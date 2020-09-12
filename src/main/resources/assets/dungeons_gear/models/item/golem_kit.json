@@ -1,0 +1,30 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "dungeons_gear:item/golem_kit"
+	},
+	"gui_light": "front",
+	"display": {
+		"thirdperson_righthand": {
+			"translation": [0, 3, 1.5]
+		},
+		"thirdperson_lefthand": {
+			"translation": [0, 3, 1.5]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 90, 0],
+			"translation": [0, 3, 0]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, -90, 0],
+			"translation": [0, 3, 0]
+		},
+		"gui": {
+			"scale": [1.33, 1.33, 1.33]
+		},
+		"fixed": {
+			"scale": [1.33, 1.33, 1.33]
+		}
+	}
+}

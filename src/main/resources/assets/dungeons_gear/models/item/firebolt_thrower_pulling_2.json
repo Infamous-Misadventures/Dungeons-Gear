@@ -1,0 +1,6 @@
+{
+    "parent": "dungeons_gear:item/firebolt_thrower",
+    "textures": {
+        "layer0": "dungeons_gear:item/firebolt_thrower_pulling_2"
+    }
+}

@@ -1,0 +1,6 @@
+{
+    "parent": "dungeons_gear:item/butterfly_crossbow",
+    "textures": {
+        "layer0": "dungeons_gear:item/butterfly_crossbow_firework"
+    }
+}

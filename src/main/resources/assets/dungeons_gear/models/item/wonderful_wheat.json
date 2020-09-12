@@ -1,0 +1,36 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "dungeons_gear:item/wonderful_wheat"
+	},
+	"gui_light": "front",
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [0, 0, 45],
+			"translation": [0, 5, 1.5],
+			"scale": [1.25, 1.25, 1]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [0, 0, -45],
+			"translation": [0, 5, 1.5],
+			"scale": [1.25, 1.25, 1]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 90, 45],
+			"translation": [0, 4, 0],
+			"scale": [1.25, 1.25, 1]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, -90, -45],
+			"translation": [0, 4, 0],
+			"scale": [1.25, 1.25, 1]
+		},
+		"gui": {
+			"scale": [1.75, 1.75, 1.75]
+		},
+		"fixed": {
+			"scale": [1.75, 1.75, 1.75]
+		}
+	}
+}

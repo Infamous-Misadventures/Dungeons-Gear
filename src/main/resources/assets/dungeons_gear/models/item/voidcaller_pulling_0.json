@@ -1,0 +1,6 @@
+{
+    "parent": "dungeons_gear:item/voidcaller",
+    "textures": {
+        "layer0": "dungeons_gear:item/voidcaller_pulling_0"
+    }
+}

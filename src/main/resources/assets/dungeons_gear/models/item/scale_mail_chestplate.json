@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "dungeons_gear:item/scale_mail_chestplate"
+  }
+}

@@ -1,0 +1,6 @@
+{
+    "parent": "dungeons_gear:item/red_snake",
+    "textures": {
+        "layer0": "dungeons_gear:item/red_snake_pulling_0"
+    }
+}

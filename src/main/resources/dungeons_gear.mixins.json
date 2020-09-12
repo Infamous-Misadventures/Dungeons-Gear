@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "com.infamous.dungeons_gear.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "minVersion": "0.8",
+  "refmap": "dungeons_gear.refmap.json",
+  "mixins": [
+    "PlayerRendererMixin",
+    "CrossbowItemMixin",
+    "BowItemMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

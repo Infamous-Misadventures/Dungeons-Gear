@@ -1,0 +1,6 @@
+{
+    "parent": "dungeons_gear:item/azure_seeker",
+    "textures": {
+        "layer0": "dungeons_gear:item/azure_seeker_pulling_1"
+    }
+}
