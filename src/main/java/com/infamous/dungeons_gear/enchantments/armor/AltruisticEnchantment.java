@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
+import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.HealthAbilityEnchantment;
 import com.infamous.dungeons_gear.utilties.AbilityUtils;
@@ -26,7 +27,7 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 public class AltruisticEnchantment extends Enchantment{
 
     public AltruisticEnchantment() {
-        super(Rarity.RARE, EnchantmentType.ARMOR_CHEST, new EquipmentSlotType[]{
+        super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlotType[]{
                 EquipmentSlotType.HEAD,
                 EquipmentSlotType.CHEST,
                 EquipmentSlotType.LEGS,

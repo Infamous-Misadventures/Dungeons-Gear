@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
+import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.HealthAbilityEnchantment;
 import com.infamous.dungeons_gear.interfaces.IArtifact;
 import net.minecraft.enchantment.Enchantment;
@@ -14,7 +15,7 @@ import net.minecraft.util.CooldownTracker;
 public class FinalShoutEnchantment extends HealthAbilityEnchantment {
 
     public FinalShoutEnchantment() {
-        super(Rarity.RARE, EnchantmentType.ARMOR_CHEST, new EquipmentSlotType[]{
+        super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlotType[]{
                 EquipmentSlotType.HEAD,
                 EquipmentSlotType.CHEST,
                 EquipmentSlotType.LEGS,

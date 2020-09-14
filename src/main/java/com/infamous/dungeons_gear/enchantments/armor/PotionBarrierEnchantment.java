@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
+import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.items.ArmorList;
 import com.infamous.dungeons_gear.utilties.EnchantUtils;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
@@ -23,7 +24,7 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 public class PotionBarrierEnchantment extends Enchantment {
 
     public PotionBarrierEnchantment() {
-        super(Rarity.RARE, EnchantmentType.ARMOR_CHEST, new EquipmentSlotType[]{
+        super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlotType[]{
                 EquipmentSlotType.HEAD,
                 EquipmentSlotType.CHEST,
                 EquipmentSlotType.LEGS,

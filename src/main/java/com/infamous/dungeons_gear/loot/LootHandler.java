@@ -7,6 +7,7 @@ import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.items.ArtifactList;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.merchant.IReputationType;
 import net.minecraft.entity.merchant.villager.*;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,6 +18,7 @@ import net.minecraft.loot.LootTable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.world.World;
 import net.minecraftforge.common.BasicTrade;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -49,7 +51,7 @@ public class LootHandler {
             ResourceLocation resourceLocation = ArtifactList.artifactMap.get(item);
             Item artifact = ForgeRegistries.ITEMS.getValue(resourceLocation);
             ItemStack artifactStack = new ItemStack(artifact);
-            BasicTrade trade = new BasicTrade(24, artifactStack, 3, 30);
+            BasicTrade trade = new BasicTrade(DungeonsGearConfig.COMMON.ARTIFACT_VALUE.get(), artifactStack, 3, 30);
             rareTrades.add(trade);
         }
     }
@@ -109,7 +111,7 @@ public class LootHandler {
             ResourceLocation resourceLocation = commonMap.get(item);
             Item weapon = ForgeRegistries.ITEMS.getValue(resourceLocation);
             ItemStack weaponStack = new ItemStack(weapon);
-            TradeUtils.EnchantedItemForEmeraldsTrade trade = new TradeUtils.EnchantedItemForEmeraldsTrade(weapon, 12, 3, 15,0.2F);
+            TradeUtils.EnchantedItemForEmeraldsTrade trade = new TradeUtils.EnchantedItemForEmeraldsTrade(weapon, DungeonsGearConfig.COMMON.COMMON_ITEM_VALUE.get(), 3, 15,0.2F);
 
             villagerTrades.get(4).add(trade);
         }
@@ -117,7 +119,7 @@ public class LootHandler {
             ResourceLocation resourceLocation = uniqueMap.get(item);
             Item weapon = ForgeRegistries.ITEMS.getValue(resourceLocation);
             ItemStack weaponStack = new ItemStack(weapon);
-            TradeUtils.EnchantedItemForEmeraldsTrade trade = new TradeUtils.EnchantedItemForEmeraldsTrade(weapon, 24, 3, 30,0.2F);
+            TradeUtils.EnchantedItemForEmeraldsTrade trade = new TradeUtils.EnchantedItemForEmeraldsTrade(weapon, DungeonsGearConfig.COMMON.UNIQUE_ITEM_VALUE.get(), 3, 30,0.2F);
 
             villagerTrades.get(5).add(trade);
         }
@@ -139,145 +141,80 @@ public class LootHandler {
         if(!DungeonsGearConfig.COMMON.ENABLE_DUNGEONS_GEAR_LOOT.get()) return;
 
         // SUPER RARE
-        if(event.getName().toString().equals("minecraft:chests/woodland_mansion")){
-            //DungeonsGear.LOGGER.info("Handled the Woodland Mansion's loot table!");
-            LootTable table = event.getTable();
-            addSuperRareLootTable(table);
-
-        }
-        if(event.getName().toString().equals("minecraft:chests/buried_treasure")){
-            //DungeonsGear.LOGGER.info("Handled the Buried Treasure's loot table!");
-            LootTable table = event.getTable();
-            addSuperRareLootTable(table);
-
-        }
+        DungeonsGearConfig.COMMON.SUPER_RARE_LOOT_TABLES.get().forEach((path) ->{
+            if(event.getName().toString().contains(path)){
+                LootTable table = event.getTable();
+                addLootTable(table, "SUPER RARE");
+            }
+        });
 
         // RARE
-        if(event.getName().toString().contains("minecraft:chests/stronghold")){
-            //DungeonsGear.LOGGER.info("Handled the Stronghold's loot tables!");
-            LootTable table = event.getTable();
-            addRareLootTable(table);
-
-        }
-        if(event.getName().toString().contains("minecraft:chests/underwater_ruin")){
-            //DungeonsGear.LOGGER.info("Handled the Ocean Ruin's loot tables!");
-            LootTable table = event.getTable();
-            addRareLootTable(table);
-
-        }
-        if(event.getName().toString().equals("minecraft:chests/ruined_portal")){
-            //DungeonsGear.LOGGER.info("Handled the Ruined Portal's loot table!");
-            LootTable table = event.getTable();
-            addRareLootTable(table);
-
-        }
-        if(event.getName().toString().equals("minecraft:chests/pillager_outpost")){
-            //DungeonsGear.LOGGER.info("Handled the Pillager Outpost's loot table!");
-            LootTable table = event.getTable();
-            addRareLootTable(table);
-
-        }
-        if(event.getName().toString().equals("minecraft:chests/simple_dungeon")){
-            //DungeonsGear.LOGGER.info("Handled the Dungeon's loot table!");
-            LootTable table = event.getTable();
-            addRareLootTable(table);
-
-        }
-        if(event.getName().toString().equals("minecraft:chests/end_city_treasure")){
-            //DungeonsGear.LOGGER.info("Handled the End City's loot table!");
-            LootTable table = event.getTable();
-            addRareLootTable(table);
-
-        }
-        if(event.getName().toString().equals("minecraft:chests/igloo_chest")){
-            //DungeonsGear.LOGGER.info("Handled the Igloo's loot table!");
-            LootTable table = event.getTable();
-            addRareLootTable(table);
-
-        }
+        DungeonsGearConfig.COMMON.RARE_LOOT_TABLES.get().forEach((path) ->{
+            if(event.getName().toString().contains(path)){
+                LootTable table = event.getTable();
+                addLootTable(table, "RARE");
+            }
+        });
 
         // UNCOMMON
-        if(event.getName().toString().equals("minecraft:chests/jungle_temple")){
-            //DungeonsGear.LOGGER.info("Handled the Jungle Temple's loot table!");
-            LootTable table = event.getTable();
-            addUncommonLootTable(table);
-
-        }
-        if(event.getName().toString().equals("minecraft:chests/nether_bridge")){
-            //DungeonsGear.LOGGER.info("Handled the Nether Fortress's loot table!");
-            LootTable table = event.getTable();
-            addUncommonLootTable(table);
-
-        }
-        if(event.getName().toString().contains("minecraft:chests/bastion")){
-            //DungeonsGear.LOGGER.info("Handled the Bastion's loot tables!");
-            LootTable table = event.getTable();
-            addUncommonLootTable(table);
-
-        }
+        DungeonsGearConfig.COMMON.UNCOMMON_LOOT_TABLES.get().forEach((path) ->{
+            if(event.getName().toString().contains(path)){
+                LootTable table = event.getTable();
+                addLootTable(table, "UNCOMMON");
+            }
+        });
 
         //COMMON
-        if(event.getName().toString().equals("minecraft:chests/abandoned_mineshaft")){
-            //DungeonsGear.LOGGER.info("Handled the Mineshaft's loot table!");
-            LootTable table = event.getTable();
-            addCommonLootTable(table);
+        DungeonsGearConfig.COMMON.COMMON_LOOT_TABLES.get().forEach((path) ->{
+            if(event.getName().toString().contains(path)){
+                LootTable table = event.getTable();
+                addLootTable(table, "COMMON");
+            }
+        });
 
-        }
-        if(event.getName().toString().contains("minecraft:chests/shipwreck")){
-            //DungeonsGear.LOGGER.info("Handled the Shipwreck's loot tables!");
-            LootTable table = event.getTable();
-            addCommonLootTable(table);
-
-        }
-        if(event.getName().toString().equals("minecraft:chests/desert_pyramid")){
-            //DungeonsGear.LOGGER.info("Handled the Desert Pyramid's loot table!");
-            LootTable table = event.getTable();
-            addCommonLootTable(table);
-
-        }
-        if(event.getName().toString().equals("minecraft:chests/village/village_weaponsmith")){
+        if(event.getName().toString().contains("minecraft:chests/village/village_weaponsmith")){
             //DungeonsGear.LOGGER.info("Handled the Weaponsmith's Chest loot table!");
             LootTable table = event.getTable();
-            addCommonMeeleWeaponLootTable(table);
+            addCommonMeleeWeaponLootTable(table);
 
         }
-        if(event.getName().toString().equals("minecraft:chests/village/village_fletcher")){
+        if(event.getName().toString().contains("minecraft:chests/village/village_fletcher")){
             //DungeonsGear.LOGGER.info("Handled the Fletcher's Chest loot table!");
             LootTable table = event.getTable();
             addCommonRangedWeaponLootTable(table);
 
         }
-        if(event.getName().toString().equals("minecraft:chests/village/village_armorer")){
+        if(event.getName().toString().contains("minecraft:chests/village/village_armorer")){
             //DungeonsGear.LOGGER.info("Handled the Weaponsmith's Chest loot table!");
             LootTable table = event.getTable();
             addCommonMetalArmorLootTable(table);
 
         }
-        if(event.getName().toString().equals("minecraft:chests/village/village_leatherworker")){
+        if(event.getName().toString().contains("minecraft:chests/village/village_leatherworker")){
             //DungeonsGear.LOGGER.info("Handled the Fletcher's Chest loot table!");
             LootTable table = event.getTable();
             addCommonLeatherArmorLootTable(table);
 
         }
-        if(event.getName().toString().equals("minecraft:gameplay/hero_of_the_village/weaponsmith_gift")){
+        if(event.getName().toString().contains("minecraft:gameplay/hero_of_the_village/weaponsmith_gift")){
             //DungeonsGear.LOGGER.info("Handled the Weaponsmith's Gift loot table!");
             LootTable table = event.getTable();
-            addCommonMeeleWeaponLootTable(table);
+            addCommonMeleeWeaponLootTable(table);
 
         }
-        if(event.getName().toString().equals("minecraft:gameplay/hero_of_the_village/fletcher_gift")){
+        if(event.getName().toString().contains("minecraft:gameplay/hero_of_the_village/fletcher_gift")){
             //DungeonsGear.LOGGER.info("Handled the Fletcher's Gift loot table!");
             LootTable table = event.getTable();
             addCommonRangedWeaponLootTable(table);
 
         }
-        if(event.getName().toString().equals("minecraft:gameplay/hero_of_the_village/armorer_gift")){
+        if(event.getName().toString().contains("minecraft:gameplay/hero_of_the_village/armorer_gift")){
             //DungeonsGear.LOGGER.info("Handled the Armorer's Gift loot table!");
             LootTable table = event.getTable();
             addCommonMetalArmorLootTable(table);
 
         }
-        if(event.getName().toString().equals("minecraft:gameplay/hero_of_the_village/leatherworker_gift")){
+        if(event.getName().toString().contains("minecraft:gameplay/hero_of_the_village/leatherworker_gift")){
             //DungeonsGear.LOGGER.info("Handled the Leatherworker's Gift loot table!");
             LootTable table = event.getTable();
             addCommonLeatherArmorLootTable(table);
@@ -285,45 +222,37 @@ public class LootHandler {
         }
     }
 
-    private static void addCommonMeeleWeaponLootTable(LootTable table){
+    private static void addCommonMeleeWeaponLootTable(LootTable table){
         Collection<ResourceLocation> commonWeapons = commonWeaponMap.values();
         Collection<ResourceLocation> uniqueWeapons = uniqueWeaponMap.values();
-        Collection<ResourceLocation> artifacts = artifactMap.values();
 
         LootUtils.myAddItemsToTable(table, commonWeapons, 1, DungeonsGearConfig.COMMON.COMMON_WEAPON_COMMON_LOOT.get().floatValue(), "common_weapons");
         LootUtils.myAddItemsToTable(table, uniqueWeapons, 1, DungeonsGearConfig.COMMON.UNIQUE_WEAPON_COMMON_LOOT.get().floatValue(), "unique_weapons");
-        LootUtils.myAddItemsToTable(table, artifacts,  1, DungeonsGearConfig.COMMON.ARTIFACT_COMMON_LOOT.get().floatValue(), "artifacts");
     }
     private static void addCommonRangedWeaponLootTable(LootTable table){
         Collection<ResourceLocation> commonRangedWeapons = commonRangedWeaponMap.values();
         Collection<ResourceLocation> uniqueRangedWeapons = uniqueRangedWeaponMap.values();
-        Collection<ResourceLocation> artifacts = artifactMap.values();
 
         LootUtils.myAddItemsToTable(table, commonRangedWeapons,  1, DungeonsGearConfig.COMMON.COMMON_WEAPON_COMMON_LOOT.get().floatValue(), "common_ranged_weapons");
         LootUtils.myAddItemsToTable(table, uniqueRangedWeapons,  1, DungeonsGearConfig.COMMON.UNIQUE_WEAPON_COMMON_LOOT.get().floatValue(), "unique_ranged_weapons");
-        LootUtils.myAddItemsToTable(table, artifacts,  1, DungeonsGearConfig.COMMON.ARTIFACT_COMMON_LOOT.get().floatValue(), "artifacts");
     }
 
     private static void addCommonMetalArmorLootTable(LootTable table){
         Collection<ResourceLocation> commonWeapons = commonMetalArmorMap.values();
         Collection<ResourceLocation> uniqueWeapons = uniqueMetalArmorMap.values();
-        Collection<ResourceLocation> artifacts = artifactMap.values();
 
         LootUtils.myAddItemsToTable(table, commonWeapons,  1, DungeonsGearConfig.COMMON.COMMON_ARMOR_COMMON_LOOT.get().floatValue(), "common_metal_armor");
         LootUtils.myAddItemsToTable(table, uniqueWeapons,  1, DungeonsGearConfig.COMMON.UNIQUE_ARMOR_COMMON_LOOT.get().floatValue(), "unique_metal_armor");
-        LootUtils.myAddItemsToTable(table, artifacts,  1, DungeonsGearConfig.COMMON.ARTIFACT_COMMON_LOOT.get().floatValue(), "artifacts");
     }
     private static void addCommonLeatherArmorLootTable(LootTable table){
         Collection<ResourceLocation> commonRangedWeapons = commonLeatherArmorMap.values();
         Collection<ResourceLocation> uniqueRangedWeapons = uniqueLeatherArmorMap.values();
-        Collection<ResourceLocation> artifacts = artifactMap.values();
 
         LootUtils.myAddItemsToTable(table, commonRangedWeapons,  1, DungeonsGearConfig.COMMON.COMMON_ARMOR_COMMON_LOOT.get().floatValue(), "common_leather_armor");
         LootUtils.myAddItemsToTable(table, uniqueRangedWeapons,  1, DungeonsGearConfig.COMMON.UNIQUE_ARMOR_COMMON_LOOT.get().floatValue(), "unique_leather_armor");
-        LootUtils.myAddItemsToTable(table, artifacts,  1, DungeonsGearConfig.COMMON.ARTIFACT_COMMON_LOOT.get().floatValue(), "artifacts");
     }
 
-    private static void addCommonLootTable(LootTable table){
+    private static void addLootTable(LootTable table, String rarity){
         Collection<ResourceLocation> commonWeaponCollectionCombined = getCommonWeaponCollection();
         Collection<ResourceLocation> uniqueWeaponCollectionCombined = getUniqueWeaponCollection();
         Collection<ResourceLocation> commonArmorCollectionCombined = getCommonArmorCollection();
@@ -331,56 +260,55 @@ public class LootHandler {
 
         Collection<ResourceLocation> artifacts = artifactMap.values();
 
-        LootUtils.myAddItemsToTable(table, commonWeaponCollectionCombined,  1, DungeonsGearConfig.COMMON.COMMON_WEAPON_COMMON_LOOT.get().floatValue(), "common_weapons");
-        LootUtils.myAddItemsToTable(table, uniqueWeaponCollectionCombined,  1, DungeonsGearConfig.COMMON.UNIQUE_WEAPON_COMMON_LOOT.get().floatValue(), "unique_weapons");
-        LootUtils.myAddItemsToTable(table, commonArmorCollectionCombined,  1, DungeonsGearConfig.COMMON.COMMON_ARMOR_COMMON_LOOT.get().floatValue(), "common_armor");
-        LootUtils.myAddItemsToTable(table, uniqueArmorCollectionCombined,  1, DungeonsGearConfig.COMMON.UNIQUE_ARMOR_COMMON_LOOT.get().floatValue(), "unique_armor");
-        LootUtils.myAddItemsToTable(table, artifacts,  1, DungeonsGearConfig.COMMON.ARTIFACT_COMMON_LOOT.get().floatValue(), "artifacts");
-    }
+        float commonWeaponChance;
+        float uniqueWeaponChance;
+        float commonArmorChance;
+        float uniqueArmorChance;
+        float artifactChance;
 
-    private static void addUncommonLootTable(LootTable table){
-        Collection<ResourceLocation> commonWeaponCollectionCombined = getCommonWeaponCollection();
-        Collection<ResourceLocation> uniqueWeaponCollectionCombined = getUniqueWeaponCollection();
-        Collection<ResourceLocation> commonArmorCollectionCombined = getCommonArmorCollection();
-        Collection<ResourceLocation> uniqueArmorCollectionCombined = getUniqueArmorCollection();
+        switch(rarity.toUpperCase()){
+            case "COMMON":
+                commonWeaponChance = DungeonsGearConfig.COMMON.COMMON_WEAPON_COMMON_LOOT.get().floatValue();
+                uniqueWeaponChance = DungeonsGearConfig.COMMON.UNIQUE_WEAPON_COMMON_LOOT.get().floatValue();
+                commonArmorChance = DungeonsGearConfig.COMMON.COMMON_ARMOR_COMMON_LOOT.get().floatValue();
+                uniqueArmorChance = DungeonsGearConfig.COMMON.UNIQUE_ARMOR_COMMON_LOOT.get().floatValue();
+                artifactChance = DungeonsGearConfig.COMMON.ARTIFACT_COMMON_LOOT.get().floatValue();
+                break;
+            case "UNCOMMON":
+                commonWeaponChance = DungeonsGearConfig.COMMON.COMMON_WEAPON_UNCOMMON_LOOT.get().floatValue();
+                uniqueWeaponChance = DungeonsGearConfig.COMMON.UNIQUE_WEAPON_UNCOMMON_LOOT.get().floatValue();
+                commonArmorChance = DungeonsGearConfig.COMMON.COMMON_ARMOR_UNCOMMON_LOOT.get().floatValue();
+                uniqueArmorChance = DungeonsGearConfig.COMMON.UNIQUE_ARMOR_UNCOMMON_LOOT.get().floatValue();
+                artifactChance = DungeonsGearConfig.COMMON.ARTIFACT_UNCOMMON_LOOT.get().floatValue();
+                break;
+            case "RARE":
+                commonWeaponChance = DungeonsGearConfig.COMMON.COMMON_WEAPON_RARE_LOOT.get().floatValue();
+                uniqueWeaponChance = DungeonsGearConfig.COMMON.UNIQUE_WEAPON_RARE_LOOT.get().floatValue();
+                commonArmorChance = DungeonsGearConfig.COMMON.COMMON_ARMOR_RARE_LOOT.get().floatValue();
+                uniqueArmorChance = DungeonsGearConfig.COMMON.UNIQUE_ARMOR_RARE_LOOT.get().floatValue();
+                artifactChance = DungeonsGearConfig.COMMON.ARTIFACT_RARE_LOOT.get().floatValue();
+                break;
+            case "SUPER RARE":
+                commonWeaponChance = DungeonsGearConfig.COMMON.COMMON_WEAPON_SUPER_RARE_LOOT.get().floatValue();
+                uniqueWeaponChance = DungeonsGearConfig.COMMON.UNIQUE_WEAPON_SUPER_RARE_LOOT.get().floatValue();
+                commonArmorChance = DungeonsGearConfig.COMMON.COMMON_ARMOR_SUPER_RARE_LOOT.get().floatValue();
+                uniqueArmorChance = DungeonsGearConfig.COMMON.UNIQUE_ARMOR_SUPER_RARE_LOOT.get().floatValue();
+                artifactChance = DungeonsGearConfig.COMMON.ARTIFACT_SUPER_RARE_LOOT.get().floatValue();
+                break;
+            default:
+                commonWeaponChance = DungeonsGearConfig.COMMON.COMMON_WEAPON_COMMON_LOOT.get().floatValue();
+                uniqueWeaponChance = DungeonsGearConfig.COMMON.UNIQUE_WEAPON_COMMON_LOOT.get().floatValue();
+                commonArmorChance = DungeonsGearConfig.COMMON.COMMON_ARMOR_COMMON_LOOT.get().floatValue();
+                uniqueArmorChance = DungeonsGearConfig.COMMON.UNIQUE_ARMOR_COMMON_LOOT.get().floatValue();
+                artifactChance = DungeonsGearConfig.COMMON.ARTIFACT_COMMON_LOOT.get().floatValue();
+                break;
+        }
 
-        Collection<ResourceLocation> artifacts = artifactMap.values();
-
-        LootUtils.myAddItemsToTable(table, commonWeaponCollectionCombined,  1, DungeonsGearConfig.COMMON.COMMON_WEAPON_UNCOMMON_LOOT.get().floatValue(), "common_weapons");
-        LootUtils.myAddItemsToTable(table, uniqueWeaponCollectionCombined,  1, DungeonsGearConfig.COMMON.UNIQUE_WEAPON_UNCOMMON_LOOT.get().floatValue(), "unique_weapons");
-        LootUtils.myAddItemsToTable(table, commonArmorCollectionCombined,  1, DungeonsGearConfig.COMMON.COMMON_ARMOR_UNCOMMON_LOOT.get().floatValue(), "common_armor");
-        LootUtils.myAddItemsToTable(table, uniqueArmorCollectionCombined,  1, DungeonsGearConfig.COMMON.UNIQUE_ARMOR_UNCOMMON_LOOT.get().floatValue(), "unique_armor");
-        LootUtils.myAddItemsToTable(table, artifacts,  1, DungeonsGearConfig.COMMON.ARTIFACT_UNCOMMON_LOOT.get().floatValue(), "artifacts");
-    }
-
-    private static void addRareLootTable(LootTable table){
-        Collection<ResourceLocation> commonWeaponCollectionCombined = getCommonWeaponCollection();
-        Collection<ResourceLocation> uniqueWeaponCollectionCombined = getUniqueWeaponCollection();
-        Collection<ResourceLocation> commonArmorCollectionCombined = getCommonArmorCollection();
-        Collection<ResourceLocation> uniqueArmorCollectionCombined = getUniqueArmorCollection();
-
-        Collection<ResourceLocation> artifacts = artifactMap.values();
-
-        LootUtils.myAddItemsToTable(table, commonWeaponCollectionCombined,  1, DungeonsGearConfig.COMMON.COMMON_WEAPON_RARE_LOOT.get().floatValue(), "common_weapons");
-        LootUtils.myAddItemsToTable(table, uniqueWeaponCollectionCombined,  1, DungeonsGearConfig.COMMON.UNIQUE_WEAPON_RARE_LOOT.get().floatValue(), "unique_weapons");
-        LootUtils.myAddItemsToTable(table, commonArmorCollectionCombined,  1, DungeonsGearConfig.COMMON.COMMON_ARMOR_RARE_LOOT.get().floatValue(), "common_armor");
-        LootUtils.myAddItemsToTable(table, uniqueArmorCollectionCombined,  1, DungeonsGearConfig.COMMON.UNIQUE_ARMOR_RARE_LOOT.get().floatValue(), "unique_armor");
-        LootUtils.myAddItemsToTable(table, artifacts,  1, DungeonsGearConfig.COMMON.ARTIFACT_RARE_LOOT.get().floatValue(), "artifacts");
-    }
-
-    private static void addSuperRareLootTable(LootTable table){
-        Collection<ResourceLocation> commonWeaponCollectionCombined = getCommonWeaponCollection();
-        Collection<ResourceLocation> uniqueWeaponCollectionCombined = getUniqueWeaponCollection();
-        Collection<ResourceLocation> commonArmorCollectionCombined = getCommonArmorCollection();
-        Collection<ResourceLocation> uniqueArmorCollectionCombined = getUniqueArmorCollection();
-
-        Collection<ResourceLocation> artifacts = artifactMap.values();
-
-        LootUtils.myAddItemsToTable(table, commonWeaponCollectionCombined,  1, DungeonsGearConfig.COMMON.COMMON_WEAPON_SUPER_RARE_LOOT.get().floatValue(), "common_weapons");
-        LootUtils.myAddItemsToTable(table, uniqueWeaponCollectionCombined,  1, DungeonsGearConfig.COMMON.UNIQUE_WEAPON_SUPER_RARE_LOOT.get().floatValue(), "unique_weapons");
-        LootUtils.myAddItemsToTable(table, commonArmorCollectionCombined,  1, DungeonsGearConfig.COMMON.COMMON_ARMOR_SUPER_RARE_LOOT.get().floatValue(), "common_armor");
-        LootUtils.myAddItemsToTable(table, uniqueArmorCollectionCombined,  1, DungeonsGearConfig.COMMON.UNIQUE_ARMOR_SUPER_RARE_LOOT.get().floatValue(), "unique_armor");
-        LootUtils.myAddItemsToTable(table, artifacts,  1, DungeonsGearConfig.COMMON.ARTIFACT_SUPER_RARE_LOOT.get().floatValue(), "artifacts");
+        LootUtils.myAddItemsToTable(table, commonWeaponCollectionCombined,  1, commonWeaponChance, "common_weapons");
+        LootUtils.myAddItemsToTable(table, uniqueWeaponCollectionCombined,  1, uniqueWeaponChance, "unique_weapons");
+        LootUtils.myAddItemsToTable(table, commonArmorCollectionCombined,  1, commonArmorChance, "common_armor");
+        LootUtils.myAddItemsToTable(table, uniqueArmorCollectionCombined,  1, uniqueArmorChance, "unique_armor");
+        LootUtils.myAddItemsToTable(table, artifacts,  1, artifactChance, "artifacts");
     }
 
     private static Collection<ResourceLocation> getUniqueArmorCollection() {
@@ -425,10 +353,10 @@ public class LootHandler {
                 if(playerEntity.isSneaking()){
                     ItemStack interactStack = playerEntity.getHeldItem(event.getHand());
                     if(commonWeaponMap.containsKey(interactStack.getItem())){
-                        handleSalvageTrade(playerEntity, villagerEntity, interactStack, false);
+                        handleSalvageTrade(playerEntity, villagerEntity, interactStack, "COMMON");
                     }
                     else if(uniqueWeaponMap.containsKey(interactStack.getItem())){
-                        handleSalvageTrade(playerEntity, villagerEntity, interactStack, true);
+                        handleSalvageTrade(playerEntity, villagerEntity, interactStack, "UNIQUE");
                     }
                 }
             }
@@ -436,10 +364,10 @@ public class LootHandler {
                 if(playerEntity.isSneaking()){
                     ItemStack interactStack = playerEntity.getHeldItem(event.getHand());
                     if(commonRangedWeaponMap.containsKey(interactStack.getItem())){
-                        handleSalvageTrade(playerEntity, villagerEntity, interactStack, false);
+                        handleSalvageTrade(playerEntity, villagerEntity, interactStack, "COMMON");
                     }
                     else if(uniqueRangedWeaponMap.containsKey(interactStack.getItem())){
-                        handleSalvageTrade(playerEntity, villagerEntity, interactStack, true);
+                        handleSalvageTrade(playerEntity, villagerEntity, interactStack, "UNIQUE");
                     }
                 }
             }
@@ -447,10 +375,10 @@ public class LootHandler {
                 if(playerEntity.isSneaking()){
                     ItemStack interactStack = playerEntity.getHeldItem(event.getHand());
                     if(commonMetalArmorMap.containsKey(interactStack.getItem())){
-                        handleSalvageTrade(playerEntity, villagerEntity, interactStack, false);
+                        handleSalvageTrade(playerEntity, villagerEntity, interactStack, "COMMON");
                     }
                     else if(uniqueMetalArmorMap.containsKey(interactStack.getItem())){
-                        handleSalvageTrade(playerEntity, villagerEntity, interactStack, true);
+                        handleSalvageTrade(playerEntity, villagerEntity, interactStack, "UNIQUE");
                     }
                 }
             }
@@ -458,10 +386,10 @@ public class LootHandler {
                 if(playerEntity.isSneaking()){
                     ItemStack interactStack = playerEntity.getHeldItem(event.getHand());
                     if(commonLeatherArmorMap.containsKey(interactStack.getItem())){
-                        handleSalvageTrade(playerEntity, villagerEntity, interactStack, false);
+                        handleSalvageTrade(playerEntity, villagerEntity, interactStack, "COMMON");
                     }
                     else if(uniqueLeatherArmorMap.containsKey(interactStack.getItem())){
-                        handleSalvageTrade(playerEntity, villagerEntity, interactStack, true);
+                        handleSalvageTrade(playerEntity, villagerEntity, interactStack, "UNIQUE");
                     }
                 }
             }
@@ -471,57 +399,56 @@ public class LootHandler {
             if(playerEntity.isSneaking()){
                 ItemStack interactStack = playerEntity.getHeldItem(event.getHand());
                 if(artifactMap.containsKey(interactStack.getItem())){
-                    handleSalvageTrade(playerEntity, wanderingTraderEntity, interactStack, true);
+                    handleSalvageTrade(playerEntity, wanderingTraderEntity, interactStack, "ARTIFACT");
                 }
             }
         }
     }
 
-    private static void handleSalvageTrade(PlayerEntity playerEntity, AbstractVillagerEntity abstractVillagerEntity, ItemStack interactStack, boolean rareItem) {
-        double maxDamage = interactStack.getMaxDamage() * 1.0D;
+    private static void handleSalvageTrade(PlayerEntity playerEntity, AbstractVillagerEntity abstractVillagerEntity, ItemStack interactStack, String itemType) {
+        float maxDamage = interactStack.getMaxDamage();
         DungeonsGear.LOGGER.info("Max damage: " + maxDamage);
-        double currentDamage = maxDamage - interactStack.getDamage() * 1.0D;
+        float currentDamage = maxDamage - interactStack.getDamage();
         DungeonsGear.LOGGER.info("Current damage: " + currentDamage);
 
-        int emeraldReward = 6;
-        int damagePenalty = 1;
-        if(rareItem){
-            emeraldReward *= 2;
-            damagePenalty *= 2;
+        int itemValue;
+        switch(itemType.toUpperCase()){
+            case "COMMON":
+                itemValue = DungeonsGearConfig.COMMON.COMMON_ITEM_VALUE.get();
+                break;
+            case "UNIQUE":
+                itemValue  = DungeonsGearConfig.COMMON.UNIQUE_ITEM_VALUE.get();
+                break;
+            case "ARTIFACT":
+                itemValue = DungeonsGearConfig.COMMON.ARTIFACT_VALUE.get();
+                break;
+            default:
+                itemValue = DungeonsGearConfig.COMMON.COMMON_ITEM_VALUE.get();
         }
 
-        double damagePercent = currentDamage / maxDamage;
-        DungeonsGear.LOGGER.info("Current damage percent: " + damagePercent);
-        if (damagePercent < 1.0D){
-            DungeonsGear.LOGGER.info("Less than 100% durability penalty!");
-            emeraldReward -= damagePenalty;
-        }
-        if (damagePercent < 0.75D){
-            DungeonsGear.LOGGER.info("Less than 75% durability penalty!");
-            emeraldReward -= damagePenalty;
-        }
-        if (damagePercent < 0.5D){
-            DungeonsGear.LOGGER.info("Less than 50% durability penalty!");
-            emeraldReward -= damagePenalty;
-        }
-        if (damagePercent < 0.25D){
-            DungeonsGear.LOGGER.info("Less than 25% durability penalty!");
-            emeraldReward -= damagePenalty;
-        }
+        int emeraldReward = Math.round(itemValue * 0.375F);
+        float durabilityModifier = currentDamage / maxDamage;
+        emeraldReward = Math.round(emeraldReward * durabilityModifier);
 
-        interactStack.shrink(1);
+        if(emeraldReward > 0){
+            interactStack.shrink(1);
 
-        if(abstractVillagerEntity instanceof VillagerEntity){
-            VillagerEntity villagerEntity = (VillagerEntity)abstractVillagerEntity;
-            villagerEntity.world.playSound((PlayerEntity) null, abstractVillagerEntity.getPosX(), abstractVillagerEntity.getPosY(), abstractVillagerEntity.getPosZ(), SoundEvents.ENTITY_VILLAGER_YES, SoundCategory.PLAYERS, 64.0F, 1.0F);
-            villagerEntity.updateReputation(IReputationType.TRADE, playerEntity);
+            if(abstractVillagerEntity instanceof VillagerEntity){
+                VillagerEntity villagerEntity = (VillagerEntity)abstractVillagerEntity;
+                villagerEntity.world.playSound((PlayerEntity) null, abstractVillagerEntity.getPosX(), abstractVillagerEntity.getPosY(), abstractVillagerEntity.getPosZ(), SoundEvents.ENTITY_VILLAGER_YES, SoundCategory.PLAYERS, 64.0F, 1.0F);
+                villagerEntity.updateReputation(IReputationType.TRADE, playerEntity);
+            }
+            else if(abstractVillagerEntity instanceof WanderingTraderEntity){
+                WanderingTraderEntity wanderingTraderEntity = (WanderingTraderEntity)abstractVillagerEntity;
+                wanderingTraderEntity.world.playSound((PlayerEntity) null, wanderingTraderEntity.getPosX(), wanderingTraderEntity.getPosY(), wanderingTraderEntity.getPosZ(), SoundEvents.ENTITY_WANDERING_TRADER_YES, SoundCategory.PLAYERS, 64.0F, 1.0F);
+            }
+            ItemStack emeraldStack = new ItemStack(Items.EMERALD, emeraldReward);
+            if(!playerEntity.addItemStackToInventory(emeraldStack)){
+                World world = playerEntity.getEntityWorld();
+                ItemEntity emeraldStackEntity = new ItemEntity(world, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), emeraldStack);
+                world.addEntity(emeraldStackEntity);
+            }
+            playerEntity.giveExperiencePoints(emeraldReward);
         }
-        else if(abstractVillagerEntity instanceof WanderingTraderEntity){
-            WanderingTraderEntity wanderingTraderEntity = (WanderingTraderEntity)abstractVillagerEntity;
-            wanderingTraderEntity.world.playSound((PlayerEntity) null, wanderingTraderEntity.getPosX(), wanderingTraderEntity.getPosY(), wanderingTraderEntity.getPosZ(), SoundEvents.ENTITY_WANDERING_TRADER_YES, SoundCategory.PLAYERS, 64.0F, 1.0F);
-        }
-
-        playerEntity.addItemStackToInventory(new ItemStack(Items.EMERALD, emeraldReward));
-        playerEntity.giveExperiencePoints(emeraldReward);
     }
 }

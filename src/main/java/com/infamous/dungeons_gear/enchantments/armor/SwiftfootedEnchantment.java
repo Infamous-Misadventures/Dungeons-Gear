@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
+import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.JumpingEnchantmnet;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
@@ -8,7 +9,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 public class SwiftfootedEnchantment extends JumpingEnchantmnet {
 
     public SwiftfootedEnchantment() {
-        super(Rarity.RARE, EnchantmentType.ARMOR_FEET, new EquipmentSlotType[]{
+        super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlotType[]{
                 EquipmentSlotType.HEAD,
                 EquipmentSlotType.CHEST,
                 EquipmentSlotType.LEGS,
