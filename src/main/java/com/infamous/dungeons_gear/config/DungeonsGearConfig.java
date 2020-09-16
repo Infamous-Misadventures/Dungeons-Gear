@@ -141,7 +141,6 @@ public class DungeonsGearConfig {
                             + "You can also write an incomplete path, and the mod will add to loot tables containing that incomplete path.")
                     .defineList("rareLootTables", Lists.newArrayList(
                             "minecraft:chests/stronghold",
-                            "minecraft:chests/buried_treasure",
                             "minecraft:chests/underwater_ruin",
                             "minecraft:chests/ruined_portal",
                             "minecraft:chests/pillager_outpost",
