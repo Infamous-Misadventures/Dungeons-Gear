@@ -49,7 +49,11 @@ public class RangedUtils {
     }
 
     public static float getVanillaArrowVelocity(ItemStack stack, int charge) {
-        float arrowVelocity = (float)charge / RangedUtils.getVanillaBowChargeTime(stack);
+        float bowChargeTime = RangedUtils.getVanillaBowChargeTime(stack);
+        if(bowChargeTime <= 0){
+            bowChargeTime = 1;
+        }
+        float arrowVelocity = (float)charge / bowChargeTime;
         arrowVelocity = (arrowVelocity * arrowVelocity + arrowVelocity * 2.0F) / 3.0F;
         if (arrowVelocity > 1.0F) {
             arrowVelocity = 1.0F;

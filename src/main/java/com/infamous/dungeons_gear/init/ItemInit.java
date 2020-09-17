@@ -221,6 +221,8 @@ public class ItemInit {
                     // done
                     ArmorList.DARK_ARMOR = new DarkArmorItem(HEAVY_PLATE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false).setRegistryName(location("dark_chestplate")),
                     ArmorList.DARK_ARMOR_HELMET = new DarkArmorItem(HEAVY_PLATE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false).setRegistryName(location("dark_helmet")),
+                    ArmorList.ROYAL_GUARD_ARMOR = new RoyalGuardArmorItem(HEAVY_PLATE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false).setRegistryName(location("royal_guard_chestplate")),
+                    ArmorList.ROYAL_GUARD_ARMOR_HELMET = new RoyalGuardArmorItem(HEAVY_PLATE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false).setRegistryName(location("royal_guard_helmet")),
                     ArmorList.TITANS_SHROUD = new DarkArmorItem(HEAVY_PLATE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true).setRegistryName(location("titans_shroud_chestplate")),
                     ArmorList.TITANS_SHROUD_HELMET = new DarkArmorItem(HEAVY_PLATE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true).setRegistryName(location("titans_shroud_helmet")),
 

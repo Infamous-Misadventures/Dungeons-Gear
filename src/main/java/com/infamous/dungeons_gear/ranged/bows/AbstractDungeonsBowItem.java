@@ -124,7 +124,11 @@ public abstract class AbstractDungeonsBowItem extends BowItem implements IRanged
     }
 
     public float getBowArrowVelocity(ItemStack stack, int charge) {
-        float arrowVelocity = (float)charge / getBowChargeTime(stack);
+        float bowChargeTime = getBowChargeTime(stack);
+        if(bowChargeTime <= 0){
+            bowChargeTime = 1;
+        }
+        float arrowVelocity = (float)charge / bowChargeTime;
         arrowVelocity = (arrowVelocity * arrowVelocity + arrowVelocity * 2.0F) / 3.0F;
         if (arrowVelocity > 1.0F) {
             arrowVelocity = 1.0F;

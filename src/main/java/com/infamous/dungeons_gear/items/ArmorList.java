@@ -91,6 +91,8 @@ public class ArmorList {
     // HEAVY ARMORS
     public static Item DARK_ARMOR_HELMET;
     public static Item DARK_ARMOR;
+    public static Item ROYAL_GUARD_ARMOR_HELMET;
+    public static Item ROYAL_GUARD_ARMOR;
     public static Item TITANS_SHROUD_HELMET;
     public static Item TITANS_SHROUD;
 
