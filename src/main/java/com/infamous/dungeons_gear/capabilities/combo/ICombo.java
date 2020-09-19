@@ -6,8 +6,8 @@ public interface ICombo {
     void setComboTimer(int comboTimer);
     int getComboTimer();
 
-    void setGhostForm(boolean ghostForm);
-    boolean getGhostForm();
+    //void setGhostForm(boolean ghostForm);
+    //boolean getGhostForm();
 
     void setShadowForm(boolean shadowForm);
     boolean getShadowForm();

@@ -43,9 +43,13 @@ public class DungeonsGearConfig {
         public final ForgeConfigSpec.ConfigValue<Double> ARTIFACT_SUPER_RARE_LOOT;
 
         public static ForgeConfigSpec.ConfigValue<List<? extends String>> COMMON_LOOT_TABLES;
+        public static ForgeConfigSpec.ConfigValue<List<? extends String>> COMMON_LOOT_TABLES_BLACKLIST;
         public static ForgeConfigSpec.ConfigValue<List<? extends String>> UNCOMMON_LOOT_TABLES;
+        public static ForgeConfigSpec.ConfigValue<List<? extends String>> UNCOMMON_LOOT_TABLES_BLACKLIST;
         public static ForgeConfigSpec.ConfigValue<List<? extends String>> RARE_LOOT_TABLES;
+        public static ForgeConfigSpec.ConfigValue<List<? extends String>> RARE_LOOT_TABLES_BLACKLIST;
         public static ForgeConfigSpec.ConfigValue<List<? extends String>> SUPER_RARE_LOOT_TABLES;
+        public static ForgeConfigSpec.ConfigValue<List<? extends String>> SUPER_RARE_LOOT_TABLES_BLACKLIST;
 
         public Common(ForgeConfigSpec.Builder builder){
 
@@ -89,6 +93,14 @@ public class DungeonsGearConfig {
                             "minecraft:chests/desert_pyramid"
                             ),
                             (itemRaw) -> itemRaw instanceof String);
+            COMMON_LOOT_TABLES_BLACKLIST = builder
+                    .comment("Use this list to prevent specific loot tables from getting common loot. \n"
+                            + "To do so, enter the full path of the specific loot table, or the path of the folder containing the loot tables.\n"
+                            + "You can also write an incomplete path, and the mod will blacklist loot tables containing that incomplete path.")
+                    .defineList("commonLootTablesBlacklist", Lists.newArrayList(
+
+                            ),
+                            (itemRaw) -> itemRaw instanceof String);
            COMMON_WEAPON_COMMON_LOOT = builder
                    .comment("The decimal chance for a common weapon to appear in common loot tables [0.0-1.0, default: 1.0]")
                    .defineInRange("commonWeaponCommonLoot", 1.0, 0.0, 1.0);
@@ -115,6 +127,14 @@ public class DungeonsGearConfig {
                             "minecraft:chests/jungle_temple",
                             "minecraft:chests/nether_bridge",
                             "minecraft:chests/bastion"
+                            ),
+                            (itemRaw) -> itemRaw instanceof String);
+            UNCOMMON_LOOT_TABLES_BLACKLIST = builder
+                    .comment("Use this list to prevent specific loot tables from getting uncommon loot. \n"
+                            + "To do so, enter the full path of the specific loot table, or the path of the folder containing the loot tables.\n"
+                            + "You can also write an incomplete path, and the mod will blacklist loot tables containing that incomplete path.")
+                    .defineList("uncommonLootTablesBlacklist", Lists.newArrayList(
+                            "minecraft:chests/jungle_temple_dispenser"
                             ),
                             (itemRaw) -> itemRaw instanceof String);
             COMMON_WEAPON_UNCOMMON_LOOT = builder
@@ -149,6 +169,14 @@ public class DungeonsGearConfig {
                             "minecraft:chests/igloo_chest"
                             ),
                             (itemRaw) -> itemRaw instanceof String);
+            RARE_LOOT_TABLES_BLACKLIST = builder
+                    .comment("Use this list to prevent specific loot tables from getting rare loot. \n"
+                            + "To do so, enter the full path of the specific loot table, or the path of the folder containing the loot tables.\n"
+                            + "You can also write an incomplete path, and the mod will blacklist loot tables containing that incomplete path.")
+                    .defineList("rareLootTableBlacklist", Lists.newArrayList(
+
+                            ),
+                            (itemRaw) -> itemRaw instanceof String);
             COMMON_WEAPON_RARE_LOOT = builder
                     .comment("The decimal chance for a common weapon to appear in rare loot tables [0.0-1.0, default: 1.0]")
                     .defineInRange("commonWeaponRareLoot", 1.0, 0.0, 1.0);
@@ -174,6 +202,14 @@ public class DungeonsGearConfig {
                     .defineList("superRareLootTables", Lists.newArrayList(
                             "minecraft:chests/woodland_mansion",
                             "minecraft:chests/buried_treasure"
+                            ),
+                            (itemRaw) -> itemRaw instanceof String);
+            SUPER_RARE_LOOT_TABLES_BLACKLIST = builder
+                    .comment("Use this list to prevent specific loot tables from getting super rare loot. \n"
+                            + "To do so, enter the full path of the specific loot table, or the path of the folder containing the loot tables.\n"
+                            + "You can also write an incomplete path, and the mod will blacklist loot tables containing that incomplete path.")
+                    .defineList("superRareLootTablesBlacklist", Lists.newArrayList(
+
                             ),
                             (itemRaw) -> itemRaw instanceof String);
             COMMON_WEAPON_SUPER_RARE_LOOT = builder

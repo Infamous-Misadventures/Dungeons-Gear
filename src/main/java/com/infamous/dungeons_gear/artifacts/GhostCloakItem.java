@@ -33,20 +33,20 @@ public class GhostCloakItem extends Item implements IArtifact {
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         ItemStack itemstack = playerIn.getHeldItem(handIn);
 
-        EffectInstance invisibility = new EffectInstance(Effects.INVISIBILITY, 120000);
+        EffectInstance invisibility = new EffectInstance(Effects.INVISIBILITY, 60);
         playerIn.addPotionEffect(invisibility);
 
-        EffectInstance glowing = new EffectInstance(Effects.GLOWING, 120000);
+        EffectInstance glowing = new EffectInstance(Effects.GLOWING, 60);
         playerIn.addPotionEffect(glowing);
 
-        EffectInstance swiftness = new EffectInstance(Effects.SPEED, 120000);
+        EffectInstance swiftness = new EffectInstance(Effects.SPEED, 60);
         playerIn.addPotionEffect(swiftness);
 
-        EffectInstance resistance = new EffectInstance(Effects.RESISTANCE, 120000,3);
+        EffectInstance resistance = new EffectInstance(Effects.RESISTANCE, 60,3);
         playerIn.addPotionEffect(resistance);
 
-        ICombo comboCap = playerIn.getCapability(ComboProvider.COMBO_CAPABILITY).orElseThrow(IllegalStateException::new);
-        comboCap.setGhostForm(true);
+        //ICombo comboCap = playerIn.getCapability(ComboProvider.COMBO_CAPABILITY).orElseThrow(IllegalStateException::new);
+        //comboCap.setGhostForm(true);
 
         if(!playerIn.isCreative()){
             itemstack.damageItem(1, playerIn, (entity) -> {

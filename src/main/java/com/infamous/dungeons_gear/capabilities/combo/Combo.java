@@ -3,7 +3,7 @@ package com.infamous.dungeons_gear.capabilities.combo;
 public class Combo implements ICombo {
 
     private int comboTimer;
-    private boolean ghostForm;
+    //private boolean ghostForm;
     private boolean shadowForm;
     private int flamingArrowCount;
     private int tormentArrowCount;
@@ -18,7 +18,7 @@ public class Combo implements ICombo {
 
     public Combo(){
         this.comboTimer = 0;
-        this.ghostForm = false;
+        //this.ghostForm = false;
         this.shadowForm = false;
         this.flamingArrowCount = 0;
         this.tormentArrowCount = 0;
@@ -40,7 +40,7 @@ public class Combo implements ICombo {
     public void setComboTimer(int comboTimer) {
         this.comboTimer = comboTimer;
     }
-
+/*
     @Override
     public void setGhostForm(boolean ghostForm) {
         this.ghostForm = ghostForm;
@@ -50,6 +50,8 @@ public class Combo implements ICombo {
     public boolean getGhostForm() {
         return this.ghostForm;
     }
+
+ */
 
     @Override
     public void setShadowForm(boolean shadowForm) {

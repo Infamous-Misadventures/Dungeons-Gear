@@ -139,10 +139,11 @@ public class LootHandler {
     @SubscribeEvent
     public static void onLootTableLoad(LootTableLoadEvent event){
         if(!DungeonsGearConfig.COMMON.ENABLE_DUNGEONS_GEAR_LOOT.get()) return;
+        String eventPath = event.getName().toString();
 
         // SUPER RARE
         DungeonsGearConfig.COMMON.SUPER_RARE_LOOT_TABLES.get().forEach((path) ->{
-            if(event.getName().toString().contains(path)){
+            if(eventPath.contains(path) && !DungeonsGearConfig.COMMON.SUPER_RARE_LOOT_TABLES_BLACKLIST.get().contains(path)){
                 LootTable table = event.getTable();
                 addLootTable(table, "SUPER RARE");
             }
@@ -150,7 +151,7 @@ public class LootHandler {
 
         // RARE
         DungeonsGearConfig.COMMON.RARE_LOOT_TABLES.get().forEach((path) ->{
-            if(event.getName().toString().contains(path)){
+            if(eventPath.contains(path) && !DungeonsGearConfig.COMMON.RARE_LOOT_TABLES_BLACKLIST.get().contains(path)){
                 LootTable table = event.getTable();
                 addLootTable(table, "RARE");
             }
@@ -158,7 +159,7 @@ public class LootHandler {
 
         // UNCOMMON
         DungeonsGearConfig.COMMON.UNCOMMON_LOOT_TABLES.get().forEach((path) ->{
-            if(event.getName().toString().contains(path)){
+            if(eventPath.contains(path) && !DungeonsGearConfig.COMMON.UNCOMMON_LOOT_TABLES_BLACKLIST.get().contains(path)){
                 LootTable table = event.getTable();
                 addLootTable(table, "UNCOMMON");
             }
@@ -166,7 +167,7 @@ public class LootHandler {
 
         //COMMON
         DungeonsGearConfig.COMMON.COMMON_LOOT_TABLES.get().forEach((path) ->{
-            if(event.getName().toString().contains(path)){
+            if(eventPath.contains(path) && !DungeonsGearConfig.COMMON.COMMON_LOOT_TABLES_BLACKLIST.get().contains(path)){
                 LootTable table = event.getTable();
                 addLootTable(table, "COMMON");
             }
