@@ -158,14 +158,8 @@ public class ArmorEvents {
 
         if(freezingMultiplier > 0){
             if(event.getPotionEffect().getPotion() == Effects.SLOWNESS || event.getPotionEffect().getPotion() == Effects.MINING_FATIGUE){
-                int oldAmplifier = effectInstance.getAmplifier();
-                if(oldAmplifier == 0){
-                    int oldDuration = effectInstance.getDuration();
-                    effectInstance.duration = (int)(oldDuration * freezingMultiplier);
-                }
-                else{
-                    effectInstance.amplifier = (int)(oldAmplifier * freezingMultiplier);
-                }
+                int oldDuration = effectInstance.getDuration();
+                effectInstance.duration = (int)(oldDuration * freezingMultiplier);
             }
         }
     }
