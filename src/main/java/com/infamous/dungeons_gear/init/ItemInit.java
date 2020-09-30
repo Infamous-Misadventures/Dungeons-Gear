@@ -4,6 +4,7 @@ import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.*;
 import com.infamous.dungeons_gear.artifacts.*;
 import com.infamous.dungeons_gear.artifacts.corruptedbeacon.CorruptedBeaconItem;
+import com.infamous.dungeons_gear.capabilities.weapon.Weapon;
 import com.infamous.dungeons_gear.melee.*;
 import com.infamous.dungeons_gear.items.ArmorList;
 import com.infamous.dungeons_gear.items.ArtifactList;
@@ -50,6 +51,10 @@ public class ItemInit {
                     WeaponList.MAULER = new GauntletItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 1, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("mauler")),
                     WeaponList.SOUL_FIST = new GauntletItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 1, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("soul_fist")),
                     // DUAL WIELD
+
+                    WeaponList.RAPIER = new RapierItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 1, (4.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("rapier")),
+                    WeaponList.BEE_STINGER = new RapierItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 1, (4.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("bee_stinger")),
+                    WeaponList.FREEZING_FOIL = new RapierItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 1, (4.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("freezing_foil")),
 
                     // MODERATE DAMAGE, MODERATE ATTACK SPEED
                     // SCYTHES
@@ -175,6 +180,10 @@ public class ItemInit {
                     EXPLODING_CROSSBOW = new ExplodingCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 25, false).setRegistryName(location("exploding_crossbow")),
                     FIREBOLT_THROWER = new ExplodingCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 25, true).setRegistryName(location("firebolt_thrower")),
                     IMPLODING_CROSSBOW = new ExplodingCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 25, true).setRegistryName(location("imploding_crossbow")),
+
+                    BURST_CROSSBOW = new BurstCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 25, false).setRegistryName(location("burst_crossbow")),
+                    CORRUPTED_CROSSBOW = new BurstCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 25, true).setRegistryName(location("corrupted_crossbow")),
+                    SOUL_HUNTER_CROSSBOW = new BurstCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 25, true).setRegistryName(location("soul_hunter_crossbow")),
 
                     DUAL_CROSSBOW = new DualCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 25, false).setRegistryName(location("dual_crossbow")),
                     BABY_CROSSBOW = new DualCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 25, true).setRegistryName(location("baby_crossbow")),

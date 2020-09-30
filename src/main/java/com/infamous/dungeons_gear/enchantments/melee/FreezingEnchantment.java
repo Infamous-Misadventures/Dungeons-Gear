@@ -26,8 +26,7 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 import static com.infamous.dungeons_gear.items.RangedWeaponList.SNOW_BOW;
 import static com.infamous.dungeons_gear.items.RangedWeaponList.WINTERS_TOUCH;
-import static com.infamous.dungeons_gear.items.WeaponList.FANG_OF_FROST;
-import static com.infamous.dungeons_gear.items.WeaponList.FROST_SCYTHE;
+import static com.infamous.dungeons_gear.items.WeaponList.*;
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class FreezingEnchantment extends Enchantment {
@@ -43,7 +42,7 @@ public class FreezingEnchantment extends Enchantment {
 
     @Override
     public boolean canApplyTogether(Enchantment enchantment) {
-        return !(enchantment == Enchantments.FIRE_ASPECT) && !(enchantment == Enchantments.FLAME);
+        return enchantment != Enchantments.FIRE_ASPECT;
     }
 
     @Override
@@ -51,7 +50,8 @@ public class FreezingEnchantment extends Enchantment {
         if(!(target instanceof LivingEntity)) return;
         ItemStack mainhand = user.getHeldItemMainhand();
         boolean uniqueWeaponFlag = mainhand.getItem() == FANG_OF_FROST
-                || mainhand.getItem() == FROST_SCYTHE;
+                || mainhand.getItem() == FROST_SCYTHE
+                || mainhand.getItem() == FREEZING_FOIL;
         if(uniqueWeaponFlag) level++;
         EffectInstance freezing = new EffectInstance(Effects.SLOWNESS, 60, level-1);
         EffectInstance miningFatigue = new EffectInstance(Effects.MINING_FATIGUE, 60, level-1);
@@ -68,8 +68,10 @@ public class FreezingEnchantment extends Enchantment {
         LivingEntity attacker = (LivingEntity)event.getSource().getTrueSource();
         LivingEntity victim = event.getEntityLiving();
         ItemStack mainhand = attacker.getHeldItemMainhand();
-        if((mainhand.getItem() == FANG_OF_FROST
-                || attacker.getHeldItemMainhand().getItem() == FROST_SCYTHE)
+        boolean uniqueWeaponFlag = mainhand.getItem() == FANG_OF_FROST
+                || mainhand.getItem() == FROST_SCYTHE
+                || mainhand.getItem() == FREEZING_FOIL;
+        if(uniqueWeaponFlag
                 && !EnchantUtils.hasEnchantment(mainhand, MeleeRangedEnchantmentList.FREEZING)){
             EffectInstance freezing = new EffectInstance(Effects.SLOWNESS, 60);
             EffectInstance miningFatigue = new EffectInstance(Effects.MINING_FATIGUE, 60);

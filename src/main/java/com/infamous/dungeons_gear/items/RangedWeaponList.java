@@ -9,7 +9,6 @@ import java.util.Map;
 public class RangedWeaponList {
 
 
-
     // BOWS
     public static Item BONEBOW;
     public static Item BOW_OF_LOST_SOULS;
@@ -54,6 +53,9 @@ public class RangedWeaponList {
     public static Item SCATTER_CROSSBOW;
     public static Item SOUL_CROSSBOW;
     public static Item IMPLODING_CROSSBOW;
+    public static Item CORRUPTED_CROSSBOW;
+    public static Item SOUL_HUNTER_CROSSBOW;
+    public static Item BURST_CROSSBOW;
 
     public static Map<Item, ResourceLocation> uniqueRangedWeaponMap = new HashMap<Item, ResourceLocation>();
     public static Map<Item, ResourceLocation> commonRangedWeaponMap = new HashMap<Item, ResourceLocation>();

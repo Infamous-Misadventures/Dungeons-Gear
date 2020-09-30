@@ -47,6 +47,10 @@
   "item.dungeons_gear.katana": "Katana",
   "item.dungeons_gear.soul_knife": "Soul Knife",
 
+  "item.dungeons_gear.rapier": "Rapier",
+  "item.dungeons_gear.bee_stinger": "Bee Stinger",
+  "item.dungeons_gear.freezing_foil": "Freezing Foil",
+
   "item.dungeons_gear.bonebow": "Bonebow",
   "item.dungeons_gear.bow_of_lost_souls": "Bow of Lost Souls",
   "item.dungeons_gear.elite_power_bow": "Elite Power Bow",
@@ -87,6 +91,9 @@
   "item.dungeons_gear.scatter_crossbow": "Scatter Crossbow",
   "item.dungeons_gear.soul_crossbow": "Soul Crossbow",
   "item.dungeons_gear.imploding_crossbow": "Imploding Crossbow",
+  "item.dungeons_gear.burst_crossbow": "Burst Crossbow",
+  "item.dungeons_gear.corrupted_crossbow": "Corrupted Crossbow",
+  "item.dungeons_gear.soul_hunter_crossbow": "Soul Hunter Crossbow",
   "item.dungeons_gear.dual_crossbow": "Dual Crossbow",
   "item.dungeons_gear.baby_crossbow": "Baby Crossbow",
 
