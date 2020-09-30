@@ -53,10 +53,10 @@ public class OcelotArmorModel<T extends LivingEntity> extends BipedModel<T> {
 		Head = new ModelRenderer(this);
 		Head.setRotationPoint(-1.0F, 0.0F, -1.0F);
 		Everything.addChild(Head);
-		Head.setTextureOffset(0, 0).addBox(-4.0F - 1.0F, -34.0F + 24.0F - testificateHelmetShiftUp, -4.0F, 10.0F, 10.0F, 10.0F, 0.0F, false);
-		Head.setTextureOffset(51, 30).addBox(3.0F - 1.0F, -36.0F + 24.0F - testificateHelmetShiftUp, 1.0F, 2.0F, 2.0F, 3.0F, 0.0F, true);
-		Head.setTextureOffset(51, 30).addBox(-3.0F - 1.0F, -36.0F + 24.0F - testificateHelmetShiftUp, 1.0F, 2.0F, 2.0F, 3.0F, 0.0F, false);
-		Head.setTextureOffset(48, 57).addBox(-0.5F - 1.0F, -32.0F + 24.0F - testificateHelmetShiftUp, -6.0F, 3.0F, 2.0F, 2.0F, 0.0F, false);
+		Head.setTextureOffset(0, 0).addBox(-4.0F - 1.0F, -34.0F + 24.0F - testificateHelmetShiftUp, -4.0F - 1.0F, 10.0F, 10.0F, 10.0F, 0.0F, false);
+		Head.setTextureOffset(51, 30).addBox(3.0F - 1.0F, -36.0F + 24.0F - testificateHelmetShiftUp, 1.0F - 1.0F, 2.0F, 2.0F, 3.0F, 0.0F, true);
+		Head.setTextureOffset(51, 30).addBox(-3.0F - 1.0F, -36.0F + 24.0F - testificateHelmetShiftUp, 1.0F - 1.0F, 2.0F, 2.0F, 3.0F, 0.0F, false);
+		Head.setTextureOffset(48, 57).addBox(-0.5F - 1.0F, -32.0F + 24.0F - testificateHelmetShiftUp, -6.0F - 1.0F, 3.0F, 2.0F, 2.0F, 0.0F, false);
 
 		Body = new ModelRenderer(this);
 		Body.setRotationPoint(0.0F, 0.0F, 0.0F);

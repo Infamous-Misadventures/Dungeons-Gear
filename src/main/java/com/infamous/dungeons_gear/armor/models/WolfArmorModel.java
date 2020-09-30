@@ -51,10 +51,10 @@ public class WolfArmorModel<T extends LivingEntity> extends BipedModel<T> {
 		Head = new ModelRenderer(this);
 		Head.setRotationPoint(0.0F, 0.0F, -1.0F);
 		Everything.addChild(Head);
-		Head.setTextureOffset(0, 0).addBox(-5.0F, -34.0F + 24.0F - testificateHelmetShiftUp, -4.0F, 10.0F, 10.0F, 10.0F, 0.0F, false);
-		Head.setTextureOffset(0, 0).addBox(2.0F, -37.0F + 24.0F - testificateHelmetShiftUp, 1.0F, 3.0F, 3.0F, 2.0F, 0.0F, false);
-		Head.setTextureOffset(0, 0).addBox(-5.0F, -37.0F + 24.0F - testificateHelmetShiftUp, 1.0F, 3.0F, 3.0F, 2.0F, 0.0F, false);
-		Head.setTextureOffset(48, 32).addBox(-2.0F, -31.0F + 24.0F - testificateHelmetShiftUp, -8.0F, 4.0F, 3.0F, 4.0F, 0.0F, false);
+		Head.setTextureOffset(0, 0).addBox(-5.0F, -34.0F + 24.0F - testificateHelmetShiftUp, -4.0F - 1.0F, 10.0F, 10.0F, 10.0F, 0.0F, false);
+		Head.setTextureOffset(0, 0).addBox(2.0F, -37.0F + 24.0F - testificateHelmetShiftUp, 1.0F - 1.0F, 3.0F, 3.0F, 2.0F, 0.0F, false);
+		Head.setTextureOffset(0, 0).addBox(-5.0F, -37.0F + 24.0F - testificateHelmetShiftUp, 1.0F - 1.0F, 3.0F, 3.0F, 2.0F, 0.0F, false);
+		Head.setTextureOffset(48, 32).addBox(-2.0F, -31.0F + 24.0F - testificateHelmetShiftUp, -8.0F - 1.0F, 4.0F, 3.0F, 4.0F, 0.0F, false);
 
 		Body = new ModelRenderer(this);
 		Body.setRotationPoint(0.0F, 0.0F, 0.0F);
