@@ -2,8 +2,8 @@ package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
-import com.infamous.dungeons_gear.utilties.AbilityUtils;
 import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.ProjectileEffects;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
@@ -46,13 +46,13 @@ public class ChainReactionEnchantment extends Enchantment {
                         if(chainReactionLevel == 3) chainReactionChance = 0.3F;
                         float chainReactionRand = attacker.getRNG().nextFloat();
                         if(chainReactionRand <= chainReactionChance){
-                            AbilityUtils.fireChainReactionProjectiles(victim.getEntityWorld(), attacker, victim, 3.15F, 1.0F, arrowEntity);
+                            ProjectileEffects.fireChainReactionProjectiles(victim.getEntityWorld(), attacker, victim, 3.15F, 1.0F, arrowEntity);
                         }
                     }
                     if(arrowEntity.getTags().contains("FireboltThrower")){
                         float chainReactionRand = attacker.getRNG().nextFloat();
                         if(chainReactionRand <= 0.1F){
-                            AbilityUtils.fireChainReactionProjectiles(victim.getEntityWorld(), attacker, victim, 3.15F, 1.0F, arrowEntity);
+                            ProjectileEffects.fireChainReactionProjectiles(victim.getEntityWorld(), attacker, victim, 3.15F, 1.0F, arrowEntity);
                         }
                     }
                 }

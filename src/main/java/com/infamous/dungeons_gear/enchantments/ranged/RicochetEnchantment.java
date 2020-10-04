@@ -2,7 +2,7 @@ package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.utilties.EnchantUtils;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
-import com.infamous.dungeons_gear.utilties.AbilityUtils;
+import com.infamous.dungeons_gear.utilties.ProjectileEffects;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.enchantment.Enchantments;
@@ -50,13 +50,13 @@ public class RicochetEnchantment extends Enchantment {
         if(ricochetLevel > 0){
             float chainReactionRand = shooter.getRNG().nextFloat();
             if(chainReactionRand <= 0.2F * ricochetLevel){
-                AbilityUtils.ricochetArrowTowardsOtherEntity(shooter, victim, arrowEntity, 10);
+                ProjectileEffects.ricochetArrowTowardsOtherEntity(shooter, victim, arrowEntity, 10);
             }
         }
         if(uniqueWeaponFlag){
             float chainReactionRand = shooter.getRNG().nextFloat();
             if(chainReactionRand <= 0.2F){
-                AbilityUtils.ricochetArrowTowardsOtherEntity(shooter, victim, arrowEntity, 10);
+                ProjectileEffects.ricochetArrowTowardsOtherEntity(shooter, victim, arrowEntity, 10);
             }
         }
     }

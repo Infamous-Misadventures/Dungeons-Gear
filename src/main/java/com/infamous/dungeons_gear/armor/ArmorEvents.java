@@ -6,7 +6,8 @@ import com.infamous.dungeons_gear.capabilities.combo.ComboProvider;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.interfaces.IArmor;
-import com.infamous.dungeons_gear.utilties.AbilityUtils;
+import com.infamous.dungeons_gear.utilties.AreaOfEffects;
+import com.infamous.dungeons_gear.utilties.ArmorEffects;
 import com.infamous.dungeons_gear.utilties.EnchantUtils;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -41,7 +42,7 @@ public class ArmorEvents {
             World world = playerEntity.getEntityWorld();
             if(event.getTo().getItem() instanceof IArmor){
                 if(((IArmor)event.getTo().getItem()).doGivesYouAPetBat()){
-                    AbilityUtils.summonOrTeleportBat(playerEntity, world);
+                    ArmorEffects.summonOrTeleportBat(playerEntity, world);
                 }
             }
         }
@@ -102,7 +103,7 @@ public class ArmorEvents {
 
         float teleportRand = victim.getRNG().nextFloat();
         if(teleportRand <= totalTeleportChance){
-            AbilityUtils.teleportOnHit(victim);
+            ArmorEffects.teleportOnHit(victim);
         }
     }
 
@@ -203,7 +204,7 @@ public class ArmorEvents {
 
         boolean healNearbyAllies = doHealthPotionsHealNearbyAllies || doHealthPotionsHealNearbyAllies2;
         if(healNearbyAllies){
-            AbilityUtils.healNearbyAllies(player, instantHealth, 12);
+            AreaOfEffects.healNearbyAllies(player, instantHealth, 12);
         }
     }
 
@@ -285,14 +286,14 @@ public class ArmorEvents {
     private static void handleJumpEnchantments(PlayerEntity playerEntity, ItemStack helmet, ItemStack chestplate, int jumpCooldownTimer) {
         if(EnchantUtils.hasEnchantment(playerEntity, ArmorEnchantmentList.ELECTRIFIED)){
             if(jumpCooldownTimer == 0){
-                AbilityUtils.electrifyNearbyEnemies(playerEntity, 5, 5, 3);
+                AreaOfEffects.electrifyNearbyEnemies(playerEntity, 5, 5, 3);
             }
         }
 
         if(EnchantUtils.hasEnchantment(playerEntity, ArmorEnchantmentList.FIRE_TRAIL)){
             if(jumpCooldownTimer == 0){
                 int fireTrailLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.FIRE_TRAIL, playerEntity);
-                AbilityUtils.burnNearbyEnemies(playerEntity, 1.0F * fireTrailLevel, 1.5F);
+                AreaOfEffects.burnNearbyEnemies(playerEntity, 1.0F * fireTrailLevel, 1.5F);
             }
         }
 

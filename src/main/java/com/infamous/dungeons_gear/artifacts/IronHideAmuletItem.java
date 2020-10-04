@@ -58,7 +58,7 @@ public class IronHideAmuletItem extends Item implements IArtifact {
             list.add(new StringTextComponent(TextFormatting.GREEN + "" + TextFormatting.ITALIC +
                     "Provides a major boost to defense for a short time."));
             list.add(new StringTextComponent(TextFormatting.BLUE +
-                    "11 Seconds Duration."));
+                    "11 Seconds Duration"));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "25 Seconds Cooldown"));
         }

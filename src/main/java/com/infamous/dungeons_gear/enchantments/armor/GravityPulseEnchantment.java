@@ -5,11 +5,10 @@ import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.PulseEnchantment;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
-import com.infamous.dungeons_gear.utilties.AbilityUtils;
+import com.infamous.dungeons_gear.utilties.AreaOfEffects;
 import com.infamous.dungeons_gear.utilties.EnchantUtils;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraftforge.event.TickEvent;
@@ -50,7 +49,7 @@ public class GravityPulseEnchantment extends PulseEnchantment {
             if(EnchantUtils.hasEnchantment(player, ArmorEnchantmentList.GRAVITY_PULSE)){
                 if(gravityPulseTimer <= 0){
                     int gravityPulseLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.GRAVITY_PULSE, player);
-                    AbilityUtils.pullInNearbyEntities(player, player, 1.5F + 1.5F * gravityPulseLevel);
+                    AreaOfEffects.pullInNearbyEntities(player, player, 1.5F + 1.5F * gravityPulseLevel);
                     comboCap.setGravityPulseTimer(100);
                 }
                 else{

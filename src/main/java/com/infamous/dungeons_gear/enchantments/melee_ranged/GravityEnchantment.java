@@ -1,12 +1,11 @@
 package com.infamous.dungeons_gear.enchantments.melee_ranged;
 
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
+import com.infamous.dungeons_gear.utilties.AreaOfEffects;
 import com.infamous.dungeons_gear.utilties.EnchantUtils;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
-import com.infamous.dungeons_gear.utilties.AbilityUtils;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
@@ -18,8 +17,6 @@ import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.player.ArrowLooseEvent;
-import net.minecraftforge.event.entity.player.ArrowNockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -47,7 +44,7 @@ public class GravityEnchantment extends Enchantment {
         ItemStack mainhand = user.getHeldItemMainhand();
         boolean uniqueWeaponFlag = mainhand.getItem() == HAMMER_OF_GRAVITY || mainhand.getItem() == VOIDCALLER || mainhand.getItem() == IMPLODING_CROSSBOW;
         if(uniqueWeaponFlag) level++;
-        AbilityUtils.pullInNearbyEntities(user, (LivingEntity)target, level * 3);
+        AreaOfEffects.pullInNearbyEntities(user, (LivingEntity)target, level * 3);
     }
 
     @SubscribeEvent
@@ -60,7 +57,7 @@ public class GravityEnchantment extends Enchantment {
         ItemStack mainhand = attacker.getHeldItemMainhand();
         if((mainhand.getItem() == HAMMER_OF_GRAVITY
                 && !EnchantUtils.hasEnchantment(mainhand, MeleeRangedEnchantmentList.GRAVITY))){
-            AbilityUtils.pullInNearbyEntities(attacker, victim, 3);
+            AreaOfEffects.pullInNearbyEntities(attacker, victim, 3);
         }
     }
 
@@ -79,20 +76,20 @@ public class GravityEnchantment extends Enchantment {
                 EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult) rayTraceResult;
                 if(entityRayTraceResult.getEntity() instanceof LivingEntity){
                     LivingEntity victim = (LivingEntity) ((EntityRayTraceResult)rayTraceResult).getEntity();
-                    AbilityUtils.pullInNearbyEntities(shooter, victim, 3);
+                    AreaOfEffects.pullInNearbyEntities(shooter, victim, 3);
                 }
             }
             if(rayTraceResult instanceof BlockRayTraceResult){
                 BlockRayTraceResult blockRayTraceResult = (BlockRayTraceResult)rayTraceResult;
                 BlockPos blockPos = blockRayTraceResult.getPos();
-                AbilityUtils.pullInNearbyEntitiesAtPos(shooter, blockPos, 3);
+                AreaOfEffects.pullInNearbyEntitiesAtPos(shooter, blockPos, 3);
             }
         }else if(gravityLevel > 0){
             if(uniqueWeaponFlag) gravityLevel++;
             if(rayTraceResult instanceof BlockRayTraceResult){
                 BlockRayTraceResult blockRayTraceResult = (BlockRayTraceResult)rayTraceResult;
                 BlockPos blockPos = blockRayTraceResult.getPos();
-                AbilityUtils.pullInNearbyEntitiesAtPos(shooter, blockPos, 3 * gravityLevel);
+                AreaOfEffects.pullInNearbyEntitiesAtPos(shooter, blockPos, 3 * gravityLevel);
             }
         }
     }

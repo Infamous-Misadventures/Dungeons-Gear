@@ -2,10 +2,11 @@ package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
+import com.infamous.dungeons_gear.utilties.AOEClouds;
+import com.infamous.dungeons_gear.utilties.AreaOfEffects;
 import com.infamous.dungeons_gear.utilties.EnchantUtils;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
-import com.infamous.dungeons_gear.utilties.AbilityUtils;
 import net.minecraft.enchantment.DamageEnchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -63,8 +64,8 @@ public class ShockwaveEnchantment extends AOEDamageEnchantment {
                 if(shockwaveLevel == 3) shockwaveDamage *= 2;
                 if(uniqueWeaponFlag) shockwaveDamage += shockwaveDamage;
                 victim.world.playSound((PlayerEntity) null, victim.getPosX(), victim.getPosY(), victim.getPosZ(), SoundEvents.ENTITY_LIGHTNING_BOLT_IMPACT, SoundCategory.PLAYERS, 64.0F, 1.0F);
-                AbilityUtils.spawnCritCloud(attacker, victim, 3.0f);
-                AbilityUtils.causeShockwave(attacker, victim, shockwaveDamage, 3.0f);
+                AOEClouds.spawnCritCloud(attacker, victim, 3.0f);
+                AreaOfEffects.causeShockwave(attacker, victim, shockwaveDamage, 3.0f);
             }
         }
     }

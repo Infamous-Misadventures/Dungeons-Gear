@@ -1,14 +1,10 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.armor.BattleRobeItem;
-import com.infamous.dungeons_gear.armor.EvocationRobeItem;
-import com.infamous.dungeons_gear.armor.GuardsArmorItem;
 import com.infamous.dungeons_gear.interfaces.IArtifact;
 import com.infamous.dungeons_gear.items.ArtifactList;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
@@ -21,7 +17,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-import static com.infamous.dungeons_gear.utilties.AbilityUtils.spawnRegenCloudAtPos;
+import static com.infamous.dungeons_gear.utilties.AOEClouds.spawnRegenCloudAtPos;
 
 public class TotemOfRegenerationItem extends Item implements IArtifact {
     public TotemOfRegenerationItem(Properties properties) {

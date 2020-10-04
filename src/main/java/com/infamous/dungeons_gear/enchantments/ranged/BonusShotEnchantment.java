@@ -3,7 +3,7 @@ package com.infamous.dungeons_gear.enchantments.ranged;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.utilties.EnchantUtils;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
-import com.infamous.dungeons_gear.utilties.AbilityUtils;
+import com.infamous.dungeons_gear.utilties.ProjectileEffects;
 import com.infamous.dungeons_gear.utilties.RangedUtils;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -46,7 +46,7 @@ public class BonusShotEnchantment extends Enchantment {
                     if(bonusShotLevel == 3) damageMultiplier = 0.24F;
                     if(uniqueWeaponFlag) damageMultiplier += 0.2F;
                     float arrowVelocity = RangedUtils.getvVanillaOrModdedCrossbowArrowVelocity(stack);
-                    AbilityUtils.fireBonusShotTowardsOtherEntity(player, 10,
+                    ProjectileEffects.fireBonusShotTowardsOtherEntity(player, 10,
                             damageMultiplier, arrowVelocity);
                 }
             }
@@ -68,7 +68,7 @@ public class BonusShotEnchantment extends Enchantment {
             if(uniqueWeaponFlag) damageMultiplier += 0.2F;
             float arrowVelocity = RangedUtils.getVanillaOrModdedBowArrowVelocity(stack, charge);
             if(arrowVelocity >= 0.1F){
-                AbilityUtils.fireBonusShotTowardsOtherEntity(livingEntity, 10, damageMultiplier, arrowVelocity);
+                ProjectileEffects.fireBonusShotTowardsOtherEntity(livingEntity, 10, damageMultiplier, arrowVelocity);
             }
         }
     }

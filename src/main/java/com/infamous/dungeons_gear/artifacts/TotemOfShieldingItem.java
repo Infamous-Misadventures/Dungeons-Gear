@@ -1,14 +1,10 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.armor.BattleRobeItem;
-import com.infamous.dungeons_gear.armor.EvocationRobeItem;
-import com.infamous.dungeons_gear.armor.GuardsArmorItem;
 import com.infamous.dungeons_gear.interfaces.IArtifact;
 import com.infamous.dungeons_gear.items.ArtifactList;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
@@ -24,7 +20,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-import static com.infamous.dungeons_gear.utilties.AbilityUtils.spawnShieldingCloudAtPos;
+import static com.infamous.dungeons_gear.utilties.AOEClouds.spawnShieldingCloudAtPos;
 
 public class TotemOfShieldingItem extends Item implements IArtifact {
     public TotemOfShieldingItem(Properties properties) {

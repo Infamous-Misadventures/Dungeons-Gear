@@ -1,9 +1,6 @@
 package com.infamous.dungeons_gear.artifacts;
 
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_gear.armor.BattleRobeItem;
-import com.infamous.dungeons_gear.armor.EvocationRobeItem;
-import com.infamous.dungeons_gear.armor.GuardsArmorItem;
 import com.infamous.dungeons_gear.armor.SoulRobeItem;
 import com.infamous.dungeons_gear.damagesources.SummonedFallingBlockDamageSource;
 import com.infamous.dungeons_gear.capabilities.combo.ComboProvider;
@@ -17,6 +14,7 @@ import com.infamous.dungeons_gear.interfaces.IArmor;
 import com.infamous.dungeons_gear.utilties.EnchantUtils;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.goals.*;
+import com.infamous.dungeons_gear.utilties.ProjectileEffects;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -53,7 +51,6 @@ import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 import static com.infamous.dungeons_gear.items.ArmorList.CAVE_CRAWLER;
 import static com.infamous.dungeons_gear.items.ArmorList.SPLENDID_ROBE;
 import static com.infamous.dungeons_gear.items.ArtifactList.*;
-import static com.infamous.dungeons_gear.utilties.AbilityUtils.*;
 
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class ArtifactEvents {
@@ -164,7 +161,7 @@ public class ArtifactEvents {
                         event.setCanceled(true);
                         if(event.getEntity() instanceof AbstractArrowEntity){
                             AbstractArrowEntity arrowEntity = (AbstractArrowEntity) event.getEntity();
-                            ricochetArrowLikeShield(arrowEntity, livingEntity);
+                            ProjectileEffects.ricochetArrowLikeShield(arrowEntity, livingEntity);
                         }
                     }
                 }

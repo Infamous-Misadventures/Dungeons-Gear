@@ -1,10 +1,8 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.artifacts.fallingblocks.SummonedFallingBlockEntity;
-import com.infamous.dungeons_gear.capabilities.summoning.ISummonable;
-import com.infamous.dungeons_gear.capabilities.summoning.SummonableProvider;
 import com.infamous.dungeons_gear.interfaces.IArtifact;
 import com.infamous.dungeons_gear.items.ArtifactList;
+import com.infamous.dungeons_gear.utilties.AbilityUtils;
 import net.minecraft.block.*;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -48,31 +46,7 @@ public class IceWandItem extends Item implements IArtifact {
                 blockPos = itemUseContextPos.offset(itemUseContextFace);
             }
                 if(itemUseContextPlayer != null) {
-                    for(int i = 0; i < 9; i++){
-                        double xshift = 0;
-                        double zshift = 0;
-
-                        // positive x shift
-                        if(i == 1 || i == 2 || i == 8){
-                            xshift = 1.0D;
-                        }
-                        // negative x shift
-                        if(i == 4 || i == 5 || i == 6){
-                            xshift = -1.0D;
-                        }
-                        // positive z shift
-                        if(i == 2 || i == 3 || i == 4){
-                            zshift = 1.0D;
-                        }
-                        // negative z shift
-                        if(i == 6 || i == 7 || i == 8){
-                            zshift = -1.0D;
-                        }
-                        SummonedFallingBlockEntity fallingBlockEntity = new SummonedFallingBlockEntity(world, (double)blockPos.getX() + 0.5D + xshift, (double)blockPos.getY() + 4.0D, (double)blockPos.getZ() + 0.5D + zshift, Blocks.ICE.getDefaultState(), itemUseContextPlayer);
-                        fallingBlockEntity.fallTime = 1;
-                        fallingBlockEntity.setHurtEntities(true);
-                        world.addEntity(fallingBlockEntity);
-                    }
+                    AbilityUtils.summonIceBlocks(world, itemUseContextPlayer, blockPos);
 
                     if(!itemUseContextPlayer.isCreative()){
                         itemUseContextItem.damageItem(1, itemUseContextPlayer, (entity) -> {

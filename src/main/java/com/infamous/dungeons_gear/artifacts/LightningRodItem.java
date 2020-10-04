@@ -3,19 +3,15 @@ package com.infamous.dungeons_gear.artifacts;
 import com.infamous.dungeons_gear.interfaces.IArtifact;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
 import com.infamous.dungeons_gear.items.ArtifactList;
-import com.infamous.dungeons_gear.utilties.AbilityUtils;
-import net.minecraft.block.BlockState;
+import com.infamous.dungeons_gear.utilties.AreaOfEffects;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.*;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -37,7 +33,7 @@ public class LightningRodItem extends Item implements IArtifact, ISoulGatherer {
                 playerIn.giveExperiencePoints(-15);
             }
             //AbilityUtils.castLightningBoltAtBlockPos(itemUseContextPlayer, blockPos);
-            AbilityUtils.electrifyNearbyEnemies(playerIn, 5, 5, Integer.MAX_VALUE);
+            AreaOfEffects.electrifyNearbyEnemies(playerIn, 5, 5, Integer.MAX_VALUE);
             if(!playerIn.isCreative()){
                 itemstack.damageItem(1, playerIn, (entity) -> {
                     entity.sendBreakAnimation(handIn);

@@ -3,10 +3,10 @@ package com.infamous.dungeons_gear.enchantments.melee;
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
+import com.infamous.dungeons_gear.utilties.AreaOfEffects;
 import com.infamous.dungeons_gear.utilties.EnchantUtils;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
-import com.infamous.dungeons_gear.utilties.AbilityUtils;
 import net.minecraft.enchantment.DamageEnchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -57,14 +57,14 @@ public class EchoEnchantment extends AOEDamageEnchantment {
             if(echoLevel == 3) echoChance = 0.75F;
             float echoRand = attacker.getRNG().nextFloat();
             if(echoRand <= echoChance){
-                AbilityUtils.causeEchoAttack(attacker, victim, damageDealt, 3.0f);
+                AreaOfEffects.causeEchoAttack(attacker, victim, damageDealt, 3.0f);
             }
         }
         if(uniqueWeaponFlag){
             float damageDealt = event.getAmount();
             float echoRand = attacker.getRNG().nextFloat();
             if(echoRand <= 0.25F){
-                AbilityUtils.causeEchoAttack(attacker, victim, damageDealt, 3.0f);
+                AreaOfEffects.causeEchoAttack(attacker, victim, damageDealt, 3.0f);
             }
         }
     }

@@ -3,20 +3,17 @@ package com.infamous.dungeons_gear.enchantments.melee_ranged;
 import com.infamous.dungeons_gear.capabilities.combo.ComboProvider;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
-import com.infamous.dungeons_gear.effects.CustomEffects;
+import com.infamous.dungeons_gear.utilties.AOEClouds;
 import com.infamous.dungeons_gear.utilties.EnchantUtils;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
-import com.infamous.dungeons_gear.utilties.AbilityUtils;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -31,7 +28,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-import static com.infamous.dungeons_gear.items.RangedWeaponList.THE_GREEN_MENACE;
 import static com.infamous.dungeons_gear.items.WeaponList.*;
 
 @Mod.EventBusSubscriber(modid = MODID)
@@ -52,7 +48,7 @@ public class PoisonCloudEnchantment extends Enchantment {
         float chance = user.getRNG().nextFloat();
         if(chance <=  0.3F){
             checkForPlayer(user);
-            AbilityUtils.spawnPoisonCloud(user, (LivingEntity)target, level-1);
+            AOEClouds.spawnPoisonCloud(user, (LivingEntity)target, level-1);
         }
     }
 
@@ -68,7 +64,7 @@ public class PoisonCloudEnchantment extends Enchantment {
             float chance = attacker.getRNG().nextFloat();
             if(chance <=  0.3F){
                 checkForPlayer(attacker);
-                AbilityUtils.spawnPoisonCloud(attacker, victim, 0);
+                AOEClouds.spawnPoisonCloud(attacker, victim, 0);
             }
         }
     }
@@ -92,7 +88,7 @@ public class PoisonCloudEnchantment extends Enchantment {
                     float poisonRand = shooter.getRNG().nextFloat();
                     if(poisonRand <= 0.3F){
                         checkForPlayer(shooter);
-                        AbilityUtils.spawnPoisonCloud(shooter, victim, poisonLevel - 1);
+                        AOEClouds.spawnPoisonCloud(shooter, victim, poisonLevel - 1);
                     }
                 }
             }
@@ -102,7 +98,7 @@ public class PoisonCloudEnchantment extends Enchantment {
                 float poisonRand = shooter.getRNG().nextFloat();
                 if(poisonRand <= 0.3F){
                     checkForPlayer(shooter);
-                    AbilityUtils.spawnPoisonCloudAtPos(shooter, true, blockPos, poisonLevel - 1);
+                    AOEClouds.spawnPoisonCloudAtPos(shooter, true, blockPos, poisonLevel - 1);
                 }
             }
         }
@@ -114,7 +110,7 @@ public class PoisonCloudEnchantment extends Enchantment {
                     float poisonRand = shooter.getRNG().nextFloat();
                     if(poisonRand <= 0.3F){
                         checkForPlayer(shooter);
-                        AbilityUtils.spawnPoisonCloud(shooter, victim, 0);
+                        AOEClouds.spawnPoisonCloud(shooter, victim, 0);
                     }
                 }
             }
@@ -124,7 +120,7 @@ public class PoisonCloudEnchantment extends Enchantment {
                 float poisonRand = shooter.getRNG().nextFloat();
                 if(poisonRand <= 0.3F){
                     checkForPlayer(shooter);
-                    AbilityUtils.spawnPoisonCloudAtPos(shooter, true, blockPos, 0);
+                    AOEClouds.spawnPoisonCloudAtPos(shooter, true, blockPos, 0);
                 }
             }
         }

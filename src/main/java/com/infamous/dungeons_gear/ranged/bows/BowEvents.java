@@ -4,8 +4,8 @@ import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
 import com.infamous.dungeons_gear.capabilities.weapon.WeaponProvider;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
 import com.infamous.dungeons_gear.utilties.AbilityUtils;
+import com.infamous.dungeons_gear.utilties.ProjectileEffects;
 import com.infamous.dungeons_gear.utilties.RangedUtils;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -87,7 +87,7 @@ public class BowEvents {
                         || arrowEntity.getTags().contains("TheGreenMenace")
                         || arrowEntity.getTags().contains("ThePinkScoundrel");
                 if(huntingBowFlag){
-                    AbilityUtils.makePetsAttackTarget(victim, shooter);
+                    AbilityUtils.makeNearbyPetsAttackTarget(victim, shooter);
                 }
                 else if(snowBowFlag){
                     EffectInstance freezing = new EffectInstance(Effects.SLOWNESS, 60, 0);
@@ -95,7 +95,7 @@ public class BowEvents {
                     PROXY.spawnParticles(victim, ParticleTypes.ITEM_SNOWBALL);
                 }
                 else if(trickbowFlag){
-                    AbilityUtils.ricochetArrowTowardsOtherEntity(shooter, victim, arrowEntity, 10);
+                    ProjectileEffects.ricochetArrowTowardsOtherEntity(shooter, victim, arrowEntity, 10);
                 }
             }
         }

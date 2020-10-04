@@ -3,8 +3,8 @@ package com.infamous.dungeons_gear.ranged.crossbows;
 import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
 import com.infamous.dungeons_gear.capabilities.weapon.WeaponProvider;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
-import com.infamous.dungeons_gear.utilties.AbilityUtils;
+import com.infamous.dungeons_gear.utilties.AOEClouds;
+import com.infamous.dungeons_gear.utilties.AreaOfEffects;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -89,8 +89,8 @@ public class CrossbowEvents {
                     }
 
                     arrowEntity.world.playSound((PlayerEntity) null, blockPos.getX(), blockPos.getY(), blockPos.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 64.0F, 1.0F);
-                    AbilityUtils.spawnExplosionCloudAtPos(shooter, true, blockPos, 3.0F);
-                    AbilityUtils.causeExplosionAttackAtPos(shooter, true, blockPos, damage, 3.0F);
+                    AOEClouds.spawnExplosionCloudAtPos(shooter, true, blockPos, 3.0F);
+                    AreaOfEffects.causeExplosionAttackAtPos(shooter, true, blockPos, damage, 3.0F);
                 }
             }
         }
@@ -109,8 +109,8 @@ public class CrossbowEvents {
                     if(explodingCrossbowFlag){
                         LivingEntity victim = event.getEntityLiving();
                         victim.world.playSound((PlayerEntity) null, victim.getPosX(), victim.getPosY(), victim.getPosZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 64.0F, 1.0F);
-                        AbilityUtils.spawnExplosionCloud(shooter, victim, 3.0F);
-                        AbilityUtils.causeExplosionAttack(shooter, victim, event.getAmount(), 3.0F);
+                        AOEClouds.spawnExplosionCloud(shooter, victim, 3.0F);
+                        AreaOfEffects.causeExplosionAttack(shooter, victim, event.getAmount(), 3.0F);
                     }
                 }
             }

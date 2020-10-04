@@ -51,6 +51,8 @@ public class DungeonsGearConfig {
         public static ForgeConfigSpec.ConfigValue<List<? extends String>> SUPER_RARE_LOOT_TABLES;
         public static ForgeConfigSpec.ConfigValue<List<? extends String>> SUPER_RARE_LOOT_TABLES_BLACKLIST;
 
+        public final ForgeConfigSpec.ConfigValue<Boolean> ENABLE_AREA_OF_EFFECT_ON_PLAYERS;
+
         public Common(ForgeConfigSpec.Builder builder){
 
             builder.comment("General Mod Configuration").push("general_mod_configuration");
@@ -80,6 +82,13 @@ public class DungeonsGearConfig {
             ARTIFACT_VALUE = builder
                     .comment("The emerald value for an artifact [0-64, default: 24]")
                     .defineInRange("artifactValue", 24, 0, 64);
+            builder.pop();
+
+            builder.comment("Combat Configuration").push("combat_configuration");
+            ENABLE_AREA_OF_EFFECT_ON_PLAYERS = builder
+                    .comment("Enable area of effects also being applied to players. \n" +
+                            "If you do not want area of effects being applied to other players, disable this feature. [true / false]")
+                    .define("enableAreaOfEffectOnPlayers", true);
             builder.pop();
 
             builder.comment("Common Loot Table Configuration").push("common_loot_table_configuration");

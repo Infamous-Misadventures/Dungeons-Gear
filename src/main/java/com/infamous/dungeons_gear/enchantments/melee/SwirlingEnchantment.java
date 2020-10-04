@@ -2,10 +2,11 @@ package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
+import com.infamous.dungeons_gear.utilties.AOEClouds;
+import com.infamous.dungeons_gear.utilties.AreaOfEffects;
 import com.infamous.dungeons_gear.utilties.EnchantUtils;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
-import com.infamous.dungeons_gear.utilties.AbilityUtils;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -58,8 +59,8 @@ public class SwirlingEnchantment extends AOEDamageEnchantment {
                 if(swirlingLevel == 2) damageDealt *= 1.5;
                 if(swirlingLevel == 3) damageDealt *= 2;
                 victim.world.playSound((PlayerEntity) null, victim.getPosX(), victim.getPosY(), victim.getPosZ(), SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.PLAYERS, 64.0F, 1.0F);
-                AbilityUtils.spawnCritCloud(attacker, victim, 1.5f);
-                AbilityUtils.causeSwirlingAttack(attacker, victim, damageDealt, 1.5f);
+                AOEClouds.spawnCritCloud(attacker, victim, 1.5f);
+                AreaOfEffects.causeSwirlingAttack(attacker, victim, damageDealt, 1.5f);
             }
         }
     }

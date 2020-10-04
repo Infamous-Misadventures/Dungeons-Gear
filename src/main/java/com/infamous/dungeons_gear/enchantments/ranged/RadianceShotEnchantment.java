@@ -1,15 +1,13 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
+import com.infamous.dungeons_gear.utilties.AOEClouds;
 import com.infamous.dungeons_gear.utilties.EnchantUtils;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
-import com.infamous.dungeons_gear.utilties.AbilityUtils;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
@@ -18,7 +16,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-import static com.infamous.dungeons_gear.items.RangedWeaponList.SABREWING;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class RadianceShotEnchantment extends Enchantment {
@@ -46,7 +43,7 @@ public class RadianceShotEnchantment extends Enchantment {
                 if(uniqueWeaponFlag) radianceShotLevel++;
                 if(rayTraceResult instanceof BlockRayTraceResult){
                     BlockPos blockPos = ((BlockRayTraceResult) rayTraceResult).getPos();
-                    AbilityUtils.spawnRegenCloudAtPos(shooter, true, blockPos, radianceShotLevel - 1);
+                    AOEClouds.spawnRegenCloudAtPos(shooter, true, blockPos, radianceShotLevel - 1);
                 }
             }
         }
@@ -55,7 +52,7 @@ public class RadianceShotEnchantment extends Enchantment {
             if(radianceShotRand <=  0.2F){
                 if(rayTraceResult instanceof BlockRayTraceResult){
                     BlockPos blockPos = ((BlockRayTraceResult) rayTraceResult).getPos();
-                    AbilityUtils.spawnRegenCloudAtPos(shooter, true, blockPos, 0);
+                    AOEClouds.spawnRegenCloudAtPos(shooter, true, blockPos, 0);
                 }
             }
         }

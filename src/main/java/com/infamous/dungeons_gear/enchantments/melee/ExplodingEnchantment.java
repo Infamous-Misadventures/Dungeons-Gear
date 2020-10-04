@@ -2,10 +2,11 @@ package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
+import com.infamous.dungeons_gear.utilties.AOEClouds;
+import com.infamous.dungeons_gear.utilties.AreaOfEffects;
 import com.infamous.dungeons_gear.utilties.EnchantUtils;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
-import com.infamous.dungeons_gear.utilties.AbilityUtils;
 import net.minecraft.enchantment.DamageEnchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -57,8 +58,8 @@ public class ExplodingEnchantment extends AOEDamageEnchantment {
                 if(explodingLevel == 3) explosionDamage = victim.getMaxHealth() * 0.6f;
                 if(uniqueWeaponFlag) explosionDamage += (victim.getMaxHealth() * 0.2f);
                 victim.world.playSound((PlayerEntity) null, victim.getPosX(), victim.getPosY(), victim.getPosZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 64.0F, 1.0F);
-                AbilityUtils.spawnExplosionCloud(attacker, victim, 3.0F);
-                AbilityUtils.causeExplosionAttack(attacker, victim, explosionDamage, 3.0F);
+                AOEClouds.spawnExplosionCloud(attacker, victim, 3.0F);
+                AreaOfEffects.causeExplosionAttack(attacker, victim, explosionDamage, 3.0F);
             }
         }
     }

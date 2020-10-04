@@ -1,8 +1,9 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
+import com.infamous.dungeons_gear.utilties.AOEClouds;
+import com.infamous.dungeons_gear.utilties.AreaOfEffects;
 import com.infamous.dungeons_gear.utilties.EnchantUtils;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.utilties.AbilityUtils;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -50,8 +51,8 @@ public class FuseShotEnchantment extends Enchantment {
                         damage = (int)Math.min(criticalDamageBonus + (long)damage, 2147483647L);
                     }
                     arrowEntity.world.playSound((PlayerEntity) null, blockPos.getX(), blockPos.getY(), blockPos.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 64.0F, 1.0F);
-                    AbilityUtils.spawnExplosionCloudAtPos(shooter, true, blockPos, 3.0F);
-                    AbilityUtils.causeExplosionAttackAtPos(shooter, true, blockPos, damage, 3.0F);
+                    AOEClouds.spawnExplosionCloudAtPos(shooter, true, blockPos, 3.0F);
+                    AreaOfEffects.causeExplosionAttackAtPos(shooter, true, blockPos, damage, 3.0F);
                 }
             }
         }
@@ -69,8 +70,8 @@ public class FuseShotEnchantment extends Enchantment {
                     LivingEntity archer = (LivingEntity) indirectEntityDamageSource.getTrueSource();
                     if(arrowEntity.getTags().contains("FuseShot")) {
                         victim.world.playSound((PlayerEntity) null, victim.getPosX(), victim.getPosY(), victim.getPosZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 64.0F, 1.0F);
-                        AbilityUtils.spawnExplosionCloud(archer, victim, 3.0f);
-                        AbilityUtils.causeExplosionAttack(archer, victim, event.getAmount(), 3.0f);
+                        AOEClouds.spawnExplosionCloud(archer, victim, 3.0f);
+                        AreaOfEffects.causeExplosionAttack(archer, victim, event.getAmount(), 3.0f);
                     }
                 }
             }

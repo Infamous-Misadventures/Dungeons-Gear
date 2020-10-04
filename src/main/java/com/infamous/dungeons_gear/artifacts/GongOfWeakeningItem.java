@@ -1,29 +1,20 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.armor.BattleRobeItem;
-import com.infamous.dungeons_gear.armor.EvocationRobeItem;
-import com.infamous.dungeons_gear.armor.GuardsArmorItem;
 import com.infamous.dungeons_gear.interfaces.IArtifact;
 import com.infamous.dungeons_gear.items.ArtifactList;
+import com.infamous.dungeons_gear.utilties.AreaOfEffects;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
 import net.minecraft.util.*;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import java.util.List;
-
-import static com.infamous.dungeons_gear.utilties.AbilityUtils.isPetOfAttacker;
 
 public class GongOfWeakeningItem extends Item implements IArtifact {
     public GongOfWeakeningItem(Properties properties) {
@@ -38,16 +29,7 @@ public class GongOfWeakeningItem extends Item implements IArtifact {
         world.playSound((PlayerEntity)null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), SoundEvents.BLOCK_BELL_RESONATE, SoundCategory.BLOCKS, 1.0F, 1.0F);
 
 
-        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(playerIn.getPosX() - 5, playerIn.getPosY() - 5, playerIn.getPosZ() - 5,
-                playerIn.getPosX() + 5, playerIn.getPosY() + 5, playerIn.getPosZ() + 5), (nearbyEntity) -> {
-            return nearbyEntity != playerIn && !isPetOfAttacker(playerIn, nearbyEntity) && nearbyEntity.isAlive();
-        });
-        for(LivingEntity nearbyEntity : nearbyEntities){
-            EffectInstance weakness = new EffectInstance(Effects.WEAKNESS, 140);
-            EffectInstance vulnerability = new EffectInstance(Effects.RESISTANCE, 140, -2);
-            nearbyEntity.addPotionEffect(weakness);
-            nearbyEntity.addPotionEffect(vulnerability);
-        }
+        AreaOfEffects.weakenAndMakeNearbyEnemiesVulnerable(playerIn, world);
 
         if(!playerIn.isCreative()){
             itemstack.damageItem(1, playerIn, (entity) -> {

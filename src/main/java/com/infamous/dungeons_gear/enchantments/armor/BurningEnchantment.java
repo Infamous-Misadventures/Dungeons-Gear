@@ -6,11 +6,10 @@ import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.PulseEnchantment;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.items.ArmorList;
-import com.infamous.dungeons_gear.utilties.AbilityUtils;
+import com.infamous.dungeons_gear.utilties.AreaOfEffects;
 import com.infamous.dungeons_gear.utilties.EnchantUtils;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraftforge.event.TickEvent;
@@ -55,7 +54,7 @@ public class BurningEnchantment extends PulseEnchantment {
                 if(burnNearbyTimer <= 0){
                     int burningLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.BURNING, player);
                     if(uniqueArmorFlag) burningLevel++;
-                    AbilityUtils.burnNearbyEnemies(player, 1.0F * burningLevel, 1.5F);
+                    AreaOfEffects.burnNearbyEnemies(player, 1.0F * burningLevel, 1.5F);
                     comboCap.setBurnNearbyTimer(10);
                 }
                 else{
