@@ -2,7 +2,7 @@ package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.utilties.AOEClouds;
+import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -33,7 +33,7 @@ public class RadianceEnchantment extends Enchantment {
         if(!(target instanceof LivingEntity)) return;
         float chance = user.getRNG().nextFloat();
         if(chance <=  0.2F){
-            AOEClouds.spawnRegenCloud(user, level - 1);
+            AOECloudHelper.spawnRegenCloud(user, level - 1);
         }
     }
 
@@ -48,7 +48,7 @@ public class RadianceEnchantment extends Enchantment {
         if((mainhand.getItem() == SUNS_GRACE)){
             float chance = attacker.getRNG().nextFloat();
             if(chance <=  0.2F) {
-                AOEClouds.spawnRegenCloud(attacker, 0);
+                AOECloudHelper.spawnRegenCloud(attacker, 0);
             }
         }
     }

@@ -10,8 +10,8 @@ import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.init.PotionList;
 import com.infamous.dungeons_gear.interfaces.IArmor;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
-import com.infamous.dungeons_gear.utilties.ProjectileEffects;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
+import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -59,7 +59,7 @@ public class GlobalEvents {
     }
 
     private static void handleRangedEnchantments(AbstractArrowEntity arrowEntity, LivingEntity shooter, ItemStack stack) {
-        EnchantUtils.addEnchantmentTagsToArrow(stack, arrowEntity);
+        ModEnchantmentHelper.addEnchantmentTagsToArrow(stack, arrowEntity);
 
         int fuseShotLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.FUSE_SHOT, stack);
         if(stack.getItem() == RED_SNAKE) fuseShotLevel++;
@@ -79,7 +79,7 @@ public class GlobalEvents {
 
         if(shooter instanceof PlayerEntity){
             PlayerEntity playerEntity = (PlayerEntity) shooter;
-            boolean soulsCriticalBoost = ProjectileEffects.soulsCriticalBoost(playerEntity, stack);
+            boolean soulsCriticalBoost = ProjectileEffectHelper.soulsCriticalBoost(playerEntity, stack);
             if(soulsCriticalBoost){
                 PROXY.spawnParticles(playerEntity, ParticleTypes.field_239812_C_);
                 arrowEntity.setIsCritical(true);

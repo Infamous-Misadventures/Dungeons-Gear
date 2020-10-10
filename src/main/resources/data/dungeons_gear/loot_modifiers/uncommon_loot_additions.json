@@ -1,0 +1,9 @@
+{
+  "type": "dungeons_gear:uncommon_loot_additions",
+  "conditions": [
+    {
+      "condition": "random_chance",
+      "chance": 1
+    }
+  ]
+}

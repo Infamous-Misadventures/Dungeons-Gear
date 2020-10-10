@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
-import com.infamous.dungeons_gear.utilties.AOEClouds;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.AOECloudHelper;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import net.minecraft.enchantment.Enchantment;
@@ -33,9 +33,9 @@ public class RadianceShotEnchantment extends Enchantment {
     public static void onSabrewingImpact(ProjectileImpactEvent.Arrow event){
         RayTraceResult rayTraceResult = event.getRayTraceResult();
         AbstractArrowEntity arrow = event.getArrow();
-        if(!EnchantUtils.shooterIsLiving(arrow)) return;
+        if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
         LivingEntity shooter = (LivingEntity)arrow.func_234616_v_();
-        int radianceShotLevel = EnchantUtils.enchantmentTagToLevel(arrow, RangedEnchantmentList.RADIANCE_SHOT);
+        int radianceShotLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.RADIANCE_SHOT);
         boolean uniqueWeaponFlag = arrow.getTags().contains("Sabrewing");
         if(radianceShotLevel > 0){
             float radianceShotRand = shooter.getRNG().nextFloat();
@@ -43,7 +43,7 @@ public class RadianceShotEnchantment extends Enchantment {
                 if(uniqueWeaponFlag) radianceShotLevel++;
                 if(rayTraceResult instanceof BlockRayTraceResult){
                     BlockPos blockPos = ((BlockRayTraceResult) rayTraceResult).getPos();
-                    AOEClouds.spawnRegenCloudAtPos(shooter, true, blockPos, radianceShotLevel - 1);
+                    AOECloudHelper.spawnRegenCloudAtPos(shooter, true, blockPos, radianceShotLevel - 1);
                 }
             }
         }
@@ -52,7 +52,7 @@ public class RadianceShotEnchantment extends Enchantment {
             if(radianceShotRand <=  0.2F){
                 if(rayTraceResult instanceof BlockRayTraceResult){
                     BlockPos blockPos = ((BlockRayTraceResult) rayTraceResult).getPos();
-                    AOEClouds.spawnRegenCloudAtPos(shooter, true, blockPos, 0);
+                    AOECloudHelper.spawnRegenCloudAtPos(shooter, true, blockPos, 0);
                 }
             }
         }

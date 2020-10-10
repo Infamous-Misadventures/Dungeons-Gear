@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-import static com.infamous.dungeons_gear.utilties.AOEClouds.spawnRegenCloudAtPos;
+import static com.infamous.dungeons_gear.utilties.AOECloudHelper.spawnRegenCloudAtPos;
 
 public class TotemOfRegenerationItem extends Item implements IArtifact {
     public TotemOfRegenerationItem(Properties properties) {

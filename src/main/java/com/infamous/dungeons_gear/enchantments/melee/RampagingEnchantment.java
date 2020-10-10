@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.enchantments.melee;
 
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import net.minecraft.enchantment.Enchantment;
@@ -38,7 +38,7 @@ public class RampagingEnchantment extends Enchantment {
             LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
             ItemStack mainhand = attacker.getHeldItemMainhand();
             boolean uniqueWeaponFlag = mainhand.getItem() == DANCERS_SWORD || mainhand.getItem() == MAULER;
-            if(EnchantUtils.hasEnchantment(mainhand, MeleeEnchantmentList.RAMPAGING)){
+            if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.RAMPAGING)){
                 int rampagingLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.RAMPAGING, mainhand);
                 float rampagingRand = attacker.getRNG().nextFloat();
                 if(rampagingRand <= 0.1F) {

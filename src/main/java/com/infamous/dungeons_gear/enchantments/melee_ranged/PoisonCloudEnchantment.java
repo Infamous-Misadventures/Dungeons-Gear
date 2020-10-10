@@ -3,8 +3,8 @@ package com.infamous.dungeons_gear.enchantments.melee_ranged;
 import com.infamous.dungeons_gear.capabilities.combo.ComboProvider;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
-import com.infamous.dungeons_gear.utilties.AOEClouds;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.AOECloudHelper;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import net.minecraft.enchantment.Enchantment;
@@ -48,7 +48,7 @@ public class PoisonCloudEnchantment extends Enchantment {
         float chance = user.getRNG().nextFloat();
         if(chance <=  0.3F){
             checkForPlayer(user);
-            AOEClouds.spawnPoisonCloud(user, (LivingEntity)target, level-1);
+            AOECloudHelper.spawnPoisonCloud(user, (LivingEntity)target, level-1);
         }
     }
 
@@ -64,7 +64,7 @@ public class PoisonCloudEnchantment extends Enchantment {
             float chance = attacker.getRNG().nextFloat();
             if(chance <=  0.3F){
                 checkForPlayer(attacker);
-                AOEClouds.spawnPoisonCloud(attacker, victim, 0);
+                AOECloudHelper.spawnPoisonCloud(attacker, victim, 0);
             }
         }
     }
@@ -74,10 +74,10 @@ public class PoisonCloudEnchantment extends Enchantment {
         RayTraceResult rayTraceResult = event.getRayTraceResult();
         //if(!EnchantUtils.arrowHitLivingEntity(rayTraceResult)) return;
         AbstractArrowEntity arrow = event.getArrow();
-        if(!EnchantUtils.shooterIsLiving(arrow)) return;
+        if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
         LivingEntity shooter = (LivingEntity)arrow.func_234616_v_();
 
-        int poisonLevel = EnchantUtils.enchantmentTagToLevel(arrow, MeleeRangedEnchantmentList.POISON_CLOUD);
+        int poisonLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrow, MeleeRangedEnchantmentList.POISON_CLOUD);
         boolean uniqueWeaponFlag = arrow.getTags().contains("TheGreenMenace");
 
         if(poisonLevel > 0){
@@ -88,7 +88,7 @@ public class PoisonCloudEnchantment extends Enchantment {
                     float poisonRand = shooter.getRNG().nextFloat();
                     if(poisonRand <= 0.3F){
                         checkForPlayer(shooter);
-                        AOEClouds.spawnPoisonCloud(shooter, victim, poisonLevel - 1);
+                        AOECloudHelper.spawnPoisonCloud(shooter, victim, poisonLevel - 1);
                     }
                 }
             }
@@ -98,7 +98,7 @@ public class PoisonCloudEnchantment extends Enchantment {
                 float poisonRand = shooter.getRNG().nextFloat();
                 if(poisonRand <= 0.3F){
                     checkForPlayer(shooter);
-                    AOEClouds.spawnPoisonCloudAtPos(shooter, true, blockPos, poisonLevel - 1);
+                    AOECloudHelper.spawnPoisonCloudAtPos(shooter, true, blockPos, poisonLevel - 1);
                 }
             }
         }
@@ -110,7 +110,7 @@ public class PoisonCloudEnchantment extends Enchantment {
                     float poisonRand = shooter.getRNG().nextFloat();
                     if(poisonRand <= 0.3F){
                         checkForPlayer(shooter);
-                        AOEClouds.spawnPoisonCloud(shooter, victim, 0);
+                        AOECloudHelper.spawnPoisonCloud(shooter, victim, 0);
                     }
                 }
             }
@@ -120,7 +120,7 @@ public class PoisonCloudEnchantment extends Enchantment {
                 float poisonRand = shooter.getRNG().nextFloat();
                 if(poisonRand <= 0.3F){
                     checkForPlayer(shooter);
-                    AOEClouds.spawnPoisonCloudAtPos(shooter, true, blockPos, 0);
+                    AOECloudHelper.spawnPoisonCloudAtPos(shooter, true, blockPos, 0);
                 }
             }
         }

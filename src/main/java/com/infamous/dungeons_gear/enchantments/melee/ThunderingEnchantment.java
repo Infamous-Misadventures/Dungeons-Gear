@@ -3,7 +3,7 @@ package com.infamous.dungeons_gear.enchantments.melee;
 import com.infamous.dungeons_gear.damagesources.ElectricShockDamageSource;
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.utilties.AreaOfEffects;
+import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -34,7 +34,7 @@ public class ThunderingEnchantment extends Enchantment {
         if(!(target instanceof LivingEntity)) return;
         float chance = user.getRNG().nextFloat();
         if(chance <=  0.3F){
-            AreaOfEffects.electrifyNearbyEnemies(user, 5, 5, Integer.MAX_VALUE);
+            AreaOfEffectHelper.electrifyNearbyEnemies(user, 5, 5, Integer.MAX_VALUE);
             //AbilityUtils.castLightningBolt(user, (LivingEntity)target);
         }
     }
@@ -51,7 +51,7 @@ public class ThunderingEnchantment extends Enchantment {
         if((mainhand.getItem() == STORMLANDER)){
             float chance = attacker.getRNG().nextFloat();
             if(chance <=  0.3F){
-                AreaOfEffects.electrifyNearbyEnemies(attacker, 5, 5, Integer.MAX_VALUE);
+                AreaOfEffectHelper.electrifyNearbyEnemies(attacker, 5, 5, Integer.MAX_VALUE);
                 //AbilityUtils.castLightningBolt(attacker, victim);
             }
         }

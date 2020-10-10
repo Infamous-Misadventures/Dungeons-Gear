@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
@@ -44,7 +44,7 @@ public class CriticalHitEnchantment extends DamageBoostEnchantment {
             PlayerEntity attacker = (PlayerEntity) event.getPlayer();
             ItemStack mainhand = attacker.getHeldItemMainhand();
             boolean uniqueWeaponFlag = mainhand.getItem() == HAWKBRAND || mainhand.getItem() == MASTERS_KATANA;
-            if(EnchantUtils.hasEnchantment(mainhand, MeleeEnchantmentList.CRITICAL_HIT)){
+            if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.CRITICAL_HIT)){
                 int criticalHitLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.CRITICAL_HIT, mainhand);
                 float criticalHitChance = 0;
                 if(criticalHitLevel == 1) criticalHitChance = 0.1F;

@@ -1,8 +1,8 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
-import com.infamous.dungeons_gear.utilties.ProjectileEffects;
+import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.enchantment.Enchantments;
@@ -39,24 +39,24 @@ public class RicochetEnchantment extends Enchantment {
     public static void onRicochetImpact(ProjectileImpactEvent.Arrow event) {
         RayTraceResult rayTraceResult = event.getRayTraceResult();
         AbstractArrowEntity arrowEntity = event.getArrow();
-        if(!EnchantUtils.shooterIsLiving(arrowEntity)) return;;
+        if(!ModEnchantmentHelper.shooterIsLiving(arrowEntity)) return;;
         LivingEntity shooter = (LivingEntity)arrowEntity.func_234616_v_();
-        if(!(EnchantUtils.arrowHitLivingEntity(rayTraceResult))) return;
+        if(!(ModEnchantmentHelper.arrowHitLivingEntity(rayTraceResult))) return;
         EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult)rayTraceResult;
         LivingEntity victim = (LivingEntity) entityRayTraceResult.getEntity();
 
-        int ricochetLevel = EnchantUtils.enchantmentTagToLevel(arrowEntity, RangedEnchantmentList.RICOCHET);
+        int ricochetLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrowEntity, RangedEnchantmentList.RICOCHET);
         boolean uniqueWeaponFlag = arrowEntity.getTags().contains("LightningHarpCrossbow") || arrowEntity.getTags().contains("SlayerCrossbow");
         if(ricochetLevel > 0){
             float chainReactionRand = shooter.getRNG().nextFloat();
             if(chainReactionRand <= 0.2F * ricochetLevel){
-                ProjectileEffects.ricochetArrowTowardsOtherEntity(shooter, victim, arrowEntity, 10);
+                ProjectileEffectHelper.ricochetArrowTowardsOtherEntity(shooter, victim, arrowEntity, 10);
             }
         }
         if(uniqueWeaponFlag){
             float chainReactionRand = shooter.getRNG().nextFloat();
             if(chainReactionRand <= 0.2F){
-                ProjectileEffects.ricochetArrowTowardsOtherEntity(shooter, victim, arrowEntity, 10);
+                ProjectileEffectHelper.ricochetArrowTowardsOtherEntity(shooter, victim, arrowEntity, 10);
             }
         }
     }

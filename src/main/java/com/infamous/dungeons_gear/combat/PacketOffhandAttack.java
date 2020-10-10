@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.combat;
 
 import com.infamous.dungeons_gear.interfaces.IOffhandAttack;
-import com.infamous.dungeons_gear.utilties.PlayerUtils;
+import com.infamous.dungeons_gear.utilties.PlayerAttackHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.*;
@@ -63,11 +63,11 @@ public class PacketOffhandAttack {
                                         //DungeonsGear.LOGGER.debug(reachSquared);
                                         //DungeonsGear.LOGGER.debug("Is reachSquared >= distanceSquared? " + (reachSquared >= distanceSquared ? "yes" : "no"));
                                         if (reachSquared >= distanceSquared) {
-                                            PlayerUtils.attackTargetEntityWithCurrentOffhandItem(player, target);
+                                            PlayerAttackHelper.attackTargetEntityWithCurrentOffhandItem(player, target);
                                             //DungeonsGear.LOGGER.debug("Attacking victim with offhand!");
                                         }
 
-                                        PlayerUtils.swingArm(player, Hand.OFF_HAND);
+                                        PlayerAttackHelper.swingArm(player, Hand.OFF_HAND);
                                         //player.resetCooldown();
                                     }
 

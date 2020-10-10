@@ -4,7 +4,7 @@ import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
 import com.infamous.dungeons_gear.capabilities.weapon.WeaponProvider;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.interfaces.IRangedWeapon;
-import com.infamous.dungeons_gear.utilties.RangedUtils;
+import com.infamous.dungeons_gear.utilties.RangedAttackHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
@@ -120,7 +120,7 @@ public abstract class AbstractDungeonsBowItem extends BowItem implements IRanged
         if(isAdditionalShot){
             abstractarrowentity.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
         }
-        RangedUtils.addWeaponTags(abstractarrowentity, stack);
+        RangedAttackHelper.addWeaponTags(abstractarrowentity, stack);
         world.addEntity(abstractarrowentity);
     }
 

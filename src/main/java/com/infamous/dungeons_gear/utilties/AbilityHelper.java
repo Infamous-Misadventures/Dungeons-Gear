@@ -50,7 +50,7 @@ import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 import static com.infamous.dungeons_gear.items.RangedWeaponList.FERAL_SOUL_CROSSBOW;
 import static net.minecraft.entity.Entity.horizontalMag;
 
-public class AbilityUtils {
+public class AbilityHelper {
 
     public static void stealSpeedFromTarget(LivingEntity attacker, LivingEntity target, int amplifer){
         EffectInstance speed = new EffectInstance(Effects.SPEED, 80, amplifer);

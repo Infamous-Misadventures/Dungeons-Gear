@@ -8,7 +8,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.math.BlockPos;
 
-public class AOEClouds {
+public class AOECloudHelper {
     public static void spawnExplosionCloud(LivingEntity attacker, LivingEntity victim, float radius){
         AreaEffectCloudEntity areaeffectcloudentity = new AreaEffectCloudEntity(victim.world, victim.getPosX(), victim.getPosY(), victim.getPosZ());
         areaeffectcloudentity.setOwner(attacker);

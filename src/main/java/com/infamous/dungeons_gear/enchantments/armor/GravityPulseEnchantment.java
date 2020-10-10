@@ -5,8 +5,8 @@ import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.PulseEnchantment;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
-import com.infamous.dungeons_gear.utilties.AreaOfEffects;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
@@ -46,10 +46,10 @@ public class GravityPulseEnchantment extends PulseEnchantment {
             ICombo comboCap = player.getCapability(ComboProvider.COMBO_CAPABILITY).orElseThrow(IllegalStateException::new);
             int gravityPulseTimer = comboCap.getGravityPulseTimer();
 
-            if(EnchantUtils.hasEnchantment(player, ArmorEnchantmentList.GRAVITY_PULSE)){
+            if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.GRAVITY_PULSE)){
                 if(gravityPulseTimer <= 0){
                     int gravityPulseLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.GRAVITY_PULSE, player);
-                    AreaOfEffects.pullInNearbyEntities(player, player, 1.5F + 1.5F * gravityPulseLevel);
+                    AreaOfEffectHelper.pullInNearbyEntities(player, player, 1.5F + 1.5F * gravityPulseLevel);
                     comboCap.setGravityPulseTimer(100);
                 }
                 else{

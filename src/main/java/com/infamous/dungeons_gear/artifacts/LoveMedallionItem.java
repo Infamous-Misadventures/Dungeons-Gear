@@ -2,7 +2,7 @@ package com.infamous.dungeons_gear.artifacts;
 
 import com.infamous.dungeons_gear.interfaces.IArtifact;
 import com.infamous.dungeons_gear.items.ArtifactList;
-import com.infamous.dungeons_gear.utilties.AreaOfEffects;
+import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -25,7 +25,7 @@ public class LoveMedallionItem extends Item implements IArtifact {
         ItemStack itemstack = playerIn.getHeldItem(handIn);
         World world = playerIn.getEntityWorld();
 
-        AreaOfEffects.makeLoversOutOfNearbyEnemies(playerIn, world);
+        AreaOfEffectHelper.makeLoversOutOfNearbyEnemies(playerIn, world);
 
         if(!playerIn.isCreative()){
             itemstack.damageItem(1, playerIn, (entity) -> {

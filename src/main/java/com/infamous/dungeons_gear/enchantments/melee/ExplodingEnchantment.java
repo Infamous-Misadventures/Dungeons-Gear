@@ -2,9 +2,9 @@ package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
-import com.infamous.dungeons_gear.utilties.AOEClouds;
-import com.infamous.dungeons_gear.utilties.AreaOfEffects;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.AOECloudHelper;
+import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import net.minecraft.enchantment.DamageEnchantment;
@@ -50,7 +50,7 @@ public class ExplodingEnchantment extends AOEDamageEnchantment {
             LivingEntity victim = event.getEntityLiving();
             ItemStack mainhand = attacker.getHeldItemMainhand();
             boolean uniqueWeaponFlag = mainhand.getItem() == CURSED_AXE || mainhand.getItem() == BATTLESTAFF_OF_TERROR;
-            if(EnchantUtils.hasEnchantment(mainhand, MeleeEnchantmentList.EXPLODING) || uniqueWeaponFlag){
+            if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.EXPLODING) || uniqueWeaponFlag){
                 int explodingLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.EXPLODING, mainhand);
                 float explosionDamage = 0;
                 if(explodingLevel == 1) explosionDamage = victim.getMaxHealth() * 0.2f;
@@ -58,8 +58,8 @@ public class ExplodingEnchantment extends AOEDamageEnchantment {
                 if(explodingLevel == 3) explosionDamage = victim.getMaxHealth() * 0.6f;
                 if(uniqueWeaponFlag) explosionDamage += (victim.getMaxHealth() * 0.2f);
                 victim.world.playSound((PlayerEntity) null, victim.getPosX(), victim.getPosY(), victim.getPosZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 64.0F, 1.0F);
-                AOEClouds.spawnExplosionCloud(attacker, victim, 3.0F);
-                AreaOfEffects.causeExplosionAttack(attacker, victim, explosionDamage, 3.0F);
+                AOECloudHelper.spawnExplosionCloud(attacker, victim, 3.0F);
+                AreaOfEffectHelper.causeExplosionAttack(attacker, victim, explosionDamage, 3.0F);
             }
         }
     }

@@ -1,9 +1,9 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
-import com.infamous.dungeons_gear.utilties.AbilityUtils;
+import com.infamous.dungeons_gear.utilties.AbilityHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -39,11 +39,11 @@ public class WildRageEnchantment extends Enchantment {
     @SubscribeEvent
     public static void onPinkScoundrelImpact(ProjectileImpactEvent.Arrow event){
         RayTraceResult rayTraceResult = event.getRayTraceResult();
-        if(!EnchantUtils.arrowHitMob(rayTraceResult)) return;
+        if(!ModEnchantmentHelper.arrowHitMob(rayTraceResult)) return;
         AbstractArrowEntity arrow = event.getArrow();
-        if(!EnchantUtils.shooterIsLiving(arrow)) return;
+        if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
         LivingEntity shooter = (LivingEntity)arrow.func_234616_v_();
-        int wildRageLevel = EnchantUtils.enchantmentTagToLevel(arrow, RangedEnchantmentList.WILD_RAGE);
+        int wildRageLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.WILD_RAGE);
         boolean uniqueWeaponFlag = arrow.getTags().contains("ThePinkScoundrel");
         MobEntity victim = (MobEntity) ((EntityRayTraceResult)rayTraceResult).getEntity();
         if(!(victim instanceof IMob) || !(victim.isNonBoss())) return;
@@ -55,13 +55,13 @@ public class WildRageEnchantment extends Enchantment {
 
             float chance = shooter.getRNG().nextFloat();
             if(chance <=  wildRageChance){
-                AbilityUtils.sendIntoWildRage(victim);
+                AbilityHelper.sendIntoWildRage(victim);
             }
         }
         if(uniqueWeaponFlag){
             float chance = shooter.getRNG().nextFloat();
             if(chance <=  0.2F){
-                AbilityUtils.sendIntoWildRage(victim);
+                AbilityHelper.sendIntoWildRage(victim);
             }
         }
     }
@@ -73,7 +73,7 @@ public class WildRageEnchantment extends Enchantment {
         LivingEntity victim = event.getEntityLiving();
         if(!(victim instanceof IMob) || !(victim.isNonBoss())) return;
         MobEntity enemy = (MobEntity) victim;
-            if((EnchantUtils.hasEnchantment(attacker, RangedEnchantmentList.WILD_RAGE))){
+            if((ModEnchantmentHelper.hasEnchantment(attacker, RangedEnchantmentList.WILD_RAGE))){
                 int wildRageLevel = EnchantmentHelper.getMaxEnchantmentLevel(RangedEnchantmentList.WILD_RAGE, attacker);
                 float wildRageChance = 0;
                 if(wildRageLevel == 1) wildRageChance = 0.2F;
@@ -82,7 +82,7 @@ public class WildRageEnchantment extends Enchantment {
 
                 float chance = attacker.getRNG().nextFloat();
                 if(chance <=  wildRageChance){
-                    AbilityUtils.sendIntoWildRage(enemy);
+                    AbilityHelper.sendIntoWildRage(enemy);
                 }
             }
     }

@@ -6,8 +6,8 @@ import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.PulseEnchantment;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.items.ArmorList;
-import com.infamous.dungeons_gear.utilties.AreaOfEffects;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
@@ -49,11 +49,11 @@ public class ChillingEnchantment extends PulseEnchantment {
 
             boolean uniqueArmorFlag = player.getItemStackFromSlot(EquipmentSlotType.CHEST).getItem() == ArmorList.FROST_ARMOR ||
                     player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() == ArmorList.FROST_ARMOR_HELMET;;
-            if(EnchantUtils.hasEnchantment(player, ArmorEnchantmentList.CHILLING) || uniqueArmorFlag){
+            if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.CHILLING) || uniqueArmorFlag){
                 if(freezeNearbyTimer <= 0){
                     int chillingLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.CHILLING, player);
                     if(uniqueArmorFlag) chillingLevel++;
-                    AreaOfEffects.freezeNearbyEnemies(player, chillingLevel - 1, 1.5F);
+                    AreaOfEffectHelper.freezeNearbyEnemies(player, chillingLevel - 1, 1.5F);
                     comboCap.setFreezeNearbyTimer(40);
                 }
                 else{

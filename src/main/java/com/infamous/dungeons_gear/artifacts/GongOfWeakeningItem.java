@@ -2,7 +2,7 @@ package com.infamous.dungeons_gear.artifacts;
 
 import com.infamous.dungeons_gear.interfaces.IArtifact;
 import com.infamous.dungeons_gear.items.ArtifactList;
-import com.infamous.dungeons_gear.utilties.AreaOfEffects;
+import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -29,7 +29,7 @@ public class GongOfWeakeningItem extends Item implements IArtifact {
         world.playSound((PlayerEntity)null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), SoundEvents.BLOCK_BELL_RESONATE, SoundCategory.BLOCKS, 1.0F, 1.0F);
 
 
-        AreaOfEffects.weakenAndMakeNearbyEnemiesVulnerable(playerIn, world);
+        AreaOfEffectHelper.weakenAndMakeNearbyEnemiesVulnerable(playerIn, world);
 
         if(!playerIn.isCreative()){
             itemstack.damageItem(1, playerIn, (entity) -> {

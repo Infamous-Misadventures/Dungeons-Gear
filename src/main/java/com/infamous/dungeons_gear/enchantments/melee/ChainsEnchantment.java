@@ -2,7 +2,7 @@ package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.utilties.AreaOfEffects;
+import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -34,7 +34,7 @@ public class ChainsEnchantment extends Enchantment {
         if(!(target instanceof LivingEntity)) return;
         float chance = user.getRNG().nextFloat();
         if(chance <=  0.3F){
-            AreaOfEffects.chainNearbyEntities(user, (LivingEntity)target, 1.5F, level);
+            AreaOfEffectHelper.chainNearbyEntities(user, (LivingEntity)target, 1.5F, level);
         }
     }
 
@@ -50,7 +50,7 @@ public class ChainsEnchantment extends Enchantment {
                 || attacker.getHeldItemMainhand().getItem() == FLAIL)){
             float chance = attacker.getRNG().nextFloat();
             if(chance <=  0.3F) {
-                AreaOfEffects.chainNearbyEntities(attacker, victim, 1.5F, 1);
+                AreaOfEffectHelper.chainNearbyEntities(attacker, victim, 1.5F, 1);
             }
         }
     }

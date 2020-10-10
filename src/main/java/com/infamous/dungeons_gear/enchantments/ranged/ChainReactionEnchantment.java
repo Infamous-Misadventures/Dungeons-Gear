@@ -2,8 +2,8 @@ package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
-import com.infamous.dungeons_gear.utilties.ProjectileEffects;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
+import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
@@ -38,7 +38,7 @@ public class ChainReactionEnchantment extends Enchantment {
                 if (indirectEntityDamageSource.getTrueSource() instanceof LivingEntity) {
                     if(!(indirectEntityDamageSource.getTrueSource() instanceof LivingEntity)) return;
                     LivingEntity attacker = (LivingEntity) indirectEntityDamageSource.getTrueSource();
-                    int chainReactionLevel = EnchantUtils.enchantmentTagToLevel(arrowEntity, RangedEnchantmentList.CHAIN_REACTION);
+                    int chainReactionLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrowEntity, RangedEnchantmentList.CHAIN_REACTION);
                     if(chainReactionLevel > 0){
                         float chainReactionChance = 0;
                         if(chainReactionLevel == 1) chainReactionChance = 0.1F;
@@ -46,13 +46,13 @@ public class ChainReactionEnchantment extends Enchantment {
                         if(chainReactionLevel == 3) chainReactionChance = 0.3F;
                         float chainReactionRand = attacker.getRNG().nextFloat();
                         if(chainReactionRand <= chainReactionChance){
-                            ProjectileEffects.fireChainReactionProjectiles(victim.getEntityWorld(), attacker, victim, 3.15F, 1.0F, arrowEntity);
+                            ProjectileEffectHelper.fireChainReactionProjectiles(victim.getEntityWorld(), attacker, victim, 3.15F, 1.0F, arrowEntity);
                         }
                     }
                     if(arrowEntity.getTags().contains("FireboltThrower")){
                         float chainReactionRand = attacker.getRNG().nextFloat();
                         if(chainReactionRand <= 0.1F){
-                            ProjectileEffects.fireChainReactionProjectiles(victim.getEntityWorld(), attacker, victim, 3.15F, 1.0F, arrowEntity);
+                            ProjectileEffectHelper.fireChainReactionProjectiles(victim.getEntityWorld(), attacker, victim, 3.15F, 1.0F, arrowEntity);
                         }
                     }
                 }

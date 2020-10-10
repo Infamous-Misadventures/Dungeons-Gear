@@ -4,11 +4,10 @@ import com.infamous.dungeons_gear.capabilities.combo.ComboProvider;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.DropsEnchantment;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
@@ -49,7 +48,7 @@ public class RecyclerEnchantment extends DropsEnchantment {
         if(player.isAlive()){
             if(event.getSource().getImmediateSource() instanceof AbstractArrowEntity){
                 ICombo comboCap = player.getCapability(ComboProvider.COMBO_CAPABILITY).orElseThrow(IllegalStateException::new);
-                if(EnchantUtils.hasEnchantment(player, ArmorEnchantmentList.RECYCLER)){
+                if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.RECYCLER)){
                     int arrowsInCounter = comboCap.getArrowsInCounter();
                     arrowsInCounter++;
                     comboCap.setArrowsInCounter(arrowsInCounter);

@@ -1,9 +1,6 @@
 package com.infamous.dungeons_gear.interfaces;
 
-import com.infamous.dungeons_gear.armor.BattleRobeItem;
-import com.infamous.dungeons_gear.armor.EvocationRobeItem;
-import com.infamous.dungeons_gear.armor.GuardsArmorItem;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,7 +20,7 @@ public interface IArtifact {
 
         float totalArmorCooldownModifier = 1.0F - armorCooldownModifier*0.01F - armorCooldownModifier2*0.01F;
         float cooldownEnchantmentReduction = 0;
-        if(EnchantUtils.hasEnchantment(playerIn, ArmorEnchantmentList.COOLDOWN)) {
+        if(ModEnchantmentHelper.hasEnchantment(playerIn, ArmorEnchantmentList.COOLDOWN)) {
             int cooldownEnchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.COOLDOWN, playerIn);
             if (cooldownEnchantmentLevel == 1) cooldownEnchantmentReduction = (int) (0.1F * cooldownInTicks);
             if (cooldownEnchantmentLevel == 2) cooldownEnchantmentReduction = (int) (0.19F * cooldownInTicks);

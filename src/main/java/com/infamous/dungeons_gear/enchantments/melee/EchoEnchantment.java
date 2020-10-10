@@ -3,8 +3,8 @@ package com.infamous.dungeons_gear.enchantments.melee;
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
-import com.infamous.dungeons_gear.utilties.AreaOfEffects;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import net.minecraft.enchantment.DamageEnchantment;
@@ -48,7 +48,7 @@ public class EchoEnchantment extends AOEDamageEnchantment {
         LivingEntity victim = event.getEntityLiving();
         ItemStack mainhand = attacker.getHeldItemMainhand();
         boolean uniqueWeaponFlag = mainhand.getItem() == WHISPERING_SPEAR;
-        if(EnchantUtils.hasEnchantment(mainhand, MeleeEnchantmentList.ECHO)){
+        if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.ECHO)){
             int echoLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.ECHO, mainhand);
             float damageDealt = event.getAmount();
             float echoChance = 0;
@@ -57,14 +57,14 @@ public class EchoEnchantment extends AOEDamageEnchantment {
             if(echoLevel == 3) echoChance = 0.75F;
             float echoRand = attacker.getRNG().nextFloat();
             if(echoRand <= echoChance){
-                AreaOfEffects.causeEchoAttack(attacker, victim, damageDealt, 3.0f);
+                AreaOfEffectHelper.causeEchoAttack(attacker, victim, damageDealt, 3.0f);
             }
         }
         if(uniqueWeaponFlag){
             float damageDealt = event.getAmount();
             float echoRand = attacker.getRNG().nextFloat();
             if(echoRand <= 0.25F){
-                AreaOfEffects.causeEchoAttack(attacker, victim, damageDealt, 3.0f);
+                AreaOfEffectHelper.causeEchoAttack(attacker, victim, damageDealt, 3.0f);
             }
         }
     }

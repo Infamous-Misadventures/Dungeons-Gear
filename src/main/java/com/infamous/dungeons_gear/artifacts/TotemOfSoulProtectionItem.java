@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-import static com.infamous.dungeons_gear.utilties.AOEClouds.spawnSoulProtectionCloudAtPos;
+import static com.infamous.dungeons_gear.utilties.AOECloudHelper.spawnSoulProtectionCloudAtPos;
 
 public class TotemOfSoulProtectionItem extends Item implements IArtifact, ISoulGatherer {
     public TotemOfSoulProtectionItem(Properties properties) {

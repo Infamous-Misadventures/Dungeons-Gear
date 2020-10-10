@@ -1,8 +1,8 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
-import com.infamous.dungeons_gear.utilties.AOEClouds;
-import com.infamous.dungeons_gear.utilties.AreaOfEffects;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.AOECloudHelper;
+import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.LivingEntity;
@@ -38,7 +38,7 @@ public class FuseShotEnchantment extends Enchantment {
     @SubscribeEvent
     public static void onFuseShotImpact(ProjectileImpactEvent.Arrow event){
         AbstractArrowEntity arrowEntity = event.getArrow();
-        if(EnchantUtils.shooterIsLiving(arrowEntity)){
+        if(ModEnchantmentHelper.shooterIsLiving(arrowEntity)){
             LivingEntity shooter =(LivingEntity) arrowEntity.func_234616_v_();
             if(arrowEntity.getTags().contains("FuseShot")){
                 if(event.getRayTraceResult() instanceof BlockRayTraceResult){
@@ -51,8 +51,8 @@ public class FuseShotEnchantment extends Enchantment {
                         damage = (int)Math.min(criticalDamageBonus + (long)damage, 2147483647L);
                     }
                     arrowEntity.world.playSound((PlayerEntity) null, blockPos.getX(), blockPos.getY(), blockPos.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 64.0F, 1.0F);
-                    AOEClouds.spawnExplosionCloudAtPos(shooter, true, blockPos, 3.0F);
-                    AreaOfEffects.causeExplosionAttackAtPos(shooter, true, blockPos, damage, 3.0F);
+                    AOECloudHelper.spawnExplosionCloudAtPos(shooter, true, blockPos, 3.0F);
+                    AreaOfEffectHelper.causeExplosionAttackAtPos(shooter, true, blockPos, damage, 3.0F);
                 }
             }
         }
@@ -70,8 +70,8 @@ public class FuseShotEnchantment extends Enchantment {
                     LivingEntity archer = (LivingEntity) indirectEntityDamageSource.getTrueSource();
                     if(arrowEntity.getTags().contains("FuseShot")) {
                         victim.world.playSound((PlayerEntity) null, victim.getPosX(), victim.getPosY(), victim.getPosZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 64.0F, 1.0F);
-                        AOEClouds.spawnExplosionCloud(archer, victim, 3.0f);
-                        AreaOfEffects.causeExplosionAttack(archer, victim, event.getAmount(), 3.0f);
+                        AOECloudHelper.spawnExplosionCloud(archer, victim, 3.0f);
+                        AreaOfEffectHelper.causeExplosionAttack(archer, victim, event.getAmount(), 3.0f);
                     }
                 }
             }

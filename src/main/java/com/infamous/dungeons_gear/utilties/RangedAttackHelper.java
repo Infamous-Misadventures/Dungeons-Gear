@@ -5,22 +5,17 @@ import com.infamous.dungeons_gear.capabilities.weapon.WeaponProvider;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.ranged.bows.AbstractDungeonsBowItem;
 import com.infamous.dungeons_gear.ranged.crossbows.AbstractDungeonsCrossbowItem;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.CrossbowItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraftforge.common.util.LazyOptional;
 
-import java.util.Optional;
-
 import static com.infamous.dungeons_gear.items.RangedWeaponList.*;
 import static net.minecraft.item.CrossbowItem.hasChargedProjectile;
 
-public class RangedUtils {
+public class RangedAttackHelper {
 
     public static int getVanillaCrossbowChargeTime(ItemStack stack){
         int quickChargeLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.QUICK_CHARGE, stack);
@@ -49,7 +44,7 @@ public class RangedUtils {
     }
 
     public static float getVanillaArrowVelocity(ItemStack stack, int charge) {
-        float bowChargeTime = RangedUtils.getVanillaBowChargeTime(stack);
+        float bowChargeTime = RangedAttackHelper.getVanillaBowChargeTime(stack);
         if(bowChargeTime <= 0){
             bowChargeTime = 1;
         }

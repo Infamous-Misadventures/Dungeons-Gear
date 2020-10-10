@@ -3,7 +3,7 @@ package com.infamous.dungeons_gear.artifacts;
 import com.infamous.dungeons_gear.interfaces.IArtifact;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
 import com.infamous.dungeons_gear.items.ArtifactList;
-import com.infamous.dungeons_gear.utilties.AOEClouds;
+import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-import static com.infamous.dungeons_gear.utilties.AreaOfEffects.causeMagicExplosionAttack;
+import static com.infamous.dungeons_gear.utilties.AreaOfEffectHelper.causeMagicExplosionAttack;
 
 public class HarvesterItem extends Item implements IArtifact, ISoulGatherer {
     public HarvesterItem(Properties properties) {
@@ -32,7 +32,7 @@ public class HarvesterItem extends Item implements IArtifact, ISoulGatherer {
                 playerIn.giveExperiencePoints(-40);
             }
             playerIn.world.playSound((PlayerEntity) null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 64.0F, 1.0F);
-            AOEClouds.spawnExplosionCloud(playerIn, playerIn, 3.0F);
+            AOECloudHelper.spawnExplosionCloud(playerIn, playerIn, 3.0F);
             causeMagicExplosionAttack(playerIn,playerIn, 15, 3.0F);
 
             if(!playerIn.isCreative()){

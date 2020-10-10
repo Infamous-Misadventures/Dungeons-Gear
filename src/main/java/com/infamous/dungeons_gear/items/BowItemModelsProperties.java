@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.items;
 
 import com.infamous.dungeons_gear.ranged.bows.*;
-import com.infamous.dungeons_gear.utilties.RangedUtils;
+import com.infamous.dungeons_gear.utilties.RangedAttackHelper;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.util.ResourceLocation;
 
@@ -40,7 +40,7 @@ public class BowItemModelsProperties {
 					} else {
 						return !(livingEntity.getActiveItemStack().getItem() instanceof DungeonsBowItem) ? 0.0F
 								: (float) (stack.getUseDuration() - livingEntity.getItemInUseCount())
-										/ RangedUtils.getModdedBowChargeTime(livingEntity.getActiveItemStack());
+										/ RangedAttackHelper.getModdedBowChargeTime(livingEntity.getActiveItemStack());
 					}
 				});
 		ItemModelsProperties.func_239418_a_(BONEBOW, new ResourceLocation("pulling"),
@@ -59,7 +59,7 @@ public class BowItemModelsProperties {
 					} else {
 						return !(p_239427_2_.getActiveItemStack().getItem() instanceof SoulBowItem) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ RangedUtils.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
+								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
 		ItemModelsProperties.func_239418_a_(BOW_OF_LOST_SOULS, new ResourceLocation("pulling"),
@@ -78,7 +78,7 @@ public class BowItemModelsProperties {
 					} else {
 						return !(p_239427_2_.getActiveItemStack().getItem() instanceof PowerBowItem) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ RangedUtils.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
+								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
 		ItemModelsProperties.func_239418_a_(ELITE_POWER_BOW, new ResourceLocation("pulling"),
@@ -97,7 +97,7 @@ public class BowItemModelsProperties {
 					} else {
 						return !(p_239427_2_.getActiveItemStack().getItem() instanceof LongbowItem) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ RangedUtils.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
+								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
 		ItemModelsProperties.func_239418_a_(GUARDIAN_BOW, new ResourceLocation("pulling"),
@@ -116,7 +116,7 @@ public class BowItemModelsProperties {
 					} else {
 						return !(p_239427_2_.getActiveItemStack().getItem() instanceof HuntingBowItem) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ RangedUtils.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
+								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
 		ItemModelsProperties.func_239418_a_(HUNTERS_PROMISE, new ResourceLocation("pulling"),
@@ -135,7 +135,7 @@ public class BowItemModelsProperties {
 					} else {
 						return !(p_239427_2_.getActiveItemStack().getItem() instanceof HuntingBowItem) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ RangedUtils.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
+								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
 		ItemModelsProperties.func_239418_a_(MASTERS_BOW, new ResourceLocation("pulling"),
@@ -154,7 +154,7 @@ public class BowItemModelsProperties {
 					} else {
 						return !(p_239427_2_.getActiveItemStack().getItem() instanceof ShortbowItem) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ RangedUtils.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
+								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
 		ItemModelsProperties.func_239418_a_(MECHANICAL_SHORTBOW, new ResourceLocation("pulling"),
@@ -173,7 +173,7 @@ public class BowItemModelsProperties {
 					} else {
 						return !(p_239427_2_.getActiveItemStack().getItem() instanceof SoulBowItem) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ RangedUtils.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
+								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
 		ItemModelsProperties.func_239418_a_(NOCTURNAL_BOW, new ResourceLocation("pulling"),
@@ -192,7 +192,7 @@ public class BowItemModelsProperties {
 					} else {
 						return !(p_239427_2_.getActiveItemStack().getItem() instanceof ShortbowItem) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ RangedUtils.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
+								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
 		ItemModelsProperties.func_239418_a_(PURPLE_STORM, new ResourceLocation("pulling"),
@@ -211,7 +211,7 @@ public class BowItemModelsProperties {
 					} else {
 						return !(p_239427_2_.getActiveItemStack().getItem() instanceof LongbowItem) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ RangedUtils.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
+								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
 		ItemModelsProperties.func_239418_a_(RED_SNAKE, new ResourceLocation("pulling"),
@@ -230,7 +230,7 @@ public class BowItemModelsProperties {
 					} else {
 						return !(p_239427_2_.getActiveItemStack().getItem() instanceof PowerBowItem) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ RangedUtils.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
+								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
 		ItemModelsProperties.func_239418_a_(SABREWING, new ResourceLocation("pulling"),
@@ -249,7 +249,7 @@ public class BowItemModelsProperties {
 					} else {
 						return !(p_239427_2_.getActiveItemStack().getItem() instanceof TrickbowItem) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ RangedUtils.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
+								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
 		ItemModelsProperties.func_239418_a_(THE_GREEN_MENACE, new ResourceLocation("pulling"),
@@ -268,7 +268,7 @@ public class BowItemModelsProperties {
 					} else {
 						return !(p_239427_2_.getActiveItemStack().getItem() instanceof TrickbowItem) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ RangedUtils.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
+								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
 		ItemModelsProperties.func_239418_a_(THE_PINK_SCOUNDREL, new ResourceLocation("pulling"),
@@ -287,7 +287,7 @@ public class BowItemModelsProperties {
 					} else {
 						return !(p_239427_2_.getActiveItemStack().getItem() instanceof DungeonsBowItem) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ RangedUtils.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
+								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
 		ItemModelsProperties.func_239418_a_(TWIN_BOW, new ResourceLocation("pulling"),
@@ -306,7 +306,7 @@ public class BowItemModelsProperties {
 					} else {
 						return !(p_239427_2_.getActiveItemStack().getItem() instanceof HuntingBowItem) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ RangedUtils.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
+								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
 		ItemModelsProperties.func_239418_a_(HUNTING_BOW, new ResourceLocation("pulling"),
@@ -325,7 +325,7 @@ public class BowItemModelsProperties {
 					} else {
 						return !(p_239427_2_.getActiveItemStack().getItem() instanceof LongbowItem) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ RangedUtils.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
+								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
 		ItemModelsProperties.func_239418_a_(LONGBOW, new ResourceLocation("pulling"),
@@ -344,7 +344,7 @@ public class BowItemModelsProperties {
 					} else {
 						return !(p_239427_2_.getActiveItemStack().getItem() instanceof ShortbowItem) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ RangedUtils.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
+								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
 		ItemModelsProperties.func_239418_a_(SHORTBOW, new ResourceLocation("pulling"),
@@ -363,7 +363,7 @@ public class BowItemModelsProperties {
 					} else {
 						return !(p_239427_2_.getActiveItemStack().getItem() instanceof PowerBowItem) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ RangedUtils.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
+								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
 		ItemModelsProperties.func_239418_a_(POWER_BOW, new ResourceLocation("pulling"),
@@ -382,7 +382,7 @@ public class BowItemModelsProperties {
 					} else {
 						return !(p_239427_2_.getActiveItemStack().getItem() instanceof SoulBowItem) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ RangedUtils.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
+								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
 		ItemModelsProperties.func_239418_a_(SOUL_BOW, new ResourceLocation("pulling"),
@@ -401,7 +401,7 @@ public class BowItemModelsProperties {
 					} else {
 						return !(p_239427_2_.getActiveItemStack().getItem() instanceof TrickbowItem) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ RangedUtils.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
+								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
 		ItemModelsProperties.func_239418_a_(TRICKBOW, new ResourceLocation("pulling"),
@@ -420,7 +420,7 @@ public class BowItemModelsProperties {
 					} else {
 						return !(p_239427_2_.getActiveItemStack().getItem() instanceof SnowBowItem) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ RangedUtils.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
+								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
 		ItemModelsProperties.func_239418_a_(SNOW_BOW, new ResourceLocation("pulling"),
@@ -439,7 +439,7 @@ public class BowItemModelsProperties {
 					} else {
 						return !(p_239427_2_.getActiveItemStack().getItem() instanceof SnowBowItem) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ RangedUtils.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
+								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
 		ItemModelsProperties.func_239418_a_(WINTERS_TOUCH, new ResourceLocation("pulling"),

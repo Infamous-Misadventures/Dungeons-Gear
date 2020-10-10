@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.items;
 
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_gear.utilties.RangedUtils;
+import com.infamous.dungeons_gear.utilties.RangedAttackHelper;
 import net.minecraft.item.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -23,7 +23,7 @@ public class VanillaItemModelProperties {
                         } else {
                             return livingEntity.getActiveItemStack() != stack ? 0.0F
                                     : (float) (stack.getUseDuration() - livingEntity.getItemInUseCount())
-                                    / RangedUtils.getVanillaBowChargeTime(livingEntity.getActiveItemStack());
+                                    / RangedAttackHelper.getVanillaBowChargeTime(livingEntity.getActiveItemStack());
                         }
                     });
             bowModelProperties.put(new ResourceLocation("pulling"),
@@ -41,7 +41,7 @@ public class VanillaItemModelProperties {
                         } else {
                             return CrossbowItem.isCharged(stack) ? 0.0F
                                     : (float) (stack.getUseDuration() - livingEntity.getItemInUseCount())
-                                    / (float) RangedUtils.getVanillaCrossbowChargeTime(stack);
+                                    / (float) RangedAttackHelper.getVanillaCrossbowChargeTime(stack);
                         }
                     });
             crossbowModelProperties.put(new ResourceLocation("pulling"),

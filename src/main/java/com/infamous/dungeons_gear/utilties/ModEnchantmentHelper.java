@@ -4,7 +4,6 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.EntityRayTraceResult;
@@ -12,7 +11,7 @@ import net.minecraft.util.math.RayTraceResult;
 
 import static com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList.rangedEnchantmentToStringMap;
 
-public class EnchantUtils {
+public class ModEnchantmentHelper {
 
     public static boolean hasEnchantment(ItemStack stack, Enchantment enchantment){
         return enchantment != null && EnchantmentHelper.getEnchantmentLevel(enchantment, stack) > 0;
@@ -54,7 +53,7 @@ public class EnchantUtils {
 
     public static void addEnchantmentTagsToArrow(ItemStack rangedWeapon, AbstractArrowEntity arrowEntity){
         for(Enchantment enchantment : rangedEnchantmentToStringMap.keySet()){
-            if(EnchantUtils.hasEnchantment(rangedWeapon, enchantment)){
+            if(ModEnchantmentHelper.hasEnchantment(rangedWeapon, enchantment)){
                 int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(enchantment, rangedWeapon);
                 String enchantmentTag = rangedEnchantmentToStringMap.get(enchantment) + enchantmentLevel;
                 arrowEntity.addTag(enchantmentTag);

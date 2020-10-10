@@ -2,9 +2,9 @@ package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
-import com.infamous.dungeons_gear.utilties.AOEClouds;
-import com.infamous.dungeons_gear.utilties.AreaOfEffects;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.AOECloudHelper;
+import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import net.minecraft.enchantment.*;
@@ -47,7 +47,7 @@ public class SwirlingEnchantment extends AOEDamageEnchantment {
             PlayerEntity attacker = (PlayerEntity) event.getPlayer();
             LivingEntity victim = event.getEntityLiving();
             ItemStack mainhand = attacker.getHeldItemMainhand();
-            if(EnchantUtils.hasEnchantment(mainhand, MeleeEnchantmentList.SWIRLING)){
+            if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.SWIRLING)){
                 int swirlingLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.SWIRLING, mainhand);
                 // gets the attack damage of the original attack before any enchantment modifiers are added
                 float attackDamage = (float)attacker.func_233637_b_(Attributes.field_233823_f_);
@@ -59,8 +59,8 @@ public class SwirlingEnchantment extends AOEDamageEnchantment {
                 if(swirlingLevel == 2) damageDealt *= 1.5;
                 if(swirlingLevel == 3) damageDealt *= 2;
                 victim.world.playSound((PlayerEntity) null, victim.getPosX(), victim.getPosY(), victim.getPosZ(), SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.PLAYERS, 64.0F, 1.0F);
-                AOEClouds.spawnCritCloud(attacker, victim, 1.5f);
-                AreaOfEffects.causeSwirlingAttack(attacker, victim, damageDealt, 1.5f);
+                AOECloudHelper.spawnCritCloud(attacker, victim, 1.5f);
+                AreaOfEffectHelper.causeSwirlingAttack(attacker, victim, damageDealt, 1.5f);
             }
         }
     }

@@ -1,11 +1,10 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,8 +16,6 @@ import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-
-import static com.infamous.dungeons_gear.items.RangedWeaponList.HUNTERS_PROMISE;
 
 public class ReplenishEnchantment extends Enchantment {
 
@@ -40,13 +37,13 @@ public class ReplenishEnchantment extends Enchantment {
     @SubscribeEvent
     public static void onReplenishImpact(ProjectileImpactEvent.Arrow event){
         RayTraceResult rayTraceResult = event.getRayTraceResult();
-        if(!EnchantUtils.arrowHitLivingEntity(rayTraceResult)) return;
+        if(!ModEnchantmentHelper.arrowHitLivingEntity(rayTraceResult)) return;
         AbstractArrowEntity arrow = event.getArrow();
-        if(!EnchantUtils.shooterIsLiving(arrow)) return;
+        if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
         LivingEntity shooter = (LivingEntity)arrow.func_234616_v_();
         if(shooter instanceof PlayerEntity){
             PlayerEntity player = (PlayerEntity) shooter;
-            int replenishLevel = EnchantUtils.enchantmentTagToLevel(arrow, RangedEnchantmentList.REPLENISH);
+            int replenishLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.REPLENISH);
             LivingEntity victim = (LivingEntity) ((EntityRayTraceResult)rayTraceResult).getEntity();
             if(replenishLevel > 0){
                 float replenishRand = shooter.getRNG().nextFloat();

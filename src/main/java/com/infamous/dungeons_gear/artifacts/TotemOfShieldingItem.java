@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-import static com.infamous.dungeons_gear.utilties.AOEClouds.spawnShieldingCloudAtPos;
+import static com.infamous.dungeons_gear.utilties.AOECloudHelper.spawnShieldingCloudAtPos;
 
 public class TotemOfShieldingItem extends Item implements IArtifact {
     public TotemOfShieldingItem(Properties properties) {

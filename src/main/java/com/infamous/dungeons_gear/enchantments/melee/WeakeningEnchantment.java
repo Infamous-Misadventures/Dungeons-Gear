@@ -1,8 +1,8 @@
 package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
-import com.infamous.dungeons_gear.utilties.AreaOfEffects;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import net.minecraft.enchantment.Enchantment;
@@ -36,7 +36,7 @@ public class WeakeningEnchantment extends Enchantment {
         ItemStack mainhand = user.getHeldItemMainhand();
         boolean uniqueWeaponFlag = mainhand.getItem() == NAMELESS_BLADE;
         if(uniqueWeaponFlag) level++;
-        AreaOfEffects.weakenNearbyEntities(user, (LivingEntity)target, 5, level-1);
+        AreaOfEffectHelper.weakenNearbyEntities(user, (LivingEntity)target, 5, level-1);
     }
 
     @SubscribeEvent
@@ -48,8 +48,8 @@ public class WeakeningEnchantment extends Enchantment {
         LivingEntity victim = event.getEntityLiving();
         ItemStack mainhand = attacker.getHeldItemMainhand();
         if((mainhand.getItem() == NAMELESS_BLADE)
-                && !EnchantUtils.hasEnchantment(mainhand, MeleeEnchantmentList.WEAKENING)){
-            AreaOfEffects.weakenNearbyEntities(attacker, victim, 5, 0);
+                && !ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.WEAKENING)){
+            AreaOfEffectHelper.weakenNearbyEntities(attacker, victim, 5, 0);
         }
     }
 }

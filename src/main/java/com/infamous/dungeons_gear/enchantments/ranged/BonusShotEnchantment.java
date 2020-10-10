@@ -1,10 +1,10 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
-import com.infamous.dungeons_gear.utilties.ProjectileEffects;
-import com.infamous.dungeons_gear.utilties.RangedUtils;
+import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
+import com.infamous.dungeons_gear.utilties.RangedAttackHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -38,15 +38,15 @@ public class BonusShotEnchantment extends Enchantment {
         if(stack.getItem() instanceof CrossbowItem){
             if(CrossbowItem.isCharged(stack)){
                 boolean uniqueWeaponFlag = stack.getItem() == BUTTERFLY_CROSSBOW;
-                if(EnchantUtils.hasEnchantment(stack, RangedEnchantmentList.BONUS_SHOT) || uniqueWeaponFlag){
+                if(ModEnchantmentHelper.hasEnchantment(stack, RangedEnchantmentList.BONUS_SHOT) || uniqueWeaponFlag){
                     int bonusShotLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.BONUS_SHOT, stack);
                     float damageMultiplier = 0;
                     if(bonusShotLevel == 1) damageMultiplier = 0.1F;
                     if(bonusShotLevel == 2) damageMultiplier = 0.71F;
                     if(bonusShotLevel == 3) damageMultiplier = 0.24F;
                     if(uniqueWeaponFlag) damageMultiplier += 0.2F;
-                    float arrowVelocity = RangedUtils.getvVanillaOrModdedCrossbowArrowVelocity(stack);
-                    ProjectileEffects.fireBonusShotTowardsOtherEntity(player, 10,
+                    float arrowVelocity = RangedAttackHelper.getvVanillaOrModdedCrossbowArrowVelocity(stack);
+                    ProjectileEffectHelper.fireBonusShotTowardsOtherEntity(player, 10,
                             damageMultiplier, arrowVelocity);
                 }
             }
@@ -59,16 +59,16 @@ public class BonusShotEnchantment extends Enchantment {
         ItemStack stack = event.getBow();
         int charge = event.getCharge();
         boolean uniqueWeaponFlag = stack.getItem() == TWIN_BOW;
-        if(EnchantUtils.hasEnchantment(stack, RangedEnchantmentList.BONUS_SHOT) || uniqueWeaponFlag){
+        if(ModEnchantmentHelper.hasEnchantment(stack, RangedEnchantmentList.BONUS_SHOT) || uniqueWeaponFlag){
             int bonusShotLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.BONUS_SHOT, stack);
             float damageMultiplier = 0;
             if(bonusShotLevel == 1) damageMultiplier = 0.1F;
             if(bonusShotLevel == 2) damageMultiplier = 0.71F;
             if(bonusShotLevel == 3) damageMultiplier = 0.24F;
             if(uniqueWeaponFlag) damageMultiplier += 0.2F;
-            float arrowVelocity = RangedUtils.getVanillaOrModdedBowArrowVelocity(stack, charge);
+            float arrowVelocity = RangedAttackHelper.getVanillaOrModdedBowArrowVelocity(stack, charge);
             if(arrowVelocity >= 0.1F){
-                ProjectileEffects.fireBonusShotTowardsOtherEntity(livingEntity, 10, damageMultiplier, arrowVelocity);
+                ProjectileEffectHelper.fireBonusShotTowardsOtherEntity(livingEntity, 10, damageMultiplier, arrowVelocity);
             }
         }
     }

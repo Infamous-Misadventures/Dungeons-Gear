@@ -4,8 +4,7 @@ import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.enchantments.*;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.HealingEnchantment;
-import com.infamous.dungeons_gear.utilties.AbilityUtils;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -48,7 +47,7 @@ public class AnimaConduitEnchantment extends HealingEnchantment {
             IndirectEntityDamageSource indirectEntityDamageSource = (IndirectEntityDamageSource) event.getSource();
             if(indirectEntityDamageSource.getImmediateSource() instanceof AbstractArrowEntity) {
                 AbstractArrowEntity arrowEntity = (AbstractArrowEntity) indirectEntityDamageSource.getImmediateSource();
-                int animaConduitLevel = EnchantUtils.enchantmentTagToLevel(arrowEntity, MeleeRangedEnchantmentList.ANIMA_CONDUIT);
+                int animaConduitLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrowEntity, MeleeRangedEnchantmentList.ANIMA_CONDUIT);
                 if(animaConduitLevel > 0){
                     LivingEntity victim = event.getEntityLiving();
                     if(victim instanceof MobEntity){
@@ -72,7 +71,7 @@ public class AnimaConduitEnchantment extends HealingEnchantment {
                 ItemStack mainhand = attacker.getHeldItemMainhand();
                 if(victim instanceof MobEntity){
                     MobEntity mobEntity = (MobEntity) victim;
-                    if (EnchantUtils.hasEnchantment(mainhand, MeleeRangedEnchantmentList.ANIMA_CONDUIT)) {
+                    if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.ANIMA_CONDUIT)) {
                         int animaConduitLevel = EnchantmentHelper.getEnchantmentLevel(MeleeRangedEnchantmentList.ANIMA_CONDUIT, mainhand);
                         if(attacker instanceof PlayerEntity){
                             PlayerEntity playerEntity = (PlayerEntity) attacker;

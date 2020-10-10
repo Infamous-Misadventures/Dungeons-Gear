@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.items;
 
 import com.infamous.dungeons_gear.ranged.crossbows.*;
-import com.infamous.dungeons_gear.utilties.RangedUtils;
+import com.infamous.dungeons_gear.utilties.RangedAttackHelper;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.util.ResourceLocation;
 
@@ -45,7 +45,7 @@ public class CrossbowItemModelsProperties {
 					} else {
 						return RapidCrossbowItem.isCharged(p_239427_0_) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-										/ (float) RangedUtils.getModdedCrossbowChargeTime(p_239427_0_);
+										/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
 		ItemModelsProperties.func_239418_a_(AUTO_CROSSBOW, new ResourceLocation("pulling"),
@@ -68,7 +68,7 @@ public class CrossbowItemModelsProperties {
 					} else {
 						return DungeonsCrossbowItem.isCharged(p_239427_0_) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ (float) RangedUtils.getModdedCrossbowChargeTime(p_239427_0_);
+								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
 		ItemModelsProperties.func_239418_a_(AZURE_SEEKER, new ResourceLocation("pulling"),
@@ -91,7 +91,7 @@ public class CrossbowItemModelsProperties {
 					} else {
 						return RapidCrossbowItem.isCharged(p_239427_0_) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ (float) RangedUtils.getModdedCrossbowChargeTime(p_239427_0_);
+								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
 		ItemModelsProperties.func_239418_a_(BUTTERFLY_CROSSBOW, new ResourceLocation("pulling"),
@@ -114,7 +114,7 @@ public class CrossbowItemModelsProperties {
 					} else {
 						return HeavyCrossbowItem.isCharged(p_239427_0_) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ (float) RangedUtils.getModdedCrossbowChargeTime(p_239427_0_);
+								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
 		ItemModelsProperties.func_239418_a_(DOOM_CROSSBOW, new ResourceLocation("pulling"),
@@ -137,7 +137,7 @@ public class CrossbowItemModelsProperties {
 					} else {
 						return SoulCrossbowItem.isCharged(p_239427_0_) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ (float) RangedUtils.getModdedCrossbowChargeTime(p_239427_0_);
+								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
 		ItemModelsProperties.func_239418_a_(FERAL_SOUL_CROSSBOW, new ResourceLocation("pulling"),
@@ -160,7 +160,7 @@ public class CrossbowItemModelsProperties {
 					} else {
 						return ExplodingCrossbowItem.isCharged(p_239427_0_) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ (float) RangedUtils.getModdedCrossbowChargeTime(p_239427_0_);
+								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
 		ItemModelsProperties.func_239418_a_(FIREBOLT_THROWER, new ResourceLocation("pulling"),
@@ -183,7 +183,7 @@ public class CrossbowItemModelsProperties {
 					} else {
 						return ScatterCrossbowItem.isCharged(p_239427_0_) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ (float) RangedUtils.getModdedCrossbowChargeTime(p_239427_0_);
+								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
 		ItemModelsProperties.func_239418_a_(HARP_CROSSBOW, new ResourceLocation("pulling"),
@@ -205,7 +205,7 @@ public class CrossbowItemModelsProperties {
 					} else {
 						return ScatterCrossbowItem.isCharged(p_239427_0_) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ (float) RangedUtils.getModdedCrossbowChargeTime(p_239427_0_);
+								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
 		ItemModelsProperties.func_239418_a_(LIGHTNING_HARP_CROSSBOW, new ResourceLocation("pulling"),
@@ -227,7 +227,7 @@ public class CrossbowItemModelsProperties {
 					} else {
 						return HeavyCrossbowItem.isCharged(p_239427_0_) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ (float) RangedUtils.getModdedCrossbowChargeTime(p_239427_0_);
+								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
 		ItemModelsProperties.func_239418_a_(SLAYER_CROSSBOW, new ResourceLocation("pulling"),
@@ -249,7 +249,7 @@ public class CrossbowItemModelsProperties {
 					} else {
 						return DungeonsCrossbowItem.isCharged(p_239427_0_) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ (float) RangedUtils.getModdedCrossbowChargeTime(p_239427_0_);
+								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
 		ItemModelsProperties.func_239418_a_(THE_SLICER, new ResourceLocation("pulling"),
@@ -271,7 +271,7 @@ public class CrossbowItemModelsProperties {
 					} else {
 						return SoulCrossbowItem.isCharged(p_239427_0_) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ (float) RangedUtils.getModdedCrossbowChargeTime(p_239427_0_);
+								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
 		ItemModelsProperties.func_239418_a_(VOIDCALLER, new ResourceLocation("pulling"),
@@ -293,7 +293,7 @@ public class CrossbowItemModelsProperties {
 					} else {
 						return ExplodingCrossbowItem.isCharged(p_239427_0_) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ (float) RangedUtils.getModdedCrossbowChargeTime(p_239427_0_);
+								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
 		ItemModelsProperties.func_239418_a_(EXPLODING_CROSSBOW, new ResourceLocation("pulling"),
@@ -315,7 +315,7 @@ public class CrossbowItemModelsProperties {
 					} else {
 						return HeavyCrossbowItem.isCharged(p_239427_0_) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ (float) RangedUtils.getModdedCrossbowChargeTime(p_239427_0_);
+								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
 		ItemModelsProperties.func_239418_a_(HEAVY_CROSSBOW, new ResourceLocation("pulling"),
@@ -337,7 +337,7 @@ public class CrossbowItemModelsProperties {
 					} else {
 						return RapidCrossbowItem.isCharged(p_239427_0_) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ (float) RangedUtils.getModdedCrossbowChargeTime(p_239427_0_);
+								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
 		ItemModelsProperties.func_239418_a_(RAPID_CROSSBOW, new ResourceLocation("pulling"),
@@ -359,7 +359,7 @@ public class CrossbowItemModelsProperties {
 					} else {
 						return ScatterCrossbowItem.isCharged(p_239427_0_) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ (float) RangedUtils.getModdedCrossbowChargeTime(p_239427_0_);
+								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
 		ItemModelsProperties.func_239418_a_(SCATTER_CROSSBOW, new ResourceLocation("pulling"),
@@ -381,7 +381,7 @@ public class CrossbowItemModelsProperties {
 					} else {
 						return SoulCrossbowItem.isCharged(p_239427_0_) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ (float) RangedUtils.getModdedCrossbowChargeTime(p_239427_0_);
+								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
 		ItemModelsProperties.func_239418_a_(SOUL_CROSSBOW, new ResourceLocation("pulling"),
@@ -404,7 +404,7 @@ public class CrossbowItemModelsProperties {
 					} else {
 						return ExplodingCrossbowItem.isCharged(p_239427_0_) ? 0.0F
 								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ (float) RangedUtils.getModdedCrossbowChargeTime(p_239427_0_);
+								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
 		ItemModelsProperties.func_239418_a_(IMPLODING_CROSSBOW, new ResourceLocation("pulling"),
@@ -427,7 +427,7 @@ public class CrossbowItemModelsProperties {
 					} else {
 						return DualCrossbowItem.isCharged(stack) ? 0.0F
 								: (float) (stack.getUseDuration() - livingEntity.getItemInUseCount())
-								/ (float) RangedUtils.getModdedCrossbowChargeTime(stack);
+								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(stack);
 					}
 				});
 		ItemModelsProperties.func_239418_a_(BABY_CROSSBOW, new ResourceLocation("pulling"),
@@ -460,7 +460,7 @@ public class CrossbowItemModelsProperties {
 					} else {
 						return DualCrossbowItem.isCharged(stack) ? 0.0F
 								: (float) (stack.getUseDuration() - livingEntity.getItemInUseCount())
-								/ (float) RangedUtils.getModdedCrossbowChargeTime(stack);
+								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(stack);
 					}
 				});
 		ItemModelsProperties.func_239418_a_(DUAL_CROSSBOW, new ResourceLocation("pulling"),

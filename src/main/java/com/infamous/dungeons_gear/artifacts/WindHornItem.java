@@ -2,7 +2,7 @@ package com.infamous.dungeons_gear.artifacts;
 
 import com.infamous.dungeons_gear.interfaces.IArtifact;
 import com.infamous.dungeons_gear.items.ArtifactList;
-import com.infamous.dungeons_gear.utilties.AreaOfEffects;
+import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -29,7 +29,7 @@ public class WindHornItem extends Item implements IArtifact {
         //((ServerPlayerEntity)playerIn).connection.sendPacket(new SPlaySoundEffectPacket(SoundEvents.EVENT_RAID_HORN, SoundCategory.NEUTRAL, d0, playerIn.posY, d1, 64.0F, 1.0F));
 
 
-        AreaOfEffects.knockbackNearbyEnemies(worldIn, playerIn);
+        AreaOfEffectHelper.knockbackNearbyEnemies(worldIn, playerIn);
         if(!playerIn.isCreative()){
             itemstack.damageItem(1, playerIn, (entity) -> {
                 entity.sendBreakAnimation(handIn);

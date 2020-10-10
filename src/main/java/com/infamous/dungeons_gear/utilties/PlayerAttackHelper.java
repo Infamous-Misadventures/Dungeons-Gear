@@ -32,7 +32,7 @@ import net.minecraftforge.event.entity.player.CriticalHitEvent;
 
 import java.util.Iterator;
 
-public class PlayerUtils {
+public class PlayerAttackHelper {
 
     public static void swingArm(ServerPlayerEntity playerEntity, Hand hand) {
         ItemStack stack = playerEntity.getHeldItem(hand);

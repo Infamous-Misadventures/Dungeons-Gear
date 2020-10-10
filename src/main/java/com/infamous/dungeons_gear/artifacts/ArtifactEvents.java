@@ -11,10 +11,10 @@ import com.infamous.dungeons_gear.capabilities.summoning.SummonableProvider;
 import com.infamous.dungeons_gear.capabilities.summoning.SummonerProvider;
 import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.interfaces.IArmor;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.goals.*;
-import com.infamous.dungeons_gear.utilties.ProjectileEffects;
+import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -161,7 +161,7 @@ public class ArtifactEvents {
                         event.setCanceled(true);
                         if(event.getEntity() instanceof AbstractArrowEntity){
                             AbstractArrowEntity arrowEntity = (AbstractArrowEntity) event.getEntity();
-                            ProjectileEffects.ricochetArrowLikeShield(arrowEntity, livingEntity);
+                            ProjectileEffectHelper.ricochetArrowLikeShield(arrowEntity, livingEntity);
                         }
                     }
                 }
@@ -355,7 +355,7 @@ public class ArtifactEvents {
 
         float totalArmorCooldownModifier = 1.0F - armorCooldownModifier*0.01F - armorCooldownModifier2*0.01F;
         float cooldownEnchantmentReduction = 0;
-        if(EnchantUtils.hasEnchantment(playerIn, ArmorEnchantmentList.COOLDOWN)) {
+        if(ModEnchantmentHelper.hasEnchantment(playerIn, ArmorEnchantmentList.COOLDOWN)) {
             int cooldownEnchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.COOLDOWN, playerIn);
             if (cooldownEnchantmentLevel == 1) cooldownEnchantmentReduction = (int) (0.1F * cooldownInTicks);
             if (cooldownEnchantmentLevel == 2) cooldownEnchantmentReduction = (int) (0.19F * cooldownInTicks);

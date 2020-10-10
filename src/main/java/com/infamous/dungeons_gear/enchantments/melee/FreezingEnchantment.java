@@ -1,11 +1,10 @@
 package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -15,17 +14,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
-import static com.infamous.dungeons_gear.items.RangedWeaponList.SNOW_BOW;
-import static com.infamous.dungeons_gear.items.RangedWeaponList.WINTERS_TOUCH;
 import static com.infamous.dungeons_gear.items.WeaponList.*;
 
 @Mod.EventBusSubscriber(modid = MODID)
@@ -72,7 +66,7 @@ public class FreezingEnchantment extends Enchantment {
                 || mainhand.getItem() == FROST_SCYTHE
                 || mainhand.getItem() == FREEZING_FOIL;
         if(uniqueWeaponFlag
-                && !EnchantUtils.hasEnchantment(mainhand, MeleeRangedEnchantmentList.FREEZING)){
+                && !ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.FREEZING)){
             EffectInstance freezing = new EffectInstance(Effects.SLOWNESS, 60);
             EffectInstance miningFatigue = new EffectInstance(Effects.MINING_FATIGUE, 60);
             victim.addPotionEffect(freezing);

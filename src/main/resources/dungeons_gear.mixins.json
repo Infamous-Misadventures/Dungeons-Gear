@@ -6,7 +6,8 @@
   "refmap": "dungeons_gear.refmap.json",
   "mixins": [
     "CrossbowItemMixin",
-    "BowItemMixin"
+    "BowItemMixin",
+    "LockableLootTileEntityMixin"
   ],
   "client": [
     "PlayerRendererMixin"

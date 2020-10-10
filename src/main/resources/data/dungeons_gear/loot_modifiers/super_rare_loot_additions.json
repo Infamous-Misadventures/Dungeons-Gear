@@ -1,0 +1,9 @@
+{
+  "type": "dungeons_gear:super_rare_loot_additions",
+  "conditions": [
+    {
+      "condition": "random_chance",
+      "chance": 1
+    }
+  ]
+}

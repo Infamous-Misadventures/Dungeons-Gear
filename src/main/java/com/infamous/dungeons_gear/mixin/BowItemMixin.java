@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
-import static com.infamous.dungeons_gear.utilties.RangedUtils.getVanillaArrowVelocity;
+import static com.infamous.dungeons_gear.utilties.RangedAttackHelper.getVanillaArrowVelocity;
 
 
 @Mixin(BowItem.class)

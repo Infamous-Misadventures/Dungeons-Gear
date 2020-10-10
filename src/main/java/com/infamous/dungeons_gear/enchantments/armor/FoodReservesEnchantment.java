@@ -2,11 +2,10 @@ package com.infamous.dungeons_gear.enchantments.armor;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.DropsEnchantment;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -53,7 +52,7 @@ public class FoodReservesEnchantment extends DropsEnchantment {
             List<EffectInstance> potionEffects = PotionUtils.getEffectsFromStack(event.getItem());
             if(potionEffects.isEmpty()) return;
             if(potionEffects.get(0).getPotion() == Effects.INSTANT_HEALTH){
-                if(EnchantUtils.hasEnchantment(player, ArmorEnchantmentList.FOOD_RESERVES)){
+                if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.FOOD_RESERVES)){
                     int foodReservesLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.FOOD_RESERVES, player);
                     List<Item> foodList = Arrays.asList(Items.APPLE, Items.BREAD, Items.COOKED_PORKCHOP, Items.MELON_SLICE, Items.COOKED_SALMON);
                     while(foodReservesLevel > 0){

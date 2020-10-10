@@ -5,8 +5,8 @@ import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.PulseEnchantment;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
-import com.infamous.dungeons_gear.utilties.ProjectileEffects;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
+import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
@@ -46,10 +46,10 @@ public class SnowballEnchantment extends PulseEnchantment {
             ICombo comboCap = player.getCapability(ComboProvider.COMBO_CAPABILITY).orElseThrow(IllegalStateException::new);
             int snowballNearbyTimer = comboCap.getSnowballNearbyTimer();
 
-            if(EnchantUtils.hasEnchantment(player, ArmorEnchantmentList.SNOWBALL)){
+            if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.SNOWBALL)){
                 int snowballLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.SNOWBALL, player);
                 if(snowballNearbyTimer <= 0){
-                    ProjectileEffects.fireSnowballAtNearbyEnemy(player, 10);
+                    ProjectileEffectHelper.fireSnowballAtNearbyEnemy(player, 10);
                     if(snowballLevel == 1) comboCap.setSnowballNearbyTimer(100);
                     if(snowballLevel == 2) comboCap.setSnowballNearbyTimer(60);
                     if(snowballLevel == 3) comboCap.setSnowballNearbyTimer(20);

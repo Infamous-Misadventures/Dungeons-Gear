@@ -2,12 +2,11 @@ package com.infamous.dungeons_gear.enchantments.armor;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.ArtifactEnchantment;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.interfaces.IArtifact;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -46,7 +45,7 @@ public class SpeedSynergyEnchantment extends ArtifactEnchantment {
         Hand activeHand = event.getHand();
         ItemStack itemStack = player.getHeldItem(activeHand);
         if(itemStack.getItem() instanceof IArtifact){
-            if(EnchantUtils.hasEnchantment(player, ArmorEnchantmentList.SPEED_SYNERGY)){
+            if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.SPEED_SYNERGY)){
                 int speedSynergyLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.SPEED_SYNERGY, player);
                 EffectInstance speedBoost = new EffectInstance(Effects.SPEED, 20 * speedSynergyLevel);
                 player.addPotionEffect(speedBoost);

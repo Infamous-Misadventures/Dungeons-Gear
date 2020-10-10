@@ -6,9 +6,9 @@ import com.infamous.dungeons_gear.capabilities.combo.ComboProvider;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.interfaces.IArmor;
-import com.infamous.dungeons_gear.utilties.AreaOfEffects;
-import com.infamous.dungeons_gear.utilties.ArmorEffects;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
+import com.infamous.dungeons_gear.utilties.ArmorEffectHelper;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
@@ -42,7 +42,7 @@ public class ArmorEvents {
             World world = playerEntity.getEntityWorld();
             if(event.getTo().getItem() instanceof IArmor){
                 if(((IArmor)event.getTo().getItem()).doGivesYouAPetBat()){
-                    ArmorEffects.summonOrTeleportBat(playerEntity, world);
+                    ArmorEffectHelper.summonOrTeleportBat(playerEntity, world);
                 }
             }
         }
@@ -103,7 +103,7 @@ public class ArmorEvents {
 
         float teleportRand = victim.getRNG().nextFloat();
         if(teleportRand <= totalTeleportChance){
-            ArmorEffects.teleportOnHit(victim);
+            ArmorEffectHelper.teleportOnHit(victim);
         }
     }
 
@@ -204,7 +204,7 @@ public class ArmorEvents {
 
         boolean healNearbyAllies = doHealthPotionsHealNearbyAllies || doHealthPotionsHealNearbyAllies2;
         if(healNearbyAllies){
-            AreaOfEffects.healNearbyAllies(player, instantHealth, 12);
+            AreaOfEffectHelper.healNearbyAllies(player, instantHealth, 12);
         }
     }
 
@@ -284,22 +284,22 @@ public class ArmorEvents {
     }
 
     private static void handleJumpEnchantments(PlayerEntity playerEntity, ItemStack helmet, ItemStack chestplate, int jumpCooldownTimer) {
-        if(EnchantUtils.hasEnchantment(playerEntity, ArmorEnchantmentList.ELECTRIFIED)){
+        if(ModEnchantmentHelper.hasEnchantment(playerEntity, ArmorEnchantmentList.ELECTRIFIED)){
             if(jumpCooldownTimer == 0){
-                AreaOfEffects.electrifyNearbyEnemies(playerEntity, 5, 5, 3);
+                AreaOfEffectHelper.electrifyNearbyEnemies(playerEntity, 5, 5, 3);
             }
         }
 
-        if(EnchantUtils.hasEnchantment(playerEntity, ArmorEnchantmentList.FIRE_TRAIL)){
+        if(ModEnchantmentHelper.hasEnchantment(playerEntity, ArmorEnchantmentList.FIRE_TRAIL)){
             if(jumpCooldownTimer == 0){
                 int fireTrailLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.FIRE_TRAIL, playerEntity);
-                AreaOfEffects.burnNearbyEnemies(playerEntity, 1.0F * fireTrailLevel, 1.5F);
+                AreaOfEffectHelper.burnNearbyEnemies(playerEntity, 1.0F * fireTrailLevel, 1.5F);
             }
         }
 
         boolean highlandArmorFlag = chestplate.getItem() == HIGHLAND_ARMOR
                 || helmet.getItem() == HIGHLAND_ARMOR_HELMET;
-        if(EnchantUtils.hasEnchantment(playerEntity, ArmorEnchantmentList.SWIFTFOOTED) || highlandArmorFlag){
+        if(ModEnchantmentHelper.hasEnchantment(playerEntity, ArmorEnchantmentList.SWIFTFOOTED) || highlandArmorFlag){
             if(jumpCooldownTimer == 0){
                 int swiftfootedLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.SWIFTFOOTED, playerEntity);
                 if(highlandArmorFlag) swiftfootedLevel++;

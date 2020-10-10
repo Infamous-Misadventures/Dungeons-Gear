@@ -28,12 +28,12 @@ import java.util.Set;
 import static com.infamous.dungeons_gear.items.RangedWeaponList.FERAL_SOUL_CROSSBOW;
 import static net.minecraft.entity.Entity.horizontalMag;
 
-public class ProjectileEffects {
+public class ProjectileEffectHelper {
     public static void ricochetArrowTowardsOtherEntity(LivingEntity attacker, LivingEntity victim, AbstractArrowEntity arrowEntity, int distance){
         World world = attacker.getEntityWorld();
         //boolean nullListFlag = arrowEntity.hitEntities == null;
         List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(victim.getPosX() - distance, victim.getPosY() - distance, victim.getPosZ() - distance,
-                victim.getPosX() + distance, victim.getPosY() + distance, victim.getPosZ() + distance), (nearbyEntity) -> AbilityUtils.canBeAppliedToEntity(attacker, victim, nearbyEntity));
+                victim.getPosX() + distance, victim.getPosY() + distance, victim.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canBeAppliedToEntity(attacker, victim, nearbyEntity));
         if(nearbyEntities.isEmpty()) return;
         nearbyEntities.sort(Comparator.comparingDouble(livingEntity -> livingEntity.getDistanceSq(victim)));
         LivingEntity target =  nearbyEntities.get(0);
@@ -55,7 +55,7 @@ public class ProjectileEffects {
         World world = attacker.getEntityWorld();
         //boolean nullListFlag = arrowEntity.hitEntities == null;
         List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(attacker.getPosX() - distance, attacker.getPosY() - distance, attacker.getPosZ() - distance,
-                attacker.getPosX() + distance, attacker.getPosY() + distance, attacker.getPosZ() + distance), (nearbyEntity) -> AbilityUtils.canBeAppliedToEntity(attacker, nearbyEntity));
+                attacker.getPosX() + distance, attacker.getPosY() + distance, attacker.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canBeAppliedToEntity(attacker, nearbyEntity));
         if(nearbyEntities.size() < 2) return;
         nearbyEntities.sort(Comparator.comparingDouble(livingEntity -> livingEntity.getDistanceSq(attacker)));
         LivingEntity target =  nearbyEntities.get(0);
@@ -81,7 +81,7 @@ public class ProjectileEffects {
         World world = attacker.getEntityWorld();
         //boolean nullListFlag = arrowEntity.hitEntities == null;
         List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(attacker.getPosX() - distance, attacker.getPosY() - distance, attacker.getPosZ() - distance,
-                attacker.getPosX() + distance, attacker.getPosY() + distance, attacker.getPosZ() + distance), (nearbyEntity) -> AbilityUtils.canBeAppliedToEntity(attacker, nearbyEntity));
+                attacker.getPosX() + distance, attacker.getPosY() + distance, attacker.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canBeAppliedToEntity(attacker, nearbyEntity));
         if(nearbyEntities.size() < 2) return;
         nearbyEntities.sort(Comparator.comparingDouble(livingEntity -> livingEntity.getDistanceSq(attacker)));
         LivingEntity target =  nearbyEntities.get(0);
@@ -170,7 +170,7 @@ public class ProjectileEffects {
     public static boolean soulsCriticalBoost(PlayerEntity attacker, ItemStack mainhand){
         int numSouls = Math.min(attacker.experienceTotal, 50);
         boolean uniqueWeaponFlag = mainhand.getItem() == FERAL_SOUL_CROSSBOW;
-        if(EnchantUtils.hasEnchantment(mainhand, MeleeRangedEnchantmentList.ENIGMA_RESONATOR)){
+        if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.ENIGMA_RESONATOR)){
             int enigmaResonatorLevel = EnchantmentHelper.getEnchantmentLevel(MeleeRangedEnchantmentList.ENIGMA_RESONATOR, mainhand);
             float soulsCriticalBoostChanceCap = 0;
             if(enigmaResonatorLevel == 1) soulsCriticalBoostChanceCap = 0.15F;

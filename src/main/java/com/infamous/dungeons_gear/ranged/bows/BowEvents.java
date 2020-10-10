@@ -4,9 +4,9 @@ import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
 import com.infamous.dungeons_gear.capabilities.weapon.WeaponProvider;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
-import com.infamous.dungeons_gear.utilties.AbilityUtils;
-import com.infamous.dungeons_gear.utilties.ProjectileEffects;
-import com.infamous.dungeons_gear.utilties.RangedUtils;
+import com.infamous.dungeons_gear.utilties.AbilityHelper;
+import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
+import com.infamous.dungeons_gear.utilties.RangedAttackHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
@@ -46,7 +46,7 @@ public class BowEvents {
             if(stack.getItem() == MECHANICAL_SHORTBOW) accelerateLevel++;
 
             float defaultChargeTime = 20.0F;
-            float arrowVelocity = RangedUtils.getVanillaArrowVelocity(stack, charge);
+            float arrowVelocity = RangedAttackHelper.getVanillaArrowVelocity(stack, charge);
             if(stack.getItem() instanceof AbstractDungeonsBowItem){
                 defaultChargeTime = ((AbstractDungeonsBowItem)stack.getItem()).getDefaultChargeTime();
                 arrowVelocity = ((AbstractDungeonsBowItem)stack.getItem()).getBowArrowVelocity(stack, charge);
@@ -87,7 +87,7 @@ public class BowEvents {
                         || arrowEntity.getTags().contains("TheGreenMenace")
                         || arrowEntity.getTags().contains("ThePinkScoundrel");
                 if(huntingBowFlag){
-                    AbilityUtils.makeNearbyPetsAttackTarget(victim, shooter);
+                    AbilityHelper.makeNearbyPetsAttackTarget(victim, shooter);
                 }
                 else if(snowBowFlag){
                     EffectInstance freezing = new EffectInstance(Effects.SLOWNESS, 60, 0);
@@ -95,7 +95,7 @@ public class BowEvents {
                     PROXY.spawnParticles(victim, ParticleTypes.ITEM_SNOWBALL);
                 }
                 else if(trickbowFlag){
-                    ProjectileEffects.ricochetArrowTowardsOtherEntity(shooter, victim, arrowEntity, 10);
+                    ProjectileEffectHelper.ricochetArrowTowardsOtherEntity(shooter, victim, arrowEntity, 10);
                 }
             }
         }

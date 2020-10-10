@@ -6,8 +6,8 @@ import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.PulseEnchantment;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.items.ArmorList;
-import com.infamous.dungeons_gear.utilties.AreaOfEffects;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
@@ -50,11 +50,11 @@ public class BurningEnchantment extends PulseEnchantment {
             boolean uniqueArmorFlag =
                     player.getItemStackFromSlot(EquipmentSlotType.CHEST).getItem() == ArmorList.EMBER_ROBE
                     || player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() == ArmorList.EMBER_ROBE_HAT;
-            if(EnchantUtils.hasEnchantment(player, ArmorEnchantmentList.BURNING) || uniqueArmorFlag){
+            if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.BURNING) || uniqueArmorFlag){
                 if(burnNearbyTimer <= 0){
                     int burningLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.BURNING, player);
                     if(uniqueArmorFlag) burningLevel++;
-                    AreaOfEffects.burnNearbyEnemies(player, 1.0F * burningLevel, 1.5F);
+                    AreaOfEffectHelper.burnNearbyEnemies(player, 1.0F * burningLevel, 1.5F);
                     comboCap.setBurnNearbyTimer(10);
                 }
                 else{

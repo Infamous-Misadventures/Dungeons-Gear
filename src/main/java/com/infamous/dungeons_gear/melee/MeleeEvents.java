@@ -2,7 +2,7 @@ package com.infamous.dungeons_gear.melee;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.items.WeaponList;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
@@ -20,7 +20,6 @@ import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.lwjgl.system.CallbackI;
 
 import static com.infamous.dungeons_gear.items.WeaponList.FIREBRAND;
 
@@ -64,7 +63,7 @@ public class MeleeEvents {
             if(event.getEntityLiving() == null) return;
             LivingEntity victim = (LivingEntity) event.getEntityLiving();
             if ((attacker.getHeldItemMainhand().getItem()  instanceof ClaymoreItem)
-                    && !EnchantUtils.hasEnchantment(attacker.getHeldItemMainhand(), Enchantments.KNOCKBACK)) {
+                    && !ModEnchantmentHelper.hasEnchantment(attacker.getHeldItemMainhand(), Enchantments.KNOCKBACK)) {
                 if(attacker instanceof PlayerEntity){
                     PlayerEntity playerEntity = (PlayerEntity) attacker;
                     float cooledAttackStrength = playerEntity.getCooledAttackStrength(0.5F);
@@ -96,7 +95,7 @@ public class MeleeEvents {
         if(event.getAttacker() instanceof LivingEntity){
             LivingEntity attacker = (LivingEntity) event.getAttacker();
             if (attacker.getHeldItemMainhand().getItem() instanceof ClaymoreItem
-                            && EnchantUtils.hasEnchantment(attacker.getHeldItemMainhand(), Enchantments.KNOCKBACK)) {
+                            && ModEnchantmentHelper.hasEnchantment(attacker.getHeldItemMainhand(), Enchantments.KNOCKBACK)) {
                 float knockbackStrength = event.getStrength();
                 event.setStrength(knockbackStrength + 0.5f);
             }

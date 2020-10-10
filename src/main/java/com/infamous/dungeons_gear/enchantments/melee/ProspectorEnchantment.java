@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.enchantments.melee;
 
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import net.minecraft.enchantment.Enchantment;
@@ -40,7 +40,7 @@ public class ProspectorEnchantment extends Enchantment{
             ItemStack mainhand = attacker.getHeldItemMainhand();
             LivingEntity victim = event.getEntityLiving();
             boolean uniqueWeaponFlag = mainhand.getItem() == THE_LAST_LAUGH;
-            if(EnchantUtils.hasEnchantment(mainhand, MeleeEnchantmentList.PROSPECTOR)){
+            if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.PROSPECTOR)){
                 int prospectorLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.PROSPECTOR, mainhand);
                 float prospectorChance = 0;
                 if(prospectorLevel == 1) prospectorChance = 0.25F;

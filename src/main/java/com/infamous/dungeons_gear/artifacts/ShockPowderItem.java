@@ -2,7 +2,7 @@ package com.infamous.dungeons_gear.artifacts;
 
 import com.infamous.dungeons_gear.interfaces.IArtifact;
 import com.infamous.dungeons_gear.items.ArtifactList;
-import com.infamous.dungeons_gear.utilties.AreaOfEffects;
+import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -26,7 +26,7 @@ public class ShockPowderItem extends Item implements IArtifact {
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         ItemStack itemstack = playerIn.getHeldItem(handIn);
 
-        AreaOfEffects.stunNearbyEnemies(worldIn, playerIn);
+        AreaOfEffectHelper.stunNearbyEnemies(worldIn, playerIn);
         if(!playerIn.isCreative()){
             itemstack.damageItem(1, playerIn, (entity) -> {
                 entity.sendBreakAnimation(handIn);

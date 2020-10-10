@@ -2,12 +2,11 @@ package com.infamous.dungeons_gear.enchantments.armor;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.DropsEnchantment;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.init.PotionList;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -51,7 +50,7 @@ public class SurpriseGiftEnchantment extends DropsEnchantment {
             List<EffectInstance> potionEffects = PotionUtils.getEffectsFromStack(event.getItem());
             if(potionEffects.isEmpty()) return;
             if(potionEffects.get(0).getPotion() == Effects.INSTANT_HEALTH){
-                if(EnchantUtils.hasEnchantment(player, ArmorEnchantmentList.SURPRISE_GIFT)){
+                if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.SURPRISE_GIFT)){
                     int surpriseGiftLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.SURPRISE_GIFT, player);
                     float surpriseGiftChance = 0.5F * surpriseGiftLevel;
 

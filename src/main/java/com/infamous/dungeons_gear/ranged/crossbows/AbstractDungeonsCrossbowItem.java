@@ -5,7 +5,7 @@ import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
 import com.infamous.dungeons_gear.capabilities.weapon.WeaponProvider;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.interfaces.IRangedWeapon;
-import com.infamous.dungeons_gear.utilties.RangedUtils;
+import com.infamous.dungeons_gear.utilties.RangedAttackHelper;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
@@ -202,7 +202,7 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
             abstractArrowEntity.setKnockbackStrength(punchLevel);
         }
 
-        RangedUtils.addWeaponTags(abstractArrowEntity, stack);
+        RangedAttackHelper.addWeaponTags(abstractArrowEntity, stack);
         return abstractArrowEntity;
     }
 

@@ -2,7 +2,7 @@ package com.infamous.dungeons_gear.artifacts;
 
 import com.infamous.dungeons_gear.interfaces.IArtifact;
 import com.infamous.dungeons_gear.items.ArtifactList;
-import com.infamous.dungeons_gear.utilties.AbilityUtils;
+import com.infamous.dungeons_gear.utilties.AbilityHelper;
 import net.minecraft.block.*;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -46,7 +46,7 @@ public class IceWandItem extends Item implements IArtifact {
                 blockPos = itemUseContextPos.offset(itemUseContextFace);
             }
                 if(itemUseContextPlayer != null) {
-                    AbilityUtils.summonIceBlocks(world, itemUseContextPlayer, blockPos);
+                    AbilityHelper.summonIceBlocks(world, itemUseContextPlayer, blockPos);
 
                     if(!itemUseContextPlayer.isCreative()){
                         itemUseContextItem.damageItem(1, itemUseContextPlayer, (entity) -> {

@@ -2,8 +2,8 @@ package com.infamous.dungeons_gear.enchantments.armor;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
-import com.infamous.dungeons_gear.utilties.AreaOfEffects;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -35,11 +35,11 @@ public class AltruisticEnchantment extends Enchantment{
         LivingEntity livingEntity = event.getEntityLiving();
         if(livingEntity instanceof PlayerEntity){
             PlayerEntity playerEntity = (PlayerEntity) livingEntity;
-            if(EnchantUtils.hasEnchantment(playerEntity, ArmorEnchantmentList.ALTRUISTIC)){
+            if(ModEnchantmentHelper.hasEnchantment(playerEntity, ArmorEnchantmentList.ALTRUISTIC)){
                 int altruisticLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.ALTRUISTIC, playerEntity);
                 float damage = event.getAmount();
                 float damageToHealingMultiplier = 0.25F * altruisticLevel;
-                AreaOfEffects.healNearbyAllies(playerEntity, damage * damageToHealingMultiplier, 12);
+                AreaOfEffectHelper.healNearbyAllies(playerEntity, damage * damageToHealingMultiplier, 12);
 
             }
         }

@@ -1,11 +1,10 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.utilties.EnchantUtils;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.enchantment.ProtectionEnchantment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
@@ -43,11 +42,11 @@ public class DeflectEnchantment extends Enchantment {
     @SubscribeEvent
     public static void onDeflectImpact(ProjectileImpactEvent.Arrow event){
         RayTraceResult rayTraceResult = event.getRayTraceResult();
-        if(!EnchantUtils.arrowHitLivingEntity(rayTraceResult)) return;
+        if(!ModEnchantmentHelper.arrowHitLivingEntity(rayTraceResult)) return;
         AbstractArrowEntity arrow = event.getArrow();
-        if(!EnchantUtils.shooterIsLiving(arrow)) return;
+        if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
         LivingEntity victim = (LivingEntity) ((EntityRayTraceResult)rayTraceResult).getEntity();
-        if(EnchantUtils.hasEnchantment(victim, ArmorEnchantmentList.DEFLECT)){
+        if(ModEnchantmentHelper.hasEnchantment(victim, ArmorEnchantmentList.DEFLECT)){
             int deflectLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.DEFLECT, victim);
             double originalDamage = arrow.getDamage();
             double deflectChance = 0;
