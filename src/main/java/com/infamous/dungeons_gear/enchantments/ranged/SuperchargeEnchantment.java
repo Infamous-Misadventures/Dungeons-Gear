@@ -10,6 +10,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
@@ -39,7 +40,7 @@ public class SuperchargeEnchantment extends Enchantment {
         boolean uniqueWeaponFlag = arrow.getTags().contains("GuardianBow");
         if(superchargeLevel > 0 || uniqueWeaponFlag){
             double originalDamage = arrow.getDamage();
-            int originalKnockback = arrow.knockbackStrength;
+            int originalKnockback = ObfuscationReflectionHelper.getPrivateValue(AbstractArrowEntity.class, arrow, "field_70256_ap");
             double damageModifier = 0;
             if(superchargeLevel == 1) damageModifier = 1.2D;
             if(superchargeLevel == 2) damageModifier = 1.4D;

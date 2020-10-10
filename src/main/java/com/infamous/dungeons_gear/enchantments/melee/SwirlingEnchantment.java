@@ -54,10 +54,9 @@ public class SwirlingEnchantment extends AOEDamageEnchantment {
                 float cooledAttackStrength = attacker.getCooledAttackStrength(0.5F);
                 attackDamage *= 0.2F + cooledAttackStrength * cooledAttackStrength * 0.8F;
 
+
                 float damageDealt = attackDamage * 0.5F;
-                if(swirlingLevel == 1) damageDealt *= 1;
-                if(swirlingLevel == 2) damageDealt *= 1.5;
-                if(swirlingLevel == 3) damageDealt *= 2;
+                damageDealt *= (swirlingLevel + 1) / 2.0F;
                 victim.world.playSound((PlayerEntity) null, victim.getPosX(), victim.getPosY(), victim.getPosZ(), SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.PLAYERS, 64.0F, 1.0F);
                 AOECloudHelper.spawnCritCloud(attacker, victim, 1.5f);
                 AreaOfEffectHelper.causeSwirlingAttack(attacker, victim, damageDealt, 1.5f);

@@ -208,7 +208,7 @@ public class AreaOfEffectHelper {
         }
     }
 
-    public static void causeEchoAttack(LivingEntity attacker, LivingEntity target, float damageAmount, float distance){
+    public static void causeEchoAttack(LivingEntity attacker, LivingEntity target, float damageAmount, float distance, int echoLevel){
         World world = target.getEntityWorld();
         DamageSource echo = DamageSource.causeMobDamage(attacker);
         if(attacker instanceof PlayerEntity){
@@ -221,7 +221,8 @@ public class AreaOfEffectHelper {
         for(LivingEntity nearbyEntity : nearbyEntities){
             if(nearbyEntity == null) return;
             nearbyEntity.attackEntityFrom(echo, damageAmount);
-            return;
+            echoLevel--;
+            if(echoLevel <= 0) return;
         }
     }
 

@@ -49,11 +49,9 @@ public class CommittedEnchantment extends DamageBoostEnchantment {
                 int committedLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.COMMITTED, mainhand);
                 float victimRemainingHealth = victim.getHealth() / victim.getMaxHealth();
                 float originalDamage = event.getAmount();
-                float extraDamageMultiplier = 0;
+                float extraDamageMultiplier;
                 // If normal damage is X, the same weapon with Tier 3 Committed adds an extra (X * (1 - (Mob Remaining HP/Mob Max HP))) damage.
-                if(committedLevel == 1) extraDamageMultiplier = 0.5F;
-                if(committedLevel == 2) extraDamageMultiplier = 0.75F;
-                if(committedLevel == 3) extraDamageMultiplier = 1.0F;
+                extraDamageMultiplier = 0.25F + committedLevel * 0.25F;
                 if(uniqueWeaponFlag) extraDamageMultiplier += 0.5F;
                 float extraDamage = (originalDamage * (1 - victimRemainingHealth)) * extraDamageMultiplier;
                 event.setAmount(originalDamage + extraDamage);

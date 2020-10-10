@@ -49,10 +49,8 @@ public class DeflectEnchantment extends Enchantment {
         if(ModEnchantmentHelper.hasEnchantment(victim, ArmorEnchantmentList.DEFLECT)){
             int deflectLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.DEFLECT, victim);
             double originalDamage = arrow.getDamage();
-            double deflectChance = 0;
-            if(deflectLevel == 1) deflectChance = 0.2F;
-            if(deflectLevel == 2) deflectChance = 0.4F;
-            if(deflectLevel == 3) deflectChance = 0.6F;
+            double deflectChance;
+            deflectChance = deflectLevel * 0.2F;
             float deflectRand = victim.getRNG().nextFloat();
             if(deflectRand <= deflectChance){
                 event.setCanceled(true);

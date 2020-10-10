@@ -52,10 +52,8 @@ public class ExplodingEnchantment extends AOEDamageEnchantment {
             boolean uniqueWeaponFlag = mainhand.getItem() == CURSED_AXE || mainhand.getItem() == BATTLESTAFF_OF_TERROR;
             if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.EXPLODING) || uniqueWeaponFlag){
                 int explodingLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.EXPLODING, mainhand);
-                float explosionDamage = 0;
-                if(explodingLevel == 1) explosionDamage = victim.getMaxHealth() * 0.2f;
-                if(explodingLevel == 2) explosionDamage = victim.getMaxHealth() * 0.4f;
-                if(explodingLevel == 3) explosionDamage = victim.getMaxHealth() * 0.6f;
+                float explosionDamage;
+                explosionDamage = victim.getMaxHealth() * 0.2F * explodingLevel;
                 if(uniqueWeaponFlag) explosionDamage += (victim.getMaxHealth() * 0.2f);
                 victim.world.playSound((PlayerEntity) null, victim.getPosX(), victim.getPosY(), victim.getPosZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 64.0F, 1.0F);
                 AOECloudHelper.spawnExplosionCloud(attacker, victim, 3.0F);

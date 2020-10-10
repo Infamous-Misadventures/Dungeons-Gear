@@ -40,11 +40,9 @@ public class BonusShotEnchantment extends Enchantment {
                 boolean uniqueWeaponFlag = stack.getItem() == BUTTERFLY_CROSSBOW;
                 if(ModEnchantmentHelper.hasEnchantment(stack, RangedEnchantmentList.BONUS_SHOT) || uniqueWeaponFlag){
                     int bonusShotLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.BONUS_SHOT, stack);
-                    float damageMultiplier = 0;
-                    if(bonusShotLevel == 1) damageMultiplier = 0.1F;
-                    if(bonusShotLevel == 2) damageMultiplier = 0.71F;
-                    if(bonusShotLevel == 3) damageMultiplier = 0.24F;
-                    if(uniqueWeaponFlag) damageMultiplier += 0.2F;
+                    float damageMultiplier;
+                    damageMultiplier = 0.1F + (bonusShotLevel-1 * 0.07F);
+                    if(uniqueWeaponFlag) damageMultiplier += 0.1F;
                     float arrowVelocity = RangedAttackHelper.getvVanillaOrModdedCrossbowArrowVelocity(stack);
                     ProjectileEffectHelper.fireBonusShotTowardsOtherEntity(player, 10,
                             damageMultiplier, arrowVelocity);
@@ -61,11 +59,9 @@ public class BonusShotEnchantment extends Enchantment {
         boolean uniqueWeaponFlag = stack.getItem() == TWIN_BOW;
         if(ModEnchantmentHelper.hasEnchantment(stack, RangedEnchantmentList.BONUS_SHOT) || uniqueWeaponFlag){
             int bonusShotLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.BONUS_SHOT, stack);
-            float damageMultiplier = 0;
-            if(bonusShotLevel == 1) damageMultiplier = 0.1F;
-            if(bonusShotLevel == 2) damageMultiplier = 0.71F;
-            if(bonusShotLevel == 3) damageMultiplier = 0.24F;
-            if(uniqueWeaponFlag) damageMultiplier += 0.2F;
+            float damageMultiplier;
+            damageMultiplier = 0.1F + (bonusShotLevel-1 * 0.07F);
+            if(uniqueWeaponFlag) damageMultiplier += 0.1F;
             float arrowVelocity = RangedAttackHelper.getVanillaOrModdedBowArrowVelocity(stack, charge);
             if(arrowVelocity >= 0.1F){
                 ProjectileEffectHelper.fireBonusShotTowardsOtherEntity(livingEntity, 10, damageMultiplier, arrowVelocity);

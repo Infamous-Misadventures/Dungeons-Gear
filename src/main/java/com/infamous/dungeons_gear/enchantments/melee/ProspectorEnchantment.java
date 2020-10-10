@@ -42,10 +42,8 @@ public class ProspectorEnchantment extends Enchantment{
             boolean uniqueWeaponFlag = mainhand.getItem() == THE_LAST_LAUGH;
             if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.PROSPECTOR)){
                 int prospectorLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.PROSPECTOR, mainhand);
-                float prospectorChance = 0;
-                if(prospectorLevel == 1) prospectorChance = 0.25F;
-                if(prospectorLevel == 2) prospectorChance = 0.5F;
-                if(prospectorLevel == 3) prospectorChance = 0.75F;
+                float prospectorChance;
+                prospectorChance = 0.25F * prospectorLevel;
                 float prospectorRand = attacker.getRNG().nextFloat();
                 if(prospectorRand <= prospectorChance){
                     if(victim instanceof MonsterEntity && !isInNether(victim)){

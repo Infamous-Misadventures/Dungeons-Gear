@@ -59,9 +59,7 @@ public class ShockwaveEnchantment extends AOEDamageEnchantment {
                 attackDamage *= 0.2F + cooledAttackStrength * cooledAttackStrength * 0.8F;
 
                 float shockwaveDamage = attackDamage * 0.25F;
-                if(shockwaveLevel == 1) shockwaveDamage *= 1;
-                if(shockwaveLevel == 2) shockwaveDamage *= 1.5;
-                if(shockwaveLevel == 3) shockwaveDamage *= 2;
+                shockwaveDamage *= (shockwaveLevel + 1) / 2.0F;
                 if(uniqueWeaponFlag) shockwaveDamage += shockwaveDamage;
                 victim.world.playSound((PlayerEntity) null, victim.getPosX(), victim.getPosY(), victim.getPosZ(), SoundEvents.ENTITY_LIGHTNING_BOLT_IMPACT, SoundCategory.PLAYERS, 64.0F, 1.0F);
                 AOECloudHelper.spawnCritCloud(attacker, victim, 3.0f);

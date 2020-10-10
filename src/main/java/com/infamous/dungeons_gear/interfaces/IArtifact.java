@@ -22,9 +22,8 @@ public interface IArtifact {
         float cooldownEnchantmentReduction = 0;
         if(ModEnchantmentHelper.hasEnchantment(playerIn, ArmorEnchantmentList.COOLDOWN)) {
             int cooldownEnchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.COOLDOWN, playerIn);
-            if (cooldownEnchantmentLevel == 1) cooldownEnchantmentReduction = (int) (0.1F * cooldownInTicks);
-            if (cooldownEnchantmentLevel == 2) cooldownEnchantmentReduction = (int) (0.19F * cooldownInTicks);
-            if (cooldownEnchantmentLevel == 3) cooldownEnchantmentReduction = (int) (0.27F * cooldownInTicks);
+            cooldownEnchantmentReduction = (int) (cooldownEnchantmentLevel * 0.1F * cooldownInTicks);
+
         }
         playerIn.getCooldownTracker().setCooldown(item, Math.max(0, (int) (cooldownInTicks * totalArmorCooldownModifier - cooldownEnchantmentReduction)));
     }

@@ -46,10 +46,8 @@ public class CriticalHitEnchantment extends DamageBoostEnchantment {
             boolean uniqueWeaponFlag = mainhand.getItem() == HAWKBRAND || mainhand.getItem() == MASTERS_KATANA;
             if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.CRITICAL_HIT)){
                 int criticalHitLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.CRITICAL_HIT, mainhand);
-                float criticalHitChance = 0;
-                if(criticalHitLevel == 1) criticalHitChance = 0.1F;
-                if(criticalHitLevel == 2) criticalHitChance = 0.15F;
-                if(criticalHitLevel == 3) criticalHitChance = 0.2F;
+                float criticalHitChance;
+                criticalHitChance = 0.5F + criticalHitLevel * 0.05F;
                 float criticalHitRand = attacker.getRNG().nextFloat();
                 if(criticalHitRand <= criticalHitChance){
                     event.setResult(Event.Result.ALLOW);

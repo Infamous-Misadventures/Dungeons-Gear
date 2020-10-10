@@ -44,6 +44,7 @@ import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import java.util.UUID;
 
@@ -230,7 +231,8 @@ public class ArtifactEvents {
                 if(!(targetEntity instanceof LivingEntity)){
                     event.setCanceled(true);
                 }
-                int currentKnockbackStrength = arrowEntity.knockbackStrength;
+
+                int currentKnockbackStrength = ObfuscationReflectionHelper.getPrivateValue(AbstractArrowEntity.class, arrowEntity, "field_70256_ap");
                 (arrowEntity).setKnockbackStrength(currentKnockbackStrength + 1);
             }
 
@@ -357,9 +359,7 @@ public class ArtifactEvents {
         float cooldownEnchantmentReduction = 0;
         if(ModEnchantmentHelper.hasEnchantment(playerIn, ArmorEnchantmentList.COOLDOWN)) {
             int cooldownEnchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.COOLDOWN, playerIn);
-            if (cooldownEnchantmentLevel == 1) cooldownEnchantmentReduction = (int) (0.1F * cooldownInTicks);
-            if (cooldownEnchantmentLevel == 2) cooldownEnchantmentReduction = (int) (0.19F * cooldownInTicks);
-            if (cooldownEnchantmentLevel == 3) cooldownEnchantmentReduction = (int) (0.27F * cooldownInTicks);
+            cooldownEnchantmentReduction = (int) (cooldownEnchantmentLevel * 0.1F * cooldownInTicks);
         }
         playerIn.getCooldownTracker().setCooldown(item, Math.max(0, (int) (cooldownInTicks * totalArmorCooldownModifier - cooldownEnchantmentReduction)));
     }

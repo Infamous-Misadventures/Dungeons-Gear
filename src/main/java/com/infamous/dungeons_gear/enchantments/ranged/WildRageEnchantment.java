@@ -48,10 +48,8 @@ public class WildRageEnchantment extends Enchantment {
         MobEntity victim = (MobEntity) ((EntityRayTraceResult)rayTraceResult).getEntity();
         if(!(victim instanceof IMob) || !(victim.isNonBoss())) return;
         if(wildRageLevel > 0){
-            float wildRageChance = 0;
-            if(wildRageLevel == 1) wildRageChance = 0.2F;
-            if(wildRageLevel == 2) wildRageChance = 0.3F;
-            if(wildRageLevel == 3) wildRageChance = 0.4F;
+            float wildRageChance = 0.1F;
+            wildRageChance += wildRageLevel * 0.1F;
 
             float chance = shooter.getRNG().nextFloat();
             if(chance <=  wildRageChance){
@@ -75,10 +73,8 @@ public class WildRageEnchantment extends Enchantment {
         MobEntity enemy = (MobEntity) victim;
             if((ModEnchantmentHelper.hasEnchantment(attacker, RangedEnchantmentList.WILD_RAGE))){
                 int wildRageLevel = EnchantmentHelper.getMaxEnchantmentLevel(RangedEnchantmentList.WILD_RAGE, attacker);
-                float wildRageChance = 0;
-                if(wildRageLevel == 1) wildRageChance = 0.2F;
-                if(wildRageLevel == 2) wildRageChance = 0.3F;
-                if(wildRageLevel == 3) wildRageChance = 0.4F;
+                float wildRageChance = 0.1F;
+                wildRageChance += wildRageLevel * 0.1F;
 
                 float chance = attacker.getRNG().nextFloat();
                 if(chance <=  wildRageChance){

@@ -50,14 +50,11 @@ public class SnowballEnchantment extends PulseEnchantment {
                 int snowballLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.SNOWBALL, player);
                 if(snowballNearbyTimer <= 0){
                     ProjectileEffectHelper.fireSnowballAtNearbyEnemy(player, 10);
-                    if(snowballLevel == 1) comboCap.setSnowballNearbyTimer(100);
-                    if(snowballLevel == 2) comboCap.setSnowballNearbyTimer(60);
-                    if(snowballLevel == 3) comboCap.setSnowballNearbyTimer(20);
+                    comboCap.setSnowballNearbyTimer(Math.max(100 - snowballLevel * 40, 0));
                 }
                 else{
-                    if(snowballLevel == 2 && snowballNearbyTimer  == 100) snowballNearbyTimer -= 40;
-                    if(snowballLevel == 3 && snowballNearbyTimer  == 100) snowballNearbyTimer -= 80;
-                    comboCap.setSnowballNearbyTimer(snowballNearbyTimer - 1);
+                    if(snowballNearbyTimer == 100) snowballNearbyTimer -= Math.max(100, 20 + snowballLevel * 20);
+                    comboCap.setSnowballNearbyTimer(Math.max(snowballNearbyTimer - 1, 0));
                 }
             }
             else{

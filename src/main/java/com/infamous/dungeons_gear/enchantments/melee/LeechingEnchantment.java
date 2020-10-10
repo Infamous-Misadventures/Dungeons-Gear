@@ -45,10 +45,8 @@ public class LeechingEnchantment extends HealingEnchantment {
             if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.LEECHING)){
                 int leechingLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.LEECHING, mainhand);
                 float victimMaxHealth = victim.getMaxHealth();
-                float healthRegained = 0;
-                if(leechingLevel == 1) healthRegained = 0.04F * victimMaxHealth;
-                if(leechingLevel == 2) healthRegained = 0.06F * victimMaxHealth;
-                if(leechingLevel == 3) healthRegained = 0.08F * victimMaxHealth;
+                float healthRegained;
+                healthRegained = (0.02F + 0.02F * leechingLevel) * victimMaxHealth;
                 if(uniqueWeaponFlag) healthRegained += 0.04F * victimMaxHealth;
                 attacker.heal(healthRegained);
             }

@@ -172,10 +172,8 @@ public class ProjectileEffectHelper {
         boolean uniqueWeaponFlag = mainhand.getItem() == FERAL_SOUL_CROSSBOW;
         if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.ENIGMA_RESONATOR)){
             int enigmaResonatorLevel = EnchantmentHelper.getEnchantmentLevel(MeleeRangedEnchantmentList.ENIGMA_RESONATOR, mainhand);
-            float soulsCriticalBoostChanceCap = 0;
-            if(enigmaResonatorLevel == 1) soulsCriticalBoostChanceCap = 0.15F;
-            if(enigmaResonatorLevel == 2) soulsCriticalBoostChanceCap = 0.2F;
-            if(enigmaResonatorLevel == 3) soulsCriticalBoostChanceCap = 0.25F;
+            float soulsCriticalBoostChanceCap;
+            soulsCriticalBoostChanceCap = 0.1F + 0.05F * enigmaResonatorLevel;
             float soulsCriticalBoostRand = attacker.getRNG().nextFloat();
             if(soulsCriticalBoostRand <= Math.min(numSouls/50.0, soulsCriticalBoostChanceCap)){
                 return true;
