@@ -58,7 +58,7 @@ public class AnimaConduitEnchantment extends HealingEnchantment {
                                 PlayerEntity playerEntity = (PlayerEntity) attacker;
                                 int experiencePoints = getDroppedExperience(mobEntity, playerEntity);
                                 double soulsToHealth = experiencePoints * (0.01 * animaConduitLevel);
-                                PROXY.spawnParticles(playerEntity, ParticleTypes.field_239812_C_);
+                                PROXY.spawnParticles(playerEntity, ParticleTypes.SOUL);
                                 playerEntity.heal((float)soulsToHealth);
                             }
                         }
@@ -77,7 +77,7 @@ public class AnimaConduitEnchantment extends HealingEnchantment {
                             PlayerEntity playerEntity = (PlayerEntity) attacker;
                             int experiencePoints = getDroppedExperience(mobEntity, playerEntity);
                             double soulsToHealth = experiencePoints * (0.01 * animaConduitLevel);
-                            PROXY.spawnParticles(playerEntity, ParticleTypes.field_239812_C_);
+                            PROXY.spawnParticles(playerEntity, ParticleTypes.SOUL);
                             playerEntity.heal((float)soulsToHealth);
                         }
                     }

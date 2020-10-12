@@ -117,7 +117,7 @@ public class SummonedFallingBlockEntity extends FallingBlockEntity {
         } else {
             Block block = this.fallTile.getBlock();
             if (this.fallTime++ == 0) {
-                BlockPos blockpos = this.func_233580_cy_();
+                BlockPos blockpos = this.getPosition();
                 if (this.world.getBlockState(blockpos).isIn(block)) {
                     this.world.removeBlock(blockpos, false);
                 } else if (!this.world.isRemote) {
@@ -132,7 +132,7 @@ public class SummonedFallingBlockEntity extends FallingBlockEntity {
 
             this.move(MoverType.SELF, this.getMotion());
             if (!this.world.isRemote) {
-                BlockPos blockpos1 = this.func_233580_cy_();
+                BlockPos blockpos1 = this.getPosition();
                 boolean flag = this.fallTile.getBlock() instanceof ConcretePowderBlock;
                 boolean flag1 = flag && this.world.getFluidState(blockpos1).isTagged(FluidTags.WATER);
                 double d0 = this.getMotion().lengthSquared();
@@ -162,7 +162,7 @@ public class SummonedFallingBlockEntity extends FallingBlockEntity {
                             boolean flag3 = FallingBlock.canFallThrough(this.world.getBlockState(blockpos1.down())) && (!flag || !flag1);
                             boolean flag4 = this.fallTile.isValidPosition(this.world, blockpos1) && !flag3;
                             if (flag2 && flag4) {
-                                if (this.fallTile.func_235901_b_(BlockStateProperties.WATERLOGGED) && this.world.getFluidState(blockpos1).getFluid() == Fluids.WATER) {
+                                if (this.fallTile.get(BlockStateProperties.WATERLOGGED) && this.world.getFluidState(blockpos1).getFluid() == Fluids.WATER) {
                                     this.fallTile = this.fallTile.with(BlockStateProperties.WATERLOGGED, Boolean.valueOf(true));
                                 }
 
@@ -183,7 +183,7 @@ public class SummonedFallingBlockEntity extends FallingBlockEntity {
                                                 }
                                             }
 
-                                            tileentity.func_230337_a_(this.fallTile, compoundnbt);
+                                            tileentity.read(this.fallTile, compoundnbt);
                                             tileentity.markDirty();
                                         }
                                     }

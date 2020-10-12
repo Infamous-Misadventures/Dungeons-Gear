@@ -6,6 +6,7 @@ import com.infamous.dungeons_gear.combat.CombatEventHandler;
 import com.infamous.dungeons_gear.interfaces.IOffhandAttack;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.items.WeaponList;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
@@ -15,13 +16,13 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
+import net.minecraft.util.*;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import java.util.List;
 
@@ -44,9 +45,32 @@ public class SickleItem extends HoeItem implements IOffhandAttack, IMeleeWeapon 
         return enchantment.type.canEnchantItem(Items.IRON_SWORD) && enchantment != Enchantments.SWEEPING;
     }
 
+    @Override
+    public ActionResultType onItemUse(ItemUseContext context) {
+        World world = context.getWorld();
+        BlockPos blockpos = context.getPos();
+        int hook = net.minecraftforge.event.ForgeEventFactory.onHoeUse(context);
+        if (hook != 0) return hook > 0 ? ActionResultType.SUCCESS : ActionResultType.FAIL;
+        if (context.getFace() != Direction.DOWN && world.isAirBlock(blockpos.up())) {
+            BlockState blockstate = world.getBlockState(blockpos).getToolModifiedState(world, blockpos, context.getPlayer(), context.getItem(), net.minecraftforge.common.ToolType.HOE);
+            if (blockstate != null) {
+                PlayerEntity playerentity = context.getPlayer();
+                world.playSound(playerentity, blockpos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                if (!world.isRemote) {
+                    world.setBlockState(blockpos, blockstate, 11);
+                }
+
+                return ActionResultType.func_233537_a_(world.isRemote);
+            }
+        }
+
+        return ActionResultType.PASS;
+    }
+
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
+        Multimap<Attribute, AttributeModifier> attributeModifiers = ObfuscationReflectionHelper.getPrivateValue(ToolItem.class, this, "field_234674_d_");
         return equipmentSlot == EquipmentSlotType.MAINHAND  || equipmentSlot == EquipmentSlotType.OFFHAND?
-                this.field_234674_d_ : super.getAttributeModifiers(equipmentSlot);
+                attributeModifiers : super.getAttributeModifiers(equipmentSlot);
     }
 
     public Rarity getRarity(ItemStack itemStack){

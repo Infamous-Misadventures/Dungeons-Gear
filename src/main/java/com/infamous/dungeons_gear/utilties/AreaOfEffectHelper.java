@@ -335,7 +335,7 @@ public class AreaOfEffectHelper {
                 xRatio = (Math.random() - Math.random()) * 0.01D;
             }
             nearbyEntity.attackedAtYaw = (float)(MathHelper.atan2(zRatio, xRatio) * 57.2957763671875D - (double)nearbyEntity.rotationYaw);
-            nearbyEntity.func_233627_a_(0.4F  * knockbackMultiplier, xRatio, zRatio);
+            nearbyEntity.applyKnockback(0.4F  * knockbackMultiplier, xRatio, zRatio);
             // END OF KNOCKBACK
 
             PROXY.spawnParticles(nearbyEntity, ParticleTypes.CLOUD);

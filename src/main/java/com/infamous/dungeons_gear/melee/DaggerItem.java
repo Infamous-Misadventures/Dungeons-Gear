@@ -19,6 +19,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import java.util.List;
 
@@ -31,8 +32,9 @@ public class DaggerItem extends SwordItem implements IOffhandAttack, IMeleeWeapo
 
 
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
+        Multimap<Attribute, AttributeModifier> attributeModifiers = ObfuscationReflectionHelper.getPrivateValue(SwordItem.class, this, "field_234810_b_");
         return equipmentSlot == EquipmentSlotType.MAINHAND  || equipmentSlot == EquipmentSlotType.OFFHAND?
-                this.field_234810_b_ : super.getAttributeModifiers(equipmentSlot);
+                attributeModifiers : super.getAttributeModifiers(equipmentSlot);
     }
 
     public Rarity getRarity(ItemStack itemStack){

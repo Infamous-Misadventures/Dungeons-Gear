@@ -61,7 +61,7 @@ public class EnigmaResonatorEnchantment extends DamageBoostEnchantment {
                     float newDamageModifier = event.getDamageModifier() == event.getOldDamageModifier() ? event.getDamageModifier() + 1.5F : event.getDamageModifier() * 3.0F;
                     event.setDamageModifier(newDamageModifier);
                     // soul particles
-                    PROXY.spawnParticles(attacker, ParticleTypes.field_239812_C_);
+                    PROXY.spawnParticles(attacker, ParticleTypes.SOUL);
                 }
             }
             if(uniqueWeaponFlag){
@@ -71,7 +71,7 @@ public class EnigmaResonatorEnchantment extends DamageBoostEnchantment {
                     float newDamageModifier = event.getDamageModifier() == event.getOldDamageModifier() ? event.getDamageModifier() + 1.5F : event.getDamageModifier() * 3.0F;
                     event.setDamageModifier(newDamageModifier);
                     // soul particles
-                    PROXY.spawnParticles(attacker, ParticleTypes.field_239812_C_);
+                    PROXY.spawnParticles(attacker, ParticleTypes.SOUL);
                 }
             }
         }

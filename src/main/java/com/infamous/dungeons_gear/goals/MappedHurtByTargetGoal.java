@@ -34,7 +34,7 @@ public class MappedHurtByTargetGoal extends TargetGoal {
         LivingEntity livingentity = this.goalOwner.getRevengeTarget();
         if (i != this.revengeTimerOld && livingentity != null) {
             if (livingentity.getType() == EntityType.PLAYER
-                    && this.goalOwner.world.getGameRules().getBoolean(GameRules.field_234896_G_)) {
+                    && this.goalOwner.world.getGameRules().getBoolean(GameRules.UNIVERSAL_ANGER)) {
                 return false;
             } else {
                 for(Class<?> oclass : this.excludedReinforcementTypes) {
@@ -73,7 +73,7 @@ public class MappedHurtByTargetGoal extends TargetGoal {
 
     protected void alertOthers() {
         double d0 = this.getTargetDistance();
-        AxisAlignedBB axisalignedbb = AxisAlignedBB.func_241549_a_(this.goalOwner.getPositionVec()).grow(d0, 10.0D, d0);
+        AxisAlignedBB axisalignedbb = AxisAlignedBB.fromVector(this.goalOwner.getPositionVec()).grow(d0, 10.0D, d0);
         List<MobEntity> list = this.goalOwner.world.getLoadedEntitiesWithinAABB(this.goalOwner.getClass(), axisalignedbb);
         Iterator iterator = list.iterator();
 

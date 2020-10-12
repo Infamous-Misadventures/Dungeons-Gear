@@ -17,11 +17,14 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.passive.horse.LlamaEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.*;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.*;
@@ -31,7 +34,10 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 
 
@@ -66,9 +72,22 @@ public class WonderfulWheatItem extends Item implements IArtifact {
                     if (llamaEntity!= null) {
                         llamaEntity.setTamedBy(itemUseContextPlayer);
                         llamaEntity.setVariant(2);
-                        llamaEntity.setStrength(5);
-                        llamaEntity.getAttribute(Attributes.field_233818_a_).setBaseValue(30.0D);
-                        llamaEntity.horseChest.setInventorySlotContents(1, new ItemStack(Items.RED_CARPET.asItem()));
+
+                        Method setStrength = ObfuscationReflectionHelper.findMethod(LlamaEntity.class, "func_190706_p", Integer.class);
+                        try {
+                            setStrength.invoke(llamaEntity, 5);
+                        } catch (IllegalAccessException | InvocationTargetException e) {
+                            e.printStackTrace();
+                        }
+                        //llamaEntity.setStrength(5);
+                        ModifiableAttributeInstance maxHealth = llamaEntity.getAttribute(Attributes.MAX_HEALTH);
+                        if(maxHealth != null)
+                        maxHealth.setBaseValue(30.0D);
+                        Inventory horseChest = ObfuscationReflectionHelper.getPrivateValue(AbstractHorseEntity.class, llamaEntity, "field_110296_bG");
+                        if (horseChest != null) {
+                            horseChest.setInventorySlotContents(1, new ItemStack(Items.RED_CARPET.asItem()));
+                        }
+
                         llamaEntity.setLocationAndAngles((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D, 0.0F, 0.0F);
 
                         llamaEntity.targetSelector.addGoal(1, new LlamaOwnerHurtByTargetGoal(llamaEntity));

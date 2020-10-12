@@ -73,7 +73,7 @@ public class PlayerAttackHelper {
         if (ForgeHooks.onPlayerAttackTarget(player, target)) {
             if (target.canBeAttackedWithItem() && !target.hitByEntity(player)) {
                 // get attack damage attribute value
-                float attackDamage = (float)player.func_233637_b_(Attributes.field_233823_f_);
+                float attackDamage = (float)player.getAttributeValue(Attributes.ATTACK_DAMAGE);
                 float enchantmentAffectsTargetBonus;
                 if (target instanceof LivingEntity) {
                     enchantmentAffectsTargetBonus = EnchantmentHelper.getModifierForCreature(player.getHeldItemOffhand(), ((LivingEntity)target).getCreatureAttribute());
@@ -96,7 +96,7 @@ public class PlayerAttackHelper {
                         flag1 = true;
                     }
 
-                    boolean flag2 = flag && player.fallDistance > 0.0F && !player.func_233570_aj_() && !player.isOnLadder() && !player.isInWater() && !player.isPotionActive(Effects.BLINDNESS) && !player.isPassenger() && target instanceof LivingEntity;
+                    boolean flag2 = flag && player.fallDistance > 0.0F && !player.isOnGround() && !player.isOnLadder() && !player.isInWater() && !player.isPotionActive(Effects.BLINDNESS) && !player.isPassenger() && target instanceof LivingEntity;
                     flag2 = flag2 && !player.isSprinting();
                     CriticalHitEvent hitResult = ForgeHooks.getCriticalHit(player, target, flag2, flag2 ? 1.5F : 1.0F);
                     flag2 = hitResult != null;
@@ -107,7 +107,7 @@ public class PlayerAttackHelper {
                     attackDamage += enchantmentAffectsTargetBonus;
                     boolean flag3 = false;
                     double d0 = (double)(player.distanceWalkedModified - player.prevDistanceWalkedModified);
-                    if (flag && !flag2 && !flag1 && player.func_233570_aj_() && d0 < (double)player.getAIMoveSpeed()) {
+                    if (flag && !flag2 && !flag1 && player.isOnGround() && d0 < (double)player.getAIMoveSpeed()) {
                         ItemStack itemstack = player.getHeldItem(Hand.OFF_HAND);
                         if (itemstack.getItem() instanceof SwordItem) {
                             flag3 = true;
@@ -131,7 +131,7 @@ public class PlayerAttackHelper {
                     if (flag5) {
                         if (i > 0) {
                             if (target instanceof LivingEntity) {
-                                ((LivingEntity)target).func_233627_a_((float)i * 0.5F, (double) MathHelper.sin(player.rotationYaw * 0.017453292F), (double)(-MathHelper.cos(player.rotationYaw * 0.017453292F)));
+                                ((LivingEntity)target).applyKnockback((float)i * 0.5F, (double) MathHelper.sin(player.rotationYaw * 0.017453292F), (double)(-MathHelper.cos(player.rotationYaw * 0.017453292F)));
                             } else {
                                 target.addVelocity((double)(-MathHelper.sin(player.rotationYaw * 0.017453292F) * (float)i * 0.5F), 0.1D, (double)(MathHelper.cos(player.rotationYaw * 0.017453292F) * (float)i * 0.5F));
                             }
@@ -164,7 +164,7 @@ public class PlayerAttackHelper {
                                 } while(livingentity instanceof ArmorStandEntity && ((ArmorStandEntity)livingentity).hasMarker());
 
                                 if (player.getDistanceSq(livingentity) < 9.0D) {
-                                    livingentity.func_233627_a_(0.4F, (double)MathHelper.sin(player.rotationYaw * 0.017453292F), (double)(-MathHelper.cos(player.rotationYaw * 0.017453292F)));
+                                    livingentity.applyKnockback(0.4F, (double)MathHelper.sin(player.rotationYaw * 0.017453292F), (double)(-MathHelper.cos(player.rotationYaw * 0.017453292F)));
                                     livingentity.attackEntityFrom(offhandAttack, f3);
                                 }
                             }

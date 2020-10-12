@@ -13,6 +13,7 @@ import net.minecraft.tileentity.LockableLootTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.event.RegistryEvent;
@@ -61,7 +62,8 @@ public class GlobalLootModifier{
             if(!DungeonsGearConfig.COMMON.ENABLE_DUNGEONS_GEAR_LOOT.get()){
                 return generatedLoot;
             }
-            BlockPos pos = context.get(LootParameters.POSITION);
+            Vector3d vector3d = context.get(LootParameters.field_237457_g_);
+            BlockPos pos = new BlockPos(vector3d);
             TileEntity te = pos == null ? null : context.getWorld().getTileEntity(pos);
             ResourceLocation lootTable = null;
             if(te instanceof LockableLootTileEntity){
@@ -91,6 +93,11 @@ public class GlobalLootModifier{
             public CommonLootAdditions read(ResourceLocation name, JsonObject object, ILootCondition[] conditionsIn) {
                 return new CommonLootAdditions(conditionsIn);
             }
+
+            @Override
+            public JsonObject write(CommonLootAdditions instance) {
+                return null;
+            }
         }
     }
 
@@ -107,7 +114,8 @@ public class GlobalLootModifier{
             if(!DungeonsGearConfig.COMMON.ENABLE_DUNGEONS_GEAR_LOOT.get()){
                 return generatedLoot;
             }
-            BlockPos pos = context.get(LootParameters.POSITION);
+            Vector3d vector3d = context.get(LootParameters.field_237457_g_);
+            BlockPos pos = new BlockPos(vector3d);
             TileEntity te = pos == null ? null : context.getWorld().getTileEntity(pos);
             ResourceLocation lootTable = null;
             if(te instanceof LockableLootTileEntity){
@@ -137,6 +145,11 @@ public class GlobalLootModifier{
             public UncommonLootAdditions read(ResourceLocation name, JsonObject object, ILootCondition[] conditionsIn) {
                 return new UncommonLootAdditions(conditionsIn);
             }
+
+            @Override
+            public JsonObject write(UncommonLootAdditions instance) {
+                return null;
+            }
         }
     }
 
@@ -153,7 +166,8 @@ public class GlobalLootModifier{
             if(!DungeonsGearConfig.COMMON.ENABLE_DUNGEONS_GEAR_LOOT.get()){
                 return generatedLoot;
             }
-            BlockPos pos = context.get(LootParameters.POSITION);
+            Vector3d vector3d = context.get(LootParameters.field_237457_g_);
+            BlockPos pos = new BlockPos(vector3d);
             TileEntity te = pos == null ? null : context.getWorld().getTileEntity(pos);
             ResourceLocation lootTable = null;
             if(te instanceof LockableLootTileEntity){
@@ -183,6 +197,11 @@ public class GlobalLootModifier{
             public RareLootAdditions read(ResourceLocation name, JsonObject object, ILootCondition[] conditionsIn) {
                 return new RareLootAdditions(conditionsIn);
             }
+
+            @Override
+            public JsonObject write(RareLootAdditions instance) {
+                return null;
+            }
         }
     }
 
@@ -199,7 +218,8 @@ public class GlobalLootModifier{
             if(!DungeonsGearConfig.COMMON.ENABLE_DUNGEONS_GEAR_LOOT.get()){
                 return generatedLoot;
             }
-            BlockPos pos = context.get(LootParameters.POSITION);
+            Vector3d vector3d = context.get(LootParameters.field_237457_g_);
+            BlockPos pos = new BlockPos(vector3d);
             TileEntity te = pos == null ? null : context.getWorld().getTileEntity(pos);
             ResourceLocation lootTable = null;
             if(te instanceof LockableLootTileEntity){
@@ -230,6 +250,11 @@ public class GlobalLootModifier{
             @Override
             public SuperRareLootAdditions read(ResourceLocation name, JsonObject object, ILootCondition[] conditionsIn) {
                 return new SuperRareLootAdditions(conditionsIn);
+            }
+
+            @Override
+            public JsonObject write(SuperRareLootAdditions instance) {
+                return null;
             }
         }
     }

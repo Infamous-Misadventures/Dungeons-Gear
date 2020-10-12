@@ -57,7 +57,7 @@ public class EchoEnchantment extends AOEDamageEnchantment {
             if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.ECHO) || uniqueWeaponFlag){
                 int echoLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.ECHO, mainhand);
                 // gets the attack damage of the original attack before any enchantment modifiers are added
-                float attackDamage = (float)attacker.func_233637_b_(Attributes.field_233823_f_);
+                float attackDamage = (float)attacker.getAttributeValue(Attributes.ATTACK_DAMAGE);
                 float cooledAttackStrength = attacker.getCooledAttackStrength(0.5F);
                 attackDamage *= 0.2F + cooledAttackStrength * cooledAttackStrength * 0.8F;
 

@@ -14,6 +14,7 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -43,26 +44,22 @@ public abstract class LockableLootTileEntityMixin extends LockableTileEntity {
     @Inject(at = @At("HEAD"), method = "fillWithLoot", cancellable = true)
     private void fillWithLoot(@Nullable PlayerEntity player, CallbackInfo callbackInfo){
         if (this.lootTable != null && this.world.getServer() != null) {
-            LootTable loottable = this.world.getServer().getLootTableManager().getLootTableFromLocation(this.lootTable);
+            LootTable lootTable = this.world.getServer().getLootTableManager().getLootTableFromLocation(this.lootTable);
             if (player instanceof ServerPlayerEntity) {
-                CriteriaTriggers.field_232608_N_.func_235478_a_((ServerPlayerEntity) player, this.lootTable);
+                CriteriaTriggers.PLAYER_GENERATES_CONTAINER_LOOT.test((ServerPlayerEntity)player, this.lootTable);
             }
 
-            // This is where lootTable was originally set to null
-
-            LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld) this.world)).withParameter(LootParameters.POSITION, new BlockPos(this.pos)).withSeed(this.lootTableSeed);
+            LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld)this.world)).withParameter(LootParameters.field_237457_g_, Vector3d.copyCentered(this.pos)).withSeed(this.lootTableSeed);
             if (player != null) {
                 lootcontext$builder.withLuck(player.getLuck()).withParameter(LootParameters.THIS_ENTITY, player);
             }
 
             this.isApplyingModifier = true;
-            loottable.fillInventory(this, lootcontext$builder.build(LootParameterSets.CHEST));
+            lootTable.fillInventory(this, lootcontext$builder.build(LootParameterSets.CHEST));
             this.isApplyingModifier = false;
 
             // Moved to the bottom of the method instead of being in the middle, with an if-check to see if it was already set to null during the loot modifier's doApply call
-            if(lootTable != null){
-                this.lootTable = null;
-            }
+            this.lootTable = null;
         }
         callbackInfo.cancel();
     }

@@ -13,7 +13,7 @@ public class CrossbowItemModelsProperties {
 	public CrossbowItemModelsProperties() {
 		// CROSSBOW
 		/*
-		ItemModelsProperties.func_239418_a_(Items.CROSSBOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(Items.CROSSBOW, new ResourceLocation("pull"),
 				(stack, clientWorld, livingEntity) -> {
 					if (livingEntity == null) {
 						return 0.0F;
@@ -23,14 +23,14 @@ public class CrossbowItemModelsProperties {
 								/ (float) DungeonsHooks.getCrossbowChargeTime(stack);
 					}
 				});
-		ItemModelsProperties.func_239418_a_(Items.CROSSBOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(Items.CROSSBOW, new ResourceLocation("pulling"),
 				(stack, clientWorld, livingEntity) -> {
 					return livingEntity != null && livingEntity.isHandActive()
 							&& livingEntity.getActiveItemStack() == stack && !CrossbowItem.isCharged(stack)
 							? 1.0F
 							: 0.0F;
 				});
-		ItemModelsProperties.func_239418_a_(Items.CROSSBOW, new ResourceLocation("charged"),
+		ItemModelsProperties.registerProperty(Items.CROSSBOW, new ResourceLocation("charged"),
 				(stack, clientWorld, livingEntity) -> {
 					return livingEntity != null && CrossbowItem.isCharged(stack) ? 1.0F : 0.0F;
 				});
@@ -38,7 +38,7 @@ public class CrossbowItemModelsProperties {
 
 
 		// AUTO CROSSBOW
-		ItemModelsProperties.func_239418_a_(AUTO_CROSSBOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(AUTO_CROSSBOW, new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -48,20 +48,20 @@ public class CrossbowItemModelsProperties {
 										/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
-		ItemModelsProperties.func_239418_a_(AUTO_CROSSBOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(AUTO_CROSSBOW, new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_ && !RapidCrossbowItem.isCharged(p_239426_0_)
 									? 1.0F
 									: 0.0F;
 				});
-		ItemModelsProperties.func_239418_a_(AUTO_CROSSBOW, new ResourceLocation("charged"),
+		ItemModelsProperties.registerProperty(AUTO_CROSSBOW, new ResourceLocation("charged"),
 				(p_239425_0_, p_239425_1_, p_239425_2_) -> {
 					return p_239425_2_ != null && RapidCrossbowItem.isCharged(p_239425_0_) ? 1.0F : 0.0F;
 				});
 
 		// AZURE SEEKER
-		ItemModelsProperties.func_239418_a_(AZURE_SEEKER, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(AZURE_SEEKER, new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -71,20 +71,20 @@ public class CrossbowItemModelsProperties {
 								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
-		ItemModelsProperties.func_239418_a_(AZURE_SEEKER, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(AZURE_SEEKER, new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_ && !DungeonsCrossbowItem.isCharged(p_239426_0_)
 							? 1.0F
 							: 0.0F;
 				});
-		ItemModelsProperties.func_239418_a_(AZURE_SEEKER, new ResourceLocation("charged"),
+		ItemModelsProperties.registerProperty(AZURE_SEEKER, new ResourceLocation("charged"),
 				(p_239425_0_, p_239425_1_, p_239425_2_) -> {
 					return p_239425_2_ != null && DungeonsCrossbowItem.isCharged(p_239425_0_) ? 1.0F : 0.0F;
 				});
 
 		// BUTTERFLY CROSSBOW
-		ItemModelsProperties.func_239418_a_(BUTTERFLY_CROSSBOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(BUTTERFLY_CROSSBOW, new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -94,20 +94,20 @@ public class CrossbowItemModelsProperties {
 								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
-		ItemModelsProperties.func_239418_a_(BUTTERFLY_CROSSBOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(BUTTERFLY_CROSSBOW, new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_ && !RapidCrossbowItem.isCharged(p_239426_0_)
 							? 1.0F
 							: 0.0F;
 				});
-		ItemModelsProperties.func_239418_a_(BUTTERFLY_CROSSBOW, new ResourceLocation("charged"),
+		ItemModelsProperties.registerProperty(BUTTERFLY_CROSSBOW, new ResourceLocation("charged"),
 				(p_239425_0_, p_239425_1_, p_239425_2_) -> {
 					return p_239425_2_ != null && RapidCrossbowItem.isCharged(p_239425_0_) ? 1.0F : 0.0F;
 				});
 
 		// DOOM CROSSBOW
-		ItemModelsProperties.func_239418_a_(DOOM_CROSSBOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(DOOM_CROSSBOW, new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -117,20 +117,20 @@ public class CrossbowItemModelsProperties {
 								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
-		ItemModelsProperties.func_239418_a_(DOOM_CROSSBOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(DOOM_CROSSBOW, new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_ && !HeavyCrossbowItem.isCharged(p_239426_0_)
 							? 1.0F
 							: 0.0F;
 				});
-		ItemModelsProperties.func_239418_a_(DOOM_CROSSBOW, new ResourceLocation("charged"),
+		ItemModelsProperties.registerProperty(DOOM_CROSSBOW, new ResourceLocation("charged"),
 				(p_239425_0_, p_239425_1_, p_239425_2_) -> {
 					return p_239425_2_ != null && HeavyCrossbowItem.isCharged(p_239425_0_) ? 1.0F : 0.0F;
 				});
 
 		// FERAL SOUL CROSSBOW
-		ItemModelsProperties.func_239418_a_(FERAL_SOUL_CROSSBOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(FERAL_SOUL_CROSSBOW, new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -140,20 +140,20 @@ public class CrossbowItemModelsProperties {
 								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
-		ItemModelsProperties.func_239418_a_(FERAL_SOUL_CROSSBOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(FERAL_SOUL_CROSSBOW, new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_ && !SoulCrossbowItem.isCharged(p_239426_0_)
 							? 1.0F
 							: 0.0F;
 				});
-		ItemModelsProperties.func_239418_a_(FERAL_SOUL_CROSSBOW, new ResourceLocation("charged"),
+		ItemModelsProperties.registerProperty(FERAL_SOUL_CROSSBOW, new ResourceLocation("charged"),
 				(p_239425_0_, p_239425_1_, p_239425_2_) -> {
 					return p_239425_2_ != null && SoulCrossbowItem.isCharged(p_239425_0_) ? 1.0F : 0.0F;
 				});
 
 		// FIREBOLT THROWER
-		ItemModelsProperties.func_239418_a_(FIREBOLT_THROWER, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(FIREBOLT_THROWER, new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -163,20 +163,20 @@ public class CrossbowItemModelsProperties {
 								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
-		ItemModelsProperties.func_239418_a_(FIREBOLT_THROWER, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(FIREBOLT_THROWER, new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_ && !ExplodingCrossbowItem.isCharged(p_239426_0_)
 							? 1.0F
 							: 0.0F;
 				});
-		ItemModelsProperties.func_239418_a_(FIREBOLT_THROWER, new ResourceLocation("charged"),
+		ItemModelsProperties.registerProperty(FIREBOLT_THROWER, new ResourceLocation("charged"),
 				(p_239425_0_, p_239425_1_, p_239425_2_) -> {
 					return p_239425_2_ != null && ExplodingCrossbowItem.isCharged(p_239425_0_) ? 1.0F : 0.0F;
 				});
 
 		// HARP CROSSBOW
-		ItemModelsProperties.func_239418_a_(HARP_CROSSBOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(HARP_CROSSBOW, new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -186,19 +186,19 @@ public class CrossbowItemModelsProperties {
 								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
-		ItemModelsProperties.func_239418_a_(HARP_CROSSBOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(HARP_CROSSBOW, new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_ && !ScatterCrossbowItem.isCharged(p_239426_0_)
 							? 1.0F
 							: 0.0F;
 				});
-		ItemModelsProperties.func_239418_a_(HARP_CROSSBOW, new ResourceLocation("charged"),
+		ItemModelsProperties.registerProperty(HARP_CROSSBOW, new ResourceLocation("charged"),
 				(p_239425_0_, p_239425_1_, p_239425_2_) -> {
 					return p_239425_2_ != null && ScatterCrossbowItem.isCharged(p_239425_0_) ? 1.0F : 0.0F;
 				});
 		// LIGHTNING HARP CROSSBOW
-		ItemModelsProperties.func_239418_a_(LIGHTNING_HARP_CROSSBOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(LIGHTNING_HARP_CROSSBOW, new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -208,19 +208,19 @@ public class CrossbowItemModelsProperties {
 								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
-		ItemModelsProperties.func_239418_a_(LIGHTNING_HARP_CROSSBOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(LIGHTNING_HARP_CROSSBOW, new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_ && !ScatterCrossbowItem.isCharged(p_239426_0_)
 							? 1.0F
 							: 0.0F;
 				});
-		ItemModelsProperties.func_239418_a_(LIGHTNING_HARP_CROSSBOW, new ResourceLocation("charged"),
+		ItemModelsProperties.registerProperty(LIGHTNING_HARP_CROSSBOW, new ResourceLocation("charged"),
 				(p_239425_0_, p_239425_1_, p_239425_2_) -> {
 					return p_239425_2_ != null && ScatterCrossbowItem.isCharged(p_239425_0_) ? 1.0F : 0.0F;
 				});
 		// SLAYER CROSSBOW
-		ItemModelsProperties.func_239418_a_(SLAYER_CROSSBOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(SLAYER_CROSSBOW, new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -230,19 +230,19 @@ public class CrossbowItemModelsProperties {
 								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
-		ItemModelsProperties.func_239418_a_(SLAYER_CROSSBOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(SLAYER_CROSSBOW, new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_ && !HeavyCrossbowItem.isCharged(p_239426_0_)
 							? 1.0F
 							: 0.0F;
 				});
-		ItemModelsProperties.func_239418_a_(SLAYER_CROSSBOW, new ResourceLocation("charged"),
+		ItemModelsProperties.registerProperty(SLAYER_CROSSBOW, new ResourceLocation("charged"),
 				(p_239425_0_, p_239425_1_, p_239425_2_) -> {
 					return p_239425_2_ != null && HeavyCrossbowItem.isCharged(p_239425_0_) ? 1.0F : 0.0F;
 				});
 		// THE SLICER
-		ItemModelsProperties.func_239418_a_(THE_SLICER, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(THE_SLICER, new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -252,19 +252,19 @@ public class CrossbowItemModelsProperties {
 								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
-		ItemModelsProperties.func_239418_a_(THE_SLICER, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(THE_SLICER, new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_ && !DungeonsCrossbowItem.isCharged(p_239426_0_)
 							? 1.0F
 							: 0.0F;
 				});
-		ItemModelsProperties.func_239418_a_(THE_SLICER, new ResourceLocation("charged"),
+		ItemModelsProperties.registerProperty(THE_SLICER, new ResourceLocation("charged"),
 				(p_239425_0_, p_239425_1_, p_239425_2_) -> {
 					return p_239425_2_ != null && DungeonsCrossbowItem.isCharged(p_239425_0_) ? 1.0F : 0.0F;
 				});
 		// VOIDCALLER
-		ItemModelsProperties.func_239418_a_(VOIDCALLER, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(VOIDCALLER, new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -274,19 +274,19 @@ public class CrossbowItemModelsProperties {
 								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
-		ItemModelsProperties.func_239418_a_(VOIDCALLER, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(VOIDCALLER, new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_ && !SoulCrossbowItem.isCharged(p_239426_0_)
 							? 1.0F
 							: 0.0F;
 				});
-		ItemModelsProperties.func_239418_a_(VOIDCALLER, new ResourceLocation("charged"),
+		ItemModelsProperties.registerProperty(VOIDCALLER, new ResourceLocation("charged"),
 				(p_239425_0_, p_239425_1_, p_239425_2_) -> {
 					return p_239425_2_ != null && SoulCrossbowItem.isCharged(p_239425_0_) ? 1.0F : 0.0F;
 				});
 		// EXPLODING CROSSBOW
-		ItemModelsProperties.func_239418_a_(EXPLODING_CROSSBOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(EXPLODING_CROSSBOW, new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -296,19 +296,19 @@ public class CrossbowItemModelsProperties {
 								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
-		ItemModelsProperties.func_239418_a_(EXPLODING_CROSSBOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(EXPLODING_CROSSBOW, new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_ && !ExplodingCrossbowItem.isCharged(p_239426_0_)
 							? 1.0F
 							: 0.0F;
 				});
-		ItemModelsProperties.func_239418_a_(EXPLODING_CROSSBOW, new ResourceLocation("charged"),
+		ItemModelsProperties.registerProperty(EXPLODING_CROSSBOW, new ResourceLocation("charged"),
 				(p_239425_0_, p_239425_1_, p_239425_2_) -> {
 					return p_239425_2_ != null && ExplodingCrossbowItem.isCharged(p_239425_0_) ? 1.0F : 0.0F;
 				});
 		// HEAVY CROSSBOW
-		ItemModelsProperties.func_239418_a_(HEAVY_CROSSBOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(HEAVY_CROSSBOW, new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -318,19 +318,19 @@ public class CrossbowItemModelsProperties {
 								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
-		ItemModelsProperties.func_239418_a_(HEAVY_CROSSBOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(HEAVY_CROSSBOW, new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_ && !HeavyCrossbowItem.isCharged(p_239426_0_)
 							? 1.0F
 							: 0.0F;
 				});
-		ItemModelsProperties.func_239418_a_(HEAVY_CROSSBOW, new ResourceLocation("charged"),
+		ItemModelsProperties.registerProperty(HEAVY_CROSSBOW, new ResourceLocation("charged"),
 				(p_239425_0_, p_239425_1_, p_239425_2_) -> {
 					return p_239425_2_ != null && HeavyCrossbowItem.isCharged(p_239425_0_) ? 1.0F : 0.0F;
 				});
 		// RAPID CROSSBOW
-		ItemModelsProperties.func_239418_a_(RAPID_CROSSBOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(RAPID_CROSSBOW, new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -340,19 +340,19 @@ public class CrossbowItemModelsProperties {
 								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
-		ItemModelsProperties.func_239418_a_(RAPID_CROSSBOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(RAPID_CROSSBOW, new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_ && !RapidCrossbowItem.isCharged(p_239426_0_)
 							? 1.0F
 							: 0.0F;
 				});
-		ItemModelsProperties.func_239418_a_(RAPID_CROSSBOW, new ResourceLocation("charged"),
+		ItemModelsProperties.registerProperty(RAPID_CROSSBOW, new ResourceLocation("charged"),
 				(p_239425_0_, p_239425_1_, p_239425_2_) -> {
 					return p_239425_2_ != null && RapidCrossbowItem.isCharged(p_239425_0_) ? 1.0F : 0.0F;
 				});
 		// SCATTER CROSSBOW
-		ItemModelsProperties.func_239418_a_(SCATTER_CROSSBOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(SCATTER_CROSSBOW, new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -362,19 +362,19 @@ public class CrossbowItemModelsProperties {
 								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
-		ItemModelsProperties.func_239418_a_(SCATTER_CROSSBOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(SCATTER_CROSSBOW, new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_ && !ScatterCrossbowItem.isCharged(p_239426_0_)
 							? 1.0F
 							: 0.0F;
 				});
-		ItemModelsProperties.func_239418_a_(SCATTER_CROSSBOW, new ResourceLocation("charged"),
+		ItemModelsProperties.registerProperty(SCATTER_CROSSBOW, new ResourceLocation("charged"),
 				(p_239425_0_, p_239425_1_, p_239425_2_) -> {
 					return p_239425_2_ != null && ScatterCrossbowItem.isCharged(p_239425_0_) ? 1.0F : 0.0F;
 				});
 		// SOUL CROSSBOW
-		ItemModelsProperties.func_239418_a_(SOUL_CROSSBOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(SOUL_CROSSBOW, new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -384,20 +384,20 @@ public class CrossbowItemModelsProperties {
 								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
-		ItemModelsProperties.func_239418_a_(SOUL_CROSSBOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(SOUL_CROSSBOW, new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_ && !SoulCrossbowItem.isCharged(p_239426_0_)
 							? 1.0F
 							: 0.0F;
 				});
-		ItemModelsProperties.func_239418_a_(SOUL_CROSSBOW, new ResourceLocation("charged"),
+		ItemModelsProperties.registerProperty(SOUL_CROSSBOW, new ResourceLocation("charged"),
 				(p_239425_0_, p_239425_1_, p_239425_2_) -> {
 					return p_239425_2_ != null && SoulCrossbowItem.isCharged(p_239425_0_) ? 1.0F : 0.0F;
 				});
 
 		// IMPLODING CROSSBOW
-		ItemModelsProperties.func_239418_a_(IMPLODING_CROSSBOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(IMPLODING_CROSSBOW, new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -407,20 +407,20 @@ public class CrossbowItemModelsProperties {
 								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
 					}
 				});
-		ItemModelsProperties.func_239418_a_(IMPLODING_CROSSBOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(IMPLODING_CROSSBOW, new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_ && !ExplodingCrossbowItem.isCharged(p_239426_0_)
 							? 1.0F
 							: 0.0F;
 				});
-		ItemModelsProperties.func_239418_a_(IMPLODING_CROSSBOW, new ResourceLocation("charged"),
+		ItemModelsProperties.registerProperty(IMPLODING_CROSSBOW, new ResourceLocation("charged"),
 				(p_239425_0_, p_239425_1_, p_239425_2_) -> {
 					return p_239425_2_ != null && ExplodingCrossbowItem.isCharged(p_239425_0_) ? 1.0F : 0.0F;
 				});
 
 		// BABY CROSSBOW
-		ItemModelsProperties.func_239418_a_(BABY_CROSSBOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(BABY_CROSSBOW, new ResourceLocation("pull"),
 				(stack, clientWorld, livingEntity) -> {
 					if (livingEntity == null) {
 						return 0.0F;
@@ -430,7 +430,7 @@ public class CrossbowItemModelsProperties {
 								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(stack);
 					}
 				});
-		ItemModelsProperties.func_239418_a_(BABY_CROSSBOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(BABY_CROSSBOW, new ResourceLocation("pulling"),
 				(stack, clientWorld, livingEntity) -> {
 					return (
 							(livingEntity != null
@@ -447,13 +447,13 @@ public class CrossbowItemModelsProperties {
 							? 1.0F
 							: 0.0F;
 				});
-		ItemModelsProperties.func_239418_a_(BABY_CROSSBOW, new ResourceLocation("charged"),
+		ItemModelsProperties.registerProperty(BABY_CROSSBOW, new ResourceLocation("charged"),
 				(stack, clientWorld, livingEntity) -> {
 					return livingEntity != null && DualCrossbowItem.isCharged(stack) ? 1.0F : 0.0F;
 				});
 
 		// DUAL CROSSBOW
-		ItemModelsProperties.func_239418_a_(DUAL_CROSSBOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(DUAL_CROSSBOW, new ResourceLocation("pull"),
 				(stack, clientWorld, livingEntity) -> {
 					if (livingEntity == null) {
 						return 0.0F;
@@ -463,7 +463,7 @@ public class CrossbowItemModelsProperties {
 								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(stack);
 					}
 				});
-		ItemModelsProperties.func_239418_a_(DUAL_CROSSBOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(DUAL_CROSSBOW, new ResourceLocation("pulling"),
 				(stack, clientWorld, livingEntity) -> {
 					return (
 							(livingEntity != null
@@ -480,7 +480,7 @@ public class CrossbowItemModelsProperties {
 							? 1.0F
 							: 0.0F;
 				});
-		ItemModelsProperties.func_239418_a_(DUAL_CROSSBOW, new ResourceLocation("charged"),
+		ItemModelsProperties.registerProperty(DUAL_CROSSBOW, new ResourceLocation("charged"),
 				(stack, clientWorld, livingEntity) -> {
 					return livingEntity != null && DualCrossbowItem.isCharged(stack) ? 1.0F : 0.0F;
 				});

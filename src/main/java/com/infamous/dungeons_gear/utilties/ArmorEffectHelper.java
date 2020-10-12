@@ -76,7 +76,7 @@ public class ArmorEffectHelper {
                 }
 
                 if (livingEntity.attemptTeleport(teleportX, teleportY, teleportZ, true)) {
-                    SoundEvent lvt_18_1_ = livingEntity instanceof FoxEntity ? SoundEvents.field_232710_ez_ : SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT;
+                    SoundEvent lvt_18_1_ = livingEntity instanceof FoxEntity ? SoundEvents.ENTITY_FOX_TELEPORT : SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT;
                     world.playSound((PlayerEntity)null, lvt_5_1_, lvt_7_1_, lvt_9_1_, lvt_18_1_, SoundCategory.PLAYERS, 1.0F, 1.0F);
                     livingEntity.playSound(lvt_18_1_, 1.0F, 1.0F);
                     break;

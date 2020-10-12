@@ -70,7 +70,7 @@ public class ChampionsArmorItem extends ArmorItem implements IArmor {
         }
         list.add(new TranslationTextComponent(
                 "attribute.name.healthPotionsHealNearbyAllies")
-                .func_240701_a_(TextFormatting.GREEN));
+                .mergeStyle(TextFormatting.GREEN));
     }
 
     @Override

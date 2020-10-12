@@ -4,11 +4,18 @@ package com.infamous.dungeons_gear.melee;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
 import com.infamous.dungeons_gear.items.WeaponList;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -28,6 +35,28 @@ public class SoulScytheItem extends HoeItem implements IMeleeWeapon, ISoulGather
             p_220039_0_.sendBreakAnimation(EquipmentSlotType.MAINHAND);
         });
         return true;
+    }
+
+    @Override
+    public ActionResultType onItemUse(ItemUseContext context) {
+        World world = context.getWorld();
+        BlockPos blockpos = context.getPos();
+        int hook = net.minecraftforge.event.ForgeEventFactory.onHoeUse(context);
+        if (hook != 0) return hook > 0 ? ActionResultType.SUCCESS : ActionResultType.FAIL;
+        if (context.getFace() != Direction.DOWN && world.isAirBlock(blockpos.up())) {
+            BlockState blockstate = world.getBlockState(blockpos).getToolModifiedState(world, blockpos, context.getPlayer(), context.getItem(), net.minecraftforge.common.ToolType.HOE);
+            if (blockstate != null) {
+                PlayerEntity playerentity = context.getPlayer();
+                world.playSound(playerentity, blockpos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                if (!world.isRemote) {
+                    world.setBlockState(blockpos, blockstate, 11);
+                }
+
+                return ActionResultType.func_233537_a_(world.isRemote);
+            }
+        }
+
+        return ActionResultType.PASS;
     }
 
     @Override

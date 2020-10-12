@@ -281,7 +281,7 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
         if (shooter instanceof ServerPlayerEntity) {
             ServerPlayerEntity serverplayerentity = (ServerPlayerEntity)shooter;
             if (!worldIn.isRemote) {
-                CriteriaTriggers.SHOT_CROSSBOW.func_215111_a(serverplayerentity, stack);
+                CriteriaTriggers.SHOT_CROSSBOW.test(serverplayerentity, stack);
             }
 
             serverplayerentity.addStat(Stats.ITEM_USED.get(stack.getItem()));

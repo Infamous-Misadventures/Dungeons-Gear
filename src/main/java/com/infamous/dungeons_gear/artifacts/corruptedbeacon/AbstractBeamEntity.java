@@ -156,7 +156,7 @@ public abstract class AbstractBeamEntity extends Entity{
             this.prevRotationPitch = this.rotationPitch;
         }
 
-        BlockPos blockpos = this.func_233580_cy_();
+        BlockPos blockpos = this.getPosition();
         BlockState blockstate = this.world.getBlockState(blockpos);
         Vector3d vector3d3;
         if (!blockstate.isAir(this.world, blockpos) && !isNoClip) {
@@ -391,9 +391,9 @@ public abstract class AbstractBeamEntity extends Entity{
                 if (!this.world.isRemote && entity1 instanceof ServerPlayerEntity) {
                     ServerPlayerEntity serverplayerentity = (ServerPlayerEntity)entity1;
                     if (this.hitEntities != null && this.getShotFromCrossbow()) {
-                        CriteriaTriggers.KILLED_BY_CROSSBOW.func_234941_a_(serverplayerentity, this.hitEntities);
+                        CriteriaTriggers.KILLED_BY_CROSSBOW.test(serverplayerentity, this.hitEntities);
                     } else if (!entity.isAlive() && this.getShotFromCrossbow()) {
-                        CriteriaTriggers.KILLED_BY_CROSSBOW.func_234941_a_(serverplayerentity, Arrays.asList(entity));
+                        CriteriaTriggers.KILLED_BY_CROSSBOW.test(serverplayerentity, Arrays.asList(entity));
                     }
                 }
             }
@@ -518,7 +518,7 @@ public abstract class AbstractBeamEntity extends Entity{
         this.setIsCritical(compoundNBT.getBoolean("crit"));
         this.setPierceLevel(compoundNBT.getByte("PierceLevel"));
         if (compoundNBT.contains("SoundEvent", 8)) {
-            this.hitSound = (SoundEvent)Registry.SOUND_EVENT.getValue(new ResourceLocation(compoundNBT.getString("SoundEvent"))).orElse(this.getHitEntitySound());
+            this.hitSound = (SoundEvent)Registry.SOUND_EVENT.getOptional(new ResourceLocation(compoundNBT.getString("SoundEvent"))).orElse(this.getHitEntitySound());
         }
 
         this.setShotFromCrossbow(compoundNBT.getBoolean("ShotFromCrossbow"));
@@ -713,7 +713,7 @@ public abstract class AbstractBeamEntity extends Entity{
         float z = MathHelper.cos(yaw * 0.017453292F) * MathHelper.cos(rotationPitch * 0.017453292F);
         this.shoot((double)x, (double)y, (double)z, p_234612_5_, p_234612_6_);
         Vector3d entityMotion = entity.getMotion();
-        this.setMotion(this.getMotion().add(entityMotion.x, entity.func_233570_aj_() ? 0.0D : entityMotion.y, entityMotion.z));
+        this.setMotion(this.getMotion().add(entityMotion.x, entity.isOnGround() ? 0.0D : entityMotion.y, entityMotion.z));
     }
 
     protected void onImpact(RayTraceResult rayTraceResult) {

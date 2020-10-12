@@ -73,16 +73,16 @@ public class MeleeEvents {
                         playerEntity.world.playSound((PlayerEntity)null, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK, playerEntity.getSoundCategory(), 1.0F, 1.0F);
                         ++attackKnockbackStrength;
                     }
-                    victim.func_233627_a_(attackKnockbackStrength * 0.5F, (double) MathHelper.sin(playerEntity.rotationYaw * ((float)Math.PI / 180F)), (double)(-MathHelper.cos(playerEntity.rotationYaw * ((float)Math.PI / 180F))));
+                    victim.applyKnockback(attackKnockbackStrength * 0.5F, (double) MathHelper.sin(playerEntity.rotationYaw * ((float)Math.PI / 180F)), (double)(-MathHelper.cos(playerEntity.rotationYaw * ((float)Math.PI / 180F))));
                     playerEntity.setMotion(playerEntity.getMotion().mul(0.6D, 1.0D, 0.6D));
 
                 }
                 else if(attacker instanceof MobEntity){
                     MobEntity mobEntity = (MobEntity) attacker;
-                    float attackKnockbackStrength = (float)mobEntity.func_233637_b_(Attributes.field_233824_g_);
+                    float attackKnockbackStrength = (float)mobEntity.getAttributeValue(Attributes.ATTACK_KNOCKBACK);
                     attackKnockbackStrength += 1;
                     if (attackKnockbackStrength > 0.0F) {
-                        victim.func_233627_a_(attackKnockbackStrength * 0.5F, (double)MathHelper.sin(mobEntity.rotationYaw * ((float)Math.PI / 180F)), (double)(-MathHelper.cos(mobEntity.rotationYaw * ((float)Math.PI / 180F))));
+                        victim.applyKnockback(attackKnockbackStrength * 0.5F, (double)MathHelper.sin(mobEntity.rotationYaw * ((float)Math.PI / 180F)), (double)(-MathHelper.cos(mobEntity.rotationYaw * ((float)Math.PI / 180F))));
                         mobEntity.setMotion(mobEntity.getMotion().mul(0.6D, 1.0D, 0.6D));
                     }
                 }
@@ -90,6 +90,8 @@ public class MeleeEvents {
         }
     }
 
+    // TODO: There is no longer an attacker passed into applyKnockback
+    /*
     @SubscribeEvent
     public static void onClaymoreKnockback(LivingKnockBackEvent event){
         if(event.getAttacker() instanceof LivingEntity){
@@ -102,8 +104,11 @@ public class MeleeEvents {
         }
     }
 
+     */
+
     @SubscribeEvent
     public static void onFortuneSpearLooting(LootingLevelEvent event){
+        if(event.getDamageSource() == null) return; // should fix Scaling Health bug
         if(event.getDamageSource().getImmediateSource() instanceof AbstractArrowEntity) return;
         if(event.getDamageSource().getTrueSource() instanceof LivingEntity){
             LivingEntity attacker = (LivingEntity) event.getDamageSource().getTrueSource();

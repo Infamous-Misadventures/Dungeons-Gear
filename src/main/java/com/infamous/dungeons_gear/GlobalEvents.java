@@ -81,7 +81,7 @@ public class GlobalEvents {
             PlayerEntity playerEntity = (PlayerEntity) shooter;
             boolean soulsCriticalBoost = ProjectileEffectHelper.soulsCriticalBoost(playerEntity, stack);
             if(soulsCriticalBoost){
-                PROXY.spawnParticles(playerEntity, ParticleTypes.field_239812_C_);
+                PROXY.spawnParticles(playerEntity, ParticleTypes.SOUL);
                 arrowEntity.setIsCritical(true);
                 arrowEntity.setDamage(arrowEntity.getDamage() * 2);
             }
@@ -128,16 +128,6 @@ public class GlobalEvents {
                 comboCap.setShadowForm(false);
                 playerEntity.removePotionEffect(Effects.INVISIBILITY);
             }
-            /*
-            if(comboCap.getGhostForm()){
-                comboCap.setGhostForm(false);
-                playerEntity.removePotionEffect(Effects.INVISIBILITY);
-                playerEntity.removePotionEffect(Effects.GLOWING);
-                playerEntity.removePotionEffect(Effects.SPEED);
-                playerEntity.removePotionEffect(Effects.RESISTANCE);
-            }
-
-             */
         }
     }
 
