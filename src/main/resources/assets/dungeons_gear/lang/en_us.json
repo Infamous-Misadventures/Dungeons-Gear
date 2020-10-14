@@ -355,5 +355,7 @@
   "itemGroup.melee_weapons": "Dungeons: Melee Weapons",
   "itemGroup.ranged_weapons": "Dungeons: Ranged Weapons",
   "itemGroup.artifacts": "Dungeons: Artifacts",
-  "itemGroup.armor": "Dungeons: Armor"
+  "itemGroup.armor": "Dungeons: Armor",
+
+  "attribute.name.generic.dungeons_gear.attackReach": "Attack Reach"
 }

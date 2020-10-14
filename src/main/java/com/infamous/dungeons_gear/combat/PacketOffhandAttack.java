@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.combat;
 
+import com.infamous.dungeons_gear.init.AttributeRegistry;
 import com.infamous.dungeons_gear.interfaces.IOffhandAttack;
 import com.infamous.dungeons_gear.utilties.PlayerAttackHelper;
 import net.minecraft.entity.Entity;
@@ -36,19 +37,15 @@ public class PacketOffhandAttack {
                     @Override
                     public void run() {
                             ServerPlayerEntity player = ((NetworkEvent.Context)ctx.get()).getSender();
-                            Entity target = player.world.getEntityByID(packet.entityID);
-                            if (player != null && target != null) {
-                                //DungeonsGear.LOGGER.debug("Victim of offhand attack: " + target.getDisplayName().toString());
+                        Entity target = null;
+                        if (player != null) {
+                            target = player.world.getEntityByID(packet.entityID);
+                        }
+                        if (target != null) {
                                 ItemStack offhand = player.getHeldItemOffhand();
-                                ItemStack mainhand = player.getHeldItemMainhand();
                                 if (!offhand.isEmpty()) {
-                                    if (offhand.getItem() instanceof IOffhandAttack
-                                        // && !(DualWieldUtils.doesMainhandHaveRightClickUse(mainhand))
-                                    ) {
-                                        IOffhandAttack offhandWeapon = (IOffhandAttack)offhand.getItem();
-                                        float reach = offhandWeapon.getOffhandAttackReach();
-
-                                        // Accounting for players being able to attack from 2 blocks further away in creative
+                                    if (offhand.getItem() instanceof IOffhandAttack) {
+                                        float reach = (float) player.getBaseAttributeValue(AttributeRegistry.ATTACK_REACH.get());
                                         if(player.isCreative()) reach += 2.0;
 
                                         // This is done to mitigate the difference between the render view entity's position
@@ -59,16 +56,11 @@ public class PacketOffhandAttack {
                                         double distanceSquared = player.getDistanceSq(target);
                                         double reachSquared = (double)(reach * reach);
 
-                                        //DungeonsGear.LOGGER.debug(distanceSquared);
-                                        //DungeonsGear.LOGGER.debug(reachSquared);
-                                        //DungeonsGear.LOGGER.debug("Is reachSquared >= distanceSquared? " + (reachSquared >= distanceSquared ? "yes" : "no"));
                                         if (reachSquared >= distanceSquared) {
                                             PlayerAttackHelper.attackTargetEntityWithCurrentOffhandItem(player, target);
-                                            //DungeonsGear.LOGGER.debug("Attacking victim with offhand!");
                                         }
 
                                         PlayerAttackHelper.swingArm(player, Hand.OFF_HAND);
-                                        //player.resetCooldown();
                                     }
 
                                 }

@@ -21,7 +21,6 @@ public class NetworkHandler {
     }
 
     public static void init() {
-        INSTANCE.registerMessage(getPacketID(), PacketLongReachAttack.class, PacketLongReachAttack::encode, PacketLongReachAttack::decode, PacketLongReachAttack.LongReachAttackHandler::handle);
         INSTANCE.registerMessage(getPacketID(), PacketOffhandAttack.class, PacketOffhandAttack::encode, PacketOffhandAttack::decode, PacketOffhandAttack.OffhandHandler::handle);
     }
 

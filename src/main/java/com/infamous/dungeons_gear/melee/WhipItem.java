@@ -1,9 +1,18 @@
 package com.infamous.dungeons_gear.melee;
 
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
+import com.infamous.dungeons_gear.init.AttributeRegistry;
 import com.infamous.dungeons_gear.interfaces.IExtendedAttackReach;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.items.WeaponList;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -11,10 +20,43 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.UUID;
 
-public class WhipItem extends SwordItem implements IExtendedAttackReach, IMeleeWeapon {
-    public WhipItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
-        super(tier, attackDamageIn, attackSpeedIn, properties);
+public class WhipItem extends TieredItem implements IMeleeWeapon {
+    private final float attackDamage;
+    private final float attackSpeed;
+    private final float attackReach;
+    private Multimap<Attribute, AttributeModifier> attributeModifierMultimap;
+    private static final UUID ATTACK_REACH_MODIFIER = UUID.fromString("63d316c1-7d6d-41be-81c3-41fc1a216c27");
+
+    public WhipItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, float attackReachIn, Properties properties) {
+        super(tier, properties);
+        this.attackDamage = (float)attackDamageIn + tier.getAttackDamage();
+        this.attackSpeed = attackSpeedIn;
+        this.attackReach = attackReachIn;
+
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double)this.attackDamage, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)this.attackSpeed, AttributeModifier.Operation.ADDITION));
+        this.attributeModifierMultimap = builder.build();
+    }
+
+    public static void setAttributeModifierMultimap(WhipItem glaiveItem){
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double)glaiveItem.attackDamage, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)glaiveItem.attackSpeed, AttributeModifier.Operation.ADDITION));
+        builder.put(AttributeRegistry.ATTACK_REACH.get(), new AttributeModifier(ATTACK_REACH_MODIFIER, "Weapon modifier", (double)glaiveItem.attackReach, AttributeModifier.Operation.ADDITION));
+        glaiveItem.attributeModifierMultimap = builder.build();
+    }
+
+    @Override
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
+        return equipmentSlot == EquipmentSlotType.MAINHAND ? this.attributeModifierMultimap : super.getAttributeModifiers(equipmentSlot);
+    }
+
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        return enchantment.type.canEnchantItem(Items.IRON_SWORD) && enchantment != Enchantments.SWEEPING;
     }
 
     public Rarity getRarity(ItemStack itemStack){
@@ -44,10 +86,5 @@ public class WhipItem extends SwordItem implements IExtendedAttackReach, IMeleeW
 
         list.add(new StringTextComponent(TextFormatting.GREEN + "Longer Melee Reach"));
 
-    }
-
-    @Override
-    public float getAttackReach() {
-        return 5.0F;
     }
 }

@@ -7,10 +7,12 @@
   "mixins": [
     "CrossbowItemMixin",
     "BowItemMixin",
-    "LockableLootTileEntityMixin"
+    "LockableLootTileEntityMixin",
+    "PlayerEntityMixin"
   ],
   "client": [
-    "PlayerRendererMixin"
+    "PlayerRendererMixin",
+    "GameRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

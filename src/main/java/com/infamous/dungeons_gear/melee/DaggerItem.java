@@ -67,11 +67,6 @@ public class DaggerItem extends SwordItem implements IOffhandAttack, IMeleeWeapo
     }
 
     @Override
-    public float getOffhandAttackReach() {
-        return 3.0F;
-    }
-
-    @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         if (handIn == Hand.OFF_HAND) {
             CombatEventHandler.checkForOffhandAttack();

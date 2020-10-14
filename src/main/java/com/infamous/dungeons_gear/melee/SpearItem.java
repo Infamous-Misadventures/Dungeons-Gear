@@ -3,7 +3,7 @@ package com.infamous.dungeons_gear.melee;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import com.infamous.dungeons_gear.interfaces.IExtendedAttackReach;
+import com.infamous.dungeons_gear.init.AttributeRegistry;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.items.WeaponList;
 import net.minecraft.block.BlockState;
@@ -27,18 +27,33 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.UUID;
 
-public class SpearItem extends TieredItem implements IExtendedAttackReach, IMeleeWeapon {
+public class SpearItem extends TieredItem implements IMeleeWeapon {
     private final float attackDamage;
-    private final Multimap<Attribute, AttributeModifier> attributeModifierMultimap;
+    private final float attackSpeed;
+    private final float attackReach;
+    private Multimap<Attribute, AttributeModifier> attributeModifierMultimap;
+    private static final UUID ATTACK_REACH_MODIFIER = UUID.fromString("63d316c1-7d6d-41be-81c3-41fc1a216c27");
 
-    public SpearItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Item.Properties properties) {
+    public SpearItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, float attackReachIn, Item.Properties properties) {
         super(tier, properties);
         this.attackDamage = (float)attackDamageIn + tier.getAttackDamage();
+        this.attackSpeed = attackSpeedIn;
+        this.attackReach = attackReachIn;
+
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
         builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double)this.attackDamage, AttributeModifier.Operation.ADDITION));
-        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)attackSpeedIn, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)this.attackSpeed, AttributeModifier.Operation.ADDITION));
         this.attributeModifierMultimap = builder.build();
+    }
+
+    public static void setAttributeModifierMultimap(SpearItem spearItem){
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double)spearItem.attackDamage, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)spearItem.attackSpeed, AttributeModifier.Operation.ADDITION));
+        builder.put(AttributeRegistry.ATTACK_REACH.get(), new AttributeModifier(ATTACK_REACH_MODIFIER, "Weapon modifier", (double)spearItem.attackReach, AttributeModifier.Operation.ADDITION));
+        spearItem.attributeModifierMultimap = builder.build();
     }
 
     public float getAttackDamage() {
@@ -79,8 +94,9 @@ public class SpearItem extends TieredItem implements IExtendedAttackReach, IMele
         return p_150897_1_.isIn(Blocks.COBWEB);
     }
 
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType p_111205_1_) {
-        return p_111205_1_ == EquipmentSlotType.MAINHAND ? this.attributeModifierMultimap : super.getAttributeModifiers(p_111205_1_);
+    @Override
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
+        return slot == EquipmentSlotType.MAINHAND ? this.attributeModifierMultimap : super.getAttributeModifiers(slot, stack);
     }
 
     @Override
@@ -117,10 +133,5 @@ public class SpearItem extends TieredItem implements IExtendedAttackReach, IMele
 
         }
         list.add(new StringTextComponent(TextFormatting.GREEN + "Long Melee Reach"));
-    }
-
-    @Override
-    public float getAttackReach() {
-        return 5.0F;
     }
 }

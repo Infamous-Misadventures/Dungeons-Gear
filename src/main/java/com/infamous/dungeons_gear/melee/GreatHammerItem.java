@@ -1,13 +1,24 @@
 package com.infamous.dungeons_gear.melee;
 
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.items.WeaponList;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -15,18 +26,31 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class GreatHammerItem extends PickaxeItem implements IMeleeWeapon {
-    public GreatHammerItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builder) {
-        super(tier, attackDamageIn, attackSpeedIn, builder);
+public class GreatHammerItem extends TieredItem implements IMeleeWeapon {
+    private final float attackDamage;
+    private final float attackSpeed;
+    private Multimap<Attribute, AttributeModifier> attributeModifierMultimap;
+    public GreatHammerItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+        super(tier, properties);
+        this.attackDamage = (float)attackDamageIn + tier.getAttackDamage();
+        this.attackSpeed = attackSpeedIn;
+
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double)this.attackDamage, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)this.attackSpeed, AttributeModifier.Operation.ADDITION));
+        this.attributeModifierMultimap = builder.build();
     }
 
-    // This is a designated weapon, so it will not be penalized for attacking as a normal pickaxe would
-    @Override
-    public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        stack.damageItem(1, attacker, (p_220039_0_) -> {
-            p_220039_0_.sendBreakAnimation(EquipmentSlotType.MAINHAND);
+    public boolean hitEntity(ItemStack p_77644_1_, LivingEntity p_77644_2_, LivingEntity p_77644_3_) {
+        p_77644_1_.damageItem(1, p_77644_3_, (p_220045_0_) -> {
+            p_220045_0_.sendBreakAnimation(EquipmentSlotType.MAINHAND);
         });
         return true;
+    }
+
+    @Override
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
+        return slot == EquipmentSlotType.MAINHAND ? this.attributeModifierMultimap : super.getAttributeModifiers(slot, stack);
     }
 
     @Override
@@ -38,6 +62,37 @@ public class GreatHammerItem extends PickaxeItem implements IMeleeWeapon {
     public boolean canDisableShield(ItemStack stack, ItemStack shield, LivingEntity entity, LivingEntity attacker)
     {
         return true;
+    }
+
+
+
+    public boolean canPlayerBreakBlockWhileHolding(BlockState state, World worldIn, BlockPos pos, PlayerEntity player) {
+        return true;
+    }
+
+    public float getDestroySpeed(ItemStack stack, BlockState state) {
+        return 1.0F;
+    }
+
+    /**
+     * Called when a Block is destroyed using this Item. Return true to trigger the "Use Item" statistic.
+     */
+    public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
+        if (state.getBlockHardness(worldIn, pos) != 0.0F) {
+            stack.damageItem(2, entityLiving, (p_220044_0_) -> {
+                p_220044_0_.sendBreakAnimation(EquipmentSlotType.MAINHAND);
+            });
+        }
+
+        return true;
+    }
+
+    /**
+     * Check whether this Item can harvest the given Block
+     */
+
+    public boolean canHarvestBlock(BlockState blockIn) {
+        return blockIn.getHarvestLevel() < 3;
     }
 
     public Rarity getRarity(ItemStack itemStack){

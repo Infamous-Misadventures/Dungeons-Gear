@@ -1,12 +1,15 @@
 package com.infamous.dungeons_gear.melee;
 
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.items.WeaponList;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
-import net.minecraft.item.SwordItem;
+import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.*;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -14,10 +17,25 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class StaffItem extends SwordItem implements IMeleeWeapon {
+public class StaffItem extends TieredItem implements IMeleeWeapon {
 
-    public StaffItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builder) {
-        super(tier, attackDamageIn, attackSpeedIn, builder);
+    private final float attackDamage;
+    private final float attackSpeed;
+    private Multimap<Attribute, AttributeModifier> attributeModifierMultimap;
+    public StaffItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+        super(tier, properties);
+        this.attackDamage = (float)attackDamageIn + tier.getAttackDamage();
+        this.attackSpeed = attackSpeedIn;
+
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double)this.attackDamage, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)this.attackSpeed, AttributeModifier.Operation.ADDITION));
+        this.attributeModifierMultimap = builder.build();
+    }
+
+    @Override
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot) {
+        return slot == EquipmentSlotType.MAINHAND ? this.attributeModifierMultimap : super.getAttributeModifiers(slot);
     }
 
     public Rarity getRarity(ItemStack itemStack){

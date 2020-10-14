@@ -11,6 +11,7 @@ import com.infamous.dungeons_gear.capabilities.weapon.WeaponStorage;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.groups.ArmorGroup;
 import com.infamous.dungeons_gear.groups.ArtifactGroup;
+import com.infamous.dungeons_gear.init.AttributeRegistry;
 import com.infamous.dungeons_gear.init.ParticleInit;
 import com.infamous.dungeons_gear.items.VanillaItemModelProperties;
 import com.infamous.dungeons_gear.items.BowItemModelsProperties;
@@ -19,6 +20,9 @@ import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.entities.ModEntityTypes;
 import com.infamous.dungeons_gear.groups.MeleeWeaponGroup;
 import com.infamous.dungeons_gear.groups.RangedWeaponGroup;
+import com.infamous.dungeons_gear.items.WeaponList;
+import com.infamous.dungeons_gear.melee.SpearItem;
+import com.infamous.dungeons_gear.melee.WeaponAttributeHandler;
 import net.minecraft.item.*;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -70,6 +74,7 @@ public class DungeonsGear
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         ModEntityTypes.ENTITY_TYPES.register(modEventBus);
         ParticleInit.PARTICLES.register(modEventBus);
+        AttributeRegistry.ATTRIBUTES.register(modEventBus);
         PROXY = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
         // Register ourselves for server and other game events we are interested in
@@ -80,6 +85,7 @@ public class DungeonsGear
     private void setup(final FMLCommonSetupEvent event)
     {
         DeferredWorkQueue.runLater(NetworkHandler::init);
+        WeaponAttributeHandler.setWeaponAttributeModifiers();
         // some preinit code
         CapabilityManager.INSTANCE.register(ISummonable.class, new SummonableStorage(), Summonable::new);
         CapabilityManager.INSTANCE.register(ICombo.class, new ComboStorage(), Combo::new);

@@ -50,14 +50,6 @@ public class GauntletItem extends TieredItem implements IOffhandAttack, IVanisha
         return this.attackDamage;
     }
 
-    public boolean canPlayerBreakBlockWhileHolding(BlockState state, World worldIn, BlockPos pos, PlayerEntity player) {
-        return true;
-    }
-
-    public float getDestroySpeed(ItemStack stack, BlockState state) {
-        return 1.0F;
-    }
-
     /**
      * Current implementations of this method in child classes do not use the entry argument beside ev. They just raise
      * the damage on the stack.
@@ -67,6 +59,14 @@ public class GauntletItem extends TieredItem implements IOffhandAttack, IVanisha
             p_220045_0_.sendBreakAnimation(EquipmentSlotType.MAINHAND);
         });
         return true;
+    }
+
+    public boolean canPlayerBreakBlockWhileHolding(BlockState state, World worldIn, BlockPos pos, PlayerEntity player) {
+        return true;
+    }
+
+    public float getDestroySpeed(ItemStack stack, BlockState state) {
+        return 1.0F;
     }
 
     /**
@@ -144,11 +144,6 @@ public class GauntletItem extends TieredItem implements IOffhandAttack, IVanisha
         }
 
         list.add(new StringTextComponent(TextFormatting.GREEN + "Dual Wield"));
-    }
-
-    @Override
-    public float getOffhandAttackReach() {
-        return 3.0F;
     }
 
     @Override

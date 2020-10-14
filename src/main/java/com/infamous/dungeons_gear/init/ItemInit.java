@@ -71,9 +71,9 @@ public class ItemInit {
                     WeaponList.HAWKBRAND = new DungeonsSwordItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 5, (1.6f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("hawkbrand")),
 
                     // STAFFS
-                    WeaponList.BATTLESTAFF = new StaffItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 5, (1.6f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("battlestaff")),
-                    WeaponList.BATTLESTAFF_OF_TERROR = new StaffItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 5, (1.6f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("battlestaff_of_terror")),
-                    WeaponList.GROWING_STAFF = new StaffItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 5, (1.6f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("growing_staff")),
+                    WeaponList.BATTLESTAFF = new StaffItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 2, (3.2f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("battlestaff")),
+                    WeaponList.BATTLESTAFF_OF_TERROR = new StaffItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 2, (3.2f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("battlestaff_of_terror")),
+                    WeaponList.GROWING_STAFF = new StaffItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 2, (3.2f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("growing_staff")),
                     // MODERATE DAMAGE, MODERATE ATTACK SPEED
 
                     // HIGH DAMAGE, LOW ATTACK SPEED
@@ -114,18 +114,18 @@ public class ItemInit {
 
                     // LONG ATTACK REACH
                     // SPEARS
-                    WeaponList.SPEAR = new SpearItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 5, (1.2f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("spear")),
-                    WeaponList.FORTUNE_SPEAR = new SpearItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 5, (1.2f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("fortune_spear")),
-                    WeaponList.WHISPERING_SPEAR = new SpearItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 5, (1.2f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("whispering_spear")),
+                    WeaponList.SPEAR = new SpearItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 5, (1.2f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("spear")),
+                    WeaponList.FORTUNE_SPEAR = new SpearItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 5, (1.2f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("fortune_spear")),
+                    WeaponList.WHISPERING_SPEAR = new SpearItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 5, (1.2f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("whispering_spear")),
 
                     // GLAIVES
-                    WeaponList.GLAIVE = new GlaiveItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 7, (1.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("glaive")),
-                    WeaponList.GRAVE_BANE = new GlaiveItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 7, (1.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("grave_bane")),
-                    WeaponList.VENOM_GLAIVE = new GlaiveItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 7, (1.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("venom_glaive")),
+                    WeaponList.GLAIVE = new GlaiveItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 7, (1.0f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("glaive")),
+                    WeaponList.GRAVE_BANE = new GlaiveItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 7, (1.0f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("grave_bane")),
+                    WeaponList.VENOM_GLAIVE = new GlaiveItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 7, (1.0f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("venom_glaive")),
 
                     // WHIPS
-                    WeaponList.WHIP = new WhipItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("whip")),
-                    WeaponList.VINE_WHIP = new WhipItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("vine_whip")),
+                    WeaponList.WHIP = new WhipItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 8, (0.9f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("whip")),
+                    WeaponList.VINE_WHIP = new WhipItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 8, (0.9f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("vine_whip")),
                     // LONG ATTACK REACH
 
                     BONEBOW = new DungeonsBowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 20.0F, true).setRegistryName(location("bonebow")),
