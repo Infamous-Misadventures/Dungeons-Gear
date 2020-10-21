@@ -63,8 +63,9 @@ public class GlobalLootModifier{
                 return generatedLoot;
             }
             Vector3d vector3d = context.get(LootParameters.field_237457_g_);
+            if(vector3d == null) return generatedLoot;
             BlockPos pos = new BlockPos(vector3d);
-            TileEntity te = pos == null ? null : context.getWorld().getTileEntity(pos);
+            TileEntity te = context.getWorld().getTileEntity(pos);
             ResourceLocation lootTable = null;
             if(te instanceof LockableLootTileEntity){
                 LockableLootTileEntity lockableLootTileEntity = (LockableLootTileEntity)te;
@@ -115,8 +116,9 @@ public class GlobalLootModifier{
                 return generatedLoot;
             }
             Vector3d vector3d = context.get(LootParameters.field_237457_g_);
+            if(vector3d == null) return generatedLoot;
             BlockPos pos = new BlockPos(vector3d);
-            TileEntity te = pos == null ? null : context.getWorld().getTileEntity(pos);
+            TileEntity te = context.getWorld().getTileEntity(pos);
             ResourceLocation lootTable = null;
             if(te instanceof LockableLootTileEntity){
                 LockableLootTileEntity lockableLootTileEntity = (LockableLootTileEntity)te;
@@ -167,8 +169,9 @@ public class GlobalLootModifier{
                 return generatedLoot;
             }
             Vector3d vector3d = context.get(LootParameters.field_237457_g_);
+            if(vector3d == null) return generatedLoot;
             BlockPos pos = new BlockPos(vector3d);
-            TileEntity te = pos == null ? null : context.getWorld().getTileEntity(pos);
+            TileEntity te = context.getWorld().getTileEntity(pos);
             ResourceLocation lootTable = null;
             if(te instanceof LockableLootTileEntity){
                 LockableLootTileEntity lockableLootTileEntity = (LockableLootTileEntity)te;
@@ -219,8 +222,9 @@ public class GlobalLootModifier{
                 return generatedLoot;
             }
             Vector3d vector3d = context.get(LootParameters.field_237457_g_);
+            if(vector3d == null) return generatedLoot;
             BlockPos pos = new BlockPos(vector3d);
-            TileEntity te = pos == null ? null : context.getWorld().getTileEntity(pos);
+            TileEntity te = context.getWorld().getTileEntity(pos);
             ResourceLocation lootTable = null;
             if(te instanceof LockableLootTileEntity){
                 LockableLootTileEntity lockableLootTileEntity = (LockableLootTileEntity)te;
