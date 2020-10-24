@@ -13,6 +13,7 @@ public class DungeonsGearConfig {
         public final ForgeConfigSpec.ConfigValue<Boolean> ENABLE_SALVAGING;
         public final ForgeConfigSpec.ConfigValue<Boolean> ENABLE_VILLAGER_TRADES;
         public final ForgeConfigSpec.ConfigValue<Boolean> ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR;
+        public final ForgeConfigSpec.ConfigValue<Boolean> ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS;
 
         public final ForgeConfigSpec.ConfigValue<Integer> COMMON_ITEM_VALUE;
         public final ForgeConfigSpec.ConfigValue<Integer> UNIQUE_ITEM_VALUE;
@@ -61,6 +62,10 @@ public class DungeonsGearConfig {
                             "If you don't want your enchantments to become too cluttered for non-Dungeons gear, or simply don't like it, disable this feature. \n" +
                             "You can still use the anvil to put the enchantments onto them and have them work correctly. [true / false]")
                     .define("enableEnchantsOnNonDungeonsGear", true);
+            ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS = builder
+                    .comment("Enable applying enchantments together to create combinations would  be considered too overpowered. \n" +
+                            "If you don't want overpowered enchantment combinations, like Sharpness and Committed on a sword, disable this feature. [true / false]")
+                    .define("enableOverpoweredEnchantmentCombos", false);
             COMMON_ITEM_VALUE = builder
                     .comment("The emerald value for a common weapon or armor [0-64, default: 12]")
                     .defineInRange("commonItemValue", 12, 0, 64);

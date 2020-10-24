@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.ArtifactEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -34,7 +35,7 @@ public class HealthSynergyEnchantment extends ArtifactEnchantment {
 
     @Override
     public boolean canApplyTogether(Enchantment enchantment) {
-        return !(enchantment instanceof ArtifactEnchantment);
+        return DungeonsGearConfig.COMMON.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof ArtifactEnchantment);
     }
 
     @SubscribeEvent

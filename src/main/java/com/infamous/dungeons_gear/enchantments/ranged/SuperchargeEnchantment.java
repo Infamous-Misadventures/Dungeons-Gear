@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
@@ -28,7 +29,8 @@ public class SuperchargeEnchantment extends Enchantment {
 
     @Override
     public boolean canApplyTogether(Enchantment enchantment) {
-        return enchantment != Enchantments.PUNCH || enchantment != Enchantments.POWER;
+        return DungeonsGearConfig.COMMON.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() ||
+                (enchantment != Enchantments.PUNCH || enchantment != Enchantments.POWER);
     }
 
     @SubscribeEvent

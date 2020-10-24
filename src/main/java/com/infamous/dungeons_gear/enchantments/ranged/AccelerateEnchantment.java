@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import net.minecraft.enchantment.Enchantment;
@@ -24,6 +25,6 @@ public class AccelerateEnchantment extends Enchantment {
 
     @Override
     public boolean canApplyTogether(Enchantment enchantment) {
-        return enchantment != Enchantments.QUICK_CHARGE;
+        return DungeonsGearConfig.COMMON.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || enchantment != Enchantments.QUICK_CHARGE;
     }
 }
