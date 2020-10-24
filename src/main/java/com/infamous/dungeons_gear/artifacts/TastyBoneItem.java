@@ -89,7 +89,6 @@ public class TastyBoneItem extends Item implements IArtifact {
                     Entity entity = ((ServerWorld)world).getEntityByUuid(summonerCap.getSummonedWolf());
                     if(entity instanceof WolfEntity){
                         WolfEntity wolfEntity = (WolfEntity) entity;
-                        DungeonsGear.LOGGER.debug("onItemUse found the summoned Wolf!");
                         wolfEntity.teleportKeepLoaded((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D);
                     }
                 }

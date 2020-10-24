@@ -4,7 +4,6 @@ import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.*;
 import com.infamous.dungeons_gear.artifacts.*;
 import com.infamous.dungeons_gear.artifacts.corruptedbeacon.CorruptedBeaconItem;
-import com.infamous.dungeons_gear.capabilities.weapon.Weapon;
 import com.infamous.dungeons_gear.melee.*;
 import com.infamous.dungeons_gear.items.ArmorList;
 import com.infamous.dungeons_gear.items.ArtifactList;
@@ -18,7 +17,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import sun.security.provider.SHA;
 
 import static com.infamous.dungeons_gear.items.ArmorList.*;
 import static com.infamous.dungeons_gear.items.ArmorMaterialList.*;
@@ -211,6 +209,7 @@ public class ItemInit {
                     ArtifactList.TOTEM_OF_SHIELDING = new TotemOfShieldingItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("totem_of_shielding")),
                     ArtifactList.TOTEM_OF_SOUL_PROTECTION = new TotemOfSoulProtectionItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("totem_of_soul_protection")),
                     ArtifactList.CORRUPTED_BEACON = new CorruptedBeaconItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("corrupted_beacon")),
+                    ArtifactList.BUZZY_NEST = new BuzzyNestArtifact(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("buzzy_nest")),
 
                     // done
                     ArmorList.HUNTERS_ARMOR = new HuntersArmorItem(VEST, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false).setRegistryName(location("hunters_vest")),
@@ -345,6 +344,7 @@ public class ItemInit {
             artifactMap.put(TOTEM_OF_SOUL_PROTECTION, TOTEM_OF_SOUL_PROTECTION.getRegistryName());
             artifactMap.put(WIND_HORN, WIND_HORN.getRegistryName());
             artifactMap.put(WONDERFUL_WHEAT, WONDERFUL_WHEAT.getRegistryName());
+            artifactMap.put(BUZZY_NEST, BUZZY_NEST.getRegistryName());
 
             uniqueWeaponMap.put(CURSED_AXE, CURSED_AXE.getRegistryName());
             uniqueWeaponMap.put(FIREBRAND, FIREBRAND.getRegistryName());

@@ -24,7 +24,8 @@ public abstract class PlayerEntityMixin extends LivingEntity {
             constant = @Constant(doubleValue = 9.0D)
     )
     private double getAttackReachSquared(double value) {
-        return Math.pow(this.getAttributeValue(AttributeRegistry.ATTACK_REACH.get()), 2);
+        double attackReachValue = this.getAttributeValue(AttributeRegistry.ATTACK_REACH.get());
+        return attackReachValue * attackReachValue;
     }
 
     @Inject(

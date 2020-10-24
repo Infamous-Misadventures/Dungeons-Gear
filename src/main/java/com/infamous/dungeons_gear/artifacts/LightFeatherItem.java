@@ -72,7 +72,7 @@ public class LightFeatherItem extends Item implements IArtifact {
                 entity.sendBreakAnimation(handIn);
             });
         }
-        setArtifactCooldown(playerIn, itemstack.getItem(), 60);
+        IArtifact.setArtifactCooldown(playerIn, itemstack.getItem(), 60);
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }
 

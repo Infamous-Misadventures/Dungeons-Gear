@@ -33,7 +33,7 @@ public class CorruptedSeedsItem extends Item implements IArtifact {
                 entity.sendBreakAnimation(handIn);
             });
         }
-        setArtifactCooldown(playerIn, itemstack.getItem(), 400);
+        IArtifact.setArtifactCooldown(playerIn, itemstack.getItem(), 400);
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }
 

@@ -57,7 +57,7 @@ public class TotemOfSoulProtectionItem extends Item implements IArtifact, ISoulG
                             entity.sendBreakAnimation(itemUseContextHand);
                         });
                     }
-                    setArtifactCooldown(itemUseContextPlayer, itemUseContextItem.getItem(), 20);
+                    IArtifact.setArtifactCooldown(itemUseContextPlayer, itemUseContextItem.getItem(), 20);
                 }
             }
         }

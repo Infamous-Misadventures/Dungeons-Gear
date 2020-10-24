@@ -42,7 +42,7 @@ public abstract class AbstractBeamRenderer<T extends AbstractBeamEntity> extends
 
         matrixStackIn.rotate(Vector3f.XP.rotationDegrees(45.0F));
         matrixStackIn.scale(0.05625F, 0.05625F, 0.05625F);
-        matrixStackIn.translate(-4.0D, 0.0D, 0.0D);
+        matrixStackIn.translate(0.0D, 0.0D, 0.0D);
         IVertexBuilder vertexBuilder = bufferIn.getBuffer(RenderType.getEntityCutout(this.getEntityTexture(entityIn)));
         MatrixStack.Entry matrixStackInLast = matrixStackIn.getLast();
         Matrix4f matrix = matrixStackInLast.getMatrix();

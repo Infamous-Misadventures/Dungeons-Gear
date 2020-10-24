@@ -35,7 +35,7 @@ public class ShockPowderItem extends Item implements IArtifact {
 
 
 
-        setArtifactCooldown(playerIn, itemstack.getItem(), 300);
+        IArtifact.setArtifactCooldown(playerIn, itemstack.getItem(), 300);
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }
 

@@ -53,7 +53,7 @@ public class TotemOfShieldingItem extends Item implements IArtifact {
                         entity.sendBreakAnimation(itemUseContextHand);
                     });
                 }
-                setArtifactCooldown(itemUseContextPlayer, itemUseContextItem.getItem(), 400);
+                IArtifact.setArtifactCooldown(itemUseContextPlayer, itemUseContextItem.getItem(), 400);
             }
         }
         return ActionResultType.CONSUME;

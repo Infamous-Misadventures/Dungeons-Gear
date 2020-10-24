@@ -39,7 +39,7 @@ public class IronHideAmuletItem extends Item implements IArtifact {
                 entity.sendBreakAnimation(handIn);
             });
         }
-        setArtifactCooldown(playerIn, itemstack.getItem(), 500);
+        IArtifact.setArtifactCooldown(playerIn, itemstack.getItem(), 500);
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }
 

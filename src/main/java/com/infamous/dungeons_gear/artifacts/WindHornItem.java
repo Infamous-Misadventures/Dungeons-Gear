@@ -35,7 +35,7 @@ public class WindHornItem extends Item implements IArtifact {
                 entity.sendBreakAnimation(handIn);
             });
         }
-        setArtifactCooldown(playerIn, itemstack.getItem(), 200);
+        IArtifact.setArtifactCooldown(playerIn, itemstack.getItem(), 200);
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }
 

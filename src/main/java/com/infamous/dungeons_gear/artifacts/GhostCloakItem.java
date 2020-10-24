@@ -53,7 +53,7 @@ public class GhostCloakItem extends Item implements IArtifact {
                 entity.sendBreakAnimation(handIn);
             });
         }
-        setArtifactCooldown(playerIn, itemstack.getItem(), 120);
+        IArtifact.setArtifactCooldown(playerIn, itemstack.getItem(), 120);
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }
 

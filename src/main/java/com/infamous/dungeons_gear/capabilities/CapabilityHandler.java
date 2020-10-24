@@ -8,6 +8,7 @@ import com.infamous.dungeons_gear.capabilities.summoning.SummonerProvider;
 import com.infamous.dungeons_gear.capabilities.weapon.WeaponProvider;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.BatEntity;
+import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.passive.horse.LlamaEntity;
@@ -43,6 +44,7 @@ public class CapabilityHandler {
         return entity instanceof IronGolemEntity
                 || entity instanceof WolfEntity
                 || entity instanceof LlamaEntity
-                || entity instanceof BatEntity;
+                || entity instanceof BatEntity
+                || entity instanceof BeeEntity;
     }
 }

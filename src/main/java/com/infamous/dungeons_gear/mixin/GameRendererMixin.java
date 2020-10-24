@@ -18,10 +18,9 @@ public abstract class GameRendererMixin {
             method = "getMouseOver",
             constant = @Constant(doubleValue = 6.0D)
     )
-    private double modifyReachDistance(double value) {
+    private double getExtendedAttackReach(double value) {
         assert mc.player != null;
-        // Default reach of 5.0D, plus 1.0D for creative mode
-        return mc.player.getAttributeValue(ForgeMod.REACH_DISTANCE.get()) + 1.0D;
+        return mc.player.getAttributeValue(AttributeRegistry.ATTACK_REACH.get()) * 2.0D;
     }
 
     @ModifyConstant(
@@ -39,6 +38,7 @@ public abstract class GameRendererMixin {
     )
     private double getAttackReachSquared(double value) {
         assert mc.player != null;
-        return Math.pow(mc.player.getAttributeValue(AttributeRegistry.ATTACK_REACH.get()), 2);
+        double attackReachValue = mc.player.getAttributeValue(AttributeRegistry.ATTACK_REACH.get());
+        return attackReachValue * attackReachValue;
     }
 }

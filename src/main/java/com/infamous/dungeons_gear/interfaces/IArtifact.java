@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 
 public interface IArtifact {
 
-    default void setArtifactCooldown(PlayerEntity playerIn, Item item, int cooldownInTicks){
+    static void setArtifactCooldown(PlayerEntity playerIn, Item item, int cooldownInTicks){
         ItemStack helmet = playerIn.getItemStackFromSlot(EquipmentSlotType.HEAD);
         ItemStack chestplate = playerIn.getItemStackFromSlot(EquipmentSlotType.CHEST);
 

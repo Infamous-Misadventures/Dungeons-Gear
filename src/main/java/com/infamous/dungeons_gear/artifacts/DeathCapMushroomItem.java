@@ -42,7 +42,7 @@ public class DeathCapMushroomItem extends Item implements IArtifact {
             });
         }
 
-        setArtifactCooldown(playerIn, itemstack.getItem(), 600);
+        IArtifact.setArtifactCooldown(playerIn, itemstack.getItem(), 600);
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }
 

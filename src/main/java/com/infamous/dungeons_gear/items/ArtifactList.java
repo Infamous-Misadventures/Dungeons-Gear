@@ -37,6 +37,7 @@ public class ArtifactList {
     public static Item TOTEM_OF_SOUL_PROTECTION;
     public static Item WIND_HORN;
     public static Item WONDERFUL_WHEAT;
+    public static Item BUZZY_NEST;
 
     public static Map<Item, ResourceLocation> artifactMap = new HashMap<Item, ResourceLocation>();
 }

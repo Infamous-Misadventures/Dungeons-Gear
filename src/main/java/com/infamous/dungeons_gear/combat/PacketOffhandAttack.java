@@ -46,7 +46,7 @@ public class PacketOffhandAttack {
                                 if (!offhand.isEmpty()) {
                                     if (offhand.getItem() instanceof IOffhandAttack) {
                                         float reach = (float) player.getBaseAttributeValue(AttributeRegistry.ATTACK_REACH.get());
-                                        if(player.isCreative()) reach += 2.0;
+                                        if(player.isCreative()) reach *= 2.0D;
 
                                         // This is done to mitigate the difference between the render view entity's position
                                         // that is checked in the client to the server player entity's position

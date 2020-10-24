@@ -39,7 +39,7 @@ public class GongOfWeakeningItem extends Item implements IArtifact {
 
 
 
-        setArtifactCooldown(playerIn, itemstack.getItem(), 400);
+        IArtifact.setArtifactCooldown(playerIn, itemstack.getItem(), 400);
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }
 

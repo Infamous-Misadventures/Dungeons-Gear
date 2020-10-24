@@ -6,6 +6,7 @@ import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 
 import javax.annotation.Nullable;
+import java.util.UUID;
 
 public class SummonerStorage implements Capability.IStorage<ISummoner> {
 
@@ -24,6 +25,20 @@ public class SummonerStorage implements Capability.IStorage<ISummoner> {
         if(instance.getSummonedBat() != null){
             tag.putUniqueId("bat", instance.getSummonedBat());
         }
+        for(int i = 0; i < 3; i++){
+            UUID buzzyNestBee = instance.getBuzzyNestBees()[i];
+            UUID tumblebeeBee = instance.getTumblebeeBees()[i];
+            UUID busyBeeBee = instance.getBusyBeeBees()[i];
+            if(buzzyNestBee != null){
+                tag.putUniqueId("buzzyNestBee" + i, buzzyNestBee);
+            }
+            if(tumblebeeBee != null){
+                tag.putUniqueId("tumblebeeBee" + i, tumblebeeBee);
+            }
+            if(busyBeeBee != null){
+                tag.putUniqueId("busyBeeBee" + i, busyBeeBee);
+            }
+        }
         return tag;
     }
 
@@ -41,6 +56,20 @@ public class SummonerStorage implements Capability.IStorage<ISummoner> {
         }
         if(tag.hasUniqueId("bat")){
             instance.setSummonedBat(tag.getUniqueId("bat"));
+        }
+        for(int i = 0; i < 3; i++){
+            String currentBuzzyNestBee = "buzzyNestBee" + i;
+            if(tag.hasUniqueId(currentBuzzyNestBee)){
+                instance.addBuzzyNestBee(tag.getUniqueId(currentBuzzyNestBee));
+            }
+            String currentTumblebeeBee = "tumblebeeBee" + i;
+            if(tag.hasUniqueId(currentTumblebeeBee)){
+                instance.addTumblebeeBee(tag.getUniqueId(currentTumblebeeBee));
+            }
+            String currentBusyBeeBee = "busyBeeBee" + i;
+            if(tag.hasUniqueId(currentBusyBeeBee)){
+                instance.addBusyBeeBee(tag.getUniqueId(currentBusyBeeBee));
+            }
         }
     }
 }

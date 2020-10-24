@@ -15,4 +15,12 @@ public interface ISummoner {
     UUID getSummonedLlama();
     UUID getSummonedBat();
 
+    UUID[] getBuzzyNestBees();
+
+    boolean addBuzzyNestBee(UUID buzzyNestBee);
+    boolean addTumblebeeBee(UUID tumblebeeBee);
+    boolean addBusyBeeBee(UUID busyBeeBee);
+
+    UUID[] getTumblebeeBees();
+    UUID[] getBusyBeeBees();
 }

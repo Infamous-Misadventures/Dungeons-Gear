@@ -5,10 +5,7 @@ import com.infamous.dungeons_gear.capabilities.summoning.SummonableProvider;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.monster.GhastEntity;
-import net.minecraft.entity.passive.BatEntity;
-import net.minecraft.entity.passive.CatEntity;
-import net.minecraft.entity.passive.IronGolemEntity;
-import net.minecraft.entity.passive.WolfEntity;
+import net.minecraft.entity.passive.*;
 import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.passive.horse.LlamaEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -57,6 +54,20 @@ public class GoalUtils {
         }
     }
 
+    @Nullable
+    public static LivingEntity getOwner(BeeEntity beeEntity) {
+        try {
+            ISummonable summonable = beeEntity.getCapability(SummonableProvider.SUMMONABLE_CAPABILITY).orElseThrow(IllegalStateException::new);
+            if(summonable.getSummoner() != null){
+                UUID ownerUniqueId = summonable.getSummoner();
+                return ownerUniqueId == null ? null : beeEntity.world.getPlayerByUuid(ownerUniqueId);
+            }
+            else return null;
+        } catch (IllegalArgumentException var2) {
+            return null;
+        }
+    }
+
     public static boolean shouldAttackEntity(LivingEntity target, LivingEntity owner) {
         if (!(target instanceof CreeperEntity) && !(target instanceof GhastEntity)) {
             if (target instanceof WolfEntity) {
@@ -74,6 +85,18 @@ public class GoalUtils {
             if (target instanceof LlamaEntity) {
                 LlamaEntity llamaEntity = (LlamaEntity)target;
                 if (llamaEntity.isTame() && getOwner(llamaEntity) == owner) {
+                    return false;
+                }
+            }
+            if (target instanceof BatEntity) {
+                BatEntity llamaEntity = (BatEntity)target;
+                if (getOwner(llamaEntity) == owner) {
+                    return false;
+                }
+            }
+            if (target instanceof BeeEntity) {
+                BeeEntity llamaEntity = (BeeEntity)target;
+                if (getOwner(llamaEntity) == owner) {
                     return false;
                 }
             }

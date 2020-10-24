@@ -32,7 +32,7 @@ public class BootsOfSwiftnessItem extends Item implements IArtifact {
                 entity.sendBreakAnimation(handIn);
             });
         }
-        setArtifactCooldown(playerIn, itemstack.getItem(), 100);
+        IArtifact.setArtifactCooldown(playerIn, itemstack.getItem(), 100);
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }
 

@@ -52,7 +52,7 @@ public class TotemOfRegenerationItem extends Item implements IArtifact {
                 }
 
 
-                setArtifactCooldown(itemUseContextPlayer, itemUseContextItem.getItem(), 500);
+                IArtifact.setArtifactCooldown(itemUseContextPlayer, itemUseContextItem.getItem(), 500);
             }
         }
         return ActionResultType.CONSUME;

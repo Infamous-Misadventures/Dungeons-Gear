@@ -42,7 +42,7 @@ public class HarvesterItem extends Item implements IArtifact, ISoulGatherer {
             }
 
 
-            setArtifactCooldown(playerIn, itemstack.getItem(), 20);
+            IArtifact.setArtifactCooldown(playerIn, itemstack.getItem(), 20);
         }
 
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
