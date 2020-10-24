@@ -27,6 +27,7 @@ public class EnchantmentInit {
                     GRAVITY = new GravityEnchantment().setRegistryName(location("gravity")),
                     POISON_CLOUD = new PoisonCloudEnchantment().setRegistryName(location("poison_cloud")),
 
+                    BUSY_BEE = new BusyBeeEnchantment().setRegistryName(location("busy_bee")),
                     CHAINS = new ChainsEnchantment().setRegistryName(location("chains")),
                     COMMITTED = new CommittedEnchantment().setRegistryName(location("committed")),
                     CRITICAL_HIT = new CriticalHitEnchantment().setRegistryName(location("critical_hit")),

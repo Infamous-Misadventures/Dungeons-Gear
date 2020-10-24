@@ -379,6 +379,8 @@ public class ItemInit {
             uniqueWeaponMap.put(MASTERS_KATANA, MASTERS_KATANA.getRegistryName());
             uniqueWeaponMap.put(NAMELESS_BLADE, NAMELESS_BLADE.getRegistryName());
             uniqueWeaponMap.put(TRUTHSEEKER, TRUTHSEEKER.getRegistryName());
+            uniqueWeaponMap.put(FREEZING_FOIL, FREEZING_FOIL.getRegistryName());
+            uniqueWeaponMap.put(BEE_STINGER, BEE_STINGER.getRegistryName());
 
             commonWeaponMap.put(DOUBLE_AXE, DOUBLE_AXE.getRegistryName());
             commonWeaponMap.put(CLAYMORE, CLAYMORE.getRegistryName());
@@ -395,6 +397,7 @@ public class ItemInit {
             commonWeaponMap.put(GREAT_HAMMER, GREAT_HAMMER.getRegistryName());
             commonWeaponMap.put(GLAIVE, GLAIVE.getRegistryName());
             commonWeaponMap.put(DAGGER, DAGGER.getRegistryName());
+            commonWeaponMap.put(RAPIER, RAPIER.getRegistryName());
 
             uniqueRangedWeaponMap.put(BONEBOW, BONEBOW.getRegistryName());
             uniqueRangedWeaponMap.put(BOW_OF_LOST_SOULS, BOW_OF_LOST_SOULS.getRegistryName());

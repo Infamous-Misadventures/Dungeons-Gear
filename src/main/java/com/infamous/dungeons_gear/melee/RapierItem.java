@@ -43,7 +43,7 @@ public class RapierItem extends SwordItem implements IMeleeWeapon {
         if(stack.getItem() == WeaponList.BEE_STINGER){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The Bee Stinger, a swift blade inspired by a bee's barb, can draw friendly bees into the fray to fight alongside you."));
 
-            //list.add(new StringTextComponent(TextFormatting.GREEN + "Chance to Summon A Bee (Busy Bee I)"));
+            list.add(new StringTextComponent(TextFormatting.GREEN + "Chance to Summon A Bee (Busy Bee I)"));
             list.add(new StringTextComponent(TextFormatting.GREEN + "Fast Thrusts"));
         }
         if(stack.getItem() == WeaponList.FREEZING_FOIL){

@@ -260,6 +260,8 @@
   "enchantment.dungeons_gear.poison_cloud": "Poison Cloud",
   "enchantment.dungeons_gear.poison_cloud.desc": "Has a 30% chance to summon a poison cloud that deals damage to enemies in an area for three seconds.",
 
+  "enchantment.dungeons_gear.busy_bee": "Busy Bee",
+  "enchantment.dungeons_gear.busy_bee.desc": "Chance to summon a bee after defeating a mob, with up to 3 bees joining your side",
   "enchantment.dungeons_gear.chains": "Chains",
   "enchantment.dungeons_gear.chains.desc": "Has a 30% chance to chain a cluster of mobs together and keep them bound for a short time.",
   "enchantment.dungeons_gear.committed": "Committed",
