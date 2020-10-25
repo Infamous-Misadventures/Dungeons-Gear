@@ -39,9 +39,8 @@ public class ArmorEffectHelper {
 
                 batEntity.targetSelector.addGoal(1, new BatOwnerHurtByTargetGoal(batEntity));
                 batEntity.targetSelector.addGoal(2, new BatOwnerHurtTargetGoal(batEntity));
-                batEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(batEntity, LivingEntity.class, 5, false, false, (entityIterator) -> {
-                    return entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity);
-                }));
+                batEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(batEntity, LivingEntity.class, 5, false, false,
+                        (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
 
                 world.playSound((PlayerEntity)null, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ENTITY_BAT_AMBIENT, SoundCategory.AMBIENT, 64.0F, 1.0F);
                 world.addEntity(batEntity);
@@ -52,10 +51,12 @@ public class ArmorEffectHelper {
                 summonerCap.setSummonedBat(batEntity.getUniqueID());
             }
         } else{
-            Entity entity = ((ServerWorld)world).getEntityByUuid(summonerCap.getSummonedBat());
-            if(entity instanceof BatEntity){
-                BatEntity batEntity = (BatEntity) entity;
-                batEntity.teleportKeepLoaded(playerEntity.getPosX() + playerEntity.getEyeHeight(), playerEntity.getPosY() + playerEntity.getEyeHeight(), playerEntity.getPosZ() + playerEntity.getEyeHeight());
+            if(world instanceof ServerWorld){
+                Entity entity = ((ServerWorld)world).getEntityByUuid(summonerCap.getSummonedBat());
+                if(entity instanceof BatEntity){
+                    BatEntity batEntity = (BatEntity) entity;
+                    batEntity.teleportKeepLoaded(playerEntity.getPosX() + playerEntity.getEyeHeight(), playerEntity.getPosY() + playerEntity.getEyeHeight(), playerEntity.getPosZ() + playerEntity.getEyeHeight());
+                }
             }
         }
     }

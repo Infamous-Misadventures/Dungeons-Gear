@@ -112,11 +112,13 @@ public class WonderfulWheatItem extends Item implements IArtifact {
                         }
                     }
                 } else{
-                    Entity entity = ((ServerWorld)world).getEntityByUuid(summonerCap.getSummonedLlama());
-                    if(entity instanceof LlamaEntity){
-                        LlamaEntity llamaEntity = (LlamaEntity) entity;
-                        DungeonsGear.LOGGER.debug("onItemUse found the summoned Llama!");
-                        llamaEntity.teleportKeepLoaded((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D);
+                    if(world instanceof ServerWorld){
+                        Entity entity = ((ServerWorld)world).getEntityByUuid(summonerCap.getSummonedLlama());
+                        if(entity instanceof LlamaEntity){
+                            LlamaEntity llamaEntity = (LlamaEntity) entity;
+                            DungeonsGear.LOGGER.debug("onItemUse found the summoned Llama!");
+                            llamaEntity.teleportKeepLoaded((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D);
+                        }
                     }
                 }
             }

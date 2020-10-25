@@ -352,6 +352,8 @@
   "enchantment.dungeons_gear.swiftfooted.desc": "Jumping makes you move faster for three seconds.",
   "enchantment.dungeons_gear.surprise_gift": "Surprise Gift",
   "enchantment.dungeons_gear.surprise_gift.desc": "Whenever you use a healing potion, you sometimes create random consumables.",
+  "enchantment.dungeons_gear.tumblebee": "Tumblebee",
+  "enchantment.dungeons_gear.tumblebee.desc": "Chance to summon a bee when you jump, with up to 3 bees joining your side.",
   "enchantment.dungeons_gear.recycler": "Recycler",
   "enchantment.dungeons_gear.recycler.desc": "Being hit by damage-inflicting projectiles will occasionally craft a small quiver of arrows.",
 

@@ -20,10 +20,7 @@ import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.passive.BatEntity;
-import net.minecraft.entity.passive.FoxEntity;
-import net.minecraft.entity.passive.IronGolemEntity;
-import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.entity.passive.*;
 import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.passive.horse.LlamaEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -96,6 +93,14 @@ public class AbilityHelper {
         if(possiblePet instanceof IronGolemEntity){
             IronGolemEntity ironGolem = (IronGolemEntity) possiblePet;
             return GoalUtils.getOwner(ironGolem) == possibleOwner;
+        }
+        if(possiblePet instanceof BatEntity){
+            BatEntity batEntity = (BatEntity) possiblePet;
+            return GoalUtils.getOwner(batEntity) == possibleOwner;
+        }
+        if(possiblePet instanceof BeeEntity){
+            BeeEntity beeEntity = (BeeEntity) possiblePet;
+            return GoalUtils.getOwner(beeEntity) == possibleOwner;
         }
         return false;
     }

@@ -86,13 +86,15 @@ public class BuzzyNestArtifact extends Item implements IArtifact {
                             }
                         } else{
                             beeEntity.remove();
-                            for(int i = 0; i < 3; i++){
-                                UUID beeUUID = summonerCap.getBuzzyNestBees()[i];
-                                if(beeUUID == null) continue;
-                                Entity entity = ((ServerWorld)world).getEntityByUuid(beeUUID);
-                                if(entity instanceof BeeEntity){
-                                    BeeEntity summonedBeeEntity = (BeeEntity) entity;
-                                    summonedBeeEntity.teleportKeepLoaded((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D);
+                            if(world instanceof ServerWorld) {
+                                for (int i = 0; i < 3; i++) {
+                                    UUID beeUUID = summonerCap.getBuzzyNestBees()[i];
+                                    if (beeUUID == null) continue;
+                                    Entity entity = ((ServerWorld) world).getEntityByUuid(beeUUID);
+                                    if (entity instanceof BeeEntity) {
+                                        BeeEntity summonedBeeEntity = (BeeEntity) entity;
+                                        summonedBeeEntity.teleportKeepLoaded((double) blockPos.getX() + 0.5D, (double) blockPos.getY() + 0.05D, (double) blockPos.getZ() + 0.5D);
+                                    }
                                 }
                             }
                         }

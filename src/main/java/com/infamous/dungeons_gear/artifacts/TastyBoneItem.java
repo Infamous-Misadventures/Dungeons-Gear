@@ -86,10 +86,12 @@ public class TastyBoneItem extends Item implements IArtifact {
                         }
                     }
                 } else{
-                    Entity entity = ((ServerWorld)world).getEntityByUuid(summonerCap.getSummonedWolf());
-                    if(entity instanceof WolfEntity){
-                        WolfEntity wolfEntity = (WolfEntity) entity;
-                        wolfEntity.teleportKeepLoaded((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D);
+                    if(world instanceof ServerWorld) {
+                        Entity entity = ((ServerWorld) world).getEntityByUuid(summonerCap.getSummonedWolf());
+                        if (entity instanceof WolfEntity) {
+                            WolfEntity wolfEntity = (WolfEntity) entity;
+                            wolfEntity.teleportKeepLoaded((double) blockPos.getX() + 0.5D, (double) blockPos.getY() + 0.05D, (double) blockPos.getZ() + 0.5D);
+                        }
                     }
                 }
             }

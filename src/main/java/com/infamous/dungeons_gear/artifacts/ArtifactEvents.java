@@ -302,7 +302,7 @@ public class ArtifactEvents {
         if(!summoner.isAlive()) return;
 
         ISummoner summonerCap = summoner.getCapability(SummonerProvider.SUMMONER_CAPABILITY).orElseThrow(IllegalStateException::new);
-        if(summonerCap.getSummonedGolem() != null){
+        if(summonerCap.getSummonedGolem() != null && event.player.world instanceof ServerWorld){
             UUID summonedGolem = summonerCap.getSummonedGolem();
             Entity entity = ((ServerWorld) event.player.world).getEntityByUuid(summonedGolem);
             if(!(entity instanceof IronGolemEntity)) {
@@ -310,7 +310,7 @@ public class ArtifactEvents {
                 IArtifact.setArtifactCooldown(summoner, GOLEM_KIT, 600);
             }
         }
-        if(summonerCap.getSummonedWolf() != null){
+        if(summonerCap.getSummonedWolf() != null && event.player.world instanceof ServerWorld){
             UUID summonedWolf = summonerCap.getSummonedWolf();
             Entity entity = ((ServerWorld) event.player.world).getEntityByUuid(summonedWolf);
             if(!(entity instanceof WolfEntity)) {
@@ -318,7 +318,7 @@ public class ArtifactEvents {
                 IArtifact.setArtifactCooldown(summoner, TASTY_BONE, 600);
             }
         }
-        if(summonerCap.getSummonedLlama() != null){
+        if(summonerCap.getSummonedLlama() != null && event.player.world instanceof ServerWorld){
             UUID summonedLlama = summonerCap.getSummonedLlama();
             Entity entity = ((ServerWorld) event.player.world).getEntityByUuid(summonedLlama);
             if(!(entity instanceof LlamaEntity)) {
@@ -326,7 +326,7 @@ public class ArtifactEvents {
                 IArtifact.setArtifactCooldown(summoner, WONDERFUL_WHEAT, 600);
             }
         }
-        if(summonerCap.getSummonedBat() != null){
+        if(summonerCap.getSummonedBat() != null && event.player.world instanceof ServerWorld){
             UUID summonedBat = summonerCap.getSummonedBat();
             Entity entity = ((ServerWorld) event.player.world).getEntityByUuid(summonedBat);
             if(!(entity instanceof BatEntity)) {
@@ -340,8 +340,8 @@ public class ArtifactEvents {
         for(int i = 0; i < 3; i++){
             UUID summonedBuzzyNestBee = summonerCap.getBuzzyNestBees()[i];
             UUID summonedTumblebeeBee = summonerCap.getTumblebeeBees()[i];
-            UUID summonedbusyBeeBee = summonerCap.getBusyBeeBees()[i];
-            if(summonedBuzzyNestBee != null){
+            UUID summonedBusyBeeBee = summonerCap.getBusyBeeBees()[i];
+            if(summonedBuzzyNestBee != null && event.player.world instanceof ServerWorld){
                 Entity entity = ((ServerWorld) event.player.world).getEntityByUuid(summonedBuzzyNestBee);
                 if(!(entity instanceof BeeEntity)) {
                     summonerCap.getBuzzyNestBees()[i] = null;
@@ -350,14 +350,14 @@ public class ArtifactEvents {
                     }
                 }
             }
-            if(summonedTumblebeeBee != null){
+            if(summonedTumblebeeBee != null && event.player.world instanceof ServerWorld){
                 Entity entity = ((ServerWorld) event.player.world).getEntityByUuid(summonedTumblebeeBee);
                 if(!(entity instanceof BeeEntity)) {
                     summonerCap.getTumblebeeBees()[i] = null;
                 }
             }
-            if(summonedbusyBeeBee != null){
-                Entity entity = ((ServerWorld) event.player.world).getEntityByUuid(summonedbusyBeeBee);
+            if(summonedBusyBeeBee != null && event.player.world instanceof ServerWorld){
+                Entity entity = ((ServerWorld) event.player.world).getEntityByUuid(summonedBusyBeeBee);
                 if(!(entity instanceof BeeEntity)) {
                     summonerCap.getBusyBeeBees()[i] = null;
                 }

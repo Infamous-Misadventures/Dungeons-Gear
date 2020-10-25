@@ -76,6 +76,7 @@ public class EnchantmentInit {
                     SPEED_SYNERGY = new SpeedSynergyEnchantment().setRegistryName(location("speed_synergy")),
                     SURPRISE_GIFT = new SurpriseGiftEnchantment().setRegistryName(location("surprise_gift")),
                     SWIFTFOOTED = new SwiftfootedEnchantment().setRegistryName(location("swiftfooted")),
+                    TUMBLEBEE = new TumblebeeEnchantment().setRegistryName(location("tumblebee")),
                     RECYCLER = new RecyclerEnchantment().setRegistryName(location("recycler"))
                     );
 

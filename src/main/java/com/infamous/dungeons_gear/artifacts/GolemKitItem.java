@@ -81,10 +81,12 @@ public class GolemKitItem extends Item implements IArtifact {
                         }
                     }
                 } else{
-                    Entity entity = ((ServerWorld)world).getEntityByUuid(summonerCap.getSummonedGolem());
-                    if(entity instanceof IronGolemEntity){
-                        IronGolemEntity ironGolemEntity = (IronGolemEntity) entity;
-                        ironGolemEntity.teleportKeepLoaded((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D);
+                    if(world instanceof ServerWorld) {
+                        Entity entity = ((ServerWorld) world).getEntityByUuid(summonerCap.getSummonedGolem());
+                        if (entity instanceof IronGolemEntity) {
+                            IronGolemEntity ironGolemEntity = (IronGolemEntity) entity;
+                            ironGolemEntity.teleportKeepLoaded((double) blockPos.getX() + 0.5D, (double) blockPos.getY() + 0.05D, (double) blockPos.getZ() + 0.5D);
+                        }
                     }
                 }
             }
