@@ -15,6 +15,8 @@ public class Summoner implements ISummoner {
     private UUID summonedLlama;
     @Nullable
     private UUID summonedBat;
+    @Nullable
+    private UUID summonedSheep;
 
     private UUID[] buzzyNestBees = new UUID[3];
     private UUID[] busyBeeBees = new UUID[3];
@@ -48,6 +50,11 @@ public class Summoner implements ISummoner {
     }
 
     @Override
+    public void setSummonedSheep(UUID enchantedSheep) {
+        this.summonedSheep = enchantedSheep;
+    }
+
+    @Override
     @Nullable
     public UUID getSummonedGolem() {
         return this.summonedGolem;
@@ -69,6 +76,11 @@ public class Summoner implements ISummoner {
     @Nullable
     public UUID getSummonedBat() {
         return this.summonedBat;
+    }
+
+    @Override
+    public UUID getSummonedSheep() {
+        return this.summonedSheep;
     }
 
     @Override
@@ -118,6 +130,11 @@ public class Summoner implements ISummoner {
     @Override
     public UUID[] getBusyBeeBees() {
         return this.busyBeeBees;
+    }
+
+    @Override
+    public boolean hasNoBuzzyNestBees() {
+        return this.busyBeeBees[0] == null && this.busyBeeBees[1] == null && this.busyBeeBees[2] == null;
     }
 
     @Override

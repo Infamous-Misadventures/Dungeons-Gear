@@ -102,6 +102,10 @@ public class AbilityHelper {
             BeeEntity beeEntity = (BeeEntity) possiblePet;
             return GoalUtils.getOwner(beeEntity) == possibleOwner;
         }
+        if(possiblePet instanceof SheepEntity){
+            SheepEntity sheepEntity = (SheepEntity) possiblePet;
+            return GoalUtils.getOwner(sheepEntity) == possibleOwner;
+        }
         return false;
     }
 

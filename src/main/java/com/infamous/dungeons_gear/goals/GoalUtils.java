@@ -68,6 +68,20 @@ public class GoalUtils {
         }
     }
 
+    @Nullable
+    public static LivingEntity getOwner(SheepEntity beeEntity) {
+        try {
+            ISummonable summonable = beeEntity.getCapability(SummonableProvider.SUMMONABLE_CAPABILITY).orElseThrow(IllegalStateException::new);
+            if(summonable.getSummoner() != null){
+                UUID ownerUniqueId = summonable.getSummoner();
+                return ownerUniqueId == null ? null : beeEntity.world.getPlayerByUuid(ownerUniqueId);
+            }
+            else return null;
+        } catch (IllegalArgumentException var2) {
+            return null;
+        }
+    }
+
     public static boolean shouldAttackEntity(LivingEntity target, LivingEntity owner) {
         if (!(target instanceof CreeperEntity) && !(target instanceof GhastEntity)) {
             if (target instanceof WolfEntity) {

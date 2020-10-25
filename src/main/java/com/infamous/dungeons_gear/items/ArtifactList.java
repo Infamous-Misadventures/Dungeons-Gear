@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ArtifactList {
+    public static  Item ENCHANTED_GRASS;
     public static Item BOOTS_OF_SWIFTNESS;
     public static Item CORRUPTED_BEACON;
     public static Item CORRUPTED_SEEDS;

@@ -210,6 +210,7 @@ public class ItemInit {
                     ArtifactList.TOTEM_OF_SOUL_PROTECTION = new TotemOfSoulProtectionItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("totem_of_soul_protection")),
                     ArtifactList.CORRUPTED_BEACON = new CorruptedBeaconItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("corrupted_beacon")),
                     ArtifactList.BUZZY_NEST = new BuzzyNestArtifact(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("buzzy_nest")),
+                    ArtifactList.ENCHANTED_GRASS = new EnchantedGrassArtifact(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("enchanted_grass")),
 
                     // done
                     ArmorList.HUNTERS_ARMOR = new HuntersArmorItem(VEST, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false).setRegistryName(location("hunters_vest")),
@@ -345,6 +346,7 @@ public class ItemInit {
             artifactMap.put(WIND_HORN, WIND_HORN.getRegistryName());
             artifactMap.put(WONDERFUL_WHEAT, WONDERFUL_WHEAT.getRegistryName());
             artifactMap.put(BUZZY_NEST, BUZZY_NEST.getRegistryName());
+            artifactMap.put(ENCHANTED_GRASS, ENCHANTED_GRASS.getRegistryName());
 
             uniqueWeaponMap.put(CURSED_AXE, CURSED_AXE.getRegistryName());
             uniqueWeaponMap.put(FIREBRAND, FIREBRAND.getRegistryName());

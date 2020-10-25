@@ -7,10 +7,7 @@ import com.infamous.dungeons_gear.capabilities.summoning.SummonableProvider;
 import com.infamous.dungeons_gear.capabilities.summoning.SummonerProvider;
 import com.infamous.dungeons_gear.capabilities.weapon.WeaponProvider;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.BatEntity;
-import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.entity.passive.IronGolemEntity;
-import net.minecraft.entity.passive.WolfEntity;
+import net.minecraft.entity.passive.*;
 import net.minecraft.entity.passive.horse.LlamaEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BowItem;
@@ -45,6 +42,7 @@ public class CapabilityHandler {
                 || entity instanceof WolfEntity
                 || entity instanceof LlamaEntity
                 || entity instanceof BatEntity
-                || entity instanceof BeeEntity;
+                || entity instanceof BeeEntity
+                || entity instanceof SheepEntity;
     }
 }

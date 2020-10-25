@@ -61,40 +61,43 @@ public class BuzzyNestArtifact extends Item implements IArtifact {
 
             if(itemUseContextPlayer != null){
                 ISummoner summonerCap = itemUseContextPlayer.getCapability(SummonerProvider.SUMMONER_CAPABILITY).orElseThrow(IllegalStateException::new);
-                    BeeEntity beeEntity = EntityType.BEE.create(world);
-                    if (beeEntity!= null) {
-                        if(summonerCap.addBuzzyNestBee(beeEntity.getUniqueID())){
-                            beeEntity.setLocationAndAngles((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D, 0.0F, 0.0F);
+                    if (summonerCap.hasNoBuzzyNestBees()) {
+                        for(int i = 0; i < 3; i++){
+                            BeeEntity beeEntity = EntityType.BEE.create(world);
+                            if(beeEntity!= null){
+                                summonerCap.addBuzzyNestBee(beeEntity.getUniqueID());
+                                beeEntity.setLocationAndAngles((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D, 0.0F, 0.0F);
 
-                            beeEntity.goalSelector.addGoal(2, new BeeFollowOwnerGoal(beeEntity, 2.1D, 10.0F, 2.0F, false));
+                                beeEntity.goalSelector.addGoal(2, new BeeFollowOwnerGoal(beeEntity, 2.1D, 10.0F, 2.0F, false));
 
-                            beeEntity.targetSelector.addGoal(1, new BeeOwnerHurtByTargetGoal(beeEntity));
-                            beeEntity.targetSelector.addGoal(2, new BeeOwnerHurtTargetGoal(beeEntity));
-                            beeEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(beeEntity, LivingEntity.class, 5, false, false,
-                                    (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
+                                beeEntity.targetSelector.addGoal(1, new BeeOwnerHurtByTargetGoal(beeEntity));
+                                beeEntity.targetSelector.addGoal(2, new BeeOwnerHurtTargetGoal(beeEntity));
+                                beeEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(beeEntity, LivingEntity.class, 5, false, false,
+                                        (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
 
-                            world.playSound((PlayerEntity)null, itemUseContextPlayer.getPosX(), itemUseContextPlayer.getPosY(), itemUseContextPlayer.getPosZ(), SoundEvents.ENTITY_BEE_LOOP, SoundCategory.AMBIENT, 64.0F, 1.0F);
-                            world.addEntity(beeEntity);
+                                world.playSound((PlayerEntity)null, itemUseContextPlayer.getPosX(), itemUseContextPlayer.getPosY(), itemUseContextPlayer.getPosZ(), SoundEvents.ENTITY_BEE_LOOP, SoundCategory.AMBIENT, 64.0F, 1.0F);
+                                world.addEntity(beeEntity);
 
-                            ISummonable summonable = beeEntity.getCapability(SummonableProvider.SUMMONABLE_CAPABILITY).orElseThrow(IllegalStateException::new);
-                            summonable.setSummoner(itemUseContextPlayer.getUniqueID());
+                                ISummonable summonable = beeEntity.getCapability(SummonableProvider.SUMMONABLE_CAPABILITY).orElseThrow(IllegalStateException::new);
+                                summonable.setSummoner(itemUseContextPlayer.getUniqueID());
 
-                            if(!itemUseContextPlayer.isCreative()){
-                                itemUseContextItem.damageItem(1, itemUseContextPlayer, (entity) -> {
-                                    entity.sendBreakAnimation(itemUseContextHand);
-                                });
+                                if(!itemUseContextPlayer.isCreative()){
+                                    itemUseContextItem.damageItem(1, itemUseContextPlayer, (entity) -> {
+                                        entity.sendBreakAnimation(itemUseContextHand);
+                                    });
+                                }
                             }
-                        } else{
-                            beeEntity.remove();
-                            if(world instanceof ServerWorld) {
-                                for (int i = 0; i < 3; i++) {
-                                    UUID beeUUID = summonerCap.getBuzzyNestBees()[i];
-                                    if (beeUUID == null) continue;
-                                    Entity entity = ((ServerWorld) world).getEntityByUuid(beeUUID);
-                                    if (entity instanceof BeeEntity) {
-                                        BeeEntity summonedBeeEntity = (BeeEntity) entity;
-                                        summonedBeeEntity.teleportKeepLoaded((double) blockPos.getX() + 0.5D, (double) blockPos.getY() + 0.05D, (double) blockPos.getZ() + 0.5D);
-                                    }
+                        }
+                    }
+                    else{
+                        if(world instanceof ServerWorld) {
+                            for (int i = 0; i < 3; i++) {
+                                UUID beeUUID = summonerCap.getBuzzyNestBees()[i];
+                                if (beeUUID == null) continue;
+                                Entity entity = ((ServerWorld) world).getEntityByUuid(beeUUID);
+                                if (entity instanceof BeeEntity) {
+                                    BeeEntity summonedBeeEntity = (BeeEntity) entity;
+                                    summonedBeeEntity.teleportKeepLoaded((double) blockPos.getX() + 0.5D, (double) blockPos.getY() + 0.05D, (double) blockPos.getZ() + 0.5D);
                                 }
                             }
                         }
