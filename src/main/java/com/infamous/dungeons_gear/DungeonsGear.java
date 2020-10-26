@@ -9,6 +9,7 @@ import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
 import com.infamous.dungeons_gear.capabilities.weapon.Weapon;
 import com.infamous.dungeons_gear.capabilities.weapon.WeaponStorage;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
+import com.infamous.dungeons_gear.entities.IceCloudRenderer;
 import com.infamous.dungeons_gear.groups.ArmorGroup;
 import com.infamous.dungeons_gear.groups.ArtifactGroup;
 import com.infamous.dungeons_gear.init.AttributeRegistry;
@@ -63,10 +64,6 @@ public class DungeonsGear
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, DungeonsGearConfig.COMMON_SPEC);
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        // Register the enqueueIMC method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
-        // Register the processIMC method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
         // Register the doClientStuff method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
 
@@ -100,19 +97,6 @@ public class DungeonsGear
         MinecraftForge.EVENT_BUS.register(new VanillaItemModelProperties());
 
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BEAM.get(), BeamRenderer::new);
-    }
-
-    private void enqueueIMC(final InterModEnqueueEvent event)
-    {
-        // some example code to dispatch IMC to another mod
-        InterModComms.sendTo(MODID, "helloworld", () -> { LOGGER.info("Hello world from the MDK"); return "Hello world";});
-    }
-
-    private void processIMC(final InterModProcessEvent event)
-    {
-        // some example code to receive and process InterModComms from other mods
-        LOGGER.info("Got IMC {}", event.getIMCStream().
-                map(m->m.getMessageSupplier().get()).
-                collect(Collectors.toList()));
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ICE_CLOUD.get(), IceCloudRenderer::new);
     }
 }

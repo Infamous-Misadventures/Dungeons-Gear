@@ -1,6 +1,36 @@
 {
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "dungeons_gear:item/enchanted_grass"
-  }
+	"credit": "Made with Blockbench",
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "dungeons_gear:item/enchanted_grass"
+	},
+	"gui_light": "front",
+	"display": {
+		"thirdperson_righthand": {
+			"translation": [0.75, 3.5, 1.5],
+			"scale": [1.25, 1.25, 1]
+		},
+		"thirdperson_lefthand": {
+			"translation": [-0.75, 3.5, 1.5],
+			"scale": [1.25, 1.25, 1]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 90, 0],
+			"translation": [0, 4, 0],
+			"scale": [1.25, 1.25, 1]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, -90, 0],
+			"translation": [0, 4, 0],
+			"scale": [1.25, 1.25, 1]
+		},
+		"gui": {
+			"translation": [1, 0, 0],
+			"scale": [1.75, 1.75, 1.75]
+		},
+		"fixed": {
+			"translation": [1, 0, 0],
+			"scale": [1.75, 1.75, 1.75]
+		}
+	}
 }

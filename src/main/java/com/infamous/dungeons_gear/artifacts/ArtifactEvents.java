@@ -1,8 +1,6 @@
 package com.infamous.dungeons_gear.artifacts;
 
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_gear.armor.SoulRobeItem;
-import com.infamous.dungeons_gear.damagesources.SummonedFallingBlockDamageSource;
 import com.infamous.dungeons_gear.capabilities.combo.ComboProvider;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.capabilities.summoning.ISummonable;
@@ -22,9 +20,6 @@ import net.minecraft.entity.passive.*;
 import net.minecraft.entity.passive.horse.LlamaEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -42,9 +37,6 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import java.util.UUID;
 
-import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
-import static com.infamous.dungeons_gear.items.ArmorList.CAVE_CRAWLER;
-import static com.infamous.dungeons_gear.items.ArmorList.SPLENDID_ROBE;
 import static com.infamous.dungeons_gear.items.ArtifactList.*;
 
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
@@ -316,34 +308,6 @@ public class ArtifactEvents {
             }
 
             if(event.getRayTraceResult() instanceof BlockRayTraceResult)event.setCanceled(true);
-        }
-    }
-
-    @SubscribeEvent
-    public static void onIceBlockFalling(LivingDamageEvent event){
-        if (event.getSource() instanceof SummonedFallingBlockDamageSource){
-            if(event.getSource().getTrueSource() instanceof LivingEntity){
-                LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
-                PROXY.spawnParticles(event.getEntityLiving(), ParticleTypes.ITEM_SNOWBALL);
-                EffectInstance stun = new EffectInstance(CustomEffects.STUNNED, 100);
-                EffectInstance nausea = new EffectInstance(Effects.NAUSEA, 100);
-                EffectInstance slowness = new EffectInstance(Effects.SLOWNESS, 100, 4);
-                event.getEntityLiving().addPotionEffect(stun);
-                event.getEntityLiving().addPotionEffect(nausea);
-                event.getEntityLiving().addPotionEffect(slowness);
-
-
-                // Checks if the summoner has magic-damage boosting armor
-                ItemStack chestplate = attacker.getItemStackFromSlot(EquipmentSlotType.CHEST);
-                boolean magicBoostingChestplateFlag = chestplate.getItem() == SPLENDID_ROBE
-                        || chestplate.getItem() instanceof SoulRobeItem
-                        || chestplate.getItem() == CAVE_CRAWLER;
-                float originalDamage = event.getAmount();
-                if(magicBoostingChestplateFlag){
-                    event.setAmount(originalDamage + originalDamage *0.5F);
-                }
-                // Finished checking summoner armor
-            }
         }
     }
 

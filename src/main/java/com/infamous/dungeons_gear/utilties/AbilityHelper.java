@@ -1,51 +1,23 @@
 package com.infamous.dungeons_gear.utilties;
 
-import com.infamous.dungeons_gear.artifacts.fallingblocks.SummonedFallingBlockEntity;
-import com.infamous.dungeons_gear.capabilities.summoning.ISummonable;
-import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
-import com.infamous.dungeons_gear.capabilities.summoning.SummonableProvider;
-import com.infamous.dungeons_gear.capabilities.summoning.SummonerProvider;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.damagesources.ElectricShockDamageSource;
-import com.infamous.dungeons_gear.effects.CustomEffects;
-import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
-import com.infamous.dungeons_gear.goals.*;
-import com.infamous.dungeons_gear.init.ParticleInit;
-import com.infamous.dungeons_gear.ranged.crossbows.AbstractDungeonsCrossbowItem;
-import net.minecraft.block.Blocks;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
+import com.infamous.dungeons_gear.goals.GoalUtils;
+import com.infamous.dungeons_gear.goals.WildRageAttackGoal;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
-import net.minecraft.entity.monster.CreeperEntity;
-import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.passive.horse.LlamaEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.*;
-import net.minecraft.item.ArrowItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Quaternion;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 
-import java.util.*;
+import java.util.List;
 
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
-import static com.infamous.dungeons_gear.items.RangedWeaponList.FERAL_SOUL_CROSSBOW;
-import static net.minecraft.entity.Entity.horizontalMag;
 
 public class AbilityHelper {
 
@@ -110,8 +82,8 @@ public class AbilityHelper {
     }
 
 
-    private static boolean isNotAVillager(LivingEntity nearbyEntity) {
-        return !(nearbyEntity instanceof AbstractVillagerEntity);
+    private static boolean isNotAVillagerOrIronGolem(LivingEntity nearbyEntity) {
+        return !(nearbyEntity instanceof AbstractVillagerEntity) && !(nearbyEntity instanceof IronGolemEntity);
     }
 
     private static boolean isNotTheTargetOrAttacker(LivingEntity attacker, LivingEntity target, LivingEntity nearbyEntity) {
@@ -148,7 +120,7 @@ public class AbilityHelper {
         return isNotTheTargetOrAttacker(attacker, target, nearbyEntity)
                 && !isPetOfAttacker(attacker, nearbyEntity)
                 && isAliveAndCanBeSeen(nearbyEntity, attacker)
-                && isNotAVillager(nearbyEntity)
+                && isNotAVillagerOrIronGolem(nearbyEntity)
                 && isNotAPlayerOrCanApplyToPlayers(nearbyEntity);
     }
 
@@ -156,47 +128,13 @@ public class AbilityHelper {
         return nearbyEntity != attacker
                 && !isPetOfAttacker(attacker, nearbyEntity)
                 && isAliveAndCanBeSeen(nearbyEntity, attacker)
-                && isNotAVillager(nearbyEntity)
+                && isNotAVillagerOrIronGolem(nearbyEntity)
                 && isNotAPlayerOrCanApplyToPlayers(nearbyEntity);
     }
 
     public static void sendIntoWildRage(MobEntity mobEntity){
         mobEntity.targetSelector.addGoal(0, new WildRageAttackGoal(mobEntity));
         PROXY.spawnParticles(mobEntity, ParticleTypes.ANGRY_VILLAGER);
-    }
-
-    public static void summonIceBlocks(World world, PlayerEntity itemUseContextPlayer, BlockPos blockPos) {
-        for(int i = 0; i < 9; i++){
-            double xshift = 0;
-            double zshift = 0;
-
-            // positive x shift
-            if(i == 1 || i == 2 || i == 8){
-                xshift = 1.0D;
-            }
-            // negative x shift
-            if(i == 4 || i == 5 || i == 6){
-                xshift = -1.0D;
-            }
-            // positive z shift
-            if(i == 2 || i == 3 || i == 4){
-                zshift = 1.0D;
-            }
-            // negative z shift
-            if(i == 6 || i == 7 || i == 8){
-                zshift = -1.0D;
-            }
-            SummonedFallingBlockEntity fallingBlockEntity =
-                    new SummonedFallingBlockEntity(world,
-                            (double)blockPos.getX() + 0.5D + xshift,
-                            (double)blockPos.getY() + 4.0D,
-                            (double)blockPos.getZ() + 0.5D + zshift,
-                            itemUseContextPlayer,
-                            Blocks.ICE.getDefaultState());
-            fallingBlockEntity.fallTime = 1;
-            fallingBlockEntity.setHurtEntities(true);
-            world.addEntity(fallingBlockEntity);
-        }
     }
 
 }

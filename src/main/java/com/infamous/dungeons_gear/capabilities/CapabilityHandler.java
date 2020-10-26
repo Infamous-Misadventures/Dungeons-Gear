@@ -1,7 +1,6 @@
 package com.infamous.dungeons_gear.capabilities;
 
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_gear.artifacts.fallingblocks.SummonedFallingBlockEntity;
 import com.infamous.dungeons_gear.capabilities.combo.ComboProvider;
 import com.infamous.dungeons_gear.capabilities.summoning.SummonableProvider;
 import com.infamous.dungeons_gear.capabilities.summoning.SummonerProvider;
@@ -10,9 +9,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.passive.horse.LlamaEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BowItem;
-import net.minecraft.item.CrossbowItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.AttachCapabilitiesEvent;

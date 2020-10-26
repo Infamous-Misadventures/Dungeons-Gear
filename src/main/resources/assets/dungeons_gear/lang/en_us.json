@@ -363,5 +363,10 @@
   "itemGroup.artifacts": "Dungeons: Artifacts",
   "itemGroup.armor": "Dungeons: Armor",
 
+
+
+  "death.attack.electricShock": "%1$s was shock and awed",
+  "death.attack.electricShock.player": "%1$s was shock and awed whilst fighting %2$s",
+
   "attribute.name.generic.dungeons_gear.attackReach": "Attack Reach"
 }
