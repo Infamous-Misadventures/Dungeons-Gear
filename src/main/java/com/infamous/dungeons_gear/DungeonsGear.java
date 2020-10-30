@@ -1,6 +1,5 @@
 package com.infamous.dungeons_gear;
 
-import com.infamous.dungeons_gear.artifacts.corruptedbeacon.BeamRenderer;
 import com.infamous.dungeons_gear.capabilities.combo.Combo;
 import com.infamous.dungeons_gear.capabilities.combo.ComboStorage;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
@@ -21,8 +20,6 @@ import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.entities.ModEntityTypes;
 import com.infamous.dungeons_gear.groups.MeleeWeaponGroup;
 import com.infamous.dungeons_gear.groups.RangedWeaponGroup;
-import com.infamous.dungeons_gear.items.WeaponList;
-import com.infamous.dungeons_gear.melee.SpearItem;
 import com.infamous.dungeons_gear.melee.WeaponAttributeHandler;
 import net.minecraft.item.*;
 import net.minecraftforge.common.MinecraftForge;
@@ -30,20 +27,15 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.stream.Collectors;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod("dungeons_gear")
@@ -96,7 +88,6 @@ public class DungeonsGear
         MinecraftForge.EVENT_BUS.register(new BowItemModelsProperties());
         MinecraftForge.EVENT_BUS.register(new VanillaItemModelProperties());
 
-        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BEAM.get(), BeamRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ICE_CLOUD.get(), IceCloudRenderer::new);
     }
 }

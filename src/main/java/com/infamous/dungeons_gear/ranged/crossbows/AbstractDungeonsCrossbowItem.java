@@ -146,7 +146,7 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
         }
     }
 
-    private void fireCrossbowProjectiles(World world, LivingEntity livingEntity, Hand hand, ItemStack stack, float velocityIn, float inaccuracyIn) {
+    public void fireCrossbowProjectiles(World world, LivingEntity livingEntity, Hand hand, ItemStack stack, float velocityIn, float inaccuracyIn) {
         List<ItemStack> list = getChargedProjectiles(stack);
         float[] randomSoundPitches = getRandomSoundPitches(livingEntity.getRNG());
 
@@ -243,7 +243,7 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
     }
 
     // FORMER CROSSBOWITEM STATIC METHODS MADE NON-STATIC
-    private  void fireProjectile(World worldIn, LivingEntity shooter, Hand handIn, ItemStack crossbow, ItemStack projectile, float soundPitch, boolean isCreativeMode, float velocity, float inaccuracy, float projectileAngle) {
+    void fireProjectile(World worldIn, LivingEntity shooter, Hand handIn, ItemStack crossbow, ItemStack projectile, float soundPitch, boolean isCreativeMode, float velocity, float inaccuracy, float projectileAngle) {
         if (!worldIn.isRemote) {
             boolean flag = projectile.getItem() == Items.FIREWORK_ROCKET;
             ProjectileEntity projectileentity;
@@ -277,7 +277,7 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
     }
 
     // DUPLICATED CROSSBOWITEM STATIC METHODS
-    private static void fireProjectilesAfter(World worldIn, LivingEntity shooter, ItemStack stack) {
+    static void fireProjectilesAfter(World worldIn, LivingEntity shooter, ItemStack stack) {
         if (shooter instanceof ServerPlayerEntity) {
             ServerPlayerEntity serverplayerentity = (ServerPlayerEntity)shooter;
             if (!worldIn.isRemote) {
@@ -300,7 +300,7 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
 
     }
 
-    private static List<ItemStack> getChargedProjectiles(ItemStack stack) {
+    static List<ItemStack> getChargedProjectiles(ItemStack stack) {
         List<ItemStack> list = Lists.newArrayList();
         CompoundNBT compoundnbt = stack.getTag();
         if (compoundnbt != null && compoundnbt.contains("ChargedProjectiles", 9)) {

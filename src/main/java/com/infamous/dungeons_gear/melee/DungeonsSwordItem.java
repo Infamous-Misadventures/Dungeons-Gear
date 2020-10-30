@@ -23,6 +23,7 @@ public class DungeonsSwordItem extends net.minecraft.item.SwordItem implements I
     public Rarity getRarity(ItemStack itemStack){
 
         if(itemStack.getItem() == WeaponList.HAWKBRAND
+                || itemStack.getItem() == WeaponList.SINISTER_SWORD
         ){
             return Rarity.RARE;
         }
@@ -35,6 +36,11 @@ public class DungeonsSwordItem extends net.minecraft.item.SwordItem implements I
         super.addInformation(stack, world, list, flag);
         if(stack.getItem() == WeaponList.HAWKBRAND){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The Hawkbrand is the legendary sword of proven warriors."));
+
+            list.add(new StringTextComponent(TextFormatting.GREEN + "Increased Critical Hit Chance (Critical Hit I)"));
+        }
+        if(stack.getItem() == WeaponList.SINISTER_SWORD){
+            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The Sinister Sword, drawn to those who face the spookiest of nights, cuts through the night with a howl."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Increased Critical Hit Chance (Critical Hit I)"));
         }

@@ -3,7 +3,8 @@ package com.infamous.dungeons_gear.init;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.*;
 import com.infamous.dungeons_gear.artifacts.*;
-import com.infamous.dungeons_gear.artifacts.corruptedbeacon.CorruptedBeaconItem;
+import com.infamous.dungeons_gear.artifacts.beacon.CorruptedBeaconItem;
+import com.infamous.dungeons_gear.artifacts.beacon.CorruptedPumpkinItem;
 import com.infamous.dungeons_gear.melee.*;
 import com.infamous.dungeons_gear.items.ArmorList;
 import com.infamous.dungeons_gear.items.ArtifactList;
@@ -67,6 +68,7 @@ public class ItemInit {
 
                     // SWORD
                     WeaponList.HAWKBRAND = new DungeonsSwordItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 5, (1.6f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("hawkbrand")),
+                    WeaponList.SINISTER_SWORD = new DungeonsSwordItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 5, (1.6f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("sinister_sword")),
 
                     // STAFFS
                     WeaponList.BATTLESTAFF = new StaffItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 2, (3.2f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("battlestaff")),
@@ -108,6 +110,7 @@ public class ItemInit {
                     WeaponList.CLAYMORE = new ClaymoreItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 10, (0.7f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("claymore")),
                     WeaponList.BROADSWORD = new ClaymoreItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 11, (0.7f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("broadsword")),
                     WeaponList.HEARTSTEALER = new ClaymoreItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 10, (0.7f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("heartstealer")),
+                    WeaponList.GREAT_AXEBLADE = new ClaymoreItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 10, (0.7f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("great_axeblade")),
                     // HIGH DAMAGE, LOW ATTACK SPEED
 
                     // LONG ATTACK REACH
@@ -128,6 +131,7 @@ public class ItemInit {
 
                     BONEBOW = new DungeonsBowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 20.0F, true).setRegistryName(location("bonebow")),
                     TWIN_BOW = new DungeonsBowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 20.0F, true).setRegistryName(location("twin_bow")),
+                    HAUNTED_BOW = new DungeonsBowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 20.0F, true).setRegistryName(location("haunted_bow")),
 
                     SOUL_BOW = new SoulBowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 20.0F, false).setRegistryName(location("soul_bow")),
                     BOW_OF_LOST_SOULS = new SoulBowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 20.0F, true).setRegistryName(location("bow_of_lost_souls")),
@@ -211,6 +215,7 @@ public class ItemInit {
                     ArtifactList.CORRUPTED_BEACON = new CorruptedBeaconItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("corrupted_beacon")),
                     ArtifactList.BUZZY_NEST = new BuzzyNestArtifact(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("buzzy_nest")),
                     ArtifactList.ENCHANTED_GRASS = new EnchantedGrassArtifact(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("enchanted_grass")),
+                    ArtifactList.CORRUPTED_PUMPKIN = new CorruptedPumpkinItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("corrupted_pumpkin")),
 
                     // done
                     ArmorList.HUNTERS_ARMOR = new HuntersArmorItem(VEST, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false).setRegistryName(location("hunters_vest")),
@@ -347,6 +352,7 @@ public class ItemInit {
             artifactMap.put(WONDERFUL_WHEAT, WONDERFUL_WHEAT.getRegistryName());
             artifactMap.put(BUZZY_NEST, BUZZY_NEST.getRegistryName());
             artifactMap.put(ENCHANTED_GRASS, ENCHANTED_GRASS.getRegistryName());
+            artifactMap.put(CORRUPTED_PUMPKIN, CORRUPTED_PUMPKIN.getRegistryName());
 
             uniqueWeaponMap.put(CURSED_AXE, CURSED_AXE.getRegistryName());
             uniqueWeaponMap.put(FIREBRAND, FIREBRAND.getRegistryName());
@@ -383,6 +389,8 @@ public class ItemInit {
             uniqueWeaponMap.put(TRUTHSEEKER, TRUTHSEEKER.getRegistryName());
             uniqueWeaponMap.put(FREEZING_FOIL, FREEZING_FOIL.getRegistryName());
             uniqueWeaponMap.put(BEE_STINGER, BEE_STINGER.getRegistryName());
+            uniqueWeaponMap.put(GREAT_AXEBLADE, GREAT_AXEBLADE.getRegistryName());
+            uniqueWeaponMap.put(SINISTER_SWORD, SINISTER_SWORD.getRegistryName());
 
             commonWeaponMap.put(DOUBLE_AXE, DOUBLE_AXE.getRegistryName());
             commonWeaponMap.put(CLAYMORE, CLAYMORE.getRegistryName());
@@ -429,6 +437,8 @@ public class ItemInit {
             uniqueRangedWeaponMap.put(VOIDCALLER, VOIDCALLER.getRegistryName());
             uniqueRangedWeaponMap.put(BABY_CROSSBOW, BABY_CROSSBOW.getRegistryName());
             uniqueRangedWeaponMap.put(IMPLODING_CROSSBOW, IMPLODING_CROSSBOW.getRegistryName());
+            commonRangedWeaponMap.put(SOUL_HUNTER_CROSSBOW, SOUL_HUNTER_CROSSBOW.getRegistryName());
+            commonRangedWeaponMap.put(CORRUPTED_CROSSBOW, CORRUPTED_CROSSBOW.getRegistryName());
 
             commonRangedWeaponMap.put(HUNTING_BOW, HUNTING_BOW.getRegistryName());
             commonRangedWeaponMap.put(LONGBOW, LONGBOW.getRegistryName());
@@ -443,6 +453,7 @@ public class ItemInit {
             commonRangedWeaponMap.put(SCATTER_CROSSBOW, SCATTER_CROSSBOW.getRegistryName());
             commonRangedWeaponMap.put(SOUL_CROSSBOW, SOUL_CROSSBOW.getRegistryName());
             commonRangedWeaponMap.put(DUAL_CROSSBOW, DUAL_CROSSBOW.getRegistryName());
+            commonRangedWeaponMap.put(BURST_CROSSBOW, BURST_CROSSBOW.getRegistryName());
 
             commonLeatherArmorMap.put(HUNTERS_ARMOR, HUNTERS_ARMOR.getRegistryName());
             commonLeatherArmorMap.put(PHANTOM_ARMOR, PHANTOM_ARMOR.getRegistryName());

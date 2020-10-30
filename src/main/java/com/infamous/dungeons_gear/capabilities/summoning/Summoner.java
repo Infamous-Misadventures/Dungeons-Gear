@@ -134,7 +134,7 @@ public class Summoner implements ISummoner {
 
     @Override
     public boolean hasNoBuzzyNestBees() {
-        return this.busyBeeBees[0] == null && this.busyBeeBees[1] == null && this.busyBeeBees[2] == null;
+        return this.buzzyNestBees[0] == null && this.buzzyNestBees[1] == null && this.buzzyNestBees[2] == null;
     }
 
     @Override

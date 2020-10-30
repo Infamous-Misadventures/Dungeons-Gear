@@ -24,7 +24,7 @@ public class DungeonsBowItem extends AbstractDungeonsBowItem {
 
     @Override
     public boolean hasBonusShotBuiltIn(ItemStack stack) {
-        return stack.getItem() == TWIN_BOW;
+        return stack.getItem() == TWIN_BOW || stack.getItem() == HAUNTED_BOW;
     }
 
     @Override
@@ -39,6 +39,11 @@ public class DungeonsBowItem extends AbstractDungeonsBowItem {
         }
         if(stack.getItem() == TWIN_BOW){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The Twin Bow is the champion of the hero who finds themselves outnumbered and alone."));
+
+            list.add(new StringTextComponent(TextFormatting.GREEN + "Shoots Two Enemies At Once (Bonus Shot I)"));
+        }
+        if(stack.getItem() == HAUNTED_BOW){
+            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "What indescribable horror! The creeping tentacles of this bow reach for the unknowable Void."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Shoots Two Enemies At Once (Bonus Shot I)"));
         }

@@ -108,6 +108,29 @@ public class BowItemModelsProperties {
 							: 0.0F;
 				});
 
+
+		/*
+		// HAUNTED BOW
+		ItemModelsProperties.registerProperty(HAUNTED_BOW, new ResourceLocation("pull"),
+				(stack, clientWorld, livingEntity) -> {
+					if (livingEntity == null) {
+						return 0.0F;
+					} else {
+						return !(livingEntity.getActiveItemStack().getItem() instanceof DungeonsBowItem) ? 0.0F
+								: (float) (stack.getUseDuration() - livingEntity.getItemInUseCount())
+								/ RangedAttackHelper.getModdedBowChargeTime(livingEntity.getActiveItemStack());
+					}
+				});
+		ItemModelsProperties.registerProperty(HAUNTED_BOW, new ResourceLocation("pulling"),
+				(stack, clientWorld, livingEntity) -> {
+					return livingEntity != null && livingEntity.isHandActive()
+							&& livingEntity.getActiveItemStack() == stack
+							? 1.0F
+							: 0.0F;
+				});
+
+		 */
+
 		// HUNTERS PROMISE
 		ItemModelsProperties.registerProperty(HUNTERS_PROMISE, new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {

@@ -18,8 +18,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-import static com.infamous.dungeons_gear.items.WeaponList.HAWKBRAND;
-import static com.infamous.dungeons_gear.items.WeaponList.MASTERS_KATANA;
+import static com.infamous.dungeons_gear.items.WeaponList.*;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class CriticalHitEnchantment extends DamageBoostEnchantment {
@@ -45,7 +44,7 @@ public class CriticalHitEnchantment extends DamageBoostEnchantment {
         if(event.getPlayer() != null && !event.isVanillaCritical()){
             PlayerEntity attacker = (PlayerEntity) event.getPlayer();
             ItemStack mainhand = attacker.getHeldItemMainhand();
-            boolean uniqueWeaponFlag = mainhand.getItem() == HAWKBRAND || mainhand.getItem() == MASTERS_KATANA;
+            boolean uniqueWeaponFlag = mainhand.getItem() == HAWKBRAND || mainhand.getItem() == MASTERS_KATANA || mainhand.getItem() == SINISTER_SWORD;
             if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.CRITICAL_HIT)){
                 int criticalHitLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.CRITICAL_HIT, mainhand);
                 float criticalHitChance;

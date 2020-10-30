@@ -56,7 +56,7 @@ public class BonusShotEnchantment extends Enchantment {
         LivingEntity livingEntity = event.getEntityLiving();
         ItemStack stack = event.getBow();
         int charge = event.getCharge();
-        boolean uniqueWeaponFlag = stack.getItem() == TWIN_BOW;
+        boolean uniqueWeaponFlag = stack.getItem() == TWIN_BOW || stack.getItem() == HAUNTED_BOW;
         if(ModEnchantmentHelper.hasEnchantment(stack, RangedEnchantmentList.BONUS_SHOT) || uniqueWeaponFlag){
             int bonusShotLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.BONUS_SHOT, stack);
             float damageMultiplier;

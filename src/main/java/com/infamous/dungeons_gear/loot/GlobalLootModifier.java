@@ -77,7 +77,7 @@ public class GlobalLootModifier{
                 if (lootTable != null) {
                     String lootTablePath = lootTable.toString();
                     DungeonsGearConfig.Common.COMMON_LOOT_TABLES.get().forEach((path) ->{
-                        if(lootTablePath.contains(path) && !DungeonsGearConfig.Common.COMMON_LOOT_TABLES_BLACKLIST.get().contains(path)){
+                        if(lootTablePath.contains(path) && !DungeonsGearConfig.Common.COMMON_LOOT_TABLES_BLACKLIST.get().contains(lootTablePath)){
                             generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.COMMON.UNIQUE_ITEM_COMMON_LOOT.get(),
                                     DungeonsGearConfig.COMMON.ARTIFACT_COMMON_LOOT.get()));
                         }
@@ -130,7 +130,7 @@ public class GlobalLootModifier{
                 if (lootTable != null) {
                     String lootTablePath = lootTable.toString();
                     DungeonsGearConfig.Common.UNCOMMON_LOOT_TABLES.get().forEach((path) ->{
-                        if(lootTablePath.contains(path) && !DungeonsGearConfig.Common.UNCOMMON_LOOT_TABLES_BLACKLIST.get().contains(path)){
+                        if(lootTablePath.contains(path) && !DungeonsGearConfig.Common.UNCOMMON_LOOT_TABLES_BLACKLIST.get().contains(lootTablePath)){
                             generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.COMMON.UNIQUE_ITEM_UNCOMMON_LOOT.get(),
                                     DungeonsGearConfig.COMMON.ARTIFACT_UNCOMMON_LOOT.get()));
                         }
@@ -183,7 +183,7 @@ public class GlobalLootModifier{
                 if (lootTable != null) {
                     String lootTablePath = lootTable.toString();
                     DungeonsGearConfig.Common.RARE_LOOT_TABLES.get().forEach((path) ->{
-                        if(lootTablePath.contains(path) && !DungeonsGearConfig.Common.RARE_LOOT_TABLES_BLACKLIST.get().contains(path)){
+                        if(lootTablePath.contains(path) && !DungeonsGearConfig.Common.RARE_LOOT_TABLES_BLACKLIST.get().contains(lootTablePath)){
                             generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.COMMON.UNIQUE_ITEM_RARE_LOOT.get(),
                                     DungeonsGearConfig.COMMON.ARTIFACT_RARE_LOOT.get()));
                         }
@@ -237,7 +237,7 @@ public class GlobalLootModifier{
                     String lootTablePath = lootTable.toString();
 
                     DungeonsGearConfig.Common.SUPER_RARE_LOOT_TABLES.get().forEach((path) ->{
-                        if(lootTablePath.contains(path) && !DungeonsGearConfig.Common.SUPER_RARE_LOOT_TABLES_BLACKLIST.get().contains(path)){
+                        if(lootTablePath.contains(path) && !DungeonsGearConfig.Common.SUPER_RARE_LOOT_TABLES_BLACKLIST.get().contains(lootTablePath)){
                             generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.COMMON.UNIQUE_ITEM_SUPER_RARE_LOOT.get(),
                                     DungeonsGearConfig.COMMON.ARTIFACT_SUPER_RARE_LOOT.get()));
                         }

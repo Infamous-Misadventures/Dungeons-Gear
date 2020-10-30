@@ -11,6 +11,8 @@ import java.util.Map;
 
 public class WeaponList {
 
+    public static Item GREAT_AXEBLADE;
+    public static Item SINISTER_SWORD;
     public static Item RAPIER;
     public static Item BEE_STINGER;
     public static Item FREEZING_FOIL;

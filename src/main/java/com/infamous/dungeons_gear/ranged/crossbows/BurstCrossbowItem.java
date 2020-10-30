@@ -2,7 +2,10 @@ package com.infamous.dungeons_gear.ranged.crossbows;
 
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -31,6 +34,36 @@ public class BurstCrossbowItem extends AbstractDungeonsCrossbowItem implements I
     @Override
     public boolean hasEnigmaResonatorBuiltIn(ItemStack stack) {
         return stack.getItem() == SOUL_HUNTER_CROSSBOW;
+    }
+
+    @Override
+    public void fireCrossbowProjectiles(World world, LivingEntity livingEntity, Hand hand, ItemStack stack, float velocityIn, float inaccuracyIn) {
+        List<ItemStack> list = getChargedProjectiles(stack);
+        float[] randomSoundPitches = getRandomSoundPitches(livingEntity.getRNG());
+
+        for(int i = 0; i < list.size(); ++i) {
+            ItemStack currentProjectile = list.get(i);
+            boolean playerInCreativeMode = livingEntity instanceof PlayerEntity && ((PlayerEntity)livingEntity).abilities.isCreativeMode;
+            if (!currentProjectile.isEmpty()) {
+                if (i == 0) {
+                    fireProjectile(world, livingEntity, hand, stack, currentProjectile, randomSoundPitches[i], playerInCreativeMode, velocityIn, inaccuracyIn, 0.0F);
+                } else if (i == 1) {
+                    fireProjectile(world, livingEntity, hand, stack, currentProjectile, randomSoundPitches[i], playerInCreativeMode, velocityIn, inaccuracyIn, -5.0F);
+                } else if (i == 2) {
+                    fireProjectile(world, livingEntity, hand, stack, currentProjectile, randomSoundPitches[i], playerInCreativeMode, velocityIn, inaccuracyIn, 5.0F);
+                } else if (i == 3) {
+                    fireProjectile(world, livingEntity, hand, stack, currentProjectile, randomSoundPitches[i-2], playerInCreativeMode, velocityIn, inaccuracyIn, -10.0F);
+                } else if (i == 4) {
+                    fireProjectile(world, livingEntity, hand, stack, currentProjectile, randomSoundPitches[i-2], playerInCreativeMode, velocityIn, inaccuracyIn, 10.0F);
+                } else if (i == 5) {
+                    fireProjectile(world, livingEntity, hand, stack, currentProjectile, randomSoundPitches[i-4], playerInCreativeMode, velocityIn, inaccuracyIn, -15.0F);
+                } else if (i == 6) {
+                    fireProjectile(world, livingEntity, hand, stack, currentProjectile, randomSoundPitches[i-4], playerInCreativeMode, velocityIn, inaccuracyIn, 15.0F);
+                }
+            }
+        }
+
+        fireProjectilesAfter(world, livingEntity, stack);
     }
 
     @Override

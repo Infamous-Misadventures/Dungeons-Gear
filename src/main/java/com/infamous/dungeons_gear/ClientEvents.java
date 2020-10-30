@@ -1,11 +1,18 @@
 package com.infamous.dungeons_gear;
 
+import com.infamous.dungeons_gear.artifacts.beacon.AbstractBeaconItem;
+import com.infamous.dungeons_gear.artifacts.beacon.BeaconBeamRenderer;
 import com.infamous.dungeons_gear.interfaces.IArmor;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -115,6 +122,30 @@ public class ClientEvents {
                         .mergeStyle(TextFormatting.LIGHT_PURPLE));
             }
         }
+    }
 
+// borrowed from direwolf20's MiningGadget mod
+    @SubscribeEvent
+    public static void renderWorldLastEvent(RenderWorldLastEvent event) {
+        List<AbstractClientPlayerEntity> players = null;
+        if (Minecraft.getInstance().world != null) {
+            players = Minecraft.getInstance().world.getPlayers();
+
+            PlayerEntity myplayer = Minecraft.getInstance().player;
+            if(myplayer != null){
+                for (PlayerEntity player : players) {
+                    if (player.getDistanceSq(myplayer) > 500)
+                        continue;
+
+
+                    ItemStack heldItem = AbstractBeaconItem.getBeacon(player);
+                    if (player.isHandActive()
+                            && heldItem.getItem() instanceof AbstractBeaconItem
+                            && AbstractBeaconItem.canFire(player)) {
+                            BeaconBeamRenderer.renderBeam(event, player, Minecraft.getInstance().getRenderPartialTicks());
+                    }
+                }
+            }
+        }
     }
 }

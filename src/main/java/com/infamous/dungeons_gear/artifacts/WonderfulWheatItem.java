@@ -73,7 +73,7 @@ public class WonderfulWheatItem extends Item implements IArtifact {
                         llamaEntity.setTamedBy(itemUseContextPlayer);
                         llamaEntity.setVariant(2);
 
-                        Method setStrength = ObfuscationReflectionHelper.findMethod(LlamaEntity.class, "func_190706_p", Integer.class);
+                        Method setStrength = ObfuscationReflectionHelper.findMethod(LlamaEntity.class, "func_190706_p", Integer.TYPE);
                         try {
                             setStrength.invoke(llamaEntity, 5);
                         } catch (IllegalAccessException | InvocationTargetException e) {

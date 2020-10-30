@@ -24,6 +24,7 @@ public class ClaymoreItem extends SwordItem implements IMeleeWeapon {
 
         if(itemStack.getItem() == WeaponList.BROADSWORD
                 || itemStack.getItem() == WeaponList.HEARTSTEALER
+                || itemStack.getItem() == WeaponList.GREAT_AXEBLADE
         ){
             return Rarity.RARE;
         }
@@ -50,6 +51,13 @@ public class ClaymoreItem extends SwordItem implements IMeleeWeapon {
         if(stack.getItem() == WeaponList.CLAYMORE){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A massive sword that seems impossibly heavy yet rests easily in a just warrior's hands."));
 
+            list.add(new StringTextComponent(TextFormatting.GREEN + "Powerful Pushback"));
+
+        }
+        if(stack.getItem() == WeaponList.GREAT_AXEBLADE){
+            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A lucky blacksmith turned a workshop blunder into a battlefield wonder, fusing two weapons into something new."));
+
+            list.add(new StringTextComponent(TextFormatting.GREEN + "Boosts Next Attack On Jump (Dynamo I)"));
             list.add(new StringTextComponent(TextFormatting.GREEN + "Powerful Pushback"));
 
         }

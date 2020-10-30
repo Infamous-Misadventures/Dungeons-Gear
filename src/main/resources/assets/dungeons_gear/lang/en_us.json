@@ -46,6 +46,8 @@
   "item.dungeons_gear.cutlass": "Cutlass",
   "item.dungeons_gear.katana": "Katana",
   "item.dungeons_gear.soul_knife": "Soul Knife",
+  "item.dungeons_gear.sinister_sword": "Sinister Sword",
+  "item.dungeons_gear.great_axeblade": "Great Axeblade",
 
   "item.dungeons_gear.rapier": "Rapier",
   "item.dungeons_gear.bee_stinger": "Bee Stinger",
@@ -73,6 +75,7 @@
   "item.dungeons_gear.trickbow": "Trickbow",
   "item.dungeons_gear.snow_bow": "Snow Bow",
   "item.dungeons_gear.winters_touch": "Winter's Touch",
+  "item.dungeons_gear.haunted_bow": "Haunted Bow",
 
   "item.dungeons_gear.auto_crossbow": "Auto Crossbow",
   "item.dungeons_gear.azure_seeker": "Azure Seeker",
@@ -134,6 +137,7 @@
   "item.dungeons_gear.corrupted_beacon": "Corrupted Beacon",
   "item.dungeons_gear.buzzy_nest": "Buzzy Nest",
   "item.dungeons_gear.enchanted_grass": "Enchanted Grass",
+  "item.dungeons_gear.corrupted_pumpkin": "Corrupted Pumpkin",
 
   "item.dungeons_gear.hunters_vest": "Hunter's Vest",
   "item.dungeons_gear.archers_vest": "Archer's Vest",
@@ -362,8 +366,6 @@
   "itemGroup.ranged_weapons": "Dungeons: Ranged Weapons",
   "itemGroup.artifacts": "Dungeons: Artifacts",
   "itemGroup.armor": "Dungeons: Armor",
-
-
 
   "death.attack.electricShock": "%1$s was shock and awed",
   "death.attack.electricShock.player": "%1$s was shock and awed whilst fighting %2$s",
