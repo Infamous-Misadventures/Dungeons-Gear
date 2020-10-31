@@ -1,9 +1,11 @@
 package com.infamous.dungeons_gear.items;
 
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import net.minecraft.item.IItemTier;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.LazyValue;
+
+import java.util.function.Supplier;
 
 public enum ToolMaterialList implements IItemTier {
     /*
@@ -58,21 +60,21 @@ public enum ToolMaterialList implements IItemTier {
    });
      */
 
-    DUNGEONS_MELEE_WEAPON(0.0F, 6.0f, 250, 2, 14, Items.AIR);
+    METAL(0.0F, 6.0f, DungeonsGearConfig.COMMON.MELEE_WEAPON_DURABILITY.get(), 2, 14, () -> Ingredient.fromTag(ItemTagWrappers.MELEE_WEAPON_REPAIR_ITEMS));
 
 
     private float attackDamage, efficiency;
     private int durability, harvestLevel, enchantability;
-    private Item repairMaterial;
+    private LazyValue<Ingredient> repairMaterial;
 
-    private ToolMaterialList(float attackDamage, float efficiency, int durability, int harvestLevel, int enchantability, Item repairMaterial)
+    private ToolMaterialList(float attackDamage, float efficiency, int durability, int harvestLevel, int enchantability, Supplier<Ingredient> repairMaterial)
     {
         this.attackDamage = attackDamage;
         this.efficiency = efficiency;
         this.durability = durability;
         this.harvestLevel = harvestLevel;
         this.enchantability = enchantability;
-        this.repairMaterial = repairMaterial;
+        this.repairMaterial = new LazyValue<>(repairMaterial);
     }
 
     @Override
@@ -108,6 +110,6 @@ public enum ToolMaterialList implements IItemTier {
     @Override
     public Ingredient getRepairMaterial()
     {
-        return Ingredient.fromItems(this.repairMaterial);
+        return this.repairMaterial.getValue();
     }
 }

@@ -35,6 +35,9 @@ public class RangedWeaponList {
     public static Item HAUNTED_BOW;
     public static Item ANCIENT_BOW;
     public static Item LOVE_SPELL_BOW;
+    public static Item WIND_BOW;
+    public static Item ECHO_OF_THE_VALLEY;
+    public static Item BURST_GALE_BOW;
 
     // CROSSBOWS
     public static Item AUTO_CROSSBOW;
@@ -62,5 +65,4 @@ public class RangedWeaponList {
 
     public static Map<Item, ResourceLocation> uniqueRangedWeaponMap = new HashMap<Item, ResourceLocation>();
     public static Map<Item, ResourceLocation> commonRangedWeaponMap = new HashMap<Item, ResourceLocation>();
-
 }

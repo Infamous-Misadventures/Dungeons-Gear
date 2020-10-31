@@ -1,6 +1,5 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.interfaces.IArtifact;
 import com.infamous.dungeons_gear.items.ArtifactList;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,7 +16,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class BootsOfSwiftnessItem extends Item implements IArtifact {
+public class BootsOfSwiftnessItem extends ArtifactItem {
     public BootsOfSwiftnessItem(Properties properties) {
         super(properties);
     }
@@ -32,12 +31,8 @@ public class BootsOfSwiftnessItem extends Item implements IArtifact {
                 entity.sendBreakAnimation(handIn);
             });
         }
-        IArtifact.setArtifactCooldown(playerIn, itemstack.getItem(), 100);
+        ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem(), 100);
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
-    }
-
-    public Rarity getRarity(ItemStack itemStack){
-        return Rarity.RARE;
     }
 
     @Override

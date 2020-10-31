@@ -10,6 +10,7 @@ import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.init.PotionList;
 import com.infamous.dungeons_gear.interfaces.IArmor;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
+import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -64,7 +65,8 @@ public class GlobalEvents {
         int fuseShotLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.FUSE_SHOT, stack);
         if(stack.getItem() == RED_SNAKE) fuseShotLevel++;
         if(fuseShotLevel > 0){
-            IWeapon weaponCap = stack.getCapability(WeaponProvider.WEAPON_CAPABILITY).orElseThrow(IllegalStateException::new);
+            IWeapon weaponCap = CapabilityHelper.getWeaponCapability(stack);
+            if(weaponCap == null) return;
             int fuseShotCounter = weaponCap.getFuseShotCounter();
             // 6 - 1, 6 - 2, 6 - 3
             // zero indexing, so subtract 1 as well
@@ -121,7 +123,8 @@ public class GlobalEvents {
         if(event.getSource().getTrueSource() instanceof PlayerEntity){
             PlayerEntity playerEntity = (PlayerEntity)event.getSource().getTrueSource();
 
-            ICombo comboCap = playerEntity.getCapability(ComboProvider.COMBO_CAPABILITY).orElseThrow(IllegalStateException::new);
+            ICombo comboCap = CapabilityHelper.getComboCapability(playerEntity);
+            if(comboCap == null) return;
             if(comboCap.getShadowForm()){
                 float originalDamage = event.getAmount();
                 event.setAmount(originalDamage * 2.0F);
@@ -142,7 +145,8 @@ public class GlobalEvents {
         if(PotionUtils.getPotionFromItem(event.getItem()) == PotionList.SHADOW_BREW){
             if(event.getEntityLiving() instanceof PlayerEntity){
                 PlayerEntity playerEntity = (PlayerEntity) event.getEntityLiving();
-                ICombo comboCap = playerEntity.getCapability(ComboProvider.COMBO_CAPABILITY).orElseThrow(IllegalStateException::new);
+                ICombo comboCap = CapabilityHelper.getComboCapability(playerEntity);
+                if(comboCap == null) return;
                 comboCap.setShadowForm(true);
             }
         }
@@ -153,7 +157,8 @@ public class GlobalEvents {
         if(event.getPotion() == Effects.INVISIBILITY){
             if(event.getEntityLiving() instanceof PlayerEntity){
                 PlayerEntity playerEntity = (PlayerEntity) event.getEntityLiving();
-                ICombo comboCap = playerEntity.getCapability(ComboProvider.COMBO_CAPABILITY).orElseThrow(IllegalStateException::new);
+                ICombo comboCap = CapabilityHelper.getComboCapability(playerEntity);
+                if(comboCap == null) return;
                 comboCap.setShadowForm(false);
             }
         }

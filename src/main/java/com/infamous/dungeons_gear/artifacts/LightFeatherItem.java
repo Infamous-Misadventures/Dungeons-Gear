@@ -1,7 +1,6 @@
 package com.infamous.dungeons_gear.artifacts;
 
 import com.infamous.dungeons_gear.effects.CustomEffects;
-import com.infamous.dungeons_gear.interfaces.IArtifact;
 import com.infamous.dungeons_gear.items.ArtifactList;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
@@ -25,7 +24,7 @@ import java.util.List;
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 import static com.infamous.dungeons_gear.utilties.AbilityHelper.isPetOfAttacker;
 
-public class LightFeatherItem extends Item implements IArtifact {
+public class LightFeatherItem extends ArtifactItem {
     public LightFeatherItem(Properties properties) {
         super(properties);
     }
@@ -72,12 +71,8 @@ public class LightFeatherItem extends Item implements IArtifact {
                 entity.sendBreakAnimation(handIn);
             });
         }
-        IArtifact.setArtifactCooldown(playerIn, itemstack.getItem(), 60);
+        ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem(), 60);
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
-    }
-
-    public Rarity getRarity(ItemStack itemStack){
-        return Rarity.RARE;
     }
 
     @Override

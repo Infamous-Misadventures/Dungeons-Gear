@@ -1,22 +1,15 @@
 package com.infamous.dungeons_gear.artifacts;
 
 import com.infamous.dungeons_gear.entities.IceCloudEntity;
-import com.infamous.dungeons_gear.interfaces.IArtifact;
 import com.infamous.dungeons_gear.items.ArtifactList;
-import com.infamous.dungeons_gear.utilties.AbilityHelper;
-import net.minecraft.block.*;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -25,7 +18,7 @@ import net.minecraft.world.World;
 import java.util.List;
 
 
-public class IceWandItem extends Item implements IArtifact {
+public class IceWandItem extends ArtifactItem {
     public IceWandItem(Properties properties) {
         super(properties);
     }
@@ -40,10 +33,6 @@ public class IceWandItem extends Item implements IArtifact {
             return ActionResultType.SUCCESS;
         }
         return super.itemInteractionForEntity(stack, playerIn, target, hand);
-    }
-
-    public Rarity getRarity(ItemStack itemStack){
-        return Rarity.RARE;
     }
 
     @Override

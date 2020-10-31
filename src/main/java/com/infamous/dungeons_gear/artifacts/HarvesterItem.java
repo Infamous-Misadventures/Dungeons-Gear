@@ -1,6 +1,5 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.interfaces.IArtifact;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
 import com.infamous.dungeons_gear.items.ArtifactList;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
@@ -19,7 +18,7 @@ import java.util.List;
 
 import static com.infamous.dungeons_gear.utilties.AreaOfEffectHelper.causeMagicExplosionAttack;
 
-public class HarvesterItem extends Item implements IArtifact, ISoulGatherer {
+public class HarvesterItem extends ArtifactItem implements ISoulGatherer {
     public HarvesterItem(Properties properties) {
         super(properties);
     }
@@ -42,16 +41,10 @@ public class HarvesterItem extends Item implements IArtifact, ISoulGatherer {
             }
 
 
-            IArtifact.setArtifactCooldown(playerIn, itemstack.getItem(), 20);
+            ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem(), 20);
         }
 
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
-    }
-
-
-
-    public Rarity getRarity(ItemStack itemStack){
-        return Rarity.RARE;
     }
 
     @Override

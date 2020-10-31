@@ -1,6 +1,5 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.interfaces.IArtifact;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
 import com.infamous.dungeons_gear.items.ArtifactList;
 import net.minecraft.block.BlockState;
@@ -23,7 +22,7 @@ import java.util.List;
 
 import static com.infamous.dungeons_gear.utilties.AOECloudHelper.spawnSoulProtectionCloudAtPos;
 
-public class TotemOfSoulProtectionItem extends Item implements IArtifact, ISoulGatherer {
+public class TotemOfSoulProtectionItem extends ArtifactItem implements ISoulGatherer {
     public TotemOfSoulProtectionItem(Properties properties) {
         super(properties);
     }
@@ -57,15 +56,11 @@ public class TotemOfSoulProtectionItem extends Item implements IArtifact, ISoulG
                             entity.sendBreakAnimation(itemUseContextHand);
                         });
                     }
-                    IArtifact.setArtifactCooldown(itemUseContextPlayer, itemUseContextItem.getItem(), 20);
+                    ArtifactItem.setArtifactCooldown(itemUseContextPlayer, itemUseContextItem.getItem(), 20);
                 }
             }
         }
         return ActionResultType.CONSUME;
-    }
-
-    public Rarity getRarity(ItemStack itemStack){
-        return Rarity.RARE;
     }
 
     @Override

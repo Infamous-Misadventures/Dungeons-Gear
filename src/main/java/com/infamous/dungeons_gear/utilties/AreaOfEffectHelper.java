@@ -5,7 +5,10 @@ import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.goals.LoverHurtByTargetGoal;
 import com.infamous.dungeons_gear.goals.LoverHurtTargetGoal;
 import com.infamous.dungeons_gear.init.ParticleInit;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -226,7 +229,18 @@ public class AreaOfEffectHelper {
         }
     }
 
+    public static void createVisualLightningBoltOnEntity(Entity target){
+        World world = target.getEntityWorld();
+        LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
+        if (lightningboltentity != null) {
+            lightningboltentity.moveForced(target.getPosX(), target.getPosY(), target.getPosZ());
+            lightningboltentity.setEffectOnly(true);
+            world.addEntity(lightningboltentity);
+        }
+    }
+
     public static void electrify(LivingEntity attacker, LivingEntity victim, float damageAmount){
+        createVisualLightningBoltOnEntity(victim);
         ElectricShockDamageSource lightning = (ElectricShockDamageSource) new ElectricShockDamageSource(attacker).setMagicDamage().setDamageBypassesArmor();
         PROXY.spawnParticles(victim, ParticleInit.ELECTRIC_SHOCK.get());
         victim.attackEntityFrom(lightning, damageAmount);

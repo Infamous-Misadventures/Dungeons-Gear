@@ -5,8 +5,8 @@ import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
 import com.infamous.dungeons_gear.capabilities.summoning.SummonableProvider;
 import com.infamous.dungeons_gear.capabilities.summoning.SummonerProvider;
 import com.infamous.dungeons_gear.goals.*;
-import com.infamous.dungeons_gear.interfaces.IArtifact;
 import com.infamous.dungeons_gear.items.ArtifactList;
+import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -28,7 +28,7 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.List;
 
-public class EnchantedGrassArtifact extends Item implements IArtifact {
+public class EnchantedGrassArtifact extends ArtifactItem {
 
     public EnchantedGrassArtifact(Properties properties) {
         super(properties);
@@ -54,39 +54,48 @@ public class EnchantedGrassArtifact extends Item implements IArtifact {
             }
 
             if(itemUseContextPlayer != null){
-                ISummoner summonerCap = itemUseContextPlayer.getCapability(SummonerProvider.SUMMONER_CAPABILITY).orElseThrow(IllegalStateException::new);
-                if(summonerCap.getSummonedSheep() == null){
-                    SheepEntity sheepEntity = EntityType.SHEEP.create(world);
-                    if (sheepEntity!= null) {
-                        this.setSheepEnchantmentAndAI(sheepEntity);
-                        sheepEntity.setLocationAndAngles((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D, 0.0F, 0.0F);
+                ISummoner summonerCap = CapabilityHelper.getSummonerCapability(itemUseContextPlayer);
+                if (summonerCap != null) {
+                    if(summonerCap.getSummonedSheep() == null){
+                        SheepEntity sheepEntity = EntityType.SHEEP.create(world);
+                        if (sheepEntity!= null) {
+                            ISummonable summon = CapabilityHelper.getSummonableCapability(sheepEntity);
+                            if(summon != null){
 
-                        world.playSound((PlayerEntity)null, itemUseContextPlayer.getPosX(), itemUseContextPlayer.getPosY(), itemUseContextPlayer.getPosZ(), SoundEvents.ENTITY_SHEEP_AMBIENT, SoundCategory.AMBIENT, 64.0F, 1.0F);
+                                summon.setSummoner(itemUseContextPlayer.getUniqueID());
+                                summonerCap.setSummonedSheep(sheepEntity.getUniqueID());
 
-                        world.addEntity(sheepEntity);
-                        ISummonable summon = sheepEntity.getCapability(SummonableProvider.SUMMONABLE_CAPABILITY).orElseThrow(IllegalStateException::new);
-                        summon.setSummoner(itemUseContextPlayer.getUniqueID());
+                                createEnchantedSheep(world, itemUseContextPlayer, blockPos, sheepEntity);
 
-                        summonerCap.setSummonedSheep(sheepEntity.getUniqueID());
-
-                        if(!itemUseContextPlayer.isCreative()){
-                            itemUseContextItem.damageItem(1, itemUseContextPlayer, (entity) -> {
-                                entity.sendBreakAnimation(itemUseContextHand);
-                            });
+                                if(!itemUseContextPlayer.isCreative()){
+                                    itemUseContextItem.damageItem(1, itemUseContextPlayer, (entity) -> {
+                                        entity.sendBreakAnimation(itemUseContextHand);
+                                    });
+                                }
+                            }
                         }
-                    }
-                } else{
-                    if(world instanceof ServerWorld){
-                        Entity entity = ((ServerWorld)world).getEntityByUuid(summonerCap.getSummonedSheep());
-                        if(entity instanceof SheepEntity){
-                            SheepEntity sheepEntity = (SheepEntity) entity;
-                            sheepEntity.teleportKeepLoaded((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D);
+                    } else{
+                        if(world instanceof ServerWorld){
+                            Entity entity = ((ServerWorld)world).getEntityByUuid(summonerCap.getSummonedSheep());
+                            if(entity instanceof SheepEntity){
+                                SheepEntity sheepEntity = (SheepEntity) entity;
+                                sheepEntity.teleportKeepLoaded((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D);
+                            }
                         }
                     }
                 }
             }
             return ActionResultType.CONSUME;
         }
+    }
+
+    private void createEnchantedSheep(World world, PlayerEntity itemUseContextPlayer, BlockPos blockPos, SheepEntity sheepEntity) {
+        this.setSheepEnchantmentAndAI(sheepEntity);
+        sheepEntity.setLocationAndAngles((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D, 0.0F, 0.0F);
+
+        world.playSound((PlayerEntity)null, itemUseContextPlayer.getPosX(), itemUseContextPlayer.getPosY(), itemUseContextPlayer.getPosZ(), SoundEvents.ENTITY_SHEEP_AMBIENT, SoundCategory.AMBIENT, 64.0F, 1.0F);
+
+        world.addEntity(sheepEntity);
     }
 
     private void setSheepEnchantmentAndAI(SheepEntity sheepEntity){
@@ -114,10 +123,6 @@ public class EnchantedGrassArtifact extends Item implements IArtifact {
             sheepEntity.setFleeceColor(DyeColor.BLUE);
             sheepEntity.addTag("Speed");
         }
-    }
-
-    public Rarity getRarity(ItemStack itemStack){
-        return Rarity.RARE;
     }
 
     @Override

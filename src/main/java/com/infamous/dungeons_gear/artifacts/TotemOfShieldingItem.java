@@ -1,6 +1,5 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.interfaces.IArtifact;
 import com.infamous.dungeons_gear.items.ArtifactList;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -22,7 +21,7 @@ import java.util.List;
 
 import static com.infamous.dungeons_gear.utilties.AOECloudHelper.spawnShieldingCloudAtPos;
 
-public class TotemOfShieldingItem extends Item implements IArtifact {
+public class TotemOfShieldingItem extends ArtifactItem {
     public TotemOfShieldingItem(Properties properties) {
         super(properties);
     }
@@ -53,14 +52,10 @@ public class TotemOfShieldingItem extends Item implements IArtifact {
                         entity.sendBreakAnimation(itemUseContextHand);
                     });
                 }
-                IArtifact.setArtifactCooldown(itemUseContextPlayer, itemUseContextItem.getItem(), 400);
+                ArtifactItem.setArtifactCooldown(itemUseContextPlayer, itemUseContextItem.getItem(), 400);
             }
         }
         return ActionResultType.CONSUME;
-    }
-
-    public Rarity getRarity(ItemStack itemStack){
-        return Rarity.RARE;
     }
 
     @Override

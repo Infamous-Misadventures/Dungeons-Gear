@@ -1,6 +1,5 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.interfaces.IArtifact;
 import com.infamous.dungeons_gear.items.ArtifactList;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import net.minecraft.client.util.ITooltipFlag;
@@ -16,7 +15,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class LoveMedallionItem extends Item implements IArtifact {
+public class LoveMedallionItem extends ArtifactItem {
     public LoveMedallionItem(Properties properties) {
         super(properties);
     }
@@ -35,12 +34,8 @@ public class LoveMedallionItem extends Item implements IArtifact {
 
 
 
-        IArtifact.setArtifactCooldown(playerIn, itemstack.getItem(), 600);
+        ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem(), 600);
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
-    }
-
-    public Rarity getRarity(ItemStack itemStack){
-        return Rarity.RARE;
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.infamous.dungeons_gear.capabilities.combo.ComboProvider;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
+import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
@@ -134,7 +135,8 @@ public class PoisonCloudEnchantment extends Enchantment {
         if(player == null) return;
         if(event.phase == TickEvent.Phase.START) return;
         if(player.isAlive()){
-            ICombo comboCap = player.getCapability(ComboProvider.COMBO_CAPABILITY).orElseThrow(IllegalStateException::new);
+            ICombo comboCap = CapabilityHelper.getComboCapability(player);
+            if(comboCap == null) return;
             int poisonImmunityTimer = comboCap.getPoisonImmunityTimer();
             if(poisonImmunityTimer <= 0){
                 comboCap.setPoisonImmunityTimer(poisonImmunityTimer - 1);
@@ -149,7 +151,8 @@ public class PoisonCloudEnchantment extends Enchantment {
         if(event.getPotionEffect().getPotion() == Effects.POISON){
             if(event.getEntityLiving() instanceof PlayerEntity){
                 PlayerEntity playerEntity = (PlayerEntity) event.getEntityLiving();
-                ICombo comboCap = playerEntity.getCapability(ComboProvider.COMBO_CAPABILITY).orElseThrow(IllegalStateException::new);
+                ICombo comboCap = CapabilityHelper.getComboCapability(playerEntity);
+                if(comboCap == null) return;
                 int poisonImmunityTimer = comboCap.getPoisonImmunityTimer();
                 if(poisonImmunityTimer > 0){
                     event.setResult(Event.Result.DENY);
@@ -162,7 +165,8 @@ public class PoisonCloudEnchantment extends Enchantment {
         if(livingEntity instanceof PlayerEntity){
             PlayerEntity playerEntity = (PlayerEntity) livingEntity;
 
-            ICombo comboCap = playerEntity.getCapability(ComboProvider.COMBO_CAPABILITY).orElseThrow(IllegalStateException::new);
+            ICombo comboCap = CapabilityHelper.getComboCapability(playerEntity);
+            if(comboCap == null) return;
             int poisonImmunityTimer = comboCap.getPoisonImmunityTimer();
             if(poisonImmunityTimer <= 0){
                 comboCap.setPoisonImmunityTimer(60);

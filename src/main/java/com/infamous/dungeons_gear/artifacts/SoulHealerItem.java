@@ -1,14 +1,9 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.armor.BattleRobeItem;
-import com.infamous.dungeons_gear.armor.EvocationRobeItem;
-import com.infamous.dungeons_gear.armor.GuardsArmorItem;
-import com.infamous.dungeons_gear.interfaces.IArtifact;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
 import com.infamous.dungeons_gear.items.ArtifactList;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
@@ -22,7 +17,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class SoulHealerItem extends Item implements IArtifact, ISoulGatherer {
+public class SoulHealerItem extends ArtifactItem implements ISoulGatherer {
     public SoulHealerItem(Properties properties) {
         super(properties);
     }
@@ -50,15 +45,11 @@ public class SoulHealerItem extends Item implements IArtifact, ISoulGatherer {
                 });
 
 
-                IArtifact.setArtifactCooldown(playerIn, itemstack.getItem(), 20);
+                ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem(), 20);
             }
         }
 
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
-    }
-
-    public Rarity getRarity(ItemStack itemStack){
-        return Rarity.RARE;
     }
 
     @Override

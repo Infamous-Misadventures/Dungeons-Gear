@@ -9,6 +9,18 @@ import java.util.List;
 public class DungeonsGearConfig {
 
     public static class Common {
+        public final ForgeConfigSpec.ConfigValue<Integer> VEST_ARMOR_DURABILITY;
+        public final ForgeConfigSpec.ConfigValue<Integer> ROBE_ARMOR_DURABILITY;
+        public final ForgeConfigSpec.ConfigValue<Integer> PELT_ARMOR_DURABILITY;
+        public final ForgeConfigSpec.ConfigValue<Integer> BONE_ARMOR_DURABILITY;
+        public final ForgeConfigSpec.ConfigValue<Integer> LIGHT_PLATE_ARMOR_DURABILITY;
+        public final ForgeConfigSpec.ConfigValue<Integer> MEDIUM_PLATE_ARMOR_DURABILITY;
+        public final ForgeConfigSpec.ConfigValue<Integer> HEAVY_PLATE_ARMOR_DURABILITY;
+        public final ForgeConfigSpec.ConfigValue<Integer> MELEE_WEAPON_DURABILITY;
+        public final ForgeConfigSpec.ConfigValue<Integer> BOW_DURABILITY;
+        public final ForgeConfigSpec.ConfigValue<Integer> CROSSBOW_DURABILITY;
+        public final ForgeConfigSpec.ConfigValue<Integer> ARTIFACT_DURABILITY;
+
         public final ForgeConfigSpec.ConfigValue<Boolean> ENABLE_DUNGEONS_GEAR_LOOT;
         public final ForgeConfigSpec.ConfigValue<Boolean> ENABLE_SALVAGING;
         public final ForgeConfigSpec.ConfigValue<Boolean> ENABLE_VILLAGER_TRADES;
@@ -75,6 +87,60 @@ public class DungeonsGearConfig {
             ARTIFACT_VALUE = builder
                     .comment("The emerald value for an artifact [0-64, default: 24]")
                     .defineInRange("artifactValue", 24, 0, 64);
+            builder.pop();
+
+            builder.comment("Item Configuration").push("item_configuration");
+            builder.comment("For armor durability configuration reference, here are the vanilla armor durability multiplier values: \n" +
+                            "Leather - 5\n" +
+                            "Gold = 7\n" +
+                            "Iron = 14\n" +
+                            "Turtle = 25\n" +
+                            "Diamond = 33\n" +
+                            "Netherite = 37"
+                    ).push("armor_durability_multiplier_reference");
+            builder.comment("For tool durability configuration reference, here are the vanilla tool durability values: \n" +
+                    "Gold - 32\n" +
+                    "Wood = 59\n" +
+                    "Stone = 131\n" +
+                    "Iron = 250\n" +
+                    "Crossbow - 326\n" +
+                    "Bow - 384\n" +
+                    "Diamond = 1561\n" +
+                    "Netherite = 2031"
+            ).push("tool_durability_reference");
+            VEST_ARMOR_DURABILITY = builder
+                    .comment("Set the durability multiplier for armors that can be classified as a vest, such as Hunter's Armor. [0-1024, default: 14")
+                    .defineInRange("vestArmorDurabilityMultiplier", 14, 0, 1024);
+            ROBE_ARMOR_DURABILITY = builder
+                    .comment("Set the durability multiplier for armors that can be classified as a robe, such as the Evocation Robe. [0-1024, default: 14")
+                    .defineInRange("robeArmorDurabilityMultiplier", 14, 0, 1024);
+            PELT_ARMOR_DURABILITY = builder
+                    .comment("Set the durability multiplier for armors that are made out of pelts, such as Wolf Armor. [0-1024, default: 14")
+                    .defineInRange("peltArmorDurabilityMultiplier", 14, 0, 1024);
+            BONE_ARMOR_DURABILITY = builder
+                    .comment("Set the durability multiplier for armors that are made out of bones, such as Grim Armor. [0-1024, default: 14")
+                    .defineInRange("boneArmorDurabilityMultiplier", 14, 0, 1024);
+            LIGHT_PLATE_ARMOR_DURABILITY = builder
+                    .comment("Set the durability multiplier for armors that can be classified as light plate, such as Guard's Armor. [0-1024, default: 14")
+                    .defineInRange("lightArmorDurabilityMultiplier", 14, 0, 1024);
+            MEDIUM_PLATE_ARMOR_DURABILITY = builder
+                    .comment("Set the durability multiplier for armors that can be classified as medium plate, such as Reinforced Mail. [0-1024, default: 14")
+                    .defineInRange("mediumArmorDurabilityMultiplier", 14, 0, 1024);
+            HEAVY_PLATE_ARMOR_DURABILITY = builder
+                    .comment("Set the durability multiplier for armors that can be classified as heavy plate, such as Mercenary Armor. [0-1024, default: 14")
+                    .defineInRange("heavyArmorDurabilityMultiplier", 14, 0, 1024);
+            MELEE_WEAPON_DURABILITY = builder
+                    .comment("Set the durability for melee weapons. [0-1024, default: 250")
+                    .defineInRange("meleeWeaponDurability", 250, 0, 1024);
+            BOW_DURABILITY = builder
+                    .comment("Set the durability for bows. [0-1024, default: 384")
+                    .defineInRange("bowDurability", 384, 0, 1024);
+            CROSSBOW_DURABILITY = builder
+                    .comment("Set the durability for crossbows. [0-1024, default: 326")
+                    .defineInRange("crossbowDurability", 326, 0, 1024);
+            ARTIFACT_DURABILITY = builder
+                    .comment("Set the durability for artifacts. [0-1024, default: 64")
+                    .defineInRange("artifactDurability", 64, 0, 1024);
             builder.pop();
 
             builder.comment("Combat Configuration").push("combat_configuration");

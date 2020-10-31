@@ -1,6 +1,5 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.interfaces.IArtifact;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
 import com.infamous.dungeons_gear.items.ArtifactList;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
@@ -19,7 +18,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class LightningRodItem extends Item implements IArtifact, ISoulGatherer {
+public class LightningRodItem extends ArtifactItem implements ISoulGatherer {
     public LightningRodItem(Properties properties) {
         super(properties);
     }
@@ -43,10 +42,6 @@ public class LightningRodItem extends Item implements IArtifact, ISoulGatherer {
         }
 
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
-    }
-
-    public Rarity getRarity(ItemStack itemStack){
-        return Rarity.RARE;
     }
 
     @Override

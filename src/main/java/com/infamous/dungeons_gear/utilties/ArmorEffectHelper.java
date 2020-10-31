@@ -26,29 +26,19 @@ import net.minecraft.world.server.ServerWorld;
 
 public class ArmorEffectHelper {
     public static void summonOrTeleportBat(PlayerEntity playerEntity, World world) {
-        ISummoner summonerCap = playerEntity.getCapability(SummonerProvider.SUMMONER_CAPABILITY).orElseThrow(IllegalStateException::new);
-
+        ISummoner summonerCap = CapabilityHelper.getSummonerCapability(playerEntity);
+        if(summonerCap == null) return;
         if(summonerCap.getSummonedBat() == null){
             BatEntity batEntity = EntityType.BAT.create(world);
             if (batEntity!= null) {
-                batEntity.setLocationAndAngles((double)playerEntity.getPosX() + playerEntity.getEyeHeight(), (double)playerEntity.getPosY() + playerEntity.getEyeHeight(), (double)playerEntity.getPosZ() + playerEntity.getEyeHeight(), 0.0F, 0.0F);
+                ISummonable summonable = CapabilityHelper.getSummonableCapability(batEntity);
+                if(summonable != null){
 
-                batEntity.goalSelector.addGoal(1, new BatMeleeAttackGoal(batEntity, 1.0D, true));
-                batEntity.goalSelector.addGoal(2, new BatFollowOwnerGoal(batEntity, 2.1D, 10.0F, 2.0F, false));
+                    summonable.setSummoner(playerEntity.getUniqueID());
+                    summonerCap.setSummonedBat(batEntity.getUniqueID());
 
-
-                batEntity.targetSelector.addGoal(1, new BatOwnerHurtByTargetGoal(batEntity));
-                batEntity.targetSelector.addGoal(2, new BatOwnerHurtTargetGoal(batEntity));
-                batEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(batEntity, LivingEntity.class, 5, false, false,
-                        (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
-
-                world.playSound((PlayerEntity)null, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ENTITY_BAT_AMBIENT, SoundCategory.AMBIENT, 64.0F, 1.0F);
-                world.addEntity(batEntity);
-                ISummonable summonable = batEntity.getCapability(SummonableProvider.SUMMONABLE_CAPABILITY).orElseThrow(IllegalStateException::new);
-
-                summonable.setSummoner(playerEntity.getUniqueID());
-
-                summonerCap.setSummonedBat(batEntity.getUniqueID());
+                    createBat(playerEntity, world, batEntity);
+                }
             }
         } else{
             if(world instanceof ServerWorld){
@@ -59,6 +49,22 @@ public class ArmorEffectHelper {
                 }
             }
         }
+    }
+
+    private static void createBat(PlayerEntity playerEntity, World world, BatEntity batEntity) {
+        batEntity.setLocationAndAngles((double)playerEntity.getPosX() + playerEntity.getEyeHeight(), (double)playerEntity.getPosY() + playerEntity.getEyeHeight(), (double)playerEntity.getPosZ() + playerEntity.getEyeHeight(), 0.0F, 0.0F);
+
+        batEntity.goalSelector.addGoal(1, new BatMeleeAttackGoal(batEntity, 1.0D, true));
+        batEntity.goalSelector.addGoal(2, new BatFollowOwnerGoal(batEntity, 2.1D, 10.0F, 2.0F, false));
+
+
+        batEntity.targetSelector.addGoal(1, new BatOwnerHurtByTargetGoal(batEntity));
+        batEntity.targetSelector.addGoal(2, new BatOwnerHurtTargetGoal(batEntity));
+        batEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(batEntity, LivingEntity.class, 5, false, false,
+                (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
+
+        world.playSound((PlayerEntity)null, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ENTITY_BAT_AMBIENT, SoundCategory.AMBIENT, 64.0F, 1.0F);
+        world.addEntity(batEntity);
     }
 
     public static void teleportOnHit(LivingEntity livingEntity){

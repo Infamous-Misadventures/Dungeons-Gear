@@ -89,7 +89,11 @@ public class WeaponList {
     public static Item MAULER;
     public static Item SOUL_FIST;
 
+    // TEMPEST KNIFES
+    public static Item TEMPEST_KNIFE;
+    public static Item RESOLUTE_TEMPEST_KNIFE;
+    public static Item CHILL_GALE_KNIFE;
+
     public static Map<Item, ResourceLocation> uniqueWeaponMap = new HashMap<Item, ResourceLocation>();
     public static Map<Item, ResourceLocation> commonWeaponMap = new HashMap<Item, ResourceLocation>();
-
 }

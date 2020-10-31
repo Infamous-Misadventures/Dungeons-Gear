@@ -1,6 +1,5 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.interfaces.IArtifact;
 import com.infamous.dungeons_gear.items.ArtifactList;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -19,7 +18,7 @@ import java.util.List;
 
 import static com.infamous.dungeons_gear.utilties.AOECloudHelper.spawnRegenCloudAtPos;
 
-public class TotemOfRegenerationItem extends Item implements IArtifact {
+public class TotemOfRegenerationItem extends ArtifactItem {
     public TotemOfRegenerationItem(Properties properties) {
         super(properties);
     }
@@ -52,14 +51,10 @@ public class TotemOfRegenerationItem extends Item implements IArtifact {
                 }
 
 
-                IArtifact.setArtifactCooldown(itemUseContextPlayer, itemUseContextItem.getItem(), 500);
+                ArtifactItem.setArtifactCooldown(itemUseContextPlayer, itemUseContextItem.getItem(), 500);
             }
         }
         return ActionResultType.CONSUME;
-    }
-
-    public Rarity getRarity(ItemStack itemStack){
-        return Rarity.RARE;
     }
 
     @Override

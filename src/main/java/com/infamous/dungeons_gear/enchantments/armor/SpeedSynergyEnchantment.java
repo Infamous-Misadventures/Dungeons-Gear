@@ -1,11 +1,11 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
+import com.infamous.dungeons_gear.artifacts.ArtifactItem;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.ArtifactEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
-import com.infamous.dungeons_gear.interfaces.IArtifact;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
@@ -45,7 +45,7 @@ public class SpeedSynergyEnchantment extends ArtifactEnchantment {
         PlayerEntity player = event.getPlayer();
         Hand activeHand = event.getHand();
         ItemStack itemStack = player.getHeldItem(activeHand);
-        if(itemStack.getItem() instanceof IArtifact){
+        if(itemStack.getItem() instanceof ArtifactItem){
             if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.SPEED_SYNERGY)){
                 int speedSynergyLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.SPEED_SYNERGY, player);
                 EffectInstance speedBoost = new EffectInstance(Effects.SPEED, 20 * speedSynergyLevel);

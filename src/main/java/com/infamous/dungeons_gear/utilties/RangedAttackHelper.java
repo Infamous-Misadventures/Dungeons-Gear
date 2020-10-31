@@ -10,7 +10,6 @@ import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraftforge.common.util.LazyOptional;
 
 import static com.infamous.dungeons_gear.items.RangedWeaponList.*;
 import static net.minecraft.item.CrossbowItem.hasChargedProjectile;
@@ -21,7 +20,7 @@ public class RangedAttackHelper {
         int quickChargeLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.QUICK_CHARGE, stack);
         int accelerateLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.ACCELERATE, stack);
 
-        IWeapon weaponCap = getWeaponCapability(stack);
+        IWeapon weaponCap = CapabilityHelper.getWeaponCapability(stack);
         if(weaponCap == null) return Math.max(25 - 5 * quickChargeLevel, 0);
         int crossbowChargeTime = weaponCap.getCrossbowChargeTime();
         long lastFiredTime = weaponCap.getLastFiredTime();
@@ -32,15 +31,6 @@ public class RangedAttackHelper {
         else{
             return Math.max(25 - 5 * quickChargeLevel, 0);
         }
-    }
-
-    public static IWeapon getWeaponCapability(ItemStack stack)
-    {
-        LazyOptional<IWeapon> lazyCap = stack.getCapability(WeaponProvider.WEAPON_CAPABILITY);
-        if (lazyCap.isPresent()) {
-            return lazyCap.orElseThrow(() -> new IllegalStateException("Couldn't get the capability from the ItemStack!"));
-        }
-        return null;
     }
 
     public static float getVanillaArrowVelocity(ItemStack stack, int charge) {
@@ -61,7 +51,8 @@ public class RangedAttackHelper {
         int quickChargeLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.QUICK_CHARGE, stack);
         int accelerateLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.ACCELERATE, stack);
 
-        IWeapon weaponCap = stack.getCapability(WeaponProvider.WEAPON_CAPABILITY).orElseThrow(IllegalStateException::new);
+        IWeapon weaponCap = CapabilityHelper.getWeaponCapability(stack);
+        if(weaponCap == null) return Math.max(20.0F - 5 * quickChargeLevel, 0);
         float bowChargeTime = weaponCap.getBowChargeTime();
         long lastFiredTime = weaponCap.getLastFiredTime();
 

@@ -5,6 +5,7 @@ import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
 import com.infamous.dungeons_gear.capabilities.weapon.WeaponProvider;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.utilties.AbilityHelper;
+import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
 import com.infamous.dungeons_gear.utilties.RangedAttackHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -38,7 +39,8 @@ public class BowEvents {
         int charge = event.getCharge();
         ItemStack stack = event.getBow();
         if(stack.getItem() instanceof BowItem){
-            IWeapon weaponCap = stack.getCapability(WeaponProvider.WEAPON_CAPABILITY).orElseThrow(IllegalStateException::new);
+            IWeapon weaponCap = CapabilityHelper.getWeaponCapability(stack);
+            if(weaponCap == null) return;
             long lastFiredTime = weaponCap.getLastFiredTime();
             float bowChargeTime = weaponCap.getBowChargeTime();
 

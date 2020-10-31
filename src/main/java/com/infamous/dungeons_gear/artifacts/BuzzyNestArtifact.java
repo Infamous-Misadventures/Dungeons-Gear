@@ -7,8 +7,8 @@ import com.infamous.dungeons_gear.capabilities.summoning.SummonerProvider;
 import com.infamous.dungeons_gear.goals.BeeFollowOwnerGoal;
 import com.infamous.dungeons_gear.goals.BeeOwnerHurtByTargetGoal;
 import com.infamous.dungeons_gear.goals.BeeOwnerHurtTargetGoal;
-import com.infamous.dungeons_gear.interfaces.IArtifact;
 import com.infamous.dungeons_gear.items.ArtifactList;
+import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -34,7 +34,7 @@ import net.minecraft.world.server.ServerWorld;
 import java.util.List;
 import java.util.UUID;
 
-public class BuzzyNestArtifact extends Item implements IArtifact {
+public class BuzzyNestArtifact extends ArtifactItem {
 
     public BuzzyNestArtifact(Properties properties) {
         super(properties);
@@ -60,31 +60,26 @@ public class BuzzyNestArtifact extends Item implements IArtifact {
             }
 
             if(itemUseContextPlayer != null){
-                ISummoner summonerCap = itemUseContextPlayer.getCapability(SummonerProvider.SUMMONER_CAPABILITY).orElseThrow(IllegalStateException::new);
+                ISummoner summonerCap = CapabilityHelper.getSummonerCapability(itemUseContextPlayer);
+                if (summonerCap != null) {
                     if (summonerCap.hasNoBuzzyNestBees()) {
                         for(int i = 0; i < 3; i++){
                             BeeEntity beeEntity = EntityType.BEE.create(world);
                             if(beeEntity!= null){
-                                summonerCap.addBuzzyNestBee(beeEntity.getUniqueID());
-                                beeEntity.setLocationAndAngles((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D, 0.0F, 0.0F);
+                                ISummonable summonable = CapabilityHelper.getSummonableCapability(beeEntity);
+                                if(summonable != null){
 
-                                beeEntity.goalSelector.addGoal(2, new BeeFollowOwnerGoal(beeEntity, 2.1D, 10.0F, 2.0F, false));
+                                    summonable.setSummoner(itemUseContextPlayer.getUniqueID());
+                                    summonerCap.addBuzzyNestBee(beeEntity.getUniqueID());
 
-                                beeEntity.targetSelector.addGoal(1, new BeeOwnerHurtByTargetGoal(beeEntity));
-                                beeEntity.targetSelector.addGoal(2, new BeeOwnerHurtTargetGoal(beeEntity));
-                                beeEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(beeEntity, LivingEntity.class, 5, false, false,
-                                        (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
+                                    createBuzzyNestBee(world, itemUseContextPlayer, blockPos, beeEntity);
 
-                                world.playSound((PlayerEntity)null, itemUseContextPlayer.getPosX(), itemUseContextPlayer.getPosY(), itemUseContextPlayer.getPosZ(), SoundEvents.ENTITY_BEE_LOOP, SoundCategory.AMBIENT, 64.0F, 1.0F);
-                                world.addEntity(beeEntity);
 
-                                ISummonable summonable = beeEntity.getCapability(SummonableProvider.SUMMONABLE_CAPABILITY).orElseThrow(IllegalStateException::new);
-                                summonable.setSummoner(itemUseContextPlayer.getUniqueID());
-
-                                if(!itemUseContextPlayer.isCreative()){
-                                    itemUseContextItem.damageItem(1, itemUseContextPlayer, (entity) -> {
-                                        entity.sendBreakAnimation(itemUseContextHand);
-                                    });
+                                    if(!itemUseContextPlayer.isCreative()){
+                                        itemUseContextItem.damageItem(1, itemUseContextPlayer, (entity) -> {
+                                            entity.sendBreakAnimation(itemUseContextHand);
+                                        });
+                                    }
                                 }
                             }
                         }
@@ -102,13 +97,24 @@ public class BuzzyNestArtifact extends Item implements IArtifact {
                             }
                         }
                     }
+                }
             }
             return ActionResultType.CONSUME;
         }
     }
 
-    public Rarity getRarity(ItemStack itemStack){
-        return Rarity.RARE;
+    private void createBuzzyNestBee(World world, PlayerEntity itemUseContextPlayer, BlockPos blockPos, BeeEntity beeEntity) {
+        beeEntity.setLocationAndAngles((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D, 0.0F, 0.0F);
+
+        beeEntity.goalSelector.addGoal(2, new BeeFollowOwnerGoal(beeEntity, 2.1D, 10.0F, 2.0F, false));
+
+        beeEntity.targetSelector.addGoal(1, new BeeOwnerHurtByTargetGoal(beeEntity));
+        beeEntity.targetSelector.addGoal(2, new BeeOwnerHurtTargetGoal(beeEntity));
+        beeEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(beeEntity, LivingEntity.class, 5, false, false,
+                (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
+
+        world.playSound((PlayerEntity)null, itemUseContextPlayer.getPosX(), itemUseContextPlayer.getPosY(), itemUseContextPlayer.getPosZ(), SoundEvents.ENTITY_BEE_LOOP, SoundCategory.AMBIENT, 64.0F, 1.0F);
+        world.addEntity(beeEntity);
     }
 
     @Override

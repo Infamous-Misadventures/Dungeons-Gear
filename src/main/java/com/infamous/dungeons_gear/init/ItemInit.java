@@ -5,11 +5,8 @@ import com.infamous.dungeons_gear.armor.*;
 import com.infamous.dungeons_gear.artifacts.*;
 import com.infamous.dungeons_gear.artifacts.beacon.CorruptedBeaconItem;
 import com.infamous.dungeons_gear.artifacts.beacon.CorruptedPumpkinItem;
+import com.infamous.dungeons_gear.items.*;
 import com.infamous.dungeons_gear.melee.*;
-import com.infamous.dungeons_gear.items.ArmorList;
-import com.infamous.dungeons_gear.items.ArtifactList;
-import com.infamous.dungeons_gear.items.ToolMaterialList;
-import com.infamous.dungeons_gear.items.WeaponList;
 import com.infamous.dungeons_gear.ranged.bows.*;
 import com.infamous.dungeons_gear.ranged.crossbows.*;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -22,11 +19,8 @@ import net.minecraftforge.fml.common.Mod;
 import static com.infamous.dungeons_gear.items.ArmorList.*;
 import static com.infamous.dungeons_gear.items.ArmorMaterialList.*;
 import static com.infamous.dungeons_gear.items.ArtifactList.*;
-import static com.infamous.dungeons_gear.items.ArtifactList.WONDERFUL_WHEAT;
 import static com.infamous.dungeons_gear.items.RangedWeaponList.*;
-import static com.infamous.dungeons_gear.items.RangedWeaponList.SOUL_CROSSBOW;
 import static com.infamous.dungeons_gear.items.WeaponList.*;
-import static com.infamous.dungeons_gear.items.WeaponList.DAGGER;
 
 public class ItemInit {
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -37,188 +31,190 @@ public class ItemInit {
             itemRegistryEvent.getRegistry().registerAll(
 
                     // DUAL WIELD
-                    WeaponList.DAGGER = new DaggerItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 1, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("dagger")),
-                    WeaponList.FANG_OF_FROST = new DaggerItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 1, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("fang_of_frost")),
-                    WeaponList.MOON_DAGGER = new DaggerItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 1, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("moon_dagger")),
-                    WeaponList.SHEAR_DAGGER = new DaggerItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 1, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("shear_dagger")),
+                    WeaponList.DAGGER = new DaggerItem(ToolMaterialList.METAL, 1, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("dagger")),
+                    WeaponList.FANG_OF_FROST = new DaggerItem(ToolMaterialList.METAL, 1, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("fang_of_frost")),
+                    WeaponList.MOON_DAGGER = new DaggerItem(ToolMaterialList.METAL, 1, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("moon_dagger")),
+                    WeaponList.SHEAR_DAGGER = new DaggerItem(ToolMaterialList.METAL, 1, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("shear_dagger")),
 
-                    WeaponList.SICKLE = new SickleItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 2, (1.6f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("sickle")),
-                    WeaponList.NIGHTMARES_BITE = new SickleItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 2, (1.6f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("nightmares_bite")),
-                    WeaponList.THE_LAST_LAUGH = new SickleItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 2, (1.6f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("the_last_laugh")),
+                    WeaponList.SICKLE = new SickleItem(ToolMaterialList.METAL, 2, (1.6f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("sickle")),
+                    WeaponList.NIGHTMARES_BITE = new SickleItem(ToolMaterialList.METAL, 2, (1.6f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("nightmares_bite")),
+                    WeaponList.THE_LAST_LAUGH = new SickleItem(ToolMaterialList.METAL, 2, (1.6f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("the_last_laugh")),
 
-                    WeaponList.GAUNTLET = new GauntletItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 1, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("gauntlet")),
-                    WeaponList.FIGHTERS_BINDING = new GauntletItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 1, (4.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("fighters_binding")),
-                    WeaponList.MAULER = new GauntletItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 1, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("mauler")),
-                    WeaponList.SOUL_FIST = new GauntletItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 1, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("soul_fist")),
+                    WeaponList.GAUNTLET = new GauntletItem(ToolMaterialList.METAL, 1, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("gauntlet")),
+                    WeaponList.FIGHTERS_BINDING = new GauntletItem(ToolMaterialList.METAL, 1, (4.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("fighters_binding")),
+                    WeaponList.MAULER = new GauntletItem(ToolMaterialList.METAL, 1, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("mauler")),
+                    WeaponList.SOUL_FIST = new GauntletItem(ToolMaterialList.METAL, 1, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("soul_fist")),
                     // DUAL WIELD
 
-                    WeaponList.RAPIER = new RapierItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 1, (4.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("rapier")),
-                    WeaponList.BEE_STINGER = new RapierItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 1, (4.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("bee_stinger")),
-                    WeaponList.FREEZING_FOIL = new RapierItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 1, (4.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("freezing_foil")),
+
+
+                    WeaponList.RAPIER = new RapierItem(ToolMaterialList.METAL, 1, (4.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("rapier")),
+                    WeaponList.BEE_STINGER = new RapierItem(ToolMaterialList.METAL, 1, (4.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("bee_stinger")),
+                    WeaponList.FREEZING_FOIL = new RapierItem(ToolMaterialList.METAL, 1, (4.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("freezing_foil")),
 
                     // MODERATE DAMAGE, MODERATE ATTACK SPEED
                     // SCYTHES
-                    WeaponList.SOUL_SCYTHE = new SoulScytheItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 4, (1.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("soul_scythe")),
-                    WeaponList.FROST_SCYTHE = new SoulScytheItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 4, (1.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("frost_scythe")),
-                    WeaponList.JAILORS_SCYTHE = new SoulScytheItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 4, (1.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("jailors_scythe")),
+                    WeaponList.SOUL_SCYTHE = new SoulScytheItem(ToolMaterialList.METAL, 4, (1.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("soul_scythe")),
+                    WeaponList.FROST_SCYTHE = new SoulScytheItem(ToolMaterialList.METAL, 4, (1.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("frost_scythe")),
+                    WeaponList.JAILORS_SCYTHE = new SoulScytheItem(ToolMaterialList.METAL, 4, (1.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("jailors_scythe")),
 
                     // CUTLASSES
-                    WeaponList.CUTLASS = new CutlassItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 4, (1.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("cutlass")),
-                    WeaponList.DANCERS_SWORD = new CutlassItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 4, (1.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("dancers_sword")),
-                    WeaponList.NAMELESS_BLADE = new CutlassItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 4, (1.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("nameless_blade")),
+                    WeaponList.CUTLASS = new CutlassItem(ToolMaterialList.METAL, 4, (1.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("cutlass")),
+                    WeaponList.DANCERS_SWORD = new CutlassItem(ToolMaterialList.METAL, 4, (1.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("dancers_sword")),
+                    WeaponList.NAMELESS_BLADE = new CutlassItem(ToolMaterialList.METAL, 4, (1.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("nameless_blade")),
 
                     // SWORD
-                    WeaponList.HAWKBRAND = new DungeonsSwordItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 5, (1.6f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("hawkbrand")),
-                    WeaponList.SINISTER_SWORD = new DungeonsSwordItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 5, (1.6f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("sinister_sword")),
+                    WeaponList.HAWKBRAND = new DungeonsSwordItem(ToolMaterialList.METAL, 5, (1.6f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("hawkbrand")),
+                    WeaponList.SINISTER_SWORD = new DungeonsSwordItem(ToolMaterialList.METAL, 5, (1.6f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("sinister_sword")),
 
                     // STAFFS
-                    WeaponList.BATTLESTAFF = new StaffItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 2, (3.2f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("battlestaff")),
-                    WeaponList.BATTLESTAFF_OF_TERROR = new StaffItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 2, (3.2f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("battlestaff_of_terror")),
-                    WeaponList.GROWING_STAFF = new StaffItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 2, (3.2f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("growing_staff")),
+                    WeaponList.BATTLESTAFF = new StaffItem(ToolMaterialList.METAL, 2, (3.2f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("battlestaff")),
+                    WeaponList.BATTLESTAFF_OF_TERROR = new StaffItem(ToolMaterialList.METAL, 2, (3.2f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("battlestaff_of_terror")),
+                    WeaponList.GROWING_STAFF = new StaffItem(ToolMaterialList.METAL, 2, (3.2f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("growing_staff")),
                     // MODERATE DAMAGE, MODERATE ATTACK SPEED
 
                     // HIGH DAMAGE, LOW ATTACK SPEED
                     // AXES
-                    WeaponList.FIREBRAND = new DungeonsAxeItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("firebrand")),
-                    WeaponList.HIGHLAND_AXE = new DungeonsAxeItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("highland_axe")),
+                    WeaponList.FIREBRAND = new DungeonsAxeItem(ToolMaterialList.METAL, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("firebrand")),
+                    WeaponList.HIGHLAND_AXE = new DungeonsAxeItem(ToolMaterialList.METAL, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("highland_axe")),
 
                     // DOUBLE AXES
-                    WeaponList.DOUBLE_AXE = new DoubleAxeItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("double_axe")),
-                    WeaponList.CURSED_AXE = new DoubleAxeItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("cursed_axe")),
-                    WeaponList.WHIRLWIND = new DoubleAxeItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("whirlwind")),
+                    WeaponList.DOUBLE_AXE = new DoubleAxeItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("double_axe")),
+                    WeaponList.CURSED_AXE = new DoubleAxeItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("cursed_axe")),
+                    WeaponList.WHIRLWIND = new DoubleAxeItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("whirlwind")),
 
                     // MACES
-                    WeaponList.MACE = new MaceItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("mace")),
-                    WeaponList.FLAIL = new MaceItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("flail")),
-                    WeaponList.SUNS_GRACE = new MaceItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("suns_grace")),
+                    WeaponList.MACE = new MaceItem(ToolMaterialList.METAL, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("mace")),
+                    WeaponList.FLAIL = new MaceItem(ToolMaterialList.METAL, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("flail")),
+                    WeaponList.SUNS_GRACE = new MaceItem(ToolMaterialList.METAL, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("suns_grace")),
 
                     // HAMMERS
-                    WeaponList.GREAT_HAMMER = new GreatHammerItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("great_hammer")),
-                    WeaponList.HAMMER_OF_GRAVITY = new GreatHammerItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("hammer_of_gravity")),
-                    WeaponList.STORMLANDER = new GreatHammerItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("stormlander")),
+                    WeaponList.GREAT_HAMMER = new GreatHammerItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("great_hammer")),
+                    WeaponList.HAMMER_OF_GRAVITY = new GreatHammerItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("hammer_of_gravity")),
+                    WeaponList.STORMLANDER = new GreatHammerItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("stormlander")),
 
                     // KATANAS
-                    WeaponList.KATANA = new KatanaItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("katana")),
-                    WeaponList.DARK_KATANA = new KatanaItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("dark_katana")),
-                    WeaponList.MASTERS_KATANA = new KatanaItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("masters_katana")),
+                    WeaponList.KATANA = new KatanaItem(ToolMaterialList.METAL, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("katana")),
+                    WeaponList.DARK_KATANA = new KatanaItem(ToolMaterialList.METAL, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("dark_katana")),
+                    WeaponList.MASTERS_KATANA = new KatanaItem(ToolMaterialList.METAL, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("masters_katana")),
 
                     // KNIVES
-                    WeaponList.SOUL_KNIFE = new SoulKnifeItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("soul_knife")),
-                    WeaponList.ETERNAL_KNIFE = new SoulKnifeItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("eternal_knife")),
-                    WeaponList.TRUTHSEEKER = new SoulKnifeItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("truthseeker")),
+                    WeaponList.SOUL_KNIFE = new SoulKnifeItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("soul_knife")),
+                    WeaponList.ETERNAL_KNIFE = new SoulKnifeItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("eternal_knife")),
+                    WeaponList.TRUTHSEEKER = new SoulKnifeItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("truthseeker")),
 
                     // GREATSWORDS
-                    WeaponList.CLAYMORE = new ClaymoreItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 10, (0.7f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("claymore")),
-                    WeaponList.BROADSWORD = new ClaymoreItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 11, (0.7f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("broadsword")),
-                    WeaponList.HEARTSTEALER = new ClaymoreItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 10, (0.7f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("heartstealer")),
-                    WeaponList.GREAT_AXEBLADE = new ClaymoreItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 10, (0.7f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("great_axeblade")),
+                    WeaponList.CLAYMORE = new ClaymoreItem(ToolMaterialList.METAL, 10, (0.7f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("claymore")),
+                    WeaponList.BROADSWORD = new ClaymoreItem(ToolMaterialList.METAL, 11, (0.7f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("broadsword")),
+                    WeaponList.HEARTSTEALER = new ClaymoreItem(ToolMaterialList.METAL, 10, (0.7f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("heartstealer")),
+                    WeaponList.GREAT_AXEBLADE = new ClaymoreItem(ToolMaterialList.METAL, 10, (0.7f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("great_axeblade")),
                     // HIGH DAMAGE, LOW ATTACK SPEED
 
                     // LONG ATTACK REACH
                     // SPEARS
-                    WeaponList.SPEAR = new SpearItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 5, (1.2f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("spear")),
-                    WeaponList.FORTUNE_SPEAR = new SpearItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 5, (1.2f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("fortune_spear")),
-                    WeaponList.WHISPERING_SPEAR = new SpearItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 5, (1.2f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("whispering_spear")),
+                    WeaponList.SPEAR = new SpearItem(ToolMaterialList.METAL, 5, (1.2f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("spear")),
+                    WeaponList.FORTUNE_SPEAR = new SpearItem(ToolMaterialList.METAL, 5, (1.2f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("fortune_spear")),
+                    WeaponList.WHISPERING_SPEAR = new SpearItem(ToolMaterialList.METAL, 5, (1.2f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("whispering_spear")),
 
                     // GLAIVES
-                    WeaponList.GLAIVE = new GlaiveItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 7, (1.0f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("glaive")),
-                    WeaponList.GRAVE_BANE = new GlaiveItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 7, (1.0f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("grave_bane")),
-                    WeaponList.VENOM_GLAIVE = new GlaiveItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 7, (1.0f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("venom_glaive")),
+                    WeaponList.GLAIVE = new GlaiveItem(ToolMaterialList.METAL, 7, (1.0f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("glaive")),
+                    WeaponList.GRAVE_BANE = new GlaiveItem(ToolMaterialList.METAL, 7, (1.0f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("grave_bane")),
+                    WeaponList.VENOM_GLAIVE = new GlaiveItem(ToolMaterialList.METAL, 7, (1.0f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("venom_glaive")),
 
                     // WHIPS
-                    WeaponList.WHIP = new WhipItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 8, (0.9f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("whip")),
-                    WeaponList.VINE_WHIP = new WhipItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 8, (0.9f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("vine_whip")),
+                    WeaponList.WHIP = new WhipItem(ToolMaterialList.METAL, 8, (0.9f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("whip")),
+                    WeaponList.VINE_WHIP = new WhipItem(ToolMaterialList.METAL, 8, (0.9f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("vine_whip")),
                     // LONG ATTACK REACH
 
-                    BONEBOW = new DungeonsBowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 20.0F, true).setRegistryName(location("bonebow")),
-                    TWIN_BOW = new DungeonsBowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 20.0F, true).setRegistryName(location("twin_bow")),
-                    HAUNTED_BOW = new DungeonsBowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 20.0F, true).setRegistryName(location("haunted_bow")),
+                    RangedWeaponList.BONEBOW = new DungeonsBowItem(new Item.Properties(), 20.0F, true).setRegistryName(location("bonebow")),
+                    RangedWeaponList.TWIN_BOW = new DungeonsBowItem(new Item.Properties(), 20.0F, true).setRegistryName(location("twin_bow")),
+                    RangedWeaponList.HAUNTED_BOW = new DungeonsBowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP), 20.0F, true).setRegistryName(location("haunted_bow")),
 
-                    SOUL_BOW = new SoulBowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 20.0F, false).setRegistryName(location("soul_bow")),
-                    BOW_OF_LOST_SOULS = new SoulBowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 20.0F, true).setRegistryName(location("bow_of_lost_souls")),
-                    NOCTURNAL_BOW = new SoulBowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 20.0F, true).setRegistryName(location("nocturnal_bow")),
+                    RangedWeaponList.SOUL_BOW = new SoulBowItem(new Item.Properties(), 20.0F, false).setRegistryName(location("soul_bow")),
+                    RangedWeaponList.BOW_OF_LOST_SOULS = new SoulBowItem(new Item.Properties(), 20.0F, true).setRegistryName(location("bow_of_lost_souls")),
+                    RangedWeaponList.NOCTURNAL_BOW = new SoulBowItem(new Item.Properties(), 20.0F, true).setRegistryName(location("nocturnal_bow")),
 
-                    POWER_BOW = new PowerBowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 25.0F, false).setRegistryName(location("power_bow")),
-                    ELITE_POWER_BOW = new PowerBowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 25.0F, true).setRegistryName(location("elite_power_bow")),
-                    SABREWING = new PowerBowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 25.0F, true).setRegistryName(location("sabrewing")),
+                    RangedWeaponList.POWER_BOW = new PowerBowItem(new Item.Properties(), 25.0F, false).setRegistryName(location("power_bow")),
+                    RangedWeaponList.ELITE_POWER_BOW = new PowerBowItem(new Item.Properties(), 25.0F, true).setRegistryName(location("elite_power_bow")),
+                    RangedWeaponList.SABREWING = new PowerBowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 25.0F, true).setRegistryName(location("sabrewing")),
 
-                    LONGBOW = new LongbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 25.0F, false).setRegistryName(location("longbow")),
-                    GUARDIAN_BOW = new LongbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 25.0F, true).setRegistryName(location("guardian_bow")),
-                    RED_SNAKE = new LongbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 25.0F, true).setRegistryName(location("red_snake")),
+                    RangedWeaponList.LONGBOW = new LongbowItem(new Item.Properties(), 25.0F, false).setRegistryName(location("longbow")),
+                    RangedWeaponList.GUARDIAN_BOW = new LongbowItem(new Item.Properties(), 25.0F, true).setRegistryName(location("guardian_bow")),
+                    RangedWeaponList.RED_SNAKE = new LongbowItem(new Item.Properties(), 25.0F, true).setRegistryName(location("red_snake")),
 
-                    HUNTING_BOW = new HuntingBowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 20.0F, false).setRegistryName(location("hunting_bow")),
-                    HUNTERS_PROMISE = new HuntingBowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 20.0F, true).setRegistryName(location("hunters_promise")),
-                    MASTERS_BOW = new HuntingBowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 20.0F, true).setRegistryName(location("masters_bow")),
-                    ANCIENT_BOW = new HuntingBowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 20.0F, true).setRegistryName(location("ancient_bow")),
+                    RangedWeaponList.HUNTING_BOW = new HuntingBowItem(new Item.Properties(), 20.0F, false).setRegistryName(location("hunting_bow")),
+                    RangedWeaponList.HUNTERS_PROMISE = new HuntingBowItem(new Item.Properties(), 20.0F, true).setRegistryName(location("hunters_promise")),
+                    RangedWeaponList.MASTERS_BOW = new HuntingBowItem(new Item.Properties(), 20.0F, true).setRegistryName(location("masters_bow")),
+                    RangedWeaponList.ANCIENT_BOW = new HuntingBowItem(new Item.Properties(), 20.0F, true).setRegistryName(location("ancient_bow")),
 
-                    SHORTBOW = new ShortbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 15.0F, false).setRegistryName(location("shortbow")),
-                    MECHANICAL_SHORTBOW = new ShortbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 15.0F, true).setRegistryName(location("mechanical_shortbow")),
-                    PURPLE_STORM = new ShortbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 15.0F, true).setRegistryName(location("purple_storm")),
-                    LOVE_SPELL_BOW = new ShortbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 15.0F, true).setRegistryName(location("love_spell_bow")),
+                    RangedWeaponList.SHORTBOW = new ShortbowItem(new Item.Properties(), 15.0F, false).setRegistryName(location("shortbow")),
+                    RangedWeaponList.MECHANICAL_SHORTBOW = new ShortbowItem(new Item.Properties(), 15.0F, true).setRegistryName(location("mechanical_shortbow")),
+                    RangedWeaponList.PURPLE_STORM = new ShortbowItem(new Item.Properties(), 15.0F, true).setRegistryName(location("purple_storm")),
+                    RangedWeaponList.LOVE_SPELL_BOW = new ShortbowItem(new Item.Properties(), 15.0F, true).setRegistryName(location("love_spell_bow")),
 
-                    TRICKBOW = new TrickbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 20.0F, false).setRegistryName(location("trickbow")),
-                    THE_GREEN_MENACE = new TrickbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 20.0F, true).setRegistryName(location("the_green_menace")),
-                    THE_PINK_SCOUNDREL = new TrickbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 20.0F, true).setRegistryName(location("the_pink_scoundrel")),
+                    RangedWeaponList.TRICKBOW = new TrickbowItem(new Item.Properties(), 20.0F, false).setRegistryName(location("trickbow")),
+                    RangedWeaponList.THE_GREEN_MENACE = new TrickbowItem(new Item.Properties(), 20.0F, true).setRegistryName(location("the_green_menace")),
+                    RangedWeaponList.THE_PINK_SCOUNDREL = new TrickbowItem(new Item.Properties(), 20.0F, true).setRegistryName(location("the_pink_scoundrel")),
 
-                    SNOW_BOW = new SnowBowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 20.0F, false).setRegistryName(location("snow_bow")),
-                    WINTERS_TOUCH = new SnowBowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 20.0F, true).setRegistryName(location("winters_touch")),
+                    RangedWeaponList.SNOW_BOW = new SnowBowItem(new Item.Properties(), 20.0F, false).setRegistryName(location("snow_bow")),
+                    RangedWeaponList.WINTERS_TOUCH = new SnowBowItem(new Item.Properties(), 20.0F, true).setRegistryName(location("winters_touch")),
 
-                    RAPID_CROSSBOW = new RapidCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 20, false).setRegistryName(location("rapid_crossbow")),
-                    BUTTERFLY_CROSSBOW = new RapidCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 20, true).setRegistryName(location("butterfly_crossbow")),
-                    AUTO_CROSSBOW = new RapidCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 20, true).setRegistryName(location("auto_crossbow")),
+                    RangedWeaponList.RAPID_CROSSBOW = new RapidCrossbowItem(new Item.Properties(), 20, false).setRegistryName(location("rapid_crossbow")),
+                    RangedWeaponList.BUTTERFLY_CROSSBOW = new RapidCrossbowItem(new Item.Properties(), 20, true).setRegistryName(location("butterfly_crossbow")),
+                    RangedWeaponList.AUTO_CROSSBOW = new RapidCrossbowItem(new Item.Properties(), 20, true).setRegistryName(location("auto_crossbow")),
 
-                    AZURE_SEEKER = new DungeonsCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 25, true).setRegistryName(location("azure_seeker")),
-                    THE_SLICER = new DungeonsCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 25, true).setRegistryName(location("the_slicer")),
+                    RangedWeaponList.AZURE_SEEKER = new DungeonsCrossbowItem(new Item.Properties(), 25, true).setRegistryName(location("azure_seeker")),
+                    RangedWeaponList.THE_SLICER = new DungeonsCrossbowItem(new Item.Properties(), 25, true).setRegistryName(location("the_slicer")),
 
-                    HEAVY_CROSSBOW = new HeavyCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 30, false).setRegistryName(location("heavy_crossbow")),
-                    DOOM_CROSSBOW = new HeavyCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 30, true).setRegistryName(location("doom_crossbow")),
-                    SLAYER_CROSSBOW = new HeavyCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 30, true).setRegistryName(location("slayer_crossbow")),
+                    RangedWeaponList.HEAVY_CROSSBOW = new HeavyCrossbowItem(new Item.Properties(), 30, false).setRegistryName(location("heavy_crossbow")),
+                    RangedWeaponList.DOOM_CROSSBOW = new HeavyCrossbowItem(new Item.Properties(), 30, true).setRegistryName(location("doom_crossbow")),
+                    RangedWeaponList.SLAYER_CROSSBOW = new HeavyCrossbowItem(new Item.Properties(), 30, true).setRegistryName(location("slayer_crossbow")),
 
-                    SOUL_CROSSBOW = new SoulCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 25, false).setRegistryName(location("soul_crossbow")),
-                    FERAL_SOUL_CROSSBOW = new SoulCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 25, true).setRegistryName(location("feral_soul_crossbow")),
-                    VOIDCALLER = new SoulCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 25, true).setRegistryName(location("voidcaller")),
+                    RangedWeaponList.SOUL_CROSSBOW = new SoulCrossbowItem(new Item.Properties(), 25, false).setRegistryName(location("soul_crossbow")),
+                    RangedWeaponList.FERAL_SOUL_CROSSBOW = new SoulCrossbowItem(new Item.Properties(), 25, true).setRegistryName(location("feral_soul_crossbow")),
+                    RangedWeaponList.VOIDCALLER = new SoulCrossbowItem(new Item.Properties(), 25, true).setRegistryName(location("voidcaller")),
 
-                    SCATTER_CROSSBOW = new ScatterCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 25, false).setRegistryName(location("scatter_crossbow")),
-                    HARP_CROSSBOW = new ScatterCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 25, true).setRegistryName(location("harp_crossbow")),
-                    LIGHTNING_HARP_CROSSBOW = new ScatterCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 25, true).setRegistryName(location("lightning_harp_crossbow")),
+                    RangedWeaponList.SCATTER_CROSSBOW = new ScatterCrossbowItem(new Item.Properties(), 25, false).setRegistryName(location("scatter_crossbow")),
+                    RangedWeaponList.HARP_CROSSBOW = new ScatterCrossbowItem(new Item.Properties(), 25, true).setRegistryName(location("harp_crossbow")),
+                    RangedWeaponList.LIGHTNING_HARP_CROSSBOW = new ScatterCrossbowItem(new Item.Properties(), 25, true).setRegistryName(location("lightning_harp_crossbow")),
 
-                    EXPLODING_CROSSBOW = new ExplodingCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 25, false).setRegistryName(location("exploding_crossbow")),
-                    FIREBOLT_THROWER = new ExplodingCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 25, true).setRegistryName(location("firebolt_thrower")),
-                    IMPLODING_CROSSBOW = new ExplodingCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 25, true).setRegistryName(location("imploding_crossbow")),
+                    RangedWeaponList.EXPLODING_CROSSBOW = new ExplodingCrossbowItem(new Item.Properties(), 25, false).setRegistryName(location("exploding_crossbow")),
+                    RangedWeaponList.FIREBOLT_THROWER = new ExplodingCrossbowItem(new Item.Properties(), 25, true).setRegistryName(location("firebolt_thrower")),
+                    RangedWeaponList.IMPLODING_CROSSBOW = new ExplodingCrossbowItem(new Item.Properties(), 25, true).setRegistryName(location("imploding_crossbow")),
 
-                    BURST_CROSSBOW = new BurstCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 25, false).setRegistryName(location("burst_crossbow")),
-                    CORRUPTED_CROSSBOW = new BurstCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 25, true).setRegistryName(location("corrupted_crossbow")),
-                    SOUL_HUNTER_CROSSBOW = new BurstCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 25, true).setRegistryName(location("soul_hunter_crossbow")),
+                    RangedWeaponList.BURST_CROSSBOW = new BurstCrossbowItem(new Item.Properties(), 25, false).setRegistryName(location("burst_crossbow")),
+                    RangedWeaponList.CORRUPTED_CROSSBOW = new BurstCrossbowItem(new Item.Properties(), 25, true).setRegistryName(location("corrupted_crossbow")),
+                    RangedWeaponList.SOUL_HUNTER_CROSSBOW = new BurstCrossbowItem(new Item.Properties(), 25, true).setRegistryName(location("soul_hunter_crossbow")),
 
-                    DUAL_CROSSBOW = new DualCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 25, false).setRegistryName(location("dual_crossbow")),
-                    BABY_CROSSBOW = new DualCrossbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(326), 25, true).setRegistryName(location("baby_crossbow")),
+                    RangedWeaponList.DUAL_CROSSBOW = new DualCrossbowItem(new Item.Properties(), 25, false).setRegistryName(location("dual_crossbow")),
+                    RangedWeaponList.BABY_CROSSBOW = new DualCrossbowItem(new Item.Properties(), 25, true).setRegistryName(location("baby_crossbow")),
 
-                    ArtifactList.BOOTS_OF_SWIFTNESS = new BootsOfSwiftnessItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("boots_of_swiftness")),
-                    ArtifactList.DEATH_CAP_MUSHROOM = new DeathCapMushroomItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("death_cap_mushroom")),
-                    ArtifactList.GOLEM_KIT = new GolemKitItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("golem_kit")),
-                    ArtifactList.TASTY_BONE = new TastyBoneItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("tasty_bone")),
-                    ArtifactList.WONDERFUL_WHEAT = new WonderfulWheatItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("wonderful_wheat")),
-                    ArtifactList.GONG_OF_WEAKENING = new GongOfWeakeningItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("gong_of_weakening")),
-                    ArtifactList.LIGHTNING_ROD = new LightningRodItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("lightning_rod")),
-                    ArtifactList.IRON_HIDE_AMULET = new IronHideAmuletItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("iron_hide_amulet")),
-                    ArtifactList.LOVE_MEDALLION = new LoveMedallionItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("love_medallion")),
-                    ArtifactList.GHOST_CLOAK = new GhostCloakItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("ghost_cloak")),
-                    ArtifactList.HARVESTER = new HarvesterItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("harvester")),
-                    ArtifactList.SHOCK_POWDER = new ShockPowderItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("shock_powder")),
-                    ArtifactList.CORRUPTED_SEEDS = new CorruptedSeedsItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("corrupted_seeds")),
-                    ArtifactList.ICE_WAND = new IceWandItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("ice_wand")),
-                    ArtifactList.WIND_HORN = new WindHornItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("wind_horn")),
-                    ArtifactList.SOUL_HEALER = new SoulHealerItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("soul_healer")),
-                    ArtifactList.LIGHT_FEATHER = new LightFeatherItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("light_feather")),
-                    ArtifactList.FLAMING_QUIVER = new FlamingQuiver(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("flaming_quiver")),
-                    ArtifactList.TORMENT_QUIVER = new TormentQuiver(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("torment_quiver")),
-                    ArtifactList.TOTEM_OF_REGENERATION = new TotemOfRegenerationItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("totem_of_regeneration")),
-                    ArtifactList.TOTEM_OF_SHIELDING = new TotemOfShieldingItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("totem_of_shielding")),
-                    ArtifactList.TOTEM_OF_SOUL_PROTECTION = new TotemOfSoulProtectionItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("totem_of_soul_protection")),
-                    ArtifactList.CORRUPTED_BEACON = new CorruptedBeaconItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("corrupted_beacon")),
-                    ArtifactList.BUZZY_NEST = new BuzzyNestArtifact(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("buzzy_nest")),
-                    ArtifactList.ENCHANTED_GRASS = new EnchantedGrassArtifact(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("enchanted_grass")),
-                    ArtifactList.CORRUPTED_PUMPKIN = new CorruptedPumpkinItem(new Item.Properties().maxStackSize(1).group(DungeonsGear.ARTIFACT_GROUP).maxDamage(64)).setRegistryName(location("corrupted_pumpkin")),
+                    ArtifactList.BOOTS_OF_SWIFTNESS = new BootsOfSwiftnessItem(new Item.Properties()).setRegistryName(location("boots_of_swiftness")),
+                    ArtifactList.DEATH_CAP_MUSHROOM = new DeathCapMushroomItem(new Item.Properties()).setRegistryName(location("death_cap_mushroom")),
+                    ArtifactList.GOLEM_KIT = new GolemKitItem(new Item.Properties()).setRegistryName(location("golem_kit")),
+                    ArtifactList.TASTY_BONE = new TastyBoneItem(new Item.Properties()).setRegistryName(location("tasty_bone")),
+                    ArtifactList.WONDERFUL_WHEAT = new WonderfulWheatItem(new Item.Properties()).setRegistryName(location("wonderful_wheat")),
+                    ArtifactList.GONG_OF_WEAKENING = new GongOfWeakeningItem(new Item.Properties()).setRegistryName(location("gong_of_weakening")),
+                    ArtifactList.LIGHTNING_ROD = new LightningRodItem(new Item.Properties()).setRegistryName(location("lightning_rod")),
+                    ArtifactList.IRON_HIDE_AMULET = new IronHideAmuletItem(new Item.Properties()).setRegistryName(location("iron_hide_amulet")),
+                    ArtifactList.LOVE_MEDALLION = new LoveMedallionItem(new Item.Properties()).setRegistryName(location("love_medallion")),
+                    ArtifactList.GHOST_CLOAK = new GhostCloakItem(new Item.Properties()).setRegistryName(location("ghost_cloak")),
+                    ArtifactList.HARVESTER = new HarvesterItem(new Item.Properties()).setRegistryName(location("harvester")),
+                    ArtifactList.SHOCK_POWDER = new ShockPowderItem(new Item.Properties()).setRegistryName(location("shock_powder")),
+                    ArtifactList.CORRUPTED_SEEDS = new CorruptedSeedsItem(new Item.Properties()).setRegistryName(location("corrupted_seeds")),
+                    ArtifactList.ICE_WAND = new IceWandItem(new Item.Properties()).setRegistryName(location("ice_wand")),
+                    ArtifactList.WIND_HORN = new WindHornItem(new Item.Properties()).setRegistryName(location("wind_horn")),
+                    ArtifactList.SOUL_HEALER = new SoulHealerItem(new Item.Properties()).setRegistryName(location("soul_healer")),
+                    ArtifactList.LIGHT_FEATHER = new LightFeatherItem(new Item.Properties()).setRegistryName(location("light_feather")),
+                    ArtifactList.FLAMING_QUIVER = new FlamingQuiver(new Item.Properties()).setRegistryName(location("flaming_quiver")),
+                    ArtifactList.TORMENT_QUIVER = new TormentQuiver(new Item.Properties()).setRegistryName(location("torment_quiver")),
+                    ArtifactList.TOTEM_OF_REGENERATION = new TotemOfRegenerationItem(new Item.Properties()).setRegistryName(location("totem_of_regeneration")),
+                    ArtifactList.TOTEM_OF_SHIELDING = new TotemOfShieldingItem(new Item.Properties()).setRegistryName(location("totem_of_shielding")),
+                    ArtifactList.TOTEM_OF_SOUL_PROTECTION = new TotemOfSoulProtectionItem(new Item.Properties()).setRegistryName(location("totem_of_soul_protection")),
+                    ArtifactList.CORRUPTED_BEACON = new CorruptedBeaconItem(new Item.Properties()).setRegistryName(location("corrupted_beacon")),
+                    ArtifactList.BUZZY_NEST = new BuzzyNestArtifact(new Item.Properties()).setRegistryName(location("buzzy_nest")),
+                    ArtifactList.ENCHANTED_GRASS = new EnchantedGrassArtifact(new Item.Properties()).setRegistryName(location("enchanted_grass")),
+                    ArtifactList.CORRUPTED_PUMPKIN = new CorruptedPumpkinItem(new Item.Properties()).setRegistryName(location("corrupted_pumpkin")),
 
                     // done
                     ArmorList.HUNTERS_ARMOR = new HuntersArmorItem(VEST, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false).setRegistryName(location("hunters_vest")),

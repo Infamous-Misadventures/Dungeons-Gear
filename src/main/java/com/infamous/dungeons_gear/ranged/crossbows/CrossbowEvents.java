@@ -5,6 +5,7 @@ import com.infamous.dungeons_gear.capabilities.weapon.WeaponProvider;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
+import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -38,7 +39,8 @@ public class CrossbowEvents {
         long worldTime = world.getGameTime();
         ItemStack stack = event.getItemStack();
         if(stack.getItem() instanceof CrossbowItem & CrossbowItem.isCharged(stack)){
-            IWeapon weaponCap = stack.getCapability(WeaponProvider.WEAPON_CAPABILITY).orElseThrow(IllegalStateException::new);
+            IWeapon weaponCap = CapabilityHelper.getWeaponCapability(stack);
+            if(weaponCap == null) return;
             long lastFiredTime = weaponCap.getLastFiredTime();
             int crossbowChargeTime = weaponCap.getCrossbowChargeTime();
 

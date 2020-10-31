@@ -8,6 +8,7 @@ import com.infamous.dungeons_gear.enchantments.types.PulseEnchantment;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.items.ArmorList;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
+import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -45,7 +46,8 @@ public class ChillingEnchantment extends PulseEnchantment {
         if(player == null) return;
         if(event.phase == TickEvent.Phase.START) return;
         if(player.isAlive()){
-            ICombo comboCap = player.getCapability(ComboProvider.COMBO_CAPABILITY).orElseThrow(IllegalStateException::new);
+            ICombo comboCap = CapabilityHelper.getComboCapability(player);
+            if(comboCap == null) return;
             int freezeNearbyTimer = comboCap.getFreezeNearbyTimer();
 
             boolean uniqueArmorFlag = player.getItemStackFromSlot(EquipmentSlotType.CHEST).getItem() == ArmorList.FROST_ARMOR ||

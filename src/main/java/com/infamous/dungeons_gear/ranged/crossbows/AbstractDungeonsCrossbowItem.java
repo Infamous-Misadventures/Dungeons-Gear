@@ -1,10 +1,13 @@
 package com.infamous.dungeons_gear.ranged.crossbows;
 
 import com.google.common.collect.Lists;
+import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
 import com.infamous.dungeons_gear.capabilities.weapon.WeaponProvider;
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.interfaces.IRangedWeapon;
+import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.RangedAttackHelper;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -38,7 +41,10 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
     public boolean isLoadingMiddle = false;
 
     public AbstractDungeonsCrossbowItem(Properties builder, int defaultChargeTimeIn, boolean isUniqueIn) {
-        super(builder);
+        super(builder
+                .group(DungeonsGear.RANGED_WEAPON_GROUP)
+                .maxDamage(DungeonsGearConfig.COMMON.CROSSBOW_DURABILITY.get())
+        );
         this.defaultChargeTime = defaultChargeTimeIn;
         this.isUnique = isUniqueIn;
     }
@@ -121,7 +127,8 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
         int accelerateLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.ACCELERATE, stack);
         if(this.hasAccelerateBuiltIn(stack)) accelerateLevel++;
 
-        IWeapon weaponCap = stack.getCapability(WeaponProvider.WEAPON_CAPABILITY).orElseThrow(IllegalStateException::new);
+        IWeapon weaponCap = CapabilityHelper.getWeaponCapability(stack);
+        if(weaponCap == null) return Math.max(this.getDefaultChargeTime() - 5 * quickChargeLevel, 0);
         int crossbowChargeTime = weaponCap.getCrossbowChargeTime();
         long lastFiredTime = weaponCap.getLastFiredTime();
 

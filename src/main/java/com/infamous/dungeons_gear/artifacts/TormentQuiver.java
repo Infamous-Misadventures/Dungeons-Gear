@@ -2,9 +2,9 @@ package com.infamous.dungeons_gear.artifacts;
 
 import com.infamous.dungeons_gear.capabilities.combo.ComboProvider;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
-import com.infamous.dungeons_gear.interfaces.IArtifact;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
 import com.infamous.dungeons_gear.items.ArtifactList;
+import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class TormentQuiver extends Item implements IArtifact, ISoulGatherer {
+public class TormentQuiver extends ArtifactItem implements ISoulGatherer {
     public TormentQuiver(Properties properties) {
         super(properties);
     }
@@ -30,8 +30,9 @@ public class TormentQuiver extends Item implements IArtifact, ISoulGatherer {
 
         if(playerIn.experienceTotal >= 10 || playerIn.isCreative()){
 
+            ICombo comboCap = CapabilityHelper.getComboCapability(playerIn);
+            if(comboCap == null) return new ActionResult<>(ActionResultType.FAIL, itemstack);
 
-            ICombo comboCap = playerIn.getCapability(ComboProvider.COMBO_CAPABILITY).orElseThrow(IllegalStateException::new);
             comboCap.setTormentArrowCount(3);
 
             if(!playerIn.isCreative()){
@@ -44,13 +45,9 @@ public class TormentQuiver extends Item implements IArtifact, ISoulGatherer {
             }
 
 
-            IArtifact.setArtifactCooldown(playerIn, itemstack.getItem(), 20);
+            ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem(), 20);
         }
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
-    }
-
-    public Rarity getRarity(ItemStack itemStack){
-        return Rarity.RARE;
     }
 
     @Override

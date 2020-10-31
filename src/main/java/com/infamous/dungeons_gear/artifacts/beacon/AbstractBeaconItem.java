@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.artifacts.beacon;
 
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_gear.interfaces.IArtifact;
+import com.infamous.dungeons_gear.artifacts.ArtifactItem;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -21,7 +21,7 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import javax.annotation.Nullable;
 
-public abstract class AbstractBeaconItem extends Item implements IArtifact, ISoulGatherer {
+public abstract class AbstractBeaconItem extends ArtifactItem implements ISoulGatherer {
 
     public static final double RAYTRACE_DISTANCE = 256;
     public static final float BEAM_DAMAGE_PER_TICK = 0.5F; // 10.0F damage per second
@@ -132,10 +132,6 @@ public abstract class AbstractBeaconItem extends Item implements IArtifact, ISou
             }
         }
         return heldItem;
-    }
-
-    public Rarity getRarity(ItemStack itemStack){
-        return Rarity.RARE;
     }
 
     @Override

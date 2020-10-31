@@ -1,13 +1,16 @@
 package com.infamous.dungeons_gear.items;
 
 import com.infamous.dungeons_gear.DungeonsGear;
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.LazyValue;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
+import net.minecraftforge.common.Tags;
+
+import java.util.function.Supplier;
 
 public enum ArmorMaterialList implements IArmorMaterial
 {
@@ -52,33 +55,32 @@ public enum ArmorMaterialList implements IArmorMaterial
      *
      */
 
-    // Tier 1
-    VEST("vest", 14, new int[] {2, 5, 6, 2}, 9, Items.AIR, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0f, 0.0f),
-    ROBE("robe", 14, new int[] {2, 5, 6, 2}, 9, Items.AIR, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0f, 0.0f),
-    PELT("pelt", 14, new int[] {2, 5, 6, 2}, 9, Items.AIR, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0f, 0.0f),
-    BONE("bone", 14, new int[] {2, 5, 6, 2}, 9, Items.AIR, SoundEvents.ENTITY_SKELETON_AMBIENT, 0.0f, 0.0f),
-    LIGHT_PLATE("light_plate", 14, new int[] {2, 5, 6, 2}, 9, Items.AIR, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0f, 0.0f),
-    MEDIUM_PLATE("medium_plate", 14, new int[] {2, 5, 6, 2}, 9, Items.AIR, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.0f, 0.0f),
-    HEAVY_PLATE("heavy_plate", 14, new int[] {2, 5, 6, 2}, 9, Items.AIR, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.0f, 0.0f);
+    VEST("vest", DungeonsGearConfig.COMMON.VEST_ARMOR_DURABILITY.get(), new int[] {2, 5, 6, 2}, 9, () -> Ingredient.fromTag(ItemTagWrappers.NON_METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0f, 0.0f),
+    ROBE("robe", DungeonsGearConfig.COMMON.ROBE_ARMOR_DURABILITY.get(), new int[] {2, 5, 6, 2}, 9, () -> Ingredient.fromTag(ItemTagWrappers.NON_METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0f, 0.0f),
+    PELT("pelt", DungeonsGearConfig.COMMON.PELT_ARMOR_DURABILITY.get(), new int[] {2, 5, 6, 2}, 9, () -> Ingredient.fromTag(ItemTagWrappers.NON_METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0f, 0.0f),
+    BONE("bone", DungeonsGearConfig.COMMON.BONE_ARMOR_DURABILITY.get(), new int[] {2, 5, 6, 2}, 9, () -> Ingredient.fromTag(ItemTagWrappers.NON_METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ITEM_ARMOR_EQUIP_TURTLE, 0.0f, 0.0f),
+    LIGHT_PLATE("light_plate", DungeonsGearConfig.COMMON.LIGHT_PLATE_ARMOR_DURABILITY.get(), new int[] {2, 5, 6, 2}, 9, () -> Ingredient.fromTag(ItemTagWrappers.METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0f, 0.0f),
+    MEDIUM_PLATE("medium_plate", DungeonsGearConfig.COMMON.MEDIUM_PLATE_ARMOR_DURABILITY.get(), new int[] {2, 5, 6, 2}, 9, () -> Ingredient.fromTag(ItemTagWrappers.METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.0f, 0.0f),
+    HEAVY_PLATE("heavy_plate", DungeonsGearConfig.COMMON.HEAVY_PLATE_ARMOR_DURABILITY.get(), new int[] {2, 5, 6, 2}, 9, () -> Ingredient.fromTag(ItemTagWrappers.METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.0f, 0.0f);
 
 
     // Armor order: boots, leggings, chestplate, helmet
-    private static final int[] maxDamageArray = new int[]{13, 15, 16, 11};
+    private static final int[] MAX_DAMAGE_ARRAY = new int[]{13, 15, 16, 11};
     private String name;
     private SoundEvent equipSound;
     private int durability, enchantability;
-    private Item repairItem;
+    private final LazyValue<Ingredient> repairItem;
     private int[] damageReductionAmounts;
     private float toughness;
     private float knockbackResistance;
 
-    private ArmorMaterialList(String name, int durability, int[] damageReductionAmounts, int enchantability, Item repairItem, SoundEvent equipSound, float toughness, float knockbackResistance)
+    private ArmorMaterialList(String name, int durability, int[] damageReductionAmounts, int enchantability, Supplier<Ingredient> repairItem, SoundEvent equipSound, float toughness, float knockbackResistance)
     {
         this.name = name;
         this.equipSound = equipSound;
         this.durability = durability;
         this.enchantability = enchantability;
-        this.repairItem = repairItem;
+        this.repairItem = new LazyValue<>(repairItem);
         this.damageReductionAmounts = damageReductionAmounts;
         this.toughness = toughness;
         this.knockbackResistance = knockbackResistance;
@@ -93,7 +95,7 @@ public enum ArmorMaterialList implements IArmorMaterial
     @Override
     public int getDurability(EquipmentSlotType slot)
     {
-        return maxDamageArray[slot.getIndex()] * this.durability;
+        return MAX_DAMAGE_ARRAY[slot.getIndex()] * this.durability;
     }
 
     @Override
@@ -111,7 +113,7 @@ public enum ArmorMaterialList implements IArmorMaterial
     @Override
     public Ingredient getRepairMaterial()
     {
-        return Ingredient.fromItems(this.repairItem);
+        return this.repairItem.getValue();
     }
 
     @Override

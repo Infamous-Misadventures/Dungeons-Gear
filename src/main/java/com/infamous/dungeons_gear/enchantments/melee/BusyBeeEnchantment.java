@@ -9,6 +9,7 @@ import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.goals.BeeFollowOwnerGoal;
 import com.infamous.dungeons_gear.goals.BeeOwnerHurtByTargetGoal;
 import com.infamous.dungeons_gear.goals.BeeOwnerHurtTargetGoal;
+import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -75,28 +76,33 @@ public class BusyBeeEnchantment extends Enchantment {
 
 
     private static void createBusyBee(LivingEntity victim, PlayerEntity playerEntity) {
-        ISummoner summonerCap = playerEntity.getCapability(SummonerProvider.SUMMONER_CAPABILITY).orElseThrow(IllegalStateException::new);
+        ISummoner summonerCap = CapabilityHelper.getSummonerCapability(playerEntity);
         BeeEntity beeEntity = EntityType.BEE.create(playerEntity.world);
-        if (beeEntity!= null) {
-            if(summonerCap.addBusyBeeBee(beeEntity.getUniqueID())){
-                beeEntity.setLocationAndAngles((double)victim.getPosX() + 0.5D, (double)victim.getPosY() + 0.05D, (double)victim.getPosZ() + 0.5D, 0.0F, 0.0F);
+        if (beeEntity!= null && summonerCap != null) {
+            ISummonable summonable = CapabilityHelper.getSummonableCapability(beeEntity);
+            if(summonable != null && summonerCap.addBusyBeeBee(beeEntity.getUniqueID())){
 
-                beeEntity.goalSelector.addGoal(2, new BeeFollowOwnerGoal(beeEntity, 2.1D, 10.0F, 2.0F, false));
-
-                beeEntity.targetSelector.addGoal(1, new BeeOwnerHurtByTargetGoal(beeEntity));
-                beeEntity.targetSelector.addGoal(2, new BeeOwnerHurtTargetGoal(beeEntity));
-                beeEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(beeEntity, LivingEntity.class, 5, false, false,
-                        (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
-
-                playerEntity.world.playSound((PlayerEntity)null, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ENTITY_BEE_LOOP, SoundCategory.AMBIENT, 64.0F, 1.0F);
-                playerEntity.world.addEntity(beeEntity);
-
-                ISummonable summonable = beeEntity.getCapability(SummonableProvider.SUMMONABLE_CAPABILITY).orElseThrow(IllegalStateException::new);
                 summonable.setSummoner(playerEntity.getUniqueID());
+
+                createBee(victim, playerEntity, beeEntity);
             }
             else {
                 beeEntity.remove();
             }
         }
+    }
+
+    private static void createBee(LivingEntity victim, PlayerEntity playerEntity, BeeEntity beeEntity) {
+        beeEntity.setLocationAndAngles((double)victim.getPosX() + 0.5D, (double)victim.getPosY() + 0.05D, (double)victim.getPosZ() + 0.5D, 0.0F, 0.0F);
+
+        beeEntity.goalSelector.addGoal(2, new BeeFollowOwnerGoal(beeEntity, 2.1D, 10.0F, 2.0F, false));
+
+        beeEntity.targetSelector.addGoal(1, new BeeOwnerHurtByTargetGoal(beeEntity));
+        beeEntity.targetSelector.addGoal(2, new BeeOwnerHurtTargetGoal(beeEntity));
+        beeEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(beeEntity, LivingEntity.class, 5, false, false,
+                (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
+
+        playerEntity.world.playSound((PlayerEntity)null, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ENTITY_BEE_LOOP, SoundCategory.AMBIENT, 64.0F, 1.0F);
+        playerEntity.world.addEntity(beeEntity);
     }
 }
