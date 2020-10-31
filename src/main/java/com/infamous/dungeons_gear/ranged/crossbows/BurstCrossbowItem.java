@@ -37,6 +37,11 @@ public class BurstCrossbowItem extends AbstractDungeonsCrossbowItem implements I
     }
 
     @Override
+    public boolean hasDynamoBuiltIn(ItemStack stack) {
+        return stack.getItem() == CORRUPTED_CROSSBOW;
+    }
+
+    @Override
     public void fireCrossbowProjectiles(World world, LivingEntity livingEntity, Hand hand, ItemStack stack, float velocityIn, float inaccuracyIn) {
         List<ItemStack> list = getChargedProjectiles(stack);
         float[] randomSoundPitches = getRandomSoundPitches(livingEntity.getRNG());
@@ -73,7 +78,7 @@ public class BurstCrossbowItem extends AbstractDungeonsCrossbowItem implements I
         if (stack.getItem() == CORRUPTED_CROSSBOW) {
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "This crossbow has a subtle yet corrupting power that is suitable for thieves and nimble warriors alike."));
 
-            //list.add(new StringTextComponent(TextFormatting.GREEN + "Boosts Next Attack On Roll (Dynamo I)"));
+            list.add(new StringTextComponent(TextFormatting.GREEN + "Boosts Next Attack On Jump (Dynamo I)"));
             list.add(new StringTextComponent(TextFormatting.GREEN + "Fast Multiple Projectiles"));
         }
         if (stack.getItem() == SOUL_HUNTER_CROSSBOW) {

@@ -9,7 +9,6 @@ import java.util.Map;
 public class RangedWeaponList {
 
 
-    public static Item HAUNTED_BOW;
     // BOWS
     public static Item BONEBOW;
     public static Item BOW_OF_LOST_SOULS;
@@ -33,6 +32,9 @@ public class RangedWeaponList {
     public static Item TRICKBOW;
     public static Item SNOW_BOW;
     public static Item WINTERS_TOUCH;
+    public static Item HAUNTED_BOW;
+    public static Item ANCIENT_BOW;
+    public static Item LOVE_SPELL_BOW;
 
     // CROSSBOWS
     public static Item AUTO_CROSSBOW;

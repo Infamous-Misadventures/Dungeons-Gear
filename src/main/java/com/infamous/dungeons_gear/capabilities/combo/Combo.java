@@ -15,6 +15,7 @@ public class Combo implements ICombo {
     private int arrowsInCounter;
     private int jumpCooldownTimer;
     private int poisonImmunityTimer;
+    private double dynamoMultiplier;
 
     public Combo(){
         this.comboTimer = 0;
@@ -29,6 +30,7 @@ public class Combo implements ICombo {
         this.snowballNearbyTimer = 100;
         this.jumpCooldownTimer = 0;
         this.poisonImmunityTimer = 0;
+        this.dynamoMultiplier = 1.0D;
     }
 
     @Override
@@ -152,5 +154,15 @@ public class Combo implements ICombo {
     @Override
     public void setPoisonImmunityTimer(int poisonImmunityTimer) {
         this.poisonImmunityTimer = poisonImmunityTimer;
+    }
+
+    @Override
+    public double getDynamoMultiplier() {
+        return this.dynamoMultiplier;
+    }
+
+    @Override
+    public void setDynamoMultiplier(double dynamoMultiplier) {
+        this.dynamoMultiplier = dynamoMultiplier;
     }
 }

@@ -97,6 +97,9 @@ public class RangedAttackHelper {
         if(stack.getItem() == TRICKBOW) arrowEntity.addTag("Trickbow");
         if(stack.getItem() == SNOW_BOW) arrowEntity.addTag("SnowBow");
         if(stack.getItem() == WINTERS_TOUCH) arrowEntity.addTag("WintersTouch");
+        //if(stack.getItem() == HAUNTED_BOW) arrowEntity.addTag("HauntedBow");
+        if(stack.getItem() == ANCIENT_BOW) arrowEntity.addTag("AncientBow");
+        if(stack.getItem() == LOVE_SPELL_BOW) arrowEntity.addTag("LoveSpellBow");
 
         // CROSSBOWS
         //if(stack.getItem() == AUTO_CROSSBOW) arrowEntity.addTag("AutoCrossbow");

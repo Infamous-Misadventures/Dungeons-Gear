@@ -39,4 +39,7 @@ public interface ICombo {
     int getPoisonImmunityTimer();
     void setPoisonImmunityTimer(int poisoncloudimmunitytimer);
 
+    double getDynamoMultiplier();
+    void setDynamoMultiplier(double dynamoMultiplier);
+
 }

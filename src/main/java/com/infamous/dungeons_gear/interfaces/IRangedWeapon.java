@@ -118,4 +118,8 @@ public interface IRangedWeapon {
         return false;
     }
 
+    default boolean hasDynamoBuiltIn(ItemStack stack){
+        return false;
+    }
+
 }

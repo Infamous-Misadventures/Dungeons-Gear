@@ -40,6 +40,7 @@ public class ItemInit {
                     WeaponList.DAGGER = new DaggerItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 1, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("dagger")),
                     WeaponList.FANG_OF_FROST = new DaggerItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 1, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("fang_of_frost")),
                     WeaponList.MOON_DAGGER = new DaggerItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 1, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("moon_dagger")),
+                    WeaponList.SHEAR_DAGGER = new DaggerItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 1, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("shear_dagger")),
 
                     WeaponList.SICKLE = new SickleItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 2, (1.6f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("sickle")),
                     WeaponList.NIGHTMARES_BITE = new SickleItem(ToolMaterialList.DUNGEONS_MELEE_WEAPON, 2, (1.6f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP)).setRegistryName(location("nightmares_bite")),
@@ -148,10 +149,12 @@ public class ItemInit {
                     HUNTING_BOW = new HuntingBowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 20.0F, false).setRegistryName(location("hunting_bow")),
                     HUNTERS_PROMISE = new HuntingBowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 20.0F, true).setRegistryName(location("hunters_promise")),
                     MASTERS_BOW = new HuntingBowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 20.0F, true).setRegistryName(location("masters_bow")),
+                    ANCIENT_BOW = new HuntingBowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 20.0F, true).setRegistryName(location("ancient_bow")),
 
                     SHORTBOW = new ShortbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 15.0F, false).setRegistryName(location("shortbow")),
                     MECHANICAL_SHORTBOW = new ShortbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 15.0F, true).setRegistryName(location("mechanical_shortbow")),
                     PURPLE_STORM = new ShortbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 15.0F, true).setRegistryName(location("purple_storm")),
+                    LOVE_SPELL_BOW = new ShortbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 15.0F, true).setRegistryName(location("love_spell_bow")),
 
                     TRICKBOW = new TrickbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 20.0F, false).setRegistryName(location("trickbow")),
                     THE_GREEN_MENACE = new TrickbowItem(new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP).maxDamage(384), 20.0F, true).setRegistryName(location("the_green_menace")),
@@ -391,6 +394,7 @@ public class ItemInit {
             uniqueWeaponMap.put(BEE_STINGER, BEE_STINGER.getRegistryName());
             uniqueWeaponMap.put(GREAT_AXEBLADE, GREAT_AXEBLADE.getRegistryName());
             uniqueWeaponMap.put(SINISTER_SWORD, SINISTER_SWORD.getRegistryName());
+            uniqueWeaponMap.put(SHEAR_DAGGER, SHEAR_DAGGER.getRegistryName());
 
             commonWeaponMap.put(DOUBLE_AXE, DOUBLE_AXE.getRegistryName());
             commonWeaponMap.put(CLAYMORE, CLAYMORE.getRegistryName());
@@ -424,6 +428,9 @@ public class ItemInit {
             uniqueRangedWeaponMap.put(THE_PINK_SCOUNDREL, THE_PINK_SCOUNDREL.getRegistryName());
             uniqueRangedWeaponMap.put(TWIN_BOW, TWIN_BOW.getRegistryName());
             uniqueRangedWeaponMap.put(WINTERS_TOUCH, WINTERS_TOUCH.getRegistryName());
+            uniqueRangedWeaponMap.put(HAUNTED_BOW, HAUNTED_BOW.getRegistryName());
+            uniqueRangedWeaponMap.put(ANCIENT_BOW, ANCIENT_BOW.getRegistryName());
+
             uniqueRangedWeaponMap.put(AUTO_CROSSBOW, AUTO_CROSSBOW.getRegistryName());
             uniqueRangedWeaponMap.put(AZURE_SEEKER, AZURE_SEEKER.getRegistryName());
             uniqueRangedWeaponMap.put(BUTTERFLY_CROSSBOW, BUTTERFLY_CROSSBOW.getRegistryName());
@@ -437,8 +444,8 @@ public class ItemInit {
             uniqueRangedWeaponMap.put(VOIDCALLER, VOIDCALLER.getRegistryName());
             uniqueRangedWeaponMap.put(BABY_CROSSBOW, BABY_CROSSBOW.getRegistryName());
             uniqueRangedWeaponMap.put(IMPLODING_CROSSBOW, IMPLODING_CROSSBOW.getRegistryName());
-            commonRangedWeaponMap.put(SOUL_HUNTER_CROSSBOW, SOUL_HUNTER_CROSSBOW.getRegistryName());
-            commonRangedWeaponMap.put(CORRUPTED_CROSSBOW, CORRUPTED_CROSSBOW.getRegistryName());
+            uniqueRangedWeaponMap.put(SOUL_HUNTER_CROSSBOW, SOUL_HUNTER_CROSSBOW.getRegistryName());
+            uniqueRangedWeaponMap.put(CORRUPTED_CROSSBOW, CORRUPTED_CROSSBOW.getRegistryName());
 
             commonRangedWeaponMap.put(HUNTING_BOW, HUNTING_BOW.getRegistryName());
             commonRangedWeaponMap.put(LONGBOW, LONGBOW.getRegistryName());

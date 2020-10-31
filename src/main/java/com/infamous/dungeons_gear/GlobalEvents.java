@@ -117,7 +117,7 @@ public class GlobalEvents {
     }
 
     @SubscribeEvent
-    public static void onShadowFormAttack(LivingDamageEvent event){
+    public static void onCapabilityAttack(LivingDamageEvent event){
         if(event.getSource().getTrueSource() instanceof PlayerEntity){
             PlayerEntity playerEntity = (PlayerEntity)event.getSource().getTrueSource();
 
@@ -127,6 +127,12 @@ public class GlobalEvents {
                 event.setAmount(originalDamage * 2.0F);
                 comboCap.setShadowForm(false);
                 playerEntity.removePotionEffect(Effects.INVISIBILITY);
+            }
+            if(comboCap.getDynamoMultiplier() > 1.0D){
+                double dynamoMultiplier = comboCap.getDynamoMultiplier();
+                float originalDamage = event.getAmount();
+                event.setAmount((float) (originalDamage * dynamoMultiplier));
+                comboCap.setDynamoMultiplier(1.0);
             }
         }
     }

@@ -9,10 +9,13 @@ import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
 import com.infamous.dungeons_gear.capabilities.summoning.SummonableProvider;
 import com.infamous.dungeons_gear.capabilities.summoning.SummonerProvider;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
+import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.goals.BeeFollowOwnerGoal;
 import com.infamous.dungeons_gear.goals.BeeOwnerHurtByTargetGoal;
 import com.infamous.dungeons_gear.goals.BeeOwnerHurtTargetGoal;
 import com.infamous.dungeons_gear.interfaces.IArmor;
+import com.infamous.dungeons_gear.items.RangedWeaponList;
+import com.infamous.dungeons_gear.items.WeaponList;
 import com.infamous.dungeons_gear.utilties.AbilityHelper;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.ArmorEffectHelper;
@@ -327,6 +330,23 @@ public class ArmorEvents {
                 if(highlandArmorFlag) swiftfootedLevel++;
                 EffectInstance speedBoost = new EffectInstance(Effects.SPEED, 60, swiftfootedLevel - 1);
                 playerEntity.addPotionEffect(speedBoost);
+        }
+
+        handleDynamoEnchantment(playerEntity);
+    }
+
+    private static void handleDynamoEnchantment(PlayerEntity playerEntity) {
+        ItemStack mainhand = playerEntity.getHeldItemMainhand();
+        boolean uniqueWeaponFlag = mainhand.getItem() == WeaponList.GREAT_AXEBLADE
+                || mainhand.getItem() == RangedWeaponList.ANCIENT_BOW
+                || mainhand.getItem() == RangedWeaponList.CORRUPTED_CROSSBOW;
+        if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.DYNAMO) || uniqueWeaponFlag){
+            int dynamoLevel = EnchantmentHelper.getEnchantmentLevel(MeleeRangedEnchantmentList.DYNAMO, mainhand);
+            if(uniqueWeaponFlag) dynamoLevel++;
+            ICombo comboCap = playerEntity.getCapability(ComboProvider.COMBO_CAPABILITY).orElseThrow(IllegalStateException::new);
+            double originalDynamoMultiplier = comboCap.getDynamoMultiplier();
+            double dynamoModifier = 1.0D + (0.5D * Math.max((dynamoLevel - 1), 0));
+            comboCap.setDynamoMultiplier(originalDynamoMultiplier + dynamoModifier);
         }
     }
 

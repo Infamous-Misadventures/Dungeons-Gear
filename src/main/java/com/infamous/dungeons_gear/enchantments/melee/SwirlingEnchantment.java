@@ -17,13 +17,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
+import static com.infamous.dungeons_gear.items.WeaponList.SHEAR_DAGGER;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class SwirlingEnchantment extends AOEDamageEnchantment {
+
+    public static final float SWIRLING_DAMAGE_MULTIPLIER = 0.5F;
 
     public SwirlingEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlotType[]{
@@ -44,24 +48,26 @@ public class SwirlingEnchantment extends AOEDamageEnchantment {
     @SubscribeEvent
     public static void onVanillaCriticalHit(CriticalHitEvent event){
         if(event.getPlayer() != null
-                //&& event.isVanillaCritical()
+                && event.isVanillaCritical()
         ){
             PlayerEntity attacker = (PlayerEntity) event.getPlayer();
             LivingEntity victim = event.getEntityLiving();
             ItemStack mainhand = attacker.getHeldItemMainhand();
-            if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.SWIRLING)){
+            boolean uniqueWeaponFlag = mainhand.getItem() == SHEAR_DAGGER;
+            if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.SWIRLING) || uniqueWeaponFlag){
                 int swirlingLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.SWIRLING, mainhand);
+                if(uniqueWeaponFlag) swirlingLevel += 1;
                 // gets the attack damage of the original attack before any enchantment modifiers are added
                 float attackDamage = (float)attacker.getAttributeValue(Attributes.ATTACK_DAMAGE);
                 float cooledAttackStrength = attacker.getCooledAttackStrength(0.5F);
                 attackDamage *= 0.2F + cooledAttackStrength * cooledAttackStrength * 0.8F;
 
 
-                float damageDealt = attackDamage * 0.5F;
-                damageDealt *= (swirlingLevel + 1) / 2.0F;
+                float swirlingDamage = attackDamage * SWIRLING_DAMAGE_MULTIPLIER;
+                swirlingDamage *= (swirlingLevel + 1) / 2.0F;
                 victim.world.playSound((PlayerEntity) null, victim.getPosX(), victim.getPosY(), victim.getPosZ(), SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.PLAYERS, 64.0F, 1.0F);
                 AOECloudHelper.spawnCritCloud(attacker, victim, 1.5f);
-                AreaOfEffectHelper.causeSwirlingAttack(attacker, victim, damageDealt, 1.5f);
+                AreaOfEffectHelper.causeSwirlingAttack(attacker, victim, swirlingDamage, 1.5f);
             }
         }
     }

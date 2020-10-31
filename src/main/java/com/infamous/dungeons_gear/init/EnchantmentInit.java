@@ -26,6 +26,7 @@ public class EnchantmentInit {
                     FREEZING = new FreezingEnchantment().setRegistryName(location("freezing")),
                     GRAVITY = new GravityEnchantment().setRegistryName(location("gravity")),
                     POISON_CLOUD = new PoisonCloudEnchantment().setRegistryName(location("poison_cloud")),
+                    DYNAMO = new DynamoEnchantment().setRegistryName(location("dynamo")),
 
                     BUSY_BEE = new BusyBeeEnchantment().setRegistryName(location("busy_bee")),
                     CHAINS = new ChainsEnchantment().setRegistryName(location("chains")),

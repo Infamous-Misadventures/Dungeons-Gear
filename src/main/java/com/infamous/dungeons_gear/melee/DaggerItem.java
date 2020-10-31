@@ -62,6 +62,11 @@ public class DaggerItem extends SwordItem implements IOffhandAttack, IMeleeWeapo
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Daggers are the weapon of cravens - or so folks say."));
 
         }
+        if(stack.getItem() == WeaponList.SHEAR_DAGGER){
+            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Even the simplest of farmers can wield these Shear Daggers with savage results."));
+
+            list.add(new StringTextComponent(TextFormatting.LIGHT_PURPLE + "Chance To Spawn Area Damage (Swirling I)"));
+        }
 
         list.add(new StringTextComponent(TextFormatting.GREEN + "Dual Wield"));
     }

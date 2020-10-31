@@ -36,7 +36,7 @@ public class RadianceShotEnchantment extends Enchantment {
         if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
         LivingEntity shooter = (LivingEntity)arrow.func_234616_v_();
         int radianceShotLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.RADIANCE_SHOT);
-        boolean uniqueWeaponFlag = arrow.getTags().contains("Sabrewing");
+        boolean uniqueWeaponFlag = arrow.getTags().contains("Sabrewing") || arrow.getTags().contains("LoveSpellBow");
         if(radianceShotLevel > 0){
             float radianceShotRand = shooter.getRNG().nextFloat();
             if(radianceShotRand <=  0.2F){

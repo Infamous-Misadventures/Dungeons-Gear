@@ -50,7 +50,7 @@ public class EchoEnchantment extends AOEDamageEnchantment {
     @SubscribeEvent
     public static void onVanillaCriticalHit(CriticalHitEvent event){
         if(event.getPlayer() != null
-            //&& event.isVanillaCritical()
+            && event.isVanillaCritical()
         ){
             PlayerEntity attacker = (PlayerEntity) event.getPlayer();
             LivingEntity victim = event.getEntityLiving();
@@ -58,12 +58,12 @@ public class EchoEnchantment extends AOEDamageEnchantment {
             boolean uniqueWeaponFlag = mainhand.getItem() == WHISPERING_SPEAR;
             if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.ECHO) || uniqueWeaponFlag){
                 int echoLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.ECHO, mainhand);
+                if(uniqueWeaponFlag) echoLevel++;
                 // gets the attack damage of the original attack before any enchantment modifiers are added
                 float attackDamage = (float)attacker.getAttributeValue(Attributes.ATTACK_DAMAGE);
                 float cooledAttackStrength = attacker.getCooledAttackStrength(0.5F);
                 attackDamage *= 0.2F + cooledAttackStrength * cooledAttackStrength * 0.8F;
 
-                if(uniqueWeaponFlag) echoLevel++;
                 // play echo sound, if there was one
                 AreaOfEffectHelper.causeEchoAttack(attacker, victim, attackDamage, 3.0f, echoLevel);
             }

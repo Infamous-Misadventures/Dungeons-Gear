@@ -8,6 +8,7 @@
   "item.dungeons_gear.fang_of_frost": "Fang Of Frost",
   "item.dungeons_gear.moon_dagger": "Moon Dagger",
   "item.dungeons_gear.dagger": "Dagger",
+  "item.dungeons_gear.shear_dagger": "Shear Dagger",
 
   "item.dungeons_gear.grave_bane": "Grave Bane",
   "item.dungeons_gear.venom_glaive": "Venom Glaive",
@@ -76,6 +77,8 @@
   "item.dungeons_gear.snow_bow": "Snow Bow",
   "item.dungeons_gear.winters_touch": "Winter's Touch",
   "item.dungeons_gear.haunted_bow": "Haunted Bow",
+  "item.dungeons_gear.ancient_bow": "Ancient Bow",
+  "item.dungeons_gear.love_spell_bow": "Love Spell Bow",
 
   "item.dungeons_gear.auto_crossbow": "Auto Crossbow",
   "item.dungeons_gear.azure_seeker": "Azure Seeker",
@@ -264,6 +267,8 @@
   "enchantment.dungeons_gear.gravity.desc": "This effect pulls mobs in range towards the weapon's impact point.",
   "enchantment.dungeons_gear.poison_cloud": "Poison Cloud",
   "enchantment.dungeons_gear.poison_cloud.desc": "Has a 30% chance to summon a poison cloud that deals damage to enemies in an area for three seconds.",
+  "enchantment.dungeons_gear.dynamo": "Dynamo",
+  "enchantment.dungeons_gear.dynamo.desc": "Adds damage to the next attack after jumping.",
 
   "enchantment.dungeons_gear.busy_bee": "Busy Bee",
   "enchantment.dungeons_gear.busy_bee.desc": "Chance to summon a bee after defeating a mob, with up to 3 bees joining your side",

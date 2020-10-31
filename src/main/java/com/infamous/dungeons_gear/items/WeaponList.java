@@ -11,11 +11,6 @@ import java.util.Map;
 
 public class WeaponList {
 
-    public static Item GREAT_AXEBLADE;
-    public static Item SINISTER_SWORD;
-    public static Item RAPIER;
-    public static Item BEE_STINGER;
-    public static Item FREEZING_FOIL;
     // AXES
     public static Item CURSED_AXE;
     public static Item FIREBRAND;
@@ -27,6 +22,7 @@ public class WeaponList {
     public static Item FANG_OF_FROST;
     public static Item DAGGER;
     public static Item MOON_DAGGER;
+    public static Item SHEAR_DAGGER;
 
     // GLAIVES
     public static Item GRAVE_BANE;
@@ -72,6 +68,11 @@ public class WeaponList {
     public static Item CUTLASS;
     public static Item KATANA;
     public static Item SOUL_KNIFE;
+    public static Item GREAT_AXEBLADE;
+    public static Item SINISTER_SWORD;
+    public static Item RAPIER;
+    public static Item BEE_STINGER;
+    public static Item FREEZING_FOIL;
 
     // STAFFS
     public static Item BATTLESTAFF;

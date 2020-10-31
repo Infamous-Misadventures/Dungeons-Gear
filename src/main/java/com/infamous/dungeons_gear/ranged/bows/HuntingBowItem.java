@@ -54,5 +54,11 @@ public class HuntingBowItem extends AbstractDungeonsBowItem {
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Pets Attack Targeted Mobs"));
         }
+        if(stack.getItem() == ANCIENT_BOW){
+            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The Ancient Bow is still as sprightly as the day it was first strung."));
+
+            list.add(new StringTextComponent(TextFormatting.GREEN + "Pets Attack Targeted Mobs"));
+            list.add(new StringTextComponent(TextFormatting.GREEN + "Boosts Next Attack On Jump (Dynamo I)"));
+        }
     }
 }

@@ -32,6 +32,25 @@ public class BowItemModelsProperties {
 
 		 */
 
+		// ANCIENT BOW
+		ItemModelsProperties.registerProperty(ANCIENT_BOW, new ResourceLocation("pull"),
+				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
+					if (p_239427_2_ == null) {
+						return 0.0F;
+					} else {
+						return !(p_239427_2_.getActiveItemStack().getItem() instanceof HuntingBowItem) ? 0.0F
+								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
+								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
+					}
+				});
+		ItemModelsProperties.registerProperty(ANCIENT_BOW, new ResourceLocation("pulling"),
+				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
+					return p_239426_2_ != null && p_239426_2_.isHandActive()
+							&& p_239426_2_.getActiveItemStack() == p_239426_0_
+							? 1.0F
+							: 0.0F;
+				});
+
 		// BONEBOW
 		ItemModelsProperties.registerProperty(BONEBOW, new ResourceLocation("pull"),
 				(stack, clientWorld, livingEntity) -> {
@@ -109,7 +128,7 @@ public class BowItemModelsProperties {
 				});
 
 
-		/*
+
 		// HAUNTED BOW
 		ItemModelsProperties.registerProperty(HAUNTED_BOW, new ResourceLocation("pull"),
 				(stack, clientWorld, livingEntity) -> {
@@ -129,7 +148,6 @@ public class BowItemModelsProperties {
 							: 0.0F;
 				});
 
-		 */
 
 		// HUNTERS PROMISE
 		ItemModelsProperties.registerProperty(HUNTERS_PROMISE, new ResourceLocation("pull"),
@@ -143,6 +161,25 @@ public class BowItemModelsProperties {
 					}
 				});
 		ItemModelsProperties.registerProperty(HUNTERS_PROMISE, new ResourceLocation("pulling"),
+				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
+					return p_239426_2_ != null && p_239426_2_.isHandActive()
+							&& p_239426_2_.getActiveItemStack() == p_239426_0_
+							? 1.0F
+							: 0.0F;
+				});
+
+		// LOVE SPELL BOW
+		ItemModelsProperties.registerProperty(LOVE_SPELL_BOW, new ResourceLocation("pull"),
+				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
+					if (p_239427_2_ == null) {
+						return 0.0F;
+					} else {
+						return !(p_239427_2_.getActiveItemStack().getItem() instanceof ShortbowItem) ? 0.0F
+								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
+								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
+					}
+				});
+		ItemModelsProperties.registerProperty(LOVE_SPELL_BOW, new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_

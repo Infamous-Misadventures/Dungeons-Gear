@@ -28,6 +28,11 @@ public class ShortbowItem extends AbstractDungeonsBowItem {
     }
 
     @Override
+    public boolean hasRadianceShotBuiltIn(ItemStack stack) {
+        return stack.getItem() == LOVE_SPELL_BOW;
+    }
+
+    @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
         super.addInformation(stack, world, list, flag);
@@ -43,6 +48,10 @@ public class ShortbowItem extends AbstractDungeonsBowItem {
         }if(stack.getItem() == SHORTBOW){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The preferred weapon of thieves and rogues, the Shortbow is nimble and lethal at short range."));
 
-        }
+        }if(stack.getItem() == LOVE_SPELL_BOW){
+        list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Love can be magical, but when it becomes too powerful, it can turn into a frenzy."));
+        list.add(new StringTextComponent(TextFormatting.GREEN + "Heals Allies In The Area (Radiance Shot I)"));
+
+    }
     }
 }

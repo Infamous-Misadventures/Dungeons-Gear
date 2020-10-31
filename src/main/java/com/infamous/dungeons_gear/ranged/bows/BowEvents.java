@@ -80,7 +80,8 @@ public class BowEvents {
                 LivingEntity victim = (LivingEntity) ((EntityRayTraceResult)rayTraceResult).getEntity();
                 boolean huntingBowFlag = arrowEntity.getTags().contains("HuntingBow")
                         || arrowEntity.getTags().contains("HuntersPromise")
-                        || arrowEntity.getTags().contains("MastersBow");
+                        || arrowEntity.getTags().contains("MastersBow")
+                        || arrowEntity.getTags().contains("AncientBow");
                 boolean snowBowFlag = arrowEntity.getTags().contains("SnowBow")
                         || arrowEntity.getTags().contains("WintersTouch");
                 boolean trickbowFlag = arrowEntity.getTags().contains("Trickbow")
