@@ -35,7 +35,7 @@ public class DeflectEnchantment extends Enchantment {
 
     @Override
     public boolean canApplyTogether(Enchantment enchantment) {
-        return DungeonsGearConfig.COMMON.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof ProtectionEnchantment);
+        return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof ProtectionEnchantment);
     }
 
 

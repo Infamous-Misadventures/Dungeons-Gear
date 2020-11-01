@@ -1,11 +1,8 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.items.ArtifactList;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.ActionResult;
@@ -43,7 +40,6 @@ public class IronHideAmuletItem extends ArtifactItem {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.IRON_HIDE_AMULET){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "The Iron Hide Amulet is both ancient and timeless. Sand mysteriously and endlessly slips through the cracks in the iron."));
             list.add(new StringTextComponent(TextFormatting.GREEN + "" + TextFormatting.ITALIC +
@@ -52,6 +48,5 @@ public class IronHideAmuletItem extends ArtifactItem {
                     "11 Seconds Duration"));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "25 Seconds Cooldown"));
-        }
     }
 }

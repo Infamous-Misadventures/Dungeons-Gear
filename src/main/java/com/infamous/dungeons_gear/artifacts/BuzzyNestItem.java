@@ -2,12 +2,9 @@ package com.infamous.dungeons_gear.artifacts;
 
 import com.infamous.dungeons_gear.capabilities.summoning.ISummonable;
 import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
-import com.infamous.dungeons_gear.capabilities.summoning.SummonableProvider;
-import com.infamous.dungeons_gear.capabilities.summoning.SummonerProvider;
 import com.infamous.dungeons_gear.goals.BeeFollowOwnerGoal;
 import com.infamous.dungeons_gear.goals.BeeOwnerHurtByTargetGoal;
 import com.infamous.dungeons_gear.goals.BeeOwnerHurtTargetGoal;
-import com.infamous.dungeons_gear.items.ArtifactList;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -19,10 +16,8 @@ import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
-import net.minecraft.item.Rarity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -34,9 +29,9 @@ import net.minecraft.world.server.ServerWorld;
 import java.util.List;
 import java.util.UUID;
 
-public class BuzzyNestArtifact extends ArtifactItem {
+public class BuzzyNestItem extends ArtifactItem {
 
-    public BuzzyNestArtifact(Properties properties) {
+    public BuzzyNestItem(Properties properties) {
         super(properties);
     }
 
@@ -122,13 +117,11 @@ public class BuzzyNestArtifact extends ArtifactItem {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.BUZZY_NEST){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "Bee lovers and the bee-loved alike are fans of the Buzzy Nest, but don't be fooled by the cute bees within - they pack a powerful sting!"));
             list.add(new StringTextComponent(TextFormatting.GREEN +
                     "When the Buzzy Nest is placed on the ground, bees who will fight beside you begin to spawn."));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "23 Seconds Cooldown"));
-        }
     }
 }

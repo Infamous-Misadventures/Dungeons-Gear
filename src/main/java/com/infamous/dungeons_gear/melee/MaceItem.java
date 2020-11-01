@@ -2,6 +2,7 @@ package com.infamous.dungeons_gear.melee;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.items.WeaponList;
 import net.minecraft.block.BlockState;
@@ -24,10 +25,12 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class MaceItem extends TieredItem implements IMeleeWeapon {
+
+    private final boolean unique;
     private final float attackDamage;
     private final float attackSpeed;
     private Multimap<Attribute, AttributeModifier> attributeModifierMultimap;
-    public MaceItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+    public MaceItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties, boolean isUnique) {
         super(tier, properties);
         this.attackDamage = (float)attackDamageIn + tier.getAttackDamage();
         this.attackSpeed = attackSpeedIn;
@@ -36,6 +39,7 @@ public class MaceItem extends TieredItem implements IMeleeWeapon {
         builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double)this.attackDamage, AttributeModifier.Operation.ADDITION));
         builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)this.attackSpeed, AttributeModifier.Operation.ADDITION));
         this.attributeModifierMultimap = builder.build();
+        this.unique = isUnique;
     }
 
     @Override
@@ -94,9 +98,7 @@ public class MaceItem extends TieredItem implements IMeleeWeapon {
 
     public Rarity getRarity(ItemStack itemStack){
 
-        if(itemStack.getItem() == WeaponList.FLAIL
-                || itemStack.getItem() == WeaponList.SUNS_GRACE
-        ){
+        if(this.unique){
             return Rarity.RARE;
         }
         return Rarity.UNCOMMON;
@@ -107,17 +109,17 @@ public class MaceItem extends TieredItem implements IMeleeWeapon {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == WeaponList.FLAIL){
+        if(stack.getItem() == DeferredItemInit.FLAIL.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "This ancient weapon inflicts grave blunt damage to those who cannot evade the deadly metal ball."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Binds And Chains Enemies (Chains I)"));
         }
-        if(stack.getItem() == WeaponList.SUNS_GRACE){
+        if(stack.getItem() == DeferredItemInit.SUNS_GRACE.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "This mace, engraved with secret healing runes, grants powerful restorative powers."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Heals Allies In Area (Radiance I)"));
         }
-        if(stack.getItem() == WeaponList.MACE){
+        if(stack.getItem() == DeferredItemInit.MACE.get()){
 
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The Mace is a brutal tool of war and what it lacks in finesse; it makes up for in power."));
 

@@ -1,10 +1,11 @@
 package com.infamous.dungeons_gear.enchantments.melee_ranged;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.enchantments.*;
+import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.DamageEnchantment;
 import net.minecraft.enchantment.Enchantment;
@@ -21,8 +22,6 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
-import static com.infamous.dungeons_gear.items.WeaponList.MOON_DAGGER;
-import static com.infamous.dungeons_gear.items.WeaponList.SOUL_FIST;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class EnigmaResonatorEnchantment extends DamageBoostEnchantment {
@@ -39,7 +38,7 @@ public class EnigmaResonatorEnchantment extends DamageBoostEnchantment {
 
     @Override
     public boolean canApplyTogether(Enchantment enchantment) {
-        return DungeonsGearConfig.COMMON.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() ||
+        return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() ||
                 (!(enchantment instanceof DamageEnchantment) && !(enchantment instanceof DamageBoostEnchantment) && !(enchantment instanceof AOEDamageEnchantment));
     }
 
@@ -49,8 +48,8 @@ public class EnigmaResonatorEnchantment extends DamageBoostEnchantment {
         PlayerEntity attacker = event.getPlayer();
         LivingEntity victim = event.getEntityLiving();
         ItemStack mainhand = attacker.getHeldItemMainhand();
-        boolean uniqueWeaponFlag = mainhand.getItem() == SOUL_FIST
-                || mainhand.getItem() == MOON_DAGGER;
+        boolean uniqueWeaponFlag = mainhand.getItem() == DeferredItemInit.SOUL_FIST.get()
+                || mainhand.getItem() == DeferredItemInit.MOON_DAGGER.get();
 
         int numSouls = Math.min(attacker.experienceTotal, 50);
         if(!event.isVanillaCritical()){

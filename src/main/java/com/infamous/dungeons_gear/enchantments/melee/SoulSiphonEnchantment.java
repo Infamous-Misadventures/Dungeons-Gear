@@ -2,6 +2,7 @@ package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -16,7 +17,6 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
-import static com.infamous.dungeons_gear.items.WeaponList.ETERNAL_KNIFE;
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class SoulSiphonEnchantment extends Enchantment {
@@ -50,7 +50,7 @@ public class SoulSiphonEnchantment extends Enchantment {
         PlayerEntity attacker = (PlayerEntity)event.getSource().getTrueSource();
         LivingEntity victim = event.getEntityLiving();
         ItemStack mainhand = attacker.getHeldItemMainhand();
-        if(mainhand.getItem() == ETERNAL_KNIFE){
+        if(mainhand.getItem() == DeferredItemInit.ETERNAL_KNIFE.get()){
             float chance = attacker.getRNG().nextFloat();
             if(chance <=  0.1F) {
                 attacker.giveExperiencePoints(3);

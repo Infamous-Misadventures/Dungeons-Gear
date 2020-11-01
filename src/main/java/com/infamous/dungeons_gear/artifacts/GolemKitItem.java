@@ -2,12 +2,9 @@ package com.infamous.dungeons_gear.artifacts;
 
 import com.infamous.dungeons_gear.capabilities.summoning.ISummonable;
 import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
-import com.infamous.dungeons_gear.capabilities.summoning.SummonableProvider;
-import com.infamous.dungeons_gear.capabilities.summoning.SummonerProvider;
 import com.infamous.dungeons_gear.goals.GolemOwnerHurtByTargetGoal;
 import com.infamous.dungeons_gear.goals.GolemOwnerHurtTargetGoal;
 import com.infamous.dungeons_gear.goals.IronGolemFollowOwnerGoal;
-import com.infamous.dungeons_gear.items.ArtifactList;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -105,13 +102,11 @@ public class GolemKitItem extends ArtifactItem {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.GOLEM_KIT){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "Iron Golems have always protected the Villagers of the Overworld. Their numbers are dwindling as a result of the Arch-Illager's war."));
             list.add(new StringTextComponent(TextFormatting.GREEN +
                     "Summons an Iron Golem to aid you in battle."));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "30 Seconds Cooldown"));
-        }
     }
 }

@@ -36,7 +36,7 @@ public class SnowballEnchantment extends PulseEnchantment {
 
     @Override
     public boolean canApplyTogether(Enchantment enchantment) {
-        return DungeonsGearConfig.COMMON.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof PulseEnchantment);
+        return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof PulseEnchantment);
     }
 
     @SubscribeEvent

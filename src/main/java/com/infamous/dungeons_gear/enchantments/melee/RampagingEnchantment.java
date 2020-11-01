@@ -1,8 +1,9 @@
 package com.infamous.dungeons_gear.enchantments.melee;
 
-import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -16,8 +17,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-import static com.infamous.dungeons_gear.items.WeaponList.DANCERS_SWORD;
-import static com.infamous.dungeons_gear.items.WeaponList.MAULER;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class RampagingEnchantment extends Enchantment {
@@ -37,7 +36,8 @@ public class RampagingEnchantment extends Enchantment {
         if(event.getSource().getTrueSource() instanceof LivingEntity){
             LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
             ItemStack mainhand = attacker.getHeldItemMainhand();
-            boolean uniqueWeaponFlag = mainhand.getItem() == DANCERS_SWORD || mainhand.getItem() == MAULER;
+            boolean uniqueWeaponFlag = mainhand.getItem() == DeferredItemInit.DANCERS_SWORD.get()
+                    || mainhand.getItem() == DeferredItemInit.MAULER.get();
             if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.RAMPAGING)){
                 int rampagingLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.RAMPAGING, mainhand);
                 float rampagingRand = attacker.getRNG().nextFloat();

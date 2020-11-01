@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.melee;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
 import com.infamous.dungeons_gear.items.WeaponList;
@@ -32,8 +33,11 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class SoulScytheItem extends SwordItem implements IMeleeWeapon, ISoulGatherer {
-    public SoulScytheItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+
+    private final boolean unique;
+    public SoulScytheItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties, boolean isUnique) {
         super(tier, attackDamageIn, attackSpeedIn, properties);
+        this.unique = isUnique;
     }
 
     public boolean canPlayerBreakBlockWhileHolding(BlockState blockState, World world, BlockPos blockPos, PlayerEntity playerEntity) {
@@ -72,9 +76,7 @@ public class SoulScytheItem extends SwordItem implements IMeleeWeapon, ISoulGath
 
     public Rarity getRarity(ItemStack itemStack){
 
-        if(itemStack.getItem() == WeaponList.FROST_SCYTHE
-                || itemStack.getItem() == WeaponList.JAILORS_SCYTHE
-        ){
+        if(this.unique){
             return Rarity.RARE;
         }
         return Rarity.UNCOMMON;
@@ -84,18 +86,18 @@ public class SoulScytheItem extends SwordItem implements IMeleeWeapon, ISoulGath
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
         super.addInformation(stack, world, list, flag);
-        if(stack.getItem() == WeaponList.FROST_SCYTHE){
+        if(stack.getItem() == DeferredItemInit.FROST_SCYTHE.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The Frost Scythe is an indestructible blade that is freezing to the touch and never seems to melt."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Slows Mobs (Freezing I)"));
         }
-        if(stack.getItem() == WeaponList.JAILORS_SCYTHE){
+        if(stack.getItem() == DeferredItemInit.JAILORS_SCYTHE.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "This scythe belonged to the terror of Highblock Keep, the Jailor."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Binds And Chains Enemies (Chains I)"));
         }
 
-        if(stack.getItem() == WeaponList.SOUL_SCYTHE){
+        if(stack.getItem() == DeferredItemInit.SOUL_SCYTHE.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A cruel reaper of souls, the Soul Scythe is unsentimental in its work."));
 
         }

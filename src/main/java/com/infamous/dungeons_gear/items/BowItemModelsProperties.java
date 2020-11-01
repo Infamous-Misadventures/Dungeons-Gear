@@ -1,11 +1,11 @@
 package com.infamous.dungeons_gear.items;
 
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.ranged.bows.*;
 import com.infamous.dungeons_gear.utilties.RangedAttackHelper;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.util.ResourceLocation;
 
-import static com.infamous.dungeons_gear.items.RangedWeaponList.*;
 
 public class BowItemModelsProperties {
 
@@ -33,7 +33,7 @@ public class BowItemModelsProperties {
 		 */
 
 		// ANCIENT BOW
-		ItemModelsProperties.registerProperty(ANCIENT_BOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.ANCIENT_BOW.get(), new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -43,7 +43,7 @@ public class BowItemModelsProperties {
 								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
-		ItemModelsProperties.registerProperty(ANCIENT_BOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.ANCIENT_BOW.get(), new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_
@@ -52,7 +52,7 @@ public class BowItemModelsProperties {
 				});
 
 		// BONEBOW
-		ItemModelsProperties.registerProperty(BONEBOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.BONEBOW.get(), new ResourceLocation("pull"),
 				(stack, clientWorld, livingEntity) -> {
 					if (livingEntity == null) {
 						return 0.0F;
@@ -62,7 +62,7 @@ public class BowItemModelsProperties {
 										/ RangedAttackHelper.getModdedBowChargeTime(livingEntity.getActiveItemStack());
 					}
 				});
-		ItemModelsProperties.registerProperty(BONEBOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.BONEBOW.get(), new ResourceLocation("pulling"),
 				(stack, clientWorld, livingEntity) -> {
 					return livingEntity != null && livingEntity.isHandActive()
 							&& livingEntity.getActiveItemStack() == stack
@@ -71,7 +71,7 @@ public class BowItemModelsProperties {
 				});
 
 		// BOW OF LOST SOULS
-		ItemModelsProperties.registerProperty(BOW_OF_LOST_SOULS, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.BOW_OF_LOST_SOULS.get(), new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -81,7 +81,7 @@ public class BowItemModelsProperties {
 								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
-		ItemModelsProperties.registerProperty(BOW_OF_LOST_SOULS, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.BOW_OF_LOST_SOULS.get(), new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_
@@ -90,7 +90,7 @@ public class BowItemModelsProperties {
 				});
 
 		// ELITE POWER BOW
-		ItemModelsProperties.registerProperty(ELITE_POWER_BOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.ELITE_POWER_BOW.get(), new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -100,7 +100,7 @@ public class BowItemModelsProperties {
 								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
-		ItemModelsProperties.registerProperty(ELITE_POWER_BOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.ELITE_POWER_BOW.get(), new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_
@@ -109,7 +109,7 @@ public class BowItemModelsProperties {
 				});
 
 		// GUARDIAN BOW
-		ItemModelsProperties.registerProperty(GUARDIAN_BOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.GUARDIAN_BOW.get(), new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -119,7 +119,7 @@ public class BowItemModelsProperties {
 								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
-		ItemModelsProperties.registerProperty(GUARDIAN_BOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.GUARDIAN_BOW.get(), new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_
@@ -130,7 +130,7 @@ public class BowItemModelsProperties {
 
 
 		// HAUNTED BOW
-		ItemModelsProperties.registerProperty(HAUNTED_BOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.HAUNTED_BOW.get(), new ResourceLocation("pull"),
 				(stack, clientWorld, livingEntity) -> {
 					if (livingEntity == null) {
 						return 0.0F;
@@ -140,7 +140,7 @@ public class BowItemModelsProperties {
 								/ RangedAttackHelper.getModdedBowChargeTime(livingEntity.getActiveItemStack());
 					}
 				});
-		ItemModelsProperties.registerProperty(HAUNTED_BOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.HAUNTED_BOW.get(), new ResourceLocation("pulling"),
 				(stack, clientWorld, livingEntity) -> {
 					return livingEntity != null && livingEntity.isHandActive()
 							&& livingEntity.getActiveItemStack() == stack
@@ -150,7 +150,7 @@ public class BowItemModelsProperties {
 
 
 		// HUNTERS PROMISE
-		ItemModelsProperties.registerProperty(HUNTERS_PROMISE, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.HUNTERS_PROMISE.get(), new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -160,7 +160,7 @@ public class BowItemModelsProperties {
 								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
-		ItemModelsProperties.registerProperty(HUNTERS_PROMISE, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.HUNTERS_PROMISE.get(), new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_
@@ -169,7 +169,7 @@ public class BowItemModelsProperties {
 				});
 
 		// LOVE SPELL BOW
-		ItemModelsProperties.registerProperty(LOVE_SPELL_BOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.LOVE_SPELL_BOW.get(), new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -179,7 +179,7 @@ public class BowItemModelsProperties {
 								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
-		ItemModelsProperties.registerProperty(LOVE_SPELL_BOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.LOVE_SPELL_BOW.get(), new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_
@@ -188,7 +188,7 @@ public class BowItemModelsProperties {
 				});
 
 		// MASTERS BOW
-		ItemModelsProperties.registerProperty(MASTERS_BOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.MASTERS_BOW.get(), new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -198,7 +198,7 @@ public class BowItemModelsProperties {
 								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
-		ItemModelsProperties.registerProperty(MASTERS_BOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.MASTERS_BOW.get(), new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_
@@ -207,7 +207,7 @@ public class BowItemModelsProperties {
 				});
 
 		// MECHANICAL SHORTBOW
-		ItemModelsProperties.registerProperty(MECHANICAL_SHORTBOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.MECHANICAL_SHORTBOW.get(), new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -217,7 +217,7 @@ public class BowItemModelsProperties {
 								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
-		ItemModelsProperties.registerProperty(MECHANICAL_SHORTBOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.MECHANICAL_SHORTBOW.get(), new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_
@@ -226,7 +226,7 @@ public class BowItemModelsProperties {
 				});
 
 		// NOCTURNAL BOW
-		ItemModelsProperties.registerProperty(NOCTURNAL_BOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.NOCTURNAL_BOW.get(), new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -236,7 +236,7 @@ public class BowItemModelsProperties {
 								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
-		ItemModelsProperties.registerProperty(NOCTURNAL_BOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.NOCTURNAL_BOW.get(), new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_
@@ -245,7 +245,7 @@ public class BowItemModelsProperties {
 				});
 
 		// PURPLE STORM
-		ItemModelsProperties.registerProperty(PURPLE_STORM, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.PURPLE_STORM.get(), new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -255,7 +255,7 @@ public class BowItemModelsProperties {
 								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
-		ItemModelsProperties.registerProperty(PURPLE_STORM, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.PURPLE_STORM.get(), new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_
@@ -264,7 +264,7 @@ public class BowItemModelsProperties {
 				});
 
 		// RED SNAKE
-		ItemModelsProperties.registerProperty(RED_SNAKE, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.RED_SNAKE.get(), new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -274,7 +274,7 @@ public class BowItemModelsProperties {
 								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
-		ItemModelsProperties.registerProperty(RED_SNAKE, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.RED_SNAKE.get(), new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_
@@ -283,7 +283,7 @@ public class BowItemModelsProperties {
 				});
 
 		// SABREWING
-		ItemModelsProperties.registerProperty(SABREWING, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.SABREWING.get(), new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -293,7 +293,7 @@ public class BowItemModelsProperties {
 								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
-		ItemModelsProperties.registerProperty(SABREWING, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.SABREWING.get(), new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_
@@ -302,7 +302,7 @@ public class BowItemModelsProperties {
 				});
 
 		// THE GREEN MENACE
-		ItemModelsProperties.registerProperty(THE_GREEN_MENACE, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.THE_GREEN_MENACE.get(), new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -312,7 +312,7 @@ public class BowItemModelsProperties {
 								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
-		ItemModelsProperties.registerProperty(THE_GREEN_MENACE, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.THE_GREEN_MENACE.get(), new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_
@@ -321,7 +321,7 @@ public class BowItemModelsProperties {
 				});
 
 		// THE PINK SCOUNDREL
-		ItemModelsProperties.registerProperty(THE_PINK_SCOUNDREL, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.THE_PINK_SCOUNDREL.get(), new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -331,7 +331,7 @@ public class BowItemModelsProperties {
 								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
-		ItemModelsProperties.registerProperty(THE_PINK_SCOUNDREL, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.THE_PINK_SCOUNDREL.get(), new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_
@@ -340,7 +340,7 @@ public class BowItemModelsProperties {
 				});
 
 		// TWIN BOW
-		ItemModelsProperties.registerProperty(TWIN_BOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.TWIN_BOW.get(), new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -350,7 +350,7 @@ public class BowItemModelsProperties {
 								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
-		ItemModelsProperties.registerProperty(TWIN_BOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.TWIN_BOW.get(), new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_
@@ -359,7 +359,7 @@ public class BowItemModelsProperties {
 				});
 
 		// HUNTING BOW
-		ItemModelsProperties.registerProperty(HUNTING_BOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.HUNTING_BOW.get(), new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -369,7 +369,7 @@ public class BowItemModelsProperties {
 								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
-		ItemModelsProperties.registerProperty(HUNTING_BOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.HUNTING_BOW.get(), new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_
@@ -378,7 +378,7 @@ public class BowItemModelsProperties {
 				});
 
 		// LONGBOW
-		ItemModelsProperties.registerProperty(LONGBOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.LONGBOW.get(), new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -388,7 +388,7 @@ public class BowItemModelsProperties {
 								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
-		ItemModelsProperties.registerProperty(LONGBOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.LONGBOW.get(), new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_
@@ -397,7 +397,7 @@ public class BowItemModelsProperties {
 				});
 
 		// SHORTBOW
-		ItemModelsProperties.registerProperty(SHORTBOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.SHORTBOW.get(), new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -407,7 +407,7 @@ public class BowItemModelsProperties {
 								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
-		ItemModelsProperties.registerProperty(SHORTBOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.SHORTBOW.get(), new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_
@@ -416,7 +416,7 @@ public class BowItemModelsProperties {
 				});
 
 		// POWER BOW
-		ItemModelsProperties.registerProperty(POWER_BOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.POWER_BOW.get(), new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -426,7 +426,7 @@ public class BowItemModelsProperties {
 								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
-		ItemModelsProperties.registerProperty(POWER_BOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.POWER_BOW.get(), new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_
@@ -435,7 +435,7 @@ public class BowItemModelsProperties {
 				});
 
 		// SOUL BOW
-		ItemModelsProperties.registerProperty(SOUL_BOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.SOUL_BOW.get(), new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -445,7 +445,7 @@ public class BowItemModelsProperties {
 								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
-		ItemModelsProperties.registerProperty(SOUL_BOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.SOUL_BOW.get(), new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_
@@ -454,7 +454,7 @@ public class BowItemModelsProperties {
 				});
 
 		// TRICKBOW
-		ItemModelsProperties.registerProperty(TRICKBOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.TRICKBOW.get(), new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -464,7 +464,7 @@ public class BowItemModelsProperties {
 								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
-		ItemModelsProperties.registerProperty(TRICKBOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.TRICKBOW.get(), new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_
@@ -473,7 +473,7 @@ public class BowItemModelsProperties {
 				});
 
 		// SNOW BOW
-		ItemModelsProperties.registerProperty(SNOW_BOW, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.SNOW_BOW.get(), new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -483,7 +483,7 @@ public class BowItemModelsProperties {
 								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
-		ItemModelsProperties.registerProperty(SNOW_BOW, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.SNOW_BOW.get(), new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_
@@ -492,7 +492,7 @@ public class BowItemModelsProperties {
 				});
 
 		// WINTERS TOUCH
-		ItemModelsProperties.registerProperty(WINTERS_TOUCH, new ResourceLocation("pull"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.WINTERS_TOUCH.get(), new ResourceLocation("pull"),
 				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
 					if (p_239427_2_ == null) {
 						return 0.0F;
@@ -502,7 +502,7 @@ public class BowItemModelsProperties {
 								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
 					}
 				});
-		ItemModelsProperties.registerProperty(WINTERS_TOUCH, new ResourceLocation("pulling"),
+		ItemModelsProperties.registerProperty(DeferredItemInit.WINTERS_TOUCH.get(), new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
 							&& p_239426_2_.getActiveItemStack() == p_239426_0_

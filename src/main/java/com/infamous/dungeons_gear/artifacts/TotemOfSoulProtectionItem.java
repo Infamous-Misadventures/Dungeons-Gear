@@ -1,14 +1,11 @@
 package com.infamous.dungeons_gear.artifacts;
 
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
-import com.infamous.dungeons_gear.items.ArtifactList;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
-import net.minecraft.item.Rarity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -68,7 +65,6 @@ public class TotemOfSoulProtectionItem extends ArtifactItem implements ISoulGath
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.TOTEM_OF_SOUL_PROTECTION){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "This totem radiates powerful protective magic."));
             list.add(new StringTextComponent(TextFormatting.GREEN +
@@ -81,7 +77,6 @@ public class TotemOfSoulProtectionItem extends ArtifactItem implements ISoulGath
                     "+1 XP Gathering"));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "Requires 5 XP"));
-        }
     }
 
     @Override

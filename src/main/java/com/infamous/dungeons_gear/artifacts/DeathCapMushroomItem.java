@@ -1,11 +1,8 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.items.ArtifactList;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.ActionResult;
@@ -46,7 +43,6 @@ public class DeathCapMushroomItem extends ArtifactItem {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.DEATH_CAP_MUSHROOM){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "Eaten by daring warriors before battle, the Death Cap Mushroom drives fighters into a frenzy."));
             list.add(new StringTextComponent(TextFormatting.GREEN +
@@ -55,6 +51,5 @@ public class DeathCapMushroomItem extends ArtifactItem {
                     "9 Seconds Duration"));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "30 Seconds Cooldown"));
-        }
     }
 }

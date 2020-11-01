@@ -1,6 +1,5 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.items.ArtifactList;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
@@ -40,7 +39,6 @@ public class BootsOfSwiftnessItem extends ArtifactItem {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.BOOTS_OF_SWIFTNESS){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "Boots blessed with enchantments to allow for swift movements. Useful in uncertain times such as these."));
             list.add(new StringTextComponent(TextFormatting.GREEN +
@@ -49,6 +47,6 @@ public class BootsOfSwiftnessItem extends ArtifactItem {
                     "2 Seconds Duration"));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "5 Seconds Cooldown"));
-        }
+
     }
 }

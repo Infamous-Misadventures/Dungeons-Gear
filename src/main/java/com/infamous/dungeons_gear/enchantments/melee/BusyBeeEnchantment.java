@@ -9,6 +9,7 @@ import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.goals.BeeFollowOwnerGoal;
 import com.infamous.dungeons_gear.goals.BeeOwnerHurtByTargetGoal;
 import com.infamous.dungeons_gear.goals.BeeOwnerHurtTargetGoal;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
@@ -55,7 +56,7 @@ public class BusyBeeEnchantment extends Enchantment {
             if(attacker instanceof PlayerEntity){
                 PlayerEntity playerEntity = (PlayerEntity)attacker;
                 ItemStack mainhand = playerEntity.getHeldItemMainhand();
-                boolean uniqueWeaponFlag = mainhand.getItem() == BEE_STINGER;
+                boolean uniqueWeaponFlag = mainhand.getItem() == DeferredItemInit.BEE_STINGER.get();
                 if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.BUSY_BEE)){
                     int busyBeeLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.RAMPAGING, mainhand);
                     float busyBeeRand = playerEntity.getRNG().nextFloat();

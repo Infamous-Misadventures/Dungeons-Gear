@@ -2,6 +2,7 @@ package com.infamous.dungeons_gear.melee;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.items.WeaponList;
 import net.minecraft.block.BlockState;
@@ -27,10 +28,12 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class GreatHammerItem extends TieredItem implements IMeleeWeapon {
+
+    private final boolean unique;
     private final float attackDamage;
     private final float attackSpeed;
     private Multimap<Attribute, AttributeModifier> attributeModifierMultimap;
-    public GreatHammerItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+    public GreatHammerItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties, boolean isUnique) {
         super(tier, properties);
         this.attackDamage = (float)attackDamageIn + tier.getAttackDamage();
         this.attackSpeed = attackSpeedIn;
@@ -39,6 +42,7 @@ public class GreatHammerItem extends TieredItem implements IMeleeWeapon {
         builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double)this.attackDamage, AttributeModifier.Operation.ADDITION));
         builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)this.attackSpeed, AttributeModifier.Operation.ADDITION));
         this.attributeModifierMultimap = builder.build();
+        this.unique = isUnique;
     }
 
     public boolean hitEntity(ItemStack p_77644_1_, LivingEntity p_77644_2_, LivingEntity p_77644_3_) {
@@ -97,9 +101,7 @@ public class GreatHammerItem extends TieredItem implements IMeleeWeapon {
 
     public Rarity getRarity(ItemStack itemStack){
 
-        if(itemStack.getItem() == WeaponList.HAMMER_OF_GRAVITY
-                || itemStack.getItem() == WeaponList.STORMLANDER
-        ){
+        if(this.unique){
             return Rarity.RARE;
         }
         return Rarity.UNCOMMON;
@@ -110,19 +112,19 @@ public class GreatHammerItem extends TieredItem implements IMeleeWeapon {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == WeaponList.HAMMER_OF_GRAVITY){
+        if(stack.getItem() == DeferredItemInit.HAMMER_OF_GRAVITY.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A hammer, embedded with a crystal that harnesses the power of gravity, that is incredibly powerful."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Pulls In Enemies (Gravity I)"));
             //list.add(new StringTextComponent(TextFormatting.GREEN + "Great Splash"));
         }
-        if(stack.getItem() == WeaponList.STORMLANDER){
+        if(stack.getItem() == DeferredItemInit.STORMLANDER.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The Stormlander, enchanted with the power of the raging storm, is a treasure of the Illagers."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Fires Lightning Bolts (Thundering I)"));
             //list.add(new StringTextComponent(TextFormatting.GREEN + "Great Splash"));
         }
-        if(stack.getItem() == WeaponList.GREAT_HAMMER){
+        if(stack.getItem() == DeferredItemInit.GREAT_HAMMER.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Blacksmiths and soldiers alike use the Great Hammer for its strength in forging and in battle."));
 
             //list.add(new StringTextComponent(TextFormatting.GREEN + "Great Splash"));

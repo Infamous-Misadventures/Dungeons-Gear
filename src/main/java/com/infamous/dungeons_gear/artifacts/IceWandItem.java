@@ -1,13 +1,10 @@
 package com.infamous.dungeons_gear.artifacts;
 
 import com.infamous.dungeons_gear.entities.IceCloudEntity;
-import com.infamous.dungeons_gear.items.ArtifactList;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
@@ -40,7 +37,6 @@ public class IceWandItem extends ArtifactItem {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.ICE_WAND){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "The Ice Wand was trapped in a tomb of ice for ages, sealed away by those who feared its power."));
             list.add(new StringTextComponent(TextFormatting.GREEN +
@@ -49,6 +45,5 @@ public class IceWandItem extends ArtifactItem {
                     "Stuns Mobs"));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "20 Seconds Cooldown"));
-        }
     }
 }

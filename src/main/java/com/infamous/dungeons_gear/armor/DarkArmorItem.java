@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.DarkArmorModel;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.interfaces.IArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
@@ -62,8 +63,13 @@ public class DarkArmorItem extends ArmorItem implements IArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(this.unique) return DungeonsGear.MODID + ":textures/models/armor/titans_shroud.png";
-        return DungeonsGear.MODID + ":textures/models/armor/dark_armor.png";
+        if(stack.getItem() == DeferredItemInit.DARK_ARMOR.get() || stack.getItem() == DeferredItemInit.DARK_ARMOR_HELMET.get()){
+            return DungeonsGear.MODID + ":textures/models/armor/dark_armor.png";
+        }
+        else if(stack.getItem() == DeferredItemInit.TITANS_SHROUD.get() || stack.getItem() == DeferredItemInit.TITANS_SHROUD_HELMET.get()){
+            return DungeonsGear.MODID + ":textures/models/armor/titans_shroud.png";
+        }
+        else return "";
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

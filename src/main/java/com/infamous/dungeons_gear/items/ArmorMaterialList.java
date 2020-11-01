@@ -55,20 +55,21 @@ public enum ArmorMaterialList implements IArmorMaterial
      *
      */
 
-    VEST("vest", DungeonsGearConfig.COMMON.VEST_ARMOR_DURABILITY.get(), new int[] {2, 5, 6, 2}, 9, () -> Ingredient.fromTag(ItemTagWrappers.NON_METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0f, 0.0f),
-    ROBE("robe", DungeonsGearConfig.COMMON.ROBE_ARMOR_DURABILITY.get(), new int[] {2, 5, 6, 2}, 9, () -> Ingredient.fromTag(ItemTagWrappers.NON_METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0f, 0.0f),
-    PELT("pelt", DungeonsGearConfig.COMMON.PELT_ARMOR_DURABILITY.get(), new int[] {2, 5, 6, 2}, 9, () -> Ingredient.fromTag(ItemTagWrappers.NON_METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0f, 0.0f),
-    BONE("bone", DungeonsGearConfig.COMMON.BONE_ARMOR_DURABILITY.get(), new int[] {2, 5, 6, 2}, 9, () -> Ingredient.fromTag(ItemTagWrappers.NON_METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ITEM_ARMOR_EQUIP_TURTLE, 0.0f, 0.0f),
-    LIGHT_PLATE("light_plate", DungeonsGearConfig.COMMON.LIGHT_PLATE_ARMOR_DURABILITY.get(), new int[] {2, 5, 6, 2}, 9, () -> Ingredient.fromTag(ItemTagWrappers.METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0f, 0.0f),
-    MEDIUM_PLATE("medium_plate", DungeonsGearConfig.COMMON.MEDIUM_PLATE_ARMOR_DURABILITY.get(), new int[] {2, 5, 6, 2}, 9, () -> Ingredient.fromTag(ItemTagWrappers.METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.0f, 0.0f),
-    HEAVY_PLATE("heavy_plate", DungeonsGearConfig.COMMON.HEAVY_PLATE_ARMOR_DURABILITY.get(), new int[] {2, 5, 6, 2}, 9, () -> Ingredient.fromTag(ItemTagWrappers.METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.0f, 0.0f);
+    VEST(Constants.VEST_NAME, DungeonsGearConfig.VEST_ARMOR_DURABILITY.get(), new int[] {2, 5, 6, 2}, 9, () -> Ingredient.fromTag(ItemTagWrappers.NON_METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0f, 0.0f),
+    ROBE(Constants.ROBE_NAME, DungeonsGearConfig.ROBE_ARMOR_DURABILITY.get(), new int[] {2, 5, 6, 2}, 9, () -> Ingredient.fromTag(ItemTagWrappers.NON_METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0f, 0.0f),
+    PELT(Constants.PELT_NAME, DungeonsGearConfig.PELT_ARMOR_DURABILITY.get(), new int[] {2, 5, 6, 2}, 9, () -> Ingredient.fromTag(ItemTagWrappers.NON_METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0f, 0.0f),
+    BONE(Constants.BONE_NAME, DungeonsGearConfig.BONE_ARMOR_DURABILITY.get(), new int[] {2, 5, 6, 2}, 9, () -> Ingredient.fromTag(ItemTagWrappers.NON_METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ITEM_ARMOR_EQUIP_TURTLE, 0.0f, 0.0f),
+    LIGHT_PLATE(Constants.LIGHT_PLATE_NAME, DungeonsGearConfig.LIGHT_PLATE_ARMOR_DURABILITY.get(), new int[] {2, 5, 6, 2}, 9, () -> Ingredient.fromTag(ItemTagWrappers.METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0f, 0.0f),
+    MEDIUM_PLATE(Constants.MEDIUM_PLATE_NAME, DungeonsGearConfig.MEDIUM_PLATE_ARMOR_DURABILITY.get(), new int[] {2, 5, 6, 2}, 9, () -> Ingredient.fromTag(ItemTagWrappers.METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.0f, 0.0f),
+    HEAVY_PLATE(Constants.HEAVY_PLATE_NAME, DungeonsGearConfig.HEAVY_PLATE_ARMOR_DURABILITY.get(), new int[] {2, 5, 6, 2}, 9, () -> Ingredient.fromTag(ItemTagWrappers.METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.0f, 0.0f);
 
 
     // Armor order: boots, leggings, chestplate, helmet
     private static final int[] MAX_DAMAGE_ARRAY = new int[]{13, 15, 16, 11};
     private String name;
     private SoundEvent equipSound;
-    private int durability, enchantability;
+    private int durability;
+    private int enchantability;
     private final LazyValue<Ingredient> repairItem;
     private int[] damageReductionAmounts;
     private float toughness;
@@ -132,5 +133,15 @@ public enum ArmorMaterialList implements IArmorMaterial
     @Override
     public float getKnockbackResistance() {
         return this.knockbackResistance;
+    }
+
+    private static class Constants {
+        public static final String VEST_NAME = "vest";
+        public static final String ROBE_NAME = "robe";
+        public static final String PELT_NAME = "pelt";
+        public static final String BONE_NAME = "bone";
+        public static final String LIGHT_PLATE_NAME = "light_plate";
+        public static final String MEDIUM_PLATE_NAME = "medium_plate";
+        public static final String HEAVY_PLATE_NAME = "heavy_plate";
     }
 }

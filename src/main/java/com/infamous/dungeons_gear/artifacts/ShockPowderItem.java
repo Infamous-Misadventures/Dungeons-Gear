@@ -1,12 +1,9 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.items.ArtifactList;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -43,7 +40,6 @@ public class ShockPowderItem extends ArtifactItem {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.SHOCK_POWDER){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "Shock Powder is a reliable tool for those who wish to make a swift exit."));
             list.add(new StringTextComponent(TextFormatting.GREEN +
@@ -52,6 +48,5 @@ public class ShockPowderItem extends ArtifactItem {
                     "5 Seconds Duration"));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "15 Seconds Cooldown"));
-        }
     }
 }

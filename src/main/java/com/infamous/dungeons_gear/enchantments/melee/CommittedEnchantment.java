@@ -1,12 +1,15 @@
 package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
-import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
-import net.minecraft.enchantment.*;
+import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
+import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
+import net.minecraft.enchantment.DamageEnchantment;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -16,8 +19,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-import static com.infamous.dungeons_gear.items.WeaponList.GROWING_STAFF;
-import static com.infamous.dungeons_gear.items.WeaponList.TRUTHSEEKER;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class CommittedEnchantment extends DamageBoostEnchantment {
@@ -34,7 +35,7 @@ public class CommittedEnchantment extends DamageBoostEnchantment {
 
     @Override
     public boolean canApplyTogether(Enchantment enchantment) {
-        return DungeonsGearConfig.COMMON.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() ||
+        return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() ||
                 (!(enchantment instanceof DamageEnchantment) && !(enchantment instanceof DamageBoostEnchantment) && !(enchantment instanceof AOEDamageEnchantment));
     }
 
@@ -46,7 +47,8 @@ public class CommittedEnchantment extends DamageBoostEnchantment {
             LivingEntity victim = (LivingEntity) event.getSource().getTrueSource();
             if(!(victim.getHealth() < victim.getMaxHealth())) return;
             ItemStack mainhand = attacker.getHeldItemMainhand();
-            boolean uniqueWeaponFlag = mainhand.getItem() == TRUTHSEEKER || mainhand.getItem() == GROWING_STAFF;
+            boolean uniqueWeaponFlag = mainhand.getItem() == DeferredItemInit.TRUTHSEEKER.get()
+                    || mainhand.getItem() == DeferredItemInit.GROWING_STAFF.get();
             if((ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.COMMITTED)) || uniqueWeaponFlag){
                 int committedLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.COMMITTED, mainhand);
                 float victimRemainingHealth = victim.getHealth() / victim.getMaxHealth();

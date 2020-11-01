@@ -1,11 +1,8 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.items.ArtifactList;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.ActionResult;
@@ -55,13 +52,11 @@ public class GhostCloakItem extends ArtifactItem {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.GHOST_CLOAK){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "The souls trapped within the Ghost Cloak are protective, but they radiate a sense of melancholy."));
             list.add(new StringTextComponent(TextFormatting.GREEN +
                     "Briefly gain Ghost Form, allowing you to move through mobs and absorb some damage."));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "6 Seconds Cooldown"));
-        }
     }
 }

@@ -43,7 +43,7 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
     public AbstractDungeonsCrossbowItem(Properties builder, int defaultChargeTimeIn, boolean isUniqueIn) {
         super(builder
                 .group(DungeonsGear.RANGED_WEAPON_GROUP)
-                .maxDamage(DungeonsGearConfig.COMMON.CROSSBOW_DURABILITY.get())
+                .maxDamage(DungeonsGearConfig.CROSSBOW_DURABILITY.get())
         );
         this.defaultChargeTime = defaultChargeTimeIn;
         this.isUnique = isUniqueIn;
@@ -154,8 +154,8 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
     }
 
     public void fireCrossbowProjectiles(World world, LivingEntity livingEntity, Hand hand, ItemStack stack, float velocityIn, float inaccuracyIn) {
-        List<ItemStack> list = getChargedProjectiles(stack);
-        float[] randomSoundPitches = getRandomSoundPitches(livingEntity.getRNG());
+        List<ItemStack> list = AbstractDungeonsCrossbowItem.getChargedProjectiles(stack);
+        float[] randomSoundPitches = AbstractDungeonsCrossbowItem.getRandomSoundPitches(livingEntity.getRNG());
 
         for(int i = 0; i < list.size(); ++i) {
             ItemStack currentProjectile = list.get(i);
@@ -179,7 +179,7 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
             }
         }
 
-        fireProjectilesAfter(world, livingEntity, stack);
+        AbstractDungeonsCrossbowItem.fireProjectilesAfter(world, livingEntity, stack);
     }
 
     private AbstractArrowEntity createCrossbowArrow(World world, LivingEntity livingEntity, ItemStack stack, ItemStack stack1) {

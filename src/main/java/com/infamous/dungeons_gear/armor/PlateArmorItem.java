@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.PlateArmorModel;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.interfaces.IArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
@@ -26,8 +27,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
 import java.util.UUID;
-
-import static com.infamous.dungeons_gear.items.ArmorList.*;
 
 public class PlateArmorItem extends ArmorItem implements IArmor {
 
@@ -65,21 +64,20 @@ public class PlateArmorItem extends ArmorItem implements IArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(this.unique) return DungeonsGear.MODID + ":textures/models/armor/full_metal_armor.png";
-        return DungeonsGear.MODID + ":textures/models/armor/plate_armor.png";
+        if(stack.getItem() == DeferredItemInit.PLATE_ARMOR.get() || stack.getItem() == DeferredItemInit.PLATE_ARMOR_HELMET.get()){
+            return DungeonsGear.MODID + ":textures/models/armor/plate_armor.png";
+        }
+        else if(stack.getItem() == DeferredItemInit.FULL_METAL_ARMOR.get() || stack.getItem() == DeferredItemInit.FULL_METAL_ARMOR_HELMET.get()){
+            return DungeonsGear.MODID + ":textures/models/armor/full_metal_armor.png";
+        }
+        else return "";
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     @OnlyIn(Dist.CLIENT)
     public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack stack, EquipmentSlotType armorSlot, A _default) {
-        if(stack.getItem() == PLATE_ARMOR || stack.getItem() == PLATE_ARMOR_HELMET){
-            return (A) new PlateArmorModel<>(1.0F, slot, entityLiving);
-        }
-        else if(stack.getItem() == FULL_METAL_ARMOR || stack.getItem() == FULL_METAL_ARMOR_HELMET){
-            return (A) new PlateArmorModel<>(1.0F, slot, entityLiving);
-        }
-        return null;
+        return (A) new PlateArmorModel<>(1.0F, slot, entityLiving);
     }
 
     @Override

@@ -1,13 +1,10 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.items.ArtifactList;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
-import net.minecraft.item.Rarity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -63,7 +60,6 @@ public class TotemOfShieldingItem extends ArtifactItem {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.TOTEM_OF_SHIELDING){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "This totem radiates powerful energy that bursts forth as a protective shield around those near it."));
             list.add(new StringTextComponent(TextFormatting.GREEN +
@@ -72,6 +68,5 @@ public class TotemOfShieldingItem extends ArtifactItem {
                     "5 Seconds Duration"));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "20 Seconds Cooldown"));
-        }
     }
 }

@@ -1,9 +1,13 @@
 {
   "item.dungeons_gear.cursed_axe": "Cursed Axe",
+  "item.dungeons_gear.axe": "Axe",
   "item.dungeons_gear.firebrand": "Firebrand",
   "item.dungeons_gear.highland_axe": "Highland Axe",
   "item.dungeons_gear.whirlwind": "Whirlwind",
   "item.dungeons_gear.double_axe": "Double Axe",
+
+  "item.dungeons_gear.pickaxe": "Pickaxe",
+  "item.dungeons_gear.diamond_pickaxe": "Diamond Pickaxe",
 
   "item.dungeons_gear.fang_of_frost": "Fang Of Frost",
   "item.dungeons_gear.moon_dagger": "Moon Dagger",
@@ -34,6 +38,8 @@
   "item.dungeons_gear.whispering_spear": "Whispering Spear",
   "item.dungeons_gear.spear": "Spear",
 
+  "item.dungeons_gear.sword": "Sword",
+  "item.dungeons_gear.diamond_sword": "Diamond Sword",
   "item.dungeons_gear.broadsword": "Broadsword",
   "item.dungeons_gear.dancers_sword": "Dancer's Sword",
   "item.dungeons_gear.dark_katana": "Dark Katana",

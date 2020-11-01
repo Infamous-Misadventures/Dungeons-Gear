@@ -4,6 +4,7 @@ package com.infamous.dungeons_gear.melee;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.combat.CombatEventHandler;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.interfaces.IOffhandAttack;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.items.WeaponList;
@@ -32,15 +33,18 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import java.util.List;
 
 public class SickleItem extends SwordItem implements IOffhandAttack, IMeleeWeapon {
+
+    private final boolean unique;
     private final float attackDamage;
     private Multimap<Attribute, AttributeModifier> attributeModifierMultimap;
-    public SickleItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
+    public SickleItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties, boolean isUnique) {
         super(tier, attackDamageIn, attackSpeedIn, properties);
         this.attackDamage = (float)attackDamageIn + tier.getAttackDamage();
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
         builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double)this.attackDamage, AttributeModifier.Operation.ADDITION));
         builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)attackSpeedIn, AttributeModifier.Operation.ADDITION));
         this.attributeModifierMultimap = builder.build();
+        this.unique = isUnique;
     }
 
     public boolean canPlayerBreakBlockWhileHolding(BlockState blockState, World world, BlockPos blockPos, PlayerEntity playerEntity) {
@@ -84,9 +88,7 @@ public class SickleItem extends SwordItem implements IOffhandAttack, IMeleeWeapo
 
     public Rarity getRarity(ItemStack itemStack){
 
-        if(itemStack.getItem() == WeaponList.NIGHTMARES_BITE
-                || itemStack.getItem() == WeaponList.THE_LAST_LAUGH
-        ){
+        if(this.unique){
             return Rarity.RARE;
         }
         return Rarity.UNCOMMON;
@@ -97,17 +99,17 @@ public class SickleItem extends SwordItem implements IOffhandAttack, IMeleeWeapo
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == WeaponList.NIGHTMARES_BITE){
+        if(stack.getItem() == DeferredItemInit.NIGHTMARES_BITE.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The blade of Nightmare's Bite drips with deadly venom, still potent after all these years."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Spawns Poison Clouds (Poison Cloud I)"));
         }
-        if(stack.getItem() == WeaponList.THE_LAST_LAUGH){
+        if(stack.getItem() == DeferredItemInit.THE_LAST_LAUGH.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Strange, distorted laughter seems to whisper from this menacing looking sickle."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Mobs Drop More Valuables (Prospector I)"));
         }
-        if(stack.getItem() == WeaponList.SICKLE){
+        if(stack.getItem() == DeferredItemInit.SICKLE.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A ceremonial weapon that hails from the same region as the Desert Temple."));
 
         }

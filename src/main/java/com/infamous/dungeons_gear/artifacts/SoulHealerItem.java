@@ -1,12 +1,9 @@
 package com.infamous.dungeons_gear.artifacts;
 
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
-import com.infamous.dungeons_gear.items.ArtifactList;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -57,7 +54,6 @@ public class SoulHealerItem extends ArtifactItem implements ISoulGatherer {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.SOUL_HEALER){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "The Soul Healer amulet is cold to the touch and trembles with the power of souls. It is a common sight among the Illagers of the Woodland Mansions."));
             list.add(new StringTextComponent(TextFormatting.GREEN +
@@ -66,7 +62,6 @@ public class SoulHealerItem extends ArtifactItem implements ISoulGatherer {
                     "+1 XP Gathering"));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "1 Second Cooldown"));
-        }
     }
 
     @Override

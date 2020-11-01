@@ -1,10 +1,11 @@
 package com.infamous.dungeons_gear.enchantments.melee_ranged;
 
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
-import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
-import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -21,9 +22,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-import static com.infamous.dungeons_gear.items.RangedWeaponList.IMPLODING_CROSSBOW;
-import static com.infamous.dungeons_gear.items.RangedWeaponList.VOIDCALLER;
-import static com.infamous.dungeons_gear.items.WeaponList.HAMMER_OF_GRAVITY;
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class GravityEnchantment extends Enchantment {
@@ -42,7 +40,7 @@ public class GravityEnchantment extends Enchantment {
     public void onEntityDamaged(LivingEntity user, Entity target, int level) {
         if(!(target instanceof LivingEntity)) return;
         ItemStack mainhand = user.getHeldItemMainhand();
-        boolean uniqueWeaponFlag = mainhand.getItem() == HAMMER_OF_GRAVITY || mainhand.getItem() == VOIDCALLER || mainhand.getItem() == IMPLODING_CROSSBOW;
+        boolean uniqueWeaponFlag = mainhand.getItem() == DeferredItemInit.HAMMER_OF_GRAVITY.get();
         if(uniqueWeaponFlag) level++;
         AreaOfEffectHelper.pullInNearbyEntities(user, (LivingEntity)target, level * 3);
     }
@@ -55,7 +53,7 @@ public class GravityEnchantment extends Enchantment {
         LivingEntity attacker = (LivingEntity)event.getSource().getTrueSource();
         LivingEntity victim = event.getEntityLiving();
         ItemStack mainhand = attacker.getHeldItemMainhand();
-        if((mainhand.getItem() == HAMMER_OF_GRAVITY
+        if((mainhand.getItem() == DeferredItemInit.HAMMER_OF_GRAVITY.get()
                 && !ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.GRAVITY))){
             AreaOfEffectHelper.pullInNearbyEntities(attacker, victim, 3);
         }

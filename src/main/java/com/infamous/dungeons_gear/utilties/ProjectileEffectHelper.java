@@ -1,6 +1,7 @@
 package com.infamous.dungeons_gear.utilties;
 
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.ranged.crossbows.AbstractDungeonsCrossbowItem;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -25,8 +26,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import static com.infamous.dungeons_gear.items.RangedWeaponList.FERAL_SOUL_CROSSBOW;
-import static com.infamous.dungeons_gear.items.RangedWeaponList.SOUL_HUNTER_CROSSBOW;
 import static net.minecraft.entity.Entity.horizontalMag;
 
 public class ProjectileEffectHelper {
@@ -170,7 +169,8 @@ public class ProjectileEffectHelper {
 
     public static boolean soulsCriticalBoost(PlayerEntity attacker, ItemStack mainhand){
         int numSouls = Math.min(attacker.experienceTotal, 50);
-        boolean uniqueWeaponFlag = mainhand.getItem() == FERAL_SOUL_CROSSBOW || mainhand.getItem() == SOUL_HUNTER_CROSSBOW;
+        boolean uniqueWeaponFlag = mainhand.getItem() == DeferredItemInit.FERAL_SOUL_CROSSBOW.get()
+                || mainhand.getItem() == DeferredItemInit.SOUL_HUNTER_CROSSBOW.get();
         if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.ENIGMA_RESONATOR)){
             int enigmaResonatorLevel = EnchantmentHelper.getEnchantmentLevel(MeleeRangedEnchantmentList.ENIGMA_RESONATOR, mainhand);
             float soulsCriticalBoostChanceCap;

@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.enchantments.melee_ranged;
 import com.infamous.dungeons_gear.capabilities.combo.ComboProvider;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -61,7 +62,9 @@ public class PoisonCloudEnchantment extends Enchantment {
         LivingEntity attacker = (LivingEntity)event.getSource().getTrueSource();
         LivingEntity victim = event.getEntityLiving();
         ItemStack mainhand = attacker.getHeldItemMainhand();
-        if((mainhand.getItem() == VENOM_GLAIVE || mainhand.getItem() == NIGHTMARES_BITE || mainhand.getItem() == VINE_WHIP)){
+        if((mainhand.getItem() == DeferredItemInit.VENOM_GLAIVE.get()
+                || mainhand.getItem() == DeferredItemInit.NIGHTMARES_BITE.get()
+                || mainhand.getItem() == DeferredItemInit.VINE_WHIP.get())){
             float chance = attacker.getRNG().nextFloat();
             if(chance <=  0.3F){
                 checkForPlayer(attacker);

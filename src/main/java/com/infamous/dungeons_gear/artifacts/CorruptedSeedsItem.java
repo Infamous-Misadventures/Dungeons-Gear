@@ -1,12 +1,9 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.items.ArtifactList;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -41,7 +38,6 @@ public class CorruptedSeedsItem extends ArtifactItem {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.CORRUPTED_SEEDS){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "A pouch of poisonous, corrupted seeds which grow into spiky grapple vines, entangling and slowly draining the life from its victims"));
             list.add(new StringTextComponent(TextFormatting.GREEN +
@@ -54,6 +50,5 @@ public class CorruptedSeedsItem extends ArtifactItem {
                     "7 Seconds Duration"));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "20 Seconds Cooldown"));
-        }
     }
 }

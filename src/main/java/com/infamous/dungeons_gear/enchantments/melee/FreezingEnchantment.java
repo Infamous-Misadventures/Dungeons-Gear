@@ -2,6 +2,7 @@ package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
@@ -37,16 +38,16 @@ public class FreezingEnchantment extends Enchantment {
 
     @Override
     public boolean canApplyTogether(Enchantment enchantment) {
-        return DungeonsGearConfig.COMMON.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || enchantment != Enchantments.FIRE_ASPECT;
+        return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || enchantment != Enchantments.FIRE_ASPECT;
     }
 
     @Override
     public void onEntityDamaged(LivingEntity user, Entity target, int level) {
         if(!(target instanceof LivingEntity)) return;
         ItemStack mainhand = user.getHeldItemMainhand();
-        boolean uniqueWeaponFlag = mainhand.getItem() == FANG_OF_FROST
-                || mainhand.getItem() == FROST_SCYTHE
-                || mainhand.getItem() == FREEZING_FOIL;
+        boolean uniqueWeaponFlag = mainhand.getItem() == DeferredItemInit.FANG_OF_FROST.get()
+                || mainhand.getItem() == DeferredItemInit.FROST_SCYTHE.get()
+                || mainhand.getItem() == DeferredItemInit.FREEZING_FOIL.get();
         if(uniqueWeaponFlag) level++;
         EffectInstance freezing = new EffectInstance(Effects.SLOWNESS, 60, level-1);
         EffectInstance miningFatigue = new EffectInstance(Effects.MINING_FATIGUE, 60, level-1);
@@ -63,9 +64,9 @@ public class FreezingEnchantment extends Enchantment {
         LivingEntity attacker = (LivingEntity)event.getSource().getTrueSource();
         LivingEntity victim = event.getEntityLiving();
         ItemStack mainhand = attacker.getHeldItemMainhand();
-        boolean uniqueWeaponFlag = mainhand.getItem() == FANG_OF_FROST
-                || mainhand.getItem() == FROST_SCYTHE
-                || mainhand.getItem() == FREEZING_FOIL;
+        boolean uniqueWeaponFlag = mainhand.getItem() == DeferredItemInit.FANG_OF_FROST.get()
+                || mainhand.getItem() == DeferredItemInit.FROST_SCYTHE.get()
+                || mainhand.getItem() == DeferredItemInit.FREEZING_FOIL.get();
         if(uniqueWeaponFlag
                 && !ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.FREEZING)){
             EffectInstance freezing = new EffectInstance(Effects.SLOWNESS, 60);

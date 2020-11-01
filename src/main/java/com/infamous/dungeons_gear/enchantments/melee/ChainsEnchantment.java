@@ -2,6 +2,7 @@ package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
@@ -14,8 +15,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-import static com.infamous.dungeons_gear.items.WeaponList.FLAIL;
-import static com.infamous.dungeons_gear.items.WeaponList.JAILORS_SCYTHE;
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class ChainsEnchantment extends Enchantment {
@@ -46,8 +45,8 @@ public class ChainsEnchantment extends Enchantment {
         LivingEntity attacker = (LivingEntity)event.getSource().getTrueSource();
         LivingEntity victim = event.getEntityLiving();
         ItemStack mainhand = attacker.getHeldItemMainhand();
-        if((mainhand.getItem() == JAILORS_SCYTHE
-                || attacker.getHeldItemMainhand().getItem() == FLAIL)){
+        if((mainhand.getItem() == DeferredItemInit.JAILORS_SCYTHE.get()
+                || attacker.getHeldItemMainhand().getItem() == DeferredItemInit.FLAIL.get())){
             float chance = attacker.getRNG().nextFloat();
             if(chance <=  0.3F) {
                 AreaOfEffectHelper.chainNearbyEntities(attacker, victim, 1.5F, 1);

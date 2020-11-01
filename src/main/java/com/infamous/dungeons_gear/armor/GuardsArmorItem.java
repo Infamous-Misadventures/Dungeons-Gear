@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.armor;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.CuriousArmorModel;
 import com.infamous.dungeons_gear.armor.models.GuardsArmorModel;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.interfaces.IArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
@@ -22,8 +23,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
 
-import static com.infamous.dungeons_gear.items.ArmorList.*;
-
 public class GuardsArmorItem extends ArmorItem implements IArmor {
     private final boolean unique;
 
@@ -35,18 +34,23 @@ public class GuardsArmorItem extends ArmorItem implements IArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(this.unique) return DungeonsGear.MODID + ":textures/models/armor/curious_armor.png";
-        return DungeonsGear.MODID + ":textures/models/armor/guards_armor.png";
+        if(stack.getItem() == DeferredItemInit.GUARDS_ARMOR.get() || stack.getItem() == DeferredItemInit.GUARDS_ARMOR_HELMET.get()){
+            return DungeonsGear.MODID + ":textures/models/armor/guards_armor.png";
+        }
+        else if(stack.getItem() == DeferredItemInit.CURIOUS_ARMOR.get() || stack.getItem() == DeferredItemInit.CURIOUS_ARMOR_HELMET.get()){
+            return DungeonsGear.MODID + ":textures/models/armor/curious_armor.png";
+        }
+        else return "";
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     @OnlyIn(Dist.CLIENT)
     public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack stack, EquipmentSlotType armorSlot, A _default) {
-        if(stack.getItem() == GUARDS_ARMOR || stack.getItem() == GUARDS_ARMOR_HELMET){
+        if(stack.getItem() == DeferredItemInit.GUARDS_ARMOR.get() || stack.getItem() == DeferredItemInit.GUARDS_ARMOR_HELMET.get()){
             return (A) new GuardsArmorModel<>(1.0F, slot, entityLiving);
         }
-        if(stack.getItem() == CURIOUS_ARMOR || stack.getItem() == CURIOUS_ARMOR_HELMET){
+        if(stack.getItem() == DeferredItemInit.CURIOUS_ARMOR.get() || stack.getItem() == DeferredItemInit.CURIOUS_ARMOR_HELMET.get()){
             return (A) new CuriousArmorModel<>(1.0F, slot, entityLiving);
         }
         return null;

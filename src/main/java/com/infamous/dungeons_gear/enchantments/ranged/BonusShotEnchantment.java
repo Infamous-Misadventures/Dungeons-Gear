@@ -1,6 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
@@ -37,7 +38,7 @@ public class BonusShotEnchantment extends Enchantment {
         ItemStack stack = event.getItemStack();
         if(stack.getItem() instanceof CrossbowItem){
             if(CrossbowItem.isCharged(stack)){
-                boolean uniqueWeaponFlag = stack.getItem() == BUTTERFLY_CROSSBOW;
+                boolean uniqueWeaponFlag = stack.getItem() == DeferredItemInit.BUTTERFLY_CROSSBOW.get();
                 if(ModEnchantmentHelper.hasEnchantment(stack, RangedEnchantmentList.BONUS_SHOT) || uniqueWeaponFlag){
                     int bonusShotLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.BONUS_SHOT, stack);
                     float damageMultiplier;
@@ -56,7 +57,8 @@ public class BonusShotEnchantment extends Enchantment {
         LivingEntity livingEntity = event.getEntityLiving();
         ItemStack stack = event.getBow();
         int charge = event.getCharge();
-        boolean uniqueWeaponFlag = stack.getItem() == TWIN_BOW || stack.getItem() == HAUNTED_BOW;
+        boolean uniqueWeaponFlag = stack.getItem() == DeferredItemInit.TWIN_BOW.get()
+                || stack.getItem() == DeferredItemInit.HAUNTED_BOW.get();
         if(ModEnchantmentHelper.hasEnchantment(stack, RangedEnchantmentList.BONUS_SHOT) || uniqueWeaponFlag){
             int bonusShotLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.BONUS_SHOT, stack);
             float damageMultiplier;

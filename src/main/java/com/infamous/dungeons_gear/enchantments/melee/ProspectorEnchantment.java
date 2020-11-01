@@ -1,8 +1,9 @@
 package com.infamous.dungeons_gear.enchantments.melee;
 
-import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -18,7 +19,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-import static com.infamous.dungeons_gear.items.WeaponList.THE_LAST_LAUGH;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class ProspectorEnchantment extends Enchantment{
@@ -39,7 +39,7 @@ public class ProspectorEnchantment extends Enchantment{
             LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
             ItemStack mainhand = attacker.getHeldItemMainhand();
             LivingEntity victim = event.getEntityLiving();
-            boolean uniqueWeaponFlag = mainhand.getItem() == THE_LAST_LAUGH;
+            boolean uniqueWeaponFlag = mainhand.getItem() == DeferredItemInit.THE_LAST_LAUGH.get() || mainhand.getItem() == DeferredItemInit.DIAMOND_PICKAXE.get();
             if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.PROSPECTOR)){
                 int prospectorLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.PROSPECTOR, mainhand);
                 float prospectorChance;

@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.ranged.crossbows;
 
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -74,19 +75,19 @@ public class DualCrossbowItem extends AbstractDungeonsCrossbowItem {
 
     @Override
     public boolean hasGrowingBuiltIn(ItemStack stack) {
-        return stack.getItem() == BABY_CROSSBOW;
+        return stack.getItem() == DeferredItemInit.BABY_CROSSBOW.get();
     }
 
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
 
-        if (stack.getItem() == BABY_CROSSBOW) {
+        if (stack.getItem() == DeferredItemInit.BABY_CROSSBOW.get()) {
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "While some discuss the cute Baby Crossbow, this deadly weapon grows into a heavy hitter."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Arrows Grow Size (Growing I)"));
         }
-        if(stack.getItem() == DUAL_CROSSBOW){
+        if(stack.getItem() == DeferredItemInit.DUAL_CROSSBOW.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Dual crossbows are the perfect choice for a warrior with quick reflexes in a fast-paced battle."));
         }
         list.add(new StringTextComponent(TextFormatting.GREEN + "Double Projectiles"));

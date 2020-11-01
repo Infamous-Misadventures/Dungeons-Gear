@@ -2,6 +2,7 @@ package com.infamous.dungeons_gear.armor;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.PhantomArmorModel;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.interfaces.IArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
@@ -21,8 +22,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
 
-import static com.infamous.dungeons_gear.items.ArmorList.*;
-
 public class PhantomArmorItem extends ArmorItem implements IArmor {
     private final boolean unique;
 
@@ -34,21 +33,20 @@ public class PhantomArmorItem extends ArmorItem implements IArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(this.unique) return DungeonsGear.MODID + ":textures/models/armor/frost_bite.png";
-        return DungeonsGear.MODID + ":textures/models/armor/phantom_armor.png";
+        if(stack.getItem() == DeferredItemInit.PHANTOM_ARMOR.get() || stack.getItem() == DeferredItemInit.PHANTOM_ARMOR_HELMET.get()){
+            return DungeonsGear.MODID + ":textures/models/armor/phantom_armor.png";
+        }
+        else if(stack.getItem() == DeferredItemInit.FROST_BITE.get() || stack.getItem() == DeferredItemInit.FROST_BITE_HELMET.get()){
+            return DungeonsGear.MODID + ":textures/models/armor/frost_bite.png";
+        }
+        else return "";
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     @OnlyIn(Dist.CLIENT)
     public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack stack, EquipmentSlotType armorSlot, A _default) {
-        if(stack.getItem() == PHANTOM_ARMOR || stack.getItem() == PHANTOM_ARMOR_HELMET) {
-            return (A) new PhantomArmorModel<>(1.0F, slot, entityLiving, this.unique);
-        }
-        else if(stack.getItem() == FROST_BITE || stack.getItem() == FROST_BITE_HELMET) {
-            return (A) new PhantomArmorModel<>(1.0F, slot, entityLiving, this.unique);
-        }
-        return null;
+        return (A) new PhantomArmorModel<>(1.0F, slot, entityLiving, this.unique);
     }
 
     @Override

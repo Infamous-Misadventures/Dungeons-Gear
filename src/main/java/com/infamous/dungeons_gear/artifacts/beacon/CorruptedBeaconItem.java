@@ -1,6 +1,5 @@
 package com.infamous.dungeons_gear.artifacts.beacon;
 
-import com.infamous.dungeons_gear.items.ArtifactList;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
@@ -29,13 +28,11 @@ public class CorruptedBeaconItem extends AbstractBeaconItem {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.CORRUPTED_BEACON){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "The Corrupted Beacon holds immense power within. It waits for the moment to unleash its wrath."));
             list.add(new StringTextComponent(TextFormatting.GREEN +
                     "Fires a high-powered beam that continuously damages mobs."));
             list.add(new StringTextComponent(TextFormatting.LIGHT_PURPLE +
                     "+1 XP Gathering"));
-        }
     }
 }

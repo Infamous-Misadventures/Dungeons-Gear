@@ -2,6 +2,7 @@ package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
@@ -35,7 +36,7 @@ public class CriticalHitEnchantment extends DamageBoostEnchantment {
 
     @Override
     public boolean canApplyTogether(Enchantment enchantment) {
-        return DungeonsGearConfig.COMMON.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() ||
+        return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() ||
                 (!(enchantment instanceof DamageEnchantment) && !(enchantment instanceof DamageBoostEnchantment) && !(enchantment instanceof AOEDamageEnchantment));
     }
 
@@ -44,7 +45,9 @@ public class CriticalHitEnchantment extends DamageBoostEnchantment {
         if(event.getPlayer() != null && !event.isVanillaCritical()){
             PlayerEntity attacker = (PlayerEntity) event.getPlayer();
             ItemStack mainhand = attacker.getHeldItemMainhand();
-            boolean uniqueWeaponFlag = mainhand.getItem() == HAWKBRAND || mainhand.getItem() == MASTERS_KATANA || mainhand.getItem() == SINISTER_SWORD;
+            boolean uniqueWeaponFlag = mainhand.getItem() == DeferredItemInit.HAWKBRAND.get()
+                    || mainhand.getItem() == DeferredItemInit.MASTERS_KATANA.get()
+                    || mainhand.getItem() == DeferredItemInit.SINISTER_SWORD.get();
             if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.CRITICAL_HIT)){
                 int criticalHitLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.CRITICAL_HIT, mainhand);
                 float criticalHitChance;

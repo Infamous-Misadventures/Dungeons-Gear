@@ -19,7 +19,7 @@ public abstract class ArtifactItem extends Item {
         super(properties
                 .maxStackSize(1)
                 .group(DungeonsGear.ARTIFACT_GROUP)
-                .maxDamage(DungeonsGearConfig.COMMON.ARTIFACT_DURABILITY.get())
+                .maxDamage(DungeonsGearConfig.ARTIFACT_DURABILITY.get())
         );
     }
 

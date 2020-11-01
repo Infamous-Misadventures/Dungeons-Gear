@@ -4,6 +4,7 @@ import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.LazyValue;
+import net.minecraftforge.common.Tags;
 
 import java.util.function.Supplier;
 
@@ -60,11 +61,13 @@ public enum ToolMaterialList implements IItemTier {
    });
      */
 
-    METAL(0.0F, 6.0f, DungeonsGearConfig.COMMON.MELEE_WEAPON_DURABILITY.get(), 2, 14, () -> Ingredient.fromTag(ItemTagWrappers.MELEE_WEAPON_REPAIR_ITEMS));
-
+    METAL(0.0F, 6.0f, DungeonsGearConfig.METAL_MELEE_WEAPON_DURABILITY.get(), 2, 14, () -> Ingredient.fromTag(ItemTagWrappers.METAL_MELEE_WEAPON_REPAIR_ITEMS)),
+    DIAMOND(1.0F, 8.0f, 1561, 3, 10, () -> Ingredient.fromTag(Tags.Items.GEMS_DIAMOND));
 
     private float attackDamage, efficiency;
-    private int durability, harvestLevel, enchantability;
+    private int durability;
+    private int harvestLevel;
+    private int enchantability;
     private LazyValue<Ingredient> repairMaterial;
 
     private ToolMaterialList(float attackDamage, float efficiency, int durability, int harvestLevel, int enchantability, Supplier<Ingredient> repairMaterial)

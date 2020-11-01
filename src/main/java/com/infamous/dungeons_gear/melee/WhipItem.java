@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.melee;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.init.AttributeRegistry;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.interfaces.IExtendedAttackReach;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.items.WeaponList;
@@ -23,13 +24,15 @@ import java.util.List;
 import java.util.UUID;
 
 public class WhipItem extends TieredItem implements IMeleeWeapon {
+
+    private final boolean unique;
     private final float attackDamage;
     private final float attackSpeed;
     private final float attackReach;
     private Multimap<Attribute, AttributeModifier> attributeModifierMultimap;
     private static final UUID ATTACK_REACH_MODIFIER = UUID.fromString("63d316c1-7d6d-41be-81c3-41fc1a216c27");
 
-    public WhipItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, float attackReachIn, Properties properties) {
+    public WhipItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, float attackReachIn, Properties properties, boolean isUnique) {
         super(tier, properties);
         this.attackDamage = (float)attackDamageIn + tier.getAttackDamage();
         this.attackSpeed = attackSpeedIn;
@@ -39,6 +42,7 @@ public class WhipItem extends TieredItem implements IMeleeWeapon {
         builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double)this.attackDamage, AttributeModifier.Operation.ADDITION));
         builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)this.attackSpeed, AttributeModifier.Operation.ADDITION));
         this.attributeModifierMultimap = builder.build();
+        this.unique = isUnique;
     }
 
     public static void setAttributeModifierMultimap(WhipItem glaiveItem){
@@ -61,8 +65,7 @@ public class WhipItem extends TieredItem implements IMeleeWeapon {
 
     public Rarity getRarity(ItemStack itemStack){
 
-        if(itemStack.getItem() == WeaponList.VINE_WHIP
-        ){
+        if(this.unique){
             return Rarity.RARE;
         }
         return Rarity.UNCOMMON;
@@ -73,12 +76,12 @@ public class WhipItem extends TieredItem implements IMeleeWeapon {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == WeaponList.WHIP){
+        if(stack.getItem() == DeferredItemInit.WHIP.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A whip made of sturdy rope, very dangerous in the right hands."));
 
         }
 
-        if(stack.getItem() == WeaponList.VINE_WHIP){
+        if(stack.getItem() == DeferredItemInit.VINE_WHIP.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A sturdy whip made from thick, thorn-laden vines capable of poisoning anything it touches. Be careful not to scratch yourself!"));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Spawns Poison Clouds (Poison Cloud I)"));

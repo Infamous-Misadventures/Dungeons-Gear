@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.ThiefArmorModel;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.interfaces.IArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
@@ -26,8 +27,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
 import java.util.UUID;
-
-import static com.infamous.dungeons_gear.items.ArmorList.*;
 
 public class ThiefArmorItem extends ArmorItem implements IArmor {
 
@@ -63,21 +62,20 @@ public class ThiefArmorItem extends ArmorItem implements IArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(this.unique) return DungeonsGear.MODID + ":textures/models/armor/spider_armor.png";
-        return DungeonsGear.MODID + ":textures/models/armor/thief_armor.png";
+        if(stack.getItem() == DeferredItemInit.THIEF_ARMOR.get() || stack.getItem() == DeferredItemInit.THIEF_ARMOR_HOOD.get()){
+            return DungeonsGear.MODID + ":textures/models/armor/thief_armor.png";
+        }
+        else if(stack.getItem() == DeferredItemInit.SPIDER_ARMOR.get() || stack.getItem() == DeferredItemInit.SPIDER_ARMOR_HOOD.get()){
+            return DungeonsGear.MODID + ":textures/models/armor/spider_armor.png";
+        }
+        else return "";
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     @OnlyIn(Dist.CLIENT)
     public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack stack, EquipmentSlotType armorSlot, A _default) {
-        if(stack.getItem() == THIEF_ARMOR || stack.getItem() == THIEF_ARMOR_HOOD){
-            return (A) new ThiefArmorModel<>(1.0F, slot, entityLiving, false);
-        }
-        else if(stack.getItem() == SPIDER_ARMOR || stack.getItem() == SPIDER_ARMOR_HOOD){
-            return (A) new ThiefArmorModel<>(1.0F, slot, entityLiving, true);
-        }
-        return null;
+        return (A) new ThiefArmorModel<>(1.0F, slot, entityLiving, this.unique);
     }
 
     @Override

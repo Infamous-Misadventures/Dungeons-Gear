@@ -1,15 +1,11 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.capabilities.combo.ComboProvider;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
-import com.infamous.dungeons_gear.items.ArtifactList;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -55,7 +51,6 @@ public class TormentQuiver extends ArtifactItem implements ISoulGatherer {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.TORMENT_QUIVER){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "The Torment Quiver radiates powerful energy drawn from the eternal source of the Undead."));
             list.add(new StringTextComponent(TextFormatting.GREEN +
@@ -66,7 +61,6 @@ public class TormentQuiver extends ArtifactItem implements ISoulGatherer {
                     "Requires 10 XP"));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "1 Second Cooldown"));
-        }
     }
 
     @Override

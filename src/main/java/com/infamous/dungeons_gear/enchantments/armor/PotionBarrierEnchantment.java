@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.items.ArmorList;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import net.minecraft.enchantment.Enchantment;
@@ -42,8 +42,8 @@ public class PotionBarrierEnchantment extends Enchantment {
             List<EffectInstance> potionEffects = PotionUtils.getEffectsFromStack(event.getItem());
             if(potionEffects.isEmpty()) return;
             if(potionEffects.get(0).getPotion() == Effects.INSTANT_HEALTH){
-                boolean uniqueArmorFlag = player.getItemStackFromSlot(EquipmentSlotType.CHEST).getItem() == ArmorList.STALWART_ARMOR
-                        || player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() == ArmorList.STALWART_ARMOR_HELMET;
+                boolean uniqueArmorFlag = player.getItemStackFromSlot(EquipmentSlotType.CHEST).getItem() == DeferredItemInit.STALWART_ARMOR.get()
+                        || player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() == DeferredItemInit.STALWART_ARMOR_HELMET.get();
                 if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.POTION_BARRIER) || uniqueArmorFlag){
                     int potionBarrierLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.POTION_BARRIER, player);
                     if(uniqueArmorFlag) potionBarrierLevel++;

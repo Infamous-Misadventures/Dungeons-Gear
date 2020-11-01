@@ -3,10 +3,10 @@ package com.infamous.dungeons_gear.melee;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.combat.CombatEventHandler;
-import com.infamous.dungeons_gear.interfaces.IOffhandAttack;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
+import com.infamous.dungeons_gear.interfaces.IOffhandAttack;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
-import com.infamous.dungeons_gear.items.WeaponList;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
@@ -30,19 +30,21 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-import static com.infamous.dungeons_gear.items.WeaponList.SOUL_FIST;
 
 public class GauntletItem extends TieredItem implements IOffhandAttack, IVanishable, IMeleeWeapon, ISoulGatherer {
+
+    private final boolean unique;
     private final float attackDamage;
     private final Multimap<Attribute, AttributeModifier> attributeModifierMultimap;
 
-    public GauntletItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Item.Properties properties) {
+    public GauntletItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Item.Properties properties, boolean isUnique) {
         super(tier, properties);
         this.attackDamage = (float)attackDamageIn + tier.getAttackDamage();
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
         builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double)this.attackDamage, AttributeModifier.Operation.ADDITION));
         builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)attackSpeedIn, AttributeModifier.Operation.ADDITION));
         this.attributeModifierMultimap = builder.build();
+        this.unique = isUnique;
     }
 
     // Only used by MobEntity class for determining sword changes
@@ -104,10 +106,7 @@ public class GauntletItem extends TieredItem implements IOffhandAttack, IVanisha
 
     public Rarity getRarity(ItemStack itemStack){
 
-        if(itemStack.getItem() == WeaponList.FIGHTERS_BINDING
-                || itemStack.getItem() == WeaponList.MAULER
-                || itemStack.getItem() == SOUL_FIST
-        ){
+        if(this.unique){
             return Rarity.RARE;
         }
         return Rarity.UNCOMMON;
@@ -118,24 +117,24 @@ public class GauntletItem extends TieredItem implements IOffhandAttack, IVanisha
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == WeaponList.GAUNTLET){
+        if(stack.getItem() == DeferredItemInit.GAUNTLET.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Gauntlets call back to an ancient style of hand to hand combat."));
 
             //list.add(new StringTextComponent(TextFormatting.GREEN + "Relentless Combo"));
         }
-        if(stack.getItem() == WeaponList.FIGHTERS_BINDING){
+        if(stack.getItem() == DeferredItemInit.FIGHTERS_BINDING.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Made in the wilds beyond the mountains, these gauntlets have been worn by warriors for centuries."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Boosts Attack Speed"));
             //list.add(new StringTextComponent(TextFormatting.GREEN + "Turbo punches"));
         }
-        if(stack.getItem() == WeaponList.MAULER){
+        if(stack.getItem() == DeferredItemInit.MAULER.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "This claw-like weapon, wielded by ancient Illager soldiers, is savage in battle."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Increases Attack Speed (Rampaging I)"));
             //list.add(new StringTextComponent(TextFormatting.GREEN + "Relentless Combo"));
         }
-        if(stack.getItem() == SOUL_FIST){
+        if(stack.getItem() == DeferredItemInit.SOUL_FIST.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Soul Fists are gauntlets clad with great gemstones, each containing a powerful soul."));
 
             list.add(new StringTextComponent(TextFormatting.LIGHT_PURPLE + "Souls Critical Boost (Enigma Resonator I)"));
@@ -159,7 +158,7 @@ public class GauntletItem extends TieredItem implements IOffhandAttack, IVanisha
 
     @Override
     public int getGatherAmount(ItemStack stack) {
-        if(stack.getItem() == SOUL_FIST){
+        if(stack.getItem() == DeferredItemInit.SOUL_FIST.get()){
             return 2;
         }
         else return 0;

@@ -20,7 +20,7 @@ mixin {
     add sourceSets.main, "dungeons_gear.refmap.json"
 }
 
-version = '2.0.11'
+version = '2.0.12'
 group = 'com.infamous.dungeons_gear' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'dungeons_gear-1.16.2+1.16.3'
 

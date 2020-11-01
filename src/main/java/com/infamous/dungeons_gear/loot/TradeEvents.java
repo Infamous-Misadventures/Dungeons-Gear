@@ -1,10 +1,8 @@
 package com.infamous.dungeons_gear.loot;
 
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.items.ArtifactList;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
@@ -14,13 +12,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.loot.LootTable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 import net.minecraftforge.common.BasicTrade;
-import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.event.village.WandererTradesEvent;
@@ -30,36 +26,31 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
 
-import static com.infamous.dungeons_gear.items.ArtifactList.*;
-import static com.infamous.dungeons_gear.items.WeaponList.*;
-import static com.infamous.dungeons_gear.items.ArmorList.*;
-import static com.infamous.dungeons_gear.items.RangedWeaponList.*;
-
 
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class TradeEvents {
 
     @SubscribeEvent
     public static void onWandererTrades(WandererTradesEvent event){
-        if(!DungeonsGearConfig.COMMON.ENABLE_VILLAGER_TRADES.get()) return;
+        if(!DungeonsGearConfig.ENABLE_VILLAGER_TRADES.get()) return;
 
         List<VillagerTrades.ITrade> genericTrades = event.getGenericTrades();
         List<VillagerTrades.ITrade> rareTrades = event.getRareTrades();
 
         moveTradesToDifferentGroup(rareTrades, genericTrades);
 
-        for(Item item : ArtifactList.artifactMap.keySet()){
-            ResourceLocation resourceLocation = ArtifactList.artifactMap.get(item);
+        for(Item item : DeferredItemInit.artifactMap.keySet()){
+            ResourceLocation resourceLocation = DeferredItemInit.artifactMap.get(item);
             Item artifact = ForgeRegistries.ITEMS.getValue(resourceLocation);
             ItemStack artifactStack = new ItemStack(artifact);
-            BasicTrade trade = new BasicTrade(DungeonsGearConfig.COMMON.ARTIFACT_VALUE.get(), artifactStack, 3, 30);
+            BasicTrade trade = new BasicTrade(DungeonsGearConfig.ARTIFACT_VALUE.get(), artifactStack, 3, 30);
             rareTrades.add(trade);
         }
     }
 
     @SubscribeEvent
     public static void onVillagerTrades(VillagerTradesEvent event){
-        if(!DungeonsGearConfig.COMMON.ENABLE_VILLAGER_TRADES.get()) return;
+        if(!DungeonsGearConfig.ENABLE_VILLAGER_TRADES.get()) return;
 
         if(event.getType() == VillagerProfession.WEAPONSMITH){
             Int2ObjectMap<List<VillagerTrades.ITrade>> weaponsmithTrades = event.getTrades();
@@ -69,7 +60,7 @@ public class TradeEvents {
             weaponsmithTrades.get(3).add(diamondForEmeraldTrade);
             weaponsmithTrades.get(4).remove(0);
 
-            addCommonAndUniqueTrades(weaponsmithTrades, commonWeaponMap, uniqueWeaponMap);
+            addCommonAndUniqueTrades(weaponsmithTrades, DeferredItemInit.commonWeaponMap, DeferredItemInit.uniqueWeaponMap);
         }
         if(event.getType() == VillagerProfession.FLETCHER){
             Int2ObjectMap<List<VillagerTrades.ITrade>> fletcherTrades = event.getTrades();
@@ -88,12 +79,12 @@ public class TradeEvents {
             //moveTradesToDifferentGroup(fletcherTrades.get(4), fletcherTrades.get(2));
             //moveTradesToDifferentGroup(fletcherTrades.get(5),  fletcherTrades.get(3));
 
-            addCommonAndUniqueTrades(fletcherTrades, commonRangedWeaponMap, uniqueRangedWeaponMap);
+            addCommonAndUniqueTrades(fletcherTrades, DeferredItemInit.commonRangedWeaponMap, DeferredItemInit.uniqueRangedWeaponMap);
         }
 
         if(event.getType() == VillagerProfession.ARMORER){
             Int2ObjectMap<List<VillagerTrades.ITrade>> armorerTrades = event.getTrades();
-            addCommonAndUniqueTrades(armorerTrades, commonMetalArmorMap, uniqueMetalArmorMap);
+            addCommonAndUniqueTrades(armorerTrades, DeferredItemInit.commonMetalArmorMap, DeferredItemInit.uniqueMetalArmorMap);
         }
 
         if(event.getType() == VillagerProfession.LEATHERWORKER){
@@ -103,7 +94,7 @@ public class TradeEvents {
             moveTradesToDifferentGroup(leatherworkerTrades.get(4), leatherworkerTrades.get(2));
             moveTradesToDifferentGroup(leatherworkerTrades.get(5),  leatherworkerTrades.get(3));
 
-            addCommonAndUniqueTrades(leatherworkerTrades, commonLeatherArmorMap, uniqueLeatherArmorMap);
+            addCommonAndUniqueTrades(leatherworkerTrades, DeferredItemInit.commonLeatherArmorMap, DeferredItemInit.uniqueLeatherArmorMap);
         }
     }
 
@@ -112,7 +103,7 @@ public class TradeEvents {
             ResourceLocation resourceLocation = commonMap.get(item);
             Item weapon = ForgeRegistries.ITEMS.getValue(resourceLocation);
             ItemStack weaponStack = new ItemStack(weapon);
-            TradeUtils.EnchantedItemForEmeraldsTrade trade = new TradeUtils.EnchantedItemForEmeraldsTrade(weapon, DungeonsGearConfig.COMMON.COMMON_ITEM_VALUE.get(), 3, 15,0.2F);
+            TradeUtils.EnchantedItemForEmeraldsTrade trade = new TradeUtils.EnchantedItemForEmeraldsTrade(weapon, DungeonsGearConfig.COMMON_ITEM_VALUE.get(), 3, 15,0.2F);
 
             villagerTrades.get(4).add(trade);
         }
@@ -120,7 +111,7 @@ public class TradeEvents {
             ResourceLocation resourceLocation = uniqueMap.get(item);
             Item weapon = ForgeRegistries.ITEMS.getValue(resourceLocation);
             ItemStack weaponStack = new ItemStack(weapon);
-            TradeUtils.EnchantedItemForEmeraldsTrade trade = new TradeUtils.EnchantedItemForEmeraldsTrade(weapon, DungeonsGearConfig.COMMON.UNIQUE_ITEM_VALUE.get(), 3, 30,0.2F);
+            TradeUtils.EnchantedItemForEmeraldsTrade trade = new TradeUtils.EnchantedItemForEmeraldsTrade(weapon, DungeonsGearConfig.UNIQUE_ITEM_VALUE.get(), 3, 30,0.2F);
 
             villagerTrades.get(5).add(trade);
         }
@@ -139,7 +130,7 @@ public class TradeEvents {
 
     @SubscribeEvent
     public static void onSalvageItem(PlayerInteractEvent.EntityInteract event){
-        if(!DungeonsGearConfig.COMMON.ENABLE_SALVAGING.get()) return;
+        if(!DungeonsGearConfig.ENABLE_SALVAGING.get()) return;
         Entity entity = event.getTarget();
         PlayerEntity playerEntity = event.getPlayer();
         if(entity instanceof VillagerEntity){
@@ -147,10 +138,10 @@ public class TradeEvents {
             if(villagerEntity.getVillagerData().getProfession() == VillagerProfession.WEAPONSMITH){
                 if(playerEntity.isSneaking()){
                     ItemStack interactStack = playerEntity.getHeldItem(event.getHand());
-                    if(commonWeaponMap.containsKey(interactStack.getItem())){
+                    if(DeferredItemInit.commonWeaponMap.containsKey(interactStack.getItem())){
                         handleSalvageTrade(playerEntity, villagerEntity, interactStack, "COMMON");
                     }
-                    else if(uniqueWeaponMap.containsKey(interactStack.getItem())){
+                    else if(DeferredItemInit.uniqueWeaponMap.containsKey(interactStack.getItem())){
                         handleSalvageTrade(playerEntity, villagerEntity, interactStack, "UNIQUE");
                     }
                 }
@@ -158,10 +149,10 @@ public class TradeEvents {
             if(villagerEntity.getVillagerData().getProfession() == VillagerProfession.FLETCHER){
                 if(playerEntity.isSneaking()){
                     ItemStack interactStack = playerEntity.getHeldItem(event.getHand());
-                    if(commonRangedWeaponMap.containsKey(interactStack.getItem())){
+                    if(DeferredItemInit.commonRangedWeaponMap.containsKey(interactStack.getItem())){
                         handleSalvageTrade(playerEntity, villagerEntity, interactStack, "COMMON");
                     }
-                    else if(uniqueRangedWeaponMap.containsKey(interactStack.getItem())){
+                    else if(DeferredItemInit.uniqueRangedWeaponMap.containsKey(interactStack.getItem())){
                         handleSalvageTrade(playerEntity, villagerEntity, interactStack, "UNIQUE");
                     }
                 }
@@ -169,10 +160,10 @@ public class TradeEvents {
             if(villagerEntity.getVillagerData().getProfession() == VillagerProfession.ARMORER){
                 if(playerEntity.isSneaking()){
                     ItemStack interactStack = playerEntity.getHeldItem(event.getHand());
-                    if(commonMetalArmorMap.containsKey(interactStack.getItem())){
+                    if(DeferredItemInit.commonMetalArmorMap.containsKey(interactStack.getItem())){
                         handleSalvageTrade(playerEntity, villagerEntity, interactStack, "COMMON");
                     }
-                    else if(uniqueMetalArmorMap.containsKey(interactStack.getItem())){
+                    else if(DeferredItemInit.uniqueMetalArmorMap.containsKey(interactStack.getItem())){
                         handleSalvageTrade(playerEntity, villagerEntity, interactStack, "UNIQUE");
                     }
                 }
@@ -180,10 +171,10 @@ public class TradeEvents {
             if(villagerEntity.getVillagerData().getProfession() == VillagerProfession.LEATHERWORKER){
                 if(playerEntity.isSneaking()){
                     ItemStack interactStack = playerEntity.getHeldItem(event.getHand());
-                    if(commonLeatherArmorMap.containsKey(interactStack.getItem())){
+                    if(DeferredItemInit.commonLeatherArmorMap.containsKey(interactStack.getItem())){
                         handleSalvageTrade(playerEntity, villagerEntity, interactStack, "COMMON");
                     }
-                    else if(uniqueLeatherArmorMap.containsKey(interactStack.getItem())){
+                    else if(DeferredItemInit.uniqueLeatherArmorMap.containsKey(interactStack.getItem())){
                         handleSalvageTrade(playerEntity, villagerEntity, interactStack, "UNIQUE");
                     }
                 }
@@ -193,7 +184,7 @@ public class TradeEvents {
             WanderingTraderEntity wanderingTraderEntity = (WanderingTraderEntity) entity;
             if(playerEntity.isSneaking()){
                 ItemStack interactStack = playerEntity.getHeldItem(event.getHand());
-                if(artifactMap.containsKey(interactStack.getItem())){
+                if(DeferredItemInit.artifactMap.containsKey(interactStack.getItem())){
                     handleSalvageTrade(playerEntity, wanderingTraderEntity, interactStack, "ARTIFACT");
                 }
             }
@@ -209,16 +200,16 @@ public class TradeEvents {
         int itemValue;
         switch(itemType.toUpperCase()){
             case "COMMON":
-                itemValue = DungeonsGearConfig.COMMON.COMMON_ITEM_VALUE.get();
+                itemValue = DungeonsGearConfig.COMMON_ITEM_VALUE.get();
                 break;
             case "UNIQUE":
-                itemValue  = DungeonsGearConfig.COMMON.UNIQUE_ITEM_VALUE.get();
+                itemValue  = DungeonsGearConfig.UNIQUE_ITEM_VALUE.get();
                 break;
             case "ARTIFACT":
-                itemValue = DungeonsGearConfig.COMMON.ARTIFACT_VALUE.get();
+                itemValue = DungeonsGearConfig.ARTIFACT_VALUE.get();
                 break;
             default:
-                itemValue = DungeonsGearConfig.COMMON.COMMON_ITEM_VALUE.get();
+                itemValue = DungeonsGearConfig.COMMON_ITEM_VALUE.get();
         }
 
         int emeraldReward = Math.round(itemValue * 0.375F);

@@ -1,13 +1,10 @@
 package com.infamous.dungeons_gear.artifacts;
 
 import com.infamous.dungeons_gear.effects.CustomEffects;
-import com.infamous.dungeons_gear.items.ArtifactList;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -80,7 +77,6 @@ public class LightFeatherItem extends ArtifactItem {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.LIGHT_FEATHER){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "No one knows what mysterious creature this feather came from, but it is as beautiful and powerful."));
             list.add(new StringTextComponent(TextFormatting.GREEN +
@@ -89,6 +85,5 @@ public class LightFeatherItem extends ArtifactItem {
                     "3 Seconds Duration"));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "3 Seconds Cooldown"));
-        }
     }
 }

@@ -1,13 +1,10 @@
 package com.infamous.dungeons_gear.artifacts;
 
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
-import com.infamous.dungeons_gear.items.ArtifactList;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -49,7 +46,6 @@ public class LightningRodItem extends ArtifactItem implements ISoulGatherer {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.LIGHTNING_ROD){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "Crafted by Illager Geomancers, this item is enchanted with the power of a storming sky."));
             list.add(new StringTextComponent(TextFormatting.GREEN +
@@ -58,7 +54,6 @@ public class LightningRodItem extends ArtifactItem implements ISoulGatherer {
                     "+1 XP Gathering"));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "Requires 15 XP"));
-        }
     }
 
     @Override

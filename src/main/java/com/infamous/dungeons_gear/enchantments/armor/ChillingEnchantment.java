@@ -1,12 +1,11 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
-import com.infamous.dungeons_gear.capabilities.combo.ComboProvider;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.PulseEnchantment;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
-import com.infamous.dungeons_gear.items.ArmorList;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -37,7 +36,7 @@ public class ChillingEnchantment extends PulseEnchantment {
 
     @Override
     public boolean canApplyTogether(Enchantment enchantment) {
-        return DungeonsGearConfig.COMMON.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof PulseEnchantment);
+        return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof PulseEnchantment);
     }
 
     @SubscribeEvent
@@ -50,8 +49,8 @@ public class ChillingEnchantment extends PulseEnchantment {
             if(comboCap == null) return;
             int freezeNearbyTimer = comboCap.getFreezeNearbyTimer();
 
-            boolean uniqueArmorFlag = player.getItemStackFromSlot(EquipmentSlotType.CHEST).getItem() == ArmorList.FROST_ARMOR ||
-                    player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() == ArmorList.FROST_ARMOR_HELMET;;
+            boolean uniqueArmorFlag = player.getItemStackFromSlot(EquipmentSlotType.CHEST).getItem() == DeferredItemInit.FROST_ARMOR.get() ||
+                    player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() == DeferredItemInit.FROST_ARMOR_HELMET.get();
             if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.CHILLING) || uniqueArmorFlag){
                 if(freezeNearbyTimer <= 0){
                     int chillingLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.CHILLING, player);

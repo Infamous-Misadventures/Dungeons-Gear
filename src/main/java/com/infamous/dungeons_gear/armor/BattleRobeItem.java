@@ -5,6 +5,7 @@ import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.BattleRobeModel;
 import com.infamous.dungeons_gear.armor.models.SplendidRobeModel;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.interfaces.IArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
@@ -27,9 +28,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
 import java.util.UUID;
-
-import static com.infamous.dungeons_gear.items.ArmorList.BATTLE_ROBE;
-import static com.infamous.dungeons_gear.items.ArmorList.SPLENDID_ROBE;
 
 public class BattleRobeItem extends ArmorItem implements IArmor {
 
@@ -64,18 +62,23 @@ public class BattleRobeItem extends ArmorItem implements IArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(this.unique) return DungeonsGear.MODID + ":textures/models/armor/splendid_robe.png";
-        return DungeonsGear.MODID + ":textures/models/armor/battle_robe.png";
+        if(stack.getItem() == DeferredItemInit.BATTLE_ROBE.get()){
+            return DungeonsGear.MODID + ":textures/models/armor/battle_robe.png";
+        }
+        else if(stack.getItem() == DeferredItemInit.SPLENDID_ROBE.get()){
+            return DungeonsGear.MODID + ":textures/models/armor/splendid_robe.png";
+        }
+        else return "";
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     @OnlyIn(Dist.CLIENT)
     public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack stack, EquipmentSlotType armorSlot, A _default) {
-        if(stack.getItem() == BATTLE_ROBE){
+        if(stack.getItem() == DeferredItemInit.BATTLE_ROBE.get()){
             return (A) new BattleRobeModel<>(1.0F, slot, entityLiving);
         }
-        else if(stack.getItem() == SPLENDID_ROBE){
+        else if(stack.getItem() == DeferredItemInit.SPLENDID_ROBE.get()){
             return (A) new SplendidRobeModel<>(1.0F, slot, entityLiving);
         }
         return null;

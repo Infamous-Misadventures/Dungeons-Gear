@@ -12,6 +12,7 @@ import com.infamous.dungeons_gear.entities.IceCloudRenderer;
 import com.infamous.dungeons_gear.groups.ArmorGroup;
 import com.infamous.dungeons_gear.groups.ArtifactGroup;
 import com.infamous.dungeons_gear.init.AttributeRegistry;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.init.ParticleInit;
 import com.infamous.dungeons_gear.items.VanillaItemModelProperties;
 import com.infamous.dungeons_gear.items.BowItemModelsProperties;
@@ -38,7 +39,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod("dungeons_gear")
+@Mod(DungeonsGear.MODID)
 public class DungeonsGear
 {
     // Directly reference a log4j logger.
@@ -53,7 +54,7 @@ public class DungeonsGear
 
     public DungeonsGear() {
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, DungeonsGearConfig.COMMON_SPEC);
+        new DungeonsGearConfig();
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         // Register the doClientStuff method for modloading
@@ -64,6 +65,7 @@ public class DungeonsGear
         ModEntityTypes.ENTITY_TYPES.register(modEventBus);
         ParticleInit.PARTICLES.register(modEventBus);
         AttributeRegistry.ATTRIBUTES.register(modEventBus);
+        DeferredItemInit.ITEMS.register(modEventBus);
         PROXY = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
         // Register ourselves for server and other game events we are interested in
@@ -73,9 +75,11 @@ public class DungeonsGear
 
     private void setup(final FMLCommonSetupEvent event)
     {
-        DeferredWorkQueue.runLater(NetworkHandler::init);
+        DeferredWorkQueue.runLater(
+                NetworkHandler::init
+        );
+        DeferredItemInit.putItemsInMap();
         WeaponAttributeHandler.setWeaponAttributeModifiers();
-        // some preinit code
         CapabilityManager.INSTANCE.register(ISummonable.class, new SummonableStorage(), Summonable::new);
         CapabilityManager.INSTANCE.register(ICombo.class, new ComboStorage(), Combo::new);
         CapabilityManager.INSTANCE.register(ISummoner.class, new SummonerStorage(), Summoner::new);

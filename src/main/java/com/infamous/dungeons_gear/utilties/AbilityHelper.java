@@ -96,7 +96,7 @@ public class AbilityHelper {
             return true;
         }
         else{
-            return DungeonsGearConfig.COMMON.ENABLE_AREA_OF_EFFECT_ON_PLAYERS.get();
+            return DungeonsGearConfig.ENABLE_AREA_OF_EFFECT_ON_PLAYERS.get();
         }
     }
 

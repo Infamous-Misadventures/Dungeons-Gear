@@ -17,15 +17,16 @@ import java.util.List;
 
 public class TempestKnifeItem extends SwordItem implements IMeleeWeapon{
 
-    public TempestKnifeItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builder) {
+    private final boolean unique;
+
+    public TempestKnifeItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builder, boolean isUnique) {
         super(tier, attackDamageIn, attackSpeedIn, builder);
+        this.unique = isUnique;
     }
 
     public Rarity getRarity(ItemStack itemStack){
 
-        if(itemStack.getItem() == WeaponList.RESOLUTE_TEMPEST_KNIFE
-                || itemStack.getItem() == WeaponList.CHILL_GALE_KNIFE
-        ){
+        if(this.unique){
             return Rarity.RARE;
         }
         return Rarity.UNCOMMON;

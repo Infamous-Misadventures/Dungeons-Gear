@@ -2,21 +2,20 @@ package com.infamous.dungeons_gear.armor;
 
 
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_gear.capabilities.combo.ComboProvider;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.capabilities.summoning.ISummonable;
 import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
-import com.infamous.dungeons_gear.capabilities.summoning.SummonableProvider;
-import com.infamous.dungeons_gear.capabilities.summoning.SummonerProvider;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.goals.BeeFollowOwnerGoal;
 import com.infamous.dungeons_gear.goals.BeeOwnerHurtByTargetGoal;
 import com.infamous.dungeons_gear.goals.BeeOwnerHurtTargetGoal;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.interfaces.IArmor;
-import com.infamous.dungeons_gear.items.RangedWeaponList;
-import com.infamous.dungeons_gear.items.WeaponList;
-import com.infamous.dungeons_gear.utilties.*;
+import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
+import com.infamous.dungeons_gear.utilties.ArmorEffectHelper;
+import com.infamous.dungeons_gear.utilties.CapabilityHelper;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -28,7 +27,8 @@ import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.PotionUtils;
@@ -44,8 +44,6 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import java.util.Collection;
 import java.util.List;
-
-import static com.infamous.dungeons_gear.items.ArmorList.*;
 
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class ArmorEvents {
@@ -185,7 +183,7 @@ public class ArmorEvents {
         if(event.getSource().getTrueSource() instanceof LivingEntity){
             LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
             ItemStack chestplate = attacker.getItemStackFromSlot(EquipmentSlotType.CHEST);
-            boolean lifeStealChestplateFlag = chestplate.getItem() == SPIDER_ARMOR || chestplate.getItem() instanceof GrimArmorItem;
+            boolean lifeStealChestplateFlag = chestplate.getItem() == DeferredItemInit.SPIDER_ARMOR.get() || chestplate.getItem() instanceof GrimArmorItem;
             if(lifeStealChestplateFlag){
                 float victimMaxHealth = event.getEntityLiving().getMaxHealth();
                 if(attacker.getHealth() < attacker.getMaxHealth()){
@@ -322,8 +320,8 @@ public class ArmorEvents {
             }
         }
 
-        boolean highlandArmorFlag = chestplate.getItem() == HIGHLAND_ARMOR
-                || helmet.getItem() == HIGHLAND_ARMOR_HELMET;
+        boolean highlandArmorFlag = chestplate.getItem() == DeferredItemInit.HIGHLAND_ARMOR.get()
+                || helmet.getItem() == DeferredItemInit.HIGHLAND_ARMOR_HELMET.get();
         if(ModEnchantmentHelper.hasEnchantment(playerEntity, ArmorEnchantmentList.SWIFTFOOTED) || highlandArmorFlag){
                 int swiftfootedLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.SWIFTFOOTED, playerEntity);
                 if(highlandArmorFlag) swiftfootedLevel++;
@@ -336,9 +334,9 @@ public class ArmorEvents {
 
     private static void handleDynamoEnchantment(PlayerEntity playerEntity) {
         ItemStack mainhand = playerEntity.getHeldItemMainhand();
-        boolean uniqueWeaponFlag = mainhand.getItem() == WeaponList.GREAT_AXEBLADE
-                || mainhand.getItem() == RangedWeaponList.ANCIENT_BOW
-                || mainhand.getItem() == RangedWeaponList.CORRUPTED_CROSSBOW;
+        boolean uniqueWeaponFlag = mainhand.getItem() == DeferredItemInit.GREAT_AXEBLADE.get()
+                || mainhand.getItem() == DeferredItemInit.ANCIENT_BOW.get()
+                || mainhand.getItem() == DeferredItemInit.CORRUPTED_CROSSBOW.get();
         if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.DYNAMO) || uniqueWeaponFlag){
             int dynamoLevel = EnchantmentHelper.getEnchantmentLevel(MeleeRangedEnchantmentList.DYNAMO, mainhand);
             if(uniqueWeaponFlag) dynamoLevel++;

@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.ranged.bows;
 
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.*;
 import net.minecraft.util.text.ITextComponent;
@@ -24,12 +25,12 @@ public class LongbowItem extends AbstractDungeonsBowItem {
 
     @Override
     public boolean hasFuseShotBuiltIn(ItemStack stack) {
-        return stack.getItem() == RED_SNAKE;
+        return stack.getItem() == DeferredItemInit.RED_SNAKE.get();
     }
 
     @Override
     public boolean hasSuperChargedBuiltIn(ItemStack stack) {
-        return stack.getItem() == GUARDIAN_BOW;
+        return stack.getItem() == DeferredItemInit.GUARDIAN_BOW.get();
     }
 
     @Override
@@ -37,18 +38,18 @@ public class LongbowItem extends AbstractDungeonsBowItem {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == GUARDIAN_BOW){
+        if(stack.getItem() == DeferredItemInit.GUARDIAN_BOW.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Forged from fossilized coral, the Guardian Bow is a remnant from sunken civilizations of lost ages."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Strong Charged Attacks"));
             list.add(new StringTextComponent(TextFormatting.GREEN + "Super Charged Arrows (Supercharge I)"));
         }
-        if(stack.getItem() == RED_SNAKE){
+        if(stack.getItem() == DeferredItemInit.RED_SNAKE.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The Red Snake radiates an explosive heat, making it a deadly fire risk in the dry, desert lands."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Strong Charged Attacks"));
             list.add(new StringTextComponent(TextFormatting.GREEN + "Chance For Arrows To Explode (Fuse Shot I)"));
-        }if(stack.getItem() == LONGBOW){
+        }if(stack.getItem() == DeferredItemInit.LONGBOW.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The Longbow, crafted for hunting rather than battle, is still useful in a fight."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Strong Charged Attacks"));

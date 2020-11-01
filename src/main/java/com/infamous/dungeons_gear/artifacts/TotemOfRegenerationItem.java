@@ -1,6 +1,5 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.items.ArtifactList;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -62,7 +61,6 @@ public class TotemOfRegenerationItem extends ArtifactItem {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.TOTEM_OF_REGENERATION){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "This hand-crafted wooden figurine radiates a warmth like that of a crackling campfire, healing those who gather around it."));
             list.add(new StringTextComponent(TextFormatting.GREEN +
@@ -71,6 +69,5 @@ public class TotemOfRegenerationItem extends ArtifactItem {
                     "5 Seconds Duration"));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "25 Seconds Cooldown"));
-        }
     }
 }

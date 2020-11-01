@@ -2,12 +2,9 @@ package com.infamous.dungeons_gear.artifacts;
 
 import com.infamous.dungeons_gear.capabilities.summoning.ISummonable;
 import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
-import com.infamous.dungeons_gear.capabilities.summoning.SummonableProvider;
-import com.infamous.dungeons_gear.capabilities.summoning.SummonerProvider;
 import com.infamous.dungeons_gear.goals.LlamaFollowOwnerGoal;
 import com.infamous.dungeons_gear.goals.LlamaOwnerHurtByTargetGoal;
 import com.infamous.dungeons_gear.goals.LlamaOwnerHurtTargetGoal;
-import com.infamous.dungeons_gear.items.ArtifactList;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -137,13 +134,11 @@ public class WonderfulWheatItem extends ArtifactItem {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.WONDERFUL_WHEAT){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "This item has the faint smell of an open field, baked bread, and freshly cut crops."));
             list.add(new StringTextComponent(TextFormatting.GREEN +
                     "Summons a llama to aid you in battle."));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "30 Seconds Cooldown"));
-        }
     }
 }

@@ -1,8 +1,8 @@
 package com.infamous.dungeons_gear.ranged.crossbows;
 
 import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
-import com.infamous.dungeons_gear.capabilities.weapon.WeaponProvider;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
@@ -26,7 +26,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-import static com.infamous.dungeons_gear.items.RangedWeaponList.AUTO_CROSSBOW;
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class CrossbowEvents {
@@ -45,7 +44,7 @@ public class CrossbowEvents {
             int crossbowChargeTime = weaponCap.getCrossbowChargeTime();
 
             int accelerateLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.ACCELERATE, stack);
-            if(stack.getItem() == AUTO_CROSSBOW) accelerateLevel++;
+            if(stack.getItem() == DeferredItemInit.AUTO_CROSSBOW.get()) accelerateLevel++;
 
             int defaultChargeTime = 25;
             if(stack.getItem() instanceof AbstractDungeonsCrossbowItem){

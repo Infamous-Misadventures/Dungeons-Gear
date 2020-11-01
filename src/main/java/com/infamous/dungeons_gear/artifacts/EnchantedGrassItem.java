@@ -2,10 +2,7 @@ package com.infamous.dungeons_gear.artifacts;
 
 import com.infamous.dungeons_gear.capabilities.summoning.ISummonable;
 import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
-import com.infamous.dungeons_gear.capabilities.summoning.SummonableProvider;
-import com.infamous.dungeons_gear.capabilities.summoning.SummonerProvider;
 import com.infamous.dungeons_gear.goals.*;
-import com.infamous.dungeons_gear.items.ArtifactList;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -28,9 +25,9 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.List;
 
-public class EnchantedGrassArtifact extends ArtifactItem {
+public class EnchantedGrassItem extends ArtifactItem {
 
-    public EnchantedGrassArtifact(Properties properties) {
+    public EnchantedGrassItem(Properties properties) {
         super(properties);
     }
 
@@ -130,13 +127,11 @@ public class EnchantedGrassArtifact extends ArtifactItem {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.ENCHANTED_GRASS){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "Just as there are powerful heroes who answer the call to fight, there are powerful enchanted sheep who will join the fight when summoned."));
             list.add(new StringTextComponent(TextFormatting.GREEN +
                     "Randomly summons one of three sheep allies that can grant either speed, poison, or fire effects."));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "30 Seconds Cooldown"));
-        }
     }
 }
