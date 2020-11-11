@@ -1,14 +1,11 @@
 package com.infamous.dungeons_gear.goals;
 
 import com.infamous.dungeons_gear.capabilities.summoning.ISummonable;
-import com.infamous.dungeons_gear.capabilities.summoning.SummonableProvider;
+import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.monster.GhastEntity;
-import net.minecraft.entity.passive.BatEntity;
-import net.minecraft.entity.passive.CatEntity;
-import net.minecraft.entity.passive.IronGolemEntity;
-import net.minecraft.entity.passive.WolfEntity;
+import net.minecraft.entity.passive.*;
 import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.passive.horse.LlamaEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -32,7 +29,8 @@ public class GoalUtils {
     @Nullable
     public static LivingEntity getOwner(IronGolemEntity ironGolemEntity) {
         try {
-            ISummonable summonable = ironGolemEntity.getCapability(SummonableProvider.SUMMONABLE_CAPABILITY).orElseThrow(IllegalStateException::new);
+            ISummonable summonable = CapabilityHelper.getSummonableCapability(ironGolemEntity);
+            if(summonable == null) return null;
             if(summonable.getSummoner() != null){
                 UUID ownerUniqueId = summonable.getSummoner();
                 return ownerUniqueId == null ? null : ironGolemEntity.world.getPlayerByUuid(ownerUniqueId);
@@ -46,10 +44,41 @@ public class GoalUtils {
     @Nullable
     public static LivingEntity getOwner(BatEntity batEntity) {
         try {
-            ISummonable summonable = batEntity.getCapability(SummonableProvider.SUMMONABLE_CAPABILITY).orElseThrow(IllegalStateException::new);
+            ISummonable summonable = CapabilityHelper.getSummonableCapability(batEntity);
+            if(summonable == null) return null;
             if(summonable.getSummoner() != null){
                 UUID ownerUniqueId = summonable.getSummoner();
                 return ownerUniqueId == null ? null : batEntity.world.getPlayerByUuid(ownerUniqueId);
+            }
+            else return null;
+        } catch (IllegalArgumentException var2) {
+            return null;
+        }
+    }
+
+    @Nullable
+    public static LivingEntity getOwner(BeeEntity beeEntity) {
+        try {
+            ISummonable summonable = CapabilityHelper.getSummonableCapability(beeEntity);
+            if(summonable == null) return null;
+            if(summonable.getSummoner() != null){
+                UUID ownerUniqueId = summonable.getSummoner();
+                return ownerUniqueId == null ? null : beeEntity.world.getPlayerByUuid(ownerUniqueId);
+            }
+            else return null;
+        } catch (IllegalArgumentException var2) {
+            return null;
+        }
+    }
+
+    @Nullable
+    public static LivingEntity getOwner(SheepEntity sheepEntity) {
+        try {
+            ISummonable summonable = CapabilityHelper.getSummonableCapability(sheepEntity);
+            if(summonable == null) return null;
+            if(summonable.getSummoner() != null){
+                UUID ownerUniqueId = summonable.getSummoner();
+                return ownerUniqueId == null ? null : sheepEntity.world.getPlayerByUuid(ownerUniqueId);
             }
             else return null;
         } catch (IllegalArgumentException var2) {
@@ -74,6 +103,18 @@ public class GoalUtils {
             if (target instanceof LlamaEntity) {
                 LlamaEntity llamaEntity = (LlamaEntity)target;
                 if (llamaEntity.isTame() && getOwner(llamaEntity) == owner) {
+                    return false;
+                }
+            }
+            if (target instanceof BatEntity) {
+                BatEntity llamaEntity = (BatEntity)target;
+                if (getOwner(llamaEntity) == owner) {
+                    return false;
+                }
+            }
+            if (target instanceof BeeEntity) {
+                BeeEntity llamaEntity = (BeeEntity)target;
+                if (getOwner(llamaEntity) == owner) {
                     return false;
                 }
             }

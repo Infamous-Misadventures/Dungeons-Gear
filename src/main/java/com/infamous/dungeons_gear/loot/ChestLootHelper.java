@@ -1,20 +1,11 @@
 package com.infamous.dungeons_gear.loot;
 
-import com.infamous.dungeons_gear.DungeonsGear;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import java.util.*;
 
-import static com.infamous.dungeons_gear.items.ArmorList.commonMetalArmorMap;
-import static com.infamous.dungeons_gear.items.ArmorList.commonLeatherArmorMap;
-import static com.infamous.dungeons_gear.items.ArmorList.uniqueMetalArmorMap;
-import static com.infamous.dungeons_gear.items.ArmorList.uniqueLeatherArmorMap;
-import static com.infamous.dungeons_gear.items.RangedWeaponList.commonRangedWeaponMap;
-import static com.infamous.dungeons_gear.items.RangedWeaponList.uniqueRangedWeaponMap;
-import static com.infamous.dungeons_gear.items.WeaponList.commonWeaponMap;
-import static com.infamous.dungeons_gear.items.WeaponList.uniqueWeaponMap;
-import static com.infamous.dungeons_gear.items.ArtifactList.artifactMap;
+import static com.infamous.dungeons_gear.init.DeferredItemInit.*;
 
 public class ChestLootHelper {
 

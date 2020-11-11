@@ -3,17 +3,9 @@ package com.infamous.dungeons_gear.goals;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.TargetGoal;
-import net.minecraft.entity.monster.CreeperEntity;
-import net.minecraft.entity.monster.GhastEntity;
-import net.minecraft.entity.passive.CatEntity;
-import net.minecraft.entity.passive.WolfEntity;
-import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.passive.horse.LlamaEntity;
-import net.minecraft.entity.player.PlayerEntity;
 
-import javax.annotation.Nullable;
 import java.util.EnumSet;
-import java.util.UUID;
 
 import static com.infamous.dungeons_gear.goals.GoalUtils.*;
 

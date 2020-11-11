@@ -1,9 +1,9 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
-import com.infamous.dungeons_gear.utilties.AOECloudHelper;
-import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
+import com.infamous.dungeons_gear.utilties.AOECloudHelper;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
@@ -36,7 +36,7 @@ public class RadianceShotEnchantment extends Enchantment {
         if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
         LivingEntity shooter = (LivingEntity)arrow.func_234616_v_();
         int radianceShotLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.RADIANCE_SHOT);
-        boolean uniqueWeaponFlag = arrow.getTags().contains("Sabrewing");
+        boolean uniqueWeaponFlag = arrow.getTags().contains("Sabrewing") || arrow.getTags().contains("LoveSpellBow");
         if(radianceShotLevel > 0){
             float radianceShotRand = shooter.getRNG().nextFloat();
             if(radianceShotRand <=  0.2F){

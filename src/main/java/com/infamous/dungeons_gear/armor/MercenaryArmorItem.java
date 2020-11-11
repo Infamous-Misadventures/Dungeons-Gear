@@ -5,6 +5,7 @@ import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.MercenaryArmorModel;
 import com.infamous.dungeons_gear.armor.models.RenegadeArmorModel;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.interfaces.IArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
@@ -28,8 +29,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.List;
 import java.util.UUID;
 
-import static com.infamous.dungeons_gear.items.ArmorList.*;
-
 public class MercenaryArmorItem extends ArmorItem implements IArmor {
 
     private static final UUID[] ARMOR_MODIFIERS = new UUID[]{
@@ -52,14 +51,14 @@ public class MercenaryArmorItem extends ArmorItem implements IArmor {
 
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
         UUID uuid = ARMOR_MODIFIERS[slot.getIndex()];
-        builder.put(Attributes.field_233826_i_, new AttributeModifier(uuid, "Armor modifier", (double)this.damageReduceAmount, AttributeModifier.Operation.ADDITION));
-        builder.put(Attributes.field_233827_j_, new AttributeModifier(uuid, "Armor toughness", (double)this.toughness, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ARMOR, new AttributeModifier(uuid, "Armor modifier", (double)this.damageReduceAmount, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(uuid, "Armor toughness", (double)this.toughness, AttributeModifier.Operation.ADDITION));
         if (this.field_234655_c_ > 0) {
-            builder.put(Attributes.field_233820_c_, new AttributeModifier(uuid, "Armor knockback resistance", (double)this.field_234655_c_, AttributeModifier.Operation.ADDITION));
+            builder.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(uuid, "Armor knockback resistance", (double)this.field_234655_c_, AttributeModifier.Operation.ADDITION));
         }
-        builder.put(Attributes.field_233823_f_, new AttributeModifier(uuid, "Armor attack damage boost", 0.20D * 0.5D, AttributeModifier.Operation.MULTIPLY_BASE));
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(uuid, "Armor attack damage boost", 0.20D * 0.5D, AttributeModifier.Operation.MULTIPLY_BASE));
         if(this.unique) {
-            builder.put(Attributes.field_233825_h_, new AttributeModifier(uuid, "Armor attack speed boost", 0.25D * 0.5D, AttributeModifier.Operation.MULTIPLY_BASE));
+            builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(uuid, "Armor attack speed boost", 0.25D * 0.5D, AttributeModifier.Operation.MULTIPLY_BASE));
         }
         this.attributeModifiers = builder.build();
     }
@@ -67,18 +66,23 @@ public class MercenaryArmorItem extends ArmorItem implements IArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(this.unique) return DungeonsGear.MODID + ":textures/models/armor/renegade_armor.png";
-        return DungeonsGear.MODID + ":textures/models/armor/mercenary_armor.png";
+        if(stack.getItem() == DeferredItemInit.MERCENARY_ARMOR.get() || stack.getItem() == DeferredItemInit.MERCENARY_ARMOR_HELMET.get()){
+            return DungeonsGear.MODID + ":textures/models/armor/mercenary_armor.png";
+        }
+        else if(stack.getItem() == DeferredItemInit.RENEGADE_ARMOR.get() || stack.getItem() == DeferredItemInit.RENEGADE_ARMOR_HELMET.get()){
+            return DungeonsGear.MODID + ":textures/models/armor/renegade_armor.png";
+        }
+        else return "";
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     @OnlyIn(Dist.CLIENT)
     public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack stack, EquipmentSlotType armorSlot, A _default) {
-        if(stack.getItem() == MERCENARY_ARMOR || stack.getItem() == MERCENARY_ARMOR_HELMET){
+        if(stack.getItem() == DeferredItemInit.MERCENARY_ARMOR.get() || stack.getItem() == DeferredItemInit.MERCENARY_ARMOR_HELMET.get()){
             return (A) new MercenaryArmorModel<>(1.0F, slot, entityLiving);
         }
-        else if(stack.getItem() == RENEGADE_ARMOR || stack.getItem() == RENEGADE_ARMOR_HELMET){
+        else if(stack.getItem() == DeferredItemInit.RENEGADE_ARMOR.get() || stack.getItem() == DeferredItemInit.RENEGADE_ARMOR_HELMET.get()){
             return (A) new RenegadeArmorModel<>(1.0F, slot, entityLiving);
         }
         return null;

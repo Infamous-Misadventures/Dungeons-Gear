@@ -2,9 +2,6 @@ package com.infamous.dungeons_gear.goals;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.monster.AbstractIllagerEntity;
-import net.minecraft.entity.monster.AbstractRaiderEntity;
-import net.minecraft.entity.monster.VindicatorEntity;
 
 import javax.annotation.Nullable;
 import java.util.function.Predicate;

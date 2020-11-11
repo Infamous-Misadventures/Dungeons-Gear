@@ -1,10 +1,12 @@
 package com.infamous.dungeons_gear.ranged.crossbows;
 
 import com.google.common.collect.Lists;
+import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
-import com.infamous.dungeons_gear.capabilities.weapon.WeaponProvider;
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.interfaces.IRangedWeapon;
+import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.RangedAttackHelper;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -38,7 +40,10 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
     public boolean isLoadingMiddle = false;
 
     public AbstractDungeonsCrossbowItem(Properties builder, int defaultChargeTimeIn, boolean isUniqueIn) {
-        super(builder);
+        super(builder
+                .group(DungeonsGear.RANGED_WEAPON_GROUP)
+                .maxDamage(DungeonsGearConfig.CROSSBOW_DURABILITY.get())
+        );
         this.defaultChargeTime = defaultChargeTimeIn;
         this.isUnique = isUniqueIn;
     }
@@ -121,7 +126,8 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
         int accelerateLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.ACCELERATE, stack);
         if(this.hasAccelerateBuiltIn(stack)) accelerateLevel++;
 
-        IWeapon weaponCap = stack.getCapability(WeaponProvider.WEAPON_CAPABILITY).orElseThrow(IllegalStateException::new);
+        IWeapon weaponCap = CapabilityHelper.getWeaponCapability(stack);
+        if(weaponCap == null) return Math.max(this.getDefaultChargeTime() - 5 * quickChargeLevel, 0);
         int crossbowChargeTime = weaponCap.getCrossbowChargeTime();
         long lastFiredTime = weaponCap.getLastFiredTime();
 
@@ -146,9 +152,9 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
         }
     }
 
-    private void fireCrossbowProjectiles(World world, LivingEntity livingEntity, Hand hand, ItemStack stack, float velocityIn, float inaccuracyIn) {
-        List<ItemStack> list = getChargedProjectiles(stack);
-        float[] randomSoundPitches = getRandomSoundPitches(livingEntity.getRNG());
+    public void fireCrossbowProjectiles(World world, LivingEntity livingEntity, Hand hand, ItemStack stack, float velocityIn, float inaccuracyIn) {
+        List<ItemStack> list = AbstractDungeonsCrossbowItem.getChargedProjectiles(stack);
+        float[] randomSoundPitches = AbstractDungeonsCrossbowItem.getRandomSoundPitches(livingEntity.getRNG());
 
         for(int i = 0; i < list.size(); ++i) {
             ItemStack currentProjectile = list.get(i);
@@ -172,7 +178,7 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
             }
         }
 
-        fireProjectilesAfter(world, livingEntity, stack);
+        AbstractDungeonsCrossbowItem.fireProjectilesAfter(world, livingEntity, stack);
     }
 
     private AbstractArrowEntity createCrossbowArrow(World world, LivingEntity livingEntity, ItemStack stack, ItemStack stack1) {
@@ -243,7 +249,7 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
     }
 
     // FORMER CROSSBOWITEM STATIC METHODS MADE NON-STATIC
-    private  void fireProjectile(World worldIn, LivingEntity shooter, Hand handIn, ItemStack crossbow, ItemStack projectile, float soundPitch, boolean isCreativeMode, float velocity, float inaccuracy, float projectileAngle) {
+    void fireProjectile(World worldIn, LivingEntity shooter, Hand handIn, ItemStack crossbow, ItemStack projectile, float soundPitch, boolean isCreativeMode, float velocity, float inaccuracy, float projectileAngle) {
         if (!worldIn.isRemote) {
             boolean flag = projectile.getItem() == Items.FIREWORK_ROCKET;
             ProjectileEntity projectileentity;
@@ -277,11 +283,11 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
     }
 
     // DUPLICATED CROSSBOWITEM STATIC METHODS
-    private static void fireProjectilesAfter(World worldIn, LivingEntity shooter, ItemStack stack) {
+    static void fireProjectilesAfter(World worldIn, LivingEntity shooter, ItemStack stack) {
         if (shooter instanceof ServerPlayerEntity) {
             ServerPlayerEntity serverplayerentity = (ServerPlayerEntity)shooter;
             if (!worldIn.isRemote) {
-                CriteriaTriggers.SHOT_CROSSBOW.func_215111_a(serverplayerentity, stack);
+                CriteriaTriggers.SHOT_CROSSBOW.test(serverplayerentity, stack);
             }
 
             serverplayerentity.addStat(Stats.ITEM_USED.get(stack.getItem()));
@@ -300,7 +306,7 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
 
     }
 
-    private static List<ItemStack> getChargedProjectiles(ItemStack stack) {
+    static List<ItemStack> getChargedProjectiles(ItemStack stack) {
         List<ItemStack> list = Lists.newArrayList();
         CompoundNBT compoundnbt = stack.getTag();
         if (compoundnbt != null && compoundnbt.contains("ChargedProjectiles", 9)) {

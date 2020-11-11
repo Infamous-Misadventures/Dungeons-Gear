@@ -1,9 +1,11 @@
 package com.infamous.dungeons_gear.enchantments.melee;
 
-import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
-import com.infamous.dungeons_gear.enchantments.types.HealingEnchantment;
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
+import com.infamous.dungeons_gear.enchantments.types.HealingEnchantment;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -15,13 +17,12 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-import static com.infamous.dungeons_gear.items.WeaponList.HEARTSTEALER;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class LeechingEnchantment extends HealingEnchantment {
 
     public LeechingEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlotType[]{
+        super(Enchantment.Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlotType[]{
                 EquipmentSlotType.MAINHAND});
     }
 
@@ -31,7 +32,7 @@ public class LeechingEnchantment extends HealingEnchantment {
 
     @Override
     public boolean canApplyTogether(Enchantment enchantment) {
-        return !(enchantment instanceof HealingEnchantment);
+        return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof HealingEnchantment);
     }
 
     @SubscribeEvent
@@ -41,7 +42,7 @@ public class LeechingEnchantment extends HealingEnchantment {
             LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
             LivingEntity victim = event.getEntityLiving();
             ItemStack mainhand = attacker.getHeldItemMainhand();
-            boolean uniqueWeaponFlag = mainhand.getItem() == HEARTSTEALER;
+            boolean uniqueWeaponFlag = mainhand.getItem() == DeferredItemInit.HEARTSTEALER.get();
             if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.LEECHING)){
                 int leechingLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.LEECHING, mainhand);
                 float victimMaxHealth = victim.getMaxHealth();

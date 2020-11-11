@@ -1,7 +1,6 @@
 package com.infamous.dungeons_gear.goals;
 
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.passive.BatEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -80,7 +79,7 @@ public class BatMeleeAttackGoal extends Goal {
             return false;
         } else if (!this.longMemory) {
             return !this.attacker.getNavigator().noPath();
-        } else if (!this.attacker.isWithinHomeDistanceFromPosition(livingentity.func_233580_cy_())) {
+        } else if (!this.attacker.isWithinHomeDistanceFromPosition(livingentity.getPosition())) {
             return false;
         } else {
             return !(livingentity instanceof PlayerEntity) || !livingentity.isSpectator() && !((PlayerEntity)livingentity).isCreative();

@@ -1,18 +1,16 @@
 package com.infamous.dungeons_gear.loot;
 
 import com.google.gson.JsonObject;
-import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.LootTables;
 import net.minecraft.loot.conditions.ILootCondition;
 import net.minecraft.tileentity.LockableLootTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.event.RegistryEvent;
@@ -58,7 +56,7 @@ public class GlobalLootModifier{
         @Override
         public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
             // return early if the user has disabled this feature
-            if(!DungeonsGearConfig.COMMON.ENABLE_DUNGEONS_GEAR_LOOT.get()){
+            if(!DungeonsGearConfig.ENABLE_DUNGEONS_GEAR_LOOT.get()){
                 return generatedLoot;
             }
             BlockPos pos = context.get(LootParameters.POSITION);
@@ -73,10 +71,10 @@ public class GlobalLootModifier{
                                 "field_184284_m");
                 if (lootTable != null) {
                     String lootTablePath = lootTable.toString();
-                    DungeonsGearConfig.Common.COMMON_LOOT_TABLES.get().forEach((path) ->{
-                        if(lootTablePath.contains(path) && !DungeonsGearConfig.Common.COMMON_LOOT_TABLES_BLACKLIST.get().contains(path)){
-                            generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.COMMON.UNIQUE_ITEM_COMMON_LOOT.get(),
-                                    DungeonsGearConfig.COMMON.ARTIFACT_COMMON_LOOT.get()));
+                    DungeonsGearConfig.COMMON_LOOT_TABLES.get().forEach((path) ->{
+                        if(lootTablePath.contains(path) && !DungeonsGearConfig.COMMON_LOOT_TABLES_BLACKLIST.get().contains(lootTablePath)){
+                            generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.UNIQUE_ITEM_COMMON_LOOT.get(),
+                                    DungeonsGearConfig.ARTIFACT_COMMON_LOOT.get()));
                         }
                     });
                 }
@@ -104,7 +102,7 @@ public class GlobalLootModifier{
         @Override
         public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
             // return early if the user has disabled this feature
-            if(!DungeonsGearConfig.COMMON.ENABLE_DUNGEONS_GEAR_LOOT.get()){
+            if(!DungeonsGearConfig.ENABLE_DUNGEONS_GEAR_LOOT.get()){
                 return generatedLoot;
             }
             BlockPos pos = context.get(LootParameters.POSITION);
@@ -119,10 +117,10 @@ public class GlobalLootModifier{
                                 "field_184284_m");
                 if (lootTable != null) {
                     String lootTablePath = lootTable.toString();
-                    DungeonsGearConfig.Common.UNCOMMON_LOOT_TABLES.get().forEach((path) ->{
-                        if(lootTablePath.contains(path) && !DungeonsGearConfig.Common.UNCOMMON_LOOT_TABLES_BLACKLIST.get().contains(path)){
-                            generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.COMMON.UNIQUE_ITEM_UNCOMMON_LOOT.get(),
-                                    DungeonsGearConfig.COMMON.ARTIFACT_UNCOMMON_LOOT.get()));
+                    DungeonsGearConfig.UNCOMMON_LOOT_TABLES.get().forEach((path) ->{
+                        if(lootTablePath.contains(path) && !DungeonsGearConfig.UNCOMMON_LOOT_TABLES_BLACKLIST.get().contains(lootTablePath)){
+                            generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.UNIQUE_ITEM_UNCOMMON_LOOT.get(),
+                                    DungeonsGearConfig.ARTIFACT_UNCOMMON_LOOT.get()));
                         }
                     });
                 }
@@ -150,7 +148,7 @@ public class GlobalLootModifier{
         @Override
         public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
             // return early if the user has disabled this feature
-            if(!DungeonsGearConfig.COMMON.ENABLE_DUNGEONS_GEAR_LOOT.get()){
+            if(!DungeonsGearConfig.ENABLE_DUNGEONS_GEAR_LOOT.get()){
                 return generatedLoot;
             }
             BlockPos pos = context.get(LootParameters.POSITION);
@@ -165,10 +163,10 @@ public class GlobalLootModifier{
                                 "field_184284_m");
                 if (lootTable != null) {
                     String lootTablePath = lootTable.toString();
-                    DungeonsGearConfig.Common.RARE_LOOT_TABLES.get().forEach((path) ->{
-                        if(lootTablePath.contains(path) && !DungeonsGearConfig.Common.RARE_LOOT_TABLES_BLACKLIST.get().contains(path)){
-                            generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.COMMON.UNIQUE_ITEM_RARE_LOOT.get(),
-                                    DungeonsGearConfig.COMMON.ARTIFACT_RARE_LOOT.get()));
+                    DungeonsGearConfig.RARE_LOOT_TABLES.get().forEach((path) ->{
+                        if(lootTablePath.contains(path) && !DungeonsGearConfig.RARE_LOOT_TABLES_BLACKLIST.get().contains(lootTablePath)){
+                            generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.UNIQUE_ITEM_RARE_LOOT.get(),
+                                    DungeonsGearConfig.ARTIFACT_RARE_LOOT.get()));
                         }
                     });
                 }
@@ -196,7 +194,7 @@ public class GlobalLootModifier{
         @Override
         public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
             // return early if the user has disabled this feature
-            if(!DungeonsGearConfig.COMMON.ENABLE_DUNGEONS_GEAR_LOOT.get()){
+            if(!DungeonsGearConfig.ENABLE_DUNGEONS_GEAR_LOOT.get()){
                 return generatedLoot;
             }
             BlockPos pos = context.get(LootParameters.POSITION);
@@ -212,10 +210,10 @@ public class GlobalLootModifier{
                 if (lootTable != null) {
                     String lootTablePath = lootTable.toString();
 
-                    DungeonsGearConfig.Common.SUPER_RARE_LOOT_TABLES.get().forEach((path) ->{
-                        if(lootTablePath.contains(path) && !DungeonsGearConfig.Common.SUPER_RARE_LOOT_TABLES_BLACKLIST.get().contains(path)){
-                            generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.COMMON.UNIQUE_ITEM_SUPER_RARE_LOOT.get(),
-                                    DungeonsGearConfig.COMMON.ARTIFACT_SUPER_RARE_LOOT.get()));
+                    DungeonsGearConfig.SUPER_RARE_LOOT_TABLES.get().forEach((path) ->{
+                        if(lootTablePath.contains(path) && !DungeonsGearConfig.SUPER_RARE_LOOT_TABLES_BLACKLIST.get().contains(lootTablePath)){
+                            generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.UNIQUE_ITEM_SUPER_RARE_LOOT.get(),
+                                    DungeonsGearConfig.ARTIFACT_SUPER_RARE_LOOT.get()));
                         }
                     });
 

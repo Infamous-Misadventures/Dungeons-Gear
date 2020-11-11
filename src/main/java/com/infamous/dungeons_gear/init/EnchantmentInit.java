@@ -2,8 +2,8 @@ package com.infamous.dungeons_gear.init;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.enchantments.armor.*;
-import com.infamous.dungeons_gear.enchantments.melee_ranged.*;
 import com.infamous.dungeons_gear.enchantments.melee.*;
+import com.infamous.dungeons_gear.enchantments.melee_ranged.*;
 import com.infamous.dungeons_gear.enchantments.ranged.*;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.util.ResourceLocation;
@@ -11,10 +11,11 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import static com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList.*;
-import static com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList.*;
-import static com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList.*;
 import static com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList.*;
+import static com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList.*;
+import static com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList.*;
+import static com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList.*;
+
 public class EnchantmentInit {
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
@@ -26,7 +27,9 @@ public class EnchantmentInit {
                     FREEZING = new FreezingEnchantment().setRegistryName(location("freezing")),
                     GRAVITY = new GravityEnchantment().setRegistryName(location("gravity")),
                     POISON_CLOUD = new PoisonCloudEnchantment().setRegistryName(location("poison_cloud")),
+                    DYNAMO = new DynamoEnchantment().setRegistryName(location("dynamo")),
 
+                    BUSY_BEE = new BusyBeeEnchantment().setRegistryName(location("busy_bee")),
                     CHAINS = new ChainsEnchantment().setRegistryName(location("chains")),
                     COMMITTED = new CommittedEnchantment().setRegistryName(location("committed")),
                     CRITICAL_HIT = new CriticalHitEnchantment().setRegistryName(location("critical_hit")),
@@ -75,6 +78,7 @@ public class EnchantmentInit {
                     SPEED_SYNERGY = new SpeedSynergyEnchantment().setRegistryName(location("speed_synergy")),
                     SURPRISE_GIFT = new SurpriseGiftEnchantment().setRegistryName(location("surprise_gift")),
                     SWIFTFOOTED = new SwiftfootedEnchantment().setRegistryName(location("swiftfooted")),
+                    TUMBLEBEE = new TumblebeeEnchantment().setRegistryName(location("tumblebee")),
                     RECYCLER = new RecyclerEnchantment().setRegistryName(location("recycler"))
                     );
 

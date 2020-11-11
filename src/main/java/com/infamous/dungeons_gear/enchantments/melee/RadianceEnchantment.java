@@ -2,6 +2,7 @@ package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
@@ -14,7 +15,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-import static com.infamous.dungeons_gear.items.WeaponList.SUNS_GRACE;
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class RadianceEnchantment extends Enchantment {
@@ -45,7 +45,7 @@ public class RadianceEnchantment extends Enchantment {
         LivingEntity attacker = (LivingEntity)event.getSource().getTrueSource();
         LivingEntity victim = event.getEntityLiving();
         ItemStack mainhand = attacker.getHeldItemMainhand();
-        if((mainhand.getItem() == SUNS_GRACE)){
+        if((mainhand.getItem() == DeferredItemInit.SUNS_GRACE.get())){
             float chance = attacker.getRNG().nextFloat();
             if(chance <=  0.2F) {
                 AOECloudHelper.spawnRegenCloud(attacker, 0);

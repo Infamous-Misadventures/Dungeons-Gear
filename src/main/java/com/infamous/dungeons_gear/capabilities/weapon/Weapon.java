@@ -1,7 +1,5 @@
 package com.infamous.dungeons_gear.capabilities.weapon;
 
-import com.infamous.dungeons_gear.capabilities.combo.ICombo;
-
 public class Weapon implements IWeapon {
 
     private int fuseShotCounter;

@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.SpelunkerArmorModel;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.interfaces.IArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
@@ -28,8 +29,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.List;
 import java.util.UUID;
 
-import static com.infamous.dungeons_gear.items.ArmorList.*;
-
 public class SpelunkerArmorItem extends ArmorItem implements IArmor {
 
     private static final UUID[] ARMOR_MODIFIERS = new UUID[]{
@@ -52,33 +51,32 @@ public class SpelunkerArmorItem extends ArmorItem implements IArmor {
 
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
         UUID uuid = ARMOR_MODIFIERS[slot.getIndex()];
-        builder.put(Attributes.field_233826_i_, new AttributeModifier(uuid, "Armor modifier", (double)this.damageReduceAmount, AttributeModifier.Operation.ADDITION));
-        builder.put(Attributes.field_233827_j_, new AttributeModifier(uuid, "Armor toughness", (double)this.toughness, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ARMOR, new AttributeModifier(uuid, "Armor modifier", (double)this.damageReduceAmount, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(uuid, "Armor toughness", (double)this.toughness, AttributeModifier.Operation.ADDITION));
         if (this.field_234655_c_ > 0) {
-            builder.put(Attributes.field_233820_c_, new AttributeModifier(uuid, "Armor knockback resistance", (double)this.field_234655_c_, AttributeModifier.Operation.ADDITION));
+            builder.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(uuid, "Armor knockback resistance", (double)this.field_234655_c_, AttributeModifier.Operation.ADDITION));
         }
-        builder.put(Attributes.field_233823_f_, new AttributeModifier(uuid, "Armor attack damage boost", 0.2D * 0.5D, AttributeModifier.Operation.MULTIPLY_BASE));
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(uuid, "Armor attack damage boost", 0.2D * 0.5D, AttributeModifier.Operation.MULTIPLY_BASE));
         this.attributeModifiers = builder.build();
     }
 
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(this.unique) return DungeonsGear.MODID + ":textures/models/armor/cave_crawler.png";
-        return DungeonsGear.MODID + ":textures/models/armor/spelunker_armor.png";
+        if(stack.getItem() == DeferredItemInit.SPELUNKER_ARMOR.get() || stack.getItem() == DeferredItemInit.SPELUNKER_ARMOR_HELMET.get()){
+            return DungeonsGear.MODID + ":textures/models/armor/spelunker_armor.png";
+        }
+        else if(stack.getItem() == DeferredItemInit.CAVE_CRAWLER.get() || stack.getItem() == DeferredItemInit.CAVE_CRAWLER_HELMET.get()){
+            return DungeonsGear.MODID + ":textures/models/armor/cave_crawler.png";
+        }
+        else return "";
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     @OnlyIn(Dist.CLIENT)
     public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack stack, EquipmentSlotType armorSlot, A _default) {
-        if(stack.getItem() == SPELUNKER_ARMOR || stack.getItem() == SPELUNKER_ARMOR_HELMET){
-            return (A) new SpelunkerArmorModel<>(1.0F, slot, entityLiving, false);
-        }
-        else if(stack.getItem() == CAVE_CRAWLER || stack.getItem() == CAVE_CRAWLER_HELMET){
-            return (A) new SpelunkerArmorModel<>(1.0F, slot, entityLiving, true);
-        }
-        return null;
+        return (A) new SpelunkerArmorModel<>(1.0F, slot, entityLiving, this.unique);
     }
 
     @Override
@@ -104,7 +102,7 @@ public class SpelunkerArmorItem extends ArmorItem implements IArmor {
         }
         list.add(new TranslationTextComponent(
                 "attribute.name.givesYouAPetBat")
-                .func_240701_a_(TextFormatting.GREEN));
+                .mergeStyle(TextFormatting.GREEN));
     }
 
     @Override

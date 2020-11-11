@@ -1,8 +1,6 @@
 package com.infamous.dungeons_gear.enchantments.lists;
 
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
 
 import java.util.HashMap;
 import java.util.Map;

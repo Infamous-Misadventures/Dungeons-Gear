@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.enchantments.lists;
 import net.minecraft.enchantment.Enchantment;
 
 public class ArmorEnchantmentList {
+    public static Enchantment TUMBLEBEE;
     public static Enchantment ALTRUISTIC;
     public static Enchantment BARRIER;
     public static Enchantment BURNING;

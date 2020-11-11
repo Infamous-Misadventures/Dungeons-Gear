@@ -1,14 +1,10 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.interfaces.IArtifact;
-import com.infamous.dungeons_gear.items.ArtifactList;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
-import net.minecraft.item.Rarity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -22,7 +18,7 @@ import java.util.List;
 
 import static com.infamous.dungeons_gear.utilties.AOECloudHelper.spawnShieldingCloudAtPos;
 
-public class TotemOfShieldingItem extends Item implements IArtifact {
+public class TotemOfShieldingItem extends ArtifactItem {
     public TotemOfShieldingItem(Properties properties) {
         super(properties);
     }
@@ -53,14 +49,10 @@ public class TotemOfShieldingItem extends Item implements IArtifact {
                         entity.sendBreakAnimation(itemUseContextHand);
                     });
                 }
-                setArtifactCooldown(itemUseContextPlayer, itemUseContextItem.getItem(), 400);
+                ArtifactItem.setArtifactCooldown(itemUseContextPlayer, itemUseContextItem.getItem(), 400);
             }
         }
         return ActionResultType.CONSUME;
-    }
-
-    public Rarity getRarity(ItemStack itemStack){
-        return Rarity.RARE;
     }
 
     @Override
@@ -68,7 +60,6 @@ public class TotemOfShieldingItem extends Item implements IArtifact {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.TOTEM_OF_SHIELDING){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "This totem radiates powerful energy that bursts forth as a protective shield around those near it."));
             list.add(new StringTextComponent(TextFormatting.GREEN +
@@ -77,6 +68,5 @@ public class TotemOfShieldingItem extends Item implements IArtifact {
                     "5 Seconds Duration"));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "20 Seconds Cooldown"));
-        }
     }
 }

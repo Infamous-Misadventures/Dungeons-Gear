@@ -1,16 +1,9 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.armor.BattleRobeItem;
-import com.infamous.dungeons_gear.armor.EvocationRobeItem;
-import com.infamous.dungeons_gear.armor.GuardsArmorItem;
-import com.infamous.dungeons_gear.interfaces.IArtifact;
-import com.infamous.dungeons_gear.items.ArtifactList;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.ActionResult;
@@ -23,8 +16,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class IronHideAmuletItem extends Item implements IArtifact {
-    public IronHideAmuletItem(Properties properties) {
+public class IronHideAmuletItem extends ArtifactItem {
+    public IronHideAmuletItem(Item.Properties properties) {
         super(properties);
     }
 
@@ -39,12 +32,8 @@ public class IronHideAmuletItem extends Item implements IArtifact {
                 entity.sendBreakAnimation(handIn);
             });
         }
-        setArtifactCooldown(playerIn, itemstack.getItem(), 500);
+        ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem(), 500);
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
-    }
-
-    public Rarity getRarity(ItemStack itemStack){
-        return Rarity.RARE;
     }
 
     @Override
@@ -52,7 +41,6 @@ public class IronHideAmuletItem extends Item implements IArtifact {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.IRON_HIDE_AMULET){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "The Iron Hide Amulet is both ancient and timeless. Sand mysteriously and endlessly slips through the cracks in the iron."));
             list.add(new StringTextComponent(TextFormatting.GREEN + "" + TextFormatting.ITALIC +
@@ -61,6 +49,5 @@ public class IronHideAmuletItem extends Item implements IArtifact {
                     "11 Seconds Duration"));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "25 Seconds Cooldown"));
-        }
     }
 }

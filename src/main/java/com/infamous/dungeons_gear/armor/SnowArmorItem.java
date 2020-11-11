@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.armor;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.FrostArmorModel;
 import com.infamous.dungeons_gear.armor.models.SnowArmorModel;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.interfaces.IArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
@@ -22,8 +23,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
 
-import static com.infamous.dungeons_gear.items.ArmorList.*;
-
 public class SnowArmorItem extends ArmorItem implements IArmor {
     private final boolean unique;
 
@@ -35,18 +34,23 @@ public class SnowArmorItem extends ArmorItem implements IArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(this.unique) return DungeonsGear.MODID + ":textures/models/armor/frost_armor.png";
-        return DungeonsGear.MODID + ":textures/models/armor/snow_armor.png";
+        if(stack.getItem() == DeferredItemInit.SNOW_ARMOR.get() || stack.getItem() == DeferredItemInit.SNOW_ARMOR_HELMET.get()){
+            return DungeonsGear.MODID + ":textures/models/armor/snow_armor.png";
+        }
+        else if(stack.getItem() == DeferredItemInit.FROST_ARMOR.get() || stack.getItem() == DeferredItemInit.FROST_ARMOR_HELMET.get()){
+            return DungeonsGear.MODID + ":textures/models/armor/frost_armor.png";
+        }
+        else return "";
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     @OnlyIn(Dist.CLIENT)
     public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack stack, EquipmentSlotType armorSlot, A _default) {
-        if(stack.getItem() == SNOW_ARMOR || stack.getItem() == SNOW_ARMOR_HELMET){
+        if(stack.getItem() == DeferredItemInit.SNOW_ARMOR.get() || stack.getItem() == DeferredItemInit.SNOW_ARMOR_HELMET.get()){
             return (A) new SnowArmorModel<>(1.0F, slot, entityLiving);
         }
-        else if(stack.getItem() == FROST_ARMOR || stack.getItem() == FROST_ARMOR_HELMET){
+        else if(stack.getItem() == DeferredItemInit.FROST_ARMOR.get() || stack.getItem() == DeferredItemInit.FROST_ARMOR_HELMET.get()){
             return (A) new FrostArmorModel<>(1.0F, slot, entityLiving);
         }
         return null;

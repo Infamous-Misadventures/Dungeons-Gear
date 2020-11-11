@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.EvocationRobeModel;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.interfaces.IArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
@@ -27,8 +28,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.List;
 import java.util.UUID;
 
-import static com.infamous.dungeons_gear.items.ArmorList.*;
-
 public class EvocationRobeItem extends ArmorItem implements IArmor {
 
     private static final UUID[] ARMOR_MODIFIERS = new UUID[]{
@@ -51,12 +50,12 @@ public class EvocationRobeItem extends ArmorItem implements IArmor {
 
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
         UUID uuid = ARMOR_MODIFIERS[slot.getIndex()];
-        builder.put(Attributes.field_233826_i_, new AttributeModifier(uuid, "Armor modifier", (double)this.damageReduceAmount, AttributeModifier.Operation.ADDITION));
-        builder.put(Attributes.field_233827_j_, new AttributeModifier(uuid, "Armor toughness", (double)this.toughness, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ARMOR, new AttributeModifier(uuid, "Armor modifier", (double)this.damageReduceAmount, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(uuid, "Armor toughness", (double)this.toughness, AttributeModifier.Operation.ADDITION));
         if (this.field_234655_c_ > 0) {
-            builder.put(Attributes.field_233820_c_, new AttributeModifier(uuid, "Armor knockback resistance", (double)this.field_234655_c_, AttributeModifier.Operation.ADDITION));
+            builder.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(uuid, "Armor knockback resistance", (double)this.field_234655_c_, AttributeModifier.Operation.ADDITION));
         }
-        builder.put(Attributes.field_233821_d_, new AttributeModifier(uuid, "Armor speed boost", 0.15D * 0.5D, AttributeModifier.Operation.MULTIPLY_BASE));
+        builder.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(uuid, "Armor speed boost", 0.15D * 0.5D, AttributeModifier.Operation.MULTIPLY_BASE));
 
         this.attributeModifiers = builder.build();
     }
@@ -64,21 +63,20 @@ public class EvocationRobeItem extends ArmorItem implements IArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(this.unique) return DungeonsGear.MODID + ":textures/models/armor/ember_robe.png";
-        return DungeonsGear.MODID + ":textures/models/armor/evocation_robe.png";
+        if(stack.getItem() == DeferredItemInit.EVOCATION_ROBE.get() || stack.getItem() == DeferredItemInit.EVOCATION_ROBE_HAT.get()){
+            return DungeonsGear.MODID + ":textures/models/armor/evocation_robe.png";
+        }
+        else if(stack.getItem() == DeferredItemInit.EMBER_ROBE.get() || stack.getItem() == DeferredItemInit.EMBER_ROBE_HAT.get()){
+            return DungeonsGear.MODID + ":textures/models/armor/ember_robe.png";
+        }
+        else return "";
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     @OnlyIn(Dist.CLIENT)
     public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack stack, EquipmentSlotType armorSlot, A _default) {
-        if(stack.getItem() == EVOCATION_ROBE || stack.getItem() == EVOCATION_ROBE_HAT){
-            return (A) new EvocationRobeModel<>(1.0F, slot, entityLiving);
-        }
-        else if(stack.getItem() == EMBER_ROBE || stack.getItem() == EMBER_ROBE_HAT){
-            return (A) new EvocationRobeModel<>(1.0F, slot, entityLiving);
-        }
-        return null;
+        return (A) new EvocationRobeModel<>(1.0F, slot, entityLiving);
     }
 
     @Override

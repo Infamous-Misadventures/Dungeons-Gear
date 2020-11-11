@@ -1,11 +1,11 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.interfaces.IArtifact;
-import com.infamous.dungeons_gear.items.ArtifactList;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -19,8 +19,8 @@ import java.util.List;
 
 import static com.infamous.dungeons_gear.utilties.AOECloudHelper.spawnRegenCloudAtPos;
 
-public class TotemOfRegenerationItem extends Item implements IArtifact {
-    public TotemOfRegenerationItem(Properties properties) {
+public class TotemOfRegenerationItem extends ArtifactItem {
+    public TotemOfRegenerationItem(Item.Properties properties) {
         super(properties);
     }
 
@@ -52,14 +52,10 @@ public class TotemOfRegenerationItem extends Item implements IArtifact {
                 }
 
 
-                setArtifactCooldown(itemUseContextPlayer, itemUseContextItem.getItem(), 500);
+                ArtifactItem.setArtifactCooldown(itemUseContextPlayer, itemUseContextItem.getItem(), 500);
             }
         }
         return ActionResultType.CONSUME;
-    }
-
-    public Rarity getRarity(ItemStack itemStack){
-        return Rarity.RARE;
     }
 
     @Override
@@ -67,7 +63,6 @@ public class TotemOfRegenerationItem extends Item implements IArtifact {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.TOTEM_OF_REGENERATION){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "This hand-crafted wooden figurine radiates a warmth like that of a crackling campfire, healing those who gather around it."));
             list.add(new StringTextComponent(TextFormatting.GREEN +
@@ -76,6 +71,5 @@ public class TotemOfRegenerationItem extends Item implements IArtifact {
                     "5 Seconds Duration"));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "25 Seconds Cooldown"));
-        }
     }
 }

@@ -2,9 +2,10 @@ package com.infamous.dungeons_gear.ranged.bows;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
-import com.infamous.dungeons_gear.capabilities.weapon.WeaponProvider;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.utilties.AbilityHelper;
+import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
 import com.infamous.dungeons_gear.utilties.RangedAttackHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -24,7 +25,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
-import static com.infamous.dungeons_gear.items.RangedWeaponList.MECHANICAL_SHORTBOW;
 
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class BowEvents {
@@ -38,12 +38,13 @@ public class BowEvents {
         int charge = event.getCharge();
         ItemStack stack = event.getBow();
         if(stack.getItem() instanceof BowItem){
-            IWeapon weaponCap = stack.getCapability(WeaponProvider.WEAPON_CAPABILITY).orElseThrow(IllegalStateException::new);
+            IWeapon weaponCap = CapabilityHelper.getWeaponCapability(stack);
+            if(weaponCap == null) return;
             long lastFiredTime = weaponCap.getLastFiredTime();
             float bowChargeTime = weaponCap.getBowChargeTime();
 
             int accelerateLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.ACCELERATE, stack);
-            if(stack.getItem() == MECHANICAL_SHORTBOW) accelerateLevel++;
+            if(stack.getItem() == DeferredItemInit.MECHANICAL_SHORTBOW.get()) accelerateLevel++;
 
             float defaultChargeTime = 20.0F;
             float arrowVelocity = RangedAttackHelper.getVanillaArrowVelocity(stack, charge);
@@ -80,7 +81,8 @@ public class BowEvents {
                 LivingEntity victim = (LivingEntity) ((EntityRayTraceResult)rayTraceResult).getEntity();
                 boolean huntingBowFlag = arrowEntity.getTags().contains("HuntingBow")
                         || arrowEntity.getTags().contains("HuntersPromise")
-                        || arrowEntity.getTags().contains("MastersBow");
+                        || arrowEntity.getTags().contains("MastersBow")
+                        || arrowEntity.getTags().contains("AncientBow");
                 boolean snowBowFlag = arrowEntity.getTags().contains("SnowBow")
                         || arrowEntity.getTags().contains("WintersTouch");
                 boolean trickbowFlag = arrowEntity.getTags().contains("Trickbow")

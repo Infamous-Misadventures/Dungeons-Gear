@@ -4,7 +4,6 @@ import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.TargetGoal;
 import net.minecraft.entity.passive.BatEntity;
-import net.minecraft.entity.passive.horse.LlamaEntity;
 
 import java.util.EnumSet;
 

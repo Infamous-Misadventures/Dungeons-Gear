@@ -1,14 +1,11 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.capabilities.combo.ComboProvider;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
-import com.infamous.dungeons_gear.interfaces.IArtifact;
-import com.infamous.dungeons_gear.items.ArtifactList;
+import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -19,15 +16,16 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class FlamingQuiver extends Item implements IArtifact {
-    public FlamingQuiver(Properties properties) {
+public class FlamingQuiver extends ArtifactItem {
+    public FlamingQuiver(Item.Properties properties) {
         super(properties);
     }
 
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         ItemStack itemstack = playerIn.getHeldItem(handIn);
 
-        ICombo comboCap = playerIn.getCapability(ComboProvider.COMBO_CAPABILITY).orElseThrow(IllegalStateException::new);
+        ICombo comboCap = CapabilityHelper.getComboCapability(playerIn);
+        if(comboCap == null) return new ActionResult<>(ActionResultType.FAIL, itemstack);
         comboCap.setFlamingArrowsCount(7);
 
         if(!playerIn.isCreative()){
@@ -37,12 +35,8 @@ public class FlamingQuiver extends Item implements IArtifact {
         }
 
 
-        setArtifactCooldown(playerIn, itemstack.getItem(), 600);
+        ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem(), 600);
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
-    }
-
-    public Rarity getRarity(ItemStack itemStack){
-        return Rarity.RARE;
     }
 
     @Override
@@ -50,13 +44,11 @@ public class FlamingQuiver extends Item implements IArtifact {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.FLAMING_QUIVER){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "This quiver is filled with the deadliest of arrows."));
             list.add(new StringTextComponent(TextFormatting.GREEN +
-                    "Gives you 7 burning arrows."));
+                    "Turns the next 7 arrows you shoot into burning arrows."));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "30 Seconds Cooldown"));
-        }
     }
 }

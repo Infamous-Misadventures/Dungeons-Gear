@@ -1,10 +1,9 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.interfaces.IArtifact;
-import com.infamous.dungeons_gear.items.ArtifactList;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.ActionResult;
@@ -17,8 +16,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class BootsOfSwiftnessItem extends Item implements IArtifact {
-    public BootsOfSwiftnessItem(Properties properties) {
+public class BootsOfSwiftnessItem extends ArtifactItem {
+    public BootsOfSwiftnessItem(Item.Properties properties) {
         super(properties);
     }
 
@@ -32,12 +31,8 @@ public class BootsOfSwiftnessItem extends Item implements IArtifact {
                 entity.sendBreakAnimation(handIn);
             });
         }
-        setArtifactCooldown(playerIn, itemstack.getItem(), 100);
+        ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem(), 100);
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
-    }
-
-    public Rarity getRarity(ItemStack itemStack){
-        return Rarity.RARE;
     }
 
     @Override
@@ -45,7 +40,6 @@ public class BootsOfSwiftnessItem extends Item implements IArtifact {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.BOOTS_OF_SWIFTNESS){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "Boots blessed with enchantments to allow for swift movements. Useful in uncertain times such as these."));
             list.add(new StringTextComponent(TextFormatting.GREEN +
@@ -54,6 +48,6 @@ public class BootsOfSwiftnessItem extends Item implements IArtifact {
                     "2 Seconds Duration"));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "5 Seconds Cooldown"));
-        }
+
     }
 }

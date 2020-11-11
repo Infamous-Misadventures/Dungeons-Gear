@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
 @Mod.EventBusSubscriber(modid= MODID)
-public class AltruisticEnchantment extends Enchantment{
+public class AltruisticEnchantment extends Enchantment {
 
     public AltruisticEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlotType[]{

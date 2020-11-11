@@ -1,14 +1,11 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.interfaces.IArtifact;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
-import com.infamous.dungeons_gear.items.ArtifactList;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
 import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -19,8 +16,8 @@ import java.util.List;
 
 import static com.infamous.dungeons_gear.utilties.AreaOfEffectHelper.causeMagicExplosionAttack;
 
-public class HarvesterItem extends Item implements IArtifact, ISoulGatherer {
-    public HarvesterItem(Properties properties) {
+public class HarvesterItem extends ArtifactItem implements ISoulGatherer {
+    public HarvesterItem(Item.Properties properties) {
         super(properties);
     }
 
@@ -42,16 +39,10 @@ public class HarvesterItem extends Item implements IArtifact, ISoulGatherer {
             }
 
 
-            setArtifactCooldown(playerIn, itemstack.getItem(), 20);
+            ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem(), 20);
         }
 
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
-    }
-
-
-
-    public Rarity getRarity(ItemStack itemStack){
-        return Rarity.RARE;
     }
 
     @Override
@@ -59,7 +50,6 @@ public class HarvesterItem extends Item implements IArtifact, ISoulGatherer {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.HARVESTER){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "The Harvester siphons the souls of the dead, before releasing them into a cluster hex of power."));
             list.add(new StringTextComponent(TextFormatting.GREEN +
@@ -70,7 +60,6 @@ public class HarvesterItem extends Item implements IArtifact, ISoulGatherer {
                     "Requires 40 XP"));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "1 Second Cooldown"));
-        }
     }
 
     @Override

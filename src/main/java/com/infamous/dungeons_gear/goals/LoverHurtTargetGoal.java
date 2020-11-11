@@ -1,15 +1,12 @@
 package com.infamous.dungeons_gear.goals;
 
-import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.goal.TargetGoal;
-import net.minecraft.entity.monster.AbstractIllagerEntity;
-import net.minecraft.entity.monster.VindicatorEntity;
 
 import java.util.EnumSet;
 
-import static com.infamous.dungeons_gear.goals.GoalUtils.*;
+import static com.infamous.dungeons_gear.goals.GoalUtils.shouldAttackEntity;
 
 public class LoverHurtTargetGoal extends TargetGoal {
     private final MobEntity mobEntity;

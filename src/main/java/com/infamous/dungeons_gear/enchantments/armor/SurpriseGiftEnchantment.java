@@ -1,10 +1,11 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.types.DropsEnchantment;
-import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
+import com.infamous.dungeons_gear.enchantments.types.DropsEnchantment;
 import com.infamous.dungeons_gear.init.PotionList;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.ItemEntity;
@@ -12,7 +13,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.potion.*;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.potion.PotionUtils;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -26,7 +29,7 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 public class SurpriseGiftEnchantment extends DropsEnchantment {
 
     public SurpriseGiftEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlotType[]{
+        super(Enchantment.Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlotType[]{
                 EquipmentSlotType.HEAD,
                 EquipmentSlotType.CHEST,
                 EquipmentSlotType.LEGS,
@@ -39,7 +42,7 @@ public class SurpriseGiftEnchantment extends DropsEnchantment {
 
     @Override
     public boolean canApplyTogether(Enchantment enchantment) {
-        return !(enchantment instanceof DropsEnchantment);
+        return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof DropsEnchantment);
     }
 
     @SubscribeEvent

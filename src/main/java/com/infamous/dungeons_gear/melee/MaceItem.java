@@ -1,13 +1,21 @@
 package com.infamous.dungeons_gear.melee;
 
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
-import com.infamous.dungeons_gear.items.WeaponList;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -15,12 +23,29 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class MaceItem extends PickaxeItem implements IMeleeWeapon {
-    public MaceItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builder) {
-        super(tier, attackDamageIn, attackSpeedIn, builder);
+public class MaceItem extends TieredItem implements IMeleeWeapon {
+
+    private final boolean unique;
+    private final float attackDamage;
+    private final float attackSpeed;
+    private Multimap<Attribute, AttributeModifier> attributeModifierMultimap;
+    public MaceItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties, boolean isUnique) {
+        super(tier, properties);
+        this.attackDamage = (float)attackDamageIn + tier.getAttackDamage();
+        this.attackSpeed = attackSpeedIn;
+
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double)this.attackDamage, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)this.attackSpeed, AttributeModifier.Operation.ADDITION));
+        this.attributeModifierMultimap = builder.build();
+        this.unique = isUnique;
     }
 
-    // This is a designated weapon, so it will not be penalized for attacking as a normal pickaxe would
+    @Override
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
+        return slot == EquipmentSlotType.MAINHAND ? this.attributeModifierMultimap : super.getAttributeModifiers(slot, stack);
+    }
+
     @Override
     public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         stack.damageItem(1, attacker, (p_220039_0_) -> {
@@ -35,6 +60,36 @@ public class MaceItem extends PickaxeItem implements IMeleeWeapon {
         return true;
     }
 
+
+    public boolean canPlayerBreakBlockWhileHolding(BlockState state, World worldIn, BlockPos pos, PlayerEntity player) {
+        return true;
+    }
+
+    public float getDestroySpeed(ItemStack stack, BlockState state) {
+        return 1.0F;
+    }
+
+    /**
+     * Called when a Block is destroyed using this Item. Return true to trigger the "Use Item" statistic.
+     */
+    public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
+        if (state.getBlockHardness(worldIn, pos) != 0.0F) {
+            stack.damageItem(2, entityLiving, (p_220044_0_) -> {
+                p_220044_0_.sendBreakAnimation(EquipmentSlotType.MAINHAND);
+            });
+        }
+
+        return true;
+    }
+
+    /**
+     * Check whether this Item can harvest the given Block
+     */
+
+    public boolean canHarvestBlock(BlockState blockIn) {
+        return blockIn.getHarvestLevel() < 3;
+    }
+
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
         return enchantment.type.canEnchantItem(Items.IRON_SWORD) && enchantment != Enchantments.SWEEPING;
@@ -42,9 +97,7 @@ public class MaceItem extends PickaxeItem implements IMeleeWeapon {
 
     public Rarity getRarity(ItemStack itemStack){
 
-        if(itemStack.getItem() == WeaponList.FLAIL
-                || itemStack.getItem() == WeaponList.SUNS_GRACE
-        ){
+        if(this.unique){
             return Rarity.RARE;
         }
         return Rarity.UNCOMMON;
@@ -55,17 +108,17 @@ public class MaceItem extends PickaxeItem implements IMeleeWeapon {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == WeaponList.FLAIL){
+        if(stack.getItem() == DeferredItemInit.FLAIL.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "This ancient weapon inflicts grave blunt damage to those who cannot evade the deadly metal ball."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Binds And Chains Enemies (Chains I)"));
         }
-        if(stack.getItem() == WeaponList.SUNS_GRACE){
+        if(stack.getItem() == DeferredItemInit.SUNS_GRACE.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "This mace, engraved with secret healing runes, grants powerful restorative powers."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Heals Allies In Area (Radiance I)"));
         }
-        if(stack.getItem() == WeaponList.MACE){
+        if(stack.getItem() == DeferredItemInit.MACE.get()){
 
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The Mace is a brutal tool of war and what it lacks in finesse; it makes up for in power."));
 

@@ -12,32 +12,32 @@ import java.util.function.Predicate;
 
 public class ModEnchantmentTypes {
     public static final EnchantmentType MELEE = addEnchantment("melee", item ->
-                    DungeonsGearConfig.COMMON.ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR.get() ?
+                    DungeonsGearConfig.ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR.get() ?
                             (item instanceof SwordItem || item instanceof IMeleeWeapon) :
                             (item instanceof IMeleeWeapon)
     );
 
     public static final EnchantmentType MELEE_RANGED = addEnchantment("melee_ranged", item ->
-                    DungeonsGearConfig.COMMON.ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR.get() ?
+                    DungeonsGearConfig.ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR.get() ?
                             (item instanceof SwordItem || item instanceof IMeleeWeapon || item instanceof BowItem || item instanceof CrossbowItem) :
                             (item instanceof IMeleeWeapon || item instanceof IRangedWeapon)
     );
 
     public static final EnchantmentType RANGED = addEnchantment("ranged", item ->
-                    DungeonsGearConfig.COMMON.ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR.get() ?
+                    DungeonsGearConfig.ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR.get() ?
                             (item instanceof BowItem || item instanceof CrossbowItem) :
                             (item instanceof IRangedWeapon)
     );
 
 
     public static final EnchantmentType ARMOR = addEnchantment("armor", item ->
-            DungeonsGearConfig.COMMON.ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR.get() ?
+            DungeonsGearConfig.ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR.get() ?
                     (item instanceof ArmorItem) :
                     (item instanceof IArmor)
     );
 
     public static final EnchantmentType ARMOR_RANGED = addEnchantment("armor_ranged", item ->
-                    DungeonsGearConfig.COMMON.ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR.get() ?
+                    DungeonsGearConfig.ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR.get() ?
                             (item instanceof BowItem || item instanceof CrossbowItem || item instanceof ArmorItem) :
                             (item instanceof IRangedWeapon || item instanceof IArmor)
     );

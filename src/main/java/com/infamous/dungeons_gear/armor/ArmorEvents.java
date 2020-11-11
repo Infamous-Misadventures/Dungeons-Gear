@@ -2,25 +2,39 @@ package com.infamous.dungeons_gear.armor;
 
 
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_gear.capabilities.combo.ComboProvider;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
+import com.infamous.dungeons_gear.capabilities.summoning.ISummonable;
+import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
+import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
+import com.infamous.dungeons_gear.goals.BeeFollowOwnerGoal;
+import com.infamous.dungeons_gear.goals.BeeOwnerHurtByTargetGoal;
+import com.infamous.dungeons_gear.goals.BeeOwnerHurtTargetGoal;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.interfaces.IArmor;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.ArmorEffectHelper;
+import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.IndirectEntityDamageSource;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.*;
@@ -30,8 +44,6 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import java.util.Collection;
 import java.util.List;
-
-import static com.infamous.dungeons_gear.items.ArmorList.*;
 
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class ArmorEvents {
@@ -171,7 +183,7 @@ public class ArmorEvents {
         if(event.getSource().getTrueSource() instanceof LivingEntity){
             LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
             ItemStack chestplate = attacker.getItemStackFromSlot(EquipmentSlotType.CHEST);
-            boolean lifeStealChestplateFlag = chestplate.getItem() == SPIDER_ARMOR || chestplate.getItem() instanceof GrimArmorItem;
+            boolean lifeStealChestplateFlag = chestplate.getItem() == DeferredItemInit.SPIDER_ARMOR.get() || chestplate.getItem() instanceof GrimArmorItem;
             if(lifeStealChestplateFlag){
                 float victimMaxHealth = event.getEntityLiving().getMaxHealth();
                 if(attacker.getHealth() < attacker.getMaxHealth()){
@@ -251,7 +263,8 @@ public class ArmorEvents {
         if(player == null) return;
         if(event.phase == TickEvent.Phase.START) return;
         if(player.isAlive()){
-            ICombo comboCap = player.getCapability(ComboProvider.COMBO_CAPABILITY).orElseThrow(IllegalStateException::new);
+            ICombo comboCap = CapabilityHelper.getComboCapability(player);
+            if(comboCap == null) return;
             int jumpCooldownTimer = comboCap.getJumpCooldownTimer();
             if(jumpCooldownTimer > 0){
                 comboCap.setJumpCooldownTimer(jumpCooldownTimer - 1);
@@ -266,14 +279,17 @@ public class ArmorEvents {
             PlayerEntity playerEntity = (PlayerEntity) livingEntity;
             ItemStack helmet = playerEntity.getItemStackFromSlot(EquipmentSlotType.HEAD);
             ItemStack chestplate = playerEntity.getItemStackFromSlot(EquipmentSlotType.CHEST);
-            ICombo comboCap = playerEntity.getCapability(ComboProvider.COMBO_CAPABILITY).orElseThrow(IllegalStateException::new);
+            ICombo comboCap = CapabilityHelper.getComboCapability(playerEntity);
+            if(comboCap == null) return;
             int jumpCooldownTimer = comboCap.getJumpCooldownTimer();
 
-            handleJumpBoost(playerEntity, helmet, chestplate, jumpCooldownTimer);
+            if(jumpCooldownTimer <= 0){
+                handleJumpBoost(playerEntity, helmet, chestplate);
 
-            handleInvulnerableJump(playerEntity, helmet, chestplate, jumpCooldownTimer);
+                handleInvulnerableJump(playerEntity, helmet, chestplate);
 
-            handleJumpEnchantments(playerEntity, helmet, chestplate, jumpCooldownTimer);
+                handleJumpEnchantments(playerEntity, helmet, chestplate);
+            }
 
             float jumpCooldown = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getLongerJumpAbilityCooldown() : 0;
             float jumpCooldown2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getLongerJumpAbilityCooldown() : 0;
@@ -284,54 +300,103 @@ public class ArmorEvents {
         }
     }
 
-    private static void handleJumpEnchantments(PlayerEntity playerEntity, ItemStack helmet, ItemStack chestplate, int jumpCooldownTimer) {
+    private static void handleJumpEnchantments(PlayerEntity playerEntity, ItemStack helmet, ItemStack chestplate) {
         if(ModEnchantmentHelper.hasEnchantment(playerEntity, ArmorEnchantmentList.ELECTRIFIED)){
-            if(jumpCooldownTimer == 0){
                 AreaOfEffectHelper.electrifyNearbyEnemies(playerEntity, 5, 5, 3);
-            }
         }
 
         if(ModEnchantmentHelper.hasEnchantment(playerEntity, ArmorEnchantmentList.FIRE_TRAIL)){
-            if(jumpCooldownTimer == 0){
-                int fireTrailLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.FIRE_TRAIL, playerEntity);
+            int fireTrailLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.FIRE_TRAIL, playerEntity);
                 AreaOfEffectHelper.burnNearbyEnemies(playerEntity, 1.0F * fireTrailLevel, 1.5F);
+        }
+
+        // TODO: Beenest Armor and Buzzynest Armor
+        if(ModEnchantmentHelper.hasEnchantment(playerEntity, ArmorEnchantmentList.TUMBLEBEE)){
+            int tumblebeeLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.TUMBLEBEE, playerEntity);
+
+            float tumblebeeRand = playerEntity.getRNG().nextFloat();
+            if(tumblebeeRand <= 0.333F * tumblebeeLevel){
+                summonTumblebeeBee(playerEntity);
             }
         }
 
-        boolean highlandArmorFlag = chestplate.getItem() == HIGHLAND_ARMOR
-                || helmet.getItem() == HIGHLAND_ARMOR_HELMET;
+        boolean highlandArmorFlag = chestplate.getItem() == DeferredItemInit.HIGHLAND_ARMOR.get()
+                || helmet.getItem() == DeferredItemInit.HIGHLAND_ARMOR_HELMET.get();
         if(ModEnchantmentHelper.hasEnchantment(playerEntity, ArmorEnchantmentList.SWIFTFOOTED) || highlandArmorFlag){
-            if(jumpCooldownTimer == 0){
                 int swiftfootedLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.SWIFTFOOTED, playerEntity);
                 if(highlandArmorFlag) swiftfootedLevel++;
                 EffectInstance speedBoost = new EffectInstance(Effects.SPEED, 60, swiftfootedLevel - 1);
                 playerEntity.addPotionEffect(speedBoost);
+        }
+
+        handleDynamoEnchantment(playerEntity);
+    }
+
+    private static void handleDynamoEnchantment(PlayerEntity playerEntity) {
+        ItemStack mainhand = playerEntity.getHeldItemMainhand();
+        boolean uniqueWeaponFlag = mainhand.getItem() == DeferredItemInit.GREAT_AXEBLADE.get()
+                || mainhand.getItem() == DeferredItemInit.ANCIENT_BOW.get()
+                || mainhand.getItem() == DeferredItemInit.CORRUPTED_CROSSBOW.get();
+        if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.DYNAMO) || uniqueWeaponFlag){
+            int dynamoLevel = EnchantmentHelper.getEnchantmentLevel(MeleeRangedEnchantmentList.DYNAMO, mainhand);
+            if(uniqueWeaponFlag) dynamoLevel++;
+            ICombo comboCap = CapabilityHelper.getComboCapability(playerEntity);
+            if(comboCap == null) return;
+            double originalDynamoMultiplier = comboCap.getDynamoMultiplier();
+            double dynamoModifier = 1.0D + (0.5D * Math.max((dynamoLevel - 1), 0));
+            comboCap.setDynamoMultiplier(originalDynamoMultiplier + dynamoModifier);
+        }
+    }
+
+    private static void summonTumblebeeBee(PlayerEntity playerEntity) {
+        ISummoner summonerCap = CapabilityHelper.getSummonerCapability(playerEntity);
+        if(summonerCap == null) return;
+        BeeEntity beeEntity = EntityType.BEE.create(playerEntity.world);
+        if (beeEntity!= null) {
+            ISummonable summonable = CapabilityHelper.getSummonableCapability(beeEntity);
+            if(summonable != null && summonerCap.addTumblebeeBee(beeEntity.getUniqueID())){
+                summonable.setSummoner(playerEntity.getUniqueID());
+
+                createBee(playerEntity, beeEntity);
+            }
+            else {
+                beeEntity.remove();
             }
         }
     }
 
-    private static void handleInvulnerableJump(PlayerEntity playerEntity, ItemStack helmet, ItemStack chestplate, int jumpCooldownTimer) {
+    private static void createBee(PlayerEntity playerEntity, BeeEntity beeEntity) {
+        beeEntity.setLocationAndAngles((double)playerEntity.getPosX() + 0.5D, (double)playerEntity.getPosY() + 0.05D, (double)playerEntity.getPosZ() + 0.5D, 0.0F, 0.0F);
+
+        beeEntity.goalSelector.addGoal(2, new BeeFollowOwnerGoal(beeEntity, 2.1D, 10.0F, 2.0F, false));
+
+        beeEntity.targetSelector.addGoal(1, new BeeOwnerHurtByTargetGoal(beeEntity));
+        beeEntity.targetSelector.addGoal(2, new BeeOwnerHurtTargetGoal(beeEntity));
+        beeEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(beeEntity, LivingEntity.class, 5, false, false,
+                (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
+
+        playerEntity.world.playSound((PlayerEntity)null, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ENTITY_BEE_LOOP, SoundCategory.AMBIENT, 64.0F, 1.0F);
+        playerEntity.world.addEntity(beeEntity);
+    }
+
+    private static void handleInvulnerableJump(PlayerEntity playerEntity, ItemStack helmet, ItemStack chestplate) {
         boolean invulnerableJump = helmet.getItem() instanceof IArmor && ((IArmor) helmet.getItem()).doBriefInvulnerabilityWhenJumping();
         boolean invulnerableJump2 = chestplate.getItem() instanceof IArmor && ((IArmor) chestplate.getItem()).doBriefInvulnerabilityWhenJumping();
         boolean doInvulnerableJump  = invulnerableJump || invulnerableJump2;
 
-        if(jumpCooldownTimer == 0) {
             if(doInvulnerableJump){
                 EffectInstance resistance = new EffectInstance(Effects.RESISTANCE, 20, 4);
                 playerEntity.addPotionEffect(resistance);
             }
-        }
     }
 
-    private static void handleJumpBoost(PlayerEntity playerEntity, ItemStack helmet, ItemStack chestplate, int jumpCooldownTimer) {
+    private static void handleJumpBoost(PlayerEntity playerEntity, ItemStack helmet, ItemStack chestplate) {
         float jumpBoost = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getHigherJumps() : 0;
         float jumpBoost2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getHigherJumps() : 0;
         float totalJumpBoost = jumpBoost * 0.002F + jumpBoost2 * 0.002F;
 
-        if(jumpCooldownTimer == 0){
             if(totalJumpBoost > 0){
                 playerEntity.setMotion(playerEntity.getMotion().add(0, totalJumpBoost, 0));
             }
-        }
     }
 }

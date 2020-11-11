@@ -1,9 +1,11 @@
 package com.infamous.dungeons_gear.ranged.bows;
 
+import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
-import com.infamous.dungeons_gear.capabilities.weapon.WeaponProvider;
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.interfaces.IRangedWeapon;
+import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.RangedAttackHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
@@ -22,7 +24,10 @@ public abstract class AbstractDungeonsBowItem extends BowItem implements IRanged
     private boolean isUnique;
 
     public AbstractDungeonsBowItem(Properties builder, float defaultChargeTimeIn, boolean isUniqueIn) {
-        super(builder);
+        super(builder
+                .group(DungeonsGear.RANGED_WEAPON_GROUP)
+                .maxDamage(DungeonsGearConfig.BOW_DURABILITY.get())
+        );
         this.defaultChargeTime = defaultChargeTimeIn;
         this.isUnique = isUniqueIn;
     }
@@ -154,7 +159,8 @@ public abstract class AbstractDungeonsBowItem extends BowItem implements IRanged
         int accelerateLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.ACCELERATE, stack);
         if(this.hasAccelerateBuiltIn(stack)) accelerateLevel++;
 
-        IWeapon weaponCap = stack.getCapability(WeaponProvider.WEAPON_CAPABILITY).orElseThrow(IllegalStateException::new);
+        IWeapon weaponCap = CapabilityHelper.getWeaponCapability(stack);
+        if(weaponCap == null) return Math.max(this.getDefaultChargeTime() - 5 * quickChargeLevel, 0);
         float bowChargeTime = weaponCap.getBowChargeTime();
         long lastFiredTime = weaponCap.getLastFiredTime();
 

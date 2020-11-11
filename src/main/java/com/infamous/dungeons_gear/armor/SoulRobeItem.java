@@ -2,6 +2,7 @@ package com.infamous.dungeons_gear.armor;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.SoulRobeModel;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.interfaces.IArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
@@ -21,8 +22,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
 
-import static com.infamous.dungeons_gear.items.ArmorList.*;
-
 public class SoulRobeItem extends ArmorItem implements IArmor {
     private final boolean unique;
 
@@ -34,21 +33,20 @@ public class SoulRobeItem extends ArmorItem implements IArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(this.unique) return DungeonsGear.MODID + ":textures/models/armor/souldancer_robe.png";
-        return DungeonsGear.MODID + ":textures/models/armor/soul_robe.png";
+        if(stack.getItem() == DeferredItemInit.SOUL_ROBE.get() || stack.getItem() == DeferredItemInit.SOUL_ROBE_HOOD.get()){
+            return DungeonsGear.MODID + ":textures/models/armor/soul_robe.png";
+        }
+        else if(stack.getItem() == DeferredItemInit.SOULDANCER_ROBE.get() || stack.getItem() == DeferredItemInit.SOULDANCER_ROBE_HOOD.get()){
+            return DungeonsGear.MODID + ":textures/models/armor/souldancer_robe.png";
+        }
+        else return "";
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     @OnlyIn(Dist.CLIENT)
     public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack stack, EquipmentSlotType armorSlot, A _default) {
-        if(stack.getItem() == SOUL_ROBE || stack.getItem() == SOUL_ROBE_HOOD){
-            return (A) new SoulRobeModel<>(1.0F, slot, entityLiving);
-        }
-        else if(stack.getItem() == SOULDANCER_ROBE || stack.getItem() == SOULDANCER_ROBE_HOOD){
-            return (A) new SoulRobeModel<>(1.0F, slot, entityLiving);
-        }
-        return null;
+        return (A) new SoulRobeModel<>(1.0F, slot, entityLiving);
     }
 
     @Override

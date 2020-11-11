@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.OcelotArmorModel;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.interfaces.IArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
@@ -28,8 +29,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.List;
 import java.util.UUID;
 
-import static com.infamous.dungeons_gear.items.ArmorList.*;
-
 public class OcelotArmorItem extends ArmorItem implements IArmor {
 
     private static final UUID[] ARMOR_MODIFIERS = new UUID[]{
@@ -52,31 +51,30 @@ public class OcelotArmorItem extends ArmorItem implements IArmor {
 
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
         UUID uuid = ARMOR_MODIFIERS[slot.getIndex()];
-        builder.put(Attributes.field_233826_i_, new AttributeModifier(uuid, "Armor modifier", (double)this.damageReduceAmount, AttributeModifier.Operation.ADDITION));
-        builder.put(Attributes.field_233827_j_, new AttributeModifier(uuid, "Armor toughness", (double)this.toughness, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ARMOR, new AttributeModifier(uuid, "Armor modifier", (double)this.damageReduceAmount, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(uuid, "Armor toughness", (double)this.toughness, AttributeModifier.Operation.ADDITION));
         if (this.field_234655_c_ > 0) {
-            builder.put(Attributes.field_233820_c_, new AttributeModifier(uuid, "Armor knockback resistance", (double)this.field_234655_c_, AttributeModifier.Operation.ADDITION));
+            builder.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(uuid, "Armor knockback resistance", (double)this.field_234655_c_, AttributeModifier.Operation.ADDITION));
         }this.attributeModifiers = builder.build();
     }
 
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(this.unique) return DungeonsGear.MODID + ":textures/models/armor/shadow_walker.png";
-        return DungeonsGear.MODID + ":textures/models/armor/ocelot_armor.png";
+        if(stack.getItem() == DeferredItemInit.OCELOT_ARMOR.get() || stack.getItem() == DeferredItemInit.OCELOT_ARMOR_HOOD.get()){
+            return DungeonsGear.MODID + ":textures/models/armor/ocelot_armor.png";
+        }
+        else if(stack.getItem() == DeferredItemInit.SHADOW_WALKER.get() || stack.getItem() == DeferredItemInit.SHADOW_WALKER_HOOD.get()){
+            return DungeonsGear.MODID + ":textures/models/armor/shadow_walker.png";
+        }
+        else return "";
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     @OnlyIn(Dist.CLIENT)
     public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack stack, EquipmentSlotType armorSlot, A _default) {
-        if(stack.getItem() == OCELOT_ARMOR || stack.getItem() == OCELOT_ARMOR_HOOD){
-            return (A) new OcelotArmorModel<>(1.0F, slot, entityLiving);
-        }
-        else if(stack.getItem() == SHADOW_WALKER || stack.getItem() == SHADOW_WALKER_HOOD){
-            return (A) new OcelotArmorModel<>(1.0F, slot, entityLiving);
-        }
-        return null;
+        return (A) new OcelotArmorModel<>(1.0F, slot, entityLiving);
     }
 
 
@@ -99,7 +97,7 @@ public class OcelotArmorItem extends ArmorItem implements IArmor {
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The legendary black Ocelot was as graceful as it was deadly. When you wear its pelt, you feel like your enemies are left chasing your shadow."));
             list.add(new TranslationTextComponent(
                     "attribute.name.briefInvulnerabilityWhenJumping")
-                    .func_240701_a_(TextFormatting.GREEN));
+                    .mergeStyle(TextFormatting.GREEN));
         }
         else{
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "You feel a rush of pure adrenaline surge through your body when you wear this Ocelot's pelt."));

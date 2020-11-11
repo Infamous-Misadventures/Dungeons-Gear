@@ -1,15 +1,12 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.interfaces.IArtifact;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
-import com.infamous.dungeons_gear.items.ArtifactList;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
-import net.minecraft.item.Rarity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -23,8 +20,8 @@ import java.util.List;
 
 import static com.infamous.dungeons_gear.utilties.AOECloudHelper.spawnSoulProtectionCloudAtPos;
 
-public class TotemOfSoulProtectionItem extends Item implements IArtifact, ISoulGatherer {
-    public TotemOfSoulProtectionItem(Properties properties) {
+public class TotemOfSoulProtectionItem extends ArtifactItem implements ISoulGatherer {
+    public TotemOfSoulProtectionItem(Item.Properties properties) {
         super(properties);
     }
 
@@ -57,15 +54,11 @@ public class TotemOfSoulProtectionItem extends Item implements IArtifact, ISoulG
                             entity.sendBreakAnimation(itemUseContextHand);
                         });
                     }
-                    setArtifactCooldown(itemUseContextPlayer, itemUseContextItem.getItem(), 20);
+                    ArtifactItem.setArtifactCooldown(itemUseContextPlayer, itemUseContextItem.getItem(), 20);
                 }
             }
         }
         return ActionResultType.CONSUME;
-    }
-
-    public Rarity getRarity(ItemStack itemStack){
-        return Rarity.RARE;
     }
 
     @Override
@@ -73,7 +66,6 @@ public class TotemOfSoulProtectionItem extends Item implements IArtifact, ISoulG
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.TOTEM_OF_SOUL_PROTECTION){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "This totem radiates powerful protective magic."));
             list.add(new StringTextComponent(TextFormatting.GREEN +
@@ -86,7 +78,6 @@ public class TotemOfSoulProtectionItem extends Item implements IArtifact, ISoulG
                     "+1 XP Gathering"));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "Requires 5 XP"));
-        }
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.enchantments.melee;
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -15,7 +16,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-import static com.infamous.dungeons_gear.items.WeaponList.HIGHLAND_AXE;
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class StunningEnchantment extends Enchantment {
@@ -50,7 +50,7 @@ public class StunningEnchantment extends Enchantment {
         if(!(event.getSource().getTrueSource() instanceof LivingEntity)) return;
         LivingEntity attacker = (LivingEntity)event.getSource().getTrueSource();
         LivingEntity victim = event.getEntityLiving();
-        if(attacker.getHeldItemMainhand().getItem() == HIGHLAND_AXE){
+        if(attacker.getHeldItemMainhand().getItem() == DeferredItemInit.HIGHLAND_AXE.get()){
             float chance = attacker.getRNG().nextFloat();
             if(chance <= 0.05) {
                 EffectInstance stunned = new EffectInstance(CustomEffects.STUNNED, 60);

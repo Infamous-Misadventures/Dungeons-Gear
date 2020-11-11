@@ -1,12 +1,13 @@
 package com.infamous.dungeons_gear.enchantments.melee_ranged;
 
-import com.infamous.dungeons_gear.capabilities.combo.ComboProvider;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
-import com.infamous.dungeons_gear.utilties.AOECloudHelper;
-import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.utilties.AOECloudHelper;
+import com.infamous.dungeons_gear.utilties.CapabilityHelper;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -28,7 +29,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-import static com.infamous.dungeons_gear.items.WeaponList.*;
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class PoisonCloudEnchantment extends Enchantment {
@@ -60,7 +60,9 @@ public class PoisonCloudEnchantment extends Enchantment {
         LivingEntity attacker = (LivingEntity)event.getSource().getTrueSource();
         LivingEntity victim = event.getEntityLiving();
         ItemStack mainhand = attacker.getHeldItemMainhand();
-        if((mainhand.getItem() == VENOM_GLAIVE || mainhand.getItem() == NIGHTMARES_BITE || mainhand.getItem() == VINE_WHIP)){
+        if((mainhand.getItem() == DeferredItemInit.VENOM_GLAIVE.get()
+                || mainhand.getItem() == DeferredItemInit.NIGHTMARES_BITE.get()
+                || mainhand.getItem() == DeferredItemInit.VINE_WHIP.get())){
             float chance = attacker.getRNG().nextFloat();
             if(chance <=  0.3F){
                 checkForPlayer(attacker);
@@ -134,7 +136,8 @@ public class PoisonCloudEnchantment extends Enchantment {
         if(player == null) return;
         if(event.phase == TickEvent.Phase.START) return;
         if(player.isAlive()){
-            ICombo comboCap = player.getCapability(ComboProvider.COMBO_CAPABILITY).orElseThrow(IllegalStateException::new);
+            ICombo comboCap = CapabilityHelper.getComboCapability(player);
+            if(comboCap == null) return;
             int poisonImmunityTimer = comboCap.getPoisonImmunityTimer();
             if(poisonImmunityTimer <= 0){
                 comboCap.setPoisonImmunityTimer(poisonImmunityTimer - 1);
@@ -149,7 +152,8 @@ public class PoisonCloudEnchantment extends Enchantment {
         if(event.getPotionEffect().getPotion() == Effects.POISON){
             if(event.getEntityLiving() instanceof PlayerEntity){
                 PlayerEntity playerEntity = (PlayerEntity) event.getEntityLiving();
-                ICombo comboCap = playerEntity.getCapability(ComboProvider.COMBO_CAPABILITY).orElseThrow(IllegalStateException::new);
+                ICombo comboCap = CapabilityHelper.getComboCapability(playerEntity);
+                if(comboCap == null) return;
                 int poisonImmunityTimer = comboCap.getPoisonImmunityTimer();
                 if(poisonImmunityTimer > 0){
                     event.setResult(Event.Result.DENY);
@@ -162,7 +166,8 @@ public class PoisonCloudEnchantment extends Enchantment {
         if(livingEntity instanceof PlayerEntity){
             PlayerEntity playerEntity = (PlayerEntity) livingEntity;
 
-            ICombo comboCap = playerEntity.getCapability(ComboProvider.COMBO_CAPABILITY).orElseThrow(IllegalStateException::new);
+            ICombo comboCap = CapabilityHelper.getComboCapability(playerEntity);
+            if(comboCap == null) return;
             int poisonImmunityTimer = comboCap.getPoisonImmunityTimer();
             if(poisonImmunityTimer <= 0){
                 comboCap.setPoisonImmunityTimer(60);

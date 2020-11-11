@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.enchantments.lists;
 import net.minecraft.enchantment.Enchantment;
 
 public class MeleeEnchantmentList {
+    public static Enchantment BUSY_BEE;
     public static Enchantment CHAINS;
     public static Enchantment COMMITTED;
     public static Enchantment CRITICAL_HIT;

@@ -2,6 +2,7 @@ package com.infamous.dungeons_gear.armor;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.ChampionsArmorModel;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.interfaces.IArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
@@ -22,8 +23,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
 
-import static com.infamous.dungeons_gear.items.ArmorList.*;
-
 public class ChampionsArmorItem extends ArmorItem implements IArmor {
     private final boolean unique;
 
@@ -34,18 +33,23 @@ public class ChampionsArmorItem extends ArmorItem implements IArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(this.unique) return DungeonsGear.MODID + ":textures/models/armor/heros_armor.png";
-        return DungeonsGear.MODID + ":textures/models/armor/champions_armor.png";
+        if(stack.getItem() == DeferredItemInit.CHAMPIONS_ARMOR.get() || stack.getItem() == DeferredItemInit.CHAMPIONS_ARMOR_HELMET.get()){
+            return DungeonsGear.MODID + ":textures/models/armor/champions_armor.png";
+        }
+        else if(stack.getItem() == DeferredItemInit.HEROS_ARMOR.get() || stack.getItem() == DeferredItemInit.HEROS_ARMOR_HELMET.get()){
+            return DungeonsGear.MODID + ":textures/models/armor/heros_armor.png";
+        }
+        else return "";
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     @OnlyIn(Dist.CLIENT)
     public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack stack, EquipmentSlotType armorSlot, A _default) {
-        if(stack.getItem() == CHAMPIONS_ARMOR || stack.getItem() == CHAMPIONS_ARMOR_HELMET){
+        if(stack.getItem() == DeferredItemInit.CHAMPIONS_ARMOR.get() || stack.getItem() == DeferredItemInit.CHAMPIONS_ARMOR_HELMET.get()){
             return (A) new ChampionsArmorModel<>(1.0F, slot, entityLiving);
         }
-        else if(stack.getItem() == HEROS_ARMOR || stack.getItem() == HEROS_ARMOR_HELMET){
+        else if(stack.getItem() == DeferredItemInit.HEROS_ARMOR.get() || stack.getItem() == DeferredItemInit.HEROS_ARMOR_HELMET.get()){
             return (A) new ChampionsArmorModel<>(1.0F, slot, entityLiving);
         }
         return null;
@@ -70,7 +74,7 @@ public class ChampionsArmorItem extends ArmorItem implements IArmor {
         }
         list.add(new TranslationTextComponent(
                 "attribute.name.healthPotionsHealNearbyAllies")
-                .func_240701_a_(TextFormatting.GREEN));
+                .mergeStyle(TextFormatting.GREEN));
     }
 
     @Override

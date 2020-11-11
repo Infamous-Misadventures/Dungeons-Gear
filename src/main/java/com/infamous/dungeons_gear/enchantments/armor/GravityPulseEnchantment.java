@@ -1,11 +1,12 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
-import com.infamous.dungeons_gear.capabilities.combo.ComboProvider;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.types.PulseEnchantment;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
+import com.infamous.dungeons_gear.enchantments.types.PulseEnchantment;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
+import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -21,7 +22,7 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 public class GravityPulseEnchantment extends PulseEnchantment {
 
     public GravityPulseEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlotType[]{
+        super(Enchantment.Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlotType[]{
                 EquipmentSlotType.HEAD,
                 EquipmentSlotType.CHEST,
                 EquipmentSlotType.LEGS,
@@ -34,7 +35,7 @@ public class GravityPulseEnchantment extends PulseEnchantment {
 
     @Override
     public boolean canApplyTogether(Enchantment enchantment) {
-        return !(enchantment instanceof PulseEnchantment);
+        return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof PulseEnchantment);
     }
 
     @SubscribeEvent
@@ -43,7 +44,8 @@ public class GravityPulseEnchantment extends PulseEnchantment {
         if(player == null) return;
         if(event.phase == TickEvent.Phase.START) return;
         if(player.isAlive()){
-            ICombo comboCap = player.getCapability(ComboProvider.COMBO_CAPABILITY).orElseThrow(IllegalStateException::new);
+            ICombo comboCap = CapabilityHelper.getComboCapability(player);
+            if(comboCap == null) return;
             int gravityPulseTimer = comboCap.getGravityPulseTimer();
 
             if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.GRAVITY_PULSE)){

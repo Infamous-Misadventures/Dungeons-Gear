@@ -1,6 +1,5 @@
 package com.infamous.dungeons_gear.capabilities.weapon;
 
-import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.Direction;

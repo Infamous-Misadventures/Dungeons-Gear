@@ -1,18 +1,17 @@
 package com.infamous.dungeons_gear.artifacts;
 
 import com.infamous.dungeons_gear.effects.CustomEffects;
-import com.infamous.dungeons_gear.interfaces.IArtifact;
-import com.infamous.dungeons_gear.items.ArtifactList;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
@@ -25,8 +24,8 @@ import java.util.List;
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 import static com.infamous.dungeons_gear.utilties.AbilityHelper.isPetOfAttacker;
 
-public class LightFeatherItem extends Item implements IArtifact {
-    public LightFeatherItem(Properties properties) {
+public class LightFeatherItem extends ArtifactItem {
+    public LightFeatherItem(Item.Properties properties) {
         super(properties);
     }
 
@@ -52,7 +51,7 @@ public class LightFeatherItem extends Item implements IArtifact {
                 xRatio = (Math.random() - Math.random()) * 0.01D;
             }
             nearbyEntity.attackedAtYaw = (float)(MathHelper.atan2(zRatio, xRatio) * 57.2957763671875D - (double)nearbyEntity.rotationYaw);
-            nearbyEntity.func_233627_a_(0.4F  * knockbackMultiplier, xRatio, zRatio);
+            nearbyEntity.applyKnockback(0.4F  * knockbackMultiplier, xRatio, zRatio);
             // END OF KNOCKBACK
 
             PROXY.spawnParticles(nearbyEntity, ParticleTypes.CLOUD);
@@ -72,12 +71,8 @@ public class LightFeatherItem extends Item implements IArtifact {
                 entity.sendBreakAnimation(handIn);
             });
         }
-        setArtifactCooldown(playerIn, itemstack.getItem(), 60);
+        ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem(), 60);
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
-    }
-
-    public Rarity getRarity(ItemStack itemStack){
-        return Rarity.RARE;
     }
 
     @Override
@@ -85,7 +80,6 @@ public class LightFeatherItem extends Item implements IArtifact {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.LIGHT_FEATHER){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "No one knows what mysterious creature this feather came from, but it is as beautiful and powerful."));
             list.add(new StringTextComponent(TextFormatting.GREEN +
@@ -94,6 +88,5 @@ public class LightFeatherItem extends Item implements IArtifact {
                     "3 Seconds Duration"));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "3 Seconds Cooldown"));
-        }
     }
 }

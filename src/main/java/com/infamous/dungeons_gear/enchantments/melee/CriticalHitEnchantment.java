@@ -1,10 +1,12 @@
 package com.infamous.dungeons_gear.enchantments.melee;
 
-import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
-import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
+import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
+import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.DamageEnchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -17,8 +19,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-import static com.infamous.dungeons_gear.items.WeaponList.HAWKBRAND;
-import static com.infamous.dungeons_gear.items.WeaponList.MASTERS_KATANA;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class CriticalHitEnchantment extends DamageBoostEnchantment {
@@ -35,7 +35,8 @@ public class CriticalHitEnchantment extends DamageBoostEnchantment {
 
     @Override
     public boolean canApplyTogether(Enchantment enchantment) {
-        return !(enchantment instanceof DamageEnchantment) && !(enchantment instanceof DamageBoostEnchantment) && !(enchantment instanceof AOEDamageEnchantment);
+        return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() ||
+                (!(enchantment instanceof DamageEnchantment) && !(enchantment instanceof DamageBoostEnchantment) && !(enchantment instanceof AOEDamageEnchantment));
     }
 
     @SubscribeEvent
@@ -43,7 +44,9 @@ public class CriticalHitEnchantment extends DamageBoostEnchantment {
         if(event.getPlayer() != null && !event.isVanillaCritical()){
             PlayerEntity attacker = (PlayerEntity) event.getPlayer();
             ItemStack mainhand = attacker.getHeldItemMainhand();
-            boolean uniqueWeaponFlag = mainhand.getItem() == HAWKBRAND || mainhand.getItem() == MASTERS_KATANA;
+            boolean uniqueWeaponFlag = mainhand.getItem() == DeferredItemInit.HAWKBRAND.get()
+                    || mainhand.getItem() == DeferredItemInit.MASTERS_KATANA.get()
+                    || mainhand.getItem() == DeferredItemInit.SINISTER_SWORD.get();
             if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.CRITICAL_HIT)){
                 int criticalHitLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.CRITICAL_HIT, mainhand);
                 float criticalHitChance;

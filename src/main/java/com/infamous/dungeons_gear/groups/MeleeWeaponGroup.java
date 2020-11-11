@@ -1,7 +1,6 @@
 package com.infamous.dungeons_gear.groups;
 
-import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_gear.items.WeaponList;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 
@@ -15,6 +14,6 @@ public class MeleeWeaponGroup extends ItemGroup
     @Override
     public ItemStack createIcon()
     {
-        return new ItemStack(WeaponList.BROADSWORD);
+        return new ItemStack(DeferredItemInit.BROADSWORD.get());
     }
 }

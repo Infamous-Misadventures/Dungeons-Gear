@@ -1,6 +1,7 @@
 package com.infamous.dungeons_gear.utilties;
 
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.ranged.crossbows.AbstractDungeonsCrossbowItem;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -25,7 +26,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import static com.infamous.dungeons_gear.items.RangedWeaponList.FERAL_SOUL_CROSSBOW;
 import static net.minecraft.entity.Entity.horizontalMag;
 
 public class ProjectileEffectHelper {
@@ -33,7 +33,7 @@ public class ProjectileEffectHelper {
         World world = attacker.getEntityWorld();
         //boolean nullListFlag = arrowEntity.hitEntities == null;
         List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(victim.getPosX() - distance, victim.getPosY() - distance, victim.getPosZ() - distance,
-                victim.getPosX() + distance, victim.getPosY() + distance, victim.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canBeAppliedToEntity(attacker, victim, nearbyEntity));
+                victim.getPosX() + distance, victim.getPosY() + distance, victim.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, victim, nearbyEntity));
         if(nearbyEntities.isEmpty()) return;
         nearbyEntities.sort(Comparator.comparingDouble(livingEntity -> livingEntity.getDistanceSq(victim)));
         LivingEntity target =  nearbyEntities.get(0);
@@ -55,7 +55,7 @@ public class ProjectileEffectHelper {
         World world = attacker.getEntityWorld();
         //boolean nullListFlag = arrowEntity.hitEntities == null;
         List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(attacker.getPosX() - distance, attacker.getPosY() - distance, attacker.getPosZ() - distance,
-                attacker.getPosX() + distance, attacker.getPosY() + distance, attacker.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canBeAppliedToEntity(attacker, nearbyEntity));
+                attacker.getPosX() + distance, attacker.getPosY() + distance, attacker.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
         if(nearbyEntities.size() < 2) return;
         nearbyEntities.sort(Comparator.comparingDouble(livingEntity -> livingEntity.getDistanceSq(attacker)));
         LivingEntity target =  nearbyEntities.get(0);
@@ -66,7 +66,7 @@ public class ProjectileEffectHelper {
             // borrowed from AbstractSkeletonEntity
             double towardsX = target.getPosX() - attacker.getPosX();
             double towardsZ = target.getPosZ() - attacker.getPosZ();
-            double euclideanDist = (double)MathHelper.sqrt(towardsX * towardsX + towardsZ * towardsZ);
+            double euclideanDist = (double) MathHelper.sqrt(towardsX * towardsX + towardsZ * towardsZ);
             double towardsY = target.getPosYHeight(0.3333333333333333D) - arrowEntity.getPosY() + euclideanDist * (double)0.2F;
             arrowEntity.func_234612_a_(attacker, attacker.rotationPitch, attacker.rotationYaw, 0.0F, arrowVelocity * 3.0F, 1.0F);
             setProjectileTowards(arrowEntity, towardsX, towardsY, towardsZ, 0);
@@ -81,7 +81,7 @@ public class ProjectileEffectHelper {
         World world = attacker.getEntityWorld();
         //boolean nullListFlag = arrowEntity.hitEntities == null;
         List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(attacker.getPosX() - distance, attacker.getPosY() - distance, attacker.getPosZ() - distance,
-                attacker.getPosX() + distance, attacker.getPosY() + distance, attacker.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canBeAppliedToEntity(attacker, nearbyEntity));
+                attacker.getPosX() + distance, attacker.getPosY() + distance, attacker.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
         if(nearbyEntities.size() < 2) return;
         nearbyEntities.sort(Comparator.comparingDouble(livingEntity -> livingEntity.getDistanceSq(attacker)));
         LivingEntity target =  nearbyEntities.get(0);
@@ -90,7 +90,7 @@ public class ProjectileEffectHelper {
             // borrowed from AbstractSkeletonEntity
             double towardsX = target.getPosX() - attacker.getPosX();
             double towardsZ = target.getPosZ() - attacker.getPosZ();
-            double euclideanDist = (double)MathHelper.sqrt(towardsX * towardsX + towardsZ * towardsZ);
+            double euclideanDist = (double) MathHelper.sqrt(towardsX * towardsX + towardsZ * towardsZ);
             double towardsY = target.getPosYHeight(0.3333333333333333D) - snowballEntity.getPosY() + euclideanDist * (double)0.2F;
             snowballEntity.func_234612_a_(attacker, attacker.rotationPitch, attacker.rotationYaw, 0.0F, 1.5F, 1.0F);
             setProjectileTowards(snowballEntity, towardsX, towardsY, towardsZ, 0);
@@ -169,7 +169,8 @@ public class ProjectileEffectHelper {
 
     public static boolean soulsCriticalBoost(PlayerEntity attacker, ItemStack mainhand){
         int numSouls = Math.min(attacker.experienceTotal, 50);
-        boolean uniqueWeaponFlag = mainhand.getItem() == FERAL_SOUL_CROSSBOW;
+        boolean uniqueWeaponFlag = mainhand.getItem() == DeferredItemInit.FERAL_SOUL_CROSSBOW.get()
+                || mainhand.getItem() == DeferredItemInit.SOUL_HUNTER_CROSSBOW.get();
         if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.ENIGMA_RESONATOR)){
             int enigmaResonatorLevel = EnchantmentHelper.getEnchantmentLevel(MeleeRangedEnchantmentList.ENIGMA_RESONATOR, mainhand);
             float soulsCriticalBoostChanceCap;

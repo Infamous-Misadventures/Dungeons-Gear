@@ -1,36 +1,23 @@
 package com.infamous.dungeons_gear.artifacts;
 
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_gear.armor.SoulRobeItem;
-import com.infamous.dungeons_gear.damagesources.SummonedFallingBlockDamageSource;
-import com.infamous.dungeons_gear.capabilities.combo.ComboProvider;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.capabilities.summoning.ISummonable;
 import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
-import com.infamous.dungeons_gear.capabilities.summoning.SummonableProvider;
-import com.infamous.dungeons_gear.capabilities.summoning.SummonerProvider;
 import com.infamous.dungeons_gear.effects.CustomEffects;
-import com.infamous.dungeons_gear.interfaces.IArmor;
-import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
-import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.goals.*;
+import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.passive.BatEntity;
-import net.minecraft.entity.passive.IronGolemEntity;
-import net.minecraft.entity.passive.WolfEntity;
+import net.minecraft.entity.passive.*;
 import net.minecraft.entity.passive.horse.LlamaEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -41,112 +28,198 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.event.entity.living.*;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import java.util.UUID;
 
-import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
-import static com.infamous.dungeons_gear.items.ArmorList.CAVE_CRAWLER;
-import static com.infamous.dungeons_gear.items.ArmorList.SPLENDID_ROBE;
-import static com.infamous.dungeons_gear.items.ArtifactList.*;
-
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class ArtifactEvents {
 
     @SubscribeEvent
     public static void reAddSummonableGoals(EntityJoinWorldEvent event){
-        if(event.getEntity() instanceof LlamaEntity){
-            LlamaEntity llamaEntity = (LlamaEntity) event.getEntity();
-            ISummonable summonableCap = llamaEntity.getCapability(SummonableProvider.SUMMONABLE_CAPABILITY).orElseThrow(IllegalStateException::new);
-            if(summonableCap.getSummoner() != null){
-                llamaEntity.targetSelector.addGoal(1, new LlamaOwnerHurtByTargetGoal(llamaEntity));
-                llamaEntity.targetSelector.addGoal(2, new LlamaOwnerHurtTargetGoal(llamaEntity));
-                llamaEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(llamaEntity, LivingEntity.class, 5, false, false, (entityIterator) -> {
-                    return entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity);
-                }));
-                llamaEntity.goalSelector.addGoal(2, new LlamaFollowOwnerGoal(llamaEntity, 2.1D, 10.0F, 2.0F, false));
+        if(isEntitySummonable(event.getEntity())){
+            ISummonable summonableCap = CapabilityHelper.getSummonableCapability(event.getEntity());
+            if(summonableCap == null) return;
+            if(event.getEntity() instanceof LlamaEntity){
+                LlamaEntity llamaEntity = (LlamaEntity) event.getEntity();
+                if(summonableCap.getSummoner() != null){
+                    llamaEntity.targetSelector.addGoal(1, new LlamaOwnerHurtByTargetGoal(llamaEntity));
+                    llamaEntity.targetSelector.addGoal(2, new LlamaOwnerHurtTargetGoal(llamaEntity));
+                    llamaEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(llamaEntity, LivingEntity.class, 5, false, false,
+                            (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
+                    llamaEntity.goalSelector.addGoal(2, new LlamaFollowOwnerGoal(llamaEntity, 2.1D, 10.0F, 2.0F, false));
+                }
             }
-        }
-        if(event.getEntity() instanceof WolfEntity){
-            WolfEntity wolfEntity = (WolfEntity) event.getEntity();
-            ISummonable summonableCap = wolfEntity.getCapability(SummonableProvider.SUMMONABLE_CAPABILITY).orElseThrow(IllegalStateException::new);
-            if(summonableCap.getSummoner() != null){
-                wolfEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(wolfEntity, LivingEntity.class, 5, false, false, (entityIterator) -> {
-                    return entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity);
-                }));
+            if(event.getEntity() instanceof WolfEntity){
+                WolfEntity wolfEntity = (WolfEntity) event.getEntity();
+                if(summonableCap.getSummoner() != null){
+                    wolfEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(wolfEntity, LivingEntity.class, 5, false, false,
+                            (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
+                }
             }
-        }
-        if(event.getEntity() instanceof IronGolemEntity){
-            IronGolemEntity ironGolemEntity = (IronGolemEntity) event.getEntity();
-            ISummonable summonableCap = ironGolemEntity.getCapability(SummonableProvider.SUMMONABLE_CAPABILITY).orElseThrow(IllegalStateException::new);
-            if(summonableCap.getSummoner() != null){
-                ironGolemEntity.goalSelector.addGoal(2, new IronGolemFollowOwnerGoal(ironGolemEntity, 2.1D, 10.0F, 2.0F, false));
+            if(event.getEntity() instanceof IronGolemEntity){
+                IronGolemEntity ironGolemEntity = (IronGolemEntity) event.getEntity();
+                if(summonableCap.getSummoner() != null){
+                    ironGolemEntity.goalSelector.addGoal(2, new IronGolemFollowOwnerGoal(ironGolemEntity, 2.1D, 10.0F, 2.0F, false));
 
-                ironGolemEntity.targetSelector.addGoal(1, new GolemOwnerHurtByTargetGoal(ironGolemEntity));
-                ironGolemEntity.targetSelector.addGoal(2, new GolemOwnerHurtTargetGoal(ironGolemEntity));
+                    ironGolemEntity.targetSelector.addGoal(1, new GolemOwnerHurtByTargetGoal(ironGolemEntity));
+                    ironGolemEntity.targetSelector.addGoal(2, new GolemOwnerHurtTargetGoal(ironGolemEntity));
+                }
+            }
+            if(event.getEntity() instanceof BatEntity){
+                BatEntity batEntity = (BatEntity) event.getEntity();
+                if(summonableCap.getSummoner() != null){
+                    batEntity.goalSelector.addGoal(1, new BatMeleeAttackGoal(batEntity, 1.0D, true));
+                    batEntity.goalSelector.addGoal(2, new BatFollowOwnerGoal(batEntity, 2.1D, 10.0F, 2.0F, false));
+
+                    batEntity.targetSelector.addGoal(1, new BatOwnerHurtByTargetGoal(batEntity));
+                    batEntity.targetSelector.addGoal(2, new BatOwnerHurtTargetGoal(batEntity));
+                    batEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(batEntity, LivingEntity.class, 5, false, false,
+                            (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
+                }
+            }
+            if(event.getEntity() instanceof BeeEntity){
+                BeeEntity beeEntity = (BeeEntity) event.getEntity();
+                if(summonableCap.getSummoner() != null){
+                    beeEntity.goalSelector.addGoal(2, new BeeFollowOwnerGoal(beeEntity, 2.1D, 10.0F, 2.0F, false));
+
+                    beeEntity.targetSelector.addGoal(1, new BeeOwnerHurtByTargetGoal(beeEntity));
+                    beeEntity.targetSelector.addGoal(2, new BeeOwnerHurtTargetGoal(beeEntity));
+                    beeEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(beeEntity, LivingEntity.class, 5, false, false,
+                            (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
+
+                }
+            }
+            if(event.getEntity() instanceof SheepEntity){
+                SheepEntity sheepEntity = (SheepEntity) event.getEntity();
+                if(summonableCap.getSummoner() != null){
+                    if(sheepEntity.getTags().contains("Fire") || sheepEntity.getTags().contains("Poison")){
+                        sheepEntity.goalSelector.addGoal(1, new SheepMeleeAttackGoal(sheepEntity, 1.0D, true));
+
+                        sheepEntity.targetSelector.addGoal(1, new SheepOwnerHurtByTargetGoal(sheepEntity));
+                        sheepEntity.targetSelector.addGoal(2, new SheepOwnerHurtTargetGoal(sheepEntity));
+                        sheepEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(sheepEntity, LivingEntity.class, 5, false, false,
+                                (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
+                    }
+                    sheepEntity.goalSelector.addGoal(2, new SheepFollowOwnerGoal(sheepEntity, 2.1D, 10.0F, 2.0F, false));
+                }
             }
         }
-        if(event.getEntity() instanceof BatEntity){
-            BatEntity batEntity = (BatEntity) event.getEntity();
-            ISummonable summonableCap = batEntity.getCapability(SummonableProvider.SUMMONABLE_CAPABILITY).orElseThrow(IllegalStateException::new);
-            if(summonableCap.getSummoner() != null){
-                batEntity.goalSelector.addGoal(1, new BatFollowOwnerGoal(batEntity, 2.1D, 10.0F, 2.0F, false));
-                batEntity.goalSelector.addGoal(2, new BatMeleeAttackGoal(batEntity, 1.0D, true));
+    }
 
-                batEntity.targetSelector.addGoal(1, new BatOwnerHurtByTargetGoal(batEntity));
-                batEntity.targetSelector.addGoal(2, new BatOwnerHurtTargetGoal(batEntity));
-                batEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(batEntity, LivingEntity.class, 5, false, false, (entityIterator) -> {
-                    return entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity);
-                }));
+    @SubscribeEvent
+    public static void onEnchantedSheepAttack(LivingDamageEvent event){
+        if(event.getSource().getTrueSource() instanceof SheepEntity){
+            SheepEntity sheepEntity = (SheepEntity)event.getSource().getTrueSource();
+            ISummonable summonableCap = CapabilityHelper.getSummonableCapability(sheepEntity);
+            if(summonableCap == null) return;
+            if(summonableCap.getSummoner() != null){
+                if(sheepEntity.getTags().contains("Fire")){
+                    event.getEntityLiving().setFire(100);
+                }
+                else if(sheepEntity.getTags().contains("Poison")){
+                    EffectInstance poison = new EffectInstance(Effects.POISON, 100);
+                    event.getEntityLiving().addPotionEffect(poison);
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void updateBlueEnchantedSheep(LivingEvent.LivingUpdateEvent event){
+        if(event.getEntityLiving() instanceof SheepEntity){
+            SheepEntity sheepEntity = (SheepEntity)event.getEntityLiving();
+            ISummonable summonableCap = CapabilityHelper.getSummonableCapability(sheepEntity);
+            if(summonableCap == null) return;
+            if(summonableCap.getSummoner() != null){
+                if(sheepEntity.world instanceof ServerWorld){
+                    Entity summoner = ((ServerWorld) sheepEntity.world).getEntityByUuid(summonableCap.getSummoner());
+                    if(summoner instanceof PlayerEntity){
+                        PlayerEntity playerEntity = (PlayerEntity)summoner;
+                        if(!playerEntity.isPotionActive(Effects.SPEED) && sheepEntity.getTags().contains("Speed")){
+                            EffectInstance speed = new EffectInstance(Effects.SPEED, 100);
+                            playerEntity.addPotionEffect(speed);
+                        }
+                    }
+                }
             }
         }
     }
 
     @SubscribeEvent
     public static void onSummonedMobAttemptsToAttack(LivingSetAttackTargetEvent event){
-        if(event.getEntityLiving() instanceof IronGolemEntity
-            || event.getEntityLiving() instanceof WolfEntity
-            || event.getEntityLiving() instanceof LlamaEntity){
-            LivingEntity summonableMob = event.getEntityLiving();
-            ISummonable attackerSummonableCap = summonableMob.getCapability(SummonableProvider.SUMMONABLE_CAPABILITY).orElseThrow(IllegalStateException::new);
+        if(isEntitySummonable(event.getEntityLiving())){
+            LivingEntity summonableAttacker = event.getEntityLiving();
+            ISummonable attackerSummonableCap = CapabilityHelper.getSummonableCapability(summonableAttacker);
+            if(attackerSummonableCap == null) return;
             if(attackerSummonableCap.getSummoner() != null){
                 UUID attackersOwner = attackerSummonableCap.getSummoner();
-                if(event.getTarget() instanceof IronGolemEntity
-                        || event.getTarget() instanceof WolfEntity
-                        || event.getTarget() instanceof LlamaEntity){
+                if(isEntitySummonable(event.getTarget())){
                     LivingEntity summonableTarget = event.getTarget();
-                    ISummonable targetSummonableCap = summonableTarget.getCapability(SummonableProvider.SUMMONABLE_CAPABILITY).orElseThrow(IllegalStateException::new);
+                    ISummonable targetSummonableCap = CapabilityHelper.getSummonableCapability(summonableTarget);
+                    if(targetSummonableCap == null) return;
                     if(targetSummonableCap.getSummoner() != null){
                         UUID targetsOwner = targetSummonableCap.getSummoner();
                         if(targetsOwner.equals(attackersOwner)){
-                            if(summonableMob instanceof IronGolemEntity){
-                                IronGolemEntity ironGolemEntity = (IronGolemEntity) summonableMob;
-                                ironGolemEntity.setAttackTarget(null);
-                                ironGolemEntity.setRevengeTarget(null);
-                            }
-                            if(summonableMob instanceof WolfEntity){
-                                WolfEntity wolfEntity = (WolfEntity) summonableMob;
-                                wolfEntity.setAttackTarget(null);
-                                wolfEntity.setRevengeTarget(null);
-                            }
-                            if(summonableMob instanceof LlamaEntity){
-                                LlamaEntity llamaEntity = (LlamaEntity) summonableMob;
-                                llamaEntity.setAttackTarget(null);
-                                llamaEntity.setRevengeTarget(null);
-                            }
-                            if(summonableMob instanceof BatEntity){
-                                BatEntity batEntity = (BatEntity) summonableMob;
-                                batEntity.setAttackTarget(null);
-                                batEntity.setRevengeTarget(null);
-                            }
+                            preventAttackForSummonableMob(summonableAttacker);
                         }
                     }
                 }
             }
         }
+        if(event.getTarget() instanceof PlayerEntity && isEntitySummonable(event.getEntityLiving())){
+            LivingEntity summonableAttacker = event.getEntityLiving();
+            ISummonable attackerSummonableCap = CapabilityHelper.getSummonableCapability(summonableAttacker);
+            if(attackerSummonableCap == null) return;
+            if(attackerSummonableCap.getSummoner() == event.getTarget().getUniqueID()){
+                preventAttackForSummonableMob(summonableAttacker);
+            }
+        }
+    }
+
+    private static void preventAttackForSummonableMob(LivingEntity summonableAttacker) {
+        if (summonableAttacker instanceof IronGolemEntity) {
+            IronGolemEntity ironGolemEntity = (IronGolemEntity) summonableAttacker;
+            ironGolemEntity.func_241356_K__();
+        }
+        if (summonableAttacker instanceof WolfEntity) {
+            WolfEntity wolfEntity = (WolfEntity) summonableAttacker;
+            wolfEntity.func_241356_K__();
+        }
+        if (summonableAttacker instanceof LlamaEntity) {
+            LlamaEntity llamaEntity = (LlamaEntity) summonableAttacker;
+            llamaEntity.setAttackTarget(null);
+            llamaEntity.setRevengeTarget(null);
+        }
+        if (summonableAttacker instanceof BatEntity) {
+            BatEntity batEntity = (BatEntity) summonableAttacker;
+            batEntity.setAttackTarget(null);
+            batEntity.setRevengeTarget(null);
+        }
+        if (summonableAttacker instanceof BeeEntity) {
+            BeeEntity beeEntity = (BeeEntity) summonableAttacker;
+            beeEntity.func_241356_K__();
+        }
+        if (summonableAttacker instanceof SheepEntity) {
+            SheepEntity llamaEntity = (SheepEntity) summonableAttacker;
+            llamaEntity.setAttackTarget(null);
+            llamaEntity.setRevengeTarget(null);
+        }
+    }
+
+    private static boolean isEntitySummonable(Entity target) {
+        return target instanceof IronGolemEntity
+                || target instanceof WolfEntity
+                || target instanceof LlamaEntity
+                || target instanceof BatEntity
+                || target instanceof BeeEntity
+                || target instanceof SheepEntity;
     }
 
     @SubscribeEvent
@@ -190,7 +263,8 @@ public class ArtifactEvents {
             Entity shooter = arrowEntity.func_234616_v_();
             if(shooter instanceof PlayerEntity){
                 PlayerEntity playerEntity = (PlayerEntity) shooter;
-                ICombo comboCap = playerEntity.getCapability(ComboProvider.COMBO_CAPABILITY).orElseThrow(IllegalStateException::new);
+                ICombo comboCap = CapabilityHelper.getComboCapability(playerEntity);
+                if(comboCap == null) return;
                 if(comboCap.getFlamingArrowsCount() > 0){
                     int count = comboCap.getFlamingArrowsCount();
                     arrowEntity.setFire(100);
@@ -240,34 +314,6 @@ public class ArtifactEvents {
         }
     }
 
-    @SubscribeEvent
-    public static void onIceBlockFalling(LivingDamageEvent event){
-        if (event.getSource() instanceof SummonedFallingBlockDamageSource){
-            if(event.getSource().getTrueSource() instanceof LivingEntity){
-                LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
-                PROXY.spawnParticles(event.getEntityLiving(), ParticleTypes.ITEM_SNOWBALL);
-                EffectInstance stun = new EffectInstance(CustomEffects.STUNNED, 100);
-                EffectInstance nausea = new EffectInstance(Effects.NAUSEA, 100);
-                EffectInstance slowness = new EffectInstance(Effects.SLOWNESS, 100, 4);
-                event.getEntityLiving().addPotionEffect(stun);
-                event.getEntityLiving().addPotionEffect(nausea);
-                event.getEntityLiving().addPotionEffect(slowness);
-
-
-                // Checks if the summoner has magic-damage boosting armor
-                ItemStack chestplate = attacker.getItemStackFromSlot(EquipmentSlotType.CHEST);
-                boolean magicBoostingChestplateFlag = chestplate.getItem() == SPLENDID_ROBE
-                        || chestplate.getItem() instanceof SoulRobeItem
-                        || chestplate.getItem() == CAVE_CRAWLER;
-                float originalDamage = event.getAmount();
-                if(magicBoostingChestplateFlag){
-                    event.setAmount(originalDamage + originalDamage *0.5F);
-                }
-                // Finished checking summoner armor
-            }
-        }
-    }
-
     // Avoids a situation where your summoned mob died but onSummonableDeath didn't fire in time,
     // making you unable to summon any more of that entity
     @SubscribeEvent
@@ -277,90 +323,131 @@ public class ArtifactEvents {
         if(event.phase == TickEvent.Phase.START) return;
         if(!summoner.isAlive()) return;
 
-        ISummoner summonerCap = summoner.getCapability(SummonerProvider.SUMMONER_CAPABILITY).orElseThrow(IllegalStateException::new);
-        if(summonerCap.getSummonedGolem() != null){
+        ISummoner summonerCap = CapabilityHelper.getSummonerCapability(event.player);
+        if(summonerCap == null) return;
+        if(summonerCap.getSummonedGolem() != null && event.player.world instanceof ServerWorld){
             UUID summonedGolem = summonerCap.getSummonedGolem();
             Entity entity = ((ServerWorld) event.player.world).getEntityByUuid(summonedGolem);
             if(!(entity instanceof IronGolemEntity)) {
                 summonerCap.setSummonedGolem(null);
-                setArtifactCooldown(summoner, GOLEM_KIT, 600);
+                ArtifactItem.setArtifactCooldown(summoner, DeferredItemInit.GOLEM_KIT.get(), 600);
             }
         }
-        if(summonerCap.getSummonedWolf() != null){
+        if(summonerCap.getSummonedWolf() != null && event.player.world instanceof ServerWorld){
             UUID summonedWolf = summonerCap.getSummonedWolf();
             Entity entity = ((ServerWorld) event.player.world).getEntityByUuid(summonedWolf);
             if(!(entity instanceof WolfEntity)) {
                 summonerCap.setSummonedWolf(null);
-                setArtifactCooldown(summoner, TASTY_BONE, 600);
+                ArtifactItem.setArtifactCooldown(summoner, DeferredItemInit.TASTY_BONE.get(), 600);
             }
         }
-        if(summonerCap.getSummonedLlama() != null){
+        if(summonerCap.getSummonedLlama() != null && event.player.world instanceof ServerWorld){
             UUID summonedLlama = summonerCap.getSummonedLlama();
             Entity entity = ((ServerWorld) event.player.world).getEntityByUuid(summonedLlama);
             if(!(entity instanceof LlamaEntity)) {
                 summonerCap.setSummonedLlama(null);
-                setArtifactCooldown(summoner, WONDERFUL_WHEAT, 600);
+                ArtifactItem.setArtifactCooldown(summoner, DeferredItemInit.WONDERFUL_WHEAT.get(), 600);
             }
         }
-        if(summonerCap.getSummonedBat() != null){
+        if(summonerCap.getSummonedBat() != null && event.player.world instanceof ServerWorld){
             UUID summonedBat = summonerCap.getSummonedBat();
             Entity entity = ((ServerWorld) event.player.world).getEntityByUuid(summonedBat);
             if(!(entity instanceof BatEntity)) {
                 summonerCap.setSummonedBat(null);
             }
         }
+        if(summonerCap.getSummonedSheep() != null && event.player.world instanceof ServerWorld){
+            UUID summonedSheep = summonerCap.getSummonedSheep();
+            Entity entity = ((ServerWorld) event.player.world).getEntityByUuid(summonedSheep);
+            if(!(entity instanceof SheepEntity)) {
+                summonerCap.setSummonedSheep(null);
+                ArtifactItem.setArtifactCooldown(summoner, DeferredItemInit.ENCHANTED_GRASS.get(), 600);
+            }
+        }
+        handleSummonableBeesAlreadyDead(event, summonerCap);
     }
 
-    @SubscribeEvent
-    public static void onSummonableDeath(LivingDeathEvent event){
-        if(event.getEntityLiving() instanceof IronGolemEntity
-            || event.getEntityLiving() instanceof WolfEntity
-            || event.getEntityLiving() instanceof LlamaEntity
-                || event.getEntityLiving() instanceof BatEntity){
-            LivingEntity livingEntity = event.getEntityLiving();
-            World world = livingEntity.getEntityWorld();
-            ISummonable summonableCap = livingEntity.getCapability(SummonableProvider.SUMMONABLE_CAPABILITY).orElseThrow(IllegalStateException::new);
-            if(summonableCap.getSummoner() != null){
-                PlayerEntity summoner = world.getPlayerByUuid(summonableCap.getSummoner());
-                if(summoner != null){
-                    ISummoner summonerCap = summoner.getCapability(SummonerProvider.SUMMONER_CAPABILITY).orElseThrow(IllegalStateException::new);
-                    UUID summonableUUID = livingEntity.getUniqueID();
-
-                    if(summonerCap.getSummonedGolem() == summonableUUID){
-                        summonerCap.setSummonedGolem(null);
-                        setArtifactCooldown(summoner, GOLEM_KIT, 600);
+    private static void handleSummonableBeesAlreadyDead(TickEvent.PlayerTickEvent event, ISummoner summonerCap) {
+        for(int i = 0; i < 3; i++){
+            UUID summonedBuzzyNestBee = summonerCap.getBuzzyNestBees()[i];
+            UUID summonedTumblebeeBee = summonerCap.getTumblebeeBees()[i];
+            UUID summonedBusyBeeBee = summonerCap.getBusyBeeBees()[i];
+            if(summonedBuzzyNestBee != null && event.player.world instanceof ServerWorld){
+                Entity entity = ((ServerWorld) event.player.world).getEntityByUuid(summonedBuzzyNestBee);
+                if(!(entity instanceof BeeEntity)) {
+                    summonerCap.getBuzzyNestBees()[i] = null;
+                    if(summonerCap.hasNoBuzzyNestBees()){
+                        ArtifactItem.setArtifactCooldown(event.player, DeferredItemInit.BUZZY_NEST.get(), 460);
                     }
-                    if(summonerCap.getSummonedWolf() == summonableUUID){
-                        summonerCap.setSummonedWolf(null);
-                        setArtifactCooldown(summoner, TASTY_BONE, 600);
-                    }
-                    if(summonerCap.getSummonedLlama() == summonableUUID){
-                        summonerCap.setSummonedLlama(null);
-                        setArtifactCooldown(summoner, WONDERFUL_WHEAT, 600);
-                    }
-                    if(summonerCap.getSummonedBat() == summonableUUID){
-                        summonerCap.setSummonedBat(null);
-                    }
+                }
+            }
+            if(summonedTumblebeeBee != null && event.player.world instanceof ServerWorld){
+                Entity entity = ((ServerWorld) event.player.world).getEntityByUuid(summonedTumblebeeBee);
+                if(!(entity instanceof BeeEntity)) {
+                    summonerCap.getTumblebeeBees()[i] = null;
+                }
+            }
+            if(summonedBusyBeeBee != null && event.player.world instanceof ServerWorld){
+                Entity entity = ((ServerWorld) event.player.world).getEntityByUuid(summonedBusyBeeBee);
+                if(!(entity instanceof BeeEntity)) {
+                    summonerCap.getBusyBeeBees()[i] = null;
                 }
             }
         }
     }
 
-    // A copy of the default method found in IArtifact
-    public static void setArtifactCooldown(PlayerEntity playerIn, Item item, int cooldownInTicks){
-        ItemStack helmet = playerIn.getItemStackFromSlot(EquipmentSlotType.HEAD);
-        ItemStack chestplate = playerIn.getItemStackFromSlot(EquipmentSlotType.CHEST);
+    @SubscribeEvent
+    public static void onSummonableDeath(LivingDeathEvent event){
+        if(isEntitySummonable(event.getEntityLiving())){
+            LivingEntity livingEntity = event.getEntityLiving();
+            World world = livingEntity.getEntityWorld();
+            ISummonable summonableCap = CapabilityHelper.getSummonableCapability(livingEntity);
+            if(summonableCap == null) return;
+            if(summonableCap.getSummoner() != null){
+                PlayerEntity summoner = world.getPlayerByUuid(summonableCap.getSummoner());
+                if(summoner != null){
+                    ISummoner summonerCap = CapabilityHelper.getSummonerCapability(summoner);
+                    if(summonerCap == null) return;
+                    UUID summonableUUID = livingEntity.getUniqueID();
 
-
-        float armorCooldownModifier = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getArtifactCooldown() : 0;
-        float armorCooldownModifier2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getArtifactCooldown() : 0;
-
-        float totalArmorCooldownModifier = 1.0F - armorCooldownModifier*0.01F - armorCooldownModifier2*0.01F;
-        float cooldownEnchantmentReduction = 0;
-        if(ModEnchantmentHelper.hasEnchantment(playerIn, ArmorEnchantmentList.COOLDOWN)) {
-            int cooldownEnchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.COOLDOWN, playerIn);
-            cooldownEnchantmentReduction = (int) (cooldownEnchantmentLevel * 0.1F * cooldownInTicks);
+                    if(summonerCap.getSummonedGolem() == summonableUUID){
+                        summonerCap.setSummonedGolem(null);
+                        ArtifactItem.setArtifactCooldown(summoner, DeferredItemInit.GOLEM_KIT.get(), 600);
+                    }
+                    if(summonerCap.getSummonedWolf() == summonableUUID){
+                        summonerCap.setSummonedWolf(null);
+                        ArtifactItem.setArtifactCooldown(summoner, DeferredItemInit.TASTY_BONE.get(), 600);
+                    }
+                    if(summonerCap.getSummonedLlama() == summonableUUID){
+                        summonerCap.setSummonedLlama(null);
+                        ArtifactItem.setArtifactCooldown(summoner, DeferredItemInit.WONDERFUL_WHEAT.get(), 600);
+                    }
+                    if(summonerCap.getSummonedBat() == summonableUUID){
+                        summonerCap.setSummonedBat(null);
+                    }
+                    if(summonerCap.getSummonedSheep() == summonableUUID){
+                        ArtifactItem.setArtifactCooldown(summoner, DeferredItemInit.ENCHANTED_GRASS.get(), 600);
+                        summonerCap.setSummonedSheep(null);
+                    }
+                    for(int i = 0; i < 3; i++){
+                        UUID buzzyNestBee = summonerCap.getBuzzyNestBees()[i];
+                        UUID tumblebeeBee = summonerCap.getTumblebeeBees()[i];
+                        UUID busyBeeBee = summonerCap.getBusyBeeBees()[i];
+                        if(buzzyNestBee == summonableUUID){
+                            summonerCap.getBuzzyNestBees()[i] = null;
+                            if(!summoner.getCooldownTracker().hasCooldown(DeferredItemInit.BUZZY_NEST.get())){
+                                ArtifactItem.setArtifactCooldown(summoner, DeferredItemInit.BUZZY_NEST.get(), 460);
+                            }
+                        }
+                        if(tumblebeeBee == summonableUUID){
+                            summonerCap.getTumblebeeBees()[i] = null;
+                        }
+                        if(busyBeeBee == summonableUUID){
+                            summonerCap.getBusyBeeBees()[i] = null;
+                        }
+                    }
+                }
+            }
         }
-        playerIn.getCooldownTracker().setCooldown(item, Math.max(0, (int) (cooldownInTicks * totalArmorCooldownModifier - cooldownEnchantmentReduction)));
     }
 }

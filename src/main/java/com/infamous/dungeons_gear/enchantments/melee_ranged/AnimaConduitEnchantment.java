@@ -1,6 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.melee_ranged;
 
 import com.infamous.dungeons_gear.DungeonsGear;
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.*;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.HealingEnchantment;
@@ -28,7 +29,7 @@ import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 @Mod.EventBusSubscriber(modid= MODID)
 public class AnimaConduitEnchantment extends HealingEnchantment {
     public AnimaConduitEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.MELEE_RANGED, new EquipmentSlotType[]{
+        super(Enchantment.Rarity.RARE, ModEnchantmentTypes.MELEE_RANGED, new EquipmentSlotType[]{
                 EquipmentSlotType.MAINHAND});
     }
 
@@ -38,7 +39,7 @@ public class AnimaConduitEnchantment extends HealingEnchantment {
 
     @Override
     public boolean canApplyTogether(Enchantment enchantment) {
-        return !(enchantment instanceof HealingEnchantment);
+        return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof HealingEnchantment);
     }
 
     @SubscribeEvent
@@ -58,7 +59,7 @@ public class AnimaConduitEnchantment extends HealingEnchantment {
                                 PlayerEntity playerEntity = (PlayerEntity) attacker;
                                 int experiencePoints = getDroppedExperience(mobEntity, playerEntity);
                                 double soulsToHealth = experiencePoints * (0.01 * animaConduitLevel);
-                                PROXY.spawnParticles(playerEntity, ParticleTypes.field_239812_C_);
+                                PROXY.spawnParticles(playerEntity, ParticleTypes.SOUL);
                                 playerEntity.heal((float)soulsToHealth);
                             }
                         }
@@ -77,7 +78,7 @@ public class AnimaConduitEnchantment extends HealingEnchantment {
                             PlayerEntity playerEntity = (PlayerEntity) attacker;
                             int experiencePoints = getDroppedExperience(mobEntity, playerEntity);
                             double soulsToHealth = experiencePoints * (0.01 * animaConduitLevel);
-                            PROXY.spawnParticles(playerEntity, ParticleTypes.field_239812_C_);
+                            PROXY.spawnParticles(playerEntity, ParticleTypes.SOUL);
                             playerEntity.heal((float)soulsToHealth);
                         }
                     }

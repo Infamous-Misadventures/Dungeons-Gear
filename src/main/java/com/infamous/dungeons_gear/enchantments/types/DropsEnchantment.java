@@ -4,7 +4,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
 
-public class DropsEnchantment extends Enchantment{
+public class DropsEnchantment extends Enchantment {
 
     protected DropsEnchantment(Rarity rarity, EnchantmentType enchantmentType, EquipmentSlotType[] equipmentSlotTypes) {
         super(rarity, enchantmentType, equipmentSlotTypes);

@@ -1,13 +1,10 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.interfaces.IArtifact;
-import com.infamous.dungeons_gear.items.ArtifactList;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
 import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -16,8 +13,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class GongOfWeakeningItem extends Item implements IArtifact {
-    public GongOfWeakeningItem(Properties properties) {
+public class GongOfWeakeningItem extends ArtifactItem {
+    public GongOfWeakeningItem(Item.Properties properties) {
         super(properties);
     }
 
@@ -39,12 +36,8 @@ public class GongOfWeakeningItem extends Item implements IArtifact {
 
 
 
-        setArtifactCooldown(playerIn, itemstack.getItem(), 400);
+        ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem(), 400);
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
-    }
-
-    public Rarity getRarity(ItemStack itemStack){
-        return Rarity.RARE;
     }
 
     @Override
@@ -52,7 +45,6 @@ public class GongOfWeakeningItem extends Item implements IArtifact {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.GONG_OF_WEAKENING){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "The ancient gong, marked with the symbols of a nameless kingdom, feels safe in your hands but emits a menacing hum to those nearby."));
             list.add(new StringTextComponent(TextFormatting.GREEN +
@@ -61,6 +53,5 @@ public class GongOfWeakeningItem extends Item implements IArtifact {
                     "7 Seconds Duration"));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "20 Seconds Cooldown"));
-        }
     }
 }

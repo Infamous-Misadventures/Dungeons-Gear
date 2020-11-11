@@ -1,13 +1,10 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.interfaces.IArtifact;
-import com.infamous.dungeons_gear.items.ArtifactList;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
 import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -16,8 +13,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class WindHornItem extends Item implements IArtifact {
-    public WindHornItem(Properties properties) {
+public class WindHornItem extends ArtifactItem {
+    public WindHornItem(Item.Properties properties) {
         super(properties);
     }
 
@@ -35,12 +32,8 @@ public class WindHornItem extends Item implements IArtifact {
                 entity.sendBreakAnimation(handIn);
             });
         }
-        setArtifactCooldown(playerIn, itemstack.getItem(), 200);
+        ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem(), 200);
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
-    }
-
-    public Rarity getRarity(ItemStack itemStack){
-        return Rarity.RARE;
     }
 
     @Override
@@ -48,7 +41,6 @@ public class WindHornItem extends Item implements IArtifact {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == ArtifactList.WIND_HORN){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "When the Wind Horn echoes throughout the forests of the Overworld the creatures of the night tremble with fear."));
             list.add(new StringTextComponent(TextFormatting.GREEN +
@@ -57,6 +49,5 @@ public class WindHornItem extends Item implements IArtifact {
                     "5 Blocks Pushed"));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "10 Seconds Cooldown"));
-        }
     }
 }

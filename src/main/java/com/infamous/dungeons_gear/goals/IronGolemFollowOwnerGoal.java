@@ -11,7 +11,7 @@ import net.minecraft.world.IWorldReader;
 
 import java.util.EnumSet;
 
-import static com.infamous.dungeons_gear.goals.GoalUtils.*;
+import static com.infamous.dungeons_gear.goals.GoalUtils.getOwner;
 
 public class IronGolemFollowOwnerGoal extends Goal {
     private final IronGolemEntity ironGolemEntity;
@@ -109,7 +109,7 @@ public class IronGolemFollowOwnerGoal extends Goal {
     }
 
     private void func_226330_g_() {
-        BlockPos blockpos = this.owner.func_233580_cy_();
+        BlockPos blockpos = this.owner.getPosition();
 
         for(int i = 0; i < 10; ++i) {
             int j = this.func_226327_a_(-3, 3);
@@ -136,7 +136,7 @@ public class IronGolemFollowOwnerGoal extends Goal {
     }
 
     private boolean func_226329_a_(BlockPos p_226329_1_) {
-        PathNodeType pathnodetype = WalkNodeProcessor.func_237231_a_(this.world, p_226329_1_.func_239590_i_());
+        PathNodeType pathnodetype = WalkNodeProcessor.func_237231_a_(this.world, p_226329_1_.toMutable());
         if (pathnodetype != PathNodeType.WALKABLE) {
             return false;
         } else {
@@ -144,7 +144,7 @@ public class IronGolemFollowOwnerGoal extends Goal {
             if (!this.passesThroughLeaves && blockstate.getBlock() instanceof LeavesBlock) {
                 return false;
             } else {
-                BlockPos blockpos = p_226329_1_.subtract(this.ironGolemEntity.func_233580_cy_());
+                BlockPos blockpos = p_226329_1_.subtract(this.ironGolemEntity.getPosition());
                 return this.world.hasNoCollisions(this.ironGolemEntity, this.ironGolemEntity.getBoundingBox().offset(blockpos));
             }
         }
