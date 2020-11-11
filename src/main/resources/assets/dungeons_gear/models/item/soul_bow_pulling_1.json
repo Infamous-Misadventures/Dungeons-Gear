@@ -1,0 +1,6 @@
+{
+    "parent": "dungeons_gear:item/soul_bow",
+    "textures": {
+        "layer0": "dungeons_gear:item/soul_bow_pulling_1"
+    }
+}

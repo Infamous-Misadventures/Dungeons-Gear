@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "entries": [
+    "dungeons_gear:common_loot_additions",
+    "dungeons_gear:uncommon_loot_additions",
+    "dungeons_gear:rare_loot_additions",
+    "dungeons_gear:super_rare_loot_additions"
+  ]
+}
