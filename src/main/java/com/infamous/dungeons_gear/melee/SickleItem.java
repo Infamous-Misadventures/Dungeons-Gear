@@ -120,7 +120,7 @@ public class SickleItem extends SwordItem implements IOffhandAttack, IMeleeWeapo
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        if (handIn == Hand.OFF_HAND) {
+        if (handIn == Hand.OFF_HAND && worldIn.isRemote) {
             CombatEventHandler.checkForOffhandAttack();
             ItemStack offhand = playerIn.getHeldItem(handIn);
             return new ActionResult<>(ActionResultType.SUCCESS, offhand);

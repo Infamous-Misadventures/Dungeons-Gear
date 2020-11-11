@@ -54,7 +54,7 @@ public class TormentQuiver extends ArtifactItem implements ISoulGatherer {
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "The Torment Quiver radiates powerful energy drawn from the eternal source of the Undead."));
             list.add(new StringTextComponent(TextFormatting.GREEN +
-                    "Gives 3 slow arrows that knock back mobs and pass through walls."));
+                    "Makes the next 3 arrows you shoot apply high knockback to mobs and pass through walls."));
             list.add(new StringTextComponent(TextFormatting.LIGHT_PURPLE +
                     "+1 XP Gathering"));
             list.add(new StringTextComponent(TextFormatting.BLUE +

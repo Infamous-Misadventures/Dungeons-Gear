@@ -82,8 +82,8 @@ public class AbilityHelper {
     }
 
 
-    private static boolean isNotAVillagerOrIronGolem(LivingEntity nearbyEntity) {
-        return !(nearbyEntity instanceof AbstractVillagerEntity) && !(nearbyEntity instanceof IronGolemEntity);
+    private static boolean isAVillagerOrIronGolem(LivingEntity nearbyEntity) {
+        return (nearbyEntity instanceof AbstractVillagerEntity) || (nearbyEntity instanceof IronGolemEntity);
     }
 
     private static boolean isNotTheTargetOrAttacker(LivingEntity attacker, LivingEntity target, LivingEntity nearbyEntity) {
@@ -108,7 +108,7 @@ public class AbilityHelper {
 
     private static boolean isAlly(LivingEntity healer, LivingEntity nearbyEntity) {
         return isPetOfAttacker(healer, nearbyEntity)
-        || (nearbyEntity instanceof AbstractVillagerEntity)
+        || isAVillagerOrIronGolem(nearbyEntity)
         || healer.isOnSameTeam(nearbyEntity);
     }
 
@@ -116,19 +116,17 @@ public class AbilityHelper {
         return nearbyEntity.isAlive() && attacker.canEntityBeSeen(nearbyEntity);
     }
 
-    public static boolean canBeAppliedToEntity(LivingEntity attacker, LivingEntity target, LivingEntity nearbyEntity) {
+    public static boolean canApplyToEnemy(LivingEntity attacker, LivingEntity target, LivingEntity nearbyEntity) {
         return isNotTheTargetOrAttacker(attacker, target, nearbyEntity)
-                && !isPetOfAttacker(attacker, nearbyEntity)
                 && isAliveAndCanBeSeen(nearbyEntity, attacker)
-                && isNotAVillagerOrIronGolem(nearbyEntity)
+                && !isAlly(attacker, nearbyEntity)
                 && isNotAPlayerOrCanApplyToPlayers(nearbyEntity);
     }
 
-    public static boolean canBeAppliedToEntity(LivingEntity attacker, LivingEntity nearbyEntity) {
+    public static boolean canApplyToEnemy(LivingEntity attacker, LivingEntity nearbyEntity) {
         return nearbyEntity != attacker
-                && !isPetOfAttacker(attacker, nearbyEntity)
                 && isAliveAndCanBeSeen(nearbyEntity, attacker)
-                && isNotAVillagerOrIronGolem(nearbyEntity)
+                && !isAlly(attacker, nearbyEntity)
                 && isNotAPlayerOrCanApplyToPlayers(nearbyEntity);
     }
 

@@ -46,7 +46,7 @@ public class FlamingQuiver extends ArtifactItem {
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
                     "This quiver is filled with the deadliest of arrows."));
             list.add(new StringTextComponent(TextFormatting.GREEN +
-                    "Gives you 7 burning arrows."));
+                    "Turns the next 7 arrows you shoot into burning arrows."));
             list.add(new StringTextComponent(TextFormatting.BLUE +
                     "30 Seconds Cooldown"));
     }

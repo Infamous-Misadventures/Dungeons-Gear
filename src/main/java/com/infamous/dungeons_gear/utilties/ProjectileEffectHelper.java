@@ -33,7 +33,7 @@ public class ProjectileEffectHelper {
         World world = attacker.getEntityWorld();
         //boolean nullListFlag = arrowEntity.hitEntities == null;
         List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(victim.getPosX() - distance, victim.getPosY() - distance, victim.getPosZ() - distance,
-                victim.getPosX() + distance, victim.getPosY() + distance, victim.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canBeAppliedToEntity(attacker, victim, nearbyEntity));
+                victim.getPosX() + distance, victim.getPosY() + distance, victim.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, victim, nearbyEntity));
         if(nearbyEntities.isEmpty()) return;
         nearbyEntities.sort(Comparator.comparingDouble(livingEntity -> livingEntity.getDistanceSq(victim)));
         LivingEntity target =  nearbyEntities.get(0);
@@ -55,7 +55,7 @@ public class ProjectileEffectHelper {
         World world = attacker.getEntityWorld();
         //boolean nullListFlag = arrowEntity.hitEntities == null;
         List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(attacker.getPosX() - distance, attacker.getPosY() - distance, attacker.getPosZ() - distance,
-                attacker.getPosX() + distance, attacker.getPosY() + distance, attacker.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canBeAppliedToEntity(attacker, nearbyEntity));
+                attacker.getPosX() + distance, attacker.getPosY() + distance, attacker.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
         if(nearbyEntities.size() < 2) return;
         nearbyEntities.sort(Comparator.comparingDouble(livingEntity -> livingEntity.getDistanceSq(attacker)));
         LivingEntity target =  nearbyEntities.get(0);
@@ -81,7 +81,7 @@ public class ProjectileEffectHelper {
         World world = attacker.getEntityWorld();
         //boolean nullListFlag = arrowEntity.hitEntities == null;
         List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(attacker.getPosX() - distance, attacker.getPosY() - distance, attacker.getPosZ() - distance,
-                attacker.getPosX() + distance, attacker.getPosY() + distance, attacker.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canBeAppliedToEntity(attacker, nearbyEntity));
+                attacker.getPosX() + distance, attacker.getPosY() + distance, attacker.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
         if(nearbyEntities.size() < 2) return;
         nearbyEntities.sort(Comparator.comparingDouble(livingEntity -> livingEntity.getDistanceSq(attacker)));
         LivingEntity target =  nearbyEntities.get(0);
