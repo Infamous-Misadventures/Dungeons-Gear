@@ -3,6 +3,8 @@ package com.infamous.dungeons_gear.loot;
 import com.google.gson.JsonObject;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.minecart.ContainerMinecartEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
@@ -63,27 +65,41 @@ public class GlobalLootModifier{
                 return generatedLoot;
             }
             Vector3d vector3d = context.get(LootParameters.field_237457_g_);
-            if(vector3d == null) return generatedLoot;
-            BlockPos pos = new BlockPos(vector3d);
-            TileEntity te = context.getWorld().getTileEntity(pos);
+            Entity contextEntity = context.get(LootParameters.KILLER_ENTITY);
             ResourceLocation lootTable = null;
-            if(te instanceof LockableLootTileEntity){
-                LockableLootTileEntity lockableLootTileEntity = (LockableLootTileEntity)te;
-                        lootTable =
-                        ObfuscationReflectionHelper.getPrivateValue(
-                                LockableLootTileEntity.class,
-                                lockableLootTileEntity,
-                                "field_184284_m");
-                if (lootTable != null) {
-                    String lootTablePath = lootTable.toString();
-                    DungeonsGearConfig.COMMON_LOOT_TABLES.get().forEach((path) ->{
-                        if(lootTablePath.contains(path) && !DungeonsGearConfig.COMMON_LOOT_TABLES_BLACKLIST.get().contains(lootTablePath)){
-                            generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.UNIQUE_ITEM_COMMON_LOOT.get(),
-                                    DungeonsGearConfig.ARTIFACT_COMMON_LOOT.get()));
-                        }
-                    });
-                }
+            if(vector3d != null){
+                BlockPos pos = new BlockPos(vector3d);
+                TileEntity contextTileEntity = context.getWorld().getTileEntity(pos);
+                if(contextTileEntity instanceof LockableLootTileEntity){
+                    LockableLootTileEntity lockableLootTileEntity = (LockableLootTileEntity)contextTileEntity;
+                    lootTable =
+                            getLootTable(lockableLootTileEntity);
+                    if (lootTable != null) {
+                        String lootTablePath = lootTable.toString();
+                        DungeonsGearConfig.COMMON_LOOT_TABLES.get().forEach((path) ->{
+                            if(lootTablePath.contains(path) && !DungeonsGearConfig.COMMON_LOOT_TABLES_BLACKLIST.get().contains(lootTablePath)){
+                                generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.UNIQUE_ITEM_COMMON_LOOT.get(),
+                                        DungeonsGearConfig.ARTIFACT_COMMON_LOOT.get()));
+                            }
+                        });
+                    }
 
+                }
+                else if(contextEntity instanceof ContainerMinecartEntity){
+                    ContainerMinecartEntity containerMinecartEntity = (ContainerMinecartEntity)contextEntity;
+                    lootTable =
+                            getLootTable(containerMinecartEntity);
+                    if (lootTable != null) {
+                        String lootTablePath = lootTable.toString();
+                        DungeonsGearConfig.COMMON_LOOT_TABLES.get().forEach((path) ->{
+                            if(lootTablePath.contains(path) && !DungeonsGearConfig.COMMON_LOOT_TABLES_BLACKLIST.get().contains(lootTablePath)){
+                                generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.UNIQUE_ITEM_COMMON_LOOT.get(),
+                                        DungeonsGearConfig.ARTIFACT_COMMON_LOOT.get()));
+                            }
+                        });
+                    }
+
+                }
             }
             return generatedLoot;
         }
@@ -116,27 +132,41 @@ public class GlobalLootModifier{
                 return generatedLoot;
             }
             Vector3d vector3d = context.get(LootParameters.field_237457_g_);
-            if(vector3d == null) return generatedLoot;
-            BlockPos pos = new BlockPos(vector3d);
-            TileEntity te = context.getWorld().getTileEntity(pos);
+            Entity contextEntity = context.get(LootParameters.KILLER_ENTITY);
             ResourceLocation lootTable = null;
-            if(te instanceof LockableLootTileEntity){
-                LockableLootTileEntity lockableLootTileEntity = (LockableLootTileEntity)te;
-                lootTable =
-                        ObfuscationReflectionHelper.getPrivateValue(
-                                LockableLootTileEntity.class,
-                                lockableLootTileEntity,
-                                "field_184284_m");
-                if (lootTable != null) {
-                    String lootTablePath = lootTable.toString();
-                    DungeonsGearConfig.UNCOMMON_LOOT_TABLES.get().forEach((path) ->{
-                        if(lootTablePath.contains(path) && !DungeonsGearConfig.UNCOMMON_LOOT_TABLES_BLACKLIST.get().contains(lootTablePath)){
-                            generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.UNIQUE_ITEM_UNCOMMON_LOOT.get(),
-                                    DungeonsGearConfig.ARTIFACT_UNCOMMON_LOOT.get()));
-                        }
-                    });
-                }
+            if(vector3d != null){
+                BlockPos pos = new BlockPos(vector3d);
+                TileEntity contextTileEntity = context.getWorld().getTileEntity(pos);
+                if(contextTileEntity instanceof LockableLootTileEntity){
+                    LockableLootTileEntity lockableLootTileEntity = (LockableLootTileEntity)contextTileEntity;
+                    lootTable =
+                            getLootTable(lockableLootTileEntity);
+                    if (lootTable != null) {
+                        String lootTablePath = lootTable.toString();
+                        DungeonsGearConfig.UNCOMMON_LOOT_TABLES.get().forEach((path) ->{
+                            if(lootTablePath.contains(path) && !DungeonsGearConfig.UNCOMMON_LOOT_TABLES_BLACKLIST.get().contains(lootTablePath)){
+                                generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.UNIQUE_ITEM_UNCOMMON_LOOT.get(),
+                                        DungeonsGearConfig.ARTIFACT_UNCOMMON_LOOT.get()));
+                            }
+                        });
+                    }
 
+                }
+                else if(contextEntity instanceof ContainerMinecartEntity){
+                    ContainerMinecartEntity containerMinecartEntity = (ContainerMinecartEntity)contextEntity;
+                    lootTable =
+                            getLootTable(containerMinecartEntity);
+                    if (lootTable != null) {
+                        String lootTablePath = lootTable.toString();
+                        DungeonsGearConfig.UNCOMMON_LOOT_TABLES.get().forEach((path) ->{
+                            if(lootTablePath.contains(path) && !DungeonsGearConfig.UNCOMMON_LOOT_TABLES_BLACKLIST.get().contains(lootTablePath)){
+                                generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.UNIQUE_ITEM_COMMON_LOOT.get(),
+                                        DungeonsGearConfig.ARTIFACT_COMMON_LOOT.get()));
+                            }
+                        });
+                    }
+
+                }
             }
             return generatedLoot;
         }
@@ -169,27 +199,41 @@ public class GlobalLootModifier{
                 return generatedLoot;
             }
             Vector3d vector3d = context.get(LootParameters.field_237457_g_);
-            if(vector3d == null) return generatedLoot;
-            BlockPos pos = new BlockPos(vector3d);
-            TileEntity te = context.getWorld().getTileEntity(pos);
+            Entity contextEntity = context.get(LootParameters.KILLER_ENTITY);
             ResourceLocation lootTable = null;
-            if(te instanceof LockableLootTileEntity){
-                LockableLootTileEntity lockableLootTileEntity = (LockableLootTileEntity)te;
-                lootTable =
-                        ObfuscationReflectionHelper.getPrivateValue(
-                                LockableLootTileEntity.class,
-                                lockableLootTileEntity,
-                                "field_184284_m");
-                if (lootTable != null) {
-                    String lootTablePath = lootTable.toString();
-                    DungeonsGearConfig.RARE_LOOT_TABLES.get().forEach((path) ->{
-                        if(lootTablePath.contains(path) && !DungeonsGearConfig.RARE_LOOT_TABLES_BLACKLIST.get().contains(lootTablePath)){
-                            generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.UNIQUE_ITEM_RARE_LOOT.get(),
-                                    DungeonsGearConfig.ARTIFACT_RARE_LOOT.get()));
-                        }
-                    });
-                }
+            if(vector3d != null){
+                BlockPos pos = new BlockPos(vector3d);
+                TileEntity contextTileEntity = context.getWorld().getTileEntity(pos);
+                if(contextTileEntity instanceof LockableLootTileEntity){
+                    LockableLootTileEntity lockableLootTileEntity = (LockableLootTileEntity)contextTileEntity;
+                    lootTable =
+                            getLootTable(lockableLootTileEntity);
+                    if (lootTable != null) {
+                        String lootTablePath = lootTable.toString();
+                        DungeonsGearConfig.RARE_LOOT_TABLES.get().forEach((path) ->{
+                            if(lootTablePath.contains(path) && !DungeonsGearConfig.RARE_LOOT_TABLES_BLACKLIST.get().contains(lootTablePath)){
+                                generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.UNIQUE_ITEM_RARE_LOOT.get(),
+                                        DungeonsGearConfig.ARTIFACT_RARE_LOOT.get()));
+                            }
+                        });
+                    }
 
+                }
+                else if(contextEntity instanceof ContainerMinecartEntity){
+                    ContainerMinecartEntity containerMinecartEntity = (ContainerMinecartEntity)contextEntity;
+                    lootTable =
+                            getLootTable(containerMinecartEntity);
+                    if (lootTable != null) {
+                        String lootTablePath = lootTable.toString();
+                        DungeonsGearConfig.RARE_LOOT_TABLES.get().forEach((path) ->{
+                            if(lootTablePath.contains(path) && !DungeonsGearConfig.RARE_LOOT_TABLES_BLACKLIST.get().contains(lootTablePath)){
+                                generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.UNIQUE_ITEM_COMMON_LOOT.get(),
+                                        DungeonsGearConfig.ARTIFACT_COMMON_LOOT.get()));
+                            }
+                        });
+                    }
+
+                }
             }
             return generatedLoot;
         }
@@ -222,29 +266,43 @@ public class GlobalLootModifier{
                 return generatedLoot;
             }
             Vector3d vector3d = context.get(LootParameters.field_237457_g_);
-            if(vector3d == null) return generatedLoot;
-            BlockPos pos = new BlockPos(vector3d);
-            TileEntity te = context.getWorld().getTileEntity(pos);
+            Entity contextEntity = context.get(LootParameters.KILLER_ENTITY);
             ResourceLocation lootTable = null;
-            if(te instanceof LockableLootTileEntity){
-                LockableLootTileEntity lockableLootTileEntity = (LockableLootTileEntity)te;
-                lootTable =
-                        ObfuscationReflectionHelper.getPrivateValue(
-                                LockableLootTileEntity.class,
-                                lockableLootTileEntity,
-                                "field_184284_m");
-                if (lootTable != null) {
-                    String lootTablePath = lootTable.toString();
+            if(vector3d != null){
+                BlockPos pos = new BlockPos(vector3d);
+                TileEntity contextTileEntity = context.getWorld().getTileEntity(pos);
+                if(contextTileEntity instanceof LockableLootTileEntity){
+                    LockableLootTileEntity lockableLootTileEntity = (LockableLootTileEntity)contextTileEntity;
+                    lootTable =
+                            getLootTable(lockableLootTileEntity);
+                    if (lootTable != null) {
+                        String lootTablePath = lootTable.toString();
 
-                    DungeonsGearConfig.SUPER_RARE_LOOT_TABLES.get().forEach((path) ->{
-                        if(lootTablePath.contains(path) && !DungeonsGearConfig.SUPER_RARE_LOOT_TABLES_BLACKLIST.get().contains(lootTablePath)){
-                            generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.UNIQUE_ITEM_SUPER_RARE_LOOT.get(),
-                                    DungeonsGearConfig.ARTIFACT_SUPER_RARE_LOOT.get()));
-                        }
-                    });
+                        DungeonsGearConfig.SUPER_RARE_LOOT_TABLES.get().forEach((path) ->{
+                            if(lootTablePath.contains(path) && !DungeonsGearConfig.SUPER_RARE_LOOT_TABLES_BLACKLIST.get().contains(lootTablePath)){
+                                generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.UNIQUE_ITEM_SUPER_RARE_LOOT.get(),
+                                        DungeonsGearConfig.ARTIFACT_SUPER_RARE_LOOT.get()));
+                            }
+                        });
+
+                    }
 
                 }
+                else if(contextEntity instanceof ContainerMinecartEntity){
+                    ContainerMinecartEntity containerMinecartEntity = (ContainerMinecartEntity)contextEntity;
+                    lootTable =
+                            getLootTable(containerMinecartEntity);
+                    if (lootTable != null) {
+                        String lootTablePath = lootTable.toString();
+                        DungeonsGearConfig.SUPER_RARE_LOOT_TABLES.get().forEach((path) ->{
+                            if(lootTablePath.contains(path) && !DungeonsGearConfig.SUPER_RARE_LOOT_TABLES_BLACKLIST.get().contains(lootTablePath)){
+                                generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.UNIQUE_ITEM_COMMON_LOOT.get(),
+                                        DungeonsGearConfig.ARTIFACT_COMMON_LOOT.get()));
+                            }
+                        });
+                    }
 
+                }
             }
             return generatedLoot;
         }
@@ -263,11 +321,20 @@ public class GlobalLootModifier{
         }
     }
 
-    private static void setLootTableNull(LockableLootTileEntity lockableLootTileEntity) {
-        // must set it null by this point
-        ObfuscationReflectionHelper.setPrivateValue(LockableLootTileEntity.class,
+    private static final String LOCKABLE_LOOT_TILE_ENTITY_LOOT_TABLE = "field_184284_m";
+    private static final String CONTAINER_MINECART_ENTITY_LOOT_TABLE = "field_184290_c";
+
+    private static ResourceLocation getLootTable(LockableLootTileEntity lockableLootTileEntity) {
+        return ObfuscationReflectionHelper.getPrivateValue(
+                LockableLootTileEntity.class,
                 lockableLootTileEntity,
-                null,
-                "field_184284_m");
+                LOCKABLE_LOOT_TILE_ENTITY_LOOT_TABLE);
+    }
+
+    private static ResourceLocation getLootTable(ContainerMinecartEntity containerMinecartEntity) {
+        return ObfuscationReflectionHelper.getPrivateValue(
+                ContainerMinecartEntity.class,
+                containerMinecartEntity,
+                CONTAINER_MINECART_ENTITY_LOOT_TABLE);
     }
 }
