@@ -24,6 +24,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
+import java.util.Comparator;
 import java.util.List;
 
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
@@ -75,6 +76,37 @@ public class AreaOfEffectHelper {
                 PROXY.spawnParticles(nearbyEntity, ParticleTypes.HEART);
             }
         }
+    }
+
+    public static float healMostInjuredAlly(LivingEntity healer, float distance){
+        World world = healer.getEntityWorld();
+        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(healer.getPosX() - distance, healer.getPosY() - distance, healer.getPosZ() - distance,
+                healer.getPosX() + distance, healer.getPosY() + distance, healer.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canHealEntity(healer, nearbyEntity));
+        if(!nearbyEntities.isEmpty()){
+            nearbyEntities.sort((o1, o2) -> {
+                float o1LostHealth = o1.getMaxHealth() - o1.getHealth();
+                float o2LostHealth = o2.getMaxHealth() - o2.getHealth();
+                return Float.compare(o1LostHealth, o2LostHealth);
+            });
+            LivingEntity mostInjuredAlly = nearbyEntities.get(nearbyEntities.size() - 1);
+            float currentHealth = mostInjuredAlly.getHealth();
+            float maxHealth = mostInjuredAlly.getMaxHealth();
+            float lostHealth = maxHealth - currentHealth;
+            float healedAmount;
+            if(lostHealth < (maxHealth * 0.20F)){
+                mostInjuredAlly.setHealth(currentHealth + lostHealth);
+                PROXY.spawnParticles(mostInjuredAlly, ParticleTypes.HEART);
+                healedAmount = lostHealth;
+                return healedAmount;
+            }
+            else{
+                mostInjuredAlly.setHealth(currentHealth + (maxHealth * 0.20F));
+                PROXY.spawnParticles(mostInjuredAlly, ParticleTypes.HEART);
+                healedAmount = (maxHealth * 0.20F);
+                return healedAmount;
+            }
+        }
+        else return 0;
     }
 
     public static void pullInNearbyEntitiesAtPos(LivingEntity attacker, BlockPos blockPos, int distance){
