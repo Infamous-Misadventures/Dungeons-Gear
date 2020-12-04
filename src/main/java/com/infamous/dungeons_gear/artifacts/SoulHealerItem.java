@@ -1,6 +1,7 @@
 package com.infamous.dungeons_gear.artifacts;
 
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
+import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -23,7 +24,7 @@ public class SoulHealerItem extends ArtifactItem implements ISoulGatherer {
         ItemStack itemstack = playerIn.getHeldItem(handIn);
 
         if(playerIn.experienceTotal >= 20 || playerIn.isCreative()){
-            if(!playerIn.isCreative() && (playerIn.getHealth() < playerIn.getMaxHealth())){
+            if((playerIn.getHealth() < playerIn.getMaxHealth())){
                 float currentHealth = playerIn.getHealth();
                 float maxHealth = playerIn.getMaxHealth();
                 float lostHealth = maxHealth - currentHealth;
@@ -36,13 +37,30 @@ public class SoulHealerItem extends ArtifactItem implements ISoulGatherer {
                     playerIn.setHealth(currentHealth + (maxHealth * 0.20F));
                     healedAmount = (maxHealth * 0.20F);
                 }
-                playerIn.giveExperiencePoints((int)(-healedAmount));
-                itemstack.damageItem(1, playerIn, (entity) -> {
-                    entity.sendBreakAnimation(handIn);
-                });
+                if(!playerIn.isCreative()){
+                    playerIn.giveExperiencePoints((int)(-healedAmount));
+                    itemstack.damageItem(1, playerIn, (entity) -> {
+                        entity.sendBreakAnimation(handIn);
+                    });
+                }
 
 
                 ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem(), 20);
+            }
+            else{
+                float healedAmount = AreaOfEffectHelper.healMostInjuredAlly(playerIn, 12);
+                if(healedAmount > 0){
+
+                    if(!playerIn.isCreative()){
+                        playerIn.giveExperiencePoints((int)(-healedAmount));
+                        itemstack.damageItem(1, playerIn, (entity) -> {
+                            entity.sendBreakAnimation(handIn);
+                        });
+                    }
+
+
+                    ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem(), 20);
+                }
             }
         }
 
