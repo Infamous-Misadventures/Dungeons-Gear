@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
+import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.artifacts.ArtifactItem;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
@@ -15,6 +16,10 @@ import net.minecraft.util.CooldownTracker;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
@@ -53,7 +58,13 @@ public class FinalShoutEnchantment extends HealthAbilityEnchantment {
                         CooldownTracker cooldownTracker = player.getCooldownTracker();
                         for(Item item : cooldownTracker.cooldowns.keySet()){
                             if(item instanceof ArtifactItem){
-                                cooldownTracker.removeCooldown(item);
+                                cooldownTracker.cooldowns.remove(item);
+                                Method notifyOnRemove = ObfuscationReflectionHelper.findMethod(CooldownTracker.class, "func_185146_c", Item.class);
+                                try {
+                                    notifyOnRemove.invoke(cooldownTracker, item);
+                                } catch (IllegalAccessException | InvocationTargetException e) {
+                                    DungeonsGear.LOGGER.info("Reflection error trying to call CooldownTracker#notifyOnRemove!");
+                                }
                             }
                         }
                     }
