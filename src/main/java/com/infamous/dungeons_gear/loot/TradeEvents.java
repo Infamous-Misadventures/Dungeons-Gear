@@ -25,6 +25,9 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
+import java.util.function.Predicate;
+
+import static net.minecraft.item.Items.*;
 
 
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
@@ -56,9 +59,7 @@ public class TradeEvents {
             Int2ObjectMap<List<VillagerTrades.ITrade>> weaponsmithTrades = event.getTrades();
 
             // Moving the Level 4 "Diamond for Emerald" Trade down to Level 3
-            VillagerTrades.ITrade diamondForEmeraldTrade = weaponsmithTrades.get(4).get(0);
-            weaponsmithTrades.get(3).add(diamondForEmeraldTrade);
-            weaponsmithTrades.get(4).remove(0);
+            moveTrade(weaponsmithTrades, 4, 3, emeraldForItemFilter(DIAMOND));
 
             addCommonAndUniqueTrades(weaponsmithTrades, DeferredItemInit.commonWeaponMap, DeferredItemInit.uniqueWeaponMap);
         }
@@ -66,15 +67,9 @@ public class TradeEvents {
             Int2ObjectMap<List<VillagerTrades.ITrade>> fletcherTrades = event.getTrades();
 
             // Move higher level stuff to lower trade levels
-            VillagerTrades.ITrade emeraldForFeatherTrade = fletcherTrades.get(4).get(0);
-            VillagerTrades.ITrade emeraldForTripwireHookTrade = fletcherTrades.get(5).get(0);
-            VillagerTrades.ITrade emeraldAndArrowForTippedArrowTrade = fletcherTrades.get(5).get(2);
-            fletcherTrades.get(2).add(emeraldForFeatherTrade);
-            fletcherTrades.get(3).add(emeraldForTripwireHookTrade);
-            fletcherTrades.get(3).add(emeraldAndArrowForTippedArrowTrade);
-            fletcherTrades.get(4).remove(0);
-            fletcherTrades.get(5).remove(0);
-            fletcherTrades.get(5).remove(1); // since the 1st trade was already removed, the 3rd trade is now the second
+            moveTrade(fletcherTrades, 4, 2, emeraldForItemFilter(FEATHER));
+            moveTrade(fletcherTrades, 5, 3, emeraldForItemFilter(TRIPWIRE_HOOK));
+            moveTrade(fletcherTrades, 5, 3, itemWithPotionForEmeraldsAndItemsFilter(TIPPED_ARROW));
 
             //moveTradesToDifferentGroup(fletcherTrades.get(4), fletcherTrades.get(2));
             //moveTradesToDifferentGroup(fletcherTrades.get(5),  fletcherTrades.get(3));
@@ -96,6 +91,30 @@ public class TradeEvents {
 
             addCommonAndUniqueTrades(leatherworkerTrades, DeferredItemInit.commonLeatherArmorMap, DeferredItemInit.uniqueLeatherArmorMap);
         }
+    }
+
+    private static void moveTrade(Int2ObjectMap<List<VillagerTrades.ITrade>> trades, int source, int target, Predicate<VillagerTrades.ITrade> filter){
+        Optional<VillagerTrades.ITrade> emeraldForFeatherTrade = getVillagerTrade(trades.get(source), filter);
+        emeraldForFeatherTrade.ifPresent(iTrade -> {
+            trades.get(target).add(iTrade);
+            trades.get(source).removeIf(filter);
+        });
+    }
+
+    private static Optional<VillagerTrades.ITrade> getVillagerTrade(List<VillagerTrades.ITrade> trades, Predicate< VillagerTrades.ITrade > filter){
+        return trades.stream().filter(filter).findFirst();
+    }
+
+    private static Predicate<VillagerTrades.ITrade> emeraldForItemFilter(Item item){
+        return (iTrade) -> (iTrade instanceof VillagerTrades.EmeraldForItemsTrade && ((VillagerTrades.EmeraldForItemsTrade) iTrade).tradeItem.equals(item));
+    }
+
+    private static Predicate<VillagerTrades.ITrade> itemsForEmeraldsFilter(Item item){
+        return (iTrade) -> (iTrade instanceof VillagerTrades.ItemsForEmeraldsTrade && ((VillagerTrades.ItemsForEmeraldsTrade) iTrade).sellingItem.getItem().equals(item));
+    }
+
+    private static Predicate<VillagerTrades.ITrade> itemWithPotionForEmeraldsAndItemsFilter(Item item){
+        return (iTrade) -> (iTrade instanceof VillagerTrades.ItemWithPotionForEmeraldsAndItemsTrade && ((VillagerTrades.ItemWithPotionForEmeraldsAndItemsTrade) iTrade).potionStack.getItem().equals(item));
     }
 
     private static void addCommonAndUniqueTrades(Int2ObjectMap<List<VillagerTrades.ITrade>> villagerTrades, Map<Item, ResourceLocation> commonMap, Map<Item, ResourceLocation> uniqueMap) {
