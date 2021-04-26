@@ -50,7 +50,7 @@ public class CowardiceEnchantment extends HealthAbilityEnchantment {
             if (currentHealth == maxHealth) {
                 if (ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.COWARDICE)) {
                     int cowardiceLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.COWARDICE, player);
-                    player.getAttribute(Attributes.ATTACK_DAMAGE).applyNonPersistentModifier(new AttributeModifier(COWARD, "cowardice multiplier", 1 + 0.1 * (cowardiceLevel+1), AttributeModifier.Operation.MULTIPLY_TOTAL));
+                    player.getAttribute(Attributes.ATTACK_DAMAGE).applyNonPersistentModifier(new AttributeModifier(COWARD, "cowardice multiplier", 0.1 * (cowardiceLevel+1), AttributeModifier.Operation.MULTIPLY_TOTAL));
                 }
             }
         }
