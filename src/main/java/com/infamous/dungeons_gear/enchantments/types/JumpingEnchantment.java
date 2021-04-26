@@ -4,9 +4,9 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
 
-public class JumpingEnchantmnet extends Enchantment{
+public class JumpingEnchantment extends Enchantment{
 
-    protected JumpingEnchantmnet(Rarity rarity, EnchantmentType enchantmentType, EquipmentSlotType[] equipmentSlotTypes) {
+    protected JumpingEnchantment(Rarity rarity, EnchantmentType enchantmentType, EquipmentSlotType[] equipmentSlotTypes) {
         super(rarity, enchantmentType, equipmentSlotTypes);
     }
 }

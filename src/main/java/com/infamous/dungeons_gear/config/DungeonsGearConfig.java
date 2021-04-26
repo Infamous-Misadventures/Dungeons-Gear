@@ -12,9 +12,7 @@ import java.io.File;
 import java.util.List;
 
 public class DungeonsGearConfig {
-    private static CommentedFileConfig cfg;
     private static final ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
-
     public static ForgeConfigSpec.ConfigValue<Integer> VEST_ARMOR_DURABILITY;
     public static ForgeConfigSpec.ConfigValue<Integer> ROBE_ARMOR_DURABILITY;
     public static ForgeConfigSpec.ConfigValue<Integer> PELT_ARMOR_DURABILITY;
@@ -26,29 +24,24 @@ public class DungeonsGearConfig {
     public static ForgeConfigSpec.ConfigValue<Integer> BOW_DURABILITY;
     public static ForgeConfigSpec.ConfigValue<Integer> CROSSBOW_DURABILITY;
     public static ForgeConfigSpec.ConfigValue<Integer> ARTIFACT_DURABILITY;
-
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_DUNGEONS_GEAR_LOOT;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_SALVAGING;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_VILLAGER_TRADES;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS;
-
+    public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_ELENAI_DODGE_COMPAT;
+    public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_WAR_DANCE_COMPAT;
     public static ForgeConfigSpec.ConfigValue<Integer> COMMON_ITEM_VALUE;
     public static ForgeConfigSpec.ConfigValue<Integer> UNIQUE_ITEM_VALUE;
     public static ForgeConfigSpec.ConfigValue<Integer> ARTIFACT_VALUE;
-
     public static ForgeConfigSpec.ConfigValue<Double> UNIQUE_ITEM_COMMON_LOOT;
     public static ForgeConfigSpec.ConfigValue<Double> ARTIFACT_COMMON_LOOT;
-
     public static ForgeConfigSpec.ConfigValue<Double> UNIQUE_ITEM_UNCOMMON_LOOT;
     public static ForgeConfigSpec.ConfigValue<Double> ARTIFACT_UNCOMMON_LOOT;
-
     public static ForgeConfigSpec.ConfigValue<Double> UNIQUE_ITEM_RARE_LOOT;
     public static ForgeConfigSpec.ConfigValue<Double> ARTIFACT_RARE_LOOT;
-
     public static ForgeConfigSpec.ConfigValue<Double> UNIQUE_ITEM_SUPER_RARE_LOOT;
     public static ForgeConfigSpec.ConfigValue<Double> ARTIFACT_SUPER_RARE_LOOT;
-
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> COMMON_LOOT_TABLES;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> COMMON_LOOT_TABLES_BLACKLIST;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> UNCOMMON_LOOT_TABLES;
@@ -57,8 +50,9 @@ public class DungeonsGearConfig {
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> RARE_LOOT_TABLES_BLACKLIST;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> SUPER_RARE_LOOT_TABLES;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> SUPER_RARE_LOOT_TABLES_BLACKLIST;
-
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> ENEMY_BLACKLIST;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_AREA_OF_EFFECT_ON_PLAYERS;
+    private static CommentedFileConfig cfg;
 
     public DungeonsGearConfig() {
         cfg = CommentedFileConfig
@@ -71,7 +65,7 @@ public class DungeonsGearConfig {
         spec.setConfig(cfg);
     }
 
-    private void initConfig(){
+    private void initConfig() {
         builder.comment("General Mod Configuration").push("general_mod_configuration");
         ENABLE_DUNGEONS_GEAR_LOOT = builder
                 .comment("Enable the mass addition of Dungeons Gear items to various vanilla loot tables by the mod itself. \n" +
@@ -94,6 +88,16 @@ public class DungeonsGearConfig {
                 .comment("Enable applying enchantments together to create combinations would  be considered too overpowered. \n" +
                         "If you don't want overpowered enchantment combinations, like Sharpness and Committed on a sword, disable this feature. [true / false]")
                 .define("enableOverpoweredEnchantmentCombos", false);
+        ENABLE_ELENAI_DODGE_COMPAT = builder
+                .comment("Enable Elenai Dodge 2 compatibility. Effects that trigger on jump will now trigger on dodge. \n" +
+                        "Does nothing if Elenai Dodge is not installed. [true / false]")
+                .define("enableElenaiDodgeCompat", true);
+        ENABLE_WAR_DANCE_COMPAT = builder
+                .comment("Enable Project: War Dance compatibility. \n" +
+                        "Dual wield weapon offhand functions are suppressed in favor of using War Dance's offhand attacks. \n" +
+                        "Block reach attributes are added to spears so they benefit from skills. \n" +
+                        "Does nothing if Project: War Dance is not installed. [true / false]")
+                .define("enableProjectWarDanceCompat", true);
         COMMON_ITEM_VALUE = builder
                 .comment("The emerald value for a common weapon or armor [0-64, default: 12]")
                 .defineInRange("commonItemValue", 12, 0, 64);
@@ -271,6 +275,41 @@ public class DungeonsGearConfig {
         ARTIFACT_SUPER_RARE_LOOT = builder
                 .comment("The decimal chance for an artifact to appear in super rare loot tables [0.0-1.0, default: 1.0]")
                 .defineInRange("artifactSuperRareLoot", 1.0, 0, 1.0);
+        builder.pop();
+
+        builder.comment("Entity Configuration").push("super_rare_loot_table_configuration");
+        ENEMY_BLACKLIST = builder
+                .comment("Add entities that will never be targeted by aggressive Dungeons Gear effects. \n"
+                        + "To do so, enter their registry names.")
+                .defineList("effectTargetBlacklist", Lists.newArrayList(
+                        "minecraft:chicken",
+                        "minecraft:cow",
+                        "minecraft:pig",
+                        "minecraft:sheep",
+                        "minecraft:bee",
+                        "minecraft:wolf",
+                        "minecraft:fox",
+                        "minecraft:villager",
+                        "minecraft:horse",
+                        "minecraft:donkey",
+                        "minecraft:mooshroom",
+                        "minecraft:parrot",
+                        "minecraft:ocelot",
+                        "minecraft:rabbit",
+                        "minecraft:squid",
+                        "minecraft:strider",
+                        "minecraft:turtle",
+                        "minecraft:salmon",
+                        "minecraft:cod",
+                        "minecraft:pufferfish",
+                        "minecraft:tropical_fish",
+                        "minecraft:dolphin",
+                        "minecraft:panda",
+                        "minecraft:polar_bear",
+                        "minecraft:bat",
+                        "minecraft:trader_llama"
+                        ),
+                        (itemRaw) -> itemRaw instanceof String);
         builder.pop();
     }
 }

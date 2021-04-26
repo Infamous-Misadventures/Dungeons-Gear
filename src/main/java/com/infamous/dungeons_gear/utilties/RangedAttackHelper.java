@@ -1,7 +1,6 @@
 package com.infamous.dungeons_gear.utilties;
 
 import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
-import com.infamous.dungeons_gear.capabilities.weapon.WeaponProvider;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.ranged.bows.AbstractDungeonsBowItem;
@@ -12,7 +11,6 @@ import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
-import static com.infamous.dungeons_gear.items.RangedWeaponList.*;
 import static net.minecraft.item.CrossbowItem.hasChargedProjectile;
 
 public class RangedAttackHelper {
@@ -140,7 +138,7 @@ public class RangedAttackHelper {
     public static float getvVanillaOrModdedCrossbowArrowVelocity(ItemStack stack) {
         float arrowVelocity;
         if(stack.getItem() instanceof AbstractDungeonsCrossbowItem){
-            arrowVelocity = ((AbstractDungeonsCrossbowItem)stack.getItem()).getProjectileVelocity(stack);
+            arrowVelocity = ((AbstractDungeonsCrossbowItem)stack.getItem()).func_220013_l(stack);
         }
         else{
             arrowVelocity = hasChargedProjectile(stack, Items.FIREWORK_ROCKET) ? 1.6F : 3.15F;
