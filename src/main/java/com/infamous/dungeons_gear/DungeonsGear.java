@@ -7,6 +7,8 @@ import com.infamous.dungeons_gear.capabilities.summoning.*;
 import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
 import com.infamous.dungeons_gear.capabilities.weapon.Weapon;
 import com.infamous.dungeons_gear.capabilities.weapon.WeaponStorage;
+import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
+import com.infamous.dungeons_gear.compat.ElenaiCompat;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.entities.IceCloudRenderer;
 import com.infamous.dungeons_gear.groups.ArmorGroup;
@@ -34,6 +36,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -59,6 +62,8 @@ public class DungeonsGear
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         // Register the doClientStuff method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+        // Register the processIMC method for modloading
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
 
 
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -72,6 +77,11 @@ public class DungeonsGear
         MinecraftForge.EVENT_BUS.register(this);
     }
 
+    private void processIMC(final InterModProcessEvent event) {
+        DungeonsGearCompatibility.checkCompatStatus();
+        if (DungeonsGearCompatibility.elenaiDodge)
+            MinecraftForge.EVENT_BUS.register(ElenaiCompat.class);
+    }
 
     private void setup(final FMLCommonSetupEvent event)
     {

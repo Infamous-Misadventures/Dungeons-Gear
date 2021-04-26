@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.utilties;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.goals.GoalUtils;
 import com.infamous.dungeons_gear.goals.WildRageAttackGoal;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
@@ -14,6 +15,8 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 
@@ -29,8 +32,7 @@ public class AbilityHelper {
     }
 
     public static void makeNearbyPetsAttackTarget(LivingEntity target, LivingEntity owner){
-        List<LivingEntity> nearbyEntities = owner.getEntityWorld().getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(owner.getPosX() - 12, owner.getPosY() - 12, owner.getPosZ() - 12,
-                owner.getPosX() + 12, owner.getPosY() + 12, owner.getPosZ() + 12), (nearbyEntity) -> {
+        List<LivingEntity> nearbyEntities = owner.getEntityWorld().getLoadedEntitiesWithinAABB(LivingEntity.class, owner.getBoundingBox().grow(12), (nearbyEntity) -> {
             return canPetAttackEntity(owner, nearbyEntity);
         });
         for(LivingEntity nearbyEntity : nearbyEntities){
@@ -112,6 +114,10 @@ public class AbilityHelper {
         || healer.isOnSameTeam(nearbyEntity);
     }
 
+    private static boolean isEntityBlacklisted(LivingEntity entity){
+        return (ForgeRegistries.ENTITIES.getKey(entity.getType()) != null && DungeonsGearConfig.ENEMY_BLACKLIST.get().contains(ForgeRegistries.ENTITIES.getKey(entity.getType()).toString()));
+    }
+
     private static boolean isAliveAndCanBeSeen(LivingEntity nearbyEntity, LivingEntity attacker) {
         return nearbyEntity.isAlive() && attacker.canEntityBeSeen(nearbyEntity);
     }
@@ -120,14 +126,16 @@ public class AbilityHelper {
         return isNotTheTargetOrAttacker(attacker, target, nearbyEntity)
                 && isAliveAndCanBeSeen(nearbyEntity, attacker)
                 && !isAlly(attacker, nearbyEntity)
-                && isNotAPlayerOrCanApplyToPlayers(nearbyEntity);
+                && isNotAPlayerOrCanApplyToPlayers(nearbyEntity)
+                && !isEntityBlacklisted(nearbyEntity);
     }
 
     public static boolean canApplyToEnemy(LivingEntity attacker, LivingEntity nearbyEntity) {
         return nearbyEntity != attacker
                 && isAliveAndCanBeSeen(nearbyEntity, attacker)
                 && !isAlly(attacker, nearbyEntity)
-                && isNotAPlayerOrCanApplyToPlayers(nearbyEntity);
+                && isNotAPlayerOrCanApplyToPlayers(nearbyEntity)
+                && !isEntityBlacklisted(nearbyEntity);
     }
 
     public static void sendIntoWildRage(MobEntity mobEntity){

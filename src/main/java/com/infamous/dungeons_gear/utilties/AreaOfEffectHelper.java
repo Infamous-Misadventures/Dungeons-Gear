@@ -34,8 +34,7 @@ import static com.infamous.dungeons_gear.utilties.AbilityHelper.isPetOfAttacker;
 public class AreaOfEffectHelper {
     public static void pullInNearbyEntities(LivingEntity attacker, LivingEntity target, float distance){
         World world = target.getEntityWorld();
-        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(target.getPosX() - distance, target.getPosY() - distance, target.getPosZ() - distance,
-                target.getPosX() + distance, target.getPosY() + distance, target.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, target, nearbyEntity));
+        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, target, nearbyEntity));
         PROXY.spawnParticles(target, ParticleTypes.PORTAL);
         for(LivingEntity nearbyEntity : nearbyEntities){
             double motionX = target.getPosX() - (nearbyEntity.getPosX());
@@ -51,8 +50,7 @@ public class AreaOfEffectHelper {
     public static void healNearbyAllies(LivingEntity healer, EffectInstance potionEffect, float distance){
         World world = healer.getEntityWorld();
         PlayerEntity playerentity = healer instanceof PlayerEntity ? (PlayerEntity)healer : null;
-        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(healer.getPosX() - distance, healer.getPosY() - distance, healer.getPosZ() - distance,
-                healer.getPosX() + distance, healer.getPosY() + distance, healer.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canHealEntity(healer, nearbyEntity));
+        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, healer.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canHealEntity(healer, nearbyEntity));
         for(LivingEntity nearbyEntity : nearbyEntities){
             if(nearbyEntity.getHealth() < nearbyEntity.getMaxHealth()){
                 if (potionEffect.getPotion().isInstant()) {
@@ -68,8 +66,7 @@ public class AreaOfEffectHelper {
     public static void healNearbyAllies(LivingEntity healer, float amount, float distance){
         World world = healer.getEntityWorld();
         PlayerEntity playerentity = healer instanceof PlayerEntity ? (PlayerEntity)healer : null;
-        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(healer.getPosX() - distance, healer.getPosY() - distance, healer.getPosZ() - distance,
-                healer.getPosX() + distance, healer.getPosY() + distance, healer.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canHealEntity(healer, nearbyEntity));
+        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, healer.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canHealEntity(healer, nearbyEntity));
         for(LivingEntity nearbyEntity : nearbyEntities){
             if(nearbyEntity.getHealth() < nearbyEntity.getMaxHealth()){
                 nearbyEntity.heal(amount);
@@ -80,8 +77,7 @@ public class AreaOfEffectHelper {
 
     public static float healMostInjuredAlly(LivingEntity healer, float distance){
         World world = healer.getEntityWorld();
-        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(healer.getPosX() - distance, healer.getPosY() - distance, healer.getPosZ() - distance,
-                healer.getPosX() + distance, healer.getPosY() + distance, healer.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canHealEntity(healer, nearbyEntity));
+        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, healer.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canHealEntity(healer, nearbyEntity));
         if(!nearbyEntities.isEmpty()){
             nearbyEntities.sort((o1, o2) -> {
                 float o1LostHealth = o1.getMaxHealth() - o1.getHealth();
@@ -111,8 +107,7 @@ public class AreaOfEffectHelper {
 
     public static void pullInNearbyEntitiesAtPos(LivingEntity attacker, BlockPos blockPos, int distance){
         World world = attacker.getEntityWorld();
-        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(blockPos.getX() - distance, blockPos.getY() - distance, blockPos.getZ() - distance,
-                blockPos.getX() + distance, blockPos.getY() + distance, blockPos.getZ() + distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
+        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(blockPos).grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
         for(LivingEntity nearbyEntity : nearbyEntities){
             double motionX = blockPos.getX() - (nearbyEntity.getPosX());
             double motionY = blockPos.getY() - (nearbyEntity.getPosY());
@@ -126,8 +121,7 @@ public class AreaOfEffectHelper {
 
     public static void chainNearbyEntities(LivingEntity attacker, LivingEntity target, float distance, int timeMultiplier){
         World world = target.getEntityWorld();
-        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(target.getPosX() - distance, target.getPosY() - distance, target.getPosZ() - distance,
-                target.getPosX() + distance, target.getPosY() + distance, target.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, target, nearbyEntity));
+        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, target, nearbyEntity));
         PROXY.spawnParticles(target, ParticleTypes.PORTAL);
         EffectInstance chained = new EffectInstance(Effects.SLOWNESS, 20 * timeMultiplier, 5);
         target.addPotionEffect(chained);
@@ -146,8 +140,7 @@ public class AreaOfEffectHelper {
 
     public static void weakenNearbyEntities(LivingEntity attacker, LivingEntity target, int distance, int amplifier){
         World world = target.getEntityWorld();
-        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(target.getPosX() - distance, target.getPosY() - distance, target.getPosZ() - distance,
-                target.getPosX() + distance, target.getPosY() + distance, target.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, target, nearbyEntity));
+        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, target, nearbyEntity));
         for(LivingEntity nearbyEntity : nearbyEntities){
             EffectInstance weakness = new EffectInstance(Effects.WEAKNESS, 100, amplifier);
             nearbyEntity.addPotionEffect(weakness);
@@ -158,8 +151,7 @@ public class AreaOfEffectHelper {
         World world = target.getEntityWorld();
         DamageSource shockwave = DamageSource.causeExplosionDamage(attacker);
 
-        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(target.getPosX() - distance, target.getPosY() - distance, target.getPosZ() - distance,
-                target.getPosX() + distance, target.getPosY() + distance, target.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, target, nearbyEntity));
+        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, target, nearbyEntity));
         if(nearbyEntities.isEmpty()) return;
         for(LivingEntity nearbyEntity : nearbyEntities){
             nearbyEntity.attackEntityFrom(shockwave, damageAmount);
@@ -170,8 +162,7 @@ public class AreaOfEffectHelper {
         World world = target.getEntityWorld();
         DamageSource explosion = DamageSource.causeExplosionDamage(attacker);
 
-        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(target.getPosX() - distance, target.getPosY() - distance, target.getPosZ() - distance,
-                target.getPosX() + distance, target.getPosY() + distance, target.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
+        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
         if(nearbyEntities.isEmpty()) return;
         for(LivingEntity nearbyEntity : nearbyEntities){
             nearbyEntity.attackEntityFrom(explosion, damageAmount);
@@ -182,8 +173,7 @@ public class AreaOfEffectHelper {
         World world = target.getEntityWorld();
         DamageSource magicExplosion = DamageSource.causeExplosionDamage(attacker).setDamageBypassesArmor().setMagicDamage();
 
-        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(target.getPosX() - distance, target.getPosY() - distance, target.getPosZ() - distance,
-                target.getPosX() + distance, target.getPosY() + distance, target.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
+        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
         if(nearbyEntities.isEmpty()) return;
         for(LivingEntity nearbyEntity : nearbyEntities){
             nearbyEntity.attackEntityFrom(magicExplosion, damageAmount);
@@ -193,8 +183,7 @@ public class AreaOfEffectHelper {
     public static void burnNearbyEnemies(LivingEntity attacker, float damage, float distance){
         World world = attacker.getEntityWorld();
 
-        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(attacker.getPosX() - distance, attacker.getPosY() - distance, attacker.getPosZ() - distance,
-                attacker.getPosX() + distance, attacker.getPosY() + distance, attacker.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
+        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, attacker.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
         if(nearbyEntities.isEmpty()) return;
         for(LivingEntity nearbyEntity : nearbyEntities){
             nearbyEntity.attackEntityFrom(DamageSource.ON_FIRE, damage);
@@ -205,8 +194,7 @@ public class AreaOfEffectHelper {
     public static void freezeNearbyEnemies(LivingEntity attacker, int amplifier, float distance){
         World world = attacker.getEntityWorld();
 
-        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(attacker.getPosX() - distance, attacker.getPosY() - distance, attacker.getPosZ() - distance,
-                attacker.getPosX() + distance, attacker.getPosY() + distance, attacker.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
+        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, attacker.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
         if(nearbyEntities.isEmpty()) return;
         for(LivingEntity nearbyEntity : nearbyEntities){
             EffectInstance slowness = new EffectInstance(Effects.SLOWNESS, 20, amplifier);
@@ -223,8 +211,7 @@ public class AreaOfEffectHelper {
         DamageSource explosion;
         explosion = DamageSource.causeExplosionDamage(attacker);
 
-        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(blockPos.getX() - distance, blockPos.getY() + inGroundMitigator - distance, blockPos.getZ() - distance,
-                blockPos.getX() + distance, blockPos.getY() + inGroundMitigator + distance, blockPos.getZ() + distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
+        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(blockPos).grow(distance).offset(0, inGroundMitigator, 0), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
         if(nearbyEntities.isEmpty()) return;
         for(LivingEntity nearbyEntity : nearbyEntities){
             nearbyEntity.attackEntityFrom(explosion, damageAmount);
@@ -235,8 +222,7 @@ public class AreaOfEffectHelper {
         World world = target.getEntityWorld();
         DamageSource swirling = DamageSource.causePlayerDamage((PlayerEntity) attacker);
 
-        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(attacker.getPosX() - distance, attacker.getPosY() - distance, attacker.getPosZ() - distance,
-                attacker.getPosX() + distance, attacker.getPosY() + distance, attacker.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, target, nearbyEntity));
+        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, attacker.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, target, nearbyEntity));
         if(nearbyEntities.isEmpty()) return;
         for(LivingEntity nearbyEntity : nearbyEntities){
             nearbyEntity.attackEntityFrom(swirling, damageAmount);
@@ -249,8 +235,7 @@ public class AreaOfEffectHelper {
         if(attacker instanceof PlayerEntity){
             echo = DamageSource.causePlayerDamage((PlayerEntity) attacker);
         }
-        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(target.getPosX() - distance, target.getPosY() - distance, target.getPosZ() - distance,
-                target.getPosX() + distance, target.getPosY() + distance, target.getPosZ() + distance),
+        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(distance),
                 (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, target, nearbyEntity));
         if(nearbyEntities.isEmpty()) return;
         for(LivingEntity nearbyEntity : nearbyEntities){
@@ -281,8 +266,7 @@ public class AreaOfEffectHelper {
     public static void electrifyNearbyEnemies(LivingEntity attacker, float distance, float damageAmount, int limit){
         World world = attacker.getEntityWorld();
 
-        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(attacker.getPosX() - distance, attacker.getPosY() - distance, attacker.getPosZ() - distance,
-                attacker.getPosX() + distance, attacker.getPosY() + distance, attacker.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
+        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, attacker.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
         if(nearbyEntities.isEmpty()) return;
         if(limit > nearbyEntities.size()) limit = nearbyEntities.size();
         attacker.world.playSound((PlayerEntity)null, attacker.getPosX(), attacker.getPosY(), attacker.getPosZ(), SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER, SoundCategory.WEATHER, 64.0F, 1.0F);
@@ -297,8 +281,7 @@ public class AreaOfEffectHelper {
     }
 
     public static void poisonAndSlowNearbyEnemies(World worldIn, PlayerEntity playerIn) {
-        List<LivingEntity> nearbyEntities = worldIn.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(playerIn.getPosX() - 5, playerIn.getPosY() - 5, playerIn.getPosZ() - 5,
-                playerIn.getPosX() + 5, playerIn.getPosY() + 5, playerIn.getPosZ() + 5), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(playerIn, nearbyEntity));
+        List<LivingEntity> nearbyEntities = worldIn.getLoadedEntitiesWithinAABB(LivingEntity.class, playerIn.getBoundingBox().grow(5), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(playerIn, nearbyEntity));
         for(LivingEntity nearbyEntity : nearbyEntities){
 
             EffectInstance entangled = new EffectInstance(Effects.SLOWNESS, 140, 4);
@@ -310,8 +293,7 @@ public class AreaOfEffectHelper {
     }
 
     public static void weakenAndMakeNearbyEnemiesVulnerable(PlayerEntity playerIn, World world) {
-        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(playerIn.getPosX() - 5, playerIn.getPosY() - 5, playerIn.getPosZ() - 5,
-                playerIn.getPosX() + 5, playerIn.getPosY() + 5, playerIn.getPosZ() + 5), (nearbyEntity) -> {
+        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, playerIn.getBoundingBox().grow(5), (nearbyEntity) -> {
             return nearbyEntity != playerIn && !isPetOfAttacker(playerIn, nearbyEntity) && nearbyEntity.isAlive();
         });
         for(LivingEntity nearbyEntity : nearbyEntities){
@@ -323,8 +305,7 @@ public class AreaOfEffectHelper {
     }
 
     public static void stunNearbyEnemies(World worldIn, PlayerEntity playerIn) {
-        List<LivingEntity> nearbyEntities = worldIn.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(playerIn.getPosX() - 5, playerIn.getPosY() - 5, playerIn.getPosZ() - 5,
-                playerIn.getPosX() + 5, playerIn.getPosY() + 5, playerIn.getPosZ() + 5), (nearbyEntity) -> {
+        List<LivingEntity> nearbyEntities = worldIn.getLoadedEntitiesWithinAABB(LivingEntity.class, playerIn.getBoundingBox().grow(5), (nearbyEntity) -> {
             return nearbyEntity != playerIn && !isPetOfAttacker(playerIn, nearbyEntity) && nearbyEntity.isAlive();
         });
         for(LivingEntity nearbyEntity : nearbyEntities){
@@ -341,8 +322,7 @@ public class AreaOfEffectHelper {
     }
 
     public static void makeLoversOutOfNearbyEnemies(PlayerEntity playerIn, World world) {
-        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(playerIn.getPosX() - 5, playerIn.getPosY() - 5, playerIn.getPosZ() - 5,
-                playerIn.getPosX() + 5, playerIn.getPosY() + 5, playerIn.getPosZ() + 5), (nearbyEntity) -> {
+        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, playerIn.getBoundingBox().grow(5), (nearbyEntity) -> {
             return nearbyEntity instanceof IMob
                     && !isPetOfAttacker(playerIn, nearbyEntity)
                     && nearbyEntity.isAlive()
@@ -364,8 +344,7 @@ public class AreaOfEffectHelper {
     }
 
     public static void knockbackNearbyEnemies(World worldIn, PlayerEntity playerIn) {
-        List<LivingEntity> nearbyEntities = worldIn.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(playerIn.getPosX() - 5, playerIn.getPosY() - 5, playerIn.getPosZ() - 5,
-                playerIn.getPosX() + 5, playerIn.getPosY() + 5, playerIn.getPosZ() + 5), (nearbyEntity) -> {
+        List<LivingEntity> nearbyEntities = worldIn.getLoadedEntitiesWithinAABB(LivingEntity.class, playerIn.getBoundingBox().grow(5), (nearbyEntity) -> {
             return nearbyEntity != playerIn && !isPetOfAttacker(playerIn, nearbyEntity) && nearbyEntity.isAlive();
         });
 
