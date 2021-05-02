@@ -12,9 +12,7 @@ import com.infamous.dungeons_gear.ranged.bows.*;
 import com.infamous.dungeons_gear.ranged.crossbows.*;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemTier;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -39,43 +37,43 @@ public class DeferredItemInit {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
 
     public static final RegistryObject<Item> DAGGER = ITEMS.register("dagger",
-            () -> new DaggerItem(ToolMaterialList.METAL, 1, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new DaggerItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
     public static final RegistryObject<Item> FANG_OF_FROST = ITEMS.register("fang_of_frost",
-            () -> new DaggerItem(ToolMaterialList.METAL, 1, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DaggerItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> MOON_DAGGER = ITEMS.register("moon_dagger",
-            () -> new DaggerItem(ToolMaterialList.METAL, 1, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DaggerItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> SHEAR_DAGGER = ITEMS.register("shear_dagger",
-            () -> new DaggerItem(ToolMaterialList.METAL, 1, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DaggerItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
 
     public static final RegistryObject<Item> SICKLE = ITEMS.register("sickle",
-            () -> new SickleItem(ToolMaterialList.METAL, 2, (1.6f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new SickleItem(ToolMaterialList.METAL, 3, (2.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
     public static final RegistryObject<Item> NIGHTMARES_BITE = ITEMS.register("nightmares_bite",
-            () -> new SickleItem(ToolMaterialList.METAL, 2, (1.6f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new SickleItem(ToolMaterialList.METAL, 3, (2.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> THE_LAST_LAUGH = ITEMS.register("the_last_laugh",
-            () -> new SickleItem(ToolMaterialList.METAL, 2, (1.6f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new SickleItem(ToolMaterialList.METAL, 3, (2.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
 
     public static final RegistryObject<Item> GAUNTLET = ITEMS.register("gauntlet",
-            () -> new GauntletItem(ToolMaterialList.METAL, 1, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new GauntletItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
     public static final RegistryObject<Item> FIGHTERS_BINDING = ITEMS.register("fighters_binding",
-            () -> new GauntletItem(ToolMaterialList.METAL, 1, (4.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new GauntletItem(ToolMaterialList.METAL, 2, (4.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> MAULER = ITEMS.register("mauler",
-            () -> new GauntletItem(ToolMaterialList.METAL, 1, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new GauntletItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> SOUL_FIST = ITEMS.register("soul_fist",
-            () -> new GauntletItem(ToolMaterialList.METAL, 1, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new GauntletItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
 
     public static final RegistryObject<Item> RAPIER = ITEMS.register("rapier",
-            () -> new RapierItem(ToolMaterialList.METAL, 1, (4.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new RapierItem(ToolMaterialList.METAL, 2, (4.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
     public static final RegistryObject<Item> BEE_STINGER = ITEMS.register("bee_stinger",
-            () -> new RapierItem(ToolMaterialList.METAL, 1, (4.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new RapierItem(ToolMaterialList.METAL, 2, (4.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> FREEZING_FOIL = ITEMS.register("freezing_foil",
-            () -> new RapierItem(ToolMaterialList.METAL, 1, (4.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new RapierItem(ToolMaterialList.METAL, 2, (4.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
 
     public static final RegistryObject<Item> SOUL_SCYTHE = ITEMS.register("soul_scythe",
-            () -> new SoulScytheItem(ToolMaterialList.METAL, 4, (1.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new SoulScytheItem(ToolMaterialList.METAL, 6, (1.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
     public static final RegistryObject<Item> FROST_SCYTHE = ITEMS.register("frost_scythe",
-            () -> new SoulScytheItem(ToolMaterialList.METAL, 4, (1.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new SoulScytheItem(ToolMaterialList.METAL, 6, (1.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> JAILORS_SCYTHE = ITEMS.register("jailors_scythe",
-            () -> new SoulScytheItem(ToolMaterialList.METAL, 4, (1.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new SoulScytheItem(ToolMaterialList.METAL, 6, (1.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
 
     public static final RegistryObject<Item> CUTLASS = ITEMS.register("cutlass",
             () -> new CutlassItem(ToolMaterialList.METAL, 4, (1.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
@@ -99,46 +97,46 @@ public class DeferredItemInit {
             () -> new DungeonsPickaxeItem(ToolMaterialList.DIAMOND, 3, (1.2f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
 
     public static final RegistryObject<Item> BATTLESTAFF = ITEMS.register("battlestaff",
-            () -> new StaffItem(ToolMaterialList.METAL, 2, (3.2f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new StaffItem(ToolMaterialList.METAL, 5, (1.7f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
     public static final RegistryObject<Item> BATTLESTAFF_OF_TERROR = ITEMS.register("battlestaff_of_terror",
-            () -> new StaffItem(ToolMaterialList.METAL, 2, (3.2f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new StaffItem(ToolMaterialList.METAL, 5, (1.7f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> GROWING_STAFF = ITEMS.register("growing_staff",
-            () -> new StaffItem(ToolMaterialList.METAL, 2, (3.2f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new StaffItem(ToolMaterialList.METAL, 5, (1.7f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
 
     public static final RegistryObject<Item> AXE = ITEMS.register("axe",
-            () -> new DungeonsAxeItem(ToolMaterialList.METAL, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new DungeonsAxeItem(ToolMaterialList.METAL, 8, (1.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
     public static final RegistryObject<Item> FIREBRAND = ITEMS.register("firebrand",
-            () -> new DungeonsAxeItem(ToolMaterialList.METAL, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DungeonsAxeItem(ToolMaterialList.METAL, 8, (1.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> HIGHLAND_AXE = ITEMS.register("highland_axe",
-            () -> new DungeonsAxeItem(ToolMaterialList.METAL, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DungeonsAxeItem(ToolMaterialList.METAL, 8, (1.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
 
     public static final RegistryObject<Item> DOUBLE_AXE = ITEMS.register("double_axe",
-            () -> new DoubleAxeItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new DoubleAxeItem(ToolMaterialList.METAL, 10, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
     public static final RegistryObject<Item> CURSED_AXE = ITEMS.register("cursed_axe",
-            () -> new DoubleAxeItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DoubleAxeItem(ToolMaterialList.METAL, 10, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> WHIRLWIND = ITEMS.register("whirlwind",
-            () -> new DoubleAxeItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DoubleAxeItem(ToolMaterialList.METAL, 10, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
 
     public static final RegistryObject<Item> MACE = ITEMS.register("mace",
-            () -> new MaceItem(ToolMaterialList.METAL, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new MaceItem(ToolMaterialList.METAL, 6, (1.3f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
     public static final RegistryObject<Item> FLAIL = ITEMS.register("flail",
-            () -> new MaceItem(ToolMaterialList.METAL, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new MaceItem(ToolMaterialList.METAL, 6, (1.3f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> SUNS_GRACE = ITEMS.register("suns_grace",
-            () -> new MaceItem(ToolMaterialList.METAL, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new MaceItem(ToolMaterialList.METAL, 6, (1.3f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
 
     public static final RegistryObject<Item> GREAT_HAMMER = ITEMS.register("great_hammer",
-            () -> new GreatHammerItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new GreatHammerItem(ToolMaterialList.METAL, 8, (1.1f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
     public static final RegistryObject<Item> HAMMER_OF_GRAVITY = ITEMS.register("hammer_of_gravity",
-            () -> new GreatHammerItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new GreatHammerItem(ToolMaterialList.METAL, 8, (1.1f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> STORMLANDER = ITEMS.register("stormlander",
-            () -> new GreatHammerItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new GreatHammerItem(ToolMaterialList.METAL, 8, (1.1f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
 
     public static final RegistryObject<Item> KATANA = ITEMS.register("katana",
-            () -> new KatanaItem(ToolMaterialList.METAL, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new KatanaItem(ToolMaterialList.METAL, 8, (1.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
     public static final RegistryObject<Item> DARK_KATANA = ITEMS.register("dark_katana",
-            () -> new KatanaItem(ToolMaterialList.METAL, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new KatanaItem(ToolMaterialList.METAL, 8, (1.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> MASTERS_KATANA = ITEMS.register("masters_katana",
-            () -> new KatanaItem(ToolMaterialList.METAL, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new KatanaItem(ToolMaterialList.METAL, 8, (1.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
 
     public static final RegistryObject<Item> SOUL_KNIFE = ITEMS.register("soul_knife",
             () -> new SoulKnifeItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
@@ -148,32 +146,32 @@ public class DeferredItemInit {
             () -> new SoulKnifeItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
 
     public static final RegistryObject<Item> CLAYMORE = ITEMS.register("claymore",
-            () -> new ClaymoreItem(ToolMaterialList.METAL, 10, (0.7f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new ClaymoreItem(ToolMaterialList.METAL, 10, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
     public static final RegistryObject<Item> BROADSWORD = ITEMS.register("broadsword",
-            () -> new ClaymoreItem(ToolMaterialList.METAL, 11, (0.7f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new ClaymoreItem(ToolMaterialList.METAL, 11, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> HEARTSTEALER = ITEMS.register("heartstealer",
-            () -> new ClaymoreItem(ToolMaterialList.METAL, 10, (0.7f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new ClaymoreItem(ToolMaterialList.METAL, 10, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> GREAT_AXEBLADE = ITEMS.register("great_axeblade",
-            () -> new ClaymoreItem(ToolMaterialList.METAL, 10, (0.7f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new ClaymoreItem(ToolMaterialList.METAL, 10, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
 
     public static final RegistryObject<Item> SPEAR = ITEMS.register("spear",
-            () -> new SpearItem(ToolMaterialList.METAL, 5, (1.2f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new SpearItem(ToolMaterialList.METAL, 5, (1.4f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
     public static final RegistryObject<Item> FORTUNE_SPEAR = ITEMS.register("fortune_spear",
-            () -> new SpearItem(ToolMaterialList.METAL, 5, (1.2f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new SpearItem(ToolMaterialList.METAL, 5, (1.4f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> WHISPERING_SPEAR = ITEMS.register("whispering_spear",
-            () -> new SpearItem(ToolMaterialList.METAL, 5, (1.2f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new SpearItem(ToolMaterialList.METAL, 5, (1.4f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
 
     public static final RegistryObject<Item> GLAIVE = ITEMS.register("glaive",
-            () -> new GlaiveItem(ToolMaterialList.METAL, 7, (1.0f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new GlaiveItem(ToolMaterialList.METAL, 7, (1.2f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
     public static final RegistryObject<Item> GRAVE_BANE = ITEMS.register("grave_bane",
-            () -> new GlaiveItem(ToolMaterialList.METAL, 7, (1.0f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new GlaiveItem(ToolMaterialList.METAL, 7, (1.2f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> VENOM_GLAIVE = ITEMS.register("venom_glaive",
-            () -> new GlaiveItem(ToolMaterialList.METAL, 7, (1.0f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new GlaiveItem(ToolMaterialList.METAL, 7, (1.2f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
 
     public static final RegistryObject<Item> WHIP = ITEMS.register("whip",
-            () -> new WhipItem(ToolMaterialList.METAL, 8, (0.9f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new WhipItem(ToolMaterialList.METAL, 8, (1.0f-4.0f), 2.5F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
     public static final RegistryObject<Item> VINE_WHIP = ITEMS.register("vine_whip",
-            () -> new WhipItem(ToolMaterialList.METAL, 8, (0.9f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new WhipItem(ToolMaterialList.METAL, 8, (1.0f-4.0f), 2.5F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
 
     public static final RegistryObject<Item> BONEBOW = ITEMS.register("bonebow",
             () -> new DungeonsBowItem(new Item.Properties(), 20.0F, true));
@@ -321,7 +319,7 @@ public class DeferredItemInit {
     public static final RegistryObject<Item> LIGHT_FEATHER = ITEMS.register("light_feather",
             () -> new LightFeatherItem(new Item.Properties()));
     public static final RegistryObject<Item> FLAMING_QUIVER = ITEMS.register("flaming_quiver",
-            () -> new FlamingQuiver(new Item.Properties()));
+            () -> new FlamingQuiverItem(new Item.Properties()));
     public static final RegistryObject<Item> TORMENT_QUIVER = ITEMS.register("torment_quiver",
             () -> new TormentQuiver(new Item.Properties()));
     public static final RegistryObject<Item> TOTEM_OF_REGENERATION = ITEMS.register("totem_of_regeneration",

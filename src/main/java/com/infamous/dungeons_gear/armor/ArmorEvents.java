@@ -267,9 +267,11 @@ public class ArmorEvents {
         if (player.isAlive()) {
             ICombo comboCap = CapabilityHelper.getComboCapability(player);
             if (comboCap == null) return;
-            int jumpCooldownTimer = comboCap.getJumpCooldownTimer();
-            if (jumpCooldownTimer > 0) {
-                comboCap.setJumpCooldownTimer(jumpCooldownTimer - 1);
+            if (comboCap.getJumpCooldownTimer() > 0) {
+                comboCap.setJumpCooldownTimer(comboCap.getJumpCooldownTimer() - 1);
+            }
+            if (comboCap.getLastShoutTimer() > 0) {
+                comboCap.setLastShoutTimer(comboCap.getLastShoutTimer() - 1);
             }
         }
     }

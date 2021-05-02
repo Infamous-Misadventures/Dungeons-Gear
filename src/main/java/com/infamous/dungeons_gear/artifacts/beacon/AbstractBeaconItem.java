@@ -7,10 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
-import net.minecraft.item.UseAction;
+import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.EntityRayTraceResult;
@@ -50,6 +47,11 @@ public abstract class AbstractBeaconItem extends ArtifactItem implements ISoulGa
 
         playerIn.setActiveHand(handIn);
         return new ActionResult<>(ActionResultType.PASS, itemstack);
+    }
+
+    @Override
+    public ActionResult<ItemStack> procArtifact(ItemUseContext iuc) {
+        return new ActionResult<>(ActionResultType.PASS, iuc.getItem());
     }
 
     @Override

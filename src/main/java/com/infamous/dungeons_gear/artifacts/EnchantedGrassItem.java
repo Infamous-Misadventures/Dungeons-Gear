@@ -2,6 +2,8 @@ package com.infamous.dungeons_gear.artifacts;
 
 import com.infamous.dungeons_gear.capabilities.summoning.ISummonable;
 import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
+import com.infamous.dungeons_gear.combat.NetworkHandler;
+import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.goals.*;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import net.minecraft.block.BlockState;
@@ -22,6 +24,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 
@@ -29,12 +32,13 @@ public class EnchantedGrassItem extends ArtifactItem {
 
     public EnchantedGrassItem(Properties properties) {
         super(properties);
+        procOnItemUse=true;
     }
 
-    public ActionResultType onItemUse(ItemUseContext itemUseContext) {
+    public ActionResult<ItemStack> procArtifact(ItemUseContext itemUseContext) {
         World world = itemUseContext.getWorld();
         if (world.isRemote) {
-            return ActionResultType.SUCCESS;
+            return ActionResult.resultSuccess(itemUseContext.getItem());
         } else {
             ItemStack itemUseContextItem = itemUseContext.getItem();
             PlayerEntity itemUseContextPlayer = itemUseContext.getPlayer();
@@ -64,11 +68,7 @@ public class EnchantedGrassItem extends ArtifactItem {
 
                                 createEnchantedSheep(world, itemUseContextPlayer, blockPos, sheepEntity);
 
-                                if(!itemUseContextPlayer.isCreative()){
-                                    itemUseContextItem.damageItem(1, itemUseContextPlayer, (entity) -> {
-                                        entity.sendBreakAnimation(itemUseContextHand);
-                                    });
-                                }
+                                itemUseContextItem.damageItem(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemUseContextItem)));
                             }
                         }
                     } else{
@@ -82,7 +82,7 @@ public class EnchantedGrassItem extends ArtifactItem {
                     }
                 }
             }
-            return ActionResultType.CONSUME;
+            return ActionResult.resultConsume(itemUseContextItem);
         }
     }
 

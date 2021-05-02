@@ -62,44 +62,6 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
         }
     }
 
-    // DUPLICATED CROSSBOWITEM STATIC METHODS
-    static void fireProjectilesAfter(World worldIn, LivingEntity shooter, ItemStack stack) {
-        if (shooter instanceof ServerPlayerEntity) {
-            ServerPlayerEntity serverplayerentity = (ServerPlayerEntity) shooter;
-            if (!worldIn.isRemote) {
-                CriteriaTriggers.SHOT_CROSSBOW.test(serverplayerentity, stack);
-            }
-
-            serverplayerentity.addStat(Stats.ITEM_USED.get(stack.getItem()));
-        }
-
-        clearProjectiles(stack);
-    }
-
-    private static void clearProjectiles(ItemStack stack) {
-        CompoundNBT compoundnbt = stack.getTag();
-        if (compoundnbt != null) {
-            ListNBT listnbt = compoundnbt.getList("ChargedProjectiles", 9);
-            listnbt.clear();
-            compoundnbt.put("ChargedProjectiles", listnbt);
-        }
-
-    }
-
-    static List<ItemStack> getChargedProjectiles(ItemStack stack) {
-        List<ItemStack> list = Lists.newArrayList();
-        CompoundNBT compoundnbt = stack.getTag();
-        if (compoundnbt != null && compoundnbt.contains("ChargedProjectiles", 9)) {
-            ListNBT listnbt = compoundnbt.getList("ChargedProjectiles", 10);
-            for (int i = 0; i < listnbt.size(); ++i) {
-                CompoundNBT compoundnbt1 = listnbt.getCompound(i);
-                list.add(ItemStack.read(compoundnbt1));
-            }
-        }
-
-        return list;
-    }
-
     public static float[] getRandomSoundPitches(Random rand) {
         boolean flag = rand.nextBoolean();
         return new float[]{1.0F, getRandomSoundPitch(flag), getRandomSoundPitch(!flag)};
@@ -128,21 +90,6 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
             addChargedProjectile(stack, itemstack);
             return true;
         }
-    }
-
-    private static void addChargedProjectile(ItemStack crossbow, ItemStack projectile) {
-        CompoundNBT compoundnbt = crossbow.getOrCreateTag();
-        ListNBT listnbt;
-        if (compoundnbt.contains("ChargedProjectiles", 9)) {
-            listnbt = compoundnbt.getList("ChargedProjectiles", 10);
-        } else {
-            listnbt = new ListNBT();
-        }
-
-        CompoundNBT compoundnbt1 = new CompoundNBT();
-        projectile.write(compoundnbt1);
-        listnbt.add(compoundnbt1);
-        compoundnbt.put("ChargedProjectiles", listnbt);
     }
 
     public int getDefaultChargeTime() {
@@ -179,7 +126,7 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
     public void onPlayerStoppedUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft) {
         int i = this.getUseDuration(stack) - timeLeft;
         float f = this.getCrossbowCharge(i, stack);
-        if (f >= 1.0F && !isCharged(stack) && this.hasAmmo(entityLiving, stack)) {
+        if (f >= 1.0F && !isCharged(stack) && hasAmmo(entityLiving, stack)) {
             setCharged(stack, true);
             SoundCategory soundcategory = entityLiving instanceof PlayerEntity ? SoundCategory.PLAYERS : SoundCategory.HOSTILE;
             worldIn.playSound((PlayerEntity) null, entityLiving.getPosX(), entityLiving.getPosY(), entityLiving.getPosZ(), SoundEvents.ITEM_CROSSBOW_LOADING_END, soundcategory, 1.0F, 1.0F / (random.nextFloat() * 0.5F + 1.0F) + 0.2F);
@@ -339,11 +286,12 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
         }
     }
 
-    public boolean hasAmmo(LivingEntity entityIn, ItemStack stack) {
+    protected static boolean hasAmmo(LivingEntity entityIn, ItemStack stack) {
         int multishotLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.MULTISHOT, stack);
-        if (this.hasMultishotBuiltIn(stack)) multishotLevel++;
-        if (this.hasExtraMultishot(stack)) multishotLevel++;
-        int arrowsToFire = multishotLevel == 0 ? 1 : 1 + multishotLevel * 2;
+        AbstractDungeonsCrossbowItem adci=((AbstractDungeonsCrossbowItem) stack.getItem());
+        if (adci.hasMultishotBuiltIn(stack)) multishotLevel++;
+        if (adci.hasExtraMultishot(stack)) multishotLevel++;
+        int arrowsToFire = 1 + multishotLevel * 2;
         boolean flag = entityIn instanceof PlayerEntity && ((PlayerEntity) entityIn).abilities.isCreativeMode;
         ItemStack itemstack = entityIn.findAmmo(stack);
         ItemStack itemstack1 = itemstack.copy();

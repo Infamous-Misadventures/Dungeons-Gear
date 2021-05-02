@@ -2,6 +2,8 @@ package com.infamous.dungeons_gear.artifacts;
 
 import com.infamous.dungeons_gear.capabilities.summoning.ISummonable;
 import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
+import com.infamous.dungeons_gear.combat.NetworkHandler;
+import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.goals.GolemOwnerHurtByTargetGoal;
 import com.infamous.dungeons_gear.goals.GolemOwnerHurtTargetGoal;
 import com.infamous.dungeons_gear.goals.IronGolemFollowOwnerGoal;
@@ -20,6 +22,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 
@@ -27,16 +30,16 @@ import java.util.List;
 public class GolemKitItem extends ArtifactItem {
     public GolemKitItem(Properties p_i48487_1_) {
         super(p_i48487_1_);
+        procOnItemUse=true;
     }
 
-    public ActionResultType onItemUse(ItemUseContext itemUseContext) {
+    public ActionResult<ItemStack> procArtifact(ItemUseContext itemUseContext) {
         World world = itemUseContext.getWorld();
         if (world.isRemote) {
-            return ActionResultType.SUCCESS;
+            return ActionResult.resultSuccess(itemUseContext.getItem());
         } else {
             ItemStack itemUseContextItem = itemUseContext.getItem();
             PlayerEntity itemUseContextPlayer = itemUseContext.getPlayer();
-            Hand itemUseContextHand = itemUseContext.getHand();
             BlockPos itemUseContextPos = itemUseContext.getPos();
             Direction itemUseContextFace = itemUseContext.getFace();
             BlockState blockState = world.getBlockState(itemUseContextPos);
@@ -62,11 +65,8 @@ public class GolemKitItem extends ArtifactItem {
 
                                 createIronGolem(world, itemUseContextPlayer, blockPos, ironGolemEntity);
 
-                                if(!itemUseContextPlayer.isCreative()){
-                                    itemUseContextItem.damageItem(1, itemUseContextPlayer, (entity) -> {
-                                        entity.sendBreakAnimation(itemUseContextHand);
-                                    });
-                                }
+                                itemUseContextItem.damageItem(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemUseContextItem)));
+
                             }
                         }
                     } else{
@@ -80,7 +80,7 @@ public class GolemKitItem extends ArtifactItem {
                     }
                 }
             }
-            return ActionResultType.CONSUME;
+            return ActionResult.resultConsume(itemUseContextItem);
         }
     }
 

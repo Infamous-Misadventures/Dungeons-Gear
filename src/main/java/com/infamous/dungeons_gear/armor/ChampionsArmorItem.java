@@ -67,14 +67,15 @@ public class ChampionsArmorItem extends ArmorItem implements IArmor {
 
         if (this.unique) {
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Given to the champions of the Overworld by the free villagers as a token of their thanks for many years of protection and assistance. The mark of a true hero."));
+            list.add(new TranslationTextComponent(
+                    "attribute.name.healthPotionsHealNearbyAllies")
+                    .mergeStyle(TextFormatting.GREEN));
         }
         else{
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Only given to the highest caliber of heroes, the Hero's Armor is a precious gift from the Villagers."));
 
         }
-        list.add(new TranslationTextComponent(
-                "attribute.name.healthPotionsHealNearbyAllies")
-                .mergeStyle(TextFormatting.GREEN));
+
     }
 
     @Override
