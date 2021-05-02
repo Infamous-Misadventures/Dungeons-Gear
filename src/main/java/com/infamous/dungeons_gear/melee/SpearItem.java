@@ -59,8 +59,7 @@ public class SpearItem extends TieredItem implements IMeleeWeapon {
         builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double) spearItem.attackDamage, AttributeModifier.Operation.ADDITION));
         builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double) spearItem.attackSpeed, AttributeModifier.Operation.ADDITION));
         builder.put(AttributeRegistry.ATTACK_REACH.get(), new AttributeModifier(ATTACK_REACH_MODIFIER, "Weapon modifier", (double) spearItem.attackReach, AttributeModifier.Operation.ADDITION));
-        if (DungeonsGearCompatibility.warDance)
-            builder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(ATTACK_REACH_MODIFIER, "Weapon modifier", (double) spearItem.attackReach, AttributeModifier.Operation.ADDITION));
+        builder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(ATTACK_REACH_MODIFIER, "Weapon modifier", (double) spearItem.attackReach, AttributeModifier.Operation.ADDITION));
         spearItem.attributeModifierMultimap = builder.build();
     }
 

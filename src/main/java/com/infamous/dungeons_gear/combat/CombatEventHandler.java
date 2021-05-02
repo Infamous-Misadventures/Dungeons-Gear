@@ -37,7 +37,7 @@ public class CombatEventHandler {
                     EntityRayTraceResult entityRayTrace = (EntityRayTraceResult)rayTrace;
                     Entity entityHit = entityRayTrace.getEntity();
                     if (entityHit != player && entityHit != player.getRidingEntity()) {
-                        NetworkHandler.sendPacketToServer(new PacketOffhandAttack(entityHit.getEntityId()));
+                        NetworkHandler.INSTANCE.sendToServer(new PacketOffhandAttack(entityHit.getEntityId()));
                     }
 
                 }

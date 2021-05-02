@@ -12,6 +12,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -55,8 +56,7 @@ public class WhipItem extends TieredItem implements IMeleeWeapon {
         builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double)glaiveItem.attackDamage, AttributeModifier.Operation.ADDITION));
         builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)glaiveItem.attackSpeed, AttributeModifier.Operation.ADDITION));
         builder.put(AttributeRegistry.ATTACK_REACH.get(), new AttributeModifier(ATTACK_REACH_MODIFIER, "Weapon modifier", (double)glaiveItem.attackReach, AttributeModifier.Operation.ADDITION));
-        if (DungeonsGearCompatibility.warDance)
-            builder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(ATTACK_REACH_MODIFIER, "Weapon modifier", (double) glaiveItem.attackReach, AttributeModifier.Operation.ADDITION));
+        builder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(ATTACK_REACH_MODIFIER, "Weapon modifier", (double) glaiveItem.attackReach, AttributeModifier.Operation.ADDITION));
         glaiveItem.attributeModifierMultimap = builder.build();
     }
 
@@ -68,6 +68,24 @@ public class WhipItem extends TieredItem implements IMeleeWeapon {
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
         return enchantment.type.canEnchantItem(Items.IRON_SWORD) && enchantment != Enchantments.SWEEPING;
+    }
+
+    @Override
+    public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        stack.damageItem(1, attacker, (p_220039_0_) -> {
+            p_220039_0_.sendBreakAnimation(EquipmentSlotType.MAINHAND);
+        });
+        return true;
+    }
+
+    public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
+        if (state.getBlockHardness(worldIn, pos) != 0.0F) {
+            stack.damageItem(2, entityLiving, (p_220044_0_) -> {
+                p_220044_0_.sendBreakAnimation(EquipmentSlotType.MAINHAND);
+            });
+        }
+
+        return true;
     }
 
     public Rarity getRarity(ItemStack itemStack){

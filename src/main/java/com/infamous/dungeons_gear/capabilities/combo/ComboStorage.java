@@ -25,6 +25,7 @@ public class ComboStorage implements Capability.IStorage<ICombo> {
         tag.putInt("snowballNearbyTimer", instance.getSnowballNearbyTimer());
         tag.putInt("jumpCooldownTimer", instance.getJumpCooldownTimer());
         tag.putInt("poisonImmunityTimer", instance.getPoisonImmunityTimer());
+        tag.putInt("lastShoutTimer", instance.getLastShoutTimer());
         tag.putDouble("dynamoMultiplier", instance.getDynamoMultiplier());
         return tag;
     }
@@ -44,6 +45,7 @@ public class ComboStorage implements Capability.IStorage<ICombo> {
         instance.setSnowballNearbyTimer(tag.getInt("snowballNearbyTimer"));
         instance.setJumpCooldownTimer(tag.getInt("jumpCooldownTimer"));
         instance.setPoisonImmunityTimer(tag.getInt("poisonImmunityTimer"));
+        instance.setLastShoutTimer(tag.getInt("lastShoutTimer"));
         instance.setDynamoMultiplier(tag.getInt("dynamoMultiplier"));
     }
 }

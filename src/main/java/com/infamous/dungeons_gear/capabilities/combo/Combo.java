@@ -16,8 +16,9 @@ public class Combo implements ICombo {
     private int jumpCooldownTimer;
     private int poisonImmunityTimer;
     private double dynamoMultiplier;
+    private int lastShoutTimer;
 
-    public Combo(){
+    public Combo() {
         this.comboTimer = 0;
         //this.ghostForm = false;
         this.shadowForm = false;
@@ -56,13 +57,13 @@ public class Combo implements ICombo {
  */
 
     @Override
-    public void setShadowForm(boolean shadowForm) {
-        this.shadowForm = shadowForm;
+    public boolean getShadowForm() {
+        return this.shadowForm;
     }
 
     @Override
-    public boolean getShadowForm() {
-        return this.shadowForm;
+    public void setShadowForm(boolean shadowForm) {
+        this.shadowForm = shadowForm;
     }
 
     @Override
@@ -71,14 +72,13 @@ public class Combo implements ICombo {
     }
 
     @Override
-    public int getTormentArrowCount() {
-        return this.tormentArrowCount;
-    }
-
-
-    @Override
     public void setFlamingArrowsCount(int flamingArrowsTimer) {
         this.flamingArrowCount = flamingArrowsTimer;
+    }
+
+    @Override
+    public int getTormentArrowCount() {
+        return this.tormentArrowCount;
     }
 
     @Override
@@ -154,6 +154,16 @@ public class Combo implements ICombo {
     @Override
     public void setPoisonImmunityTimer(int poisonImmunityTimer) {
         this.poisonImmunityTimer = poisonImmunityTimer;
+    }
+
+    @Override
+    public int getLastShoutTimer() {
+        return lastShoutTimer;
+    }
+
+    @Override
+    public void setLastShoutTimer(int lastShoutTimer) {
+        this.lastShoutTimer = lastShoutTimer;
     }
 
     @Override
