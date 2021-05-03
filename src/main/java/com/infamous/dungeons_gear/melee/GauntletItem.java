@@ -29,21 +29,25 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.UUID;
 
 
 public class GauntletItem extends TieredItem implements IOffhandAttack, IVanishable, IMeleeWeapon, ISoulGatherer {
-
+    private static final UUID ATTACK_DAMAGE_MODIFIER_OFF = UUID.fromString("CB3F55D3-645C-4F38-A497-9C13A34DB5CF");
     private final boolean unique;
     private final float attackDamage;
-    private final Multimap<Attribute, AttributeModifier> attributeModifierMultimap;
+    private final Multimap<Attribute, AttributeModifier> attributeModifiersMain, attributeModifiersOff;
 
     public GauntletItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Item.Properties properties, boolean isUnique) {
         super(tier, properties);
-        this.attackDamage = (float)attackDamageIn + tier.getAttackDamage();
+        this.attackDamage = (float) attackDamageIn + tier.getAttackDamage();
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double)this.attackDamage, AttributeModifier.Operation.ADDITION));
-        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)attackSpeedIn, AttributeModifier.Operation.ADDITION));
-        this.attributeModifierMultimap = builder.build();
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", attackDamageIn, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
+        this.attributeModifiersMain = builder.build();
+        builder = ImmutableMultimap.builder();
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER_OFF, "Weapon modifier", attackDamageIn, AttributeModifier.Operation.ADDITION));
+        this.attributeModifiersOff = builder.build();
         this.unique = isUnique;
     }
 
@@ -64,7 +68,7 @@ public class GauntletItem extends TieredItem implements IOffhandAttack, IVanisha
     }
 
     public boolean canPlayerBreakBlockWhileHolding(BlockState state, World worldIn, BlockPos pos, PlayerEntity player) {
-        return true;
+        return !player.isCreative();
     }
 
     public float getDestroySpeed(ItemStack stack, BlockState state) {
@@ -96,7 +100,7 @@ public class GauntletItem extends TieredItem implements IOffhandAttack, IVanisha
      * Gets a map of item attribute modifiers, used by ItemSword to increase hit damage.
      */
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
-        return equipmentSlot == EquipmentSlotType.MAINHAND || equipmentSlot == EquipmentSlotType.OFFHAND ? this.attributeModifierMultimap : super.getAttributeModifiers(equipmentSlot);
+        return equipmentSlot == EquipmentSlotType.MAINHAND ? attributeModifiersMain : equipmentSlot == EquipmentSlotType.OFFHAND ? attributeModifiersOff : super.getAttributeModifiers(equipmentSlot);
     }
 
     @Override
@@ -104,37 +108,36 @@ public class GauntletItem extends TieredItem implements IOffhandAttack, IVanisha
         return enchantment.type.canEnchantItem(Items.IRON_SWORD) && enchantment != Enchantments.SWEEPING;
     }
 
-    public Rarity getRarity(ItemStack itemStack){
+    public Rarity getRarity(ItemStack itemStack) {
 
-        if(this.unique){
+        if (this.unique) {
             return Rarity.RARE;
         }
         return Rarity.UNCOMMON;
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
-    {
+    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == DeferredItemInit.GAUNTLET.get()){
+        if (stack.getItem() == DeferredItemInit.GAUNTLET.get()) {
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Gauntlets call back to an ancient style of hand to hand combat."));
 
             //list.add(new StringTextComponent(TextFormatting.GREEN + "Relentless Combo"));
         }
-        if(stack.getItem() == DeferredItemInit.FIGHTERS_BINDING.get()){
+        if (stack.getItem() == DeferredItemInit.FIGHTERS_BINDING.get()) {
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Made in the wilds beyond the mountains, these gauntlets have been worn by warriors for centuries."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Boosts Attack Speed"));
             //list.add(new StringTextComponent(TextFormatting.GREEN + "Turbo punches"));
         }
-        if(stack.getItem() == DeferredItemInit.MAULER.get()){
+        if (stack.getItem() == DeferredItemInit.MAULER.get()) {
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "This claw-like weapon, wielded by ancient Illager soldiers, is savage in battle."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Increases Attack Speed (Rampaging I)"));
             //list.add(new StringTextComponent(TextFormatting.GREEN + "Relentless Combo"));
         }
-        if(stack.getItem() == DeferredItemInit.SOUL_FIST.get()){
+        if (stack.getItem() == DeferredItemInit.SOUL_FIST.get()) {
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Soul Fists are gauntlets clad with great gemstones, each containing a powerful soul."));
 
             list.add(new StringTextComponent(TextFormatting.LIGHT_PURPLE + "Souls Critical Boost (Enigma Resonator I)"));
@@ -158,9 +161,8 @@ public class GauntletItem extends TieredItem implements IOffhandAttack, IVanisha
 
     @Override
     public int getGatherAmount(ItemStack stack) {
-        if(stack.getItem() == DeferredItemInit.SOUL_FIST.get()){
+        if (stack.getItem() == DeferredItemInit.SOUL_FIST.get()) {
             return 2;
-        }
-        else return 0;
+        } else return 0;
     }
 }

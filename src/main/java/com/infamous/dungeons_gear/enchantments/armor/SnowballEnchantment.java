@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
-@Mod.EventBusSubscriber(modid= MODID)
+@Mod.EventBusSubscriber(modid = MODID)
 public class SnowballEnchantment extends PulseEnchantment {
 
     public SnowballEnchantment() {
@@ -30,6 +30,33 @@ public class SnowballEnchantment extends PulseEnchantment {
                 EquipmentSlotType.FEET});
     }
 
+    @SubscribeEvent
+    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
+        PlayerEntity player = event.player;
+        if (player == null) return;
+        if (event.phase == TickEvent.Phase.START) return;
+        if (player.isAlive()) {
+            ICombo comboCap = CapabilityHelper.getComboCapability(player);
+            if (comboCap == null) return;
+            int snowballNearbyTimer = comboCap.getSnowballNearbyTimer();
+
+            if (ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.SNOWBALL)) {
+                int snowballLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.SNOWBALL, player);
+                if (snowballNearbyTimer <= 0) {
+                    ProjectileEffectHelper.fireSnowballAtNearbyEnemy(player, 10);
+                    comboCap.setSnowballNearbyTimer(Math.max(100 - (snowballLevel - 1) * 40, 20));
+                } else {
+                    if (snowballNearbyTimer == 100) snowballNearbyTimer -= Math.max(100, 20 + snowballLevel * 20);
+                    comboCap.setSnowballNearbyTimer(Math.max(snowballNearbyTimer - 1, 0));
+                }
+            } else {
+                if (snowballNearbyTimer != 100) {
+                    comboCap.setSnowballNearbyTimer(100);
+                }
+            }
+        }
+    }
+
     public int getMaxLevel() {
         return 3;
     }
@@ -37,34 +64,5 @@ public class SnowballEnchantment extends PulseEnchantment {
     @Override
     public boolean canApplyTogether(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof PulseEnchantment);
-    }
-
-    @SubscribeEvent
-    public static void onPlayerTick(TickEvent.PlayerTickEvent event){
-        PlayerEntity player = event.player;
-        if(player == null) return;
-        if(event.phase == TickEvent.Phase.START) return;
-        if(player.isAlive()){
-            ICombo comboCap = CapabilityHelper.getComboCapability(player);
-            if(comboCap == null) return;
-            int snowballNearbyTimer = comboCap.getSnowballNearbyTimer();
-
-            if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.SNOWBALL)){
-                int snowballLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.SNOWBALL, player);
-                if(snowballNearbyTimer <= 0){
-                    ProjectileEffectHelper.fireSnowballAtNearbyEnemy(player, 10);
-                    comboCap.setSnowballNearbyTimer(Math.max(100 - snowballLevel * 40, 0));
-                }
-                else{
-                    if(snowballNearbyTimer == 100) snowballNearbyTimer -= Math.max(100, 20 + snowballLevel * 20);
-                    comboCap.setSnowballNearbyTimer(Math.max(snowballNearbyTimer - 1, 0));
-                }
-            }
-            else{
-                if(snowballNearbyTimer != 100){
-                    comboCap.setSnowballNearbyTimer(100);
-                }
-            }
-        }
     }
 }

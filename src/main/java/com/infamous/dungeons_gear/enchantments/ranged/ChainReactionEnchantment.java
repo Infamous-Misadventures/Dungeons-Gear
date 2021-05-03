@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
-@Mod.EventBusSubscriber(modid= MODID)
+@Mod.EventBusSubscriber(modid = MODID)
 public class ChainReactionEnchantment extends Enchantment {
 
     public ChainReactionEnchantment() {
@@ -23,40 +23,37 @@ public class ChainReactionEnchantment extends Enchantment {
                 EquipmentSlotType.MAINHAND});
     }
 
-    public int getMaxLevel() {
-        return 3;
-    }
-
     @SubscribeEvent
-    public static void onChainReactionDamage(LivingDamageEvent event){
-        if(event.getSource() instanceof IndirectEntityDamageSource){
+    public static void onChainReactionDamage(LivingDamageEvent event) {
+        if (event.getSource() instanceof IndirectEntityDamageSource) {
             IndirectEntityDamageSource indirectEntityDamageSource = (IndirectEntityDamageSource) event.getSource();
-            if(indirectEntityDamageSource.getImmediateSource() instanceof AbstractArrowEntity) {
+            if (indirectEntityDamageSource.getImmediateSource() instanceof AbstractArrowEntity) {
                 AbstractArrowEntity arrowEntity = (AbstractArrowEntity) indirectEntityDamageSource.getImmediateSource();
 
                 LivingEntity victim = event.getEntityLiving();
                 if (indirectEntityDamageSource.getTrueSource() instanceof LivingEntity) {
-                    if(!(indirectEntityDamageSource.getTrueSource() instanceof LivingEntity)) return;
+                    if (!(indirectEntityDamageSource.getTrueSource() instanceof LivingEntity)) return;
                     LivingEntity attacker = (LivingEntity) indirectEntityDamageSource.getTrueSource();
                     int chainReactionLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrowEntity, RangedEnchantmentList.CHAIN_REACTION);
-                    if(chainReactionLevel > 0){
-                        float chainReactionChance = 0;
-                        if(chainReactionLevel == 1) chainReactionChance = 0.1F;
-                        if(chainReactionLevel == 2) chainReactionChance = 0.2F;
-                        if(chainReactionLevel == 3) chainReactionChance = 0.3F;
+                    if (chainReactionLevel > 0) {
+                        float chainReactionChance = chainReactionLevel * 0.1f;
                         float chainReactionRand = attacker.getRNG().nextFloat();
-                        if(chainReactionRand <= chainReactionChance){
+                        if (chainReactionRand <= chainReactionChance) {
                             ProjectileEffectHelper.fireChainReactionProjectiles(victim.getEntityWorld(), attacker, victim, 3.15F, 1.0F, arrowEntity);
                         }
                     }
-                    if(arrowEntity.getTags().contains("FireboltThrower")){
+                    if (arrowEntity.getTags().contains("FireboltThrower")) {
                         float chainReactionRand = attacker.getRNG().nextFloat();
-                        if(chainReactionRand <= 0.1F){
+                        if (chainReactionRand <= 0.1F) {
                             ProjectileEffectHelper.fireChainReactionProjectiles(victim.getEntityWorld(), attacker, victim, 3.15F, 1.0F, arrowEntity);
                         }
                     }
                 }
             }
         }
+    }
+
+    public int getMaxLevel() {
+        return 3;
     }
 }

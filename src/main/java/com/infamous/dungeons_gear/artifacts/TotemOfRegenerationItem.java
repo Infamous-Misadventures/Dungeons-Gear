@@ -1,9 +1,12 @@
 package com.infamous.dungeons_gear.artifacts;
 
+import com.infamous.dungeons_gear.combat.NetworkHandler;
+import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -12,6 +15,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 
@@ -20,16 +24,16 @@ import static com.infamous.dungeons_gear.utilties.AOECloudHelper.spawnRegenCloud
 public class TotemOfRegenerationItem extends ArtifactItem {
     public TotemOfRegenerationItem(Properties properties) {
         super(properties);
+        procOnItemUse=true;
     }
 
-    public ActionResultType onItemUse(ItemUseContext itemUseContext) {
+    public ActionResult<ItemStack> procArtifact(ItemUseContext itemUseContext) {
         World world = itemUseContext.getWorld();
         if (world.isRemote) {
-            return ActionResultType.SUCCESS;
+            return ActionResult.resultSuccess(itemUseContext.getItem());
         } else {
             ItemStack itemUseContextItem = itemUseContext.getItem();
             PlayerEntity itemUseContextPlayer = itemUseContext.getPlayer();
-            Hand itemUseContextHand = itemUseContext.getHand();
             BlockPos itemUseContextPos = itemUseContext.getPos();
             Direction itemUseContextFace = itemUseContext.getFace();
             BlockState blockState = world.getBlockState(itemUseContextPos);
@@ -43,17 +47,12 @@ public class TotemOfRegenerationItem extends ArtifactItem {
             if(itemUseContextPlayer != null) {
 
                 spawnRegenCloudAtPos(itemUseContextPlayer, false, blockPos, 100);
-                if(!itemUseContextPlayer.isCreative()){
-                    itemUseContextItem.damageItem(1, itemUseContextPlayer, (entity) -> {
-                        entity.sendBreakAnimation(itemUseContextHand);
-                    });
-                }
-
+                itemUseContextItem.damageItem(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemUseContextItem)));
 
                 ArtifactItem.setArtifactCooldown(itemUseContextPlayer, itemUseContextItem.getItem(), 500);
             }
         }
-        return ActionResultType.CONSUME;
+        return ActionResult.resultConsume(itemUseContext.getItem());
     }
 
     @Override

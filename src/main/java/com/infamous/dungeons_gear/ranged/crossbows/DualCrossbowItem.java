@@ -13,8 +13,6 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-import static com.infamous.dungeons_gear.items.RangedWeaponList.*;
-
 public class DualCrossbowItem extends AbstractDungeonsCrossbowItem {
 
     public DualCrossbowItem(Properties builder, int defaultChargeTimeIn, boolean isUniqueIn) {
@@ -23,33 +21,9 @@ public class DualCrossbowItem extends AbstractDungeonsCrossbowItem {
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity playerEntity, Hand handIn) {
-        ItemStack heldItem = playerEntity.getHeldItem(handIn);
-        ItemStack offhandHeldItem = playerEntity.getHeldItemOffhand();
-        boolean offhandCrossbowFlag = offhandHeldItem.getItem() instanceof DualCrossbowItem && handIn == Hand.MAIN_HAND;
-        if (isCharged(heldItem)) {
-            fireProjectiles(world, playerEntity, handIn, heldItem, getProjectileVelocity(heldItem), 5.0F);
-            if(offhandCrossbowFlag && isCharged(offhandHeldItem)){
-                fireProjectiles(world, playerEntity, Hand.OFF_HAND, offhandHeldItem, getProjectileVelocity(heldItem), 5.0F);
-            }
-            setCharged(heldItem, false);
-            if(offhandCrossbowFlag){
-                setCharged(offhandHeldItem, false);
-            }
-
-            return ActionResult.resultConsume(heldItem);
-        } else if (!playerEntity.findAmmo(heldItem).isEmpty()) {
-
-            if (!isCharged(heldItem)) {
-
-                this.isLoadingStart = false;
-                this.isLoadingMiddle = false;
-                playerEntity.setActiveHand(handIn);
-            }
-
-            return ActionResult.resultConsume(heldItem);
-        } else {
-            return ActionResult.resultFail(heldItem);
-        }
+        if (isCharged(playerEntity.getHeldItemMainhand()) && playerEntity.getHeldItemOffhand().getItem() instanceof DualCrossbowItem && isCharged(playerEntity.getHeldItemOffhand()) && handIn == Hand.MAIN_HAND)
+            super.onItemRightClick(world, playerEntity, Hand.OFF_HAND);
+        return super.onItemRightClick(world, playerEntity, handIn);
     }
 
     @Override
@@ -62,13 +36,13 @@ public class DualCrossbowItem extends AbstractDungeonsCrossbowItem {
 
         if (charge >= 1.0F
                 && !isCharged(stack)
-                && this.hasAmmo(livingEntity, stack)) {
+                && hasAmmo(livingEntity, stack)) {
             setCharged(stack, true);
-            if(offhandCrossbowFlag && this.hasAmmo(livingEntity, offhandHeldItem)){
+            if (offhandCrossbowFlag && hasAmmo(livingEntity, offhandHeldItem)) {
                 setCharged(offhandHeldItem, true);
             }
             SoundCategory lvt_7_1_ = livingEntity instanceof PlayerEntity ? SoundCategory.PLAYERS : SoundCategory.HOSTILE;
-            world.playSound((PlayerEntity)null, livingEntity.getPosX(), livingEntity.getPosY(), livingEntity.getPosZ(), SoundEvents.ITEM_CROSSBOW_LOADING_END, lvt_7_1_, 1.0F, 1.0F / (random.nextFloat() * 0.5F + 1.0F) + 0.2F);
+            world.playSound((PlayerEntity) null, livingEntity.getPosX(), livingEntity.getPosY(), livingEntity.getPosZ(), SoundEvents.ITEM_CROSSBOW_LOADING_END, lvt_7_1_, 1.0F, 1.0F / (random.nextFloat() * 0.5F + 1.0F) + 0.2F);
         }
 
     }
@@ -87,9 +61,14 @@ public class DualCrossbowItem extends AbstractDungeonsCrossbowItem {
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Arrows Grow Size (Growing I)"));
         }
-        if(stack.getItem() == DeferredItemInit.DUAL_CROSSBOW.get()){
+        if (stack.getItem() == DeferredItemInit.DUAL_CROSSBOW.get()) {
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Dual crossbows are the perfect choice for a warrior with quick reflexes in a fast-paced battle."));
         }
         list.add(new StringTextComponent(TextFormatting.GREEN + "Double Projectiles"));
+    }
+
+    @Override
+    void fireProjectile(World worldIn, LivingEntity shooter, Hand handIn, ItemStack crossbow, ItemStack projectile, float soundPitch, boolean isCreativeMode, float velocity, float inaccuracy, float projectileAngle) {
+        super.fireProjectile(worldIn, shooter, handIn, crossbow, projectile, soundPitch, isCreativeMode, velocity, inaccuracy, projectileAngle);
     }
 }

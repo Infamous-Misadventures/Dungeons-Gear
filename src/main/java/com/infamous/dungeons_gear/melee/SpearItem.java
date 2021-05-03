@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.melee;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
 import com.infamous.dungeons_gear.init.AttributeRegistry;
 import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
@@ -26,37 +27,39 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeMod;
 
 import java.util.List;
 import java.util.UUID;
 
 public class SpearItem extends TieredItem implements IMeleeWeapon {
 
+    private static final UUID ATTACK_REACH_MODIFIER = UUID.fromString("63d316c1-7d6d-41be-81c3-41fc1a216c27");
     private final boolean unique;
     private final float attackDamage;
     private final float attackSpeed;
     private final float attackReach;
     private Multimap<Attribute, AttributeModifier> attributeModifierMultimap;
-    private static final UUID ATTACK_REACH_MODIFIER = UUID.fromString("63d316c1-7d6d-41be-81c3-41fc1a216c27");
 
     public SpearItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, float attackReachIn, Item.Properties properties, boolean isUnique) {
         super(tier, properties);
-        this.attackDamage = (float)attackDamageIn + tier.getAttackDamage();
+        this.attackDamage = (float) attackDamageIn + tier.getAttackDamage();
         this.attackSpeed = attackSpeedIn;
         this.attackReach = attackReachIn;
 
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double)this.attackDamage, AttributeModifier.Operation.ADDITION));
-        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)this.attackSpeed, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double) this.attackDamage, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double) this.attackSpeed, AttributeModifier.Operation.ADDITION));
         this.attributeModifierMultimap = builder.build();
         this.unique = isUnique;
     }
 
-    public static void setAttributeModifierMultimap(SpearItem spearItem){
+    public static void setAttributeModifierMultimap(SpearItem spearItem) {
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double)spearItem.attackDamage, AttributeModifier.Operation.ADDITION));
-        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)spearItem.attackSpeed, AttributeModifier.Operation.ADDITION));
-        builder.put(AttributeRegistry.ATTACK_REACH.get(), new AttributeModifier(ATTACK_REACH_MODIFIER, "Weapon modifier", (double)spearItem.attackReach, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double) spearItem.attackDamage, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double) spearItem.attackSpeed, AttributeModifier.Operation.ADDITION));
+        builder.put(AttributeRegistry.ATTACK_REACH.get(), new AttributeModifier(ATTACK_REACH_MODIFIER, "Weapon modifier", (double) spearItem.attackReach, AttributeModifier.Operation.ADDITION));
+        builder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(ATTACK_REACH_MODIFIER, "Weapon modifier", (double) spearItem.attackReach, AttributeModifier.Operation.ADDITION));
         spearItem.attributeModifierMultimap = builder.build();
     }
 
@@ -108,29 +111,28 @@ public class SpearItem extends TieredItem implements IMeleeWeapon {
         return enchantment.type.canEnchantItem(Items.IRON_SWORD) && enchantment != Enchantments.SWEEPING;
     }
 
-    public Rarity getRarity(ItemStack itemStack){
+    public Rarity getRarity(ItemStack itemStack) {
 
-        if(this.unique){
+        if (this.unique) {
             return Rarity.RARE;
         }
         return Rarity.UNCOMMON;
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
-    {
+    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
-        if(stack.getItem() == DeferredItemInit.FORTUNE_SPEAR.get()){
+        if (stack.getItem() == DeferredItemInit.FORTUNE_SPEAR.get()) {
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A spear that is watched over by lucky souls, bringing luck to any who wield it."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Mobs Drop More Loot (Fortune I)"));
         }
-        if(stack.getItem() == DeferredItemInit.WHISPERING_SPEAR.get()){
+        if (stack.getItem() == DeferredItemInit.WHISPERING_SPEAR.get()) {
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Legend says that this cursed spear is plagued by a soul that controls the mind of any who wield it."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Sometimes Strikes Twice (Echo I)"));
         }
-        if(stack.getItem() == DeferredItemInit.SPEAR.get()){
+        if (stack.getItem() == DeferredItemInit.SPEAR.get()) {
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The spear, with its long reach and powerful range, is a solid choice of weapon."));
 
         }

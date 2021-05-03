@@ -61,9 +61,8 @@ public class MaceItem extends TieredItem implements IMeleeWeapon {
         return true;
     }
 
-
     public boolean canPlayerBreakBlockWhileHolding(BlockState state, World worldIn, BlockPos pos, PlayerEntity player) {
-        return true;
+        return !player.isCreative();
     }
 
     public float getDestroySpeed(ItemStack stack, BlockState state) {
