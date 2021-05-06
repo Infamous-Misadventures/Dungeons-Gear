@@ -1,6 +1,7 @@
 package com.infamous.dungeons_gear.melee;
 
 import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
@@ -15,7 +16,11 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class DungeonsPickaxeItem extends PickaxeItem implements IMeleeWeapon {
+public class DungeonsPickaxeItem extends PickaxeItem implements IMeleeWeapon, IComboWeapon {
+    @Override
+    public int getComboLength(ItemStack stack, LivingEntity attacker) {
+        return 1;
+    }
     private final boolean unique;
     public DungeonsPickaxeItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builder, boolean isUnique) {
         super(tier, attackDamageIn, attackSpeedIn, builder);

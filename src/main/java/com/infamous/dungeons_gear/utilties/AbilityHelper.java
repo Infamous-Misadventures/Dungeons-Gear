@@ -108,7 +108,7 @@ public class AbilityHelper {
                 && isAliveAndCanBeSeen(nearbyEntity, healer);
     }
 
-    private static boolean isAlly(LivingEntity healer, LivingEntity nearbyEntity) {
+    public static boolean isAlly(LivingEntity healer, LivingEntity nearbyEntity) {
         return isPetOfAttacker(healer, nearbyEntity)
         || isAVillagerOrIronGolem(nearbyEntity)
         || healer.isOnSameTeam(nearbyEntity);

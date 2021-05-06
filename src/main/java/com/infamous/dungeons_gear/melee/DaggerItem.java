@@ -5,10 +5,12 @@ import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.combat.CombatEventHandler;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
 import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.interfaces.IOffhandAttack;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -29,7 +31,11 @@ import net.minecraft.world.World;
 import java.util.List;
 import java.util.UUID;
 
-public class DaggerItem extends SwordItem implements IOffhandAttack, IMeleeWeapon, ISoulGatherer {
+public class DaggerItem extends SwordItem implements IOffhandAttack, IMeleeWeapon, ISoulGatherer , IComboWeapon {
+    @Override
+    public int getComboLength(ItemStack stack, LivingEntity attacker) {
+        return 6;
+    }
     private static final UUID ATTACK_DAMAGE_MODIFIER_OFF = UUID.fromString("CB3F55D3-645C-4F38-A497-9C13A34DB5CF");
     private final boolean unique;
     private final Multimap<Attribute, AttributeModifier> attributeModifiersMain, attributeModifiersOff;

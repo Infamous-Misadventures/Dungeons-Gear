@@ -14,6 +14,7 @@ public class ComboStorage implements Capability.IStorage<ICombo> {
     public INBT writeNBT(Capability<ICombo> capability, ICombo instance, Direction side) {
         CompoundNBT tag = new CompoundNBT();
         tag.putInt("comboTimer", instance.getComboTimer());
+        tag.putInt("comboCount", instance.getComboCount());
         //tag.putBoolean("ghostForm", instance.getGhostForm());
         tag.putBoolean("shadowForm", instance.getShadowForm());
         tag.putInt("flamingArrowsCount", instance.getFlamingArrowsCount());
@@ -34,6 +35,7 @@ public class ComboStorage implements Capability.IStorage<ICombo> {
     public void readNBT(Capability<ICombo> capability, ICombo instance, Direction side, INBT nbt) {
         CompoundNBT tag = (CompoundNBT) nbt;
         instance.setComboTimer(tag.getInt("comboTimer"));
+        instance.setComboCount(tag.getInt("comboCount"));
         //instance.setGhostForm(tag.getBoolean("ghostForm"));
         instance.setShadowForm(tag.getBoolean("shadowForm"));
         instance.setFlamingArrowsCount(tag.getInt("flamingArrowsCount"));

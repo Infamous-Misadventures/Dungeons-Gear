@@ -1,9 +1,11 @@
 package com.infamous.dungeons_gear.melee;
 
+import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
 import com.infamous.dungeons_gear.items.WeaponList;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
@@ -15,7 +17,11 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class TempestKnifeItem extends SwordItem implements IMeleeWeapon{
+public class TempestKnifeItem extends SwordItem implements IMeleeWeapon, IComboWeapon {
+    @Override
+    public int getComboLength(ItemStack stack, LivingEntity attacker) {
+        return 3;
+    }
 
     private final boolean unique;
 

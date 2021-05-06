@@ -11,15 +11,17 @@ public class Combo implements ICombo {
     private int freezeNearbyTimer;
     private int snowballNearbyTimer;
     private int gravityPulseTimer;
-    private int regenerateTimer;
+    private int comboCount;
     private int arrowsInCounter;
     private int jumpCooldownTimer;
     private int poisonImmunityTimer;
     private double dynamoMultiplier;
     private int lastShoutTimer;
+    private float cachedCooldown;//no need to be saved, it's stored and used in the span of a tick
 
     public Combo() {
         this.comboTimer = 0;
+        this.comboCount = 0;
         //this.ghostForm = false;
         this.shadowForm = false;
         this.flamingArrowCount = 0;
@@ -174,5 +176,25 @@ public class Combo implements ICombo {
     @Override
     public void setDynamoMultiplier(double dynamoMultiplier) {
         this.dynamoMultiplier = dynamoMultiplier;
+    }
+
+    @Override
+    public void setCachedCooldown(float cooldown) {
+        cachedCooldown = cooldown;
+    }
+
+    @Override
+    public int getComboCount() {
+        return comboCount;
+    }
+
+    @Override
+    public void setComboCount(int comboCount) {
+        this.comboCount = comboCount;
+    }
+
+    @Override
+    public float getCachedCooldown() {
+        return cachedCooldown;
     }
 }
