@@ -6,10 +6,12 @@ import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
 import com.infamous.dungeons_gear.init.AttributeRegistry;
 import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IExtendedAttackReach;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.items.WeaponList;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -27,7 +29,11 @@ import net.minecraftforge.common.ForgeMod;
 import java.util.List;
 import java.util.UUID;
 
-public class GlaiveItem extends SwordItem implements IMeleeWeapon {
+public class GlaiveItem extends SwordItem implements IMeleeWeapon, IComboWeapon {
+    @Override
+    public int getComboLength(ItemStack stack, LivingEntity attacker) {
+        return 3;
+    }
 
     private final boolean unique;
     private final float attackDamage;
