@@ -51,7 +51,7 @@ public class ArmorEvents {
 
     @SubscribeEvent
     public static void onSpelunkerArmorEquipped(LivingEquipmentChangeEvent event) {
-        if (event.getEntityLiving() instanceof PlayerEntity) {
+        if (event.getEntityLiving() instanceof PlayerEntity && event.getSlot() != EquipmentSlotType.OFFHAND && event.getSlot() != EquipmentSlotType.MAINHAND) {
             PlayerEntity playerEntity = (PlayerEntity) event.getEntityLiving();
             World world = playerEntity.getEntityWorld();
             if (event.getTo().getItem() instanceof IArmor) {
@@ -273,6 +273,10 @@ public class ArmorEvents {
             if (comboCap.getLastShoutTimer() > 0) {
                 comboCap.setLastShoutTimer(comboCap.getLastShoutTimer() - 1);
             }
+            if (comboCap.getComboTimer() > 0) {
+                comboCap.setComboTimer(comboCap.getComboTimer() - 1);
+            } else if (comboCap.getComboCount() != 0)
+                comboCap.setComboCount(0);
         }
     }
 

@@ -45,4 +45,9 @@ public interface ICombo {
     double getDynamoMultiplier();
     void setDynamoMultiplier(double dynamoMultiplier);
 
+    int getComboCount();
+    void setComboCount(int comboCount);
+
+    float getCachedCooldown();
+    void setCachedCooldown(float cooldown);
 }

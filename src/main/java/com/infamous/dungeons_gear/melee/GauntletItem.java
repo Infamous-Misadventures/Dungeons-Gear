@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.combat.CombatEventHandler;
 import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.interfaces.IOffhandAttack;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
@@ -32,12 +33,11 @@ import java.util.List;
 import java.util.UUID;
 
 
-public class GauntletItem extends TieredItem implements IOffhandAttack, IVanishable, IMeleeWeapon, ISoulGatherer {
+public class GauntletItem extends TieredItem implements IOffhandAttack, IVanishable, IMeleeWeapon, ISoulGatherer, IComboWeapon {
     private static final UUID ATTACK_DAMAGE_MODIFIER_OFF = UUID.fromString("CB3F55D3-645C-4F38-A497-9C13A34DB5CF");
     private final boolean unique;
     private final float attackDamage;
     private final Multimap<Attribute, AttributeModifier> attributeModifiersMain, attributeModifiersOff;
-
     public GauntletItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Item.Properties properties, boolean isUnique) {
         super(tier, properties);
         this.attackDamage = (float) attackDamageIn + tier.getAttackDamage();
@@ -49,6 +49,11 @@ public class GauntletItem extends TieredItem implements IOffhandAttack, IVanisha
         builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER_OFF, "Weapon modifier", attackDamageIn, AttributeModifier.Operation.ADDITION));
         this.attributeModifiersOff = builder.build();
         this.unique = isUnique;
+    }
+
+    @Override
+    public int getComboLength(ItemStack stack, LivingEntity attacker) {
+        return stack.getItem() == DeferredItemInit.FIGHTERS_BINDING.get() ? 4 : 7;
     }
 
     // Only used by MobEntity class for determining sword changes

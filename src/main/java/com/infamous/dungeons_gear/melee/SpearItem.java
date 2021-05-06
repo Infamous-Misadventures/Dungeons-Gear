@@ -6,6 +6,7 @@ import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
 import com.infamous.dungeons_gear.init.AttributeRegistry;
 import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.items.WeaponList;
 import net.minecraft.block.BlockState;
@@ -32,7 +33,11 @@ import net.minecraftforge.common.ForgeMod;
 import java.util.List;
 import java.util.UUID;
 
-public class SpearItem extends TieredItem implements IMeleeWeapon {
+public class SpearItem extends TieredItem implements IMeleeWeapon, IComboWeapon {
+    @Override
+    public int getComboLength(ItemStack stack, LivingEntity attacker) {
+        return 3;
+    }
 
     private static final UUID ATTACK_REACH_MODIFIER = UUID.fromString("63d316c1-7d6d-41be-81c3-41fc1a216c27");
     private final boolean unique;

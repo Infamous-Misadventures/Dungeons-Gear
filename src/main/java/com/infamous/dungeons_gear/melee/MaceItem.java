@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.melee;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.items.WeaponList;
 import net.minecraft.block.BlockState;
@@ -24,7 +25,11 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class MaceItem extends TieredItem implements IMeleeWeapon {
+public class MaceItem extends TieredItem implements IMeleeWeapon, IComboWeapon {
+    @Override
+    public int getComboLength(ItemStack stack, LivingEntity attacker) {
+        return 3;
+    }
 
     private final boolean unique;
     private final float attackDamage;

@@ -1,6 +1,7 @@
 package com.infamous.dungeons_gear.melee;
 
 import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.items.WeaponList;
 import net.minecraft.client.util.ITooltipFlag;
@@ -16,7 +17,11 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class DoubleAxeItem extends AxeItem implements IMeleeWeapon {
+public class DoubleAxeItem extends AxeItem implements IMeleeWeapon, IComboWeapon {
+    @Override
+    public int getComboLength(ItemStack stack, LivingEntity attacker) {
+        return 2;
+    }
     private final boolean unique;
 
     public DoubleAxeItem(IItemTier tier, float attackDamageIn, float attackSpeedIn, Properties builder, boolean isUnique) {

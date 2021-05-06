@@ -5,16 +5,17 @@
   "minVersion": "0.8",
   "refmap": "dungeons_gear.refmap.json",
   "mixins": [
-    "CrossbowItemMixin",
+    "AreaEffectCloudEntityMixin",
     "BowItemMixin",
-    "LockableLootTileEntityMixin",
     "ContainerMinecartEntityMixin",
-    "PlayerEntityMixin",
-    "HurtByTargetGoalMixin"
+    "CrossbowItemMixin",
+    "HurtByTargetGoalMixin",
+    "LockableLootTileEntityMixin",
+    "PlayerEntityMixin"
   ],
   "client": [
-    "PlayerRendererMixin",
-    "GameRendererMixin"
+    "GameRendererMixin",
+    "PlayerRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
