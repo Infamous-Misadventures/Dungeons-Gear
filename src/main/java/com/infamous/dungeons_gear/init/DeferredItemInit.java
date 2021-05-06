@@ -106,11 +106,11 @@ public class DeferredItemInit {
 
     //DPS 12, crits once per 5 seconds
     public static final RegistryObject<Item> BATTLESTAFF = ITEMS.register("battlestaff",
-            () -> new StaffItem(ToolMaterialList.METAL, 5, (2f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new StaffItem(ToolMaterialList.METAL, 4, (1.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
     public static final RegistryObject<Item> BATTLESTAFF_OF_TERROR = ITEMS.register("battlestaff_of_terror",
-            () -> new StaffItem(ToolMaterialList.METAL, 5, (2f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new StaffItem(ToolMaterialList.METAL, 4, (1.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> GROWING_STAFF = ITEMS.register("growing_staff",
-            () -> new StaffItem(ToolMaterialList.METAL, 5, (2f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new StaffItem(ToolMaterialList.METAL, 4, (1.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
 
     //DPS 10, crits once per 3 seconds, disables shields
     public static final RegistryObject<Item> AXE = ITEMS.register("axe",

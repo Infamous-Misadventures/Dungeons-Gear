@@ -2,6 +2,7 @@ package com.infamous.dungeons_gear.enchantments.armor;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.artifacts.ArtifactItem;
+import com.infamous.dungeons_gear.artifacts.beacon.AbstractBeaconItem;
 import com.infamous.dungeons_gear.capabilities.combo.ComboProvider;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
@@ -55,15 +56,14 @@ public class FinalShoutEnchantment extends HealthAbilityEnchantment {
                 ICombo comboCap = CapabilityHelper.getComboCapability(player);
                 if (currentHealth - damageDealt <= (0.25F * maxHealth)) {
                     if (comboCap != null && comboCap.getLastShoutTimer() == 0 && ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.FINAL_SHOUT)) {
-                        //TODO mass evoke artis in inventory
                         int proc = 0;
                         for (ItemStack is : player.inventory.offHandInventory)
-                            if (is.getItem() instanceof ArtifactItem) {
+                            if (is.getItem() instanceof ArtifactItem && !(is.getItem() instanceof AbstractBeaconItem)) {
                                 ((ArtifactItem) is.getItem()).procArtifact(new ItemUseContext(player, Hand.OFF_HAND, new BlockRayTraceResult(player.getPositionVec(), Direction.UP, player.getPosition(), false)));
                                 proc++;
                             }
                         for (ItemStack is : player.inventory.mainInventory)
-                            if (is.getItem() instanceof ArtifactItem) {
+                            if (is.getItem() instanceof ArtifactItem && !(is.getItem() instanceof AbstractBeaconItem)) {
                                 ((ArtifactItem) is.getItem()).procArtifact(new ItemUseContext(player.world, player, null, is, new BlockRayTraceResult(player.getPositionVec(), Direction.UP, player.getPosition(), false)));
                                 if (++proc == 3) break;
                             }

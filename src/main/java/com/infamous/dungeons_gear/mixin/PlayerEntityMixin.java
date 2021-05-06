@@ -43,10 +43,21 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     }
 
     @Inject(
+            method = "attackTargetEntityWithCurrentItem",
+            at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/enchantment/EnchantmentHelper;getFireAspectModifier(Lnet/minecraft/entity/LivingEntity;)I")
+    )
+    private void kindOfAddCombo(CallbackInfo ci) {
+        ICombo ic = CapabilityHelper.getComboCapability(this);
+        if (ic != null) {
+            ic.setComboCount(ic.getComboCount() - 1);
+        }
+    }
+
+    @Inject(
             method = "resetCooldown",
             at = @At("HEAD")
     )
-    private void resetCooldown(CallbackInfo ci) {
+    private void addCombo(CallbackInfo ci) {
         ICombo ic = CapabilityHelper.getComboCapability(this);
         if (ic != null) {
             ic.setComboCount(ic.getComboCount() + 1);
