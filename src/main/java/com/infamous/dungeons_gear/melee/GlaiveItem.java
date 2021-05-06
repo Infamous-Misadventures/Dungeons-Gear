@@ -86,18 +86,16 @@ public class GlaiveItem extends SwordItem implements IMeleeWeapon, IComboWeapon 
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A relic from ages of darkness; this glaives radiates potent magical energy to ward off the undead."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Extra Damage To Undead (Smite I)"));
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Longer Melee Reach"));
         }
         if(stack.getItem() == DeferredItemInit.VENOM_GLAIVE.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A toxic cloud seems to follow the Venom Glaive wherever it goes..."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Spawns Poison Clouds (Poison Cloud I)"));
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Longer Melee Reach"));
         }
         if(stack.getItem() == DeferredItemInit.GLAIVE.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The glaive, wielded by the servants of the Nameless One, is a weapon with style and power."));
 
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Longer Melee Reach"));
         }
+        list.add(new StringTextComponent(TextFormatting.GREEN + "Longer Melee Reach"));
     }
 }
