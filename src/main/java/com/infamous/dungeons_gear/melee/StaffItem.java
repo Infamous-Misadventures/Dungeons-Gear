@@ -24,13 +24,7 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class StaffItem extends TieredItem implements IMeleeWeapon, IComboWeapon {
-    @Override
-    public int getComboLength(ItemStack stack, LivingEntity attacker) {
-        return 10;
-    }
-
     private final boolean unique;
-
     private final float attackDamage;
     private final float attackSpeed;
     private Multimap<Attribute, AttributeModifier> attributeModifierMultimap;
@@ -45,6 +39,39 @@ public class StaffItem extends TieredItem implements IMeleeWeapon, IComboWeapon 
         builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double) this.attackSpeed, AttributeModifier.Operation.ADDITION));
         this.attributeModifierMultimap = builder.build();
         this.unique = isUnique;
+    }
+
+    @Override
+    public int getComboLength(ItemStack stack, LivingEntity attacker) {
+        return 10;
+    }
+
+    @Override
+    public boolean shouldProcSpecialEffects(ItemStack stack, LivingEntity attacker, int combo) {
+        combo -= 1;
+        combo %= 10;
+        return combo == 3 || combo == 6 || combo == 8 || combo == 0;
+    }
+
+    @Override
+    public float damageMultiplier(ItemStack stack, LivingEntity attacker, int combo) {
+        float additional = 0;
+        switch (combo % 10) {
+            case 3:
+                additional = 0.2f;
+                break;
+            case 6:
+                additional = 0.4f;
+                break;
+            case 8:
+                additional = 0.6f;
+                break;
+            case 0:
+                additional = 0.8f;
+                break;
+
+        }
+        return 1 + additional;
     }
 
     @Override
@@ -100,6 +127,7 @@ public class StaffItem extends TieredItem implements IMeleeWeapon, IComboWeapon 
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Increased Damage To Wounded Mobs (Committed I)"));
         }
+        list.add(new StringTextComponent(TextFormatting.GOLD + "Increased Damage on Third, Sixth, Eighth, and Final Hit of a Combo"));
         //list.add(new StringTextComponent(TextFormatting.GREEN + "Stylish Combo"));
     }
 }

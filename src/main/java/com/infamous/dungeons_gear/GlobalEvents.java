@@ -110,7 +110,7 @@ public class GlobalEvents {
             ICombo cap = CapabilityHelper.getComboCapability(p);
             if (cap != null && ic.shouldProcSpecialEffects(is, p, cap.getComboCount())) {
                 event.setResult(Event.Result.ALLOW);
-                event.setDamageModifier(1);
+                event.setDamageModifier(ic.damageMultiplier(is, p, cap.getComboCount()));
                 cap.setComboCount(cap.getComboCount() % ic.getComboLength(is, p));
             } else event.setResult(Event.Result.DENY);
         }
