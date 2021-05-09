@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.combat.CombatEventHandler;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
+import com.infamous.dungeons_gear.init.AttributeRegistry;
 import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
@@ -27,35 +28,41 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeMod;
 
 import java.util.List;
 import java.util.UUID;
 
-public class DaggerItem extends SwordItem implements IOffhandAttack, IMeleeWeapon, ISoulGatherer , IComboWeapon {
-    @Override
-    public int getComboLength(ItemStack stack, LivingEntity attacker) {
-        return 6;
-    }
-    private static final UUID ATTACK_DAMAGE_MODIFIER_OFF = UUID.fromString("CB3F55D3-645C-4F38-A497-9C13A34DB5CF");
+public class DaggerItem extends SwordItem implements IOffhandAttack, IMeleeWeapon, ISoulGatherer, IComboWeapon {
+    private static final UUID ATTACK_REACH_MODIFIER = UUID.fromString("63d316c1-7d6d-41be-81c3-41fc1a216c27");
     private final boolean unique;
-    private final Multimap<Attribute, AttributeModifier> attributeModifiersMain, attributeModifiersOff;
+    private final float attackDamage;
+    private final float attackSpeed;
+    private Multimap<Attribute, AttributeModifier> attributeModifiers;
 
     public DaggerItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builder, boolean isUnique) {
         super(tier, attackDamageIn, attackSpeedIn, builder);
         this.unique = isUnique;
+        attackDamage = attackDamageIn;
+        attackSpeed = attackSpeedIn;
         ImmutableMultimap.Builder<Attribute, AttributeModifier> lvt_5_1_ = ImmutableMultimap.builder();
         lvt_5_1_.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", attackDamageIn, AttributeModifier.Operation.ADDITION));
         lvt_5_1_.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
-        this.attributeModifiersMain = lvt_5_1_.build();
-        lvt_5_1_ = ImmutableMultimap.builder();
-        lvt_5_1_.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER_OFF, "Weapon modifier", attackDamageIn, AttributeModifier.Operation.ADDITION));
-        this.attributeModifiersOff = lvt_5_1_.build();
+        this.attributeModifiers = lvt_5_1_.build();
     }
 
+    public static void setAttributeModifierMultimap(DaggerItem glaiveItem) {
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double) glaiveItem.attackDamage, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double) glaiveItem.attackSpeed, AttributeModifier.Operation.ADDITION));
+        builder.put(AttributeRegistry.ATTACK_REACH.get(), new AttributeModifier(ATTACK_REACH_MODIFIER, "Weapon modifier", -1, AttributeModifier.Operation.ADDITION));
+        builder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(ATTACK_REACH_MODIFIER, "Weapon modifier", -1, AttributeModifier.Operation.ADDITION));
+        glaiveItem.attributeModifiers = builder.build();
+    }
 
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
-        return equipmentSlot == EquipmentSlotType.MAINHAND ? attributeModifiersMain : equipmentSlot == EquipmentSlotType.OFFHAND ?
-                attributeModifiersOff : super.getAttributeModifiers(equipmentSlot);
+    @Override
+    public int getComboLength(ItemStack stack, LivingEntity attacker) {
+        return 6;
     }
 
     public Rarity getRarity(ItemStack itemStack) {
@@ -92,6 +99,10 @@ public class DaggerItem extends SwordItem implements IOffhandAttack, IMeleeWeapo
         list.add(new StringTextComponent(TextFormatting.GREEN + "Dual Wield"));
     }
 
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
+        return equipmentSlot == EquipmentSlotType.MAINHAND ? this.attributeModifiers : super.getAttributeModifiers(equipmentSlot);
+    }
+
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         if (handIn == Hand.OFF_HAND && worldIn.isRemote && !DungeonsGearCompatibility.warDance) {
@@ -108,5 +119,12 @@ public class DaggerItem extends SwordItem implements IOffhandAttack, IMeleeWeapo
         if (stack.getItem() == DeferredItemInit.MOON_DAGGER.get()) {
             return 1;
         } else return 0;
+    }
+
+
+    @Override
+    public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        target.hurtResistantTime = 0;
+        return super.hitEntity(stack, target, attacker);
     }
 }

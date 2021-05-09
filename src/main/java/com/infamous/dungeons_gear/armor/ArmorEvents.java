@@ -277,6 +277,7 @@ public class ArmorEvents {
                 comboCap.setComboTimer(comboCap.getComboTimer() - 1);
             } else if (comboCap.getComboCount() != 0)
                 comboCap.setComboCount(0);
+            comboCap.setOffhandCooldown(comboCap.getOffhandCooldown() + 1);
         }
     }
 
