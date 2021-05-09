@@ -17,6 +17,7 @@ public class Combo implements ICombo {
     private int poisonImmunityTimer;
     private double dynamoMultiplier;
     private int lastShoutTimer;
+    private int offhandCooldown;
     private float cachedCooldown;//no need to be saved, it's stored and used in the span of a tick
 
     public Combo() {
@@ -179,11 +180,6 @@ public class Combo implements ICombo {
     }
 
     @Override
-    public void setCachedCooldown(float cooldown) {
-        cachedCooldown = cooldown;
-    }
-
-    @Override
     public int getComboCount() {
         return comboCount;
     }
@@ -194,7 +190,22 @@ public class Combo implements ICombo {
     }
 
     @Override
+    public int getOffhandCooldown() {
+        return offhandCooldown;
+    }
+
+    @Override
+    public void setOffhandCooldown(int cooldown) {
+        offhandCooldown = comboCount;
+    }
+
+    @Override
     public float getCachedCooldown() {
         return cachedCooldown;
+    }
+
+    @Override
+    public void setCachedCooldown(float cooldown) {
+        cachedCooldown = cooldown;
     }
 }

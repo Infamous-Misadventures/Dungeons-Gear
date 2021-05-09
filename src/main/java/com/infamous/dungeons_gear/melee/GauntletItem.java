@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.melee;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.combat.CombatEventHandler;
+import com.infamous.dungeons_gear.init.AttributeRegistry;
 import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
@@ -28,27 +29,36 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeMod;
 
 import java.util.List;
 import java.util.UUID;
 
 
 public class GauntletItem extends TieredItem implements IOffhandAttack, IVanishable, IMeleeWeapon, ISoulGatherer, IComboWeapon {
-    private static final UUID ATTACK_DAMAGE_MODIFIER_OFF = UUID.fromString("CB3F55D3-645C-4F38-A497-9C13A34DB5CF");
+    private static final UUID ATTACK_REACH_MODIFIER = UUID.fromString("CB3F55D3-645C-4F38-A497-9C13A34DB5CF");
     private final boolean unique;
-    private final float attackDamage;
-    private final Multimap<Attribute, AttributeModifier> attributeModifiersMain, attributeModifiersOff;
+    private final float attackDamage, attackSpeed;
+    private Multimap<Attribute, AttributeModifier> attributeModifiers;
+
     public GauntletItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Item.Properties properties, boolean isUnique) {
         super(tier, properties);
         this.attackDamage = (float) attackDamageIn + tier.getAttackDamage();
+        this.attackSpeed = attackSpeedIn;
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
         builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", attackDamageIn, AttributeModifier.Operation.ADDITION));
         builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
-        this.attributeModifiersMain = builder.build();
-        builder = ImmutableMultimap.builder();
-        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER_OFF, "Weapon modifier", attackDamageIn, AttributeModifier.Operation.ADDITION));
-        this.attributeModifiersOff = builder.build();
+        this.attributeModifiers = builder.build();
         this.unique = isUnique;
+    }
+
+    public static void setAttributeModifierMultimap(GauntletItem glaiveItem) {
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double) glaiveItem.attackDamage, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double) glaiveItem.attackSpeed, AttributeModifier.Operation.ADDITION));
+        builder.put(AttributeRegistry.ATTACK_REACH.get(), new AttributeModifier(ATTACK_REACH_MODIFIER, "Weapon modifier", -1, AttributeModifier.Operation.ADDITION));
+        builder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(ATTACK_REACH_MODIFIER, "Weapon modifier", -1, AttributeModifier.Operation.ADDITION));
+        glaiveItem.attributeModifiers = builder.build();
     }
 
     @Override
@@ -66,6 +76,7 @@ public class GauntletItem extends TieredItem implements IOffhandAttack, IVanisha
      * the damage on the stack.
      */
     public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        target.hurtResistantTime=0;
         stack.damageItem(1, attacker, (p_220045_0_) -> {
             p_220045_0_.sendBreakAnimation(EquipmentSlotType.MAINHAND);
         });
@@ -74,6 +85,10 @@ public class GauntletItem extends TieredItem implements IOffhandAttack, IVanisha
 
     public boolean canPlayerBreakBlockWhileHolding(BlockState state, World worldIn, BlockPos pos, PlayerEntity player) {
         return !player.isCreative();
+    }
+
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
+        return equipmentSlot == EquipmentSlotType.MAINHAND ? this.attributeModifiers : super.getAttributeModifiers(equipmentSlot);
     }
 
     public float getDestroySpeed(ItemStack stack, BlockState state) {
@@ -99,13 +114,6 @@ public class GauntletItem extends TieredItem implements IOffhandAttack, IVanisha
 
     public boolean canHarvestBlock(BlockState blockIn) {
         return blockIn.getHarvestLevel() < 0;
-    }
-
-    /**
-     * Gets a map of item attribute modifiers, used by ItemSword to increase hit damage.
-     */
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
-        return equipmentSlot == EquipmentSlotType.MAINHAND ? attributeModifiersMain : equipmentSlot == EquipmentSlotType.OFFHAND ? attributeModifiersOff : super.getAttributeModifiers(equipmentSlot);
     }
 
     @Override

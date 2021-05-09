@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.combat.CombatEventHandler;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
+import com.infamous.dungeons_gear.init.AttributeRegistry;
 import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IOffhandAttack;
@@ -30,33 +31,41 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import java.util.List;
 import java.util.UUID;
 
 public class SickleItem extends SwordItem implements IOffhandAttack, IMeleeWeapon, IComboWeapon {
-    @Override
-    public int getComboLength(ItemStack stack, LivingEntity attacker) {
-        return 6;
-    }
-    private static final UUID ATTACK_DAMAGE_MODIFIER_OFF = UUID.fromString("CB3F55D3-645C-4F38-A497-9C13A34DB5CF");
-
+    private static final UUID ATTACK_REACH_MODIFIER = UUID.fromString("CB3F55D3-645C-4F38-A497-9C13A34DB5CF");
     private final boolean unique;
-    private final float attackDamage;
-    private final Multimap<Attribute, AttributeModifier> attributeModifiersMain, attributeModifiersOff;
+    private final float attackDamage, attackSpeed;
+    private Multimap<Attribute, AttributeModifier> attributeModifiers;
 
     public SickleItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties, boolean isUnique) {
         super(tier, attackDamageIn, attackSpeedIn, properties);
         this.attackDamage = (float) attackDamageIn + tier.getAttackDamage();
+        this.attackSpeed = attackSpeedIn;
         ImmutableMultimap.Builder<Attribute, AttributeModifier> lvt_5_1_ = ImmutableMultimap.builder();
         lvt_5_1_.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", attackDamageIn, AttributeModifier.Operation.ADDITION));
         lvt_5_1_.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
-        this.attributeModifiersMain = lvt_5_1_.build();
-        lvt_5_1_ = ImmutableMultimap.builder();
-        lvt_5_1_.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER_OFF, "Weapon modifier", attackDamageIn, AttributeModifier.Operation.ADDITION));
-        this.attributeModifiersOff = lvt_5_1_.build();
+        this.attributeModifiers = lvt_5_1_.build();
         this.unique = isUnique;
+    }
+
+    public static void setAttributeModifierMultimap(SickleItem glaiveItem) {
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double) glaiveItem.attackDamage, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double) glaiveItem.attackSpeed, AttributeModifier.Operation.ADDITION));
+        builder.put(AttributeRegistry.ATTACK_REACH.get(), new AttributeModifier(ATTACK_REACH_MODIFIER, "Weapon modifier", -1, AttributeModifier.Operation.ADDITION));
+        builder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(ATTACK_REACH_MODIFIER, "Weapon modifier", -1, AttributeModifier.Operation.ADDITION));
+        glaiveItem.attributeModifiers = builder.build();
+    }
+
+    @Override
+    public int getComboLength(ItemStack stack, LivingEntity attacker) {
+        return 6;
     }
 
     public boolean canPlayerBreakBlockWhileHolding(BlockState blockState, World world, BlockPos blockPos, PlayerEntity playerEntity) {
@@ -73,6 +82,7 @@ public class SickleItem extends SwordItem implements IOffhandAttack, IMeleeWeapo
     }
 
     public boolean hitEntity(ItemStack p_77644_1_, LivingEntity p_77644_2_, LivingEntity p_77644_3_) {
+        p_77644_2_.hurtResistantTime = 0;
         p_77644_1_.damageItem(1, p_77644_3_, (p_220045_0_) -> {
             p_220045_0_.sendBreakAnimation(EquipmentSlotType.MAINHAND);
         });
@@ -93,9 +103,8 @@ public class SickleItem extends SwordItem implements IOffhandAttack, IMeleeWeapo
         return p_150897_1_.isIn(Blocks.COBWEB) || p_150897_1_.isIn(BlockTags.LEAVES);
     }
 
-    @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot) {
-        return slot == EquipmentSlotType.MAINHAND ? attributeModifiersMain : slot == EquipmentSlotType.OFFHAND ? attributeModifiersOff : super.getAttributeModifiers(slot);
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
+        return equipmentSlot == EquipmentSlotType.MAINHAND ? this.attributeModifiers : super.getAttributeModifiers(equipmentSlot);
     }
 
     public Rarity getRarity(ItemStack itemStack) {

@@ -32,34 +32,33 @@ public class CrossbowEvents {
 
 
     @SubscribeEvent
-    public static void onAccelerateCrossbowFired(PlayerInteractEvent.RightClickItem event){
+    public static void onAccelerateCrossbowFired(PlayerInteractEvent.RightClickItem event) {
         PlayerEntity playerEntity = event.getPlayer();
         World world = playerEntity.getEntityWorld();
         long worldTime = world.getGameTime();
         ItemStack stack = event.getItemStack();
-        if(stack.getItem() instanceof CrossbowItem & CrossbowItem.isCharged(stack)){
+        if (stack.getItem() instanceof CrossbowItem & CrossbowItem.isCharged(stack)) {
             IWeapon weaponCap = CapabilityHelper.getWeaponCapability(stack);
-            if(weaponCap == null) return;
+            if (weaponCap == null) return;
             long lastFiredTime = weaponCap.getLastFiredTime();
             int crossbowChargeTime = weaponCap.getCrossbowChargeTime();
 
             int accelerateLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.ACCELERATE, stack);
-            if(stack.getItem() == DeferredItemInit.AUTO_CROSSBOW.get()) accelerateLevel++;
+            if (stack.getItem() == DeferredItemInit.AUTO_CROSSBOW.get()) accelerateLevel++;
 
             int defaultChargeTime = 25;
-            if(stack.getItem() instanceof AbstractDungeonsCrossbowItem){
-                defaultChargeTime = ((AbstractDungeonsCrossbowItem)stack.getItem()).getDefaultChargeTime();
+            if (stack.getItem() instanceof AbstractDungeonsCrossbowItem) {
+                defaultChargeTime = ((AbstractDungeonsCrossbowItem) stack.getItem()).getDefaultChargeTime();
             }
 
-            if(accelerateLevel > 0){
-                if(lastFiredTime < worldTime - (Math.max(crossbowChargeTime, 0) + 23)
-                        && crossbowChargeTime < defaultChargeTime){
+            if (accelerateLevel > 0) {
+                if (lastFiredTime < worldTime - (Math.max(crossbowChargeTime, 0) + 23)
+                        && crossbowChargeTime < defaultChargeTime) {
                     weaponCap.setCrossbowChargeTime(defaultChargeTime);
-                }
-                else{
+                } else {
                     int fireRateReduction =
-                            (int)(defaultChargeTime * (0.04 + 0.04*accelerateLevel));
-                            //(int)(2.5F * accelerateLevel);
+                            (int) (defaultChargeTime * (0.04 + 0.04 * accelerateLevel));
+                    //(int)(2.5F * accelerateLevel);
 
                     weaponCap.setCrossbowChargeTime(crossbowChargeTime - fireRateReduction);
                 }
@@ -69,24 +68,24 @@ public class CrossbowEvents {
     }
 
     @SubscribeEvent
-    public static void onExplodingCrossbowImpact(ProjectileImpactEvent.Arrow event){
+    public static void onExplodingCrossbowImpact(ProjectileImpactEvent.Arrow event) {
         AbstractArrowEntity arrowEntity = event.getArrow();
-        if(arrowEntity.func_234616_v_() instanceof LivingEntity){
-            LivingEntity shooter =(LivingEntity) arrowEntity.func_234616_v_();
+        if (arrowEntity.func_234616_v_() instanceof LivingEntity) {
+            LivingEntity shooter = (LivingEntity) arrowEntity.func_234616_v_();
             boolean explodingCrossbowFlag = arrowEntity.getTags().contains("ExplodingCrossbow")
                     || arrowEntity.getTags().contains("FireboltThrower")
                     || arrowEntity.getTags().contains("ImplodingCrossbow");
-            if(explodingCrossbowFlag){
-                if(event.getRayTraceResult() instanceof BlockRayTraceResult){
-                    BlockRayTraceResult blockRayTraceResult = (BlockRayTraceResult)event.getRayTraceResult();
+            if (explodingCrossbowFlag) {
+                if (event.getRayTraceResult() instanceof BlockRayTraceResult) {
+                    BlockRayTraceResult blockRayTraceResult = (BlockRayTraceResult) event.getRayTraceResult();
                     BlockPos blockPos = blockRayTraceResult.getPos();
 
                     // weird arrow damage calculation from AbstractArrowEntity
-                    float f = (float)arrowEntity.getMotion().length();
-                    int damage = MathHelper.ceil(MathHelper.clamp((double)f * arrowEntity.getDamage(), 0.0D, 2.147483647E9D));
+                    float f = (float) arrowEntity.getMotion().length();
+                    int damage = MathHelper.ceil(MathHelper.clamp((double) f * arrowEntity.getDamage(), 0.0D, 2.147483647E9D));
                     if (arrowEntity.getIsCritical()) {
-                        long criticalDamageBonus = (long)shooter.getRNG().nextInt(damage / 2 + 2);
-                        damage = (int)Math.min(criticalDamageBonus + (long)damage, 2147483647L);
+                        long criticalDamageBonus = (long) shooter.getRNG().nextInt(damage / 2 + 2);
+                        damage = (int) Math.min(criticalDamageBonus + (long) damage, 2147483647L);
                     }
 
                     arrowEntity.world.playSound((PlayerEntity) null, blockPos.getX(), blockPos.getY(), blockPos.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 64.0F, 1.0F);
@@ -98,20 +97,32 @@ public class CrossbowEvents {
     }
 
     @SubscribeEvent
-    public static void onExplodingCrossbowDamage(LivingDamageEvent event){
-        if(event.getSource() instanceof IndirectEntityDamageSource){
-            if(event.getSource().getImmediateSource() instanceof AbstractArrowEntity){
+    public static void onExplodingCrossbowDamage(LivingDamageEvent event) {
+        if (event.getSource() instanceof IndirectEntityDamageSource) {
+            if (event.getSource().getImmediateSource() instanceof AbstractArrowEntity) {
                 AbstractArrowEntity arrowEntity = (AbstractArrowEntity) event.getSource().getImmediateSource();
-                if(arrowEntity.func_234616_v_() instanceof LivingEntity){
+                if (arrowEntity.func_234616_v_() instanceof LivingEntity) {
                     LivingEntity shooter = (LivingEntity) arrowEntity.func_234616_v_();
                     boolean explodingCrossbowFlag = arrowEntity.getTags().contains("ExplodingCrossbow")
                             || arrowEntity.getTags().contains("FireboltThrower")
                             || arrowEntity.getTags().contains("ImplodingCrossbow");
-                    if(explodingCrossbowFlag){
+                    if (explodingCrossbowFlag) {
                         LivingEntity victim = event.getEntityLiving();
                         victim.world.playSound((PlayerEntity) null, victim.getPosX(), victim.getPosY(), victim.getPosZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 64.0F, 1.0F);
                         AOECloudHelper.spawnExplosionCloud(shooter, victim, 3.0F);
                         AreaOfEffectHelper.causeExplosionAttack(shooter, victim, event.getAmount(), 3.0F);
+                    }
+                    boolean rapidFireFlag = arrowEntity.getTags().contains("BabyCrossbow")
+                            || arrowEntity.getTags().contains("BowOfLostSouls")
+                            || arrowEntity.getTags().contains("HarpCrossbow")
+                            || arrowEntity.getTags().contains("LightningHarpCrossbow")
+                            || arrowEntity.getTags().contains("DualCrossbow")
+                            || arrowEntity.getTags().contains("SoulHunterCrossbow")
+                            || arrowEntity.getTags().contains("CorruptedCrossbow")
+                            || arrowEntity.getTags().contains("ScatterCrossbow")
+                            || arrowEntity.getTags().contains("BurstCrossbow");
+                    if (rapidFireFlag) {
+                        event.getEntityLiving().hurtResistantTime = 0;
                     }
                 }
             }
