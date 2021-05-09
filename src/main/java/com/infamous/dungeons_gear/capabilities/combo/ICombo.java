@@ -48,6 +48,9 @@ public interface ICombo {
     int getComboCount();
     void setComboCount(int comboCount);
 
+    int getOffhandCooldown();
+    void setOffhandCooldown(int cooldown);
+
     float getCachedCooldown();
     void setCachedCooldown(float cooldown);
 }

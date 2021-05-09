@@ -1,21 +1,16 @@
 package com.infamous.dungeons_gear.mixin;
 
-import com.infamous.dungeons_gear.capabilities.CapabilityHandler;
-import com.infamous.dungeons_gear.capabilities.combo.Combo;
-import com.infamous.dungeons_gear.capabilities.combo.ComboProvider;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.init.AttributeRegistry;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -33,13 +28,20 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         ci.getReturnValue().createMutableAttribute(AttributeRegistry.ATTACK_REACH.get());
     }
 
-    @ModifyConstant(
-            method = "attackTargetEntityWithCurrentItem",
-            constant = @Constant(doubleValue = 9.0D)
-    )
-    private double getAttackReachSquared(double value) {
-        double attackReachValue = this.getAttributeValue(AttributeRegistry.ATTACK_REACH.get());
-        return attackReachValue * attackReachValue;
+//    @ModifyConstant(
+//            method = "attackTargetEntityWithCurrentItem",
+//            constant = @Constant(doubleValue = 9.0D)
+//    )
+//    private double getAttackReachSquared(double value) {
+//        double attackReachValue = this.getAttributeValue(AttributeRegistry.ATTACK_REACH.get());
+//        return attackReachValue * attackReachValue;
+//    }
+
+    //Sometimes my genius... it's almost frightening.
+    @Redirect(method = "attackTargetEntityWithCurrentItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getDistanceSq(Lnet/minecraft/entity/Entity;)D"))
+    private double getModifiedDistance(PlayerEntity playerEntity, Entity entityIn) {
+        double reach = playerEntity.getAttributeValue(AttributeRegistry.ATTACK_REACH.get()) - 3;
+        return playerEntity.getDistanceSq(entityIn) - (6 * reach + reach * reach);
     }
 
     @Inject(

@@ -21,20 +21,20 @@ import net.minecraftforge.fml.common.Mod;
 
 public class CombatEventHandler {
 
-    public static void checkForOffhandAttack(){
+    public static void checkForOffhandAttack() {
         Minecraft mc = Minecraft.getInstance();
         PlayerEntity player = mc.player;
         if (Minecraft.getInstance().world != null && Minecraft.getInstance().currentScreen == null && !Minecraft.getInstance().isGamePaused() && player != null && !player.isActiveItemStackBlocking()) {
             ItemStack offhand = player.getHeldItemOffhand();
-            if (offhand.getItem() instanceof IOffhandAttack) {
+            if (offhand.getItem() instanceof IOffhandAttack && ((IOffhandAttack<?>) offhand.getItem()).canAttack(player, offhand)) {
                 float reach = (float) 3.0D;
                 if (mc.player != null) {
                     reach = (float) mc.player.getBaseAttributeValue(AttributeRegistry.ATTACK_REACH.get());
                 }
-                if(player.isCreative()) reach += 2.0;
+                if (player.isCreative()) reach += 2.0;
                 RayTraceResult rayTrace = getEntityMouseOverExtended(reach);
                 if (rayTrace instanceof EntityRayTraceResult) {
-                    EntityRayTraceResult entityRayTrace = (EntityRayTraceResult)rayTrace;
+                    EntityRayTraceResult entityRayTrace = (EntityRayTraceResult) rayTrace;
                     Entity entityHit = entityRayTrace.getEntity();
                     if (entityHit != player && entityHit != player.getRidingEntity()) {
                         NetworkHandler.INSTANCE.sendToServer(new PacketOffhandAttack(entityHit.getEntityId()));
@@ -50,7 +50,7 @@ public class CombatEventHandler {
         Minecraft mc = Minecraft.getInstance();
         Entity viewEntity = mc.renderViewEntity;
         if (viewEntity != null && mc.world != null) {
-            double reachDistance = (double)reach;
+            double reachDistance = (double) reach;
             RayTraceResult rayTrace = viewEntity.pick(reachDistance, 0.0F, false);
             Vector3d eyePos = viewEntity.getEyePosition(0.0F);
             boolean hasExtendedReach = false;
@@ -59,7 +59,7 @@ public class CombatEventHandler {
                 if (mc.playerController.extendedReach() && reachDistance < 6.0D) {
                     attackReach = 6.0D;
                     reachDistance = attackReach;
-                } else if (reachDistance > (double)reach) {
+                } else if (reachDistance > (double) reach) {
                     hasExtendedReach = true;
                 }
             }
@@ -73,7 +73,7 @@ public class CombatEventHandler {
             if (entityRayTrace != null) {
                 Vector3d hitVec = entityRayTrace.getHitVec();
                 double squareDistanceTo = eyePos.squareDistanceTo(hitVec);
-                if (hasExtendedReach && squareDistanceTo > (double)(reach * reach)) {
+                if (hasExtendedReach && squareDistanceTo > (double) (reach * reach)) {
                     result = BlockRayTraceResult.createMiss(hitVec, Direction.getFacingFromVector(lookVec.x, lookVec.y, lookVec.z), new BlockPos(hitVec));
                 } else if (squareDistanceTo < attackReach) {
                     result = entityRayTrace;
@@ -83,6 +83,6 @@ public class CombatEventHandler {
             }
         }
 
-        return (RayTraceResult)result;
+        return (RayTraceResult) result;
     }
 }

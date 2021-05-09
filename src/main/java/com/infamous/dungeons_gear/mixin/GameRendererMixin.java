@@ -20,7 +20,7 @@ public abstract class GameRendererMixin {
     )
     private double getExtendedAttackReach(double value) {
         assert mc.player != null;
-        return mc.player.getAttributeValue(AttributeRegistry.ATTACK_REACH.get()) * 2.0D;
+        return mc.player.getAttributeValue(AttributeRegistry.ATTACK_REACH.get()) + 3.0D;
     }
 
     @ModifyConstant(
