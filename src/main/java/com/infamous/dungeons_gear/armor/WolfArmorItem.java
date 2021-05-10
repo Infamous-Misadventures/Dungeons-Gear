@@ -4,8 +4,9 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.WolfArmorModel;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IArmor;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -63,10 +64,10 @@ public class WolfArmorItem extends ArmorItem implements IArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(stack.getItem() == DeferredItemInit.WOLF_ARMOR.get() || stack.getItem() == DeferredItemInit.WOLF_ARMOR_HOOD.get()){
+        if(stack.getItem() == ItemRegistry.WOLF_ARMOR.get() || stack.getItem() == ItemRegistry.WOLF_ARMOR_HOOD.get()){
             return DungeonsGear.MODID + ":textures/models/armor/wolf_armor.png";
         }
-        else if(stack.getItem() == DeferredItemInit.FOX_ARMOR.get() || stack.getItem() == DeferredItemInit.FOX_ARMOR_HOOD.get()){
+        else if(stack.getItem() == ItemRegistry.FOX_ARMOR.get() || stack.getItem() == ItemRegistry.FOX_ARMOR_HOOD.get()){
             return DungeonsGear.MODID + ":textures/models/armor/fox_armor.png";
         }
         else return "";
@@ -93,14 +94,7 @@ public class WolfArmorItem extends ArmorItem implements IArmor {
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
-
-        if (this.unique) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Ancient Villager tribes created this armor to honor the fox, who is a great and agile warrior. This piece strikes terror into the hearts of many enemies as it has a reputation for being quite difficult to pierce."));
-
-        }
-        else{
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Many warriors wear the heads of wolves into battle to strike fear into the hearts of their enemies."));
-        }
+        DescriptionHelper.addLoreDescription(list, stack);
         list.add(new TranslationTextComponent(
                 "attribute.name.healthPotionsHealNearbyAllies")
                 .mergeStyle(TextFormatting.GREEN));

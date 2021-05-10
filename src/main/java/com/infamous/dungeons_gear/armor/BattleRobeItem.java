@@ -5,8 +5,9 @@ import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.BattleRobeModel;
 import com.infamous.dungeons_gear.armor.models.SplendidRobeModel;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IArmor;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -62,10 +63,10 @@ public class BattleRobeItem extends ArmorItem implements IArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(stack.getItem() == DeferredItemInit.BATTLE_ROBE.get()){
+        if(stack.getItem() == ItemRegistry.BATTLE_ROBE.get()){
             return DungeonsGear.MODID + ":textures/models/armor/battle_robe.png";
         }
-        else if(stack.getItem() == DeferredItemInit.SPLENDID_ROBE.get()){
+        else if(stack.getItem() == ItemRegistry.SPLENDID_ROBE.get()){
             return DungeonsGear.MODID + ":textures/models/armor/splendid_robe.png";
         }
         else return "";
@@ -75,10 +76,10 @@ public class BattleRobeItem extends ArmorItem implements IArmor {
     @Override
     @OnlyIn(Dist.CLIENT)
     public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack stack, EquipmentSlotType armorSlot, A _default) {
-        if(stack.getItem() == DeferredItemInit.BATTLE_ROBE.get()){
+        if(stack.getItem() == ItemRegistry.BATTLE_ROBE.get()){
             return (A) new BattleRobeModel<>(1.0F, slot, entityLiving);
         }
-        else if(stack.getItem() == DeferredItemInit.SPLENDID_ROBE.get()){
+        else if(stack.getItem() == ItemRegistry.SPLENDID_ROBE.get()){
             return (A) new SplendidRobeModel<>(1.0F, slot, entityLiving);
         }
         return null;
@@ -98,13 +99,7 @@ public class BattleRobeItem extends ArmorItem implements IArmor {
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
-
-        if (this.unique) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The distinguished Splendid Robe is worn by the hardened Illager warriors who protect the Arch-Illager."));
-        }
-        else{
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The Battle Robe is worn by the distinguished Illager Evokers of the Arch-Illager's court."));
-        }
+        DescriptionHelper.addLoreDescription(list, stack);
     }
 
     @Override

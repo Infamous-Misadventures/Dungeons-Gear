@@ -69,6 +69,10 @@ public class GlobalLootModifier{
             ResourceLocation lootTable = null;
             if(vector3d != null){
                 BlockPos pos = new BlockPos(vector3d);
+                // fix chunk lag issue
+                if(!context.getWorld().isBlockLoaded(pos)){
+                    return generatedLoot;
+                }
                 TileEntity contextTileEntity = context.getWorld().getTileEntity(pos);
                 if(contextTileEntity instanceof LockableLootTileEntity){
                     LockableLootTileEntity lockableLootTileEntity = (LockableLootTileEntity)contextTileEntity;
@@ -136,6 +140,10 @@ public class GlobalLootModifier{
             ResourceLocation lootTable = null;
             if(vector3d != null){
                 BlockPos pos = new BlockPos(vector3d);
+                // fix chunk lag issue
+                if(!context.getWorld().isBlockLoaded(pos)){
+                    return generatedLoot;
+                }
                 TileEntity contextTileEntity = context.getWorld().getTileEntity(pos);
                 if(contextTileEntity instanceof LockableLootTileEntity){
                     LockableLootTileEntity lockableLootTileEntity = (LockableLootTileEntity)contextTileEntity;
@@ -203,6 +211,10 @@ public class GlobalLootModifier{
             ResourceLocation lootTable = null;
             if(vector3d != null){
                 BlockPos pos = new BlockPos(vector3d);
+                // fix chunk lag issue
+                if(!context.getWorld().isBlockLoaded(pos)){
+                    return generatedLoot;
+                }
                 TileEntity contextTileEntity = context.getWorld().getTileEntity(pos);
                 if(contextTileEntity instanceof LockableLootTileEntity){
                     LockableLootTileEntity lockableLootTileEntity = (LockableLootTileEntity)contextTileEntity;
@@ -270,6 +282,10 @@ public class GlobalLootModifier{
             ResourceLocation lootTable = null;
             if(vector3d != null){
                 BlockPos pos = new BlockPos(vector3d);
+                // fix chunk lag issue
+                if(!context.getWorld().isBlockLoaded(pos)){
+                    return generatedLoot;
+                }
                 TileEntity contextTileEntity = context.getWorld().getTileEntity(pos);
                 if(contextTileEntity instanceof LockableLootTileEntity){
                     LockableLootTileEntity lockableLootTileEntity = (LockableLootTileEntity)contextTileEntity;

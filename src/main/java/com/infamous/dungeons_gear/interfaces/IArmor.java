@@ -1,5 +1,7 @@
 package com.infamous.dungeons_gear.interfaces;
 
+import net.minecraft.item.ItemStack;
+
 public interface IArmor {
     default boolean doHealthPotionsHealNearbyAllies(){
         return false;
@@ -47,4 +49,11 @@ public interface IArmor {
     default double getFreezingResistance(){
         return 0;
     }
+
+    // Enchantment abilities
+    default boolean hasBurningBuiltIn(ItemStack stack){ return false;}
+    default boolean hasSnowballBuiltIn(ItemStack stack){ return false;}
+    default boolean hasPotionBarrierBuiltIn(ItemStack stack){return false;}
+    default boolean hasSwiftfootedBuiltIn(ItemStack stack){return false;}
+    default boolean hasChillingBuiltIn(ItemStack stack){return false;}
 }

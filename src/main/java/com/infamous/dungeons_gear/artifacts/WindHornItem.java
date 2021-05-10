@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.artifacts;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
+import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -26,8 +27,7 @@ public class WindHornItem extends ArtifactItem {
         ItemStack itemstack = c.getItem();
         World worldIn = c.getWorld();
 
-        worldIn.playSound((PlayerEntity) null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), SoundEvents.EVENT_RAID_HORN, SoundCategory.BLOCKS, 64.0F, 1.0F);
-
+        SoundHelper.playHornSound(playerIn);
         //((ServerPlayerEntity)playerIn).connection.sendPacket(new SPlaySoundEffectPacket(SoundEvents.EVENT_RAID_HORN, SoundCategory.NEUTRAL, d0, playerIn.posY, d1, 64.0F, 1.0F));
 
 

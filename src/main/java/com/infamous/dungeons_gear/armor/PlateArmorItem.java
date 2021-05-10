@@ -4,8 +4,9 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.PlateArmorModel;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IArmor;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -64,10 +65,10 @@ public class PlateArmorItem extends ArmorItem implements IArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(stack.getItem() == DeferredItemInit.PLATE_ARMOR.get() || stack.getItem() == DeferredItemInit.PLATE_ARMOR_HELMET.get()){
+        if(stack.getItem() == ItemRegistry.PLATE_ARMOR.get() || stack.getItem() == ItemRegistry.PLATE_ARMOR_HELMET.get()){
             return DungeonsGear.MODID + ":textures/models/armor/plate_armor.png";
         }
-        else if(stack.getItem() == DeferredItemInit.FULL_METAL_ARMOR.get() || stack.getItem() == DeferredItemInit.FULL_METAL_ARMOR_HELMET.get()){
+        else if(stack.getItem() == ItemRegistry.FULL_METAL_ARMOR.get() || stack.getItem() == ItemRegistry.FULL_METAL_ARMOR_HELMET.get()){
             return DungeonsGear.MODID + ":textures/models/armor/full_metal_armor.png";
         }
         else return "";
@@ -94,13 +95,7 @@ public class PlateArmorItem extends ArmorItem implements IArmor {
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
-
-        if (this.unique) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Full Metal Armor is destined for the great defenders of the Overworld."));
-        }
-        else{
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Plate Armor turns the average soldier into a fortress but comes with reduced mobility."));
-        }
+        DescriptionHelper.addLoreDescription(list, stack);
     }
 
     @Override

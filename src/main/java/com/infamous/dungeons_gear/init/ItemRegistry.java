@@ -22,7 +22,7 @@ import java.util.Map;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
-public class DeferredItemInit {
+public class ItemRegistry {
 
     public static Map<Item, ResourceLocation> commonLeatherArmorMap = new HashMap<Item, ResourceLocation>();
     public static Map<Item, ResourceLocation> commonMetalArmorMap = new HashMap<Item, ResourceLocation>();

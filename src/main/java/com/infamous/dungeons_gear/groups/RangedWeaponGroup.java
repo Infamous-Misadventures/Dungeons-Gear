@@ -1,9 +1,6 @@
 package com.infamous.dungeons_gear.groups;
 
-import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
-import com.infamous.dungeons_gear.items.RangedWeaponList;
-import com.infamous.dungeons_gear.items.WeaponList;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 
@@ -17,6 +14,6 @@ public class RangedWeaponGroup extends ItemGroup
     @Override
     public ItemStack createIcon()
     {
-        return new ItemStack(DeferredItemInit.AUTO_CROSSBOW.get());
+        return new ItemStack(ItemRegistry.AUTO_CROSSBOW.get());
     }
 }

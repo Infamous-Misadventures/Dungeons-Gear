@@ -5,6 +5,7 @@ import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
+import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -96,7 +97,7 @@ public class TastyBoneItem extends ArtifactItem {
             return entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity);
         }));
 
-        world.playSound((PlayerEntity)null, itemUseContextPlayer.getPosX(), itemUseContextPlayer.getPosY(), itemUseContextPlayer.getPosZ(), SoundEvents.ENTITY_WOLF_HOWL, SoundCategory.AMBIENT, 64.0F, 1.0F);
+        SoundHelper.playCreatureSound(itemUseContextPlayer, SoundEvents.ENTITY_WOLF_AMBIENT);
 
         world.addEntity(wolfEntity);
     }

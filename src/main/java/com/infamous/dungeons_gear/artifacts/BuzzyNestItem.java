@@ -8,6 +8,7 @@ import com.infamous.dungeons_gear.goals.BeeFollowOwnerGoal;
 import com.infamous.dungeons_gear.goals.BeeOwnerHurtByTargetGoal;
 import com.infamous.dungeons_gear.goals.BeeOwnerHurtTargetGoal;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
+import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -107,7 +108,7 @@ public class BuzzyNestItem extends ArtifactItem {
         beeEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(beeEntity, LivingEntity.class, 5, false, false,
                 (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
 
-        world.playSound((PlayerEntity) null, itemUseContextPlayer.getPosX(), itemUseContextPlayer.getPosY(), itemUseContextPlayer.getPosZ(), SoundEvents.ENTITY_BEE_LOOP, SoundCategory.AMBIENT, 64.0F, 1.0F);
+        SoundHelper.playCreatureSound(itemUseContextPlayer, SoundEvents.ENTITY_BEE_LOOP);
         world.addEntity(beeEntity);
     }
 

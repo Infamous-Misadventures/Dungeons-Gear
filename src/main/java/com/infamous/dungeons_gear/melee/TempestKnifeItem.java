@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.melee;
 
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
@@ -28,6 +29,16 @@ public class TempestKnifeItem extends SwordItem implements IMeleeWeapon, IComboW
     public TempestKnifeItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builder, boolean isUnique) {
         super(tier, attackDamageIn, attackSpeedIn, builder);
         this.unique = isUnique;
+    }
+
+    @Override
+    public boolean hasCommittedBuiltIn(ItemStack stack) {
+        return stack.getItem() == WeaponList.RESOLUTE_TEMPEST_KNIFE;
+    }
+
+    @Override
+    public boolean hasFreezingBuiltIn(ItemStack stack) {
+        return stack.getItem() == WeaponList.CHILL_GALE_KNIFE;
     }
 
     public Rarity getRarity(ItemStack itemStack){

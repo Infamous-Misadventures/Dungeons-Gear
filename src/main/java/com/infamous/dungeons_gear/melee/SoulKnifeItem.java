@@ -1,10 +1,9 @@
 package com.infamous.dungeons_gear.melee;
 
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
-import com.infamous.dungeons_gear.items.WeaponList;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.IItemTier;
@@ -31,6 +30,16 @@ public class SoulKnifeItem extends SwordItem implements IMeleeWeapon, ISoulGathe
         this.unique = isUnique;
     }
 
+    @Override
+    public boolean hasSoulSiphonBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.ETERNAL_KNIFE.get();
+    }
+
+    @Override
+    public boolean hasCommittedBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.TRUTHSEEKER.get();
+    }
+
     public Rarity getRarity(ItemStack itemStack){
 
         if(this.unique){
@@ -43,7 +52,7 @@ public class SoulKnifeItem extends SwordItem implements IMeleeWeapon, ISoulGathe
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
         super.addInformation(stack, world, list, flag);
-        if(stack.getItem() == DeferredItemInit.TRUTHSEEKER.get()){
+        if(stack.getItem() == ItemRegistry.TRUTHSEEKER.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The warden of Highblock Keep kept this unpleasant blade by their side during interrogations."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Increased Damage To Wounded Mobs (Committed I)"));
@@ -51,14 +60,14 @@ public class SoulKnifeItem extends SwordItem implements IMeleeWeapon, ISoulGathe
             //list.add(new StringTextComponent(TextFormatting.GREEN + "Thrust Attack"));
         }
 
-        if(stack.getItem() == DeferredItemInit.ETERNAL_KNIFE.get()){
+        if(stack.getItem() == ItemRegistry.ETERNAL_KNIFE.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A disturbing aura surrounds this knife, as if it has existed for all time and will outlive us all."));
 
             list.add(new StringTextComponent(TextFormatting.LIGHT_PURPLE + "Chance To Gain XP (Soul Siphon I)"));
             list.add(new StringTextComponent(TextFormatting.LIGHT_PURPLE + "+2 XP Gathering"));
             //list.add(new StringTextComponent(TextFormatting.GREEN + "Thrust Attack"));
         }
-        if(stack.getItem() == DeferredItemInit.SOUL_KNIFE.get()){
+        if(stack.getItem() == ItemRegistry.SOUL_KNIFE.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A ceremonial knife that uses magical energy to hold the wrath of souls inside its blade."));
 
             list.add(new StringTextComponent(TextFormatting.LIGHT_PURPLE + "+2 XP Gathering"));

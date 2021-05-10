@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.combat.CombatEventHandler;
 import com.infamous.dungeons_gear.init.AttributeRegistry;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.interfaces.IOffhandAttack;
@@ -63,7 +63,7 @@ public class GauntletItem extends TieredItem implements IOffhandAttack, IVanisha
 
     @Override
     public int getComboLength(ItemStack stack, LivingEntity attacker) {
-        return stack.getItem() == DeferredItemInit.FIGHTERS_BINDING.get() ? 4 : 7;
+        return stack.getItem() == ItemRegistry.FIGHTERS_BINDING.get() ? 4 : 7;
     }
 
     // Only used by MobEntity class for determining sword changes
@@ -121,6 +121,26 @@ public class GauntletItem extends TieredItem implements IOffhandAttack, IVanisha
         return enchantment.type.canEnchantItem(Items.IRON_SWORD) && enchantment != Enchantments.SWEEPING;
     }
 
+    @Override
+    public boolean hasRampagingBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.MAULER.get();
+    }
+
+    @Override
+    public boolean hasEnigmaResonatorBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.SOUL_FIST.get();
+    }
+
+    @Override
+    public boolean canDualWield(ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public boolean boostsAttackSpeed(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.FIGHTERS_BINDING.get();
+    }
+
     public Rarity getRarity(ItemStack itemStack) {
 
         if (this.unique) {
@@ -133,24 +153,24 @@ public class GauntletItem extends TieredItem implements IOffhandAttack, IVanisha
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
 
-        if (stack.getItem() == DeferredItemInit.GAUNTLET.get()) {
+        if (stack.getItem() == ItemRegistry.GAUNTLET.get()) {
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Gauntlets call back to an ancient style of hand to hand combat."));
 
             //list.add(new StringTextComponent(TextFormatting.GREEN + "Relentless Combo"));
         }
-        if (stack.getItem() == DeferredItemInit.FIGHTERS_BINDING.get()) {
+        if (stack.getItem() == ItemRegistry.FIGHTERS_BINDING.get()) {
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Made in the wilds beyond the mountains, these gauntlets have been worn by warriors for centuries."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Boosts Attack Speed"));
             //list.add(new StringTextComponent(TextFormatting.GREEN + "Turbo punches"));
         }
-        if (stack.getItem() == DeferredItemInit.MAULER.get()) {
+        if (stack.getItem() == ItemRegistry.MAULER.get()) {
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "This claw-like weapon, wielded by ancient Illager soldiers, is savage in battle."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Increases Attack Speed (Rampaging I)"));
             //list.add(new StringTextComponent(TextFormatting.GREEN + "Relentless Combo"));
         }
-        if (stack.getItem() == DeferredItemInit.SOUL_FIST.get()) {
+        if (stack.getItem() == ItemRegistry.SOUL_FIST.get()) {
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Soul Fists are gauntlets clad with great gemstones, each containing a powerful soul."));
 
             list.add(new StringTextComponent(TextFormatting.LIGHT_PURPLE + "Souls Critical Boost (Enigma Resonator I)"));
@@ -174,7 +194,7 @@ public class GauntletItem extends TieredItem implements IOffhandAttack, IVanisha
 
     @Override
     public int getGatherAmount(ItemStack stack) {
-        if (stack.getItem() == DeferredItemInit.SOUL_FIST.get()) {
+        if (stack.getItem() == ItemRegistry.SOUL_FIST.get()) {
             return 2;
         } else return 0;
     }

@@ -3,7 +3,7 @@ package com.infamous.dungeons_gear.enchantments.melee;
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -50,7 +50,7 @@ public class StunningEnchantment extends Enchantment {
         if(!(event.getSource().getTrueSource() instanceof LivingEntity)) return;
         LivingEntity attacker = (LivingEntity)event.getSource().getTrueSource();
         LivingEntity victim = event.getEntityLiving();
-        if(attacker.getHeldItemMainhand().getItem() == DeferredItemInit.HIGHLAND_AXE.get()){
+        if(attacker.getHeldItemMainhand().getItem() == ItemRegistry.HIGHLAND_AXE.get()){
             float chance = attacker.getRNG().nextFloat();
             if(chance <= 0.05) {
                 EffectInstance stunned = new EffectInstance(CustomEffects.STUNNED, 60);

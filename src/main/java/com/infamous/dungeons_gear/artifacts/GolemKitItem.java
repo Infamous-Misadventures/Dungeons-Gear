@@ -8,6 +8,7 @@ import com.infamous.dungeons_gear.goals.GolemOwnerHurtByTargetGoal;
 import com.infamous.dungeons_gear.goals.GolemOwnerHurtTargetGoal;
 import com.infamous.dungeons_gear.goals.IronGolemFollowOwnerGoal;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
+import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -93,7 +94,7 @@ public class GolemKitItem extends ArtifactItem {
         ironGolemEntity.targetSelector.addGoal(1, new GolemOwnerHurtByTargetGoal(ironGolemEntity));
         ironGolemEntity.targetSelector.addGoal(2, new GolemOwnerHurtTargetGoal(ironGolemEntity));
 
-        world.playSound((PlayerEntity)null, itemUseContextPlayer.getPosX(), itemUseContextPlayer.getPosY(), itemUseContextPlayer.getPosZ(), SoundEvents.ENTITY_IRON_GOLEM_HURT, SoundCategory.AMBIENT, 64.0F, 1.0F);
+        SoundHelper.playCreatureSound(itemUseContextPlayer, SoundEvents.ENTITY_IRON_GOLEM_REPAIR);
         world.addEntity(ironGolemEntity);
     }
 

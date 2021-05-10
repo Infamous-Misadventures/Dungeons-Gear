@@ -2,10 +2,11 @@ package com.infamous.dungeons_gear.ranged.crossbows;
 
 import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
+import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,8 +14,6 @@ import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IndirectEntityDamageSource;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
@@ -44,7 +43,7 @@ public class CrossbowEvents {
             int crossbowChargeTime = weaponCap.getCrossbowChargeTime();
 
             int accelerateLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.ACCELERATE, stack);
-            if (stack.getItem() == DeferredItemInit.AUTO_CROSSBOW.get()) accelerateLevel++;
+            if (stack.getItem() == ItemRegistry.AUTO_CROSSBOW.get()) accelerateLevel++;
 
             int defaultChargeTime = 25;
             if (stack.getItem() instanceof AbstractDungeonsCrossbowItem) {
@@ -88,7 +87,7 @@ public class CrossbowEvents {
                         damage = (int) Math.min(criticalDamageBonus + (long) damage, 2147483647L);
                     }
 
-                    arrowEntity.world.playSound((PlayerEntity) null, blockPos.getX(), blockPos.getY(), blockPos.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 64.0F, 1.0F);
+                    SoundHelper.playGenericExplodeSound(arrowEntity);
                     AOECloudHelper.spawnExplosionCloudAtPos(shooter, true, blockPos, 3.0F);
                     AreaOfEffectHelper.causeExplosionAttackAtPos(shooter, true, blockPos, damage, 3.0F);
                 }
@@ -108,7 +107,7 @@ public class CrossbowEvents {
                             || arrowEntity.getTags().contains("ImplodingCrossbow");
                     if (explodingCrossbowFlag) {
                         LivingEntity victim = event.getEntityLiving();
-                        victim.world.playSound((PlayerEntity) null, victim.getPosX(), victim.getPosY(), victim.getPosZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 64.0F, 1.0F);
+                        SoundHelper.playGenericExplodeSound(victim);
                         AOECloudHelper.spawnExplosionCloud(shooter, victim, 3.0F);
                         AreaOfEffectHelper.causeExplosionAttack(shooter, victim, event.getAmount(), 3.0F);
                     }

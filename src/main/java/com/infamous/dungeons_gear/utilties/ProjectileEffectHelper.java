@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.utilties;
 
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.ranged.crossbows.AbstractDungeonsCrossbowItem;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -12,7 +12,6 @@ import net.minecraft.entity.projectile.SnowballEntity;
 import net.minecraft.item.ArrowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
@@ -29,6 +28,9 @@ import java.util.Set;
 import static net.minecraft.entity.Entity.horizontalMag;
 
 public class ProjectileEffectHelper {
+
+    public static final Random RANDOM = new Random();
+
     public static void ricochetArrowTowardsOtherEntity(LivingEntity attacker, LivingEntity victim, AbstractArrowEntity arrowEntity, int distance) {
         World world = attacker.getEntityWorld();
         //boolean nullListFlag = arrowEntity.hitEntities == null;
@@ -166,14 +168,14 @@ public class ProjectileEffectHelper {
             vector3f.transform(quaternion);
             projectile.shoot((double) vector3f.getX(), (double) vector3f.getY(), (double) vector3f.getZ(), v1, v2);
             world.addEntity(projectile);
-            world.playSound((PlayerEntity) null, victim.getPosX(), victim.getPosY(), victim.getPosZ(), SoundEvents.ITEM_CROSSBOW_SHOOT, SoundCategory.PLAYERS, 1.0F, soundPitch);
+            world.playSound((PlayerEntity) null, victim.getPosX(), victim.getPosY(), victim.getPosZ(), SoundEvents.ITEM_CROSSBOW_SHOOT, attacker.getSoundCategory(), 1.0F, soundPitch);
         }
     }
 
     public static boolean soulsCriticalBoost(PlayerEntity attacker, ItemStack mainhand) {
         int numSouls = Math.min(attacker.experienceTotal, 50);
-        boolean uniqueWeaponFlag = mainhand.getItem() == DeferredItemInit.FERAL_SOUL_CROSSBOW.get()
-                || mainhand.getItem() == DeferredItemInit.SOUL_HUNTER_CROSSBOW.get();
+        boolean uniqueWeaponFlag = mainhand.getItem() == ItemRegistry.FERAL_SOUL_CROSSBOW.get()
+                || mainhand.getItem() == ItemRegistry.SOUL_HUNTER_CROSSBOW.get();
         if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.ENIGMA_RESONATOR)) {
             int enigmaResonatorLevel = EnchantmentHelper.getEnchantmentLevel(MeleeRangedEnchantmentList.ENIGMA_RESONATOR, mainhand);
             float soulsCriticalBoostChanceCap;
@@ -190,14 +192,15 @@ public class ProjectileEffectHelper {
         return false;
     }
 
-    //it's a copy-paste of ProjectileEntity::shoot that creates a new Random. Why?
+    //Chief: it's a copy-paste of ProjectileEntity::shoot that creates a new Random. Why?
+    //Infamous: This one doesn't require a velocity parameter, but I imagine I still added this unnecessarily
+    //Infamous: Removed the Random instantiation and made it a constant
     public static void setProjectileTowards(ProjectileEntity projectileEntity, double x, double y, double z, float inaccuracy) {
-        Random random = new Random();
         Vector3d vector3d = (new Vector3d(x, y, z))
                 .normalize()
-                .add(random.nextGaussian() * (double) 0.0075F * (double) inaccuracy,
-                        random.nextGaussian() * (double) 0.0075F * (double) inaccuracy,
-                        random.nextGaussian() * (double) 0.0075F * (double) inaccuracy);
+                .add(RANDOM.nextGaussian() * (double) 0.0075F * (double) inaccuracy,
+                        RANDOM.nextGaussian() * (double) 0.0075F * (double) inaccuracy,
+                        RANDOM.nextGaussian() * (double) 0.0075F * (double) inaccuracy);
         projectileEntity.setMotion(vector3d);
         float f = MathHelper.sqrt(horizontalMag(vector3d));
         projectileEntity.rotationYaw = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * (double) (180F / (float) Math.PI));

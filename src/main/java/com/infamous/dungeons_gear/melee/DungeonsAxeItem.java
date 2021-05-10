@@ -1,9 +1,8 @@
 package com.infamous.dungeons_gear.melee;
 
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
-import com.infamous.dungeons_gear.items.WeaponList;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
@@ -43,6 +42,16 @@ public class DungeonsAxeItem extends AxeItem implements IMeleeWeapon, IComboWeap
         return enchantment.type.canEnchantItem(Items.IRON_SWORD) && enchantment != Enchantments.SWEEPING;
     }
 
+    @Override
+    public boolean hasFireAspectBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.FIREBRAND.get();
+    }
+
+    @Override
+    public boolean hasStunningBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.HIGHLAND_AXE.get();
+    }
+
     public Rarity getRarity(ItemStack itemStack){
 
         if(this.unique){
@@ -55,15 +64,15 @@ public class DungeonsAxeItem extends AxeItem implements IMeleeWeapon, IComboWeap
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
         super.addInformation(stack, world, list, flag);
-        if(stack.getItem() == DeferredItemInit.AXE.get()){
+        if(stack.getItem() == ItemRegistry.AXE.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The axe is an effective weapon, favored by the relentless Vindicators of the Arch-Illager's army."));
         }
-        if(stack.getItem() == DeferredItemInit.FIREBRAND.get()){
+        if(stack.getItem() == ItemRegistry.FIREBRAND.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Crafted in the blackest depths of the Fiery Forge and enchanted with fiery powers."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Burns Mobs (Fire Aspect I)"));
         }
-        if(stack.getItem() == DeferredItemInit.HIGHLAND_AXE.get()){
+        if(stack.getItem() == ItemRegistry.HIGHLAND_AXE.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Expertly crafted and a polished weapon of war, the Highland Axe also makes a daring backscratcher."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Stuns Mobs (Stunning I)"));

@@ -4,8 +4,9 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.ScaleMailModel;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IArmor;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -62,10 +63,10 @@ public class ScaleMailItem extends ArmorItem implements IArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(stack.getItem() == DeferredItemInit.SCALE_MAIL.get()){
+        if(stack.getItem() == ItemRegistry.SCALE_MAIL.get()){
             return DungeonsGear.MODID + ":textures/models/armor/scale_mail.png";
         }
-        else if(stack.getItem() == DeferredItemInit.HIGHLAND_ARMOR.get() || stack.getItem() == DeferredItemInit.HIGHLAND_ARMOR_HELMET.get()){
+        else if(stack.getItem() == ItemRegistry.HIGHLAND_ARMOR.get() || stack.getItem() == ItemRegistry.HIGHLAND_ARMOR_HELMET.get()){
             return DungeonsGear.MODID + ":textures/models/armor/highland_armor.png";
         }
         else return "";
@@ -84,6 +85,11 @@ public class ScaleMailItem extends ArmorItem implements IArmor {
     }
 
     @Override
+    public boolean hasSwiftfootedBuiltIn(ItemStack stack) {
+        return this.unique;
+    }
+
+    @Override
     public Rarity getRarity(ItemStack itemStack){
         if(this.unique) return Rarity.RARE;
         return Rarity.UNCOMMON;
@@ -92,15 +98,6 @@ public class ScaleMailItem extends ArmorItem implements IArmor {
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
-
-        if (this.unique) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A wise armorer made this armor with care."));
-            //if(this.slot == EquipmentSlotType.CHEST){
-                list.add(new StringTextComponent(TextFormatting.GREEN + "Gain Speed After Jumping (Swiftfooted I)"));
-            //}
-        }
-        else{
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "This armor, crafted near the shores of a great sea, was inspired by the scales of fish."));
-        }
+        DescriptionHelper.addFullDescription(list, stack);
     }
 }

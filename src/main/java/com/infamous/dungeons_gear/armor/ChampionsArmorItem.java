@@ -2,8 +2,9 @@ package com.infamous.dungeons_gear.armor;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.ChampionsArmorModel;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IArmor;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -33,10 +34,10 @@ public class ChampionsArmorItem extends ArmorItem implements IArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(stack.getItem() == DeferredItemInit.CHAMPIONS_ARMOR.get() || stack.getItem() == DeferredItemInit.CHAMPIONS_ARMOR_HELMET.get()){
+        if(stack.getItem() == ItemRegistry.CHAMPIONS_ARMOR.get() || stack.getItem() == ItemRegistry.CHAMPIONS_ARMOR_HELMET.get()){
             return DungeonsGear.MODID + ":textures/models/armor/champions_armor.png";
         }
-        else if(stack.getItem() == DeferredItemInit.HEROS_ARMOR.get() || stack.getItem() == DeferredItemInit.HEROS_ARMOR_HELMET.get()){
+        else if(stack.getItem() == ItemRegistry.HEROS_ARMOR.get() || stack.getItem() == ItemRegistry.HEROS_ARMOR_HELMET.get()){
             return DungeonsGear.MODID + ":textures/models/armor/heros_armor.png";
         }
         else return "";
@@ -46,10 +47,10 @@ public class ChampionsArmorItem extends ArmorItem implements IArmor {
     @Override
     @OnlyIn(Dist.CLIENT)
     public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack stack, EquipmentSlotType armorSlot, A _default) {
-        if(stack.getItem() == DeferredItemInit.CHAMPIONS_ARMOR.get() || stack.getItem() == DeferredItemInit.CHAMPIONS_ARMOR_HELMET.get()){
+        if(stack.getItem() == ItemRegistry.CHAMPIONS_ARMOR.get() || stack.getItem() == ItemRegistry.CHAMPIONS_ARMOR_HELMET.get()){
             return (A) new ChampionsArmorModel<>(1.0F, slot, entityLiving);
         }
-        else if(stack.getItem() == DeferredItemInit.HEROS_ARMOR.get() || stack.getItem() == DeferredItemInit.HEROS_ARMOR_HELMET.get()){
+        else if(stack.getItem() == ItemRegistry.HEROS_ARMOR.get() || stack.getItem() == ItemRegistry.HEROS_ARMOR_HELMET.get()){
             return (A) new ChampionsArmorModel<>(1.0F, slot, entityLiving);
         }
         return null;
@@ -64,18 +65,12 @@ public class ChampionsArmorItem extends ArmorItem implements IArmor {
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
-
+        DescriptionHelper.addLoreDescription(list, stack);
         if (this.unique) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Given to the champions of the Overworld by the free villagers as a token of their thanks for many years of protection and assistance. The mark of a true hero."));
             list.add(new TranslationTextComponent(
                     "attribute.name.healthPotionsHealNearbyAllies")
                     .mergeStyle(TextFormatting.GREEN));
         }
-        else{
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Only given to the highest caliber of heroes, the Hero's Armor is a precious gift from the Villagers."));
-
-        }
-
     }
 
     @Override

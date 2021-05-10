@@ -5,8 +5,9 @@ import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.ArchersArmorModel;
 import com.infamous.dungeons_gear.armor.models.HuntersArmorModel;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IArmor;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -64,10 +65,10 @@ public class HuntersArmorItem extends ArmorItem implements IArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(stack.getItem() == DeferredItemInit.HUNTERS_ARMOR.get()){
+        if(stack.getItem() == ItemRegistry.HUNTERS_ARMOR.get()){
             return DungeonsGear.MODID + ":textures/models/armor/hunters_armor.png";
         }
-        else if(stack.getItem() == DeferredItemInit.ARCHERS_ARMOR.get() || stack.getItem() == DeferredItemInit.ARCHERS_ARMOR_HOOD.get()){
+        else if(stack.getItem() == ItemRegistry.ARCHERS_ARMOR.get() || stack.getItem() == ItemRegistry.ARCHERS_ARMOR_HOOD.get()){
             return DungeonsGear.MODID + ":textures/models/armor/archers_armor.png";
         }
         else return "";
@@ -77,10 +78,10 @@ public class HuntersArmorItem extends ArmorItem implements IArmor {
     @Override
     @OnlyIn(Dist.CLIENT)
     public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack stack, EquipmentSlotType armorSlot, A _default) {
-        if(stack.getItem() == DeferredItemInit.HUNTERS_ARMOR.get()){
+        if(stack.getItem() == ItemRegistry.HUNTERS_ARMOR.get()){
             return (A) new HuntersArmorModel<>(1.0F, slot, entityLiving);
         }
-        if(stack.getItem() == DeferredItemInit.ARCHERS_ARMOR.get() || stack.getItem() == DeferredItemInit.ARCHERS_ARMOR_HOOD.get()){
+        if(stack.getItem() == ItemRegistry.ARCHERS_ARMOR.get() || stack.getItem() == ItemRegistry.ARCHERS_ARMOR_HOOD.get()){
             return (A) new ArchersArmorModel<>(1.0F, slot, entityLiving);
         }
         return null;
@@ -100,13 +101,7 @@ public class HuntersArmorItem extends ArmorItem implements IArmor {
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
-
-        if (this.unique) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Archer's Armor, favored by humble warriors, is cheap to make and still stops a blade."));
-        }
-        else{
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Hunter's Armor may not be fit for a knight, but it will stop a blade."));
-        }
+        DescriptionHelper.addLoreDescription(list, stack);
     }
 
     @Override

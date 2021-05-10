@@ -2,13 +2,10 @@ package com.infamous.dungeons_gear.melee;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
 import com.infamous.dungeons_gear.init.AttributeRegistry;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
-import com.infamous.dungeons_gear.interfaces.IExtendedAttackReach;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
-import com.infamous.dungeons_gear.items.WeaponList;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
@@ -93,6 +90,11 @@ public class WhipItem extends TieredItem implements IMeleeWeapon, IComboWeapon {
         return true;
     }
 
+    @Override
+    public boolean hasPoisonCloudBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.VINE_WHIP.get();
+    }
+
     public Rarity getRarity(ItemStack itemStack){
 
         if(this.unique){
@@ -106,12 +108,12 @@ public class WhipItem extends TieredItem implements IMeleeWeapon, IComboWeapon {
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == DeferredItemInit.WHIP.get()){
+        if(stack.getItem() == ItemRegistry.WHIP.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A whip made of sturdy rope, very dangerous in the right hands."));
 
         }
 
-        if(stack.getItem() == DeferredItemInit.VINE_WHIP.get()){
+        if(stack.getItem() == ItemRegistry.VINE_WHIP.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A sturdy whip made from thick, thorn-laden vines capable of poisoning anything it touches. Be careful not to scratch yourself!"));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Spawns Poison Clouds (Poison Cloud I)"));

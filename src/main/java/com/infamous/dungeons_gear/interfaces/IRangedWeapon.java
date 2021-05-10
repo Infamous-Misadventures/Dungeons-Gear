@@ -33,13 +33,15 @@ public interface IRangedWeapon {
         return false;
     }
 
-    default boolean gathersSouls(ItemStack stack){
-        return false;
-    }
-
     default boolean hasGuaranteedRicochet(ItemStack stack){ return false;}
 
     default boolean hasMultishotWhenCharged(ItemStack stack){ return false;}
+
+    default boolean hasDualShoot(ItemStack stack){ return false;}
+
+    default boolean hasHighFireRate(ItemStack stack){ return false;}
+
+    default boolean hasSlowFireRate(ItemStack stack){ return this.shootsHeavyArrows(stack);}
 
     // Enchantment Abilities
     default boolean hasTempoTheftBuiltIn(ItemStack stack){

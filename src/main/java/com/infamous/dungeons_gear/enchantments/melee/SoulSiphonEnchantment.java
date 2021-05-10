@@ -2,7 +2,7 @@ package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -50,7 +50,7 @@ public class SoulSiphonEnchantment extends Enchantment {
         PlayerEntity attacker = (PlayerEntity)event.getSource().getTrueSource();
         LivingEntity victim = event.getEntityLiving();
         ItemStack mainhand = attacker.getHeldItemMainhand();
-        if(mainhand.getItem() == DeferredItemInit.ETERNAL_KNIFE.get()){
+        if(mainhand.getItem() == ItemRegistry.ETERNAL_KNIFE.get()){
             float chance = attacker.getRNG().nextFloat();
             if(chance <=  0.1F) {
                 attacker.giveExperiencePoints(3);

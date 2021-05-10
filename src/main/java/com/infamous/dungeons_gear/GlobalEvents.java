@@ -5,7 +5,7 @@ import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
 import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.init.PotionList;
 import com.infamous.dungeons_gear.interfaces.IArmor;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
@@ -66,7 +66,7 @@ public class GlobalEvents {
         ModEnchantmentHelper.addEnchantmentTagsToArrow(stack, arrowEntity);
 
         int fuseShotLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.FUSE_SHOT, stack);
-        if (stack.getItem() == DeferredItemInit.RED_SNAKE.get()) fuseShotLevel++;
+        if (stack.getItem() == ItemRegistry.RED_SNAKE.get()) fuseShotLevel++;
         if (fuseShotLevel > 0) {
             IWeapon weaponCap = CapabilityHelper.getWeaponCapability(stack);
             if (weaponCap == null) return;

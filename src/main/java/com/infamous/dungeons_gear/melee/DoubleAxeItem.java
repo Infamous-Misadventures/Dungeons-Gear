@@ -1,9 +1,8 @@
 package com.infamous.dungeons_gear.melee;
 
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
-import com.infamous.dungeons_gear.items.WeaponList;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
@@ -18,10 +17,6 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class DoubleAxeItem extends AxeItem implements IMeleeWeapon, IComboWeapon {
-    @Override
-    public int getComboLength(ItemStack stack, LivingEntity attacker) {
-        return 2;
-    }
     private final boolean unique;
 
     public DoubleAxeItem(IItemTier tier, float attackDamageIn, float attackSpeedIn, Properties builder, boolean isUnique) {
@@ -43,6 +38,21 @@ public class DoubleAxeItem extends AxeItem implements IMeleeWeapon, IComboWeapon
         return enchantment.type.canEnchantItem(Items.IRON_SWORD) && enchantment != Enchantments.SWEEPING;
     }
 
+    @Override
+    public boolean hasExplodingBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.CURSED_AXE.get();
+    }
+
+    @Override
+    public boolean hasShockwaveBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.WHIRLWIND.get();
+    }
+
+    @Override
+    public int getComboLength(ItemStack stack, LivingEntity attacker) {
+        return 2;
+    }
+
     public Rarity getRarity(ItemStack itemStack){
 
         if(this.unique){
@@ -56,16 +66,16 @@ public class DoubleAxeItem extends AxeItem implements IMeleeWeapon, IComboWeapon
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == DeferredItemInit.CURSED_AXE.get()){
+        if(stack.getItem() == ItemRegistry.CURSED_AXE.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "This cursed, poisonous axe leaves their victims sick for years with just a single scratch."));
             list.add(new StringTextComponent(TextFormatting.GREEN + "Defeated Mobs Explode (Exploding I)"));
         }
-        if(stack.getItem() == DeferredItemInit.WHIRLWIND.get()){
+        if(stack.getItem() == ItemRegistry.WHIRLWIND.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Whirlwind, forged during an epic windstorm, is a double-bladed axe that levitates slightly."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Casts Shockwaves (Shockwave I)"));
         }
-        if(stack.getItem() == DeferredItemInit.DOUBLE_AXE.get()){
+        if(stack.getItem() == ItemRegistry.DOUBLE_AXE.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A devastating weapon fit for barbaric fighters."));
 
         }

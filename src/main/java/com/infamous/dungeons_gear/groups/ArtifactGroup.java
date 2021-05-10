@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.groups;
 
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 
@@ -14,6 +14,6 @@ public class ArtifactGroup extends ItemGroup
     @Override
     public ItemStack createIcon()
     {
-        return new ItemStack(DeferredItemInit.TOTEM_OF_REGENERATION.get());
+        return new ItemStack(ItemRegistry.TOTEM_OF_REGENERATION.get());
     }
 }

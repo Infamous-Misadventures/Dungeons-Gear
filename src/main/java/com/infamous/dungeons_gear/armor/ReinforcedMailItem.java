@@ -3,8 +3,9 @@ package com.infamous.dungeons_gear.armor;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.ReinforcedMailModel;
 import com.infamous.dungeons_gear.armor.models.StalwartArmorModel;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IArmor;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -34,10 +35,10 @@ public class ReinforcedMailItem extends ArmorItem implements IArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(stack.getItem() == DeferredItemInit.REINFORCED_MAIL.get() || stack.getItem() == DeferredItemInit.REINFORCED_MAIL_HELMET.get()){
+        if(stack.getItem() == ItemRegistry.REINFORCED_MAIL.get() || stack.getItem() == ItemRegistry.REINFORCED_MAIL_HELMET.get()){
             return DungeonsGear.MODID + ":textures/models/armor/reinforced_mail.png";
         }
-        else if(stack.getItem() == DeferredItemInit.STALWART_ARMOR.get() || stack.getItem() == DeferredItemInit.STALWART_ARMOR_HELMET.get()){
+        else if(stack.getItem() == ItemRegistry.STALWART_ARMOR.get() || stack.getItem() == ItemRegistry.STALWART_ARMOR_HELMET.get()){
             return DungeonsGear.MODID + ":textures/models/armor/stalwart_armor.png";
         }
         else return "";
@@ -47,13 +48,18 @@ public class ReinforcedMailItem extends ArmorItem implements IArmor {
     @Override
     @OnlyIn(Dist.CLIENT)
     public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack stack, EquipmentSlotType armorSlot, A _default) {
-        if(stack.getItem() == DeferredItemInit.REINFORCED_MAIL.get() || stack.getItem() == DeferredItemInit.REINFORCED_MAIL_HELMET.get()){
+        if(stack.getItem() == ItemRegistry.REINFORCED_MAIL.get() || stack.getItem() == ItemRegistry.REINFORCED_MAIL_HELMET.get()){
             return (A) new ReinforcedMailModel<>(1.0F, slot, entityLiving);
         }
-        if(stack.getItem() == DeferredItemInit.STALWART_ARMOR.get() || stack.getItem() == DeferredItemInit.STALWART_ARMOR_HELMET.get()){
+        if(stack.getItem() == ItemRegistry.STALWART_ARMOR.get() || stack.getItem() == ItemRegistry.STALWART_ARMOR_HELMET.get()){
             return (A) new StalwartArmorModel<>(1.0F, slot, entityLiving);
         }
         return null;
+    }
+
+    @Override
+    public boolean hasPotionBarrierBuiltIn(ItemStack stack) {
+        return this.unique;
     }
 
     @Override
@@ -65,16 +71,7 @@ public class ReinforcedMailItem extends ArmorItem implements IArmor {
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
-
-        if (this.unique) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "This reliable armor is sturdy enough to be passed down for generations."));
-            //if(this.slot == EquipmentSlotType.CHEST){
-                list.add(new StringTextComponent(TextFormatting.GREEN + "Using Health Potions Boosts Defense (Potion Barrier I)"));
-            //}
-        }
-        else{
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Mostly worn by casual adventurers, Reinforced Mail is a common sight throughout the land."));
-        }
+        DescriptionHelper.addFullDescription(list, stack);
     }
 
     @Override

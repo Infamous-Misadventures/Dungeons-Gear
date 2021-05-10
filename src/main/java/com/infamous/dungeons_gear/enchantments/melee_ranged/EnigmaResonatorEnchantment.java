@@ -5,7 +5,7 @@ import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.DamageEnchantment;
@@ -39,8 +39,8 @@ public class EnigmaResonatorEnchantment extends DamageBoostEnchantment {
         PlayerEntity attacker = event.getPlayer();
         LivingEntity victim = event.getEntityLiving();
         ItemStack mainhand = attacker.getHeldItemMainhand();
-        boolean uniqueWeaponFlag = mainhand.getItem() == DeferredItemInit.SOUL_FIST.get()
-                || mainhand.getItem() == DeferredItemInit.MOON_DAGGER.get();
+        boolean uniqueWeaponFlag = mainhand.getItem() == ItemRegistry.SOUL_FIST.get()
+                || mainhand.getItem() == ItemRegistry.MOON_DAGGER.get();
 
         int numSouls = Math.min(attacker.experienceTotal, 50);
         if (!event.isVanillaCritical()) {

@@ -4,6 +4,7 @@ import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
+import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -50,7 +51,7 @@ public class FuseShotEnchantment extends Enchantment {
                         long criticalDamageBonus = (long)shooter.getRNG().nextInt(damage / 2 + 2);
                         damage = (int)Math.min(criticalDamageBonus + (long)damage, 2147483647L);
                     }
-                    arrowEntity.world.playSound((PlayerEntity) null, blockPos.getX(), blockPos.getY(), blockPos.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 64.0F, 1.0F);
+                    SoundHelper.playGenericExplodeSound(arrowEntity);
                     AOECloudHelper.spawnExplosionCloudAtPos(shooter, true, blockPos, 3.0F);
                     AreaOfEffectHelper.causeExplosionAttackAtPos(shooter, true, blockPos, damage, 3.0F);
                 }
@@ -69,7 +70,7 @@ public class FuseShotEnchantment extends Enchantment {
                 if (indirectEntityDamageSource.getTrueSource() instanceof LivingEntity) {
                     LivingEntity archer = (LivingEntity) indirectEntityDamageSource.getTrueSource();
                     if(arrowEntity.getTags().contains("FuseShot")) {
-                        victim.world.playSound((PlayerEntity) null, victim.getPosX(), victim.getPosY(), victim.getPosZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 64.0F, 1.0F);
+                        SoundHelper.playGenericExplodeSound(arrowEntity);
                         AOECloudHelper.spawnExplosionCloud(archer, victim, 3.0f);
                         AreaOfEffectHelper.causeExplosionAttack(archer, victim, event.getAmount(), 3.0f);
                     }

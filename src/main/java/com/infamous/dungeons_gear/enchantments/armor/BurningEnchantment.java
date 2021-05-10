@@ -5,7 +5,7 @@ import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.PulseEnchantment;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -50,8 +50,8 @@ public class BurningEnchantment extends PulseEnchantment {
             int burnNearbyTimer = comboCap.getBurnNearbyTimer();
 
             boolean uniqueArmorFlag =
-                    player.getItemStackFromSlot(EquipmentSlotType.CHEST).getItem() == DeferredItemInit.EMBER_ROBE.get()
-                    || player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() == DeferredItemInit.EMBER_ROBE_HAT.get();
+                    player.getItemStackFromSlot(EquipmentSlotType.CHEST).getItem() == ItemRegistry.EMBER_ROBE.get()
+                    || player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() == ItemRegistry.EMBER_ROBE_HAT.get();
             if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.BURNING) || uniqueArmorFlag){
                 if(burnNearbyTimer <= 0){
                     int burningLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.BURNING, player);

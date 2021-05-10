@@ -3,8 +3,9 @@ package com.infamous.dungeons_gear.armor;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.CuriousArmorModel;
 import com.infamous.dungeons_gear.armor.models.GuardsArmorModel;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IArmor;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -34,10 +35,10 @@ public class GuardsArmorItem extends ArmorItem implements IArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(stack.getItem() == DeferredItemInit.GUARDS_ARMOR.get() || stack.getItem() == DeferredItemInit.GUARDS_ARMOR_HELMET.get()){
+        if(stack.getItem() == ItemRegistry.GUARDS_ARMOR.get() || stack.getItem() == ItemRegistry.GUARDS_ARMOR_HELMET.get()){
             return DungeonsGear.MODID + ":textures/models/armor/guards_armor.png";
         }
-        else if(stack.getItem() == DeferredItemInit.CURIOUS_ARMOR.get() || stack.getItem() == DeferredItemInit.CURIOUS_ARMOR_HELMET.get()){
+        else if(stack.getItem() == ItemRegistry.CURIOUS_ARMOR.get() || stack.getItem() == ItemRegistry.CURIOUS_ARMOR_HELMET.get()){
             return DungeonsGear.MODID + ":textures/models/armor/curious_armor.png";
         }
         else return "";
@@ -47,10 +48,10 @@ public class GuardsArmorItem extends ArmorItem implements IArmor {
     @Override
     @OnlyIn(Dist.CLIENT)
     public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack stack, EquipmentSlotType armorSlot, A _default) {
-        if(stack.getItem() == DeferredItemInit.GUARDS_ARMOR.get() || stack.getItem() == DeferredItemInit.GUARDS_ARMOR_HELMET.get()){
+        if(stack.getItem() == ItemRegistry.GUARDS_ARMOR.get() || stack.getItem() == ItemRegistry.GUARDS_ARMOR_HELMET.get()){
             return (A) new GuardsArmorModel<>(1.0F, slot, entityLiving);
         }
-        if(stack.getItem() == DeferredItemInit.CURIOUS_ARMOR.get() || stack.getItem() == DeferredItemInit.CURIOUS_ARMOR_HELMET.get()){
+        if(stack.getItem() == ItemRegistry.CURIOUS_ARMOR.get() || stack.getItem() == ItemRegistry.CURIOUS_ARMOR_HELMET.get()){
             return (A) new CuriousArmorModel<>(1.0F, slot, entityLiving);
         }
         return null;
@@ -66,14 +67,7 @@ public class GuardsArmorItem extends ArmorItem implements IArmor {
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
-
-        if (this.unique) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "No one knows where this strange armor came from but it seems familiar to you."));
-        }
-        else{
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Cheap armor made in bulk, the Guard's Armor is a common sight in the villages of the Overworld."));
-
-        }
+        DescriptionHelper.addLoreDescription(list, stack);
     }
 
     @Override

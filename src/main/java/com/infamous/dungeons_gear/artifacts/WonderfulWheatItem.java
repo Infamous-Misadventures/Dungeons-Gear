@@ -8,6 +8,7 @@ import com.infamous.dungeons_gear.goals.LlamaFollowOwnerGoal;
 import com.infamous.dungeons_gear.goals.LlamaOwnerHurtByTargetGoal;
 import com.infamous.dungeons_gear.goals.LlamaOwnerHurtTargetGoal;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
+import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -124,7 +125,7 @@ public class WonderfulWheatItem extends ArtifactItem {
         }));
         llamaEntity.goalSelector.addGoal(2, new LlamaFollowOwnerGoal(llamaEntity, 2.1D, 10.0F, 2.0F, false));
 
-        world.playSound((PlayerEntity)null, itemUseContextPlayer.getPosX(), itemUseContextPlayer.getPosY(), itemUseContextPlayer.getPosZ(), SoundEvents.ENTITY_LLAMA_ANGRY, SoundCategory.AMBIENT, 64.0F, 1.0F);
+        SoundHelper.playCreatureSound(itemUseContextPlayer, SoundEvents.ENTITY_LLAMA_AMBIENT);
 
         world.addEntity(llamaEntity);
     }

@@ -6,17 +6,14 @@ import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.combat.CombatEventHandler;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
 import com.infamous.dungeons_gear.init.AttributeRegistry;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IOffhandAttack;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
-import com.infamous.dungeons_gear.items.WeaponList;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -32,7 +29,6 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import java.util.List;
 import java.util.UUID;
@@ -107,6 +103,21 @@ public class SickleItem extends SwordItem implements IOffhandAttack, IMeleeWeapo
         return equipmentSlot == EquipmentSlotType.MAINHAND ? this.attributeModifiers : super.getAttributeModifiers(equipmentSlot);
     }
 
+    @Override
+    public boolean canDualWield(ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public boolean hasPoisonCloudBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.NIGHTMARES_BITE.get();
+    }
+
+    @Override
+    public boolean hasProspectorBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.THE_LAST_LAUGH.get();
+    }
+
     public Rarity getRarity(ItemStack itemStack) {
 
         if (this.unique) {
@@ -119,17 +130,17 @@ public class SickleItem extends SwordItem implements IOffhandAttack, IMeleeWeapo
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
 
-        if (stack.getItem() == DeferredItemInit.NIGHTMARES_BITE.get()) {
+        if (stack.getItem() == ItemRegistry.NIGHTMARES_BITE.get()) {
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The blade of Nightmare's Bite drips with deadly venom, still potent after all these years."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Spawns Poison Clouds (Poison Cloud I)"));
         }
-        if (stack.getItem() == DeferredItemInit.THE_LAST_LAUGH.get()) {
+        if (stack.getItem() == ItemRegistry.THE_LAST_LAUGH.get()) {
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Strange, distorted laughter seems to whisper from this menacing looking sickle."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Mobs Drop More Valuables (Prospector I)"));
         }
-        if (stack.getItem() == DeferredItemInit.SICKLE.get()) {
+        if (stack.getItem() == ItemRegistry.SICKLE.get()) {
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A ceremonial weapon that hails from the same region as the Desert Temple."));
 
         }

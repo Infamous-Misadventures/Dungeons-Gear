@@ -14,7 +14,7 @@ import com.infamous.dungeons_gear.entities.IceCloudRenderer;
 import com.infamous.dungeons_gear.groups.ArmorGroup;
 import com.infamous.dungeons_gear.groups.ArtifactGroup;
 import com.infamous.dungeons_gear.init.AttributeRegistry;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.init.ParticleInit;
 import com.infamous.dungeons_gear.items.VanillaItemModelProperties;
 import com.infamous.dungeons_gear.items.BowItemModelsProperties;
@@ -30,10 +30,8 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
@@ -70,7 +68,7 @@ public class DungeonsGear
         ModEntityTypes.ENTITY_TYPES.register(modEventBus);
         ParticleInit.PARTICLES.register(modEventBus);
         AttributeRegistry.ATTRIBUTES.register(modEventBus);
-        DeferredItemInit.ITEMS.register(modEventBus);
+        ItemRegistry.ITEMS.register(modEventBus);
         PROXY = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
         // Register ourselves for server and other game events we are interested in
@@ -88,7 +86,7 @@ public class DungeonsGear
         DeferredWorkQueue.runLater(
                 NetworkHandler::init
         );
-        DeferredItemInit.putItemsInMap();
+        ItemRegistry.putItemsInMap();
         WeaponAttributeHandler.setWeaponAttributeModifiers();
         CapabilityManager.INSTANCE.register(ISummonable.class, new SummonableStorage(), Summonable::new);
         CapabilityManager.INSTANCE.register(ICombo.class, new ComboStorage(), Combo::new);

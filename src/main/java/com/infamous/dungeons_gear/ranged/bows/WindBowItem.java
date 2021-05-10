@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.ranged.bows;
 
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
@@ -21,17 +22,6 @@ public class WindBowItem extends AbstractDungeonsBowItem {
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
         super.addInformation(stack, world, list, flag);
-
-        if(stack.getItem() == ECHO_OF_THE_VALLEY){
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "This bow calls upon the twisting winds of the hidden valley where it was first strung."));
-
-        }
-        if(stack.getItem() == BURST_GALE_BOW){
-            //TODO
-        }
-        if(stack.getItem() == WIND_BOW){
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A mesmerizing bow that captures the power of the wind to fire mighty Gale Arrows."));
-
-        }
+        DescriptionHelper.addFullDescription(list, stack);
     }
 }

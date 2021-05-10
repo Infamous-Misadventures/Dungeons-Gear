@@ -2,8 +2,9 @@ package com.infamous.dungeons_gear.melee;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
+import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
@@ -12,7 +13,6 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
@@ -32,17 +32,17 @@ public class MeleeEvents {
             LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
             LivingEntity victim = event.getEntityLiving();
             ItemStack mainhand = attacker.getHeldItemMainhand();
-            if(mainhand.getItem() == DeferredItemInit.FIREBRAND.get()){
+            if(mainhand.getItem() == ItemRegistry.FIREBRAND.get()){
                 int fireAspectLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FIRE_ASPECT, mainhand);
                 victim.setFire(4 + fireAspectLevel * 4);
             }
-            else if (attacker.getHeldItemMainhand().getItem() == DeferredItemInit.GRAVE_BANE.get()) {
+            else if (attacker.getHeldItemMainhand().getItem() == ItemRegistry.GRAVE_BANE.get()) {
                 if(victim.isEntityUndead()){
                     float currentDamage = event.getAmount();
                     event.setAmount(currentDamage + 2.5f);
                 }
             }
-            else if (attacker.getHeldItemMainhand().getItem() == DeferredItemInit.DARK_KATANA.get()) {
+            else if (attacker.getHeldItemMainhand().getItem() == ItemRegistry.DARK_KATANA.get()) {
                 if(victim.isEntityUndead()){
                     float currentDamage = event.getAmount();
                     event.setAmount(currentDamage + 2.5f);
@@ -67,7 +67,7 @@ public class MeleeEvents {
                     boolean atFullAttackStrength = cooledAttackStrength > 0.9F;
                     float attackKnockbackStrength = 1;
                     if (playerEntity.isSprinting() && atFullAttackStrength) {
-                        playerEntity.world.playSound((PlayerEntity)null, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK, playerEntity.getSoundCategory(), 1.0F, 1.0F);
+                        SoundHelper.playKnockbackSound(playerEntity);
                         ++attackKnockbackStrength;
                     }
                     victim.applyKnockback(attackKnockbackStrength * 0.5F, (double) MathHelper.sin(playerEntity.rotationYaw * ((float)Math.PI / 180F)), (double)(-MathHelper.cos(playerEntity.rotationYaw * ((float)Math.PI / 180F))));
@@ -110,7 +110,7 @@ public class MeleeEvents {
         if(event.getDamageSource().getTrueSource() instanceof LivingEntity){
             LivingEntity attacker = (LivingEntity) event.getDamageSource().getTrueSource();
             int lootingLevel = event.getLootingLevel();
-            if(attacker.getHeldItemMainhand().getItem() == DeferredItemInit.FORTUNE_SPEAR.get()){
+            if(attacker.getHeldItemMainhand().getItem() == ItemRegistry.FORTUNE_SPEAR.get()){
                 event.setLootingLevel(lootingLevel + 1);
             }
         }

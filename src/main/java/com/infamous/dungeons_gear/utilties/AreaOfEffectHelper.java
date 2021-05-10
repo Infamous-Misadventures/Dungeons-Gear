@@ -267,8 +267,6 @@ public class AreaOfEffectHelper {
         List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, attacker.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
         if (nearbyEntities.isEmpty()) return;
         if (limit > nearbyEntities.size()) limit = nearbyEntities.size();
-        attacker.world.playSound((PlayerEntity) null, attacker.getPosX(), attacker.getPosY(), attacker.getPosZ(), SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER, SoundCategory.WEATHER, 64.0F, 1.0F);
-        attacker.world.playSound((PlayerEntity) null, attacker.getPosX(), attacker.getPosY(), attacker.getPosZ(), SoundEvents.ENTITY_LIGHTNING_BOLT_IMPACT, SoundCategory.WEATHER, 64.0F, 1.0F);
         for (int i = 0; i < limit; i++) {
             if (nearbyEntities.size() >= i + 1) {
                 LivingEntity nearbyEntity = nearbyEntities.get(i);

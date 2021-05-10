@@ -1,30 +1,19 @@
 package com.infamous.dungeons_gear.melee;
 
 
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
-import com.infamous.dungeons_gear.items.WeaponList;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -79,6 +68,16 @@ public class SoulScytheItem extends SwordItem implements IMeleeWeapon, ISoulGath
         return p_150897_1_.isIn(Blocks.COBWEB) || p_150897_1_.isIn(BlockTags.LEAVES);
     }
 
+    @Override
+    public boolean hasFreezingBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.FROST_SCYTHE.get();
+    }
+
+    @Override
+    public boolean hasChainsBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.JAILORS_SCYTHE.get();
+    }
+
     public Rarity getRarity(ItemStack itemStack){
 
         if(this.unique){
@@ -91,18 +90,18 @@ public class SoulScytheItem extends SwordItem implements IMeleeWeapon, ISoulGath
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
         super.addInformation(stack, world, list, flag);
-        if(stack.getItem() == DeferredItemInit.FROST_SCYTHE.get()){
+        if(stack.getItem() == ItemRegistry.FROST_SCYTHE.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The Frost Scythe is an indestructible blade that is freezing to the touch and never seems to melt."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Slows Mobs (Freezing I)"));
         }
-        if(stack.getItem() == DeferredItemInit.JAILORS_SCYTHE.get()){
+        if(stack.getItem() == ItemRegistry.JAILORS_SCYTHE.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "This scythe belonged to the terror of Highblock Keep, the Jailor."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Binds And Chains Enemies (Chains I)"));
         }
 
-        if(stack.getItem() == DeferredItemInit.SOUL_SCYTHE.get()){
+        if(stack.getItem() == ItemRegistry.SOUL_SCYTHE.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A cruel reaper of souls, the Soul Scythe is unsentimental in its work."));
 
         }

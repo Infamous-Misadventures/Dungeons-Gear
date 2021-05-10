@@ -1,15 +1,13 @@
 package com.infamous.dungeons_gear.melee;
 
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
-import com.infamous.dungeons_gear.items.WeaponList;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
-import net.minecraft.item.SwordItem;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -30,6 +28,17 @@ public class DungeonsSwordItem extends net.minecraft.item.SwordItem implements I
         this.unique = isUnique;
     }
 
+    @Override
+    public boolean hasSharpnessBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.DIAMOND_SWORD.get();
+    }
+
+    @Override
+    public boolean hasCriticalHitBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.HAWKBRAND.get() ||
+                stack.getItem() == ItemRegistry.SINISTER_SWORD.get();
+    }
+
     public Rarity getRarity(ItemStack itemStack){
 
         if(this.unique){
@@ -43,22 +52,22 @@ public class DungeonsSwordItem extends net.minecraft.item.SwordItem implements I
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == DeferredItemInit.SWORD.get()){
+        if(stack.getItem() == ItemRegistry.SWORD.get()){
         list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A sturdy and reliable blade."));
         }
 
-        if(stack.getItem() == DeferredItemInit.DIAMOND_SWORD.get()){
+        if(stack.getItem() == ItemRegistry.DIAMOND_SWORD.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The Diamond Sword is the true mark of a hero and an accomplished adventurer."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Extra Damage (Sharpness I)"));
         }
 
-        if(stack.getItem() == DeferredItemInit.HAWKBRAND.get()){
+        if(stack.getItem() == ItemRegistry.HAWKBRAND.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The Hawkbrand is the legendary sword of proven warriors."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Increased Critical Hit Chance (Critical Hit I)"));
         }
-        if(stack.getItem() == DeferredItemInit.SINISTER_SWORD.get()){
+        if(stack.getItem() == ItemRegistry.SINISTER_SWORD.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The Sinister Sword, drawn to those who face the spookiest of nights, cuts through the night with a howl."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Increased Critical Hit Chance (Critical Hit I)"));

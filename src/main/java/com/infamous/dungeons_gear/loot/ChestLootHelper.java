@@ -5,15 +5,15 @@ import net.minecraft.item.ItemStack;
 
 import java.util.*;
 
-import static com.infamous.dungeons_gear.init.DeferredItemInit.commonMetalArmorMap;
-import static com.infamous.dungeons_gear.init.DeferredItemInit.commonLeatherArmorMap;
-import static com.infamous.dungeons_gear.init.DeferredItemInit.uniqueMetalArmorMap;
-import static com.infamous.dungeons_gear.init.DeferredItemInit.uniqueLeatherArmorMap;
-import static com.infamous.dungeons_gear.init.DeferredItemInit.commonRangedWeaponMap;
-import static com.infamous.dungeons_gear.init.DeferredItemInit.uniqueRangedWeaponMap;
-import static com.infamous.dungeons_gear.init.DeferredItemInit.commonWeaponMap;
-import static com.infamous.dungeons_gear.init.DeferredItemInit.uniqueWeaponMap;
-import static com.infamous.dungeons_gear.init.DeferredItemInit.artifactMap;
+import static com.infamous.dungeons_gear.init.ItemRegistry.commonMetalArmorMap;
+import static com.infamous.dungeons_gear.init.ItemRegistry.commonLeatherArmorMap;
+import static com.infamous.dungeons_gear.init.ItemRegistry.uniqueMetalArmorMap;
+import static com.infamous.dungeons_gear.init.ItemRegistry.uniqueLeatherArmorMap;
+import static com.infamous.dungeons_gear.init.ItemRegistry.commonRangedWeaponMap;
+import static com.infamous.dungeons_gear.init.ItemRegistry.uniqueRangedWeaponMap;
+import static com.infamous.dungeons_gear.init.ItemRegistry.commonWeaponMap;
+import static com.infamous.dungeons_gear.init.ItemRegistry.uniqueWeaponMap;
+import static com.infamous.dungeons_gear.init.ItemRegistry.artifactMap;
 
 public class ChestLootHelper {
 

@@ -2,8 +2,9 @@ package com.infamous.dungeons_gear.armor;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.SoulRobeModel;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IArmor;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -33,10 +34,10 @@ public class SoulRobeItem extends ArmorItem implements IArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(stack.getItem() == DeferredItemInit.SOUL_ROBE.get() || stack.getItem() == DeferredItemInit.SOUL_ROBE_HOOD.get()){
+        if(stack.getItem() == ItemRegistry.SOUL_ROBE.get() || stack.getItem() == ItemRegistry.SOUL_ROBE_HOOD.get()){
             return DungeonsGear.MODID + ":textures/models/armor/soul_robe.png";
         }
-        else if(stack.getItem() == DeferredItemInit.SOULDANCER_ROBE.get() || stack.getItem() == DeferredItemInit.SOULDANCER_ROBE_HOOD.get()){
+        else if(stack.getItem() == ItemRegistry.SOULDANCER_ROBE.get() || stack.getItem() == ItemRegistry.SOULDANCER_ROBE_HOOD.get()){
             return DungeonsGear.MODID + ":textures/models/armor/souldancer_robe.png";
         }
         else return "";
@@ -58,13 +59,7 @@ public class SoulRobeItem extends ArmorItem implements IArmor {
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
-
-        if (this.unique) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The Souldancer Robe comes alive in the light, as if the souls within are dancing for all eternity."));
-        }
-        else{
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "In a particular light, the souls woven into the cloth of the Soul Robe shimmer with power."));
-        }
+        DescriptionHelper.addLoreDescription(list, stack);
     }
 
     @Override

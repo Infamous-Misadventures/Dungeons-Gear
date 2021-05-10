@@ -5,7 +5,7 @@ import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.DamageEnchantment;
 import net.minecraft.enchantment.Enchantment;
@@ -47,8 +47,8 @@ public class CommittedEnchantment extends DamageBoostEnchantment {
             LivingEntity victim = (LivingEntity) event.getSource().getTrueSource();
             if(!(victim.getHealth() < victim.getMaxHealth())) return;
             ItemStack mainhand = attacker.getHeldItemMainhand();
-            boolean uniqueWeaponFlag = mainhand.getItem() == DeferredItemInit.TRUTHSEEKER.get()
-                    || mainhand.getItem() == DeferredItemInit.GROWING_STAFF.get();
+            boolean uniqueWeaponFlag = mainhand.getItem() == ItemRegistry.TRUTHSEEKER.get()
+                    || mainhand.getItem() == ItemRegistry.GROWING_STAFF.get();
             if((ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.COMMITTED)) || uniqueWeaponFlag){
                 int committedLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.COMMITTED, mainhand);
                 float victimRemainingHealth = victim.getHealth() / victim.getMaxHealth();

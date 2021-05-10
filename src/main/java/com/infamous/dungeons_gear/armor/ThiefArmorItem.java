@@ -4,8 +4,9 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.ThiefArmorModel;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IArmor;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -62,10 +63,10 @@ public class ThiefArmorItem extends ArmorItem implements IArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(stack.getItem() == DeferredItemInit.THIEF_ARMOR.get() || stack.getItem() == DeferredItemInit.THIEF_ARMOR_HOOD.get()){
+        if(stack.getItem() == ItemRegistry.THIEF_ARMOR.get() || stack.getItem() == ItemRegistry.THIEF_ARMOR_HOOD.get()){
             return DungeonsGear.MODID + ":textures/models/armor/thief_armor.png";
         }
-        else if(stack.getItem() == DeferredItemInit.SPIDER_ARMOR.get() || stack.getItem() == DeferredItemInit.SPIDER_ARMOR_HOOD.get()){
+        else if(stack.getItem() == ItemRegistry.SPIDER_ARMOR.get() || stack.getItem() == ItemRegistry.SPIDER_ARMOR_HOOD.get()){
             return DungeonsGear.MODID + ":textures/models/armor/spider_armor.png";
         }
         else return "";
@@ -92,13 +93,7 @@ public class ThiefArmorItem extends ArmorItem implements IArmor {
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
-
-        if (this.unique) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Spider Armor, created by master thieves, is inspired by the agile talents of the Spider."));
-        }
-        else{
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "This armor is light, nimble, and smells faintly of sulfur."));
-        }
+        DescriptionHelper.addLoreDescription(list, stack);
     }
 
     @Override

@@ -2,13 +2,10 @@ package com.infamous.dungeons_gear.melee;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
-import com.infamous.dungeons_gear.items.WeaponList;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
@@ -19,7 +16,6 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -102,6 +98,16 @@ public class GreatHammerItem extends TieredItem implements IMeleeWeapon, IComboW
         return blockIn.getHarvestLevel() < 3;
     }
 
+    @Override
+    public boolean hasGravityBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.HAMMER_OF_GRAVITY.get();
+    }
+
+    @Override
+    public boolean hasThunderingBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.STORMLANDER.get();
+    }
+
     public Rarity getRarity(ItemStack itemStack){
 
         if(this.unique){
@@ -115,19 +121,19 @@ public class GreatHammerItem extends TieredItem implements IMeleeWeapon, IComboW
     {
         super.addInformation(stack, world, list, flag);
 
-        if(stack.getItem() == DeferredItemInit.HAMMER_OF_GRAVITY.get()){
+        if(stack.getItem() == ItemRegistry.HAMMER_OF_GRAVITY.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A hammer, embedded with a crystal that harnesses the power of gravity, that is incredibly powerful."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Pulls In Enemies (Gravity I)"));
             //list.add(new StringTextComponent(TextFormatting.GREEN + "Great Splash"));
         }
-        if(stack.getItem() == DeferredItemInit.STORMLANDER.get()){
+        if(stack.getItem() == ItemRegistry.STORMLANDER.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The Stormlander, enchanted with the power of the raging storm, is a treasure of the Illagers."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Fires Lightning Bolts (Thundering I)"));
             //list.add(new StringTextComponent(TextFormatting.GREEN + "Great Splash"));
         }
-        if(stack.getItem() == DeferredItemInit.GREAT_HAMMER.get()){
+        if(stack.getItem() == ItemRegistry.GREAT_HAMMER.get()){
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Blacksmiths and soldiers alike use the Great Hammer for its strength in forging and in battle."));
 
             //list.add(new StringTextComponent(TextFormatting.GREEN + "Great Splash"));

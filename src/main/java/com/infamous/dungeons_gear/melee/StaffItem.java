@@ -2,10 +2,9 @@ package com.infamous.dungeons_gear.melee;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
-import com.infamous.dungeons_gear.items.WeaponList;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
@@ -83,6 +82,16 @@ public class StaffItem extends TieredItem implements IMeleeWeapon, IComboWeapon 
         return !player.isCreative();
     }
 
+    @Override
+    public boolean hasExplodingBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.BATTLESTAFF_OF_TERROR.get();
+    }
+
+    @Override
+    public boolean hasCommittedBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.GROWING_STAFF.get();
+    }
+
     public Rarity getRarity(ItemStack itemStack) {
 
         if (this.unique) {
@@ -113,16 +122,16 @@ public class StaffItem extends TieredItem implements IMeleeWeapon, IComboWeapon 
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
 
-        if (stack.getItem() == DeferredItemInit.BATTLESTAFF.get()) {
+        if (stack.getItem() == ItemRegistry.BATTLESTAFF.get()) {
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The battlestaff is a perfectly balanced staff that is ready for any battle."));
 
         }
-        if (stack.getItem() == DeferredItemInit.BATTLESTAFF_OF_TERROR.get()) {
+        if (stack.getItem() == ItemRegistry.BATTLESTAFF_OF_TERROR.get()) {
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "This staff overwhelms its target in battle to explosive effect."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Defeated Mobs Explode (Exploding I)"));
         }
-        if (stack.getItem() == DeferredItemInit.GROWING_STAFF.get()) {
+        if (stack.getItem() == ItemRegistry.GROWING_STAFF.get()) {
             list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A staff that grows and shifts as it attacks, the Growing Staff is unpredictable and powerful."));
 
             list.add(new StringTextComponent(TextFormatting.GREEN + "Increased Damage To Wounded Mobs (Committed I)"));

@@ -5,8 +5,9 @@ import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.MercenaryArmorModel;
 import com.infamous.dungeons_gear.armor.models.RenegadeArmorModel;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IArmor;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -66,10 +67,10 @@ public class MercenaryArmorItem extends ArmorItem implements IArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(stack.getItem() == DeferredItemInit.MERCENARY_ARMOR.get() || stack.getItem() == DeferredItemInit.MERCENARY_ARMOR_HELMET.get()){
+        if(stack.getItem() == ItemRegistry.MERCENARY_ARMOR.get() || stack.getItem() == ItemRegistry.MERCENARY_ARMOR_HELMET.get()){
             return DungeonsGear.MODID + ":textures/models/armor/mercenary_armor.png";
         }
-        else if(stack.getItem() == DeferredItemInit.RENEGADE_ARMOR.get() || stack.getItem() == DeferredItemInit.RENEGADE_ARMOR_HELMET.get()){
+        else if(stack.getItem() == ItemRegistry.RENEGADE_ARMOR.get() || stack.getItem() == ItemRegistry.RENEGADE_ARMOR_HELMET.get()){
             return DungeonsGear.MODID + ":textures/models/armor/renegade_armor.png";
         }
         else return "";
@@ -79,10 +80,10 @@ public class MercenaryArmorItem extends ArmorItem implements IArmor {
     @Override
     @OnlyIn(Dist.CLIENT)
     public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack stack, EquipmentSlotType armorSlot, A _default) {
-        if(stack.getItem() == DeferredItemInit.MERCENARY_ARMOR.get() || stack.getItem() == DeferredItemInit.MERCENARY_ARMOR_HELMET.get()){
+        if(stack.getItem() == ItemRegistry.MERCENARY_ARMOR.get() || stack.getItem() == ItemRegistry.MERCENARY_ARMOR_HELMET.get()){
             return (A) new MercenaryArmorModel<>(1.0F, slot, entityLiving);
         }
-        else if(stack.getItem() == DeferredItemInit.RENEGADE_ARMOR.get() || stack.getItem() == DeferredItemInit.RENEGADE_ARMOR_HELMET.get()){
+        else if(stack.getItem() == ItemRegistry.RENEGADE_ARMOR.get() || stack.getItem() == ItemRegistry.RENEGADE_ARMOR_HELMET.get()){
             return (A) new RenegadeArmorModel<>(1.0F, slot, entityLiving);
         }
         return null;
@@ -103,13 +104,7 @@ public class MercenaryArmorItem extends ArmorItem implements IArmor {
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
-
-        if (this.unique) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Renegade Armor made a fine payment for mercenaries hired to protect the villages against Illagers."));
-        }
-        else{
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Mercenary Armor, favored by those looking to save some coin, lacks flair but gets the job done."));
-        }
+        DescriptionHelper.addLoreDescription(list, stack);
     }
 
     @Override

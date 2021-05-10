@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.artifacts.beacon;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.artifacts.ArtifactItem;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
+import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -36,7 +37,7 @@ public abstract class AbstractBeaconItem extends ArtifactItem implements ISoulGa
         ItemStack itemstack = playerIn.getHeldItem(handIn);
         if (worldIn.isRemote) {
             if (canFire(playerIn)){
-                worldIn.playSound(playerIn, playerIn.getPosition(), SoundEvents.BLOCK_BEACON_ACTIVATE, SoundCategory.PLAYERS, 1.0f, 1.0f);
+                SoundHelper.playBeaconSound(playerIn, true);
             }
             return new ActionResult<>(ActionResultType.PASS, itemstack);
         }
@@ -67,7 +68,7 @@ public abstract class AbstractBeaconItem extends ArtifactItem implements ISoulGa
     @Override
     public void onPlayerStoppedUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft) {
         if (entityLiving instanceof PlayerEntity){
-            worldIn.playSound((PlayerEntity) entityLiving, entityLiving.getPosition(), SoundEvents.BLOCK_BEACON_DEACTIVATE, SoundCategory.PLAYERS, 1.0f, 1.0f);
+            SoundHelper.playBeaconSound(entityLiving, false);
             entityLiving.resetActiveHand();
         }
     }
