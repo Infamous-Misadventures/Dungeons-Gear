@@ -41,9 +41,9 @@ public class DualCrossbowItem extends AbstractDungeonsCrossbowItem {
 
         if (charge >= 1.0F
                 && !isCharged(stack)
-                && hasAmmo(livingEntity, stack)) {
+                && AbstractDungeonsCrossbowItem.hasAmmo(livingEntity, stack)) {
             setCharged(stack, true);
-            if (offhandCrossbowFlag && hasAmmo(livingEntity, offhandHeldItem)) {
+            if (offhandCrossbowFlag && AbstractDungeonsCrossbowItem.hasAmmo(livingEntity, offhandHeldItem)) {
                 setCharged(offhandHeldItem, true);
             }
             SoundCategory lvt_7_1_ = livingEntity instanceof PlayerEntity ? SoundCategory.PLAYERS : SoundCategory.HOSTILE;
