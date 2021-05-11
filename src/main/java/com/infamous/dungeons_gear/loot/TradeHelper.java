@@ -10,7 +10,7 @@ import net.minecraft.item.MerchantOffer;
 
 import java.util.Random;
 
-public class TradeUtils {
+public class TradeHelper {
     static class EnchantedItemForEmeraldsTrade implements VillagerTrades.ITrade {
         private final ItemStack sellingStack;
         private final int emeraldCount;

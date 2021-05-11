@@ -122,7 +122,7 @@ public class TradeEvents {
             ResourceLocation resourceLocation = commonMap.get(item);
             Item weapon = ForgeRegistries.ITEMS.getValue(resourceLocation);
             ItemStack weaponStack = new ItemStack(weapon);
-            TradeUtils.EnchantedItemForEmeraldsTrade trade = new TradeUtils.EnchantedItemForEmeraldsTrade(weapon, DungeonsGearConfig.COMMON_ITEM_VALUE.get(), 3, 15,0.2F);
+            TradeHelper.EnchantedItemForEmeraldsTrade trade = new TradeHelper.EnchantedItemForEmeraldsTrade(weapon, DungeonsGearConfig.COMMON_ITEM_VALUE.get(), 3, 15,0.2F);
 
             villagerTrades.get(4).add(trade);
         }
@@ -130,7 +130,7 @@ public class TradeEvents {
             ResourceLocation resourceLocation = uniqueMap.get(item);
             Item weapon = ForgeRegistries.ITEMS.getValue(resourceLocation);
             ItemStack weaponStack = new ItemStack(weapon);
-            TradeUtils.EnchantedItemForEmeraldsTrade trade = new TradeUtils.EnchantedItemForEmeraldsTrade(weapon, DungeonsGearConfig.UNIQUE_ITEM_VALUE.get(), 3, 30,0.2F);
+            TradeHelper.EnchantedItemForEmeraldsTrade trade = new TradeHelper.EnchantedItemForEmeraldsTrade(weapon, DungeonsGearConfig.UNIQUE_ITEM_VALUE.get(), 3, 30,0.2F);
 
             villagerTrades.get(5).add(trade);
         }

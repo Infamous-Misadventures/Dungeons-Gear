@@ -17,7 +17,7 @@ import static com.infamous.dungeons_gear.init.ItemRegistry.artifactMap;
 
 public class ChestLootHelper {
 
-    private static Random myRNG = new Random();
+    private static final Random myRNG = new Random();
 
     public static List<ItemStack> generateLootFromValues(double uniqueItemChance, double artifactChance){
         Item commonMeleeWeapon = getRandomSetElement(commonWeaponMap.keySet());
