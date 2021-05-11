@@ -244,8 +244,8 @@ public class DescriptionHelper {
             if(rangedWeapon.hasDynamoBuiltIn(itemStack)){
                 abilities.add("dynamo");
             }
-            if(rangedWeapon.hasDualShoot(itemStack)){
-                abilities.add("dual_shoot");
+            if(rangedWeapon.canDualWield(itemStack)){
+                abilities.add("dual_wield");
             }
             if(rangedWeapon.hasEnigmaResonatorBuiltIn(itemStack)){
                 abilities.add("enigma_resonator");

@@ -1,8 +1,9 @@
 package com.infamous.dungeons_gear.interfaces;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public interface IArmor {
+public interface IArmor<T extends Item> {
     default boolean doHealthPotionsHealNearbyAllies(){
         return false;
     }

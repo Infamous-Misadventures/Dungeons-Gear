@@ -1,9 +1,10 @@
 package com.infamous.dungeons_gear.interfaces;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public interface IComboWeapon {
+public interface IComboWeapon<T extends Item> {
     int getComboLength(ItemStack stack, LivingEntity attacker);
 
     default boolean shouldProcSpecialEffects(ItemStack stack, LivingEntity attacker, int combo) {

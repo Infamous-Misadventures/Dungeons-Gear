@@ -631,7 +631,7 @@ public class ItemRegistry {
         commonRangedWeaponMap.put(SOUL_BOW.get(), SOUL_BOW.get().getRegistryName());
         commonRangedWeaponMap.put(TRICKBOW.get(), TRICKBOW.get().getRegistryName());
         commonRangedWeaponMap.put(SNOW_BOW.get(), SNOW_BOW.get().getRegistryName());
-        commonRangedWeaponMap.put(WIND_BOW.get(), WIND_BOW.get().getRegistryName());
+        //commonRangedWeaponMap.put(WIND_BOW.get(), WIND_BOW.get().getRegistryName());
     }
 
     private static void putCommonCrossbowsInMap() {
@@ -681,8 +681,8 @@ public class ItemRegistry {
         uniqueRangedWeaponMap.put(HAUNTED_BOW.get(), HAUNTED_BOW.get().getRegistryName());
         uniqueRangedWeaponMap.put(ANCIENT_BOW.get(), ANCIENT_BOW.get().getRegistryName());
         uniqueRangedWeaponMap.put(LOVE_SPELL_BOW.get(), LOVE_SPELL_BOW.get().getRegistryName());
-        uniqueRangedWeaponMap.put(BURST_GALE_BOW.get(), BURST_GALE_BOW.get().getRegistryName());
-        uniqueRangedWeaponMap.put(ECHO_OF_THE_VALLEY.get(), ECHO_OF_THE_VALLEY.get().getRegistryName());
+        //uniqueRangedWeaponMap.put(BURST_GALE_BOW.get(), BURST_GALE_BOW.get().getRegistryName());
+        //uniqueRangedWeaponMap.put(ECHO_OF_THE_VALLEY.get(), ECHO_OF_THE_VALLEY.get().getRegistryName());
     }
 
     private static void putCommonMeleeWeaponsInMap() {

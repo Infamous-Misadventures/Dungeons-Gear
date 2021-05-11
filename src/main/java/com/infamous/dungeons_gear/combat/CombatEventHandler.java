@@ -2,21 +2,14 @@ package com.infamous.dungeons_gear.combat;
 
 import com.infamous.dungeons_gear.init.AttributeRegistry;
 import com.infamous.dungeons_gear.interfaces.IOffhandAttack;
-import com.infamous.dungeons_gear.interfaces.IExtendedAttackReach;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
 
 public class CombatEventHandler {

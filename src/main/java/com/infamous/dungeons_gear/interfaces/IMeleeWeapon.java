@@ -1,8 +1,9 @@
 package com.infamous.dungeons_gear.interfaces;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public interface IMeleeWeapon {
+public interface IMeleeWeapon<T extends Item> {
 
     // Non-enchantment abilities
     default boolean canDualWield(ItemStack stack){

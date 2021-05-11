@@ -1,8 +1,9 @@
 package com.infamous.dungeons_gear.interfaces;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public interface IRangedWeapon {
+public interface IRangedWeapon<T extends Item> {
 
     // Non-Enchantment Abilities
     default boolean shootsFasterArrows(ItemStack stack){
@@ -37,7 +38,7 @@ public interface IRangedWeapon {
 
     default boolean hasMultishotWhenCharged(ItemStack stack){ return false;}
 
-    default boolean hasDualShoot(ItemStack stack){ return false;}
+    default boolean canDualWield(ItemStack stack){ return false;}
 
     default boolean hasHighFireRate(ItemStack stack){ return false;}
 

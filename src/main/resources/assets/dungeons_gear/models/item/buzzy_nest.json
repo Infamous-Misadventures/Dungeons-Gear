@@ -1,6 +1,71 @@
 {
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "dungeons_gear:item/buzzy_nest"
-  }
+	"credit": "Made with Blockbench",
+	"texture_size": [40, 40],
+	"textures": {
+		"0": "dungeons_gear:item/buzzy_nest",
+		"particle": "dungeons_gear:item/buzzy_nest"
+	},
+	"elements": [
+		{
+			"name": "nest",
+			"from": [5, 6, 5],
+			"to": [11, 12, 11],
+			"rotation": {"angle": 0, "axis": "y", "origin": [13, 14, 13]},
+			"faces": {
+				"north": {"uv": [6.4, 0, 12.8, 6.4], "texture": "#0"},
+				"east": {"uv": [6.4, 6.4, 12.8, 12.8], "texture": "#0"},
+				"south": {"uv": [6.4, 6.4, 12.8, 12.8], "texture": "#0"},
+				"west": {"uv": [6.4, 6.4, 12.8, 12.8], "texture": "#0"},
+				"up": {"uv": [0, 6.4, 6.4, 12.8], "texture": "#0"},
+				"down": {"uv": [0, 0, 6.4, 6.4], "texture": "#0"}
+			}
+		},
+		{
+			"name": "stick",
+			"from": [7.25, 0.75, 7.25],
+			"to": [8.75, 6, 8.75],
+			"rotation": {"angle": -22.5, "axis": "x", "origin": [8.75, 6, 7.25]},
+			"faces": {
+				"north": {"uv": [12.8, 1.6, 14.4, 7.2], "texture": "#0"},
+				"east": {"uv": [14.4, 1.6, 16, 7.2], "texture": "#0"},
+				"south": {"uv": [12.8, 1.6, 14.4, 7.2], "texture": "#0"},
+				"west": {"uv": [14.4, 1.6, 16, 7.2], "texture": "#0"},
+				"up": {"uv": [12.8, 0, 14.4, 1.6], "texture": "#0"},
+				"down": {"uv": [14.4, 0, 16, 1.6], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [17, 33, 0],
+			"translation": [-0.75, 4, 2.5],
+			"scale": [1.38, 1.38, 1.38]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [17, 33, 0],
+			"translation": [-0.75, 4, 2.5],
+			"scale": [1.38, 1.38, 1.38]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 18, -1],
+			"translation": [1.75, 4.25, 0]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 18, -1],
+			"translation": [2, 4.25, 0]
+		},
+		"gui": {
+			"rotation": [6, 153, 26],
+			"translation": [0, 0.75, 0],
+			"scale": [1.38, 1.38, 1.38]
+		},
+		"head": {
+			"translation": [0, 10.5, 0],
+			"scale": [2, 2, 2]
+		},
+		"fixed": {
+			"translation": [0, 2.5, -4.5],
+			"scale": [1.75, 1.75, 1.75]
+		}
+	}
 }

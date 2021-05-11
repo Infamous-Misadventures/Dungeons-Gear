@@ -1,8 +1,58 @@
 {
-  "parent": "minecraft:block/orientable",
-  "textures": {
-    "top": "minecraft:block/pumpkin_top",
-    "front": "dungeons_gear:item/corrupted_pumpkin",
-    "side": "minecraft:block/pumpkin_side"
-  }
+	"credit": "Made with Blockbench",
+	"texture_size": [32, 32],
+	"textures": {
+		"0": "dungeons_gear:item/corrupted_pumpkin",
+		"particle": "dungeons_gear:item/corrupted_pumpkin"
+	},
+	"elements": [
+		{
+			"name": "pumpkin",
+			"from": [4, 0, 4],
+			"to": [12, 8, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 8, 8], "texture": "#0"},
+				"east": {"uv": [0, 8, 8, 16], "texture": "#0"},
+				"south": {"uv": [0, 8, 8, 16], "texture": "#0"},
+				"west": {"uv": [0, 8, 8, 16], "texture": "#0"},
+				"up": {"uv": [8, 8, 16, 16], "rotation": 180, "texture": "#0"},
+				"down": {"uv": [8, 0, 16, 8], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [57, -13, 0],
+			"translation": [1.5, 3, 2.75]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [57, -13, 0],
+			"translation": [1.5, 3, 2.75]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, -1.5, 0],
+			"translation": [4, 5.5, -2.25]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, -1.5, 0],
+			"translation": [4, 5.5, -2.25]
+		},
+		"ground": {
+			"translation": [0, 3.75, 0]
+		},
+		"gui": {
+			"rotation": [16, 135, 7],
+			"translation": [0.5, 4.75, 0],
+			"scale": [1.25, 1.25, 1.25]
+		},
+		"head": {
+			"translation": [0, 7.25, 0],
+			"scale": [2, 2, 2]
+		},
+		"fixed": {
+			"translation": [0, 7.5, 1.25],
+			"scale": [1.9, 1.9, 1.9]
+		}
+	}
 }

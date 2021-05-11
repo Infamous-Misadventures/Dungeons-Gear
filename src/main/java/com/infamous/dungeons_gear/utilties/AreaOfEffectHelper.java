@@ -30,6 +30,9 @@ import static com.infamous.dungeons_gear.utilties.AbilityHelper.canApplyToEnemy;
 import static com.infamous.dungeons_gear.utilties.AbilityHelper.isPetOfAttacker;
 
 public class AreaOfEffectHelper {
+
+    public static final double PULL_IN_SPEED_FACTOR = 0.5;
+
     public static void pullInNearbyEntities(LivingEntity attacker, LivingEntity target, float distance, BasicParticleType particleType) {
         World world = target.getEntityWorld();
         List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, target, nearbyEntity));
@@ -43,7 +46,7 @@ public class AreaOfEffectHelper {
         double motionX = target.getPosX() - (nearbyEntity.getPosX());
         double motionY = target.getPosY() - (nearbyEntity.getPosY());
         double motionZ = target.getPosZ() - (nearbyEntity.getPosZ());
-        Vector3d vector3d = new Vector3d(motionX, motionY, motionZ).scale(0.15);
+        Vector3d vector3d = new Vector3d(motionX, motionY, motionZ).scale(PULL_IN_SPEED_FACTOR);
 
         nearbyEntity.setMotion(vector3d);
         PROXY.spawnParticles(nearbyEntity, particleType);
@@ -61,7 +64,7 @@ public class AreaOfEffectHelper {
         double motionX = targetPos.getX() - (nearbyEntity.getPosX());
         double motionY = targetPos.getY() - (nearbyEntity.getPosY());
         double motionZ = targetPos.getZ() - (nearbyEntity.getPosZ());
-        Vector3d vector3d = new Vector3d(motionX, motionY, motionZ).scale(0.15);
+        Vector3d vector3d = new Vector3d(motionX, motionY, motionZ).scale(PULL_IN_SPEED_FACTOR);
 
         nearbyEntity.setMotion(vector3d);
         PROXY.spawnParticles(nearbyEntity, particleType);
@@ -78,7 +81,7 @@ public class AreaOfEffectHelper {
             double motionX = target.getPosX() - (nearbyEntity.getPosX());
             double motionY = target.getPosY() - (nearbyEntity.getPosY());
             double motionZ = target.getPosZ() - (nearbyEntity.getPosZ());
-            Vector3d vector3d = new Vector3d(motionX, motionY, motionZ);
+            Vector3d vector3d = new Vector3d(motionX, motionY, motionZ).scale(PULL_IN_SPEED_FACTOR);
 
             nearbyEntity.setMotion(vector3d);
             nearbyEntity.addPotionEffect(chained);

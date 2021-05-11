@@ -19,7 +19,7 @@ public class DualCrossbowItem extends AbstractDungeonsCrossbowItem {
     }
 
     @Override
-    public boolean hasDualShoot(ItemStack stack) {
+    public boolean canDualWield(ItemStack stack) {
         return true;
     }
 

@@ -7,22 +7,22 @@
 	"gui_light": "front",
 	"display": {
 		"thirdperson_righthand": {
-			"rotation": [0, -90, 45],
-			"translation": [0, 3, 1.5],
+			"rotation": [0, -90, -45],
+			"translation": [0, 4, 1.5],
 			"scale": [2, 2, 1]
 		},
 		"thirdperson_lefthand": {
-			"rotation": [0, 90, -45],
-			"translation": [0, 3, 1.5],
+			"rotation": [0, 90, 45],
+			"translation": [0, 4, 1.5],
 			"scale": [2, 2, 1]
 		},
 		"firstperson_righthand": {
-			"rotation": [0, -90, 45],
+			"rotation": [0, -90, -45],
 			"translation": [0, 2, 0],
 			"scale": [2, 2, 1]
 		},
 		"firstperson_lefthand": {
-			"rotation": [0, 90, -45],
+			"rotation": [0, 90, 45],
 			"translation": [0, 2, 0],
 			"scale": [2, 2, 1]
 		},
