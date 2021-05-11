@@ -1,15 +1,12 @@
 package com.infamous.dungeons_gear.loot;
 
 import com.google.gson.JsonObject;
-import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.minecart.ContainerMinecartEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.LootTables;
 import net.minecraft.loot.conditions.ILootCondition;
 import net.minecraft.tileentity.LockableLootTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -60,51 +57,7 @@ public class GlobalLootModifier{
         @Nonnull
         @Override
         public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-            // return early if the user has disabled this feature
-            if(!DungeonsGearConfig.ENABLE_DUNGEONS_GEAR_LOOT.get()){
-                return generatedLoot;
-            }
-            Vector3d vector3d = context.get(LootParameters.field_237457_g_);
-            Entity contextEntity = context.get(LootParameters.KILLER_ENTITY);
-            ResourceLocation lootTable = null;
-            if(vector3d != null){
-                BlockPos pos = new BlockPos(vector3d);
-                // fix chunk lag issue
-                if(!context.getWorld().isBlockLoaded(pos)){
-                    return generatedLoot;
-                }
-                TileEntity contextTileEntity = context.getWorld().getTileEntity(pos);
-                if(contextTileEntity instanceof LockableLootTileEntity){
-                    LockableLootTileEntity lockableLootTileEntity = (LockableLootTileEntity)contextTileEntity;
-                    lootTable =
-                            getLootTable(lockableLootTileEntity);
-                    if (lootTable != null) {
-                        String lootTablePath = lootTable.toString();
-                        DungeonsGearConfig.COMMON_LOOT_TABLES.get().forEach((path) ->{
-                            if(lootTablePath.contains(path) && !DungeonsGearConfig.COMMON_LOOT_TABLES_BLACKLIST.get().contains(lootTablePath)){
-                                generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.UNIQUE_ITEM_COMMON_LOOT.get(),
-                                        DungeonsGearConfig.ARTIFACT_COMMON_LOOT.get()));
-                            }
-                        });
-                    }
-
-                }
-                else if(contextEntity instanceof ContainerMinecartEntity){
-                    ContainerMinecartEntity containerMinecartEntity = (ContainerMinecartEntity)contextEntity;
-                    lootTable =
-                            getLootTable(containerMinecartEntity);
-                    if (lootTable != null) {
-                        String lootTablePath = lootTable.toString();
-                        DungeonsGearConfig.COMMON_LOOT_TABLES.get().forEach((path) ->{
-                            if(lootTablePath.contains(path) && !DungeonsGearConfig.COMMON_LOOT_TABLES_BLACKLIST.get().contains(lootTablePath)){
-                                generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.UNIQUE_ITEM_COMMON_LOOT.get(),
-                                        DungeonsGearConfig.ARTIFACT_COMMON_LOOT.get()));
-                            }
-                        });
-                    }
-
-                }
-            }
+            injectLoot(generatedLoot, context, DungeonsGearConfig.COMMON_LOOT_TABLES.get(), DungeonsGearConfig.COMMON_LOOT_TABLES_BLACKLIST.get(), DungeonsGearConfig.UNIQUE_ITEM_COMMON_LOOT.get(), DungeonsGearConfig.ARTIFACT_COMMON_LOOT.get());
             return generatedLoot;
         }
 
@@ -131,51 +84,7 @@ public class GlobalLootModifier{
         @Nonnull
         @Override
         public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-            // return early if the user has disabled this feature
-            if(!DungeonsGearConfig.ENABLE_DUNGEONS_GEAR_LOOT.get()){
-                return generatedLoot;
-            }
-            Vector3d vector3d = context.get(LootParameters.field_237457_g_);
-            Entity contextEntity = context.get(LootParameters.KILLER_ENTITY);
-            ResourceLocation lootTable = null;
-            if(vector3d != null){
-                BlockPos pos = new BlockPos(vector3d);
-                // fix chunk lag issue
-                if(!context.getWorld().isBlockLoaded(pos)){
-                    return generatedLoot;
-                }
-                TileEntity contextTileEntity = context.getWorld().getTileEntity(pos);
-                if(contextTileEntity instanceof LockableLootTileEntity){
-                    LockableLootTileEntity lockableLootTileEntity = (LockableLootTileEntity)contextTileEntity;
-                    lootTable =
-                            getLootTable(lockableLootTileEntity);
-                    if (lootTable != null) {
-                        String lootTablePath = lootTable.toString();
-                        DungeonsGearConfig.UNCOMMON_LOOT_TABLES.get().forEach((path) ->{
-                            if(lootTablePath.contains(path) && !DungeonsGearConfig.UNCOMMON_LOOT_TABLES_BLACKLIST.get().contains(lootTablePath)){
-                                generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.UNIQUE_ITEM_UNCOMMON_LOOT.get(),
-                                        DungeonsGearConfig.ARTIFACT_UNCOMMON_LOOT.get()));
-                            }
-                        });
-                    }
-
-                }
-                else if(contextEntity instanceof ContainerMinecartEntity){
-                    ContainerMinecartEntity containerMinecartEntity = (ContainerMinecartEntity)contextEntity;
-                    lootTable =
-                            getLootTable(containerMinecartEntity);
-                    if (lootTable != null) {
-                        String lootTablePath = lootTable.toString();
-                        DungeonsGearConfig.UNCOMMON_LOOT_TABLES.get().forEach((path) ->{
-                            if(lootTablePath.contains(path) && !DungeonsGearConfig.UNCOMMON_LOOT_TABLES_BLACKLIST.get().contains(lootTablePath)){
-                                generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.UNIQUE_ITEM_COMMON_LOOT.get(),
-                                        DungeonsGearConfig.ARTIFACT_COMMON_LOOT.get()));
-                            }
-                        });
-                    }
-
-                }
-            }
+            injectLoot(generatedLoot, context, DungeonsGearConfig.UNCOMMON_LOOT_TABLES.get(), DungeonsGearConfig.UNCOMMON_LOOT_TABLES_BLACKLIST.get(), DungeonsGearConfig.UNIQUE_ITEM_UNCOMMON_LOOT.get(), DungeonsGearConfig.ARTIFACT_UNCOMMON_LOOT.get());
             return generatedLoot;
         }
 
@@ -202,51 +111,7 @@ public class GlobalLootModifier{
         @Nonnull
         @Override
         public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-            // return early if the user has disabled this feature
-            if(!DungeonsGearConfig.ENABLE_DUNGEONS_GEAR_LOOT.get()){
-                return generatedLoot;
-            }
-            Vector3d vector3d = context.get(LootParameters.field_237457_g_);
-            Entity contextEntity = context.get(LootParameters.KILLER_ENTITY);
-            ResourceLocation lootTable = null;
-            if(vector3d != null){
-                BlockPos pos = new BlockPos(vector3d);
-                // fix chunk lag issue
-                if(!context.getWorld().isBlockLoaded(pos)){
-                    return generatedLoot;
-                }
-                TileEntity contextTileEntity = context.getWorld().getTileEntity(pos);
-                if(contextTileEntity instanceof LockableLootTileEntity){
-                    LockableLootTileEntity lockableLootTileEntity = (LockableLootTileEntity)contextTileEntity;
-                    lootTable =
-                            getLootTable(lockableLootTileEntity);
-                    if (lootTable != null) {
-                        String lootTablePath = lootTable.toString();
-                        DungeonsGearConfig.RARE_LOOT_TABLES.get().forEach((path) ->{
-                            if(lootTablePath.contains(path) && !DungeonsGearConfig.RARE_LOOT_TABLES_BLACKLIST.get().contains(lootTablePath)){
-                                generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.UNIQUE_ITEM_RARE_LOOT.get(),
-                                        DungeonsGearConfig.ARTIFACT_RARE_LOOT.get()));
-                            }
-                        });
-                    }
-
-                }
-                else if(contextEntity instanceof ContainerMinecartEntity){
-                    ContainerMinecartEntity containerMinecartEntity = (ContainerMinecartEntity)contextEntity;
-                    lootTable =
-                            getLootTable(containerMinecartEntity);
-                    if (lootTable != null) {
-                        String lootTablePath = lootTable.toString();
-                        DungeonsGearConfig.RARE_LOOT_TABLES.get().forEach((path) ->{
-                            if(lootTablePath.contains(path) && !DungeonsGearConfig.RARE_LOOT_TABLES_BLACKLIST.get().contains(lootTablePath)){
-                                generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.UNIQUE_ITEM_COMMON_LOOT.get(),
-                                        DungeonsGearConfig.ARTIFACT_COMMON_LOOT.get()));
-                            }
-                        });
-                    }
-
-                }
-            }
+            injectLoot(generatedLoot, context, DungeonsGearConfig.RARE_LOOT_TABLES.get(), DungeonsGearConfig.RARE_LOOT_TABLES_BLACKLIST.get(), DungeonsGearConfig.UNIQUE_ITEM_RARE_LOOT.get(), DungeonsGearConfig.ARTIFACT_RARE_LOOT.get());
             return generatedLoot;
         }
 
@@ -273,53 +138,7 @@ public class GlobalLootModifier{
         @Nonnull
         @Override
         public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-            // return early if the user has disabled this feature
-            if(!DungeonsGearConfig.ENABLE_DUNGEONS_GEAR_LOOT.get()){
-                return generatedLoot;
-            }
-            Vector3d vector3d = context.get(LootParameters.field_237457_g_);
-            Entity contextEntity = context.get(LootParameters.KILLER_ENTITY);
-            ResourceLocation lootTable = null;
-            if(vector3d != null){
-                BlockPos pos = new BlockPos(vector3d);
-                // fix chunk lag issue
-                if(!context.getWorld().isBlockLoaded(pos)){
-                    return generatedLoot;
-                }
-                TileEntity contextTileEntity = context.getWorld().getTileEntity(pos);
-                if(contextTileEntity instanceof LockableLootTileEntity){
-                    LockableLootTileEntity lockableLootTileEntity = (LockableLootTileEntity)contextTileEntity;
-                    lootTable =
-                            getLootTable(lockableLootTileEntity);
-                    if (lootTable != null) {
-                        String lootTablePath = lootTable.toString();
-
-                        DungeonsGearConfig.SUPER_RARE_LOOT_TABLES.get().forEach((path) ->{
-                            if(lootTablePath.contains(path) && !DungeonsGearConfig.SUPER_RARE_LOOT_TABLES_BLACKLIST.get().contains(lootTablePath)){
-                                generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.UNIQUE_ITEM_SUPER_RARE_LOOT.get(),
-                                        DungeonsGearConfig.ARTIFACT_SUPER_RARE_LOOT.get()));
-                            }
-                        });
-
-                    }
-
-                }
-                else if(contextEntity instanceof ContainerMinecartEntity){
-                    ContainerMinecartEntity containerMinecartEntity = (ContainerMinecartEntity)contextEntity;
-                    lootTable =
-                            getLootTable(containerMinecartEntity);
-                    if (lootTable != null) {
-                        String lootTablePath = lootTable.toString();
-                        DungeonsGearConfig.SUPER_RARE_LOOT_TABLES.get().forEach((path) ->{
-                            if(lootTablePath.contains(path) && !DungeonsGearConfig.SUPER_RARE_LOOT_TABLES_BLACKLIST.get().contains(lootTablePath)){
-                                generatedLoot.addAll(ChestLootHelper.generateLootFromValues(DungeonsGearConfig.UNIQUE_ITEM_COMMON_LOOT.get(),
-                                        DungeonsGearConfig.ARTIFACT_COMMON_LOOT.get()));
-                            }
-                        });
-                    }
-
-                }
-            }
+            injectLoot(generatedLoot, context, DungeonsGearConfig.SUPER_RARE_LOOT_TABLES.get(), DungeonsGearConfig.SUPER_RARE_LOOT_TABLES_BLACKLIST.get(), DungeonsGearConfig.UNIQUE_ITEM_SUPER_RARE_LOOT.get(), DungeonsGearConfig.ARTIFACT_SUPER_RARE_LOOT.get());
             return generatedLoot;
         }
 
@@ -352,5 +171,49 @@ public class GlobalLootModifier{
                 ContainerMinecartEntity.class,
                 containerMinecartEntity,
                 CONTAINER_MINECART_ENTITY_LOOT_TABLE);
+    }
+
+    private static void injectLoot(List<ItemStack> generatedLoot, LootContext context, List<? extends String> lootTables, List<? extends String> lootTableBlacklist, Double uniqueItemChance, Double artifactChance) {
+        // return early if the user has disabled this feature
+        if(!DungeonsGearConfig.ENABLE_DUNGEONS_GEAR_LOOT.get()){
+            return;
+        }
+        Entity contextEntity = context.get(LootParameters.KILLER_ENTITY);
+        if(contextEntity instanceof ContainerMinecartEntity){
+            ContainerMinecartEntity containerMinecartEntity = (ContainerMinecartEntity)contextEntity;
+            ResourceLocation lootTable = getLootTable(containerMinecartEntity);
+            if (lootTable != null) {
+                String lootTablePath = lootTable.toString();
+                lootTables.forEach((path) ->{
+                    if(lootTablePath.contains(path) && !lootTableBlacklist.contains(lootTablePath)){
+                        generatedLoot.addAll(ChestLootHelper.generateLootFromValues(uniqueItemChance, artifactChance));
+                    }
+                });
+            }
+        }
+        else
+        {
+            Vector3d vector3d = context.get(LootParameters.field_237457_g_);
+            if(vector3d != null){
+                BlockPos pos = new BlockPos(vector3d);
+                // fix chunk lag issue
+                if(!context.getWorld().isBlockLoaded(pos)){
+                    return;
+                }
+                TileEntity contextTileEntity = context.getWorld().getTileEntity(pos);
+                if(contextTileEntity instanceof LockableLootTileEntity){
+                    LockableLootTileEntity lockableLootTileEntity = (LockableLootTileEntity)contextTileEntity;
+                    ResourceLocation lootTable = getLootTable(lockableLootTileEntity);
+                    if (lootTable != null) {
+                        String lootTablePath = lootTable.toString();
+                        lootTables.forEach((path) ->{
+                            if(lootTablePath.contains(path) && !lootTableBlacklist.contains(lootTablePath)){
+                                generatedLoot.addAll(ChestLootHelper.generateLootFromValues(uniqueItemChance, artifactChance));
+                            }
+                        });
+                    }
+                }
+            }
+        }
     }
 }
