@@ -37,7 +37,7 @@ public class EnchantmentInit {
                     ECHO = new EchoEnchantment().setRegistryName(location("echo")),
                     EXPLODING = new ExplodingEnchantment().setRegistryName(location("exploding")),
                     LEECHING = new LeechingEnchantment().setRegistryName(location("leeching")),
-                    ILLAGERS_BANE = new ModDamageEnchantment(Enchantment.Rarity.UNCOMMON, 3, EquipmentSlotType.MAINHAND).setRegistryName(location("leeching")),
+                    ILLAGERS_BANE = new ModDamageEnchantment(Enchantment.Rarity.UNCOMMON, 3, EquipmentSlotType.MAINHAND).setRegistryName(location("illagers_bane")),
                     PROSPECTOR = new ProspectorEnchantment().setRegistryName(location("prospector")),
                     RADIANCE = new RadianceEnchantment().setRegistryName(location("radiance")),
                     RAMPAGING = new RampagingEnchantment().setRegistryName(location("rampaging")),
