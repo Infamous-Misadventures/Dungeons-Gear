@@ -24,7 +24,7 @@ public class WindBowItem extends AbstractDungeonsBowItem {
     public AbstractArrowEntity createBowArrow(ItemStack stack, World world, PlayerEntity playerentity, ItemStack itemstack, float arrowVelocity, int i, boolean hasInfiniteAmmo, boolean isAdditionalShot) {
         AbstractArrowEntity arrowEntity = super.createBowArrow(stack, world, playerentity, itemstack, arrowVelocity, i, hasInfiniteAmmo, isAdditionalShot);
         if(arrowVelocity == 1.0F){
-            arrowEntity.addTag("Gale");
+            arrowEntity.addTag("GaleArrow");
         }
         return arrowEntity;
     }

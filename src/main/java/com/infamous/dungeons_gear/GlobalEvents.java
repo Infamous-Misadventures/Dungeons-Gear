@@ -230,7 +230,7 @@ public class GlobalEvents {
         AbstractArrowEntity arrow = event.getArrow();
         if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
         LivingEntity shooter = (LivingEntity)arrow.func_234616_v_();
-        boolean isGaleArrow = arrow.getTags().contains("Gale");
+        boolean isGaleArrow = arrow.getTags().contains("GaleArrow");
         if(isGaleArrow) {
             if (rayTraceResult instanceof EntityRayTraceResult) {
                 EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult) rayTraceResult;
