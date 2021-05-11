@@ -7,6 +7,7 @@ import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
 import com.infamous.dungeons_gear.init.ItemRegistry;
+import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -42,7 +43,7 @@ public class EchoEnchantment extends AOEDamageEnchantment {
             PlayerEntity attacker = (PlayerEntity) event.getPlayer();
             LivingEntity victim = event.getEntityLiving();
             ItemStack mainhand = attacker.getHeldItemMainhand();
-            boolean uniqueWeaponFlag = mainhand.getItem() == ItemRegistry.WHISPERING_SPEAR.get();
+            boolean uniqueWeaponFlag = hasEchoBuiltIn(mainhand);
             if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.ECHO) || uniqueWeaponFlag) {
                 int echoLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.ECHO, mainhand);
                 if (uniqueWeaponFlag) echoLevel++;
@@ -56,6 +57,10 @@ public class EchoEnchantment extends AOEDamageEnchantment {
                 AreaOfEffectHelper.causeEchoAttack(attacker, victim, attackDamage, 3.0f, echoLevel);
             }
         }
+    }
+
+    private static boolean hasEchoBuiltIn(ItemStack mainhand) {
+        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasEchoBuiltIn(mainhand);
     }
 
     public int getMaxLevel() {

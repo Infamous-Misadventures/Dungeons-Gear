@@ -8,6 +8,7 @@ import com.infamous.dungeons_gear.goals.GolemOwnerHurtByTargetGoal;
 import com.infamous.dungeons_gear.goals.GolemOwnerHurtTargetGoal;
 import com.infamous.dungeons_gear.goals.IronGolemFollowOwnerGoal;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -102,12 +103,16 @@ public class GolemKitItem extends ArtifactItem {
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
         super.addInformation(stack, world, list, flag);
+        DescriptionHelper.addFullDescription(list, stack);
+    }
 
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
-                    "Iron Golems have always protected the Villagers of the Overworld. Their numbers are dwindling as a result of the Arch-Illager's war."));
-            list.add(new StringTextComponent(TextFormatting.GREEN +
-                    "Summons an Iron Golem to aid you in battle."));
-            list.add(new StringTextComponent(TextFormatting.BLUE +
-                    "30 Seconds Cooldown"));
+    @Override
+    public int getCooldownInSeconds() {
+        return 30;
+    }
+
+    @Override
+    public int getDurationInSeconds() {
+        return 0;
     }
 }

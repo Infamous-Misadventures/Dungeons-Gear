@@ -2,6 +2,7 @@ package com.infamous.dungeons_gear.artifacts;
 
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
@@ -27,25 +28,26 @@ public class BootsOfSwiftnessItem extends ArtifactItem {
         PlayerEntity playerIn = c.getPlayer();
         ItemStack itemstack = c.getItem();
 
-        EffectInstance swiftness = new EffectInstance(Effects.SPEED, 40, 2);
+        EffectInstance swiftness = new EffectInstance(Effects.SPEED, this.getDurationInSeconds() * 20, 2);
         playerIn.addPotionEffect(swiftness);
         itemstack.damageItem(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemstack)));
-        ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem(), 100);
+        ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem());
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }
 
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
+        DescriptionHelper.addFullDescription(list, stack);
+    }
 
-        list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
-                "Boots blessed with enchantments to allow for swift movements. Useful in uncertain times such as these."));
-        list.add(new StringTextComponent(TextFormatting.GREEN +
-                "Gives a short boost to movement speed."));
-        list.add(new StringTextComponent(TextFormatting.BLUE +
-                "2 Seconds Duration"));
-        list.add(new StringTextComponent(TextFormatting.BLUE +
-                "5 Seconds Cooldown"));
+    @Override
+    public int getCooldownInSeconds() {
+        return 5;
+    }
 
+    @Override
+    public int getDurationInSeconds() {
+        return 2;
     }
 }

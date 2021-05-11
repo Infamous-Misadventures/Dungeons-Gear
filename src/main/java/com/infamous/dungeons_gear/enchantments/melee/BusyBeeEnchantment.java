@@ -8,6 +8,7 @@ import com.infamous.dungeons_gear.goals.BeeFollowOwnerGoal;
 import com.infamous.dungeons_gear.goals.BeeOwnerHurtByTargetGoal;
 import com.infamous.dungeons_gear.goals.BeeOwnerHurtTargetGoal;
 import com.infamous.dungeons_gear.init.ItemRegistry;
+import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
@@ -51,7 +52,7 @@ public class BusyBeeEnchantment extends Enchantment {
             if(attacker instanceof PlayerEntity){
                 PlayerEntity playerEntity = (PlayerEntity)attacker;
                 ItemStack mainhand = playerEntity.getHeldItemMainhand();
-                boolean uniqueWeaponFlag = mainhand.getItem() == ItemRegistry.BEE_STINGER.get();
+                boolean uniqueWeaponFlag = hasBusyBeeBuiltIn(mainhand);
                 if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.BUSY_BEE)){
                     int busyBeeLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.RAMPAGING, mainhand);
                     float busyBeeRand = playerEntity.getRNG().nextFloat();
@@ -68,6 +69,10 @@ public class BusyBeeEnchantment extends Enchantment {
                 }
             }
         }
+    }
+
+    private static boolean hasBusyBeeBuiltIn(ItemStack mainhand) {
+        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasBusyBeeBuiltIn(mainhand);
     }
 
 

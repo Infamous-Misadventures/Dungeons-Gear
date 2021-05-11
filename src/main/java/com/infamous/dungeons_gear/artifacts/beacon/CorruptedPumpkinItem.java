@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.artifacts.beacon;
 
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
@@ -34,17 +35,6 @@ public class CorruptedPumpkinItem extends AbstractBeaconItem {
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
         super.addInformation(stack, world, list, flag);
-
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
-                    "The Corrupted Pumpkin glows with supernatural power, illuminating even the darkest nights with its powerful beacon."));
-            list.add(new StringTextComponent(TextFormatting.GREEN +
-                    "Fires a high-powered beam that continuously damages mobs."));
-            list.add(new StringTextComponent(TextFormatting.LIGHT_PURPLE +
-                    "+1 XP Gathering"));
-    }
-
-    @Override
-    public int getGatherAmount(ItemStack stack) {
-        return 1;
+        DescriptionHelper.addFullDescription(list, stack);
     }
 }

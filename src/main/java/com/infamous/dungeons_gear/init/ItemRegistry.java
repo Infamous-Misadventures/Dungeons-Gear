@@ -192,6 +192,14 @@ public class ItemRegistry {
     public static final RegistryObject<Item> VINE_WHIP = ITEMS.register("vine_whip",
             () -> new WhipItem(ToolMaterialList.METAL, 6, (1.0f-4.0f), 2.5F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
 
+    // Tempest Knives
+    public static final RegistryObject<Item> TEMPEST_KNIFE = ITEMS.register("tempest_knife",
+            () -> new TempestKnifeItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+    public static final RegistryObject<Item> RESOLUTE_TEMPEST_KNIFE = ITEMS.register("resolute_tempest_knife",
+            () -> new TempestKnifeItem(ToolMaterialList.METAL, 6, (1.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+    public static final RegistryObject<Item> CHILL_GALE_KNIFE = ITEMS.register("chill_gale_knife",
+            () -> new TempestKnifeItem(ToolMaterialList.METAL, 6, (1.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+
     public static final RegistryObject<Item> BONEBOW = ITEMS.register("bonebow",
             () -> new DungeonsBowItem(new Item.Properties(), 20.0F, true));
     public static final RegistryObject<Item> TWIN_BOW = ITEMS.register("twin_bow",
@@ -249,6 +257,13 @@ public class ItemRegistry {
             () -> new SnowBowItem(new Item.Properties(), 20.0F, false));
     public static final RegistryObject<Item> WINTERS_TOUCH = ITEMS.register("winters_touch",
             () -> new SnowBowItem(new Item.Properties(), 20.0F, true));
+
+    public static final RegistryObject<Item> WIND_BOW = ITEMS.register("wind_bow",
+            () -> new WindBowItem(new Item.Properties(), 20.0F, false));
+    public static final RegistryObject<Item> BURST_GALE_BOW = ITEMS.register("burst_gale_bow",
+            () -> new WindBowItem(new Item.Properties(), 20.0F, true));
+    public static final RegistryObject<Item> ECHO_OF_THE_VALLEY = ITEMS.register("echo_of_the_valley",
+            () -> new WindBowItem(new Item.Properties(), 20.0F, true));
 
 
     public static final RegistryObject<Item> RAPID_CROSSBOW = ITEMS.register("rapid_crossbow",
@@ -616,6 +631,7 @@ public class ItemRegistry {
         commonRangedWeaponMap.put(SOUL_BOW.get(), SOUL_BOW.get().getRegistryName());
         commonRangedWeaponMap.put(TRICKBOW.get(), TRICKBOW.get().getRegistryName());
         commonRangedWeaponMap.put(SNOW_BOW.get(), SNOW_BOW.get().getRegistryName());
+        commonRangedWeaponMap.put(WIND_BOW.get(), WIND_BOW.get().getRegistryName());
     }
 
     private static void putCommonCrossbowsInMap() {
@@ -665,6 +681,8 @@ public class ItemRegistry {
         uniqueRangedWeaponMap.put(HAUNTED_BOW.get(), HAUNTED_BOW.get().getRegistryName());
         uniqueRangedWeaponMap.put(ANCIENT_BOW.get(), ANCIENT_BOW.get().getRegistryName());
         uniqueRangedWeaponMap.put(LOVE_SPELL_BOW.get(), LOVE_SPELL_BOW.get().getRegistryName());
+        uniqueRangedWeaponMap.put(BURST_GALE_BOW.get(), BURST_GALE_BOW.get().getRegistryName());
+        uniqueRangedWeaponMap.put(ECHO_OF_THE_VALLEY.get(), ECHO_OF_THE_VALLEY.get().getRegistryName());
     }
 
     private static void putCommonMeleeWeaponsInMap() {
@@ -684,6 +702,7 @@ public class ItemRegistry {
         commonWeaponMap.put(GLAIVE.get(), GLAIVE.get().getRegistryName());
         commonWeaponMap.put(DAGGER.get(), DAGGER.get().getRegistryName());
         commonWeaponMap.put(RAPIER.get(), RAPIER.get().getRegistryName());
+        commonWeaponMap.put(TEMPEST_KNIFE.get(), TEMPEST_KNIFE.get().getRegistryName());
     }
 
     private static void putUniqueMeleeWeaponsInMap() {
@@ -725,6 +744,8 @@ public class ItemRegistry {
         uniqueWeaponMap.put(GREAT_AXEBLADE.get(), GREAT_AXEBLADE.get().getRegistryName());
         uniqueWeaponMap.put(SINISTER_SWORD.get(), SINISTER_SWORD.get().getRegistryName());
         uniqueWeaponMap.put(SHEAR_DAGGER.get(), SHEAR_DAGGER.get().getRegistryName());
+        uniqueWeaponMap.put(RESOLUTE_TEMPEST_KNIFE.get(), RESOLUTE_TEMPEST_KNIFE.get().getRegistryName());
+        uniqueWeaponMap.put(CHILL_GALE_KNIFE.get(), CHILL_GALE_KNIFE.get().getRegistryName());
     }
 
     private static void putArtifactsInMap() {

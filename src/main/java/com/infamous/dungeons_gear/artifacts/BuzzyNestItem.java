@@ -8,6 +8,7 @@ import com.infamous.dungeons_gear.goals.BeeFollowOwnerGoal;
 import com.infamous.dungeons_gear.goals.BeeOwnerHurtByTargetGoal;
 import com.infamous.dungeons_gear.goals.BeeOwnerHurtTargetGoal;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -115,12 +116,16 @@ public class BuzzyNestItem extends ArtifactItem {
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
+        DescriptionHelper.addFullDescription(list, stack);
+    }
 
-        list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
-                "Bee lovers and the bee-loved alike are fans of the Buzzy Nest, but don't be fooled by the cute bees within - they pack a powerful sting!"));
-        list.add(new StringTextComponent(TextFormatting.GREEN +
-                "When the Buzzy Nest is placed on the ground, bees who will fight beside you begin to spawn."));
-        list.add(new StringTextComponent(TextFormatting.BLUE +
-                "23 Seconds Cooldown"));
+    @Override
+    public int getCooldownInSeconds() {
+        return 23;
+    }
+
+    @Override
+    public int getDurationInSeconds() {
+        return 0;
     }
 }

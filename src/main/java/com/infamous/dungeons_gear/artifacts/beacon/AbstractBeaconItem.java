@@ -36,13 +36,13 @@ public abstract class AbstractBeaconItem extends ArtifactItem implements ISoulGa
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         ItemStack itemstack = playerIn.getHeldItem(handIn);
         if (worldIn.isRemote) {
-            if (canFire(playerIn)){
+            if (canFire(playerIn, itemstack)){
                 SoundHelper.playBeaconSound(playerIn, true);
             }
             return new ActionResult<>(ActionResultType.PASS, itemstack);
         }
 
-        if (!canFire(playerIn)){
+        if (!canFire(playerIn, itemstack)){
             return new ActionResult<>(ActionResultType.FAIL, itemstack);
         }
 
@@ -78,7 +78,7 @@ public abstract class AbstractBeaconItem extends ArtifactItem implements ISoulGa
         if(livingEntity instanceof PlayerEntity){
             World world = livingEntity.getEntityWorld();
             PlayerEntity playerEntity = (PlayerEntity)livingEntity;
-            if (canFire(playerEntity)) {
+            if (canFire(playerEntity, stack)) {
                 if(!playerEntity.isCreative()){
                     playerEntity.giveExperiencePoints(EXPERIENCE_COST_PER_TICK);
                 }
@@ -122,8 +122,12 @@ public abstract class AbstractBeaconItem extends ArtifactItem implements ISoulGa
         return stackItem instanceof AbstractBeaconItem ? ((AbstractBeaconItem)stackItem).getBeamColor() :  null;
     }
 
-    public static boolean canFire(PlayerEntity playerEntity) {
-        return playerEntity.experienceTotal >= 1 || playerEntity.isCreative();
+    public static boolean canFire(PlayerEntity playerEntity, ItemStack stack) {
+        ISoulGatherer soulGatherer = stack.getItem() instanceof ISoulGatherer ? ((ISoulGatherer)stack.getItem()) : null;
+        if(soulGatherer != null){
+            return playerEntity.experienceTotal >= soulGatherer.getActivationCost(stack)|| playerEntity.isCreative();
+        }
+        return false;
     }
 
     public static ItemStack getBeacon(PlayerEntity player) {
@@ -140,5 +144,20 @@ public abstract class AbstractBeaconItem extends ArtifactItem implements ISoulGa
     @Override
     public int getGatherAmount(ItemStack stack) {
         return 1;
+    }
+
+    @Override
+    public int getCooldownInSeconds() {
+        return 0;
+    }
+
+    @Override
+    public int getActivationCost(ItemStack stack) {
+        return 1;
+    }
+
+    @Override
+    public int getDurationInSeconds() {
+        return 0;
     }
 }

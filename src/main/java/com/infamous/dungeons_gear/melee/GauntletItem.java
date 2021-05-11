@@ -9,6 +9,7 @@ import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.interfaces.IOffhandAttack;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
@@ -122,6 +123,11 @@ public class GauntletItem extends TieredItem implements IOffhandAttack, IVanisha
     }
 
     @Override
+    public boolean hasRelentlessCombo(ItemStack stack) {
+        return true;
+    }
+
+    @Override
     public boolean hasRampagingBuiltIn(ItemStack stack) {
         return stack.getItem() == ItemRegistry.MAULER.get();
     }
@@ -152,33 +158,7 @@ public class GauntletItem extends TieredItem implements IOffhandAttack, IVanisha
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
-
-        if (stack.getItem() == ItemRegistry.GAUNTLET.get()) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Gauntlets call back to an ancient style of hand to hand combat."));
-
-            //list.add(new StringTextComponent(TextFormatting.GREEN + "Relentless Combo"));
-        }
-        if (stack.getItem() == ItemRegistry.FIGHTERS_BINDING.get()) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Made in the wilds beyond the mountains, these gauntlets have been worn by warriors for centuries."));
-
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Boosts Attack Speed"));
-            //list.add(new StringTextComponent(TextFormatting.GREEN + "Turbo punches"));
-        }
-        if (stack.getItem() == ItemRegistry.MAULER.get()) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "This claw-like weapon, wielded by ancient Illager soldiers, is savage in battle."));
-
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Increases Attack Speed (Rampaging I)"));
-            //list.add(new StringTextComponent(TextFormatting.GREEN + "Relentless Combo"));
-        }
-        if (stack.getItem() == ItemRegistry.SOUL_FIST.get()) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Soul Fists are gauntlets clad with great gemstones, each containing a powerful soul."));
-
-            list.add(new StringTextComponent(TextFormatting.LIGHT_PURPLE + "Souls Critical Boost (Enigma Resonator I)"));
-            list.add(new StringTextComponent(TextFormatting.LIGHT_PURPLE + "+2 XP Gathering"));
-            //list.add(new StringTextComponent(TextFormatting.GREEN + "Relentless Combo"));
-        }
-
-        list.add(new StringTextComponent(TextFormatting.GREEN + "Dual Wield"));
+        DescriptionHelper.addFullDescription(list, stack);
     }
 
     @Override
@@ -197,5 +177,10 @@ public class GauntletItem extends TieredItem implements IOffhandAttack, IVanisha
         if (stack.getItem() == ItemRegistry.SOUL_FIST.get()) {
             return 2;
         } else return 0;
+    }
+
+    @Override
+    public int getActivationCost(ItemStack stack) {
+        return 0;
     }
 }

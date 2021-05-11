@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.enchantments.melee_ranged;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.init.ItemRegistry;
+import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -60,15 +61,17 @@ public class PoisonCloudEnchantment extends Enchantment {
         LivingEntity attacker = (LivingEntity)event.getSource().getTrueSource();
         LivingEntity victim = event.getEntityLiving();
         ItemStack mainhand = attacker.getHeldItemMainhand();
-        if((mainhand.getItem() == ItemRegistry.VENOM_GLAIVE.get()
-                || mainhand.getItem() == ItemRegistry.NIGHTMARES_BITE.get()
-                || mainhand.getItem() == ItemRegistry.VINE_WHIP.get())){
+        if(hasPoisonCloudBuiltIn(mainhand)){
             float chance = attacker.getRNG().nextFloat();
             if(chance <=  0.3F){
                 checkForPlayer(attacker);
                 AOECloudHelper.spawnPoisonCloud(attacker, victim, 0);
             }
         }
+    }
+
+    private static boolean hasPoisonCloudBuiltIn(ItemStack mainhand) {
+        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasPoisonCloudBuiltIn(mainhand);
     }
 
     @SubscribeEvent

@@ -37,13 +37,13 @@ public interface IArmor {
     default double getChanceToTeleportAwayWhenHit(){
         return 0;
     }
-    default double getHigherJumps(){
+    default double getLongerRolls(){
         return 0;
     }
     default double getChanceToNegateHits(){
         return 0;
     }
-    default double getLongerJumpAbilityCooldown(){
+    default double getLongerRollCooldown(){
         return 0;
     }
     default double getFreezingResistance(){

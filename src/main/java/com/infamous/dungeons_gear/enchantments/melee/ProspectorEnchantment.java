@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.enchantments.melee;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.init.ItemRegistry;
+import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -39,7 +40,7 @@ public class ProspectorEnchantment extends Enchantment{
             LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
             ItemStack mainhand = attacker.getHeldItemMainhand();
             LivingEntity victim = event.getEntityLiving();
-            boolean uniqueWeaponFlag = mainhand.getItem() == ItemRegistry.THE_LAST_LAUGH.get() || mainhand.getItem() == ItemRegistry.DIAMOND_PICKAXE.get();
+            boolean uniqueWeaponFlag = hasProspectorBuiltIn(mainhand);
             if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.PROSPECTOR)){
                 int prospectorLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.PROSPECTOR, mainhand);
                 float prospectorChance;
@@ -69,6 +70,10 @@ public class ProspectorEnchantment extends Enchantment{
                 }
             }
         }
+    }
+
+    private static boolean hasProspectorBuiltIn(ItemStack mainhand) {
+        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasProspectorBuiltIn(mainhand);
     }
 
     private static boolean isInNether(LivingEntity victim){

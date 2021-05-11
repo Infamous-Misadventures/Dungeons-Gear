@@ -4,6 +4,7 @@ import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -33,19 +34,23 @@ public class FlamingQuiverItem extends ArtifactItem {
         comboCap.setFlamingArrowsCount(7);
 
         itemstack.damageItem(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemstack)));
-        ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem(), 600);
+        ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem());
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }
 
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
+        DescriptionHelper.addFullDescription(list, stack);
+    }
 
-        list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
-                "This quiver is filled with the deadliest of arrows."));
-        list.add(new StringTextComponent(TextFormatting.GREEN +
-                "Turns the next 7 arrows you shoot into burning arrows."));
-        list.add(new StringTextComponent(TextFormatting.BLUE +
-                "30 Seconds Cooldown"));
+    @Override
+    public int getCooldownInSeconds() {
+        return 30;
+    }
+
+    @Override
+    public int getDurationInSeconds() {
+        return 0;
     }
 }

@@ -4,6 +4,7 @@ import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.init.ItemRegistry;
+import com.infamous.dungeons_gear.interfaces.IRangedWeapon;
 import com.infamous.dungeons_gear.utilties.AbilityHelper;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
@@ -44,7 +45,7 @@ public class BowEvents {
             float bowChargeTime = weaponCap.getBowChargeTime();
 
             int accelerateLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.ACCELERATE, stack);
-            if(stack.getItem() == ItemRegistry.MECHANICAL_SHORTBOW.get()) accelerateLevel++;
+            if(hasAccelerateBuiltIn(stack)) accelerateLevel++;
 
             float defaultChargeTime = 20.0F;
             float arrowVelocity = RangedAttackHelper.getVanillaArrowVelocity(stack, charge);
@@ -68,6 +69,10 @@ public class BowEvents {
                 weaponCap.setLastFiredTime(worldTime);
             }
         }
+    }
+
+    private static boolean hasAccelerateBuiltIn(ItemStack stack) {
+        return stack.getItem() instanceof IRangedWeapon && ((IRangedWeapon) stack.getItem()).hasAccelerateBuiltIn(stack);
     }
 
 

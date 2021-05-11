@@ -5,7 +5,9 @@ import com.infamous.dungeons_gear.enchantments.armor.*;
 import com.infamous.dungeons_gear.enchantments.melee_ranged.*;
 import com.infamous.dungeons_gear.enchantments.melee.*;
 import com.infamous.dungeons_gear.enchantments.ranged.*;
+import com.infamous.dungeons_gear.enchantments.types.ModDamageEnchantment;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -35,9 +37,11 @@ public class EnchantmentInit {
                     ECHO = new EchoEnchantment().setRegistryName(location("echo")),
                     EXPLODING = new ExplodingEnchantment().setRegistryName(location("exploding")),
                     LEECHING = new LeechingEnchantment().setRegistryName(location("leeching")),
+                    ILLAGERS_BANE = new ModDamageEnchantment(Enchantment.Rarity.UNCOMMON, 3, EquipmentSlotType.MAINHAND).setRegistryName(location("leeching")),
                     PROSPECTOR = new ProspectorEnchantment().setRegistryName(location("prospector")),
                     RADIANCE = new RadianceEnchantment().setRegistryName(location("radiance")),
                     RAMPAGING = new RampagingEnchantment().setRegistryName(location("rampaging")),
+                    RUSHDOWN = new RushdownEnchantment().setRegistryName(location("rushdown")),
                     SHOCKWAVE = new ShockwaveEnchantment().setRegistryName(location("shockwave")),
                     SOUL_SIPHON = new SoulSiphonEnchantment().setRegistryName(location("soul_siphon")),
                     STUNNING = new StunningEnchantment().setRegistryName(location("stunning")),

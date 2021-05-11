@@ -10,6 +10,7 @@ import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.interfaces.IOffhandAttack;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
@@ -96,27 +97,7 @@ public class DaggerItem extends SwordItem implements IOffhandAttack, IMeleeWeapo
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
-
-        if (stack.getItem() == ItemRegistry.FANG_OF_FROST.get()) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "This lauded dagger of the northern mountains is known to freeze its foes to solid ice."));
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Slows Mobs (Freezing I)"));
-        }
-        if (stack.getItem() == ItemRegistry.MOON_DAGGER.get()) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "This curved blade shines like the crescent moon on a dark night."));
-
-            list.add(new StringTextComponent(TextFormatting.LIGHT_PURPLE + "Souls Critical Boost (Enigma Resonator I)"));
-        }
-        if (stack.getItem() == ItemRegistry.DAGGER.get()) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Daggers are the weapon of cravens - or so folks say."));
-
-        }
-        if (stack.getItem() == ItemRegistry.SHEAR_DAGGER.get()) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Even the simplest of farmers can wield these Shear Daggers with savage results."));
-
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Chance To Spawn Area Damage (Swirling I)"));
-        }
-
-        list.add(new StringTextComponent(TextFormatting.GREEN + "Dual Wield"));
+        DescriptionHelper.addFullDescription(list, stack);
     }
 
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
@@ -141,6 +122,10 @@ public class DaggerItem extends SwordItem implements IOffhandAttack, IMeleeWeapo
         } else return 0;
     }
 
+    @Override
+    public int getActivationCost(ItemStack stack) {
+        return 0;
+    }
 
     @Override
     public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {

@@ -43,6 +43,8 @@ public interface IRangedWeapon {
 
     default boolean hasSlowFireRate(ItemStack stack){ return this.shootsHeavyArrows(stack);}
 
+    default boolean shootsGaleArrows(ItemStack stack){ return false;}
+
     // Enchantment Abilities
     default boolean hasTempoTheftBuiltIn(ItemStack stack){
         return false;
@@ -123,5 +125,7 @@ public interface IRangedWeapon {
     default boolean hasDynamoBuiltIn(ItemStack stack){
         return false;
     }
+
+    default boolean hasRollChargeBuiltIn(ItemStack stack){ return false;}
 
 }

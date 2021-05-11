@@ -7,6 +7,7 @@ import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
 import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
+import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -56,7 +57,7 @@ public class ShockwaveEnchantment extends AOEDamageEnchantment {
             LivingEntity victim = event.getEntityLiving();
             ItemStack mainhand = attacker.getHeldItemMainhand();
             if (event.getResult() != Event.Result.ALLOW && mainhand.getItem() instanceof IComboWeapon) return;
-            boolean uniqueWeaponFlag = mainhand.getItem() == ItemRegistry.WHIRLWIND.get();
+            boolean uniqueWeaponFlag = hasShockwaveBuiltIn(mainhand);
             if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.SHOCKWAVE) || uniqueWeaponFlag){
                 int shockwaveLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.SHOCKWAVE, mainhand);
                 if(uniqueWeaponFlag) shockwaveLevel += 1;
@@ -72,5 +73,9 @@ public class ShockwaveEnchantment extends AOEDamageEnchantment {
                 AreaOfEffectHelper.causeShockwave(attacker, victim, shockwaveDamage, 3.0f);
             }
         }
+    }
+
+    private static boolean hasShockwaveBuiltIn(ItemStack mainhand) {
+        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasShockwaveBuiltIn(mainhand);
     }
 }

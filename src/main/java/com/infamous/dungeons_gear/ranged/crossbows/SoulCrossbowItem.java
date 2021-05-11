@@ -38,4 +38,9 @@ public class SoulCrossbowItem extends AbstractDungeonsCrossbowItem implements IS
     public int getGatherAmount(ItemStack stack) {
         return 2;
     }
+
+    @Override
+    public int getActivationCost(ItemStack stack) {
+        return 0;
+    }
 }

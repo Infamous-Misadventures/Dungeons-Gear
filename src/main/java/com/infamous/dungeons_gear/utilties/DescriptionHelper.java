@@ -1,6 +1,8 @@
 package com.infamous.dungeons_gear.utilties;
 
+import com.infamous.dungeons_gear.artifacts.ArtifactItem;
 import com.infamous.dungeons_gear.interfaces.IArmor;
+import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.interfaces.IRangedWeapon;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
 import net.minecraft.item.ItemStack;
@@ -16,13 +18,14 @@ public class DescriptionHelper {
     public static void addFullDescription(List<ITextComponent> list, ItemStack itemStack){
         addLoreDescription(list, itemStack);
         addAbilityDescription(list, itemStack);
-        addSoulGatheringDescription(list, itemStack);
         addPenaltyDescription(list, itemStack);
+        addArtifactInfo(list, itemStack);
+        addSoulGatheringDescription(list, itemStack);
     }
 
     public static void addLoreDescription(List<ITextComponent> list, ItemStack itemStack){
         list.add(new TranslationTextComponent(
-                "lore.dungeons_gear" + itemStack.getItem().getRegistryName().getPath())
+                "lore.dungeons_gear." + itemStack.getItem().getRegistryName().getPath())
                 .mergeStyle(TextFormatting.WHITE, TextFormatting.ITALIC));
     }
 
@@ -39,9 +42,17 @@ public class DescriptionHelper {
         if(itemStack.getItem() instanceof ISoulGatherer){
             ISoulGatherer soulGatherer = (ISoulGatherer) itemStack.getItem();
             int gatherAmount = soulGatherer.getGatherAmount(itemStack);
-            list.add(new TranslationTextComponent(
-                    "ability.dungeons_gear.soul_gathering", gatherAmount)
-                    .mergeStyle(TextFormatting.LIGHT_PURPLE));
+            int activationCost = soulGatherer.getActivationCost(itemStack);
+            if(gatherAmount > 0) {
+                list.add(new TranslationTextComponent(
+                        "ability.dungeons_gear.soul_gathering", gatherAmount)
+                        .mergeStyle(TextFormatting.LIGHT_PURPLE));
+            }
+            if(activationCost > 0) {
+                list.add(new TranslationTextComponent(
+                        "artifact.dungeons_gear.activation", activationCost)
+                        .mergeStyle(TextFormatting.LIGHT_PURPLE));
+            }
         }
     }
 
@@ -54,10 +65,29 @@ public class DescriptionHelper {
         }
     }
 
+    public static void addArtifactInfo(List<ITextComponent> list, ItemStack itemStack) {
+        if (itemStack.getItem() instanceof ArtifactItem) {
+            ArtifactItem artifactItem = (ArtifactItem) itemStack.getItem();
+            int durationInSeconds = artifactItem.getDurationInSeconds();
+            int cooldownInSeconds = artifactItem.getCooldownInSeconds();
+            if(durationInSeconds > 0) {
+                list.add(new TranslationTextComponent(
+                        "artifact.dungeons_gear.duration", durationInSeconds)
+                        .mergeStyle(TextFormatting.BLUE));
+            }
+            if(cooldownInSeconds > 0) {
+                list.add(new TranslationTextComponent(
+                        "artifact.dungeons_gear.cooldown", cooldownInSeconds)
+                        .mergeStyle(TextFormatting.BLUE));
+            }
+        }
+    }
+
     public static List<String> getAbilities(ItemStack itemStack){
         List<String> abilities = new ArrayList<>();
         checkRangedWeapon(itemStack, abilities);
         checkArmor(itemStack, abilities);
+        checkMeleeWeapon(itemStack, abilities);
         return abilities;
     }
 
@@ -78,6 +108,120 @@ public class DescriptionHelper {
             }
             if(armor.hasChillingBuiltIn(itemStack)){
                 abilities.add("chilling");
+            }
+        }
+    }
+
+    private static void checkMeleeWeapon(ItemStack itemStack, List<String> abilities) {
+        if (itemStack.getItem() instanceof IMeleeWeapon) {
+            IMeleeWeapon meleeWeapon = (IMeleeWeapon) itemStack.getItem();
+            if (meleeWeapon.boostsAttackSpeed(itemStack)) {
+                abilities.add("boosts_attack_speed");
+            }
+            if (meleeWeapon.hasBusyBeeBuiltIn(itemStack)) {
+                abilities.add("busy_bee");
+            }
+            if (meleeWeapon.hasCommittedBuiltIn(itemStack)) {
+                abilities.add("committed");
+            }
+            if (meleeWeapon.hasChainsBuiltIn(itemStack)) {
+                abilities.add("chains");
+            }
+            if (meleeWeapon.hasCriticalHitBuiltIn(itemStack)) {
+                abilities.add("critical_hit");
+            }
+            if (meleeWeapon.hasDynamoBuiltIn(itemStack)) {
+                abilities.add("dynamo");
+            }
+            if (meleeWeapon.canDualWield(itemStack)) {
+                abilities.add("dual_wield");
+            }
+            if (meleeWeapon.hasEchoBuiltIn(itemStack)) {
+                abilities.add("echo");
+            }
+            if (meleeWeapon.hasEnigmaResonatorBuiltIn(itemStack)) {
+                abilities.add("enigma_resonator");
+            }
+            if (meleeWeapon.hasExplodingBuiltIn(itemStack)) {
+                abilities.add("exploding");
+            }
+            if (meleeWeapon.hasFastThrusts(itemStack)) {
+                abilities.add("fast_thrusts");
+            }
+            if (meleeWeapon.hasFireAspectBuiltIn(itemStack)) {
+                abilities.add("fire_aspect");
+            }
+            if (meleeWeapon.hasFortuneBuiltIn(itemStack)) {
+                abilities.add("fortune");
+            }
+            if (meleeWeapon.hasFreezingBuiltIn(itemStack)) {
+                abilities.add("freezing");
+            }
+            if (meleeWeapon.hasGravityBuiltIn(itemStack)) {
+                abilities.add("gravity");
+            }
+            if (meleeWeapon.hasGreatSplash(itemStack)) {
+                abilities.add("great_splash");
+            }
+            if (meleeWeapon.hasKnockbackBuiltIn(itemStack)) {
+                abilities.add("knockback");
+            }
+            if (meleeWeapon.hasLeechingBuiltIn(itemStack)) {
+                abilities.add("leeching");
+            }
+            if (meleeWeapon.hasPoisonCloudBuiltIn(itemStack)) {
+                abilities.add("poison_cloud");
+            }
+            if (meleeWeapon.hasProspectorBuiltIn(itemStack)) {
+                abilities.add("prospector");
+            }
+            if (meleeWeapon.hasRadianceBuiltIn(itemStack)) {
+                abilities.add("radiance");
+            }
+            if (meleeWeapon.hasRampagingBuiltIn(itemStack)) {
+                abilities.add("rampaging");
+            }
+            if (meleeWeapon.hasReliableCombo(itemStack)) {
+                abilities.add("reliable_combo");
+            }
+            if (meleeWeapon.hasRelentlessCombo(itemStack)) {
+                abilities.add("relentless_combo");
+            }
+            if (meleeWeapon.hasRushdownBuiltIn(itemStack)) {
+                abilities.add("rushdown");
+            }
+            if (meleeWeapon.hasSharpnessBuiltIn(itemStack)) {
+                abilities.add("sharpness");
+            }
+            if (meleeWeapon.hasShockwaveBuiltIn(itemStack)) {
+                abilities.add("shockwave");
+            }
+            if (meleeWeapon.hasSmiteBuiltIn(itemStack)) {
+                abilities.add("smite");
+            }
+            if (meleeWeapon.hasSoulSiphonBuiltIn(itemStack)) {
+                abilities.add("soul_siphon");
+            }
+            if (meleeWeapon.hasSpinAttack(itemStack)) {
+                abilities.add("spin_attack");
+            }
+            if (meleeWeapon.hasStunningBuiltIn(itemStack)) {
+                abilities.add("stunning");
+            }
+            if (meleeWeapon.hasStylishCombo(itemStack)) {
+                abilities.add("stylish_combo");
+            }
+            if (meleeWeapon.hasSwirlingBuiltIn(itemStack)) {
+                abilities.add("swirling");
+            }
+            if (meleeWeapon.hasThrustAttack(itemStack)) {
+                abilities.add("thrust_attack");
+            }
+            if (meleeWeapon.hasThunderingBuiltIn(itemStack)) {
+                abilities.add("thundering");
+            }
+            if (meleeWeapon.hasWeakeningBuiltIn(itemStack)) {
+                abilities.add("weakening");
             }
         }
     }
@@ -120,6 +264,9 @@ public class DescriptionHelper {
             }
             if(rangedWeapon.hasFuseShotBuiltIn(itemStack)){
                 abilities.add("fuse_shot");
+            }
+            if(rangedWeapon.shootsGaleArrows(itemStack)){
+                abilities.add("gale_arrows");
             }
             if(rangedWeapon.hasGravityBuiltIn(itemStack)){
                 abilities.add("gravity");
@@ -165,6 +312,9 @@ public class DescriptionHelper {
             }
             if(rangedWeapon.hasRicochetBuiltIn(itemStack)){
                 abilities.add("ricochet");
+            }
+            if(rangedWeapon.hasRollChargeBuiltIn(itemStack)){
+                abilities.add("roll_charge");
             }
             if(rangedWeapon.shootsStrongChargedArrows(itemStack)){
                 abilities.add("strong_charged");

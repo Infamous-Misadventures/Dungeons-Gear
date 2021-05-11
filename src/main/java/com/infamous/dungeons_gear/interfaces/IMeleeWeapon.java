@@ -9,7 +9,13 @@ public interface IMeleeWeapon {
         return false;
     }
     default boolean boostsAttackSpeed(ItemStack stack) { return false; }
+    default boolean hasSpinAttack(ItemStack stack){ return false;}
     default boolean hasFastThrusts(ItemStack stack) { return false; }
+    default boolean hasReliableCombo(ItemStack stack){ return false;}
+    default boolean hasRelentlessCombo(ItemStack stack){ return false;}
+    default boolean hasGreatSplash(ItemStack stack){ return false;}
+    default boolean hasThrustAttack(ItemStack stack){ return false;}
+    default boolean hasStylishCombo(ItemStack stack){ return false;}
 
     // Enchantment abilities
     default boolean hasKnockbackBuiltIn(ItemStack stack){
@@ -90,5 +96,6 @@ public interface IMeleeWeapon {
     default boolean hasFortuneBuiltIn(ItemStack stack){
         return false;
     }
+    default boolean hasRushdownBuiltIn(ItemStack stack){return false;}
 
 }

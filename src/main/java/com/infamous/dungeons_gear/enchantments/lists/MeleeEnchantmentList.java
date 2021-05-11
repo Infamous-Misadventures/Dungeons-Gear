@@ -10,9 +10,11 @@ public class MeleeEnchantmentList {
     public static Enchantment ECHO;
     public static Enchantment EXPLODING;
     public static Enchantment LEECHING;
+    public static Enchantment ILLAGERS_BANE;
     public static Enchantment PROSPECTOR;
     public static Enchantment RADIANCE;
     public static Enchantment RAMPAGING;
+    public static Enchantment RUSHDOWN;
     public static Enchantment SHOCKWAVE;
     public static Enchantment SOUL_SIPHON;
     public static Enchantment STUNNING;

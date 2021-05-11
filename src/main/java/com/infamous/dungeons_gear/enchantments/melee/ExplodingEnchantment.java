@@ -6,6 +6,7 @@ import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
 import com.infamous.dungeons_gear.init.ItemRegistry;
+import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -48,8 +49,7 @@ public class ExplodingEnchantment extends AOEDamageEnchantment {
             LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
             LivingEntity victim = event.getEntityLiving();
             ItemStack mainhand = attacker.getHeldItemMainhand();
-            boolean uniqueWeaponFlag = mainhand.getItem() == ItemRegistry.CURSED_AXE.get()
-                    || mainhand.getItem() == ItemRegistry.BATTLESTAFF_OF_TERROR.get();
+            boolean uniqueWeaponFlag = hasExplodingBuiltIn(mainhand);
             if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.EXPLODING) || uniqueWeaponFlag){
                 int explodingLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.EXPLODING, mainhand);
                 float explosionDamage;
@@ -60,6 +60,10 @@ public class ExplodingEnchantment extends AOEDamageEnchantment {
                 AreaOfEffectHelper.causeExplosionAttack(attacker, victim, explosionDamage, 3.0F);
             }
         }
+    }
+
+    private static boolean hasExplodingBuiltIn(ItemStack mainhand) {
+        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasExplodingBuiltIn(mainhand);
     }
 
 }

@@ -96,7 +96,7 @@ public class OcelotArmorItem extends ArmorItem implements IArmor {
         DescriptionHelper.addLoreDescription(list, stack);
         if (this.unique) {
             list.add(new TranslationTextComponent(
-                    "attribute.name.briefInvulnerabilityWhenJumping")
+                    "attribute.name.briefInvulnerabilityWhenRolling")
                     .mergeStyle(TextFormatting.GREEN));
         }
     }
@@ -107,7 +107,7 @@ public class OcelotArmorItem extends ArmorItem implements IArmor {
     }
 
     @Override
-    public double getHigherJumps() {
+    public double getLongerRolls() {
         return 25;
     }
 }

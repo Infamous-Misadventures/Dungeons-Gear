@@ -83,4 +83,9 @@ public class BurstCrossbowItem extends AbstractDungeonsCrossbowItem implements I
         }
         else return 0;
     }
+
+    @Override
+    public int getActivationCost(ItemStack stack) {
+        return 0;
+    }
 }

@@ -12,19 +12,17 @@ import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.particles.BasicParticleType;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
-import java.util.Comparator;
 import java.util.List;
 
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
@@ -32,17 +30,58 @@ import static com.infamous.dungeons_gear.utilties.AbilityHelper.canApplyToEnemy;
 import static com.infamous.dungeons_gear.utilties.AbilityHelper.isPetOfAttacker;
 
 public class AreaOfEffectHelper {
-    public static void pullInNearbyEntities(LivingEntity attacker, LivingEntity target, float distance) {
+    public static void pullInNearbyEntities(LivingEntity attacker, LivingEntity target, float distance, BasicParticleType particleType) {
         World world = target.getEntityWorld();
         List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, target, nearbyEntity));
         PROXY.spawnParticles(target, ParticleTypes.PORTAL);
         for (LivingEntity nearbyEntity : nearbyEntities) {
+            pullVicitimTowardsTarget(target,nearbyEntity, particleType);
+        }
+    }
+
+    public static void pullVicitimTowardsTarget(LivingEntity target, LivingEntity nearbyEntity, BasicParticleType particleType) {
+        double motionX = target.getPosX() - (nearbyEntity.getPosX());
+        double motionY = target.getPosY() - (nearbyEntity.getPosY());
+        double motionZ = target.getPosZ() - (nearbyEntity.getPosZ());
+        Vector3d vector3d = new Vector3d(motionX, motionY, motionZ).scale(0.15);
+
+        nearbyEntity.setMotion(vector3d);
+        PROXY.spawnParticles(nearbyEntity, particleType);
+    }
+
+    public static void pullInNearbyEntitiesAtPos(LivingEntity attacker, BlockPos blockPos, int distance, BasicParticleType particleType) {
+        World world = attacker.getEntityWorld();
+        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(blockPos).grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
+        for (LivingEntity nearbyEntity : nearbyEntities) {
+            pullVictimTowardsPos(blockPos, nearbyEntity, particleType);
+        }
+    }
+
+    private static void pullVictimTowardsPos(BlockPos targetPos, LivingEntity nearbyEntity, BasicParticleType particleType) {
+        double motionX = targetPos.getX() - (nearbyEntity.getPosX());
+        double motionY = targetPos.getY() - (nearbyEntity.getPosY());
+        double motionZ = targetPos.getZ() - (nearbyEntity.getPosZ());
+        Vector3d vector3d = new Vector3d(motionX, motionY, motionZ).scale(0.15);
+
+        nearbyEntity.setMotion(vector3d);
+        PROXY.spawnParticles(nearbyEntity, particleType);
+    }
+
+    public static void chainNearbyEntities(LivingEntity attacker, LivingEntity target, float distance, int timeMultiplier) {
+        World world = target.getEntityWorld();
+        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, target, nearbyEntity));
+        PROXY.spawnParticles(target, ParticleTypes.PORTAL);
+        EffectInstance chained = new EffectInstance(Effects.SLOWNESS, 20 * timeMultiplier, 5);
+        target.addPotionEffect(chained);
+        for (LivingEntity nearbyEntity : nearbyEntities) {
+
             double motionX = target.getPosX() - (nearbyEntity.getPosX());
             double motionY = target.getPosY() - (nearbyEntity.getPosY());
             double motionZ = target.getPosZ() - (nearbyEntity.getPosZ());
-            Vector3d vector3d = new Vector3d(motionX, motionY, motionZ).scale(0.15);
+            Vector3d vector3d = new Vector3d(motionX, motionY, motionZ);
 
             nearbyEntity.setMotion(vector3d);
+            nearbyEntity.addPotionEffect(chained);
             PROXY.spawnParticles(nearbyEntity, ParticleTypes.PORTAL);
         }
     }
@@ -101,39 +140,6 @@ public class AreaOfEffectHelper {
                 return healedAmount;
             }
         } else return 0;
-    }
-
-    public static void pullInNearbyEntitiesAtPos(LivingEntity attacker, BlockPos blockPos, int distance) {
-        World world = attacker.getEntityWorld();
-        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(blockPos).grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
-        for (LivingEntity nearbyEntity : nearbyEntities) {
-            double motionX = blockPos.getX() - (nearbyEntity.getPosX());
-            double motionY = blockPos.getY() - (nearbyEntity.getPosY());
-            double motionZ = blockPos.getZ() - (nearbyEntity.getPosZ());
-            Vector3d vector3d = new Vector3d(motionX, motionY, motionZ);
-
-            nearbyEntity.setMotion(vector3d);
-            PROXY.spawnParticles(nearbyEntity, ParticleTypes.PORTAL);
-        }
-    }
-
-    public static void chainNearbyEntities(LivingEntity attacker, LivingEntity target, float distance, int timeMultiplier) {
-        World world = target.getEntityWorld();
-        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, target, nearbyEntity));
-        PROXY.spawnParticles(target, ParticleTypes.PORTAL);
-        EffectInstance chained = new EffectInstance(Effects.SLOWNESS, 20 * timeMultiplier, 5);
-        target.addPotionEffect(chained);
-        for (LivingEntity nearbyEntity : nearbyEntities) {
-
-            double motionX = target.getPosX() - (nearbyEntity.getPosX());
-            double motionY = target.getPosY() - (nearbyEntity.getPosY());
-            double motionZ = target.getPosZ() - (nearbyEntity.getPosZ());
-            Vector3d vector3d = new Vector3d(motionX, motionY, motionZ);
-
-            nearbyEntity.setMotion(vector3d);
-            nearbyEntity.addPotionEffect(chained);
-            PROXY.spawnParticles(nearbyEntity, ParticleTypes.PORTAL);
-        }
     }
 
     public static void weakenNearbyEntities(LivingEntity attacker, LivingEntity target, int distance, int amplifier) {

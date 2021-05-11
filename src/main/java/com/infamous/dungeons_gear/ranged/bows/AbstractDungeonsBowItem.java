@@ -88,7 +88,7 @@ public abstract class AbstractDungeonsBowItem extends BowItem implements IRanged
         }
     }
 
-    public void createBowArrow(ItemStack stack, World world, PlayerEntity playerentity, ItemStack itemstack, float arrowVelocity, int i, boolean hasInfiniteAmmo, boolean isAdditionalShot) {
+    public AbstractArrowEntity createBowArrow(ItemStack stack, World world, PlayerEntity playerentity, ItemStack itemstack, float arrowVelocity, int i, boolean hasInfiniteAmmo, boolean isAdditionalShot) {
         ArrowItem arrowitem = (ArrowItem)((ArrowItem)(itemstack.getItem() instanceof ArrowItem ? itemstack.getItem() : Items.ARROW));
         AbstractArrowEntity abstractarrowentity = arrowitem.createArrow(world, itemstack, playerentity);
         abstractarrowentity = this.customArrow(abstractarrowentity);
@@ -128,6 +128,7 @@ public abstract class AbstractDungeonsBowItem extends BowItem implements IRanged
         }
         RangedAttackHelper.addWeaponTags(abstractarrowentity, stack);
         world.addEntity(abstractarrowentity);
+        return abstractarrowentity;
     }
 
     public void setArrowTrajectory(PlayerEntity playerentity, float arrowVelocity, int i, AbstractArrowEntity abstractarrowentity) {

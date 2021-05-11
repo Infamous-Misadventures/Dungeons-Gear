@@ -5,6 +5,7 @@ import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
@@ -90,26 +91,16 @@ public class SoulScytheItem extends SwordItem implements IMeleeWeapon, ISoulGath
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
         super.addInformation(stack, world, list, flag);
-        if(stack.getItem() == ItemRegistry.FROST_SCYTHE.get()){
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The Frost Scythe is an indestructible blade that is freezing to the touch and never seems to melt."));
-
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Slows Mobs (Freezing I)"));
-        }
-        if(stack.getItem() == ItemRegistry.JAILORS_SCYTHE.get()){
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "This scythe belonged to the terror of Highblock Keep, the Jailor."));
-
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Binds And Chains Enemies (Chains I)"));
-        }
-
-        if(stack.getItem() == ItemRegistry.SOUL_SCYTHE.get()){
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A cruel reaper of souls, the Soul Scythe is unsentimental in its work."));
-
-        }
-        list.add(new StringTextComponent(TextFormatting.LIGHT_PURPLE + "+2 XP Gathering"));
+        DescriptionHelper.addFullDescription(list, stack);
     }
 
     @Override
     public int getGatherAmount(ItemStack stack) {
         return 2;
+    }
+
+    @Override
+    public int getActivationCost(ItemStack stack) {
+        return 0;
     }
 }

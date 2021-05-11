@@ -4,6 +4,7 @@ import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -29,17 +30,16 @@ public class HarvesterItem extends ArtifactItem implements ISoulGatherer {
         PlayerEntity playerIn = c.getPlayer();
         ItemStack itemstack = c.getItem();
 
-        if (playerIn.experienceTotal >= 40 || playerIn.isCreative()) {
+        if (playerIn.experienceTotal >= this.getActivationCost(itemstack) || playerIn.isCreative()) {
             if (!playerIn.isCreative()) {
-                playerIn.giveExperiencePoints(-40);
+                playerIn.giveExperiencePoints(-1 * this.getActivationCost(itemstack));
             }
             SoundHelper.playGenericExplodeSound(playerIn);
             AOECloudHelper.spawnExplosionCloud(playerIn, playerIn, 3.0F);
             causeMagicExplosionAttack(playerIn, playerIn, 15, 3.0F);
 
             itemstack.damageItem(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemstack)));
-
-            ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem(), 20);
+            ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem());
         }
 
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
@@ -48,21 +48,26 @@ public class HarvesterItem extends ArtifactItem implements ISoulGatherer {
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
+        DescriptionHelper.addFullDescription(list, stack);
+    }
 
-        list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
-                "The Harvester siphons the souls of the dead, before releasing them into a cluster hex of power."));
-        list.add(new StringTextComponent(TextFormatting.GREEN +
-                "When used, the Harvester releases souls in an explosion."));
-        list.add(new StringTextComponent(TextFormatting.LIGHT_PURPLE +
-                "+1 XP Gathering"));
-        list.add(new StringTextComponent(TextFormatting.BLUE +
-                "Requires 40 XP"));
-        list.add(new StringTextComponent(TextFormatting.BLUE +
-                "1 Second Cooldown"));
+    @Override
+    public int getCooldownInSeconds() {
+        return 1;
     }
 
     @Override
     public int getGatherAmount(ItemStack stack) {
         return 1;
+    }
+
+    @Override
+    public int getActivationCost(ItemStack stack) {
+        return 40;
+    }
+
+    @Override
+    public int getDurationInSeconds() {
+        return 0;
     }
 }

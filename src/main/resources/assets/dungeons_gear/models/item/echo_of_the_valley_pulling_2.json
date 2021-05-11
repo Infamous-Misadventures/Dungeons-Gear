@@ -1,0 +1,6 @@
+{
+    "parent": "dungeons_gear:item/echo_of_the_valley",
+    "textures": {
+        "layer0": "dungeons_gear:item/echo_of_the_valley_pulling_2"
+    }
+}

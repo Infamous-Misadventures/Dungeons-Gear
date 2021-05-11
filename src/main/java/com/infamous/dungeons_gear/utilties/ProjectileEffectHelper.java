@@ -2,6 +2,7 @@ package com.infamous.dungeons_gear.utilties;
 
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.init.ItemRegistry;
+import com.infamous.dungeons_gear.interfaces.IRangedWeapon;
 import com.infamous.dungeons_gear.ranged.crossbows.AbstractDungeonsCrossbowItem;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -174,8 +175,7 @@ public class ProjectileEffectHelper {
 
     public static boolean soulsCriticalBoost(PlayerEntity attacker, ItemStack mainhand) {
         int numSouls = Math.min(attacker.experienceTotal, 50);
-        boolean uniqueWeaponFlag = mainhand.getItem() == ItemRegistry.FERAL_SOUL_CROSSBOW.get()
-                || mainhand.getItem() == ItemRegistry.SOUL_HUNTER_CROSSBOW.get();
+        boolean uniqueWeaponFlag = hasEnigmaResonatorBuiltIn(mainhand);
         if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.ENIGMA_RESONATOR)) {
             int enigmaResonatorLevel = EnchantmentHelper.getEnchantmentLevel(MeleeRangedEnchantmentList.ENIGMA_RESONATOR, mainhand);
             float soulsCriticalBoostChanceCap;
@@ -190,6 +190,10 @@ public class ProjectileEffectHelper {
             return soulsCriticalBoostRand <= Math.min(numSouls / 50.0, 0.15F);
         }
         return false;
+    }
+
+    private static boolean hasEnigmaResonatorBuiltIn(ItemStack mainhand) {
+        return mainhand.getItem() instanceof IRangedWeapon && ((IRangedWeapon) mainhand.getItem()).hasEnigmaResonatorBuiltIn(mainhand);
     }
 
     //Chief: it's a copy-paste of ProjectileEntity::shoot that creates a new Random. Why?

@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.ranged.crossbows;
 import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.init.ItemRegistry;
+import com.infamous.dungeons_gear.interfaces.IRangedWeapon;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
@@ -43,7 +44,7 @@ public class CrossbowEvents {
             int crossbowChargeTime = weaponCap.getCrossbowChargeTime();
 
             int accelerateLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.ACCELERATE, stack);
-            if (stack.getItem() == ItemRegistry.AUTO_CROSSBOW.get()) accelerateLevel++;
+            if (hasAccelerateBuiltIn(stack)) accelerateLevel++;
 
             int defaultChargeTime = 25;
             if (stack.getItem() instanceof AbstractDungeonsCrossbowItem) {
@@ -64,6 +65,10 @@ public class CrossbowEvents {
                 weaponCap.setLastFiredTime(worldTime);
             }
         }
+    }
+
+    private static boolean hasAccelerateBuiltIn(ItemStack stack) {
+        return stack.getItem() instanceof IRangedWeapon && ((IRangedWeapon) stack.getItem()).hasAccelerateBuiltIn(stack);
     }
 
     @SubscribeEvent

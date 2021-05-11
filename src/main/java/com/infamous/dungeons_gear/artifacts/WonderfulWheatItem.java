@@ -8,6 +8,7 @@ import com.infamous.dungeons_gear.goals.LlamaFollowOwnerGoal;
 import com.infamous.dungeons_gear.goals.LlamaOwnerHurtByTargetGoal;
 import com.infamous.dungeons_gear.goals.LlamaOwnerHurtTargetGoal;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -134,12 +135,16 @@ public class WonderfulWheatItem extends ArtifactItem {
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
         super.addInformation(stack, world, list, flag);
+        DescriptionHelper.addFullDescription(list, stack);
+    }
 
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
-                    "This item has the faint smell of an open field, baked bread, and freshly cut crops."));
-            list.add(new StringTextComponent(TextFormatting.GREEN +
-                    "Summons a llama to aid you in battle."));
-            list.add(new StringTextComponent(TextFormatting.BLUE +
-                    "30 Seconds Cooldown"));
+    @Override
+    public int getCooldownInSeconds() {
+        return 30;
+    }
+
+    @Override
+    public int getDurationInSeconds() {
+        return 0;
     }
 }

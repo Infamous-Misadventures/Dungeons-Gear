@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.melee;
 import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.*;
@@ -54,32 +55,7 @@ public class ClaymoreItem extends SwordItem implements IMeleeWeapon, IComboWeapo
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
         super.addInformation(stack, world, list, flag);
-
-        if(stack.getItem() == ItemRegistry.BROADSWORD.get()){
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Only those with the strength of a champion and the heart of a hero can carry this massive blade."));
-
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Extra Damage (Sharpness I)"));
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Powerful Pushback"));
-        }
-        if(stack.getItem() == ItemRegistry.HEARTSTEALER.get()){
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Gifted to one of the Arch-Illager's most distinguished generals upon their conquest of the Squid Coast - this runeblade is infused with dark witchcraft."));
-
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Leeches Health From Mobs (Leeching I)"));
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Powerful Pushback"));
-        }
-        if(stack.getItem() == ItemRegistry.CLAYMORE.get()){
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A massive sword that seems impossibly heavy yet rests easily in a just warrior's hands."));
-
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Powerful Pushback"));
-
-        }
-        if(stack.getItem() == ItemRegistry.GREAT_AXEBLADE.get()){
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A lucky blacksmith turned a workshop blunder into a battlefield wonder, fusing two weapons into something new."));
-
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Boosts Next Attack On Jump (Dynamo I)"));
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Powerful Pushback"));
-
-        }
+        DescriptionHelper.addFullDescription(list, stack);
     }
 
     @Override

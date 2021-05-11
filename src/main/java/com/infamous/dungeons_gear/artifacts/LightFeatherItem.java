@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.artifacts;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.effects.CustomEffects;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -60,9 +61,9 @@ public class LightFeatherItem extends ArtifactItem {
             PROXY.spawnParticles(nearbyEntity, ParticleTypes.CLOUD);
 
 
-            EffectInstance stunned = new EffectInstance(CustomEffects.STUNNED, 60);
-            EffectInstance nausea = new EffectInstance(Effects.NAUSEA, 60);
-            EffectInstance slowness = new EffectInstance(Effects.SLOWNESS, 60, 4);
+            EffectInstance stunned = new EffectInstance(CustomEffects.STUNNED, this.getDurationInSeconds() * 20);
+            EffectInstance nausea = new EffectInstance(Effects.NAUSEA, this.getDurationInSeconds() * 20);
+            EffectInstance slowness = new EffectInstance(Effects.SLOWNESS, this.getDurationInSeconds() * 20, 4);
             nearbyEntity.addPotionEffect(slowness);
             nearbyEntity.addPotionEffect(nausea);
             nearbyEntity.addPotionEffect(stunned);
@@ -70,21 +71,23 @@ public class LightFeatherItem extends ArtifactItem {
         }
 
         itemstack.damageItem(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemstack)));
-        ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem(), 60);
+        ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem());
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }
 
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
+        DescriptionHelper.addFullDescription(list, stack);
+    }
 
-        list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
-                "No one knows what mysterious creature this feather came from, but it is as beautiful and powerful."));
-        list.add(new StringTextComponent(TextFormatting.GREEN +
-                "Lets you tumble through the air, stunning and pushing enemies back as you go."));
-        list.add(new StringTextComponent(TextFormatting.BLUE +
-                "3 Seconds Duration"));
-        list.add(new StringTextComponent(TextFormatting.BLUE +
-                "3 Seconds Cooldown"));
+    @Override
+    public int getCooldownInSeconds() {
+        return 3;
+    }
+
+    @Override
+    public int getDurationInSeconds() {
+        return 3;
     }
 }

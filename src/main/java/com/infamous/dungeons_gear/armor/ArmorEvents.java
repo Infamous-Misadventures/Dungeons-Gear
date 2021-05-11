@@ -4,7 +4,6 @@ package com.infamous.dungeons_gear.armor;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
-import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IArmor;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.ArmorEffectHelper;
@@ -167,15 +166,30 @@ public class ArmorEvents {
     public static void onEntityKilled(LivingDeathEvent event) {
         if (event.getSource().getTrueSource() instanceof LivingEntity) {
             LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
+            ItemStack helmet = attacker.getItemStackFromSlot(EquipmentSlotType.HEAD);
             ItemStack chestplate = attacker.getItemStackFromSlot(EquipmentSlotType.CHEST);
-            boolean lifeStealChestplateFlag = chestplate.getItem() == ItemRegistry.SPIDER_ARMOR.get() || chestplate.getItem() instanceof GrimArmorItem;
-            if (lifeStealChestplateFlag) {
+            boolean lifeStealHelmetFlag = hasLifeSteal(chestplate);
+            boolean lifeStealChestplateFlag = hasLifeSteal(chestplate);
+            if (lifeStealHelmetFlag || lifeStealChestplateFlag) {
+                double lifeStealAmount = getLifeSteal(helmet) + getLifeSteal(chestplate);
+                float lifeStealAsDecimal = (float) (lifeStealAmount * 0.01);
                 float victimMaxHealth = event.getEntityLiving().getMaxHealth();
                 if (attacker.getHealth() < attacker.getMaxHealth()) {
-                    attacker.heal(victimMaxHealth * 0.03F);
+                    attacker.heal(victimMaxHealth * lifeStealAsDecimal);
                 }
             }
         }
+    }
+
+    private static boolean hasLifeSteal(ItemStack stack) {
+        return getLifeSteal(stack) > 0;
+    }
+
+    private static double getLifeSteal(ItemStack stack) {
+        if(stack.getItem() instanceof IArmor){
+            return ((IArmor) stack.getItem()).getLifeSteal();
+        }
+        return 0;
     }
 
     @SubscribeEvent
@@ -285,8 +299,8 @@ public class ArmorEvents {
                 ArmorEffectHelper.handleJumpEnchantments(playerEntity, helmet, chestplate);
             }
 
-            float jumpCooldown = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getLongerJumpAbilityCooldown() : 0;
-            float jumpCooldown2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getLongerJumpAbilityCooldown() : 0;
+            float jumpCooldown = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getLongerRollCooldown() : 0;
+            float jumpCooldown2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getLongerRollCooldown() : 0;
             float totalJumpCooldown = jumpCooldown * 0.01F + jumpCooldown2 * 0.01F;
 
             int jumpCooldownTimerLength = totalJumpCooldown > 0 ? 60 + (int) (60 * totalJumpCooldown) : 60;

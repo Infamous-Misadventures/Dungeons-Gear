@@ -509,5 +509,62 @@ public class BowItemModelsProperties {
 							? 1.0F
 							: 0.0F;
 				});
+
+		// WIND BOW
+		ItemModelsProperties.registerProperty(ItemRegistry.WIND_BOW.get(), new ResourceLocation("pull"),
+				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
+					if (p_239427_2_ == null) {
+						return 0.0F;
+					} else {
+						return !(p_239427_2_.getActiveItemStack().getItem() instanceof HuntingBowItem) ? 0.0F
+								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
+								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
+					}
+				});
+		ItemModelsProperties.registerProperty(ItemRegistry.WIND_BOW.get(), new ResourceLocation("pulling"),
+				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
+					return p_239426_2_ != null && p_239426_2_.isHandActive()
+							&& p_239426_2_.getActiveItemStack() == p_239426_0_
+							? 1.0F
+							: 0.0F;
+				});
+
+		// BURST GALE BOW
+		ItemModelsProperties.registerProperty(ItemRegistry.BURST_GALE_BOW.get(), new ResourceLocation("pull"),
+				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
+					if (p_239427_2_ == null) {
+						return 0.0F;
+					} else {
+						return !(p_239427_2_.getActiveItemStack().getItem() instanceof HuntingBowItem) ? 0.0F
+								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
+								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
+					}
+				});
+		ItemModelsProperties.registerProperty(ItemRegistry.BURST_GALE_BOW.get(), new ResourceLocation("pulling"),
+				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
+					return p_239426_2_ != null && p_239426_2_.isHandActive()
+							&& p_239426_2_.getActiveItemStack() == p_239426_0_
+							? 1.0F
+							: 0.0F;
+				});
+
+		// ECHO OF THE VALLEY
+		ItemModelsProperties.registerProperty(ItemRegistry.ECHO_OF_THE_VALLEY.get(), new ResourceLocation("pull"),
+				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
+					if (p_239427_2_ == null) {
+						return 0.0F;
+					} else {
+						return !(p_239427_2_.getActiveItemStack().getItem() instanceof HuntingBowItem) ? 0.0F
+								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
+								/ RangedAttackHelper.getModdedBowChargeTime(p_239427_2_.getActiveItemStack());
+					}
+				});
+		ItemModelsProperties.registerProperty(ItemRegistry.ECHO_OF_THE_VALLEY.get(), new ResourceLocation("pulling"),
+				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
+					return p_239426_2_ != null && p_239426_2_.isHandActive()
+							&& p_239426_2_.getActiveItemStack() == p_239426_0_
+							? 1.0F
+							: 0.0F;
+				});
 	}
 }

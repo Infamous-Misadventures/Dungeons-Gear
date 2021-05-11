@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.enchantments.melee;
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.init.ItemRegistry;
+import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
@@ -45,11 +46,15 @@ public class RadianceEnchantment extends Enchantment {
         LivingEntity attacker = (LivingEntity)event.getSource().getTrueSource();
         LivingEntity victim = event.getEntityLiving();
         ItemStack mainhand = attacker.getHeldItemMainhand();
-        if((mainhand.getItem() == ItemRegistry.SUNS_GRACE.get())){
+        if(hasRadianceBuiltIn(mainhand)){
             float chance = attacker.getRNG().nextFloat();
             if(chance <=  0.2F) {
                 AOECloudHelper.spawnRegenCloud(attacker, 0);
             }
         }
+    }
+
+    private static boolean hasRadianceBuiltIn(ItemStack mainhand) {
+        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasRadianceBuiltIn(mainhand);
     }
 }

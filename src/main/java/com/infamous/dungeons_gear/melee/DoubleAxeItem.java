@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.melee;
 import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
@@ -39,6 +40,11 @@ public class DoubleAxeItem extends AxeItem implements IMeleeWeapon, IComboWeapon
     }
 
     @Override
+    public boolean hasSpinAttack(ItemStack stack) {
+        return true;
+    }
+
+    @Override
     public boolean hasExplodingBuiltIn(ItemStack stack) {
         return stack.getItem() == ItemRegistry.CURSED_AXE.get();
     }
@@ -65,20 +71,6 @@ public class DoubleAxeItem extends AxeItem implements IMeleeWeapon, IComboWeapon
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
         super.addInformation(stack, world, list, flag);
-
-        if(stack.getItem() == ItemRegistry.CURSED_AXE.get()){
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "This cursed, poisonous axe leaves their victims sick for years with just a single scratch."));
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Defeated Mobs Explode (Exploding I)"));
-        }
-        if(stack.getItem() == ItemRegistry.WHIRLWIND.get()){
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Whirlwind, forged during an epic windstorm, is a double-bladed axe that levitates slightly."));
-
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Casts Shockwaves (Shockwave I)"));
-        }
-        if(stack.getItem() == ItemRegistry.DOUBLE_AXE.get()){
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A devastating weapon fit for barbaric fighters."));
-
-        }
-        //list.add(new StringTextComponent(TextFormatting.GREEN + "Spin Attack"));
+        DescriptionHelper.addFullDescription(list, stack);
     }
 }

@@ -104,7 +104,7 @@ public class PlateArmorItem extends ArmorItem implements IArmor {
     }
 
     @Override
-    public double getLongerJumpAbilityCooldown() {
+    public double getLongerRollCooldown() {
         return 50;
     }
 }

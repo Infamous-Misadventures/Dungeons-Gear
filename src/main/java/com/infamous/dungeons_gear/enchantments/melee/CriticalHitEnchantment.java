@@ -4,6 +4,7 @@ import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
+import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
@@ -35,9 +36,7 @@ public class CriticalHitEnchantment extends DamageBoostEnchantment {
         if (event.getPlayer() != null && !event.isVanillaCritical()) {
             PlayerEntity attacker = event.getPlayer();
             ItemStack mainhand = attacker.getHeldItemMainhand();
-            boolean uniqueWeaponFlag = mainhand.getItem() == ItemRegistry.HAWKBRAND.get()
-                    || mainhand.getItem() == ItemRegistry.MASTERS_KATANA.get()
-                    || mainhand.getItem() == ItemRegistry.SINISTER_SWORD.get();
+            boolean uniqueWeaponFlag = hasCriticalHitBuiltIn(mainhand);
             boolean success = false;
             if (event.getResult() != Event.Result.ALLOW && mainhand.getItem() instanceof IComboWeapon) return;
             if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.CRITICAL_HIT)) {
@@ -61,6 +60,10 @@ public class CriticalHitEnchantment extends DamageBoostEnchantment {
                 event.setDamageModifier(newDamageModifier);
             }
         }
+    }
+
+    private static boolean hasCriticalHitBuiltIn(ItemStack mainhand) {
+        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasCriticalHitBuiltIn(mainhand);
     }
 
     @Override

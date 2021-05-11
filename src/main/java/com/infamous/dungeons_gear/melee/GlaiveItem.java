@@ -7,6 +7,7 @@ import com.infamous.dungeons_gear.init.AttributeRegistry;
 import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
@@ -88,21 +89,6 @@ public class GlaiveItem extends SwordItem implements IMeleeWeapon, IComboWeapon 
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
         super.addInformation(stack, world, list, flag);
-
-        if(stack.getItem() == ItemRegistry.GRAVE_BANE.get()){
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A relic from ages of darkness; this glaives radiates potent magical energy to ward off the undead."));
-
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Extra Damage To Undead (Smite I)"));
-        }
-        if(stack.getItem() == ItemRegistry.VENOM_GLAIVE.get()){
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A toxic cloud seems to follow the Venom Glaive wherever it goes..."));
-
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Spawns Poison Clouds (Poison Cloud I)"));
-        }
-        if(stack.getItem() == ItemRegistry.GLAIVE.get()){
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The glaive, wielded by the servants of the Nameless One, is a weapon with style and power."));
-
-        }
-        list.add(new StringTextComponent(TextFormatting.GREEN + "Longer Melee Reach"));
+        DescriptionHelper.addFullDescription(list, stack);
     }
 }

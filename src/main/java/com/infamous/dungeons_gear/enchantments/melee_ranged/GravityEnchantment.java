@@ -3,7 +3,7 @@ package com.infamous.dungeons_gear.enchantments.melee_ranged;
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
-import com.infamous.dungeons_gear.init.ItemRegistry;
+import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
@@ -12,6 +12,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
@@ -40,9 +41,13 @@ public class GravityEnchantment extends Enchantment {
     public void onEntityDamaged(LivingEntity user, Entity target, int level) {
         if(!(target instanceof LivingEntity)) return;
         ItemStack mainhand = user.getHeldItemMainhand();
-        boolean uniqueWeaponFlag = mainhand.getItem() == ItemRegistry.HAMMER_OF_GRAVITY.get();
+        boolean uniqueWeaponFlag = hasGravityBuiltIn(mainhand);
         if(uniqueWeaponFlag) level++;
-        AreaOfEffectHelper.pullInNearbyEntities(user, (LivingEntity)target, level * 3);
+        AreaOfEffectHelper.pullInNearbyEntities(user, (LivingEntity)target, level * 3, ParticleTypes.PORTAL);
+    }
+
+    private static boolean hasGravityBuiltIn(ItemStack mainhand) {
+        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasGravityBuiltIn(mainhand);
     }
 
     @SubscribeEvent
@@ -53,9 +58,9 @@ public class GravityEnchantment extends Enchantment {
         LivingEntity attacker = (LivingEntity)event.getSource().getTrueSource();
         LivingEntity victim = event.getEntityLiving();
         ItemStack mainhand = attacker.getHeldItemMainhand();
-        if((mainhand.getItem() == ItemRegistry.HAMMER_OF_GRAVITY.get()
+        if((hasGravityBuiltIn(mainhand)
                 && !ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.GRAVITY))){
-            AreaOfEffectHelper.pullInNearbyEntities(attacker, victim, 3);
+            AreaOfEffectHelper.pullInNearbyEntities(attacker, victim, 3, ParticleTypes.PORTAL);
         }
     }
 
@@ -74,20 +79,20 @@ public class GravityEnchantment extends Enchantment {
                 EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult) rayTraceResult;
                 if(entityRayTraceResult.getEntity() instanceof LivingEntity){
                     LivingEntity victim = (LivingEntity) ((EntityRayTraceResult)rayTraceResult).getEntity();
-                    AreaOfEffectHelper.pullInNearbyEntities(shooter, victim, 3);
+                    AreaOfEffectHelper.pullInNearbyEntities(shooter, victim, 3, ParticleTypes.PORTAL);
                 }
             }
             if(rayTraceResult instanceof BlockRayTraceResult){
                 BlockRayTraceResult blockRayTraceResult = (BlockRayTraceResult)rayTraceResult;
                 BlockPos blockPos = blockRayTraceResult.getPos();
-                AreaOfEffectHelper.pullInNearbyEntitiesAtPos(shooter, blockPos, 3);
+                AreaOfEffectHelper.pullInNearbyEntitiesAtPos(shooter, blockPos, 3, ParticleTypes.PORTAL);
             }
         }else if(gravityLevel > 0){
             if(uniqueWeaponFlag) gravityLevel++;
             if(rayTraceResult instanceof BlockRayTraceResult){
                 BlockRayTraceResult blockRayTraceResult = (BlockRayTraceResult)rayTraceResult;
                 BlockPos blockPos = blockRayTraceResult.getPos();
-                AreaOfEffectHelper.pullInNearbyEntitiesAtPos(shooter, blockPos, 3 * gravityLevel);
+                AreaOfEffectHelper.pullInNearbyEntitiesAtPos(shooter, blockPos, 3 * gravityLevel, ParticleTypes.PORTAL);
             }
         }
     }

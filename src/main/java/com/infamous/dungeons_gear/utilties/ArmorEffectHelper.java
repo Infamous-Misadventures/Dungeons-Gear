@@ -6,8 +6,9 @@ import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.goals.*;
-import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IArmor;
+import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
+import com.infamous.dungeons_gear.interfaces.IRangedWeapon;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -106,8 +107,8 @@ public class ArmorEffectHelper {
     }
 
     public static void handleJumpBoost(PlayerEntity playerEntity, ItemStack helmet, ItemStack chestplate) {
-        float jumpBoost = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getHigherJumps() : 0;
-        float jumpBoost2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getHigherJumps() : 0;
+        float jumpBoost = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getLongerRolls() : 0;
+        float jumpBoost2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getLongerRolls() : 0;
         float totalJumpBoost = jumpBoost * 0.002F + jumpBoost2 * 0.002F;
 
         if (totalJumpBoost > 0) {
@@ -136,8 +137,7 @@ public class ArmorEffectHelper {
             }
         }
 
-        boolean highlandArmorFlag = chestplate.getItem() == ItemRegistry.HIGHLAND_ARMOR.get()
-                || helmet.getItem() == ItemRegistry.HIGHLAND_ARMOR_HELMET.get();
+        boolean highlandArmorFlag = hasSwiftfootedBuiltIn(chestplate) || hasSwiftfootedBuiltIn(helmet);
         if (ModEnchantmentHelper.hasEnchantment(playerEntity, ArmorEnchantmentList.SWIFTFOOTED) || highlandArmorFlag) {
             int swiftfootedLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.SWIFTFOOTED, playerEntity);
             if (highlandArmorFlag) swiftfootedLevel++;
@@ -148,11 +148,13 @@ public class ArmorEffectHelper {
         handleDynamoEnchantment(playerEntity);
     }
 
+    private static boolean hasSwiftfootedBuiltIn(ItemStack stack) {
+        return stack.getItem() instanceof IArmor && ((IArmor) stack.getItem()).hasSwiftfootedBuiltIn(stack);
+    }
+
     private static void handleDynamoEnchantment(PlayerEntity playerEntity) {
         ItemStack mainhand = playerEntity.getHeldItemMainhand();
-        boolean uniqueWeaponFlag = mainhand.getItem() == ItemRegistry.GREAT_AXEBLADE.get()
-                || mainhand.getItem() == ItemRegistry.ANCIENT_BOW.get()
-                || mainhand.getItem() == ItemRegistry.CORRUPTED_CROSSBOW.get();
+        boolean uniqueWeaponFlag = hasDynamoBuiltIn(mainhand);
         if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.DYNAMO) || uniqueWeaponFlag) {
             int dynamoLevel = EnchantmentHelper.getEnchantmentLevel(MeleeRangedEnchantmentList.DYNAMO, mainhand);
             if (uniqueWeaponFlag) dynamoLevel++;
@@ -162,6 +164,11 @@ public class ArmorEffectHelper {
             double dynamoModifier = 1.0D + (0.5D * Math.max((dynamoLevel - 1), 0));
             comboCap.setDynamoMultiplier(originalDynamoMultiplier + dynamoModifier);
         }
+    }
+
+    private static boolean hasDynamoBuiltIn(ItemStack mainhand) {
+        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasDynamoBuiltIn(mainhand) ||
+                mainhand.getItem() instanceof IRangedWeapon && ((IRangedWeapon) mainhand.getItem()).hasDynamoBuiltIn(mainhand);
     }
 
     private static void summonTumblebeeBee(PlayerEntity playerEntity) {

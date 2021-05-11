@@ -7,6 +7,7 @@ import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
 import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
+import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.DamageEnchantment;
 import net.minecraft.enchantment.Enchantment;
@@ -39,8 +40,7 @@ public class EnigmaResonatorEnchantment extends DamageBoostEnchantment {
         PlayerEntity attacker = event.getPlayer();
         LivingEntity victim = event.getEntityLiving();
         ItemStack mainhand = attacker.getHeldItemMainhand();
-        boolean uniqueWeaponFlag = mainhand.getItem() == ItemRegistry.SOUL_FIST.get()
-                || mainhand.getItem() == ItemRegistry.MOON_DAGGER.get();
+        boolean uniqueWeaponFlag = hasEnigmaResonatorBuiltIn(mainhand);
 
         int numSouls = Math.min(attacker.experienceTotal, 50);
         if (!event.isVanillaCritical()) {
@@ -68,6 +68,10 @@ public class EnigmaResonatorEnchantment extends DamageBoostEnchantment {
                 PROXY.spawnParticles(attacker, ParticleTypes.SOUL);
             }
         }
+    }
+
+    private static boolean hasEnigmaResonatorBuiltIn(ItemStack mainhand) {
+        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasEnigmaResonatorBuiltIn(mainhand);
     }
 
     @Override

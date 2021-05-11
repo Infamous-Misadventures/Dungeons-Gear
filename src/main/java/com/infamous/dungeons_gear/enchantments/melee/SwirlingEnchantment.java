@@ -7,6 +7,7 @@ import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
 import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
+import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -45,7 +46,7 @@ public class SwirlingEnchantment extends AOEDamageEnchantment {
             LivingEntity victim = event.getEntityLiving();
             ItemStack mainhand = attacker.getHeldItemMainhand();
             if (event.getResult() != Event.Result.ALLOW && mainhand.getItem() instanceof IComboWeapon) return;
-            boolean uniqueWeaponFlag = mainhand.getItem() == ItemRegistry.SHEAR_DAGGER.get();
+            boolean uniqueWeaponFlag = hasSwirlingBuiltIn(mainhand);
             if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.SWIRLING) || uniqueWeaponFlag) {
                 int swirlingLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.SWIRLING, mainhand);
                 if (uniqueWeaponFlag) swirlingLevel += 1;
@@ -62,6 +63,10 @@ public class SwirlingEnchantment extends AOEDamageEnchantment {
                 AreaOfEffectHelper.causeSwirlingAttack(attacker, victim, swirlingDamage, 1.5f);
             }
         }
+    }
+
+    private static boolean hasSwirlingBuiltIn(ItemStack mainhand) {
+        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasSwirlingBuiltIn(mainhand);
     }
 
     @Override

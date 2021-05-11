@@ -37,4 +37,9 @@ public class SoulBowItem extends AbstractDungeonsBowItem implements ISoulGathere
     public int getGatherAmount(ItemStack stack) {
         return 2;
     }
+
+    @Override
+    public int getActivationCost(ItemStack stack) {
+        return 0;
+    }
 }
