@@ -2,6 +2,7 @@ package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
+import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
 import net.minecraft.enchantment.Enchantment;
@@ -16,7 +17,7 @@ import net.minecraftforge.fml.common.Mod;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
 @Mod.EventBusSubscriber(modid = MODID)
-public class ChainReactionEnchantment extends Enchantment {
+public class ChainReactionEnchantment extends DungeonsEnchantment {
 
     public ChainReactionEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.RANGED, new EquipmentSlotType[]{

@@ -2,6 +2,7 @@ package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
+import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import net.minecraft.enchantment.Enchantment;
@@ -18,7 +19,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class ReplenishEnchantment extends Enchantment {
+public class ReplenishEnchantment extends DungeonsEnchantment {
 
     public ReplenishEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.RANGED, new EquipmentSlotType[]{

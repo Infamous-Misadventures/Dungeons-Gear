@@ -1,6 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
+import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
@@ -19,7 +20,7 @@ import net.minecraftforge.fml.common.Mod;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
 @Mod.EventBusSubscriber(modid= MODID)
-public class RicochetEnchantment extends Enchantment {
+public class RicochetEnchantment extends DungeonsEnchantment {
 
     public RicochetEnchantment() {
         super(Rarity.RARE, EnchantmentType.CROSSBOW, new EquipmentSlotType[]{

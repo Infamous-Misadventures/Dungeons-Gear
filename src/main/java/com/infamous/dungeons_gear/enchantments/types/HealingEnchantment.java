@@ -4,7 +4,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
 
-public class HealingEnchantment extends Enchantment{
+public class HealingEnchantment extends DungeonsEnchantment{
 
     protected HealingEnchantment(Rarity rarity, EnchantmentType enchantmentType, EquipmentSlotType[] equipmentSlotTypes) {
         super(rarity, enchantmentType, equipmentSlotTypes);

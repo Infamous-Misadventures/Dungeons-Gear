@@ -1,6 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
+import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IArmor;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -22,7 +23,7 @@ import java.util.List;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
 @Mod.EventBusSubscriber(modid= MODID)
-public class PotionBarrierEnchantment extends Enchantment {
+public class PotionBarrierEnchantment extends DungeonsEnchantment {
 
     public PotionBarrierEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlotType[]{

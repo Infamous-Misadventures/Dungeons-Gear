@@ -2,6 +2,7 @@ package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
+import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -25,7 +26,7 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 
 @Mod.EventBusSubscriber(modid = MODID)
-public class FreezingEnchantment extends Enchantment {
+public class FreezingEnchantment extends DungeonsEnchantment {
 
     public FreezingEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlotType[]{

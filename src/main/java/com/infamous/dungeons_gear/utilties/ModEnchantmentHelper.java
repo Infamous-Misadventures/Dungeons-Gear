@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.utilties;
 
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -81,5 +82,21 @@ public class ModEnchantmentHelper {
             }
         }
         return 0;
+    }
+
+    public static boolean isNotBlacklistedEnchant(Enchantment enchantment) {
+        return !isBlacklistedEnchant(enchantment);
+    }
+
+    public static boolean isBlacklistedEnchant(Enchantment enchantment) {
+        return DungeonsGearConfig.ENCHANTMENT_BLACKLIST.get().contains(enchantment.getRegistryName().toString());
+    }
+
+    public static boolean isNotTreasureEnchant(Enchantment enchantment) {
+        return !isTreasureEnchant(enchantment);
+    }
+
+    public static boolean isTreasureEnchant(Enchantment enchantment) {
+        return DungeonsGearConfig.TREASURE_ONLY_ENCHANTMENTS.get().contains(enchantment.getRegistryName().toString());
     }
 }

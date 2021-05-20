@@ -36,6 +36,7 @@ public class TradeEvents {
     @SubscribeEvent
     public static void onWandererTrades(WandererTradesEvent event){
         if(!DungeonsGearConfig.ENABLE_VILLAGER_TRADES.get()) return;
+        if(!ConfigurableLootHelper.isArtifactLootEnabled()) return;
 
         List<VillagerTrades.ITrade> genericTrades = event.getGenericTrades();
         List<VillagerTrades.ITrade> rareTrades = event.getRareTrades();
@@ -56,6 +57,8 @@ public class TradeEvents {
         if(!DungeonsGearConfig.ENABLE_VILLAGER_TRADES.get()) return;
 
         if(event.getType() == VillagerProfession.WEAPONSMITH){
+            if(!ConfigurableLootHelper.isMeleeWeaponLootEnabled()) return;
+
             Int2ObjectMap<List<VillagerTrades.ITrade>> weaponsmithTrades = event.getTrades();
 
             // Moving the Level 4 "Diamond for Emerald" Trade down to Level 3
@@ -64,6 +67,8 @@ public class TradeEvents {
             addCommonAndUniqueTrades(weaponsmithTrades, ItemRegistry.commonWeaponMap, ItemRegistry.uniqueWeaponMap);
         }
         if(event.getType() == VillagerProfession.FLETCHER){
+            if(!ConfigurableLootHelper.isRangedWeaponLootEnabled()) return;
+
             Int2ObjectMap<List<VillagerTrades.ITrade>> fletcherTrades = event.getTrades();
 
             // Move higher level stuff to lower trade levels
@@ -78,11 +83,15 @@ public class TradeEvents {
         }
 
         if(event.getType() == VillagerProfession.ARMORER){
+            if(!ConfigurableLootHelper.isArmorLootEnabled()) return;
+
             Int2ObjectMap<List<VillagerTrades.ITrade>> armorerTrades = event.getTrades();
             addCommonAndUniqueTrades(armorerTrades, ItemRegistry.commonMetalArmorMap, ItemRegistry.uniqueMetalArmorMap);
         }
 
         if(event.getType() == VillagerProfession.LEATHERWORKER){
+            if(!ConfigurableLootHelper.isArmorLootEnabled()) return;
+
             Int2ObjectMap<List<VillagerTrades.ITrade>> leatherworkerTrades = event.getTrades();
 
             // Move higher level stuff to lower trade levels
