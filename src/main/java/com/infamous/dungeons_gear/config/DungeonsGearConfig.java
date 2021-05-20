@@ -114,19 +114,19 @@ public class DungeonsGearConfig {
                         (itemRaw) -> itemRaw instanceof String);
         ENABLE_MELEE_WEAPON_LOOT = builder
                 .comment("Enable melee weapons appearing in chest loot and trades. \n" +
-                        "If you want to disable obtaining  this mod's melee weapons, disable this feature. [true / false]")
+                        "If you want to disable obtaining this mod's melee weapons, disable this feature. [true / false]")
                 .define("enableMeleeWeaponLoot", true);
         ENABLE_RANGED_WEAPON_LOOT = builder
                 .comment("Enable ranged weapons appearing in chest loot and trades. \n" +
-                        "If you want to disable obtaining  this mod's ranged weapons, disable this feature. [true / false]")
+                        "If you want to disable obtaining this mod's ranged weapons, disable this feature. [true / false]")
                 .define("enableRangedWeaponLoot", true);
         ENABLE_ARMOR_LOOT = builder
                 .comment("Enable armors appearing in chest loot and trades. \n" +
-                        "If you want to disable obtaining  this mod's armors, disable this feature. [true / false]")
+                        "If you want to disable obtaining this mod's armors, disable this feature. [true / false]")
                 .define("enableArmorLoot", true);
         ENABLE_ARTIFACT_LOOT = builder
                 .comment("Enable artifacts appearing in chest loot and trades. \n" +
-                        "If you want to disable obtaining  this mod's artifacts, disable this feature. [true / false]")
+                        "If you want to disable obtaining this mod's artifacts, disable this feature. [true / false]")
                 .define("enableArtifactLoot", true);
         COMMON_ITEM_VALUE = builder
                 .comment("The emerald value for a common weapon or armor [0-64, default: 12]")
