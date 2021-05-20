@@ -2,8 +2,9 @@ package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
+import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
@@ -21,7 +22,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-import static com.infamous.dungeons_gear.items.WeaponList.*;
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class CriticalHitEnchantment extends DamageBoostEnchantment {
@@ -36,9 +36,7 @@ public class CriticalHitEnchantment extends DamageBoostEnchantment {
         if (event.getPlayer() != null && !event.isVanillaCritical()) {
             PlayerEntity attacker = event.getPlayer();
             ItemStack mainhand = attacker.getHeldItemMainhand();
-            boolean uniqueWeaponFlag = mainhand.getItem() == DeferredItemInit.HAWKBRAND.get()
-                    || mainhand.getItem() == DeferredItemInit.MASTERS_KATANA.get()
-                    || mainhand.getItem() == DeferredItemInit.SINISTER_SWORD.get();
+            boolean uniqueWeaponFlag = hasCriticalHitBuiltIn(mainhand);
             boolean success = false;
             if (event.getResult() != Event.Result.ALLOW && mainhand.getItem() instanceof IComboWeapon) return;
             if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.CRITICAL_HIT)) {
@@ -62,6 +60,10 @@ public class CriticalHitEnchantment extends DamageBoostEnchantment {
                 event.setDamageModifier(newDamageModifier);
             }
         }
+    }
+
+    private static boolean hasCriticalHitBuiltIn(ItemStack mainhand) {
+        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasCriticalHitBuiltIn(mainhand);
     }
 
     @Override

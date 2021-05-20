@@ -5,11 +5,12 @@ import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.combat.CombatEventHandler;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
 import com.infamous.dungeons_gear.init.AttributeRegistry;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.interfaces.IOffhandAttack;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
@@ -61,6 +62,26 @@ public class DaggerItem extends SwordItem implements IOffhandAttack, IMeleeWeapo
     }
 
     @Override
+    public boolean canDualWield(ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public boolean hasFreezingBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.FANG_OF_FROST.get();
+    }
+
+    @Override
+    public boolean hasEnigmaResonatorBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.MOON_DAGGER.get();
+    }
+
+    @Override
+    public boolean hasSwirlingBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.SHEAR_DAGGER.get();
+    }
+
+    @Override
     public int getComboLength(ItemStack stack, LivingEntity attacker) {
         return 6;
     }
@@ -76,27 +97,7 @@ public class DaggerItem extends SwordItem implements IOffhandAttack, IMeleeWeapo
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
-
-        if (stack.getItem() == DeferredItemInit.FANG_OF_FROST.get()) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "This lauded dagger of the northern mountains is known to freeze its foes to solid ice."));
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Slows Mobs (Freezing I)"));
-        }
-        if (stack.getItem() == DeferredItemInit.MOON_DAGGER.get()) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "This curved blade shines like the crescent moon on a dark night."));
-
-            list.add(new StringTextComponent(TextFormatting.LIGHT_PURPLE + "Souls Critical Boost (Enigma Resonator I)"));
-        }
-        if (stack.getItem() == DeferredItemInit.DAGGER.get()) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Daggers are the weapon of cravens - or so folks say."));
-
-        }
-        if (stack.getItem() == DeferredItemInit.SHEAR_DAGGER.get()) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Even the simplest of farmers can wield these Shear Daggers with savage results."));
-
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Chance To Spawn Area Damage (Swirling I)"));
-        }
-
-        list.add(new StringTextComponent(TextFormatting.GREEN + "Dual Wield"));
+        DescriptionHelper.addFullDescription(list, stack);
     }
 
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
@@ -116,11 +117,15 @@ public class DaggerItem extends SwordItem implements IOffhandAttack, IMeleeWeapo
 
     @Override
     public int getGatherAmount(ItemStack stack) {
-        if (stack.getItem() == DeferredItemInit.MOON_DAGGER.get()) {
+        if (stack.getItem() == ItemRegistry.MOON_DAGGER.get()) {
             return 1;
         } else return 0;
     }
 
+    @Override
+    public int getActivationCost(ItemStack stack) {
+        return 0;
+    }
 
     @Override
     public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {

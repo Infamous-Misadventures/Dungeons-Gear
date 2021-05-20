@@ -5,11 +5,13 @@ import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
+import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
+import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.enchantment.DamageEnchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -18,8 +20,6 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -46,7 +46,7 @@ public class SwirlingEnchantment extends AOEDamageEnchantment {
             LivingEntity victim = event.getEntityLiving();
             ItemStack mainhand = attacker.getHeldItemMainhand();
             if (event.getResult() != Event.Result.ALLOW && mainhand.getItem() instanceof IComboWeapon) return;
-            boolean uniqueWeaponFlag = mainhand.getItem() == DeferredItemInit.SHEAR_DAGGER.get();
+            boolean uniqueWeaponFlag = hasSwirlingBuiltIn(mainhand);
             if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.SWIRLING) || uniqueWeaponFlag) {
                 int swirlingLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.SWIRLING, mainhand);
                 if (uniqueWeaponFlag) swirlingLevel += 1;
@@ -58,11 +58,15 @@ public class SwirlingEnchantment extends AOEDamageEnchantment {
 
                 float swirlingDamage = attackDamage * SWIRLING_DAMAGE_MULTIPLIER;
                 swirlingDamage *= (swirlingLevel + 1) / 2.0F;
-                victim.world.playSound((PlayerEntity) null, victim.getPosX(), victim.getPosY(), victim.getPosZ(), SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.PLAYERS, 64.0F, 1.0F);
+                SoundHelper.playAttackSweepSound(attacker);
                 AOECloudHelper.spawnCritCloud(attacker, victim, 1.5f);
                 AreaOfEffectHelper.causeSwirlingAttack(attacker, victim, swirlingDamage, 1.5f);
             }
         }
+    }
+
+    private static boolean hasSwirlingBuiltIn(ItemStack mainhand) {
+        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasSwirlingBuiltIn(mainhand);
     }
 
     @Override

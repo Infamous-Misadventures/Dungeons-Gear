@@ -6,6 +6,7 @@ import com.infamous.dungeons_gear.entities.IceCloudEntity;
 import com.infamous.dungeons_gear.items.ItemTagWrappers;
 import com.infamous.dungeons_gear.utilties.AbilityHelper;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -64,6 +65,7 @@ public class IceWandItem extends ArtifactItem {
             IceCloudEntity iceCloudEntity = new IceCloudEntity(world, playerIn, target);
             world.addEntity(iceCloudEntity);
             stack.damageItem(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), stack)));
+            ArtifactItem.setArtifactCooldown(playerIn, stack.getItem());
             return ActionResultType.SUCCESS;
         }
         return ActionResultType.PASS;
@@ -72,15 +74,17 @@ public class IceWandItem extends ArtifactItem {
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
+        DescriptionHelper.addFullDescription(list, stack);
+    }
 
-        list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
-                "The Ice Wand was trapped in a tomb of ice for ages, sealed away by those who feared its power."));
-        list.add(new StringTextComponent(TextFormatting.GREEN +
-                "Creates large ice blocks that can crush your foes."));
-        list.add(new StringTextComponent(TextFormatting.GREEN +
-                "Stuns Mobs"));
-        list.add(new StringTextComponent(TextFormatting.BLUE +
-                "20 Seconds Cooldown"));
+    @Override
+    public int getCooldownInSeconds() {
+        return 20;
+    }
+
+    @Override
+    public int getDurationInSeconds() {
+        return 0;
     }
 
     @Override

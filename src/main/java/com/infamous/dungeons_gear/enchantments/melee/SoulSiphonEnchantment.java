@@ -2,7 +2,8 @@ package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
+import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -50,7 +51,7 @@ public class SoulSiphonEnchantment extends Enchantment {
         PlayerEntity attacker = (PlayerEntity)event.getSource().getTrueSource();
         LivingEntity victim = event.getEntityLiving();
         ItemStack mainhand = attacker.getHeldItemMainhand();
-        if(mainhand.getItem() == DeferredItemInit.ETERNAL_KNIFE.get()){
+        if(hasSoulSiphonBuiltIn(mainhand)){
             float chance = attacker.getRNG().nextFloat();
             if(chance <=  0.1F) {
                 attacker.giveExperiencePoints(3);
@@ -58,5 +59,9 @@ public class SoulSiphonEnchantment extends Enchantment {
                 PROXY.spawnParticles(victim, ParticleTypes.SOUL);
             }
         }
+    }
+
+    private static boolean hasSoulSiphonBuiltIn(ItemStack mainhand) {
+        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasSoulSiphonBuiltIn(mainhand);
     }
 }

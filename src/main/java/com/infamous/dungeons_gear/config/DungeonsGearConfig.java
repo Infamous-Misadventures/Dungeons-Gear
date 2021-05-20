@@ -189,7 +189,7 @@ public class DungeonsGearConfig {
                         ),
                         (itemRaw) -> itemRaw instanceof String);
         UNIQUE_ITEM_COMMON_LOOT = builder
-                .comment("The decimal chance for a unique item to appear in common loot tables instead of a common one [0.0-1.0, default: 0.15]")
+                .comment("The decimal chance for a unique item to appear in common loot tables instead of a common one [0.0-1.0, default: 0.25]")
                 .defineInRange("uniqueItemCommonLoot", 0.25, 0.0, 1.0);
         ARTIFACT_COMMON_LOOT = builder
                 .comment("The decimal chance for an artifact to appear in common loot tables [0.0-1.0, default: 0.25]")
@@ -215,7 +215,7 @@ public class DungeonsGearConfig {
                         ),
                         (itemRaw) -> itemRaw instanceof String);
         UNIQUE_ITEM_UNCOMMON_LOOT = builder
-                .comment("The decimal chance for a unique item to appear in uncommon loot tables instead of a common one [0.0-1.0, default: 0.3]")
+                .comment("The decimal chance for a unique item to appear in uncommon loot tables instead of a common one [0.0-1.0, default: 0.5]")
                 .defineInRange("uniqueItemUncommonLoot", 0.5, 0.0, 1.0);
         ARTIFACT_UNCOMMON_LOOT = builder
                 .comment("The decimal chance for an artifact to appear in uncommon loot tables [0.0-1.0, default: 0.5]")
@@ -245,7 +245,7 @@ public class DungeonsGearConfig {
                         ),
                         (itemRaw) -> itemRaw instanceof String);
         UNIQUE_ITEM_RARE_LOOT = builder
-                .comment("The decimal chance for a unique weapon to appear in rare loot table instead of a common ones [0.0-1.0, default: 0.45]")
+                .comment("The decimal chance for a unique weapon to appear in rare loot table instead of a common ones [0.0-1.0, default: 0.75]")
                 .defineInRange("uniqueItemRareLoot", 0.75, 0.0, 1.0);
         ARTIFACT_RARE_LOOT = builder
                 .comment("The decimal chance for an artifact to appear in rare loot tables [0.0-1.0, default: 0.75]")
@@ -270,7 +270,7 @@ public class DungeonsGearConfig {
                         ),
                         (itemRaw) -> itemRaw instanceof String);
         UNIQUE_ITEM_SUPER_RARE_LOOT = builder
-                .comment("The decimal chance for a unique item to appear in super rare loot tables instead of a common one [0.0-1.0, default: 0.6]")
+                .comment("The decimal chance for a unique item to appear in super rare loot tables instead of a common one [0.0-1.0, default: 1.0]")
                 .defineInRange("uniqueItemSuperRareLoot", 1.0, 0, 1.0);
         ARTIFACT_SUPER_RARE_LOOT = builder
                 .comment("The decimal chance for an artifact to appear in super rare loot tables [0.0-1.0, default: 1.0]")

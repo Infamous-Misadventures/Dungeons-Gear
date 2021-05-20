@@ -32,8 +32,8 @@ public class ElenaiCompat {
                 ArmorEffectHelper.handleJumpEnchantments(playerEntity, helmet, chestplate);
             }
 
-            float jumpCooldown = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getLongerJumpAbilityCooldown() : 0;
-            float jumpCooldown2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getLongerJumpAbilityCooldown() : 0;
+            float jumpCooldown = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getLongerRollCooldown() : 0;
+            float jumpCooldown2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getLongerRollCooldown() : 0;
             float totalJumpCooldown = jumpCooldown * 0.01F + jumpCooldown2 * 0.01F;
 
             int jumpCooldownTimerLength = totalJumpCooldown > 0 ? 60 + (int) (60 * totalJumpCooldown) : 60;

@@ -5,11 +5,12 @@ import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
 import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.init.PotionList;
 import com.infamous.dungeons_gear.interfaces.IArmor;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
+import com.infamous.dungeons_gear.interfaces.IRangedWeapon;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
+import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
@@ -26,7 +27,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.PotionUtils;
+import net.minecraft.util.math.EntityRayTraceResult;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -66,7 +70,7 @@ public class GlobalEvents {
         ModEnchantmentHelper.addEnchantmentTagsToArrow(stack, arrowEntity);
 
         int fuseShotLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.FUSE_SHOT, stack);
-        if (stack.getItem() == DeferredItemInit.RED_SNAKE.get()) fuseShotLevel++;
+        if (hasFuseShotBuiltIn(stack)) fuseShotLevel++;
         if (fuseShotLevel > 0) {
             IWeapon weaponCap = CapabilityHelper.getWeaponCapability(stack);
             if (weaponCap == null) return;
@@ -90,6 +94,10 @@ public class GlobalEvents {
                 arrowEntity.setDamage(arrowEntity.getDamage() * 2);
             }
         }
+    }
+
+    private static boolean hasFuseShotBuiltIn(ItemStack stack) {
+        return stack.getItem() instanceof IRangedWeapon && ((IRangedWeapon) stack.getItem()).hasFuseShotBuiltIn(stack);
     }
 
     @SubscribeEvent
@@ -212,6 +220,25 @@ public class GlobalEvents {
             }
 
             event.setDroppedExperience(originalExperience + additionalExperienceCounter);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onGaleArrowImpact(ProjectileImpactEvent.Arrow event){
+        RayTraceResult rayTraceResult = event.getRayTraceResult();
+        if(!ModEnchantmentHelper.arrowHitLivingEntity(rayTraceResult)) return;
+        AbstractArrowEntity arrow = event.getArrow();
+        if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
+        LivingEntity shooter = (LivingEntity)arrow.func_234616_v_();
+        boolean isGaleArrow = arrow.getTags().contains("GaleArrow");
+        if(isGaleArrow) {
+            if (rayTraceResult instanceof EntityRayTraceResult) {
+                EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult) rayTraceResult;
+                if (entityRayTraceResult.getEntity() instanceof LivingEntity) {
+                    LivingEntity victim = (LivingEntity) ((EntityRayTraceResult) rayTraceResult).getEntity();
+                    AreaOfEffectHelper.pullVicitimTowardsTarget(shooter, victim, ParticleTypes.ENTITY_EFFECT);
+                }
+            }
         }
     }
 }

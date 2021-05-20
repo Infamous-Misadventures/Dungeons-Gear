@@ -2,6 +2,7 @@ package com.infamous.dungeons_gear.artifacts;
 
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -45,7 +46,7 @@ public class GhostCloakItem extends ArtifactItem {
 
         itemstack.damageItem(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemstack)));
 
-        ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem(), 120);
+        ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem());
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }
 
@@ -53,12 +54,16 @@ public class GhostCloakItem extends ArtifactItem {
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
         super.addInformation(stack, world, list, flag);
+        DescriptionHelper.addFullDescription(list, stack);
+    }
 
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
-                    "The souls trapped within the Ghost Cloak are protective, but they radiate a sense of melancholy."));
-            list.add(new StringTextComponent(TextFormatting.GREEN +
-                    "Briefly gain Ghost Form, allowing you to move through mobs and absorb some damage."));
-            list.add(new StringTextComponent(TextFormatting.BLUE +
-                    "6 Seconds Cooldown"));
+    @Override
+    public int getCooldownInSeconds() {
+        return 6;
+    }
+
+    @Override
+    public int getDurationInSeconds() {
+        return 0;
     }
 }

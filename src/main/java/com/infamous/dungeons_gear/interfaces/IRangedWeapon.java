@@ -1,8 +1,9 @@
 package com.infamous.dungeons_gear.interfaces;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public interface IRangedWeapon {
+public interface IRangedWeapon<T extends Item> {
 
     // Non-Enchantment Abilities
     default boolean shootsFasterArrows(ItemStack stack){
@@ -33,13 +34,17 @@ public interface IRangedWeapon {
         return false;
     }
 
-    default boolean gathersSouls(ItemStack stack){
-        return false;
-    }
-
     default boolean hasGuaranteedRicochet(ItemStack stack){ return false;}
 
     default boolean hasMultishotWhenCharged(ItemStack stack){ return false;}
+
+    default boolean canDualWield(ItemStack stack){ return false;}
+
+    default boolean hasHighFireRate(ItemStack stack){ return false;}
+
+    default boolean hasSlowFireRate(ItemStack stack){ return this.shootsHeavyArrows(stack);}
+
+    default boolean shootsGaleArrows(ItemStack stack){ return false;}
 
     // Enchantment Abilities
     default boolean hasTempoTheftBuiltIn(ItemStack stack){
@@ -121,5 +126,7 @@ public interface IRangedWeapon {
     default boolean hasDynamoBuiltIn(ItemStack stack){
         return false;
     }
+
+    default boolean hasRollChargeBuiltIn(ItemStack stack){ return false;}
 
 }

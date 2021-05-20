@@ -1,0 +1,6 @@
+{
+    "parent": "dungeons_gear:item/burst_gale_bow",
+    "textures": {
+        "layer0": "dungeons_gear:item/burst_gale_bow_pulling_0"
+    }
+}

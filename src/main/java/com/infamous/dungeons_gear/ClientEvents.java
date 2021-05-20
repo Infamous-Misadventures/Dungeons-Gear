@@ -79,18 +79,18 @@ public class ClientEvents {
                                 "attribute.name.healthPotionBoost"))
                         .mergeStyle(TextFormatting.GREEN));
             }
-            if(armor.getHigherJumps() > 0){
+            if(armor.getLongerRolls() > 0){
                 tooltip.add(index + 1, new TranslationTextComponent(
-                        "+" + armor.getHigherJumps() + "% ")
+                        "+" + armor.getLongerRolls() + "% ")
                         .append(new TranslationTextComponent(
-                                "attribute.name.higherJumps"))
+                                "attribute.name.longerRolls"))
                         .mergeStyle(TextFormatting.GREEN));
             }
-            if(armor.getLongerJumpAbilityCooldown() > 0){
+            if(armor.getLongerRollCooldown() > 0){
                 tooltip.add(index + 1, new TranslationTextComponent(
-                        "+" + armor.getLongerJumpAbilityCooldown() + "% ")
+                        "+" + armor.getLongerRollCooldown() + "% ")
                         .append(new TranslationTextComponent(
-                                "attribute.name.longerJumpAbilityCooldown"))
+                                "attribute.name.longerRollCooldown"))
                         .mergeStyle(TextFormatting.RED));
             }
             if(armor.getLifeSteal() > 0){
@@ -141,7 +141,7 @@ public class ClientEvents {
                     ItemStack heldItem = AbstractBeaconItem.getBeacon(player);
                     if (player.isHandActive()
                             && heldItem.getItem() instanceof AbstractBeaconItem
-                            && AbstractBeaconItem.canFire(player)) {
+                            && AbstractBeaconItem.canFire(player, heldItem)) {
                             BeaconBeamRenderer.renderBeam(event, player, Minecraft.getInstance().getRenderPartialTicks());
                     }
                 }

@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.artifacts;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -47,14 +48,14 @@ public class TotemOfSoulProtectionItem extends ArtifactItem implements ISoulGath
                 blockPos = itemUseContextPos.offset(itemUseContextFace);
             }
             if(itemUseContextPlayer != null) {
-                if(itemUseContextPlayer.experienceTotal >= 5 || itemUseContextPlayer.isCreative()){
+                if(itemUseContextPlayer.experienceTotal >= this.getActivationCost(itemUseContextItem) || itemUseContextPlayer.isCreative()){
                     if(!itemUseContextPlayer.isCreative()){
-                        itemUseContextPlayer.giveExperiencePoints(-5);
+                        itemUseContextPlayer.giveExperiencePoints(-1 * this.getActivationCost(itemUseContextItem));
                     }
                     spawnSoulProtectionCloudAtPos(itemUseContextPlayer, blockPos, 100);
                     itemUseContextItem.damageItem(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemUseContextItem)));
 
-                    ArtifactItem.setArtifactCooldown(itemUseContextPlayer, itemUseContextItem.getItem(), 20);
+                    ArtifactItem.setArtifactCooldown(itemUseContextPlayer, itemUseContextItem.getItem());
                 }
             }
         }
@@ -65,23 +66,26 @@ public class TotemOfSoulProtectionItem extends ArtifactItem implements ISoulGath
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
         super.addInformation(stack, world, list, flag);
+        DescriptionHelper.addFullDescription(list, stack);
+    }
 
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
-                    "This totem radiates powerful protective magic."));
-            list.add(new StringTextComponent(TextFormatting.GREEN +
-                    "Creates a space around the totem which, when you or allies die within it, revives the player."));
-            list.add(new StringTextComponent(TextFormatting.BLUE +
-                    "5 Seconds Duration"));
-            list.add(new StringTextComponent(TextFormatting.BLUE +
-                    "1 Second Cooldown"));
-            list.add(new StringTextComponent(TextFormatting.LIGHT_PURPLE +
-                    "+1 XP Gathering"));
-            list.add(new StringTextComponent(TextFormatting.BLUE +
-                    "Requires 5 XP"));
+    @Override
+    public int getCooldownInSeconds() {
+        return 1;
+    }
+
+    @Override
+    public int getDurationInSeconds() {
+        return 5;
     }
 
     @Override
     public int getGatherAmount(ItemStack stack) {
         return 1;
+    }
+
+    @Override
+    public int getActivationCost(ItemStack stack) {
+        return 5;
     }
 }

@@ -4,8 +4,9 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.OcelotArmorModel;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IArmor;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -61,10 +62,10 @@ public class OcelotArmorItem extends ArmorItem implements IArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(stack.getItem() == DeferredItemInit.OCELOT_ARMOR.get() || stack.getItem() == DeferredItemInit.OCELOT_ARMOR_HOOD.get()){
+        if(stack.getItem() == ItemRegistry.OCELOT_ARMOR.get() || stack.getItem() == ItemRegistry.OCELOT_ARMOR_HOOD.get()){
             return DungeonsGear.MODID + ":textures/models/armor/ocelot_armor.png";
         }
-        else if(stack.getItem() == DeferredItemInit.SHADOW_WALKER.get() || stack.getItem() == DeferredItemInit.SHADOW_WALKER_HOOD.get()){
+        else if(stack.getItem() == ItemRegistry.SHADOW_WALKER.get() || stack.getItem() == ItemRegistry.SHADOW_WALKER_HOOD.get()){
             return DungeonsGear.MODID + ":textures/models/armor/shadow_walker.png";
         }
         else return "";
@@ -92,15 +93,11 @@ public class OcelotArmorItem extends ArmorItem implements IArmor {
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
-
+        DescriptionHelper.addLoreDescription(list, stack);
         if (this.unique) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The legendary black Ocelot was as graceful as it was deadly. When you wear its pelt, you feel like your enemies are left chasing your shadow."));
             list.add(new TranslationTextComponent(
-                    "attribute.name.briefInvulnerabilityWhenJumping")
+                    "attribute.name.briefInvulnerabilityWhenRolling")
                     .mergeStyle(TextFormatting.GREEN));
-        }
-        else{
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "You feel a rush of pure adrenaline surge through your body when you wear this Ocelot's pelt."));
         }
     }
 
@@ -110,7 +107,7 @@ public class OcelotArmorItem extends ArmorItem implements IArmor {
     }
 
     @Override
-    public double getHigherJumps() {
+    public double getLongerRolls() {
         return 25;
     }
 }

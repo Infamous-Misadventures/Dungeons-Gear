@@ -4,8 +4,9 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.EvocationRobeModel;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IArmor;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -63,10 +64,10 @@ public class EvocationRobeItem extends ArmorItem implements IArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(stack.getItem() == DeferredItemInit.EVOCATION_ROBE.get() || stack.getItem() == DeferredItemInit.EVOCATION_ROBE_HAT.get()){
+        if(stack.getItem() == ItemRegistry.EVOCATION_ROBE.get() || stack.getItem() == ItemRegistry.EVOCATION_ROBE_HAT.get()){
             return DungeonsGear.MODID + ":textures/models/armor/evocation_robe.png";
         }
-        else if(stack.getItem() == DeferredItemInit.EMBER_ROBE.get() || stack.getItem() == DeferredItemInit.EMBER_ROBE_HAT.get()){
+        else if(stack.getItem() == ItemRegistry.EMBER_ROBE.get() || stack.getItem() == ItemRegistry.EMBER_ROBE_HAT.get()){
             return DungeonsGear.MODID + ":textures/models/armor/ember_robe.png";
         }
         else return "";
@@ -85,6 +86,11 @@ public class EvocationRobeItem extends ArmorItem implements IArmor {
     }
 
     @Override
+    public boolean hasBurningBuiltIn(ItemStack stack) {
+        return this.unique;
+    }
+
+    @Override
     public Rarity getRarity(ItemStack itemStack){
         if(this.unique) return Rarity.RARE;
         return Rarity.UNCOMMON;
@@ -93,17 +99,7 @@ public class EvocationRobeItem extends ArmorItem implements IArmor {
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
-
-        if (this.unique) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The Ember Robe was created by Illager Evokers to distinguish themselves from the common guard."));
-            //if(this.slot == EquipmentSlotType.CHEST){
-                list.add(new StringTextComponent(TextFormatting.GREEN + "Burns Nearby Enemies (Burning I"));
-            //}
-        }
-        else{
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Potent magical runes are weaved into the fabric of these robes, their origins and powers are shrouded in mystery."));
-
-        }
+        DescriptionHelper.addFullDescription(list, stack);
     }
 
     @Override

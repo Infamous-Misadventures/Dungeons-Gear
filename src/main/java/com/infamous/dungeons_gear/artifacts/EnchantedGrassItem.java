@@ -6,6 +6,8 @@ import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.goals.*;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
+import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -90,7 +92,7 @@ public class EnchantedGrassItem extends ArtifactItem {
         this.setSheepEnchantmentAndAI(sheepEntity);
         sheepEntity.setLocationAndAngles((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D, 0.0F, 0.0F);
 
-        world.playSound((PlayerEntity)null, itemUseContextPlayer.getPosX(), itemUseContextPlayer.getPosY(), itemUseContextPlayer.getPosZ(), SoundEvents.ENTITY_SHEEP_AMBIENT, SoundCategory.AMBIENT, 64.0F, 1.0F);
+        SoundHelper.playCreatureSound(itemUseContextPlayer, SoundEvents.ENTITY_SHEEP_AMBIENT);
 
         world.addEntity(sheepEntity);
     }
@@ -126,12 +128,16 @@ public class EnchantedGrassItem extends ArtifactItem {
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
         super.addInformation(stack, world, list, flag);
+        DescriptionHelper.addFullDescription(list, stack);
+    }
 
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
-                    "Just as there are powerful heroes who answer the call to fight, there are powerful enchanted sheep who will join the fight when summoned."));
-            list.add(new StringTextComponent(TextFormatting.GREEN +
-                    "Randomly summons one of three sheep allies that can grant either speed, poison, or fire effects."));
-            list.add(new StringTextComponent(TextFormatting.BLUE +
-                    "30 Seconds Cooldown"));
+    @Override
+    public int getCooldownInSeconds() {
+        return 30;
+    }
+
+    @Override
+    public int getDurationInSeconds() {
+        return 0;
     }
 }

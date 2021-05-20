@@ -1,7 +1,8 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
+import com.infamous.dungeons_gear.interfaces.IRangedWeapon;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
@@ -18,7 +19,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-import static com.infamous.dungeons_gear.items.RangedWeaponList.*;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class BonusShotEnchantment extends Enchantment {
@@ -38,7 +38,7 @@ public class BonusShotEnchantment extends Enchantment {
         ItemStack stack = event.getItemStack();
         if(stack.getItem() instanceof CrossbowItem){
             if(CrossbowItem.isCharged(stack)){
-                boolean uniqueWeaponFlag = stack.getItem() == DeferredItemInit.BUTTERFLY_CROSSBOW.get();
+                boolean uniqueWeaponFlag = hasBonusShotBuiltIn(stack);
                 if(ModEnchantmentHelper.hasEnchantment(stack, RangedEnchantmentList.BONUS_SHOT) || uniqueWeaponFlag){
                     int bonusShotLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.BONUS_SHOT, stack);
                     float damageMultiplier;
@@ -52,13 +52,16 @@ public class BonusShotEnchantment extends Enchantment {
         }
     }
 
+    private static boolean hasBonusShotBuiltIn(ItemStack stack) {
+        return stack.getItem() instanceof IRangedWeapon && ((IRangedWeapon) stack.getItem()).hasBonusShotBuiltIn(stack);
+    }
+
     @SubscribeEvent
     public static void onBowFired(ArrowLooseEvent event){
         LivingEntity livingEntity = event.getEntityLiving();
         ItemStack stack = event.getBow();
         int charge = event.getCharge();
-        boolean uniqueWeaponFlag = stack.getItem() == DeferredItemInit.TWIN_BOW.get()
-                || stack.getItem() == DeferredItemInit.HAUNTED_BOW.get();
+        boolean uniqueWeaponFlag = hasBonusShotBuiltIn(stack);
         if(ModEnchantmentHelper.hasEnchantment(stack, RangedEnchantmentList.BONUS_SHOT) || uniqueWeaponFlag){
             int bonusShotLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.BONUS_SHOT, stack);
             float damageMultiplier;

@@ -5,6 +5,8 @@ import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
+import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -96,7 +98,7 @@ public class TastyBoneItem extends ArtifactItem {
             return entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity);
         }));
 
-        world.playSound((PlayerEntity)null, itemUseContextPlayer.getPosX(), itemUseContextPlayer.getPosY(), itemUseContextPlayer.getPosZ(), SoundEvents.ENTITY_WOLF_HOWL, SoundCategory.AMBIENT, 64.0F, 1.0F);
+        SoundHelper.playCreatureSound(itemUseContextPlayer, SoundEvents.ENTITY_WOLF_AMBIENT);
 
         world.addEntity(wolfEntity);
     }
@@ -105,12 +107,16 @@ public class TastyBoneItem extends ArtifactItem {
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
         super.addInformation(stack, world, list, flag);
+        DescriptionHelper.addFullDescription(list, stack);
+    }
 
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
-                    "You hear distant howling as you hold the Tasty Bone in your hand."));
-            list.add(new StringTextComponent(TextFormatting.GREEN +
-                    "Summons a wolf to aid you in battle."));
-            list.add(new StringTextComponent(TextFormatting.BLUE +
-                    "30 Seconds Cooldown"));
+    @Override
+    public int getCooldownInSeconds() {
+        return 30;
+    }
+
+    @Override
+    public int getDurationInSeconds() {
+        return 0;
     }
 }

@@ -3,12 +3,11 @@ package com.infamous.dungeons_gear.melee;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
 import com.infamous.dungeons_gear.init.AttributeRegistry;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
-import com.infamous.dungeons_gear.items.WeaponList;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
@@ -116,6 +115,16 @@ public class SpearItem extends TieredItem implements IMeleeWeapon, IComboWeapon 
         return enchantment.type.canEnchantItem(Items.IRON_SWORD) && enchantment != Enchantments.SWEEPING;
     }
 
+    @Override
+    public boolean hasEchoBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.WHISPERING_SPEAR.get();
+    }
+
+    @Override
+    public boolean hasFortuneBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.FORTUNE_SPEAR.get();
+    }
+
     public Rarity getRarity(ItemStack itemStack) {
 
         if (this.unique) {
@@ -127,20 +136,6 @@ public class SpearItem extends TieredItem implements IMeleeWeapon, IComboWeapon 
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
-        if (stack.getItem() == DeferredItemInit.FORTUNE_SPEAR.get()) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A spear that is watched over by lucky souls, bringing luck to any who wield it."));
-
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Mobs Drop More Loot (Fortune I)"));
-        }
-        if (stack.getItem() == DeferredItemInit.WHISPERING_SPEAR.get()) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Legend says that this cursed spear is plagued by a soul that controls the mind of any who wield it."));
-
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Sometimes Strikes Twice (Echo I)"));
-        }
-        if (stack.getItem() == DeferredItemInit.SPEAR.get()) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The spear, with its long reach and powerful range, is a solid choice of weapon."));
-
-        }
-        list.add(new StringTextComponent(TextFormatting.GREEN + "Long Melee Reach"));
+        DescriptionHelper.addFullDescription(list, stack);
     }
 }

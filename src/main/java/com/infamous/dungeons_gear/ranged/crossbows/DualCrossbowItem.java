@@ -1,14 +1,13 @@
 package com.infamous.dungeons_gear.ranged.crossbows;
 
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -20,11 +19,17 @@ public class DualCrossbowItem extends AbstractDungeonsCrossbowItem {
     }
 
     @Override
+    public boolean canDualWield(ItemStack stack) {
+        return true;
+    }
+
+    @Override
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity playerEntity, Hand handIn) {
         if (isCharged(playerEntity.getHeldItemMainhand()) && playerEntity.getHeldItemOffhand().getItem() instanceof DualCrossbowItem && isCharged(playerEntity.getHeldItemOffhand()) && handIn == Hand.MAIN_HAND)
             super.onItemRightClick(world, playerEntity, Hand.OFF_HAND);
         return super.onItemRightClick(world, playerEntity, handIn);
     }
+
 
     @Override
     public void onPlayerStoppedUsing(ItemStack stack, World world, LivingEntity livingEntity, int timeLeft) {
@@ -36,9 +41,9 @@ public class DualCrossbowItem extends AbstractDungeonsCrossbowItem {
 
         if (charge >= 1.0F
                 && !isCharged(stack)
-                && hasAmmo(livingEntity, stack)) {
+                && AbstractDungeonsCrossbowItem.hasAmmo(livingEntity, stack)) {
             setCharged(stack, true);
-            if (offhandCrossbowFlag && hasAmmo(livingEntity, offhandHeldItem)) {
+            if (offhandCrossbowFlag && AbstractDungeonsCrossbowItem.hasAmmo(livingEntity, offhandHeldItem)) {
                 setCharged(offhandHeldItem, true);
             }
             SoundCategory lvt_7_1_ = livingEntity instanceof PlayerEntity ? SoundCategory.PLAYERS : SoundCategory.HOSTILE;
@@ -49,22 +54,13 @@ public class DualCrossbowItem extends AbstractDungeonsCrossbowItem {
 
     @Override
     public boolean hasGrowingBuiltIn(ItemStack stack) {
-        return stack.getItem() == DeferredItemInit.BABY_CROSSBOW.get();
+        return stack.getItem() == ItemRegistry.BABY_CROSSBOW.get();
     }
 
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
-
-        if (stack.getItem() == DeferredItemInit.BABY_CROSSBOW.get()) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "While some discuss the cute Baby Crossbow, this deadly weapon grows into a heavy hitter."));
-
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Arrows Grow Size (Growing I)"));
-        }
-        if (stack.getItem() == DeferredItemInit.DUAL_CROSSBOW.get()) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Dual crossbows are the perfect choice for a warrior with quick reflexes in a fast-paced battle."));
-        }
-        list.add(new StringTextComponent(TextFormatting.GREEN + "Double Projectiles"));
+        DescriptionHelper.addFullDescription(list, stack);
     }
 
     @Override

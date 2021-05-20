@@ -1,6 +1,9 @@
 package com.infamous.dungeons_gear.interfaces;
 
-public interface IArmor {
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+
+public interface IArmor<T extends Item> {
     default boolean doHealthPotionsHealNearbyAllies(){
         return false;
     }
@@ -35,16 +38,23 @@ public interface IArmor {
     default double getChanceToTeleportAwayWhenHit(){
         return 0;
     }
-    default double getHigherJumps(){
+    default double getLongerRolls(){
         return 0;
     }
     default double getChanceToNegateHits(){
         return 0;
     }
-    default double getLongerJumpAbilityCooldown(){
+    default double getLongerRollCooldown(){
         return 0;
     }
     default double getFreezingResistance(){
         return 0;
     }
+
+    // Enchantment abilities
+    default boolean hasBurningBuiltIn(ItemStack stack){ return false;}
+    default boolean hasSnowballBuiltIn(ItemStack stack){ return false;}
+    default boolean hasPotionBarrierBuiltIn(ItemStack stack){return false;}
+    default boolean hasSwiftfootedBuiltIn(ItemStack stack){return false;}
+    default boolean hasChillingBuiltIn(ItemStack stack){return false;}
 }

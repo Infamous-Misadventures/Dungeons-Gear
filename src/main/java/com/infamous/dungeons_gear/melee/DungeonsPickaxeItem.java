@@ -1,8 +1,9 @@
 package com.infamous.dungeons_gear.melee;
 
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
@@ -41,6 +42,11 @@ public class DungeonsPickaxeItem extends PickaxeItem implements IMeleeWeapon, IC
         return enchantment.type.canEnchantItem(Items.IRON_SWORD) && enchantment != Enchantments.SWEEPING;
     }
 
+    @Override
+    public boolean hasProspectorBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.DIAMOND_PICKAXE.get();
+    }
+
     public Rarity getRarity(ItemStack itemStack){
 
         if(this.unique){
@@ -53,15 +59,6 @@ public class DungeonsPickaxeItem extends PickaxeItem implements IMeleeWeapon, IC
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
         super.addInformation(stack, world, list, flag);
-
-        if(stack.getItem() == DeferredItemInit.PICKAXE.get()){
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The pickaxe has been the iconic tool of adventurers and heroes for as long as anyone can remember."));
-
-        }
-        if(stack.getItem() == DeferredItemInit.DIAMOND_PICKAXE.get()){
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Diamond is one of the most durable materials, making it an excellent choice for a pickaxe."));
-
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Finds More Valuables (Prospector I)"));
-        }
+        DescriptionHelper.addFullDescription(list, stack);
     }
 }

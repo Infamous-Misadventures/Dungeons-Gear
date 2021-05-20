@@ -1,20 +1,17 @@
 package com.infamous.dungeons_gear.ranged.crossbows;
 
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import java.util.List;
-
-import static com.infamous.dungeons_gear.items.RangedWeaponList.*;
 
 public class BurstCrossbowItem extends AbstractDungeonsCrossbowItem implements ISoulGatherer {
 
@@ -34,12 +31,12 @@ public class BurstCrossbowItem extends AbstractDungeonsCrossbowItem implements I
 
     @Override
     public boolean hasEnigmaResonatorBuiltIn(ItemStack stack) {
-        return stack.getItem() == DeferredItemInit.SOUL_HUNTER_CROSSBOW.get();
+        return stack.getItem() == ItemRegistry.SOUL_HUNTER_CROSSBOW.get();
     }
 
     @Override
     public boolean hasDynamoBuiltIn(ItemStack stack) {
-        return stack.getItem() == DeferredItemInit.CORRUPTED_CROSSBOW.get();
+        return stack.getItem() == ItemRegistry.CORRUPTED_CROSSBOW.get();
     }
 
     @Override
@@ -76,31 +73,19 @@ public class BurstCrossbowItem extends AbstractDungeonsCrossbowItem implements I
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
-
-        if (stack.getItem() == DeferredItemInit.CORRUPTED_CROSSBOW.get()) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "This crossbow has a subtle yet corrupting power that is suitable for thieves and nimble warriors alike."));
-
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Boosts Next Attack On Jump (Dynamo I)"));
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Fast Multiple Projectiles"));
-        }
-        if (stack.getItem() == DeferredItemInit.SOUL_HUNTER_CROSSBOW.get()) {
-            //list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Adding electrical energy to this crossbow changed the firing sound dramatically."));
-
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Souls Critical Boost (Enigma Resonator I)"));
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Fast Multiple Projectiles"));
-        }
-        if (stack.getItem() == DeferredItemInit.BURST_CROSSBOW.get()) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A tactical crossbow favored by warriors and hunters alike, the Burst Crossbow is a powerful tool for any hero."));
-
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Fast Multiple Projectiles"));
-        }
+        DescriptionHelper.addFullDescription(list, stack);
     }
 
     @Override
     public int getGatherAmount(ItemStack stack) {
-        if(stack.getItem() == DeferredItemInit.BURST_CROSSBOW.get()){
+        if(stack.getItem() == ItemRegistry.BURST_CROSSBOW.get()){
             return 1;
         }
         else return 0;
+    }
+
+    @Override
+    public int getActivationCost(ItemStack stack) {
+        return 0;
     }
 }

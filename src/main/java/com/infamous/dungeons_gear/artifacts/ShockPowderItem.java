@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.artifacts;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -30,7 +31,7 @@ public class ShockPowderItem extends ArtifactItem {
         AreaOfEffectHelper.stunNearbyEnemies(c.getWorld(), playerIn);
         itemstack.damageItem(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemstack)));
 
-        ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem(), 300);
+        ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem());
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }
 
@@ -38,14 +39,16 @@ public class ShockPowderItem extends ArtifactItem {
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
         super.addInformation(stack, world, list, flag);
+        DescriptionHelper.addFullDescription(list, stack);
+    }
 
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
-                    "Shock Powder is a reliable tool for those who wish to make a swift exit."));
-            list.add(new StringTextComponent(TextFormatting.GREEN +
-                    "Stuns nearby enemies."));
-            list.add(new StringTextComponent(TextFormatting.BLUE +
-                    "5 Seconds Duration"));
-            list.add(new StringTextComponent(TextFormatting.BLUE +
-                    "15 Seconds Cooldown"));
+    @Override
+    public int getCooldownInSeconds() {
+        return 15;
+    }
+
+    @Override
+    public int getDurationInSeconds() {
+        return 5;
     }
 }

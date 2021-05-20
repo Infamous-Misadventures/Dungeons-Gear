@@ -13,14 +13,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.Rarity;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 public abstract class ArtifactItem extends Item {
@@ -34,7 +31,9 @@ public abstract class ArtifactItem extends Item {
         );
     }
 
-    public static void setArtifactCooldown(PlayerEntity playerIn, Item item, int cooldownInTicks) {
+    public static void setArtifactCooldown(PlayerEntity playerIn, Item item) {
+        int cooldownInTicks = item instanceof ArtifactItem ?
+                ((ArtifactItem)item).getCooldownInSeconds() * 20 : 0;
         ItemStack helmet = playerIn.getItemStackFromSlot(EquipmentSlotType.HEAD);
         ItemStack chestplate = playerIn.getItemStackFromSlot(EquipmentSlotType.CHEST);
 
@@ -74,4 +73,8 @@ public abstract class ArtifactItem extends Item {
     }
 
     public abstract ActionResult<ItemStack> procArtifact(ItemUseContext iuc);
+
+    public abstract int getCooldownInSeconds();
+
+    public abstract int getDurationInSeconds();
 }

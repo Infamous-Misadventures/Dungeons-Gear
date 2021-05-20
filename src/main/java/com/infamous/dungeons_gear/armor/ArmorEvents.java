@@ -3,28 +3,14 @@ package com.infamous.dungeons_gear.armor;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
-import com.infamous.dungeons_gear.capabilities.summoning.ISummonable;
-import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
-import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
-import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
-import com.infamous.dungeons_gear.goals.BeeFollowOwnerGoal;
-import com.infamous.dungeons_gear.goals.BeeOwnerHurtByTargetGoal;
-import com.infamous.dungeons_gear.goals.BeeOwnerHurtTargetGoal;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.interfaces.IArmor;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.ArmorEffectHelper;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
-import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -34,8 +20,6 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.IndirectEntityDamageSource;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.*;
@@ -182,15 +166,30 @@ public class ArmorEvents {
     public static void onEntityKilled(LivingDeathEvent event) {
         if (event.getSource().getTrueSource() instanceof LivingEntity) {
             LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
+            ItemStack helmet = attacker.getItemStackFromSlot(EquipmentSlotType.HEAD);
             ItemStack chestplate = attacker.getItemStackFromSlot(EquipmentSlotType.CHEST);
-            boolean lifeStealChestplateFlag = chestplate.getItem() == DeferredItemInit.SPIDER_ARMOR.get() || chestplate.getItem() instanceof GrimArmorItem;
-            if (lifeStealChestplateFlag) {
+            boolean lifeStealHelmetFlag = hasLifeSteal(chestplate);
+            boolean lifeStealChestplateFlag = hasLifeSteal(chestplate);
+            if (lifeStealHelmetFlag || lifeStealChestplateFlag) {
+                double lifeStealAmount = getLifeSteal(helmet) + getLifeSteal(chestplate);
+                float lifeStealAsDecimal = (float) (lifeStealAmount * 0.01);
                 float victimMaxHealth = event.getEntityLiving().getMaxHealth();
                 if (attacker.getHealth() < attacker.getMaxHealth()) {
-                    attacker.heal(victimMaxHealth * 0.03F);
+                    attacker.heal(victimMaxHealth * lifeStealAsDecimal);
                 }
             }
         }
+    }
+
+    private static boolean hasLifeSteal(ItemStack stack) {
+        return getLifeSteal(stack) > 0;
+    }
+
+    private static double getLifeSteal(ItemStack stack) {
+        if(stack.getItem() instanceof IArmor){
+            return ((IArmor) stack.getItem()).getLifeSteal();
+        }
+        return 0;
     }
 
     @SubscribeEvent
@@ -300,8 +299,8 @@ public class ArmorEvents {
                 ArmorEffectHelper.handleJumpEnchantments(playerEntity, helmet, chestplate);
             }
 
-            float jumpCooldown = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getLongerJumpAbilityCooldown() : 0;
-            float jumpCooldown2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getLongerJumpAbilityCooldown() : 0;
+            float jumpCooldown = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getLongerRollCooldown() : 0;
+            float jumpCooldown2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getLongerRollCooldown() : 0;
             float totalJumpCooldown = jumpCooldown * 0.01F + jumpCooldown2 * 0.01F;
 
             int jumpCooldownTimerLength = totalJumpCooldown > 0 ? 60 + (int) (60 * totalJumpCooldown) : 60;

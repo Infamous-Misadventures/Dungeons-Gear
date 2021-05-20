@@ -3,8 +3,10 @@ package com.infamous.dungeons_gear.enchantments.melee;
 import com.infamous.dungeons_gear.damagesources.ElectricShockDamageSource;
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
+import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
+import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -34,6 +36,7 @@ public class ThunderingEnchantment extends Enchantment {
         if(!(target instanceof LivingEntity)) return;
         float chance = user.getRNG().nextFloat();
         if(chance <=  0.3F){
+            SoundHelper.playLightningStrikeSounds(user);
             AreaOfEffectHelper.electrifyNearbyEnemies(user, 5, 5, Integer.MAX_VALUE);
             //AbilityUtils.castLightningBolt(user, (LivingEntity)target);
         }
@@ -48,12 +51,17 @@ public class ThunderingEnchantment extends Enchantment {
         LivingEntity attacker = (LivingEntity)event.getSource().getTrueSource();
         LivingEntity victim = event.getEntityLiving();
         ItemStack mainhand = attacker.getHeldItemMainhand();
-        if((mainhand.getItem() == DeferredItemInit.STORMLANDER.get())){
+        if(hasThunderingBuiltIn(mainhand)){
             float chance = attacker.getRNG().nextFloat();
             if(chance <=  0.3F){
+                SoundHelper.playLightningStrikeSounds(attacker);
                 AreaOfEffectHelper.electrifyNearbyEnemies(attacker, 5, 5, Integer.MAX_VALUE);
                 //AbilityUtils.castLightningBolt(attacker, victim);
             }
         }
+    }
+
+    private static boolean hasThunderingBuiltIn(ItemStack mainhand) {
+        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasThunderingBuiltIn(mainhand);
     }
 }

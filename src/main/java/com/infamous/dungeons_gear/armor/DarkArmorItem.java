@@ -4,8 +4,9 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.DarkArmorModel;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IArmor;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -63,10 +64,10 @@ public class DarkArmorItem extends ArmorItem implements IArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(stack.getItem() == DeferredItemInit.DARK_ARMOR.get() || stack.getItem() == DeferredItemInit.DARK_ARMOR_HELMET.get()){
+        if(stack.getItem() == ItemRegistry.DARK_ARMOR.get() || stack.getItem() == ItemRegistry.DARK_ARMOR_HELMET.get()){
             return DungeonsGear.MODID + ":textures/models/armor/dark_armor.png";
         }
-        else if(stack.getItem() == DeferredItemInit.TITANS_SHROUD.get() || stack.getItem() == DeferredItemInit.TITANS_SHROUD_HELMET.get()){
+        else if(stack.getItem() == ItemRegistry.TITANS_SHROUD.get() || stack.getItem() == ItemRegistry.TITANS_SHROUD_HELMET.get()){
             return DungeonsGear.MODID + ":textures/models/armor/titans_shroud.png";
         }
         else return "";
@@ -93,13 +94,7 @@ public class DarkArmorItem extends ArmorItem implements IArmor {
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
-
-        if (this.unique) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The Titan's Shroud has passed through the hands of evil for generations."));
-        }
-        else{
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Dark Armor, made in the blackest depths of the Fiery Forge, is worn by the Illager royal guard."));
-        }
+        DescriptionHelper.addLoreDescription(list, stack);
     }
 
     @Override

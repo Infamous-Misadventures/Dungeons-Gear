@@ -1,34 +1,73 @@
 {
 	"credit": "Made with Blockbench",
-	"parent": "item/generated",
+	"texture_size": [16, 24],
 	"textures": {
-		"layer0": "dungeons_gear:item/death_cap_mushroom"
+		"0": "dungeons_gear:item/death_cap_mushroom",
+		"particle": "dungeons_gear:item/death_cap_mushroom"
 	},
-	"gui_light": "front",
+	"elements": [
+		{
+			"name": "cap",
+			"from": [5, 6, 6],
+			"to": [11, 11, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [16, 14, 12]},
+			"faces": {
+				"north": {"uv": [0, 4, 6, 7.33333], "texture": "#0"},
+				"east": {"uv": [6, 4, 12, 7.33333], "texture": "#0"},
+				"south": {"uv": [0, 4, 6, 7.33333], "texture": "#0"},
+				"west": {"uv": [6, 4, 12, 7.33333], "texture": "#0"},
+				"up": {"uv": [0, 0, 6, 4], "rotation": 180, "texture": "#0"},
+				"down": {"uv": [6, 0, 12, 4], "texture": "#0"}
+			}
+		},
+		{
+			"name": "stem",
+			"from": [6.75, 2, 7.75],
+			"to": [9.25, 6, 10.25],
+			"rotation": {"angle": 0, "axis": "y", "origin": [14.75, 9, 15.75]},
+			"faces": {
+				"north": {"uv": [0, 7.33333, 3, 10.66667], "texture": "#0"},
+				"east": {"uv": [3, 7.33333, 6, 10.66667], "texture": "#0"},
+				"south": {"uv": [0, 7.33333, 3, 10.66667], "texture": "#0"},
+				"west": {"uv": [3, 7.33333, 6, 10.66667], "texture": "#0"},
+				"up": {"uv": [8, 1.33333, 11, 3.33333], "texture": "#0"},
+				"down": {"uv": [3, 10.66667, 6, 12.66667], "texture": "#0"}
+			}
+		}
+	],
 	"display": {
 		"thirdperson_righthand": {
-			"translation": [0, 3, 1.5],
-			"scale": [1.5, 1.5, 1]
+			"rotation": [0, 34, 0],
+			"translation": [-0.75, 1.5, 0]
 		},
 		"thirdperson_lefthand": {
-			"translation": [0, 3, 1.5],
-			"scale": [1.5, 1.5, 1]
+			"rotation": [0, 34, 0],
+			"translation": [-0.75, 1.5, 0]
 		},
 		"firstperson_righthand": {
-			"rotation": [0, 90, 0],
-			"translation": [0, 2, 0],
-			"scale": [1.5, 1.5, 1]
+			"rotation": [0, 96, 0],
+			"translation": [2, 3.5, 0]
 		},
 		"firstperson_lefthand": {
-			"rotation": [0, -90, 0],
-			"translation": [0, 2, 0],
-			"scale": [1.5, 1.5, 1]
+			"rotation": [0, 95, 0],
+			"translation": [2, 3.5, 0]
+		},
+		"ground": {
+			"translation": [0.25, 0, -0.5]
 		},
 		"gui": {
-			"scale": [1.5, 1.5, 1.5]
+			"rotation": [20, -52, 0],
+			"translation": [1.25, 1.75, 0],
+			"scale": [1.46, 1.46, 1.46]
+		},
+		"head": {
+			"rotation": [0, 0, -13],
+			"translation": [3.75, 11.5, -0.75],
+			"scale": [1.4, 1.4, 1.4]
 		},
 		"fixed": {
-			"scale": [1.5, 1.5, 1.5]
+			"translation": [0, 2.5, -1],
+			"scale": [1.8, 1.8, 1.8]
 		}
 	}
 }

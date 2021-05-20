@@ -6,7 +6,7 @@ import com.infamous.dungeons_gear.capabilities.summoning.ISummonable;
 import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
 import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.goals.*;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
 import net.minecraft.entity.Entity;
@@ -330,7 +330,7 @@ public class ArtifactEvents {
             Entity entity = ((ServerWorld) event.player.world).getEntityByUuid(summonedGolem);
             if(!(entity instanceof IronGolemEntity)) {
                 summonerCap.setSummonedGolem(null);
-                ArtifactItem.setArtifactCooldown(summoner, DeferredItemInit.GOLEM_KIT.get(), 600);
+                ArtifactItem.setArtifactCooldown(summoner, ItemRegistry.GOLEM_KIT.get());
             }
         }
         if(summonerCap.getSummonedWolf() != null && event.player.world instanceof ServerWorld){
@@ -338,7 +338,7 @@ public class ArtifactEvents {
             Entity entity = ((ServerWorld) event.player.world).getEntityByUuid(summonedWolf);
             if(!(entity instanceof WolfEntity)) {
                 summonerCap.setSummonedWolf(null);
-                ArtifactItem.setArtifactCooldown(summoner, DeferredItemInit.TASTY_BONE.get(), 600);
+                ArtifactItem.setArtifactCooldown(summoner, ItemRegistry.TASTY_BONE.get());
             }
         }
         if(summonerCap.getSummonedLlama() != null && event.player.world instanceof ServerWorld){
@@ -346,7 +346,7 @@ public class ArtifactEvents {
             Entity entity = ((ServerWorld) event.player.world).getEntityByUuid(summonedLlama);
             if(!(entity instanceof LlamaEntity)) {
                 summonerCap.setSummonedLlama(null);
-                ArtifactItem.setArtifactCooldown(summoner, DeferredItemInit.WONDERFUL_WHEAT.get(), 600);
+                ArtifactItem.setArtifactCooldown(summoner, ItemRegistry.WONDERFUL_WHEAT.get());
             }
         }
         if(summonerCap.getSummonedBat() != null && event.player.world instanceof ServerWorld){
@@ -361,7 +361,7 @@ public class ArtifactEvents {
             Entity entity = ((ServerWorld) event.player.world).getEntityByUuid(summonedSheep);
             if(!(entity instanceof SheepEntity)) {
                 summonerCap.setSummonedSheep(null);
-                ArtifactItem.setArtifactCooldown(summoner, DeferredItemInit.ENCHANTED_GRASS.get(), 600);
+                ArtifactItem.setArtifactCooldown(summoner, ItemRegistry.ENCHANTED_GRASS.get());
             }
         }
         handleSummonableBeesAlreadyDead(event, summonerCap);
@@ -377,7 +377,7 @@ public class ArtifactEvents {
                 if(!(entity instanceof BeeEntity)) {
                     summonerCap.getBuzzyNestBees()[i] = null;
                     if(summonerCap.hasNoBuzzyNestBees()){
-                        ArtifactItem.setArtifactCooldown(event.player, DeferredItemInit.BUZZY_NEST.get(), 460);
+                        ArtifactItem.setArtifactCooldown(event.player, ItemRegistry.BUZZY_NEST.get());
                     }
                 }
             }
@@ -412,21 +412,21 @@ public class ArtifactEvents {
 
                     if(summonerCap.getSummonedGolem() == summonableUUID){
                         summonerCap.setSummonedGolem(null);
-                        ArtifactItem.setArtifactCooldown(summoner, DeferredItemInit.GOLEM_KIT.get(), 600);
+                        ArtifactItem.setArtifactCooldown(summoner, ItemRegistry.GOLEM_KIT.get());
                     }
                     if(summonerCap.getSummonedWolf() == summonableUUID){
                         summonerCap.setSummonedWolf(null);
-                        ArtifactItem.setArtifactCooldown(summoner, DeferredItemInit.TASTY_BONE.get(), 600);
+                        ArtifactItem.setArtifactCooldown(summoner, ItemRegistry.TASTY_BONE.get());
                     }
                     if(summonerCap.getSummonedLlama() == summonableUUID){
                         summonerCap.setSummonedLlama(null);
-                        ArtifactItem.setArtifactCooldown(summoner, DeferredItemInit.WONDERFUL_WHEAT.get(), 600);
+                        ArtifactItem.setArtifactCooldown(summoner, ItemRegistry.WONDERFUL_WHEAT.get());
                     }
                     if(summonerCap.getSummonedBat() == summonableUUID){
                         summonerCap.setSummonedBat(null);
                     }
                     if(summonerCap.getSummonedSheep() == summonableUUID){
-                        ArtifactItem.setArtifactCooldown(summoner, DeferredItemInit.ENCHANTED_GRASS.get(), 600);
+                        ArtifactItem.setArtifactCooldown(summoner, ItemRegistry.ENCHANTED_GRASS.get());
                         summonerCap.setSummonedSheep(null);
                     }
                     for(int i = 0; i < 3; i++){
@@ -435,8 +435,8 @@ public class ArtifactEvents {
                         UUID busyBeeBee = summonerCap.getBusyBeeBees()[i];
                         if(buzzyNestBee == summonableUUID){
                             summonerCap.getBuzzyNestBees()[i] = null;
-                            if(!summoner.getCooldownTracker().hasCooldown(DeferredItemInit.BUZZY_NEST.get())){
-                                ArtifactItem.setArtifactCooldown(summoner, DeferredItemInit.BUZZY_NEST.get(), 460);
+                            if(!summoner.getCooldownTracker().hasCooldown(ItemRegistry.BUZZY_NEST.get())){
+                                ArtifactItem.setArtifactCooldown(summoner, ItemRegistry.BUZZY_NEST.get());
                             }
                         }
                         if(tumblebeeBee == summonableUUID){

@@ -5,7 +5,8 @@ import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.PulseEnchantment;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
+import com.infamous.dungeons_gear.interfaces.IArmor;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -13,6 +14,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -49,9 +51,10 @@ public class BurningEnchantment extends PulseEnchantment {
             if(comboCap == null) return;
             int burnNearbyTimer = comboCap.getBurnNearbyTimer();
 
+            ItemStack chestplate = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
+            ItemStack helmet = player.getItemStackFromSlot(EquipmentSlotType.HEAD);
             boolean uniqueArmorFlag =
-                    player.getItemStackFromSlot(EquipmentSlotType.CHEST).getItem() == DeferredItemInit.EMBER_ROBE.get()
-                    || player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() == DeferredItemInit.EMBER_ROBE_HAT.get();
+                    hasBurningBuiltIn(chestplate) || hasBurningBuiltIn(helmet);
             if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.BURNING) || uniqueArmorFlag){
                 if(burnNearbyTimer <= 0){
                     int burningLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.BURNING, player);
@@ -69,5 +72,9 @@ public class BurningEnchantment extends PulseEnchantment {
                 }
             }
         }
+    }
+
+    private static boolean hasBurningBuiltIn(ItemStack stack) {
+        return stack.getItem() instanceof IArmor && ((IArmor) stack.getItem()).hasBurningBuiltIn(stack);
     }
 }

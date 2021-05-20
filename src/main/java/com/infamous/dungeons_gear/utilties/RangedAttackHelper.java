@@ -2,7 +2,7 @@ package com.infamous.dungeons_gear.utilties;
 
 import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.ranged.bows.AbstractDungeonsBowItem;
 import com.infamous.dungeons_gear.ranged.crossbows.AbstractDungeonsCrossbowItem;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -65,52 +65,52 @@ public class RangedAttackHelper {
 
     public static void addWeaponTags(AbstractArrowEntity arrowEntity, ItemStack stack){
         // BOWS
-        if(stack.getItem() == DeferredItemInit.BONEBOW.get()) arrowEntity.addTag("Bonebow");
-        if(stack.getItem() == DeferredItemInit.BOW_OF_LOST_SOULS.get()) arrowEntity.addTag("BowOfLostSouls");
-        if(stack.getItem() == DeferredItemInit.ELITE_POWER_BOW.get()) arrowEntity.addTag("ElitePowerBow");
-        if(stack.getItem() == DeferredItemInit.GUARDIAN_BOW.get()) arrowEntity.addTag("GuardianBow");
-        if(stack.getItem() == DeferredItemInit.HUNTERS_PROMISE.get()) arrowEntity.addTag("HuntersPromise");
-        if(stack.getItem() == DeferredItemInit.MASTERS_BOW.get()) arrowEntity.addTag("MastersBow");
+        if(stack.getItem() == ItemRegistry.BONEBOW.get()) arrowEntity.addTag("Bonebow");
+        if(stack.getItem() == ItemRegistry.BOW_OF_LOST_SOULS.get()) arrowEntity.addTag("BowOfLostSouls");
+        if(stack.getItem() == ItemRegistry.ELITE_POWER_BOW.get()) arrowEntity.addTag("ElitePowerBow");
+        if(stack.getItem() == ItemRegistry.GUARDIAN_BOW.get()) arrowEntity.addTag("GuardianBow");
+        if(stack.getItem() == ItemRegistry.HUNTERS_PROMISE.get()) arrowEntity.addTag("HuntersPromise");
+        if(stack.getItem() == ItemRegistry.MASTERS_BOW.get()) arrowEntity.addTag("MastersBow");
         //if(stack.getItem() == DeferredItemInit.MECHANICAL_SHORTBOW.get()) arrowEntity.addTag("MechanicalShortbow");
-        if(stack.getItem() == DeferredItemInit.NOCTURNAL_BOW.get()) arrowEntity.addTag("NocturnalBow");
+        if(stack.getItem() == ItemRegistry.NOCTURNAL_BOW.get()) arrowEntity.addTag("NocturnalBow");
         //if(stack.getItem() == DeferredItemInit.PURPLE_STORM.get()) arrowEntity.addTag("PurpleStorm");
-        if(stack.getItem() == DeferredItemInit.RED_SNAKE.get()) arrowEntity.addTag("RedSnake");
-        if(stack.getItem() == DeferredItemInit.SABREWING.get()) arrowEntity.addTag("Sabrewing");
-        if(stack.getItem() == DeferredItemInit.THE_GREEN_MENACE.get()) arrowEntity.addTag("TheGreenMenace");
-        if(stack.getItem() == DeferredItemInit.THE_PINK_SCOUNDREL.get()) arrowEntity.addTag("ThePinkScoundrel");
-        if(stack.getItem() == DeferredItemInit.TWIN_BOW.get()) arrowEntity.addTag("TwinBow");
-        if(stack.getItem() == DeferredItemInit.HUNTING_BOW.get()) arrowEntity.addTag("HuntingBow");
-        if(stack.getItem() == DeferredItemInit.LONGBOW.get()) arrowEntity.addTag("Longbow");
-        if(stack.getItem() == DeferredItemInit.SHORTBOW.get()) arrowEntity.addTag("Shortbow");
-        if(stack.getItem() == DeferredItemInit.POWER_BOW.get()) arrowEntity.addTag("PowerBow");
-        if(stack.getItem() == DeferredItemInit.SOUL_BOW.get()) arrowEntity.addTag("SoulBow");
-        if(stack.getItem() == DeferredItemInit.TRICKBOW.get()) arrowEntity.addTag("Trickbow");
-        if(stack.getItem() == DeferredItemInit.SNOW_BOW.get()) arrowEntity.addTag("SnowBow");
-        if(stack.getItem() == DeferredItemInit.WINTERS_TOUCH.get()) arrowEntity.addTag("WintersTouch");
+        if(stack.getItem() == ItemRegistry.RED_SNAKE.get()) arrowEntity.addTag("RedSnake");
+        if(stack.getItem() == ItemRegistry.SABREWING.get()) arrowEntity.addTag("Sabrewing");
+        if(stack.getItem() == ItemRegistry.THE_GREEN_MENACE.get()) arrowEntity.addTag("TheGreenMenace");
+        if(stack.getItem() == ItemRegistry.THE_PINK_SCOUNDREL.get()) arrowEntity.addTag("ThePinkScoundrel");
+        if(stack.getItem() == ItemRegistry.TWIN_BOW.get()) arrowEntity.addTag("TwinBow");
+        if(stack.getItem() == ItemRegistry.HUNTING_BOW.get()) arrowEntity.addTag("HuntingBow");
+        if(stack.getItem() == ItemRegistry.LONGBOW.get()) arrowEntity.addTag("Longbow");
+        if(stack.getItem() == ItemRegistry.SHORTBOW.get()) arrowEntity.addTag("Shortbow");
+        if(stack.getItem() == ItemRegistry.POWER_BOW.get()) arrowEntity.addTag("PowerBow");
+        if(stack.getItem() == ItemRegistry.SOUL_BOW.get()) arrowEntity.addTag("SoulBow");
+        if(stack.getItem() == ItemRegistry.TRICKBOW.get()) arrowEntity.addTag("Trickbow");
+        if(stack.getItem() == ItemRegistry.SNOW_BOW.get()) arrowEntity.addTag("SnowBow");
+        if(stack.getItem() == ItemRegistry.WINTERS_TOUCH.get()) arrowEntity.addTag("WintersTouch");
         //if(stack.getItem() == DeferredItemInit.HAUNTED_BOW.get()) arrowEntity.addTag("HauntedBow");
-        if(stack.getItem() == DeferredItemInit.ANCIENT_BOW.get()) arrowEntity.addTag("AncientBow");
-        if(stack.getItem() == DeferredItemInit.LOVE_SPELL_BOW.get()) arrowEntity.addTag("LoveSpellBow");
+        if(stack.getItem() == ItemRegistry.ANCIENT_BOW.get()) arrowEntity.addTag("AncientBow");
+        if(stack.getItem() == ItemRegistry.LOVE_SPELL_BOW.get()) arrowEntity.addTag("LoveSpellBow");
 
         // CROSSBOWS
         //if(stack.getItem() == DeferredItemInit.AUTO_CROSSBOW.get()) arrowEntity.addTag("AutoCrossbow");
-        if(stack.getItem() == DeferredItemInit.AZURE_SEEKER.get()) arrowEntity.addTag("AzureSeeker");
-        if(stack.getItem() == DeferredItemInit.BUTTERFLY_CROSSBOW.get()) arrowEntity.addTag("ButterflyCrossbow");
-        if(stack.getItem() == DeferredItemInit.DOOM_CROSSBOW.get()) arrowEntity.addTag("DoomCrossbow");
-        if(stack.getItem() == DeferredItemInit.FERAL_SOUL_CROSSBOW.get()) arrowEntity.addTag("FeralSoulCrossbow");
-        if(stack.getItem() == DeferredItemInit.FIREBOLT_THROWER.get()) arrowEntity.addTag("FireboltThrower");
-        if(stack.getItem() == DeferredItemInit.HARP_CROSSBOW.get()) arrowEntity.addTag("HarpCrossbow");
-        if(stack.getItem() == DeferredItemInit.LIGHTNING_HARP_CROSSBOW.get()) arrowEntity.addTag("LightningHarpCrossbow");
-        if(stack.getItem() == DeferredItemInit.SLAYER_CROSSBOW.get()) arrowEntity.addTag("SlayerCrossbow");
-        if(stack.getItem() == DeferredItemInit.THE_SLICER.get()) arrowEntity.addTag("TheSlicer");
-        if(stack.getItem() == DeferredItemInit.VOIDCALLER.get()) arrowEntity.addTag("Voidcaller");
-        if(stack.getItem() == DeferredItemInit.DUAL_CROSSBOW.get()) arrowEntity.addTag("DualCrossbow");
-        if(stack.getItem() == DeferredItemInit.BABY_CROSSBOW.get()) arrowEntity.addTag("BabyCrossbow");
-        if(stack.getItem() == DeferredItemInit.EXPLODING_CROSSBOW.get()) arrowEntity.addTag("ExplodingCrossbow");
-        if(stack.getItem() == DeferredItemInit.HEAVY_CROSSBOW.get()) arrowEntity.addTag("HeavyCrossbow");
-        if(stack.getItem() == DeferredItemInit.RAPID_CROSSBOW.get()) arrowEntity.addTag("RapidCrossbow");
-        if(stack.getItem() == DeferredItemInit.SCATTER_CROSSBOW.get()) arrowEntity.addTag("ScatterCrossbow");
-        if(stack.getItem() == DeferredItemInit.SOUL_CROSSBOW.get()) arrowEntity.addTag("SoulCrossbow");
-        if(stack.getItem() == DeferredItemInit.IMPLODING_CROSSBOW.get()) arrowEntity.addTag("ImplodingCrossbow");
+        if(stack.getItem() == ItemRegistry.AZURE_SEEKER.get()) arrowEntity.addTag("AzureSeeker");
+        if(stack.getItem() == ItemRegistry.BUTTERFLY_CROSSBOW.get()) arrowEntity.addTag("ButterflyCrossbow");
+        if(stack.getItem() == ItemRegistry.DOOM_CROSSBOW.get()) arrowEntity.addTag("DoomCrossbow");
+        if(stack.getItem() == ItemRegistry.FERAL_SOUL_CROSSBOW.get()) arrowEntity.addTag("FeralSoulCrossbow");
+        if(stack.getItem() == ItemRegistry.FIREBOLT_THROWER.get()) arrowEntity.addTag("FireboltThrower");
+        if(stack.getItem() == ItemRegistry.HARP_CROSSBOW.get()) arrowEntity.addTag("HarpCrossbow");
+        if(stack.getItem() == ItemRegistry.LIGHTNING_HARP_CROSSBOW.get()) arrowEntity.addTag("LightningHarpCrossbow");
+        if(stack.getItem() == ItemRegistry.SLAYER_CROSSBOW.get()) arrowEntity.addTag("SlayerCrossbow");
+        if(stack.getItem() == ItemRegistry.THE_SLICER.get()) arrowEntity.addTag("TheSlicer");
+        if(stack.getItem() == ItemRegistry.VOIDCALLER.get()) arrowEntity.addTag("Voidcaller");
+        if(stack.getItem() == ItemRegistry.DUAL_CROSSBOW.get()) arrowEntity.addTag("DualCrossbow");
+        if(stack.getItem() == ItemRegistry.BABY_CROSSBOW.get()) arrowEntity.addTag("BabyCrossbow");
+        if(stack.getItem() == ItemRegistry.EXPLODING_CROSSBOW.get()) arrowEntity.addTag("ExplodingCrossbow");
+        if(stack.getItem() == ItemRegistry.HEAVY_CROSSBOW.get()) arrowEntity.addTag("HeavyCrossbow");
+        if(stack.getItem() == ItemRegistry.RAPID_CROSSBOW.get()) arrowEntity.addTag("RapidCrossbow");
+        if(stack.getItem() == ItemRegistry.SCATTER_CROSSBOW.get()) arrowEntity.addTag("ScatterCrossbow");
+        if(stack.getItem() == ItemRegistry.SOUL_CROSSBOW.get()) arrowEntity.addTag("SoulCrossbow");
+        if(stack.getItem() == ItemRegistry.IMPLODING_CROSSBOW.get()) arrowEntity.addTag("ImplodingCrossbow");
     }
 
     public static int getModdedCrossbowChargeTime(ItemStack stack){

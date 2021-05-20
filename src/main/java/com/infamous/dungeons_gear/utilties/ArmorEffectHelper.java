@@ -3,13 +3,12 @@ package com.infamous.dungeons_gear.utilties;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.capabilities.summoning.ISummonable;
 import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
-import com.infamous.dungeons_gear.capabilities.summoning.SummonableProvider;
-import com.infamous.dungeons_gear.capabilities.summoning.SummonerProvider;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.goals.*;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
 import com.infamous.dungeons_gear.interfaces.IArmor;
+import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
+import com.infamous.dungeons_gear.interfaces.IRangedWeapon;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -70,16 +69,13 @@ public class ArmorEffectHelper {
         batEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(batEntity, LivingEntity.class, 5, false, false,
                 (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
 
-        world.playSound((PlayerEntity)null, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ENTITY_BAT_AMBIENT, SoundCategory.AMBIENT, 64.0F, 1.0F);
+        SoundHelper.playCreatureSound(playerEntity, SoundEvents.ENTITY_BAT_AMBIENT);
         world.addEntity(batEntity);
     }
 
     public static void teleportOnHit(LivingEntity livingEntity){
         World world = livingEntity.getEntityWorld();
         if (!world.isRemote) {
-            double lvt_5_1_ = livingEntity.getPosX();
-            double lvt_7_1_ = livingEntity.getPosY();
-            double lvt_9_1_ = livingEntity.getPosZ();
 
             for(int i = 0; i < 16; ++i) {
                 double teleportX = livingEntity.getPosX() + (livingEntity.getRNG().nextDouble() - 0.5D) * 16.0D;
@@ -90,9 +86,9 @@ public class ArmorEffectHelper {
                 }
 
                 if (livingEntity.attemptTeleport(teleportX, teleportY, teleportZ, true)) {
-                    SoundEvent lvt_18_1_ = livingEntity instanceof FoxEntity ? SoundEvents.ENTITY_FOX_TELEPORT : SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT;
-                    world.playSound((PlayerEntity)null, lvt_5_1_, lvt_7_1_, lvt_9_1_, lvt_18_1_, SoundCategory.PLAYERS, 1.0F, 1.0F);
-                    livingEntity.playSound(lvt_18_1_, 1.0F, 1.0F);
+                    SoundEvent soundEvent = livingEntity instanceof FoxEntity ? SoundEvents.ENTITY_FOX_TELEPORT : SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT;
+                    world.playSound((PlayerEntity)null, livingEntity.getPosition(), soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                    livingEntity.playSound(soundEvent, 1.0F, 1.0F);
                     break;
                 }
             }
@@ -111,8 +107,8 @@ public class ArmorEffectHelper {
     }
 
     public static void handleJumpBoost(PlayerEntity playerEntity, ItemStack helmet, ItemStack chestplate) {
-        float jumpBoost = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getHigherJumps() : 0;
-        float jumpBoost2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getHigherJumps() : 0;
+        float jumpBoost = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getLongerRolls() : 0;
+        float jumpBoost2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getLongerRolls() : 0;
         float totalJumpBoost = jumpBoost * 0.002F + jumpBoost2 * 0.002F;
 
         if (totalJumpBoost > 0) {
@@ -122,6 +118,7 @@ public class ArmorEffectHelper {
 
     public static void handleJumpEnchantments(PlayerEntity playerEntity, ItemStack helmet, ItemStack chestplate) {
         if (ModEnchantmentHelper.hasEnchantment(playerEntity, ArmorEnchantmentList.ELECTRIFIED)) {
+            SoundHelper.playLightningStrikeSounds(playerEntity);
             AreaOfEffectHelper.electrifyNearbyEnemies(playerEntity, 5, 5, 3);
         }
 
@@ -140,8 +137,7 @@ public class ArmorEffectHelper {
             }
         }
 
-        boolean highlandArmorFlag = chestplate.getItem() == DeferredItemInit.HIGHLAND_ARMOR.get()
-                || helmet.getItem() == DeferredItemInit.HIGHLAND_ARMOR_HELMET.get();
+        boolean highlandArmorFlag = hasSwiftfootedBuiltIn(chestplate) || hasSwiftfootedBuiltIn(helmet);
         if (ModEnchantmentHelper.hasEnchantment(playerEntity, ArmorEnchantmentList.SWIFTFOOTED) || highlandArmorFlag) {
             int swiftfootedLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.SWIFTFOOTED, playerEntity);
             if (highlandArmorFlag) swiftfootedLevel++;
@@ -152,11 +148,13 @@ public class ArmorEffectHelper {
         handleDynamoEnchantment(playerEntity);
     }
 
+    private static boolean hasSwiftfootedBuiltIn(ItemStack stack) {
+        return stack.getItem() instanceof IArmor && ((IArmor) stack.getItem()).hasSwiftfootedBuiltIn(stack);
+    }
+
     private static void handleDynamoEnchantment(PlayerEntity playerEntity) {
         ItemStack mainhand = playerEntity.getHeldItemMainhand();
-        boolean uniqueWeaponFlag = mainhand.getItem() == DeferredItemInit.GREAT_AXEBLADE.get()
-                || mainhand.getItem() == DeferredItemInit.ANCIENT_BOW.get()
-                || mainhand.getItem() == DeferredItemInit.CORRUPTED_CROSSBOW.get();
+        boolean uniqueWeaponFlag = hasDynamoBuiltIn(mainhand);
         if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.DYNAMO) || uniqueWeaponFlag) {
             int dynamoLevel = EnchantmentHelper.getEnchantmentLevel(MeleeRangedEnchantmentList.DYNAMO, mainhand);
             if (uniqueWeaponFlag) dynamoLevel++;
@@ -166,6 +164,11 @@ public class ArmorEffectHelper {
             double dynamoModifier = 1.0D + (0.5D * Math.max((dynamoLevel - 1), 0));
             comboCap.setDynamoMultiplier(originalDynamoMultiplier + dynamoModifier);
         }
+    }
+
+    private static boolean hasDynamoBuiltIn(ItemStack mainhand) {
+        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasDynamoBuiltIn(mainhand) ||
+                mainhand.getItem() instanceof IRangedWeapon && ((IRangedWeapon) mainhand.getItem()).hasDynamoBuiltIn(mainhand);
     }
 
     private static void summonTumblebeeBee(PlayerEntity playerEntity) {
@@ -194,7 +197,7 @@ public class ArmorEffectHelper {
         beeEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(beeEntity, LivingEntity.class, 5, false, false,
                 (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
 
-        playerEntity.world.playSound((PlayerEntity) null, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), SoundEvents.ENTITY_BEE_LOOP, SoundCategory.AMBIENT, 64.0F, 1.0F);
+        SoundHelper.playCreatureSound(playerEntity, SoundEvents.ENTITY_BEE_LOOP);
         playerEntity.world.addEntity(beeEntity);
     }
 

@@ -1,13 +1,15 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
+import com.infamous.dungeons_gear.interfaces.IArmor;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.PotionUtils;
@@ -42,8 +44,10 @@ public class PotionBarrierEnchantment extends Enchantment {
             List<EffectInstance> potionEffects = PotionUtils.getEffectsFromStack(event.getItem());
             if(potionEffects.isEmpty()) return;
             if(potionEffects.get(0).getPotion() == Effects.INSTANT_HEALTH){
-                boolean uniqueArmorFlag = player.getItemStackFromSlot(EquipmentSlotType.CHEST).getItem() == DeferredItemInit.STALWART_ARMOR.get()
-                        || player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() == DeferredItemInit.STALWART_ARMOR_HELMET.get();
+                ItemStack chestplate = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
+                ItemStack helmet = player.getItemStackFromSlot(EquipmentSlotType.HEAD);
+                boolean uniqueArmorFlag =
+                        hasPotionBarrierBuiltIn(chestplate) || hasPotionBarrierBuiltIn(helmet);
                 if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.POTION_BARRIER) || uniqueArmorFlag){
                     int potionBarrierLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.POTION_BARRIER, player);
                     if(uniqueArmorFlag) potionBarrierLevel++;
@@ -53,5 +57,8 @@ public class PotionBarrierEnchantment extends Enchantment {
                 }
             }
         }
+    }
+    private static boolean hasPotionBarrierBuiltIn(ItemStack stack) {
+        return stack.getItem() instanceof IArmor && ((IArmor) stack.getItem()).hasPotionBarrierBuiltIn(stack);
     }
 }

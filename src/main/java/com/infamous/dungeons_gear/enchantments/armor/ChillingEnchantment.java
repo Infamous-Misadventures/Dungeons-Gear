@@ -5,7 +5,7 @@ import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.PulseEnchantment;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.interfaces.IArmor;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -13,6 +13,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -49,8 +50,11 @@ public class ChillingEnchantment extends PulseEnchantment {
             if(comboCap == null) return;
             int freezeNearbyTimer = comboCap.getFreezeNearbyTimer();
 
-            boolean uniqueArmorFlag = player.getItemStackFromSlot(EquipmentSlotType.CHEST).getItem() == DeferredItemInit.FROST_ARMOR.get() ||
-                    player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() == DeferredItemInit.FROST_ARMOR_HELMET.get();
+            ItemStack chestplate = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
+            ItemStack helmet = player.getItemStackFromSlot(EquipmentSlotType.HEAD);
+            boolean uniqueArmorFlag =
+                    hasChillingBuiltIn(chestplate) || hasChillingBuiltIn(helmet);
+
             if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.CHILLING) || uniqueArmorFlag){
                 if(freezeNearbyTimer <= 0){
                     int chillingLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.CHILLING, player);
@@ -68,5 +72,9 @@ public class ChillingEnchantment extends PulseEnchantment {
                 }
             }
         }
+    }
+
+    private static boolean hasChillingBuiltIn(ItemStack stack) {
+        return stack.getItem() instanceof IArmor && ((IArmor) stack.getItem()).hasChillingBuiltIn(stack);
     }
 }

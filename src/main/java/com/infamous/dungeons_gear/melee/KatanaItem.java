@@ -1,9 +1,9 @@
 package com.infamous.dungeons_gear.melee;
 
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
-import com.infamous.dungeons_gear.items.WeaponList;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.IItemTier;
@@ -30,6 +30,16 @@ public class KatanaItem extends SwordItem implements IMeleeWeapon, IComboWeapon 
         this.unique = isUnique;
     }
 
+    @Override
+    public boolean hasSmiteBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.DARK_KATANA.get();
+    }
+
+    @Override
+    public boolean hasCriticalHitBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.MASTERS_KATANA.get();
+    }
+
     public Rarity getRarity(ItemStack itemStack){
 
         if(this.unique){
@@ -42,20 +52,6 @@ public class KatanaItem extends SwordItem implements IMeleeWeapon, IComboWeapon 
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
         super.addInformation(stack, world, list, flag);
-
-        if(stack.getItem() == DeferredItemInit.DARK_KATANA.get()){
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A blade that will not rest until the battle has been won."));
-
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Extra Damage To Undead (Smite I)"));
-        }
-        if(stack.getItem() == DeferredItemInit.MASTERS_KATANA.get()){
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The Master's Katana has existed throughout the ages, appearing to heroes at the right moment."));
-
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Increased Critical Hit Chance (Critical Hit I)"));
-        }
-        if(stack.getItem() == DeferredItemInit.KATANA.get()){
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "A blade fit for expert warriors and fighters, its blade is crafted to inflict precision damage."));
-
-        }
+        DescriptionHelper.addFullDescription(list, stack);
     }
 }

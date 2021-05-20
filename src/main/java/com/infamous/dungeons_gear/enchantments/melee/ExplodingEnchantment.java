@@ -5,20 +5,19 @@ import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
+import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
+import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.enchantment.DamageEnchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -50,18 +49,21 @@ public class ExplodingEnchantment extends AOEDamageEnchantment {
             LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
             LivingEntity victim = event.getEntityLiving();
             ItemStack mainhand = attacker.getHeldItemMainhand();
-            boolean uniqueWeaponFlag = mainhand.getItem() == DeferredItemInit.CURSED_AXE.get()
-                    || mainhand.getItem() == DeferredItemInit.BATTLESTAFF_OF_TERROR.get();
+            boolean uniqueWeaponFlag = hasExplodingBuiltIn(mainhand);
             if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.EXPLODING) || uniqueWeaponFlag){
                 int explodingLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.EXPLODING, mainhand);
                 float explosionDamage;
                 explosionDamage = victim.getMaxHealth() * 0.2F * explodingLevel;
                 if(uniqueWeaponFlag) explosionDamage += (victim.getMaxHealth() * 0.2f);
-                victim.world.playSound((PlayerEntity) null, victim.getPosX(), victim.getPosY(), victim.getPosZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 64.0F, 1.0F);
+                SoundHelper.playGenericExplodeSound(victim);
                 AOECloudHelper.spawnExplosionCloud(attacker, victim, 3.0F);
                 AreaOfEffectHelper.causeExplosionAttack(attacker, victim, explosionDamage, 3.0F);
             }
         }
+    }
+
+    private static boolean hasExplodingBuiltIn(ItemStack mainhand) {
+        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasExplodingBuiltIn(mainhand);
     }
 
 }

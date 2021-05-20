@@ -4,8 +4,9 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.GrimArmorModel;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IArmor;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -61,10 +62,10 @@ public class GrimArmorItem extends ArmorItem implements IArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(stack.getItem() == DeferredItemInit.GRIM_ARMOR.get() || stack.getItem() == DeferredItemInit.GRIM_ARMOR_HELMET.get()){
+        if(stack.getItem() == ItemRegistry.GRIM_ARMOR.get() || stack.getItem() == ItemRegistry.GRIM_ARMOR_HELMET.get()){
             return DungeonsGear.MODID + ":textures/models/armor/grim_armor.png";
         }
-        else if(stack.getItem() == DeferredItemInit.WITHER_ARMOR.get() || stack.getItem() == DeferredItemInit.WITHER_ARMOR_HELMET.get()){
+        else if(stack.getItem() == ItemRegistry.WITHER_ARMOR.get() || stack.getItem() == ItemRegistry.WITHER_ARMOR_HELMET.get()){
             return DungeonsGear.MODID + ":textures/models/armor/wither_armor.png";
         }
         else return "";
@@ -92,13 +93,7 @@ public class GrimArmorItem extends ArmorItem implements IArmor {
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
-
-        if (this.unique) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Wither Armor, crafted with the parts of slain enemies, was made to terrify the wearer's enemies."));
-        }
-        else{
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Grim Armor invokes a sense of dread for the one who wears it and to those who face it in battle."));
-        }
+        DescriptionHelper.addLoreDescription(list, stack);
     }
 
     @Override

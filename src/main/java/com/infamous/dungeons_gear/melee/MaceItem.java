@@ -2,10 +2,10 @@ package com.infamous.dungeons_gear.melee;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
-import com.infamous.dungeons_gear.items.WeaponList;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
@@ -100,6 +100,16 @@ public class MaceItem extends TieredItem implements IMeleeWeapon, IComboWeapon {
         return enchantment.type.canEnchantItem(Items.IRON_SWORD) && enchantment != Enchantments.SWEEPING;
     }
 
+    @Override
+    public boolean hasChainsBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.FLAIL.get();
+    }
+
+    @Override
+    public boolean hasRadianceBuiltIn(ItemStack stack) {
+        return stack.getItem() == ItemRegistry.SUNS_GRACE.get();
+    }
+
     public Rarity getRarity(ItemStack itemStack){
 
         if(this.unique){
@@ -112,21 +122,6 @@ public class MaceItem extends TieredItem implements IMeleeWeapon, IComboWeapon {
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
         super.addInformation(stack, world, list, flag);
-
-        if(stack.getItem() == DeferredItemInit.FLAIL.get()){
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "This ancient weapon inflicts grave blunt damage to those who cannot evade the deadly metal ball."));
-
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Binds And Chains Enemies (Chains I)"));
-        }
-        if(stack.getItem() == DeferredItemInit.SUNS_GRACE.get()){
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "This mace, engraved with secret healing runes, grants powerful restorative powers."));
-
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Heals Allies In Area (Radiance I)"));
-        }
-        if(stack.getItem() == DeferredItemInit.MACE.get()){
-
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "The Mace is a brutal tool of war and what it lacks in finesse; it makes up for in power."));
-
-        }
+        DescriptionHelper.addFullDescription(list, stack);
     }
 }

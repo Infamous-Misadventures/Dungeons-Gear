@@ -5,11 +5,13 @@ import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
+import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
+import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.enchantment.DamageEnchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -18,8 +20,6 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -57,7 +57,7 @@ public class ShockwaveEnchantment extends AOEDamageEnchantment {
             LivingEntity victim = event.getEntityLiving();
             ItemStack mainhand = attacker.getHeldItemMainhand();
             if (event.getResult() != Event.Result.ALLOW && mainhand.getItem() instanceof IComboWeapon) return;
-            boolean uniqueWeaponFlag = mainhand.getItem() == DeferredItemInit.WHIRLWIND.get();
+            boolean uniqueWeaponFlag = hasShockwaveBuiltIn(mainhand);
             if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.SHOCKWAVE) || uniqueWeaponFlag){
                 int shockwaveLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.SHOCKWAVE, mainhand);
                 if(uniqueWeaponFlag) shockwaveLevel += 1;
@@ -68,10 +68,14 @@ public class ShockwaveEnchantment extends AOEDamageEnchantment {
 
                 float shockwaveDamage = attackDamage * SHOCKWAVE_DAMAGE_MULTIPLIER;
                 shockwaveDamage *= (shockwaveLevel + 1) / 2.0F;
-                victim.world.playSound((PlayerEntity) null, victim.getPosX(), victim.getPosY(), victim.getPosZ(), SoundEvents.ENTITY_LIGHTNING_BOLT_IMPACT, SoundCategory.PLAYERS, 64.0F, 1.0F);
+                SoundHelper.playBoltImpactSound(attacker);
                 AOECloudHelper.spawnCritCloud(attacker, victim, 3.0f);
                 AreaOfEffectHelper.causeShockwave(attacker, victim, shockwaveDamage, 3.0f);
             }
         }
+    }
+
+    private static boolean hasShockwaveBuiltIn(ItemStack mainhand) {
+        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasShockwaveBuiltIn(mainhand);
     }
 }

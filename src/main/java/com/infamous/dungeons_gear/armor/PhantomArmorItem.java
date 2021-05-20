@@ -2,8 +2,9 @@ package com.infamous.dungeons_gear.armor;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.armor.models.PhantomArmorModel;
-import com.infamous.dungeons_gear.init.DeferredItemInit;
+import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IArmor;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -33,10 +34,10 @@ public class PhantomArmorItem extends ArmorItem implements IArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if(stack.getItem() == DeferredItemInit.PHANTOM_ARMOR.get() || stack.getItem() == DeferredItemInit.PHANTOM_ARMOR_HELMET.get()){
+        if(stack.getItem() == ItemRegistry.PHANTOM_ARMOR.get() || stack.getItem() == ItemRegistry.PHANTOM_ARMOR_HELMET.get()){
             return DungeonsGear.MODID + ":textures/models/armor/phantom_armor.png";
         }
-        else if(stack.getItem() == DeferredItemInit.FROST_BITE.get() || stack.getItem() == DeferredItemInit.FROST_BITE_HELMET.get()){
+        else if(stack.getItem() == ItemRegistry.FROST_BITE.get() || stack.getItem() == ItemRegistry.FROST_BITE_HELMET.get()){
             return DungeonsGear.MODID + ":textures/models/armor/frost_bite.png";
         }
         else return "";
@@ -50,6 +51,11 @@ public class PhantomArmorItem extends ArmorItem implements IArmor {
     }
 
     @Override
+    public boolean hasSnowballBuiltIn(ItemStack stack) {
+        return this.unique;
+    }
+
+    @Override
     public Rarity getRarity(ItemStack itemStack){
         if(this.unique) return Rarity.RARE;
         return Rarity.UNCOMMON;
@@ -58,16 +64,7 @@ public class PhantomArmorItem extends ArmorItem implements IArmor {
     @Override
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
-
-        if (this.unique) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "Frost Bite remembers the icy winds which once flowed beneath the wings of the night Phantoms."));
-            if(this.slot == EquipmentSlotType.CHEST){
-                list.add(new StringTextComponent(TextFormatting.GREEN + "Spawns A Snowy Companion (Snowball I)"));
-            }
-        }
-        else{
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC + "This armor, crafted from the bones of Phantoms, is a terrifying sight on the battlefield."));
-        }
+        DescriptionHelper.addFullDescription(list, stack);
     }
 
     @Override

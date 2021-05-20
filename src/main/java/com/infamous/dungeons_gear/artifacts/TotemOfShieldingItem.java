@@ -2,6 +2,7 @@ package com.infamous.dungeons_gear.artifacts;
 
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -50,7 +51,7 @@ public class TotemOfShieldingItem extends ArtifactItem {
                 spawnShieldingCloudAtPos(itemUseContextPlayer, blockPos, 100);
                 itemUseContextItem.damageItem(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemUseContextItem)));
 
-                ArtifactItem.setArtifactCooldown(itemUseContextPlayer, itemUseContextItem.getItem(), 400);
+                ArtifactItem.setArtifactCooldown(itemUseContextPlayer, itemUseContextItem.getItem());
             }
         }
         return ActionResult.resultConsume(itemUseContext.getItem());
@@ -60,14 +61,16 @@ public class TotemOfShieldingItem extends ArtifactItem {
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
         super.addInformation(stack, world, list, flag);
+        DescriptionHelper.addFullDescription(list, stack);
+    }
 
-            list.add(new StringTextComponent(TextFormatting.WHITE + "" + TextFormatting.ITALIC +
-                    "This totem radiates powerful energy that bursts forth as a protective shield around those near it."));
-            list.add(new StringTextComponent(TextFormatting.GREEN +
-                    "This totem has mystical powers that shield those around it from projectiles."));
-            list.add(new StringTextComponent(TextFormatting.BLUE +
-                    "5 Seconds Duration"));
-            list.add(new StringTextComponent(TextFormatting.BLUE +
-                    "20 Seconds Cooldown"));
+    @Override
+    public int getCooldownInSeconds() {
+        return 20;
+    }
+
+    @Override
+    public int getDurationInSeconds() {
+        return 5;
     }
 }
