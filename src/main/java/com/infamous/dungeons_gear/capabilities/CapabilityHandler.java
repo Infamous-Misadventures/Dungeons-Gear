@@ -10,6 +10,7 @@ import net.minecraft.entity.passive.*;
 import net.minecraft.entity.passive.horse.LlamaEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ShootableItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -30,10 +31,11 @@ public class CapabilityHandler {
 
     @SubscribeEvent
     public static void onAttachItemCapabilities(AttachCapabilitiesEvent<ItemStack> event) {
-        event.addCapability(new ResourceLocation(DungeonsGear.MODID, "weapon"), new WeaponProvider());
+        if (event.getObject().getItem() instanceof ShootableItem)
+            event.addCapability(new ResourceLocation(DungeonsGear.MODID, "weapon"), new WeaponProvider());
     }
 
-    private static boolean isSummonableEntity(Entity entity){
+    private static boolean isSummonableEntity(Entity entity) {
         return entity instanceof IronGolemEntity
                 || entity instanceof WolfEntity
                 || entity instanceof LlamaEntity

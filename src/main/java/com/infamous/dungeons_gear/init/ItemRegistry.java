@@ -164,7 +164,7 @@ public class ItemRegistry {
     public static final RegistryObject<Item> CLAYMORE = ITEMS.register("claymore",
             () -> new ClaymoreItem(ToolMaterialList.METAL, 11, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
     public static final RegistryObject<Item> BROADSWORD = ITEMS.register("broadsword",
-            () -> new ClaymoreItem(ToolMaterialList.METAL, 11, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new ClaymoreItem(ToolMaterialList.METAL, 12, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> HEARTSTEALER = ITEMS.register("heartstealer",
             () -> new ClaymoreItem(ToolMaterialList.METAL, 11, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> GREAT_AXEBLADE = ITEMS.register("great_axeblade",
@@ -196,9 +196,9 @@ public class ItemRegistry {
     public static final RegistryObject<Item> TEMPEST_KNIFE = ITEMS.register("tempest_knife",
             () -> new TempestKnifeItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
     public static final RegistryObject<Item> RESOLUTE_TEMPEST_KNIFE = ITEMS.register("resolute_tempest_knife",
-            () -> new TempestKnifeItem(ToolMaterialList.METAL, 6, (1.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new TempestKnifeItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> CHILL_GALE_KNIFE = ITEMS.register("chill_gale_knife",
-            () -> new TempestKnifeItem(ToolMaterialList.METAL, 6, (1.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new TempestKnifeItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
 
     public static final RegistryObject<Item> BONEBOW = ITEMS.register("bonebow",
             () -> new DungeonsBowItem(new Item.Properties(), 20.0F, true));
