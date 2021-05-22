@@ -5,6 +5,7 @@ import com.infamous.dungeons_gear.armor.*;
 import com.infamous.dungeons_gear.artifacts.*;
 import com.infamous.dungeons_gear.artifacts.beacon.CorruptedBeaconItem;
 import com.infamous.dungeons_gear.artifacts.beacon.CorruptedPumpkinItem;
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.items.ArmorMaterialList;
 import com.infamous.dungeons_gear.items.ToolMaterialList;
 import com.infamous.dungeons_gear.melee.*;
@@ -12,6 +13,7 @@ import com.infamous.dungeons_gear.ranged.bows.*;
 import com.infamous.dungeons_gear.ranged.crossbows.*;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -36,498 +38,507 @@ public class ItemRegistry {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
 
+    public static final Item.Properties MELEE_WEAPON_PROPERTIES = DungeonsGearConfig.ENABLE_MELEE_WEAPON_TAB.get() ?
+            new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP) : new Item.Properties().group(ItemGroup.COMBAT);
+    public static final Item.Properties ARMOR_PROPERTIES = DungeonsGearConfig.ENABLE_ARMOR_TAB.get() ?
+            new Item.Properties().group(DungeonsGear.ARMOR_GROUP) : new Item.Properties().group(ItemGroup.COMBAT);
+    public static final Item.Properties RANGED_WEAPON_PROPERTIES = DungeonsGearConfig.ENABLE_RANGED_WEAPON_TAB.get() ?
+            new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP) : new Item.Properties().group(ItemGroup.COMBAT);
+    public static final Item.Properties ARTIFACT_PROPERTIES = DungeonsGearConfig.ENABLE_ARTIFACT_TAB.get() ?
+            new Item.Properties().group(DungeonsGear.ARTIFACT_GROUP) : new Item.Properties().group(ItemGroup.COMBAT);
+
     //DPS 7.2 (14.4), crits once per 2.5 (1.25) seconds
     public static final RegistryObject<Item> DAGGER = ITEMS.register("dagger",
-            () -> new DaggerItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new DaggerItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), MELEE_WEAPON_PROPERTIES, false));
     public static final RegistryObject<Item> FANG_OF_FROST = ITEMS.register("fang_of_frost",
-            () -> new DaggerItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DaggerItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), MELEE_WEAPON_PROPERTIES, true));
     public static final RegistryObject<Item> MOON_DAGGER = ITEMS.register("moon_dagger",
-            () -> new DaggerItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DaggerItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), MELEE_WEAPON_PROPERTIES, true));
     public static final RegistryObject<Item> SHEAR_DAGGER = ITEMS.register("shear_dagger",
-            () -> new DaggerItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DaggerItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), MELEE_WEAPON_PROPERTIES, true));
 
     //DPS 8 (16), crits once per 3 (1.5) seconds
     public static final RegistryObject<Item> SICKLE = ITEMS.register("sickle",
-            () -> new SickleItem(ToolMaterialList.METAL, 3, (2.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new SickleItem(ToolMaterialList.METAL, 3, (2.0f-4.0f), MELEE_WEAPON_PROPERTIES, false));
     public static final RegistryObject<Item> NIGHTMARES_BITE = ITEMS.register("nightmares_bite",
-            () -> new SickleItem(ToolMaterialList.METAL, 3, (2.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new SickleItem(ToolMaterialList.METAL, 3, (2.0f-4.0f), MELEE_WEAPON_PROPERTIES, true));
     public static final RegistryObject<Item> THE_LAST_LAUGH = ITEMS.register("the_last_laugh",
-            () -> new SickleItem(ToolMaterialList.METAL, 3, (2.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new SickleItem(ToolMaterialList.METAL, 3, (2.0f-4.0f), MELEE_WEAPON_PROPERTIES, true));
 
     //DPS 7.2/8 (14.4/16), crits once per 2.92/1 (1.46/0.5) seconds
     public static final RegistryObject<Item> GAUNTLET = ITEMS.register("gauntlet",
-            () -> new GauntletItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new GauntletItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), MELEE_WEAPON_PROPERTIES, false));
     public static final RegistryObject<Item> FIGHTERS_BINDING = ITEMS.register("fighters_binding",
-            () -> new GauntletItem(ToolMaterialList.METAL, 1, (4.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new GauntletItem(ToolMaterialList.METAL, 1, (4.0f-4.0f), MELEE_WEAPON_PROPERTIES, true));
     public static final RegistryObject<Item> MAULER = ITEMS.register("mauler",
-            () -> new GauntletItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new GauntletItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), MELEE_WEAPON_PROPERTIES, true));
     public static final RegistryObject<Item> SOUL_FIST = ITEMS.register("soul_fist",
-            () -> new GauntletItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new GauntletItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), MELEE_WEAPON_PROPERTIES, true));
 
     //DPS 8, crits once per 3.5 seconds
     public static final RegistryObject<Item> RAPIER = ITEMS.register("rapier",
-            () -> new RapierItem(ToolMaterialList.METAL, 1, (4.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new RapierItem(ToolMaterialList.METAL, 1, (4.0f-4.0f), MELEE_WEAPON_PROPERTIES, false));
     public static final RegistryObject<Item> BEE_STINGER = ITEMS.register("bee_stinger",
-            () -> new RapierItem(ToolMaterialList.METAL, 1, (4.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new RapierItem(ToolMaterialList.METAL, 1, (4.0f-4.0f), MELEE_WEAPON_PROPERTIES, true));
     public static final RegistryObject<Item> FREEZING_FOIL = ITEMS.register("freezing_foil",
-            () -> new RapierItem(ToolMaterialList.METAL, 1, (4.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new RapierItem(ToolMaterialList.METAL, 1, (4.0f-4.0f), MELEE_WEAPON_PROPERTIES, true));
 
     //DPS 9.1, crits once per 1.53 seconds
     public static final RegistryObject<Item> SOUL_SCYTHE = ITEMS.register("soul_scythe",
-            () -> new SoulScytheItem(ToolMaterialList.METAL, 6, (1.3f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new SoulScytheItem(ToolMaterialList.METAL, 6, (1.3f-4.0f), MELEE_WEAPON_PROPERTIES, false));
     public static final RegistryObject<Item> FROST_SCYTHE = ITEMS.register("frost_scythe",
-            () -> new SoulScytheItem(ToolMaterialList.METAL, 6, (1.3f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new SoulScytheItem(ToolMaterialList.METAL, 6, (1.3f-4.0f), MELEE_WEAPON_PROPERTIES, true));
     public static final RegistryObject<Item> JAILORS_SCYTHE = ITEMS.register("jailors_scythe",
-            () -> new SoulScytheItem(ToolMaterialList.METAL, 6, (1.3f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new SoulScytheItem(ToolMaterialList.METAL, 6, (1.3f-4.0f), MELEE_WEAPON_PROPERTIES, true));
 
     //DPS 7.2, crits once per 1.11 seconds
     public static final RegistryObject<Item> CUTLASS = ITEMS.register("cutlass",
-            () -> new CutlassItem(ToolMaterialList.METAL, 3, (1.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new CutlassItem(ToolMaterialList.METAL, 3, (1.8f-4.0f), MELEE_WEAPON_PROPERTIES, false));
     public static final RegistryObject<Item> DANCERS_SWORD = ITEMS.register("dancers_sword",
-            () -> new CutlassItem(ToolMaterialList.METAL, 3, (1.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new CutlassItem(ToolMaterialList.METAL, 3, (1.8f-4.0f), MELEE_WEAPON_PROPERTIES, true));
     public static final RegistryObject<Item> NAMELESS_BLADE = ITEMS.register("nameless_blade",
-            () -> new CutlassItem(ToolMaterialList.METAL, 3, (1.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new CutlassItem(ToolMaterialList.METAL, 3, (1.8f-4.0f), MELEE_WEAPON_PROPERTIES, true));
 
     //DPS 9.6, crits once per 1.875 seconds
     public static final RegistryObject<Item> SWORD = ITEMS.register("sword",
-            () -> new DungeonsSwordItem(ToolMaterialList.METAL, 5, (1.6f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new DungeonsSwordItem(ToolMaterialList.METAL, 5, (1.6f-4.0f), MELEE_WEAPON_PROPERTIES, false));
     public static final RegistryObject<Item> DIAMOND_SWORD = ITEMS.register("diamond_sword",
-            () -> new DungeonsSwordItem(ToolMaterialList.DIAMOND, 5, (1.6f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DungeonsSwordItem(ToolMaterialList.DIAMOND, 5, (1.6f-4.0f), MELEE_WEAPON_PROPERTIES, true));
     public static final RegistryObject<Item> HAWKBRAND = ITEMS.register("hawkbrand",
-            () -> new DungeonsSwordItem(ToolMaterialList.METAL, 5, (1.6f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DungeonsSwordItem(ToolMaterialList.METAL, 5, (1.6f-4.0f), MELEE_WEAPON_PROPERTIES, true));
     public static final RegistryObject<Item> SINISTER_SWORD = ITEMS.register("sinister_sword",
-            () -> new DungeonsSwordItem(ToolMaterialList.METAL, 5, (1.6f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DungeonsSwordItem(ToolMaterialList.METAL, 5, (1.6f-4.0f), MELEE_WEAPON_PROPERTIES, true));
 
     //DPS 4.8, crits once per 0.83 seconds
     public static final RegistryObject<Item> PICKAXE = ITEMS.register("pickaxe",
-            () -> new DungeonsPickaxeItem(ToolMaterialList.METAL, 3, (1.2f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new DungeonsPickaxeItem(ToolMaterialList.METAL, 3, (1.2f-4.0f), MELEE_WEAPON_PROPERTIES, false));
     public static final RegistryObject<Item> DIAMOND_PICKAXE = ITEMS.register("diamond_pickaxe",
-            () -> new DungeonsPickaxeItem(ToolMaterialList.DIAMOND, 3, (1.2f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DungeonsPickaxeItem(ToolMaterialList.DIAMOND, 3, (1.2f-4.0f), MELEE_WEAPON_PROPERTIES, true));
 
     //DPS 12, crits once per 5 seconds
     public static final RegistryObject<Item> BATTLESTAFF = ITEMS.register("battlestaff",
-            () -> new StaffItem(ToolMaterialList.METAL, 4, (1.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new StaffItem(ToolMaterialList.METAL, 4, (1.8f-4.0f), MELEE_WEAPON_PROPERTIES, false));
     public static final RegistryObject<Item> BATTLESTAFF_OF_TERROR = ITEMS.register("battlestaff_of_terror",
-            () -> new StaffItem(ToolMaterialList.METAL, 4, (1.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new StaffItem(ToolMaterialList.METAL, 4, (1.8f-4.0f), MELEE_WEAPON_PROPERTIES, true));
     public static final RegistryObject<Item> GROWING_STAFF = ITEMS.register("growing_staff",
-            () -> new StaffItem(ToolMaterialList.METAL, 4, (1.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new StaffItem(ToolMaterialList.METAL, 4, (1.8f-4.0f), MELEE_WEAPON_PROPERTIES, true));
 
     //DPS 10, crits once per 3 seconds, disables shields
     public static final RegistryObject<Item> AXE = ITEMS.register("axe",
-            () -> new DungeonsAxeItem(ToolMaterialList.METAL, 9, (1.1f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new DungeonsAxeItem(ToolMaterialList.METAL, 9, (1.1f-4.0f), MELEE_WEAPON_PROPERTIES, false));
     public static final RegistryObject<Item> FIREBRAND = ITEMS.register("firebrand",
-            () -> new DungeonsAxeItem(ToolMaterialList.METAL, 9, (1.1f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DungeonsAxeItem(ToolMaterialList.METAL, 9, (1.1f-4.0f), MELEE_WEAPON_PROPERTIES, true));
     public static final RegistryObject<Item> HIGHLAND_AXE = ITEMS.register("highland_axe",
-            () -> new DungeonsAxeItem(ToolMaterialList.METAL, 9, (1.1f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DungeonsAxeItem(ToolMaterialList.METAL, 9, (1.1f-4.0f), MELEE_WEAPON_PROPERTIES, true));
 
     //DPS 9, crits once per 1.1 seconds, disables shields
     public static final RegistryObject<Item> DOUBLE_AXE = ITEMS.register("double_axe",
-            () -> new DoubleAxeItem(ToolMaterialList.METAL, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new DoubleAxeItem(ToolMaterialList.METAL, 8, (0.9f-4.0f), MELEE_WEAPON_PROPERTIES, false));
     public static final RegistryObject<Item> CURSED_AXE = ITEMS.register("cursed_axe",
-            () -> new DoubleAxeItem(ToolMaterialList.METAL, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DoubleAxeItem(ToolMaterialList.METAL, 8, (0.9f-4.0f), MELEE_WEAPON_PROPERTIES, true));
     public static final RegistryObject<Item> WHIRLWIND = ITEMS.register("whirlwind",
-            () -> new DoubleAxeItem(ToolMaterialList.METAL, 8, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DoubleAxeItem(ToolMaterialList.METAL, 8, (0.9f-4.0f), MELEE_WEAPON_PROPERTIES, true));
 
     //DPS 9.8, crits once per 2.1 seconds, disables shields
     public static final RegistryObject<Item> MACE = ITEMS.register("mace",
-            () -> new MaceItem(ToolMaterialList.METAL, 6, (1.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new MaceItem(ToolMaterialList.METAL, 6, (1.4f-4.0f), MELEE_WEAPON_PROPERTIES, false));
     public static final RegistryObject<Item> FLAIL = ITEMS.register("flail",
-            () -> new MaceItem(ToolMaterialList.METAL, 6, (1.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new MaceItem(ToolMaterialList.METAL, 6, (1.4f-4.0f), MELEE_WEAPON_PROPERTIES, true));
     public static final RegistryObject<Item> SUNS_GRACE = ITEMS.register("suns_grace",
-            () -> new MaceItem(ToolMaterialList.METAL, 6, (1.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new MaceItem(ToolMaterialList.METAL, 6, (1.4f-4.0f), MELEE_WEAPON_PROPERTIES, true));
 
     //DPS 8.8, crits once per 0.9 seconds, disables shields
     public static final RegistryObject<Item> GREAT_HAMMER = ITEMS.register("great_hammer",
-            () -> new GreatHammerItem(ToolMaterialList.METAL, 7, (1.1f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new GreatHammerItem(ToolMaterialList.METAL, 7, (1.1f-4.0f), MELEE_WEAPON_PROPERTIES, false));
     public static final RegistryObject<Item> HAMMER_OF_GRAVITY = ITEMS.register("hammer_of_gravity",
-            () -> new GreatHammerItem(ToolMaterialList.METAL, 7, (1.1f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new GreatHammerItem(ToolMaterialList.METAL, 7, (1.1f-4.0f), MELEE_WEAPON_PROPERTIES, true));
     public static final RegistryObject<Item> STORMLANDER = ITEMS.register("stormlander",
-            () -> new GreatHammerItem(ToolMaterialList.METAL, 7, (1.1f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new GreatHammerItem(ToolMaterialList.METAL, 7, (1.1f-4.0f), MELEE_WEAPON_PROPERTIES, true));
 
     //DPS 11.2, crits once per 2.1 seconds
     public static final RegistryObject<Item> KATANA = ITEMS.register("katana",
-            () -> new KatanaItem(ToolMaterialList.METAL, 7, (1.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new KatanaItem(ToolMaterialList.METAL, 7, (1.4f-4.0f), MELEE_WEAPON_PROPERTIES, false));
     public static final RegistryObject<Item> DARK_KATANA = ITEMS.register("dark_katana",
-            () -> new KatanaItem(ToolMaterialList.METAL, 7, (1.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new KatanaItem(ToolMaterialList.METAL, 7, (1.4f-4.0f), MELEE_WEAPON_PROPERTIES, true));
     public static final RegistryObject<Item> MASTERS_KATANA = ITEMS.register("masters_katana",
-            () -> new KatanaItem(ToolMaterialList.METAL, 7, (1.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new KatanaItem(ToolMaterialList.METAL, 7, (1.4f-4.0f), MELEE_WEAPON_PROPERTIES, true));
 
     //DPS 7.2, crits once per 1.25 seconds
     public static final RegistryObject<Item> SOUL_KNIFE = ITEMS.register("soul_knife",
-            () -> new SoulKnifeItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new SoulKnifeItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), MELEE_WEAPON_PROPERTIES, false));
     public static final RegistryObject<Item> ETERNAL_KNIFE = ITEMS.register("eternal_knife",
-            () -> new SoulKnifeItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new SoulKnifeItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), MELEE_WEAPON_PROPERTIES, true));
     public static final RegistryObject<Item> TRUTHSEEKER = ITEMS.register("truthseeker",
-            () -> new SoulKnifeItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new SoulKnifeItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), MELEE_WEAPON_PROPERTIES, true));
 
     //DPS 9.6, crits once per 3.3 seconds
     public static final RegistryObject<Item> CLAYMORE = ITEMS.register("claymore",
-            () -> new ClaymoreItem(ToolMaterialList.METAL, 11, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new ClaymoreItem(ToolMaterialList.METAL, 11, (0.9f-4.0f), MELEE_WEAPON_PROPERTIES, false));
     public static final RegistryObject<Item> BROADSWORD = ITEMS.register("broadsword",
-            () -> new ClaymoreItem(ToolMaterialList.METAL, 12, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new ClaymoreItem(ToolMaterialList.METAL, 12, (0.9f-4.0f), MELEE_WEAPON_PROPERTIES, true));
     public static final RegistryObject<Item> HEARTSTEALER = ITEMS.register("heartstealer",
-            () -> new ClaymoreItem(ToolMaterialList.METAL, 11, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new ClaymoreItem(ToolMaterialList.METAL, 11, (0.9f-4.0f), MELEE_WEAPON_PROPERTIES, true));
     public static final RegistryObject<Item> GREAT_AXEBLADE = ITEMS.register("great_axeblade",
-            () -> new ClaymoreItem(ToolMaterialList.METAL, 11, (0.9f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new ClaymoreItem(ToolMaterialList.METAL, 11, (0.9f-4.0f), MELEE_WEAPON_PROPERTIES, true));
 
     //DPS 8.4, crits once per 2.14 seconds, +2 reach
     public static final RegistryObject<Item> SPEAR = ITEMS.register("spear",
-            () -> new SpearItem(ToolMaterialList.METAL, 5, (1.4f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new SpearItem(ToolMaterialList.METAL, 5, (1.4f-4.0f), 2.0F, MELEE_WEAPON_PROPERTIES, false));
     public static final RegistryObject<Item> FORTUNE_SPEAR = ITEMS.register("fortune_spear",
-            () -> new SpearItem(ToolMaterialList.METAL, 5, (1.4f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new SpearItem(ToolMaterialList.METAL, 5, (1.4f-4.0f), 2.0F, MELEE_WEAPON_PROPERTIES, true));
     public static final RegistryObject<Item> WHISPERING_SPEAR = ITEMS.register("whispering_spear",
-            () -> new SpearItem(ToolMaterialList.METAL, 5, (1.4f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new SpearItem(ToolMaterialList.METAL, 5, (1.4f-4.0f), 2.0F, MELEE_WEAPON_PROPERTIES, true));
 
     //DPS 9.6, crits once per 2.5 seconds, +2 reach
     public static final RegistryObject<Item> GLAIVE = ITEMS.register("glaive",
-            () -> new GlaiveItem(ToolMaterialList.METAL, 7, (1.2f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new GlaiveItem(ToolMaterialList.METAL, 7, (1.2f-4.0f), 2.0F, MELEE_WEAPON_PROPERTIES, false));
     public static final RegistryObject<Item> GRAVE_BANE = ITEMS.register("grave_bane",
-            () -> new GlaiveItem(ToolMaterialList.METAL, 7, (1.2f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new GlaiveItem(ToolMaterialList.METAL, 7, (1.2f-4.0f), 2.0F, MELEE_WEAPON_PROPERTIES, true));
     public static final RegistryObject<Item> VENOM_GLAIVE = ITEMS.register("venom_glaive",
-            () -> new GlaiveItem(ToolMaterialList.METAL, 7, (1.2f-4.0f), 2.0F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new GlaiveItem(ToolMaterialList.METAL, 7, (1.2f-4.0f), 2.0F, MELEE_WEAPON_PROPERTIES, true));
 
     //DPS 7, crits once per second, +2 reach
     public static final RegistryObject<Item> WHIP = ITEMS.register("whip",
-            () -> new WhipItem(ToolMaterialList.METAL, 6, (1.0f-4.0f), 2.5F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new WhipItem(ToolMaterialList.METAL, 6, (1.0f-4.0f), 2.5F, MELEE_WEAPON_PROPERTIES, false));
     public static final RegistryObject<Item> VINE_WHIP = ITEMS.register("vine_whip",
-            () -> new WhipItem(ToolMaterialList.METAL, 6, (1.0f-4.0f), 2.5F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new WhipItem(ToolMaterialList.METAL, 6, (1.0f-4.0f), 2.5F, MELEE_WEAPON_PROPERTIES, true));
 
     // Tempest Knives
     public static final RegistryObject<Item> TEMPEST_KNIFE = ITEMS.register("tempest_knife",
-            () -> new TempestKnifeItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new TempestKnifeItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), MELEE_WEAPON_PROPERTIES, false));
     public static final RegistryObject<Item> RESOLUTE_TEMPEST_KNIFE = ITEMS.register("resolute_tempest_knife",
-            () -> new TempestKnifeItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new TempestKnifeItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), MELEE_WEAPON_PROPERTIES, true));
     public static final RegistryObject<Item> CHILL_GALE_KNIFE = ITEMS.register("chill_gale_knife",
-            () -> new TempestKnifeItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new TempestKnifeItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), MELEE_WEAPON_PROPERTIES, true));
 
     public static final RegistryObject<Item> BONEBOW = ITEMS.register("bonebow",
-            () -> new DungeonsBowItem(new Item.Properties(), 20.0F, true));
+            () -> new DungeonsBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
     public static final RegistryObject<Item> TWIN_BOW = ITEMS.register("twin_bow",
-            () -> new DungeonsBowItem(new Item.Properties(), 20.0F, true));
+            () -> new DungeonsBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
     public static final RegistryObject<Item> HAUNTED_BOW = ITEMS.register("haunted_bow",
-            () -> new DungeonsBowItem(new Item.Properties(), 20.0F, true));
+            () -> new DungeonsBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
 
     public static final RegistryObject<Item> SOUL_BOW = ITEMS.register("soul_bow",
-            () -> new SoulBowItem(new Item.Properties(), 20.0F, false));
+            () -> new SoulBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, false));
     public static final RegistryObject<Item> BOW_OF_LOST_SOULS = ITEMS.register("bow_of_lost_souls",
-            () -> new SoulBowItem(new Item.Properties(), 20.0F, true));
+            () -> new SoulBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
     public static final RegistryObject<Item> NOCTURNAL_BOW = ITEMS.register("nocturnal_bow",
-            () -> new SoulBowItem(new Item.Properties(), 20.0F, true));
+            () -> new SoulBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
 
     public static final RegistryObject<Item> POWER_BOW = ITEMS.register("power_bow",
-            () -> new PowerBowItem(new Item.Properties(), 25.0F, false));
+            () -> new PowerBowItem(RANGED_WEAPON_PROPERTIES, 25.0F, false));
     public static final RegistryObject<Item> ELITE_POWER_BOW = ITEMS.register("elite_power_bow",
-            () -> new PowerBowItem(new Item.Properties(), 25.0F, true));
+            () -> new PowerBowItem(RANGED_WEAPON_PROPERTIES, 25.0F, true));
     public static final RegistryObject<Item> SABREWING = ITEMS.register("sabrewing",
-            () -> new PowerBowItem(new Item.Properties(), 25.0F, true));
+            () -> new PowerBowItem(RANGED_WEAPON_PROPERTIES, 25.0F, true));
 
     public static final RegistryObject<Item> LONGBOW = ITEMS.register("longbow",
-            () -> new LongbowItem(new Item.Properties(), 25.0F, false));
+            () -> new LongbowItem(RANGED_WEAPON_PROPERTIES, 25.0F, false));
     public static final RegistryObject<Item> GUARDIAN_BOW = ITEMS.register("guardian_bow",
-            () -> new LongbowItem(new Item.Properties(), 25.0F, true));
+            () -> new LongbowItem(RANGED_WEAPON_PROPERTIES, 25.0F, true));
     public static final RegistryObject<Item> RED_SNAKE = ITEMS.register("red_snake",
-            () -> new LongbowItem(new Item.Properties(), 25.0F, true));
+            () -> new LongbowItem(RANGED_WEAPON_PROPERTIES, 25.0F, true));
 
     public static final RegistryObject<Item> HUNTING_BOW = ITEMS.register("hunting_bow",
-            () -> new HuntingBowItem(new Item.Properties(), 20.0F, false));
+            () -> new HuntingBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, false));
     public static final RegistryObject<Item> HUNTERS_PROMISE = ITEMS.register("hunters_promise",
-            () -> new HuntingBowItem(new Item.Properties(), 20.0F, true));
+            () -> new HuntingBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
     public static final RegistryObject<Item> MASTERS_BOW = ITEMS.register("masters_bow",
-            () -> new HuntingBowItem(new Item.Properties(), 20.0F, true));
+            () -> new HuntingBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
     public static final RegistryObject<Item> ANCIENT_BOW = ITEMS.register("ancient_bow",
-            () -> new HuntingBowItem(new Item.Properties(), 20.0F, true));
+            () -> new HuntingBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
 
     public static final RegistryObject<Item> SHORTBOW = ITEMS.register("shortbow",
-            () -> new ShortbowItem(new Item.Properties(), 15.0F, false));
+            () -> new ShortbowItem(RANGED_WEAPON_PROPERTIES, 15.0F, false));
     public static final RegistryObject<Item> MECHANICAL_SHORTBOW = ITEMS.register("mechanical_shortbow",
-            () -> new ShortbowItem(new Item.Properties(), 15.0F, true));
+            () -> new ShortbowItem(RANGED_WEAPON_PROPERTIES, 15.0F, true));
     public static final RegistryObject<Item> PURPLE_STORM = ITEMS.register("purple_storm",
-            () -> new ShortbowItem(new Item.Properties(), 15.0F, true));
+            () -> new ShortbowItem(RANGED_WEAPON_PROPERTIES, 15.0F, true));
     public static final RegistryObject<Item> LOVE_SPELL_BOW = ITEMS.register("love_spell_bow",
-            () -> new ShortbowItem(new Item.Properties(), 15.0F, true));
+            () -> new ShortbowItem(RANGED_WEAPON_PROPERTIES, 15.0F, true));
 
     public static final RegistryObject<Item> TRICKBOW = ITEMS.register("trickbow",
-            () -> new TrickbowItem(new Item.Properties(), 20.0F, false));
+            () -> new TrickbowItem(RANGED_WEAPON_PROPERTIES, 20.0F, false));
     public static final RegistryObject<Item> THE_GREEN_MENACE = ITEMS.register("the_green_menace",
-            () -> new TrickbowItem(new Item.Properties(), 20.0F, true));
+            () -> new TrickbowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
     public static final RegistryObject<Item> THE_PINK_SCOUNDREL = ITEMS.register("the_pink_scoundrel",
-            () -> new TrickbowItem(new Item.Properties(), 20.0F, true));
+            () -> new TrickbowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
 
     public static final RegistryObject<Item> SNOW_BOW = ITEMS.register("snow_bow",
-            () -> new SnowBowItem(new Item.Properties(), 20.0F, false));
+            () -> new SnowBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, false));
     public static final RegistryObject<Item> WINTERS_TOUCH = ITEMS.register("winters_touch",
-            () -> new SnowBowItem(new Item.Properties(), 20.0F, true));
+            () -> new SnowBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
 
     public static final RegistryObject<Item> WIND_BOW = ITEMS.register("wind_bow",
-            () -> new WindBowItem(new Item.Properties(), 20.0F, false));
+            () -> new WindBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, false));
     public static final RegistryObject<Item> BURST_GALE_BOW = ITEMS.register("burst_gale_bow",
-            () -> new WindBowItem(new Item.Properties(), 20.0F, true));
+            () -> new WindBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
     public static final RegistryObject<Item> ECHO_OF_THE_VALLEY = ITEMS.register("echo_of_the_valley",
-            () -> new WindBowItem(new Item.Properties(), 20.0F, true));
+            () -> new WindBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
 
 
     public static final RegistryObject<Item> RAPID_CROSSBOW = ITEMS.register("rapid_crossbow",
-            () -> new RapidCrossbowItem(new Item.Properties(), 20, false));
+            () -> new RapidCrossbowItem(RANGED_WEAPON_PROPERTIES, 20, false));
     public static final RegistryObject<Item> BUTTERFLY_CROSSBOW = ITEMS.register("butterfly_crossbow",
-            () -> new RapidCrossbowItem(new Item.Properties(), 20, true));
+            () -> new RapidCrossbowItem(RANGED_WEAPON_PROPERTIES, 20, true));
     public static final RegistryObject<Item> AUTO_CROSSBOW = ITEMS.register("auto_crossbow",
-            () -> new RapidCrossbowItem(new Item.Properties(), 20, true));
+            () -> new RapidCrossbowItem(RANGED_WEAPON_PROPERTIES, 20, true));
 
     public static final RegistryObject<Item> AZURE_SEEKER = ITEMS.register("azure_seeker",
-            () -> new DungeonsCrossbowItem(new Item.Properties(), 25, true));
+            () -> new DungeonsCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, true));
     public static final RegistryObject<Item> THE_SLICER = ITEMS.register("the_slicer",
-            () -> new DungeonsCrossbowItem(new Item.Properties(), 25, true));
+            () -> new DungeonsCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, true));
 
     public static final RegistryObject<Item> HEAVY_CROSSBOW = ITEMS.register("heavy_crossbow",
-            () -> new HeavyCrossbowItem(new Item.Properties(), 30, false));
+            () -> new HeavyCrossbowItem(RANGED_WEAPON_PROPERTIES, 30, false));
     public static final RegistryObject<Item> DOOM_CROSSBOW = ITEMS.register("doom_crossbow",
-            () -> new HeavyCrossbowItem(new Item.Properties(), 30, true));
+            () -> new HeavyCrossbowItem(RANGED_WEAPON_PROPERTIES, 30, true));
     public static final RegistryObject<Item> SLAYER_CROSSBOW = ITEMS.register("slayer_crossbow",
-            () -> new HeavyCrossbowItem(new Item.Properties(), 30, true));
+            () -> new HeavyCrossbowItem(RANGED_WEAPON_PROPERTIES, 30, true));
 
     public static final RegistryObject<Item> SOUL_CROSSBOW = ITEMS.register("soul_crossbow",
-            () -> new SoulCrossbowItem(new Item.Properties(), 25, false));
+            () -> new SoulCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, false));
     public static final RegistryObject<Item> FERAL_SOUL_CROSSBOW = ITEMS.register("feral_soul_crossbow",
-            () -> new SoulCrossbowItem(new Item.Properties(), 25, true));
+            () -> new SoulCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, true));
     public static final RegistryObject<Item> VOIDCALLER = ITEMS.register("voidcaller",
-            () -> new SoulCrossbowItem(new Item.Properties(), 25, true));
+            () -> new SoulCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, true));
 
     public static final RegistryObject<Item> SCATTER_CROSSBOW = ITEMS.register("scatter_crossbow",
-            () -> new ScatterCrossbowItem(new Item.Properties(), 25, false));
+            () -> new ScatterCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, false));
     public static final RegistryObject<Item> HARP_CROSSBOW = ITEMS.register("harp_crossbow",
-            () -> new ScatterCrossbowItem(new Item.Properties(), 25, true));
+            () -> new ScatterCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, true));
     public static final RegistryObject<Item> LIGHTNING_HARP_CROSSBOW = ITEMS.register("lightning_harp_crossbow",
-            () -> new ScatterCrossbowItem(new Item.Properties(), 25, true));
+            () -> new ScatterCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, true));
 
     public static final RegistryObject<Item> EXPLODING_CROSSBOW = ITEMS.register("exploding_crossbow",
-            () -> new ExplodingCrossbowItem(new Item.Properties(), 25, false));
+            () -> new ExplodingCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, false));
     public static final RegistryObject<Item> FIREBOLT_THROWER = ITEMS.register("firebolt_thrower",
-            () -> new ExplodingCrossbowItem(new Item.Properties(), 25, true));
+            () -> new ExplodingCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, true));
     public static final RegistryObject<Item> IMPLODING_CROSSBOW = ITEMS.register("imploding_crossbow",
-            () -> new ExplodingCrossbowItem(new Item.Properties(), 25, true));
+            () -> new ExplodingCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, true));
 
     public static final RegistryObject<Item> BURST_CROSSBOW = ITEMS.register("burst_crossbow",
-            () -> new BurstCrossbowItem(new Item.Properties(), 25, false));
+            () -> new BurstCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, false));
     public static final RegistryObject<Item> CORRUPTED_CROSSBOW = ITEMS.register("corrupted_crossbow",
-            () -> new BurstCrossbowItem(new Item.Properties(), 25, true));
+            () -> new BurstCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, true));
     public static final RegistryObject<Item> SOUL_HUNTER_CROSSBOW = ITEMS.register("soul_hunter_crossbow",
-            () -> new BurstCrossbowItem(new Item.Properties(), 25, true));
+            () -> new BurstCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, true));
 
     public static final RegistryObject<Item> DUAL_CROSSBOW = ITEMS.register("dual_crossbow",
-            () -> new DualCrossbowItem(new Item.Properties(), 25, true));
+            () -> new DualCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, true));
     public static final RegistryObject<Item> BABY_CROSSBOW = ITEMS.register("baby_crossbow",
-            () -> new DualCrossbowItem(new Item.Properties(), 25, true));
+            () -> new DualCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, true));
 
     public static final RegistryObject<Item> BOOTS_OF_SWIFTNESS = ITEMS.register("boots_of_swiftness",
-            () -> new BootsOfSwiftnessItem(new Item.Properties()));
+            () -> new BootsOfSwiftnessItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> DEATH_CAP_MUSHROOM = ITEMS.register("death_cap_mushroom",
-            () -> new DeathCapMushroomItem(new Item.Properties()));
+            () -> new DeathCapMushroomItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> GOLEM_KIT = ITEMS.register("golem_kit",
-            () -> new GolemKitItem(new Item.Properties()));
+            () -> new GolemKitItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> TASTY_BONE = ITEMS.register("tasty_bone",
-            () -> new TastyBoneItem(new Item.Properties()));
+            () -> new TastyBoneItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> WONDERFUL_WHEAT = ITEMS.register("wonderful_wheat",
-            () -> new WonderfulWheatItem(new Item.Properties()));
+            () -> new WonderfulWheatItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> GONG_OF_WEAKENING = ITEMS.register("gong_of_weakening",
-            () -> new GongOfWeakeningItem(new Item.Properties()));
+            () -> new GongOfWeakeningItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> LIGHTNING_ROD = ITEMS.register("lightning_rod",
-            () -> new LightningRodItem(new Item.Properties()));
+            () -> new LightningRodItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> IRON_HIDE_AMULET = ITEMS.register("iron_hide_amulet",
-            () -> new IronHideAmuletItem(new Item.Properties()));
+            () -> new IronHideAmuletItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> LOVE_MEDALLION = ITEMS.register("love_medallion",
-            () -> new LoveMedallionItem(new Item.Properties()));
+            () -> new LoveMedallionItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> GHOST_CLOAK = ITEMS.register("ghost_cloak",
-            () -> new GhostCloakItem(new Item.Properties()));
+            () -> new GhostCloakItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> HARVESTER = ITEMS.register("harvester",
-            () -> new HarvesterItem(new Item.Properties()));
+            () -> new HarvesterItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> SHOCK_POWDER = ITEMS.register("shock_powder",
-            () -> new ShockPowderItem(new Item.Properties()));
+            () -> new ShockPowderItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> CORRUPTED_SEEDS = ITEMS.register("corrupted_seeds",
-            () -> new CorruptedSeedsItem(new Item.Properties()));
+            () -> new CorruptedSeedsItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> ICE_WAND = ITEMS.register("ice_wand",
-            () -> new IceWandItem(new Item.Properties()));
+            () -> new IceWandItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> WIND_HORN = ITEMS.register("wind_horn",
-            () -> new WindHornItem(new Item.Properties()));
+            () -> new WindHornItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> SOUL_HEALER = ITEMS.register("soul_healer",
-            () -> new SoulHealerItem(new Item.Properties()));
+            () -> new SoulHealerItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> LIGHT_FEATHER = ITEMS.register("light_feather",
-            () -> new LightFeatherItem(new Item.Properties()));
+            () -> new LightFeatherItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> FLAMING_QUIVER = ITEMS.register("flaming_quiver",
-            () -> new FlamingQuiverItem(new Item.Properties()));
+            () -> new FlamingQuiverItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> TORMENT_QUIVER = ITEMS.register("torment_quiver",
-            () -> new TormentQuiver(new Item.Properties()));
+            () -> new TormentQuiver(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> TOTEM_OF_REGENERATION = ITEMS.register("totem_of_regeneration",
-            () -> new TotemOfRegenerationItem(new Item.Properties()));
+            () -> new TotemOfRegenerationItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> TOTEM_OF_SHIELDING = ITEMS.register("totem_of_shielding",
-            () -> new TotemOfShieldingItem(new Item.Properties()));
+            () -> new TotemOfShieldingItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> TOTEM_OF_SOUL_PROTECTION = ITEMS.register("totem_of_soul_protection",
-            () -> new TotemOfSoulProtectionItem(new Item.Properties()));
+            () -> new TotemOfSoulProtectionItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> CORRUPTED_BEACON = ITEMS.register("corrupted_beacon",
-            () -> new CorruptedBeaconItem(new Item.Properties()));
+            () -> new CorruptedBeaconItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> BUZZY_NEST = ITEMS.register("buzzy_nest",
-            () -> new BuzzyNestItem(new Item.Properties()));
+            () -> new BuzzyNestItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> ENCHANTED_GRASS = ITEMS.register("enchanted_grass",
-            () -> new EnchantedGrassItem(new Item.Properties()));
+            () -> new EnchantedGrassItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> CORRUPTED_PUMPKIN = ITEMS.register("corrupted_pumpkin",
-            () -> new CorruptedPumpkinItem(new Item.Properties()));
+            () -> new CorruptedPumpkinItem(ARTIFACT_PROPERTIES));
 
     public static final RegistryObject<Item> HUNTERS_ARMOR = ITEMS.register("hunters_vest",
-            () -> new HuntersArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new HuntersArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> ARCHERS_ARMOR = ITEMS.register("archers_vest",
-            () -> new HuntersArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new HuntersArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
     public static final RegistryObject<Item> ARCHERS_ARMOR_HOOD = ITEMS.register("archers_hood",
-            () ->  new HuntersArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () ->  new HuntersArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
     public static final RegistryObject<Item> BATTLE_ROBE = ITEMS.register("battle_robe",
-            () -> new BattleRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new BattleRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> SPLENDID_ROBE = ITEMS.register("splendid_robe",
-            () -> new BattleRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new BattleRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
 
     public static final RegistryObject<Item> CHAMPIONS_ARMOR = ITEMS.register("champions_chestplate",
-            () -> new ChampionsArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new ChampionsArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> CHAMPIONS_ARMOR_HELMET = ITEMS.register("champions_helmet",
-            () -> new ChampionsArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new ChampionsArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> HEROS_ARMOR = ITEMS.register("heros_chestplate",
-            () -> new ChampionsArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new ChampionsArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
     public static final RegistryObject<Item> HEROS_ARMOR_HELMET = ITEMS.register("heros_helmet",
-            () -> new ChampionsArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new ChampionsArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
     public static final RegistryObject<Item> DARK_ARMOR = ITEMS.register("dark_chestplate",
-            () -> new DarkArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new DarkArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> DARK_ARMOR_HELMET = ITEMS.register("dark_helmet",
-            () -> new DarkArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new DarkArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> ROYAL_GUARD_ARMOR = ITEMS.register("royal_guard_chestplate",
-            () -> new RoyalGuardArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new RoyalGuardArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> ROYAL_GUARD_ARMOR_HELMET = ITEMS.register("royal_guard_helmet",
-            () -> new RoyalGuardArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new RoyalGuardArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> TITANS_SHROUD = ITEMS.register("titans_shroud_chestplate",
-            () -> new DarkArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new DarkArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
     public static final RegistryObject<Item> TITANS_SHROUD_HELMET = ITEMS.register("titans_shroud_helmet",
-            () -> new DarkArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new DarkArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
     public static final RegistryObject<Item> EVOCATION_ROBE = ITEMS.register("evocation_robe",
-            () -> new EvocationRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new EvocationRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> EVOCATION_ROBE_HAT = ITEMS.register("evocation_hat",
-            () -> new EvocationRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new EvocationRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> EMBER_ROBE = ITEMS.register("ember_robe",
-            () -> new EvocationRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new EvocationRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
     public static final RegistryObject<Item> EMBER_ROBE_HAT = ITEMS.register("ember_hat",
-            () -> new EvocationRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new EvocationRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
     public static final RegistryObject<Item> GRIM_ARMOR = ITEMS.register("grim_chestplate",
-            () -> new GrimArmorItem(ArmorMaterialList.BONE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new GrimArmorItem(ArmorMaterialList.BONE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> GRIM_ARMOR_HELMET = ITEMS.register("grim_helmet",
-            () -> new GrimArmorItem(ArmorMaterialList.BONE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new GrimArmorItem(ArmorMaterialList.BONE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> WITHER_ARMOR = ITEMS.register("wither_chestplate",
-            () -> new GrimArmorItem(ArmorMaterialList.BONE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new GrimArmorItem(ArmorMaterialList.BONE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
     public static final RegistryObject<Item> WITHER_ARMOR_HELMET = ITEMS.register("wither_helmet",
-            () -> new GrimArmorItem(ArmorMaterialList.BONE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new GrimArmorItem(ArmorMaterialList.BONE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
     public static final RegistryObject<Item> GUARDS_ARMOR = ITEMS.register("guards_chestplate",
-            () -> new GuardsArmorItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new GuardsArmorItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> GUARDS_ARMOR_HELMET = ITEMS.register("guards_helmet",
-            () -> new GuardsArmorItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new GuardsArmorItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> CURIOUS_ARMOR = ITEMS.register("curious_chestplate",
-            () -> new GuardsArmorItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new GuardsArmorItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
     public static final RegistryObject<Item> CURIOUS_ARMOR_HELMET = ITEMS.register("curious_helmet",
-            () -> new GuardsArmorItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new GuardsArmorItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
     public static final RegistryObject<Item> MERCENARY_ARMOR = ITEMS.register("mercenary_chestplate",
-            () -> new MercenaryArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new MercenaryArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> MERCENARY_ARMOR_HELMET = ITEMS.register("mercenary_helmet",
-            () -> new MercenaryArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new MercenaryArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> RENEGADE_ARMOR = ITEMS.register("renegade_chestplate",
-            () -> new MercenaryArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new MercenaryArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
     public static final RegistryObject<Item> RENEGADE_ARMOR_HELMET = ITEMS.register("renegade_helmet",
-            () -> new MercenaryArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new MercenaryArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
     public static final RegistryObject<Item> OCELOT_ARMOR = ITEMS.register("ocelot_vest",
-            () -> new OcelotArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new OcelotArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> OCELOT_ARMOR_HOOD = ITEMS.register("ocelot_hood",
-            () -> new OcelotArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new OcelotArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> SHADOW_WALKER = ITEMS.register("shadow_walker_vest",
-            () -> new OcelotArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new OcelotArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
     public static final RegistryObject<Item> SHADOW_WALKER_HOOD = ITEMS.register("shadow_walker_hood",
-            () -> new OcelotArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new OcelotArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
     public static final RegistryObject<Item> PHANTOM_ARMOR = ITEMS.register("phantom_chestplate",
-            () -> new PhantomArmorItem(ArmorMaterialList.BONE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new PhantomArmorItem(ArmorMaterialList.BONE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> PHANTOM_ARMOR_HELMET = ITEMS.register("phantom_helmet",
-            () -> new PhantomArmorItem(ArmorMaterialList.BONE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new PhantomArmorItem(ArmorMaterialList.BONE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> FROST_BITE = ITEMS.register("frost_bite_chestplate",
-            () -> new PhantomArmorItem(ArmorMaterialList.BONE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new PhantomArmorItem(ArmorMaterialList.BONE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
     public static final RegistryObject<Item> FROST_BITE_HELMET = ITEMS.register("frost_bite_helmet",
-            () -> new PhantomArmorItem(ArmorMaterialList.BONE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new PhantomArmorItem(ArmorMaterialList.BONE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
     public static final RegistryObject<Item> PLATE_ARMOR = ITEMS.register("plate_chestplate",
-            () -> new PlateArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new PlateArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> PLATE_ARMOR_HELMET = ITEMS.register("plate_helmet",
-            () -> new PlateArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new PlateArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> FULL_METAL_ARMOR = ITEMS.register("full_metal_chestplate",
-            () -> new PlateArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new PlateArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
     public static final RegistryObject<Item> FULL_METAL_ARMOR_HELMET = ITEMS.register("full_metal_helmet",
-            () -> new PlateArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new PlateArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
     public static final RegistryObject<Item> REINFORCED_MAIL = ITEMS.register("reinforced_mail_chestplate",
-            () -> new ReinforcedMailItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new ReinforcedMailItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> REINFORCED_MAIL_HELMET = ITEMS.register("reinforced_mail_helmet",
-            () -> new ReinforcedMailItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new ReinforcedMailItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> STALWART_ARMOR = ITEMS.register("stalwart_chestplate",
-            () -> new ReinforcedMailItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new ReinforcedMailItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
     public static final RegistryObject<Item> STALWART_ARMOR_HELMET = ITEMS.register("stalwart_helmet",
-            () -> new ReinforcedMailItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new ReinforcedMailItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
     public static final RegistryObject<Item> SCALE_MAIL = ITEMS.register("scale_mail_chestplate",
-            () -> new ScaleMailItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new ScaleMailItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> HIGHLAND_ARMOR = ITEMS.register("highland_chestplate",
-            () -> new ScaleMailItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new ScaleMailItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
     public static final RegistryObject<Item> HIGHLAND_ARMOR_HELMET = ITEMS.register("highland_helmet",
-            () -> new ScaleMailItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new ScaleMailItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
     public static final RegistryObject<Item> SNOW_ARMOR = ITEMS.register("snow_chestplate",
-            () -> new SnowArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new SnowArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> SNOW_ARMOR_HELMET = ITEMS.register("snow_helmet",
-            () -> new SnowArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new SnowArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> FROST_ARMOR = ITEMS.register("frost_chestplate",
-            () -> new SnowArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new SnowArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
     public static final RegistryObject<Item> FROST_ARMOR_HELMET = ITEMS.register("frost_helmet",
-            () -> new SnowArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new SnowArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
     public static final RegistryObject<Item> SOUL_ROBE = ITEMS.register("soul_robe",
-            () -> new SoulRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new SoulRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> SOUL_ROBE_HOOD = ITEMS.register("soul_hood",
-            () -> new SoulRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new SoulRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> SOULDANCER_ROBE = ITEMS.register("souldancer_robe",
-            () -> new SoulRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new SoulRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
     public static final RegistryObject<Item> SOULDANCER_ROBE_HOOD = ITEMS.register("souldancer_hood",
-            () -> new SoulRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new SoulRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
     public static final RegistryObject<Item> SPELUNKER_ARMOR = ITEMS.register("spelunker_chestplate",
-            () -> new SpelunkerArmorItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new SpelunkerArmorItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> SPELUNKER_ARMOR_HELMET = ITEMS.register("spelunker_helmet",
-            () -> new SpelunkerArmorItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new SpelunkerArmorItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> CAVE_CRAWLER = ITEMS.register("cave_crawler_chestplate",
-            () -> new SpelunkerArmorItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new SpelunkerArmorItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
     public static final RegistryObject<Item> CAVE_CRAWLER_HELMET = ITEMS.register("cave_crawler_helmet",
-            () -> new SpelunkerArmorItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new SpelunkerArmorItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
     public static final RegistryObject<Item> THIEF_ARMOR = ITEMS.register("thief_vest",
-            () -> new ThiefArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new ThiefArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> THIEF_ARMOR_HOOD = ITEMS.register("thief_hood",
-            () -> new ThiefArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new ThiefArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> SPIDER_ARMOR = ITEMS.register("spider_vest",
-            () -> new ThiefArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new ThiefArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
     public static final RegistryObject<Item> SPIDER_ARMOR_HOOD = ITEMS.register("spider_hood",
-            () -> new ThiefArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new ThiefArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
     public static final RegistryObject<Item> WOLF_ARMOR = ITEMS.register("wolf_vest",
-            () -> new WolfArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new WolfArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> WOLF_ARMOR_HOOD = ITEMS.register("wolf_hood",
-            () -> new WolfArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), false));
+            () -> new WolfArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
     public static final RegistryObject<Item> FOX_ARMOR = ITEMS.register("fox_vest",
-            () -> new WolfArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.CHEST, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new WolfArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
     public static final RegistryObject<Item> FOX_ARMOR_HOOD = ITEMS.register("fox_hood",
-            () -> new WolfArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, new Item.Properties().group(DungeonsGear.ARMOR_GROUP), true));
+            () -> new WolfArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
     public static void putItemsInMap() {
         putArtifactsInMap();

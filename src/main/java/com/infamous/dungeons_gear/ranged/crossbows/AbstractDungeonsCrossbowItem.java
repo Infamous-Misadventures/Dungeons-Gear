@@ -40,7 +40,6 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
 
     public AbstractDungeonsCrossbowItem(Properties builder, int defaultChargeTimeIn, boolean isUniqueIn) {
         super(builder
-                .group(DungeonsGear.RANGED_WEAPON_GROUP)
                 .maxDamage(DungeonsGearConfig.CROSSBOW_DURABILITY.get())
         );
         this.defaultChargeTime = defaultChargeTimeIn;

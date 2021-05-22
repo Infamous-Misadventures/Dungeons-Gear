@@ -1,6 +1,5 @@
 package com.infamous.dungeons_gear.artifacts;
 
-import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.interfaces.IArmor;
@@ -25,8 +24,6 @@ public abstract class ArtifactItem extends Item {
 
     public ArtifactItem(Properties properties) {
         super(properties
-                .maxStackSize(1)
-                .group(DungeonsGear.ARTIFACT_GROUP)
                 .maxDamage(DungeonsGearConfig.ARTIFACT_DURABILITY.get())
         );
     }

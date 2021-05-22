@@ -56,11 +56,15 @@ public class DungeonsGearConfig {
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> ENCHANTMENT_BLACKLIST;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> TREASURE_ONLY_ENCHANTMENTS;
 
-
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_MELEE_WEAPON_LOOT;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_RANGED_WEAPON_LOOT;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_ARMOR_LOOT;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_ARTIFACT_LOOT;
+
+    public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_MELEE_WEAPON_TAB;
+    public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_RANGED_WEAPON_TAB;
+    public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_ARMOR_TAB;
+    public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_ARTIFACT_TAB;
 
     private static CommentedFileConfig cfg;
 
@@ -128,6 +132,23 @@ public class DungeonsGearConfig {
                 .comment("Enable artifacts appearing in chest loot and trades. \n" +
                         "If you want to disable obtaining this mod's artifacts, disable this feature. [true / false]")
                 .define("enableArtifactLoot", true);
+
+        ENABLE_MELEE_WEAPON_TAB = builder
+                .comment("Enable melee weapons appearing in their own tab in the creative menu. \n" +
+                        "Disabling this feature puts them in the COMBAT tab. [true / false]")
+                .define("enableMeleeWeaponTab", true);
+        ENABLE_RANGED_WEAPON_TAB = builder
+                .comment("Enable ranged weapons appearing in their own tab in the creative menu. \n" +
+                        "Disabling this feature puts them in the COMBAT tab. [true / false]")
+                .define("enableRangedWeaponTab", true);
+        ENABLE_ARMOR_TAB = builder
+                .comment("Enable armors appearing in their own tab in the creative menu. \n" +
+                        "Disabling this feature puts them in the COMBAT tab. [true / false]")
+                .define("enableArmorTab", true);
+        ENABLE_ARTIFACT_TAB = builder
+                .comment("Enable artifacts appearing in their own tab in the creative menu. \n" +
+                        "Disabling this feature puts them in the COMBAT tab. [true / false]")
+                .define("enableArtifactTab", true);
         COMMON_ITEM_VALUE = builder
                 .comment("The emerald value for a common weapon or armor [0-64, default: 12]")
                 .defineInRange("commonItemValue", 12, 0, 64);
@@ -154,24 +175,6 @@ public class DungeonsGearConfig {
 
 
         builder.comment("Item Configuration").push("item_configuration");
-        builder.comment("For armor durability configuration reference, here are the vanilla armor durability multiplier values: \n" +
-                "Leather - 5\n" +
-                "Gold = 7\n" +
-                "Iron = 14\n" +
-                "Turtle = 25\n" +
-                "Diamond = 33\n" +
-                "Netherite = 37"
-        ).push("armor_durability_multiplier_reference");
-        builder.comment("For tool durability configuration reference, here are the vanilla tool durability values: \n" +
-                "Gold - 32\n" +
-                "Wood = 59\n" +
-                "Stone = 131\n" +
-                "Iron = 250\n" +
-                "Crossbow - 326\n" +
-                "Bow - 384\n" +
-                "Diamond = 1561\n" +
-                "Netherite = 2031"
-        ).push("tool_durability_reference");
         VEST_ARMOR_DURABILITY = builder
                 .comment("Set the durability multiplier for armors that can be classified as a vest, such as Hunter's Armor. [0-1024, default: 14")
                 .defineInRange("vestArmorDurabilityMultiplier", 14, 0, 1024);
@@ -211,7 +214,7 @@ public class DungeonsGearConfig {
         ENABLE_AREA_OF_EFFECT_ON_PLAYERS = builder
                 .comment("Enable area of effects also being applied to players. \n" +
                         "If you do not want area of effects being applied to other players, disable this feature. [true / false]")
-                .define("enableAreaOfEffectOnPlayers", true);
+                .define("enableAreaOfEffectOnPlayers", false);
         builder.pop();
 
         builder.comment("Common Loot Table Configuration").push("common_loot_table_configuration");
