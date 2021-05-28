@@ -17,6 +17,8 @@ public interface IMeleeWeapon<T extends Item> {
     default boolean hasGreatSplash(ItemStack stack){ return false;}
     default boolean hasThrustAttack(ItemStack stack){ return false;}
     default boolean hasStylishCombo(ItemStack stack){ return false;}
+    default boolean hasContinuousAttacks(ItemStack stack){ return false;}
+    default boolean canOverheat(ItemStack stack){ return this.hasContinuousAttacks(stack);}
 
     // Enchantment abilities
     default boolean hasKnockbackBuiltIn(ItemStack stack){
@@ -98,5 +100,6 @@ public interface IMeleeWeapon<T extends Item> {
         return false;
     }
     default boolean hasRushdownBuiltIn(ItemStack stack){return false;}
+    default boolean hasIllagersBaneBuiltIn(ItemStack stack){return false;}
 
 }

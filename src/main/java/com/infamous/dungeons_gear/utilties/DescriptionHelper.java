@@ -121,11 +121,14 @@ public class DescriptionHelper {
             if (meleeWeapon.hasBusyBeeBuiltIn(itemStack)) {
                 abilities.add("busy_bee");
             }
-            if (meleeWeapon.hasCommittedBuiltIn(itemStack)) {
-                abilities.add("committed");
-            }
             if (meleeWeapon.hasChainsBuiltIn(itemStack)) {
                 abilities.add("chains");
+            }
+            if (meleeWeapon.hasContinuousAttacks(itemStack)) {
+                abilities.add("continuous_attacks");
+            }
+            if (meleeWeapon.hasCommittedBuiltIn(itemStack)) {
+                abilities.add("committed");
             }
             if (meleeWeapon.hasCriticalHitBuiltIn(itemStack)) {
                 abilities.add("critical_hit");
@@ -162,6 +165,9 @@ public class DescriptionHelper {
             }
             if (meleeWeapon.hasGreatSplash(itemStack)) {
                 abilities.add("great_splash");
+            }
+            if (meleeWeapon.hasIllagersBaneBuiltIn(itemStack)) {
+                abilities.add("illagers_bane");
             }
             if (meleeWeapon.hasKnockbackBuiltIn(itemStack)) {
                 abilities.add("knockback");
@@ -328,11 +334,20 @@ public class DescriptionHelper {
             if(rangedWeapon.hasWildRageBuiltIn(itemStack)){
                 abilities.add("wild_rage");
             }
+            if(rangedWeapon.hasWindUpAttack(itemStack)){
+                abilities.add("wind_up_attack");
+            }
         }
     }
 
     public static List<String> getPenalties(ItemStack itemStack) {
         List<String> penalties = new ArrayList<>();
+        if (itemStack.getItem() instanceof IMeleeWeapon) {
+            IMeleeWeapon meleeWeapon = (IMeleeWeapon) itemStack.getItem();
+            if (meleeWeapon.canOverheat(itemStack)) {
+                penalties.add("can_overheat");
+            }
+        }
         if (itemStack.getItem() instanceof IRangedWeapon) {
             IRangedWeapon rangedWeapon = (IRangedWeapon) itemStack.getItem();
             if (rangedWeapon.hasSlowFireRate(itemStack)) {
