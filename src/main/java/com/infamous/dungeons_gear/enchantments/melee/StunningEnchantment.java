@@ -3,9 +3,8 @@ package com.infamous.dungeons_gear.enchantments.melee;
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.init.ItemRegistry;
+import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
@@ -20,7 +19,7 @@ import net.minecraftforge.fml.common.Mod;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
 @Mod.EventBusSubscriber(modid = MODID)
-public class StunningEnchantment extends Enchantment {
+public class StunningEnchantment extends DungeonsEnchantment {
 
     public StunningEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlotType[]{

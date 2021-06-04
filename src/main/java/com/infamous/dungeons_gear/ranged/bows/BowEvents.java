@@ -3,7 +3,6 @@ package com.infamous.dungeons_gear.ranged.bows;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
-import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IRangedWeapon;
 import com.infamous.dungeons_gear.utilties.AbilityHelper;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;

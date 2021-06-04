@@ -30,7 +30,8 @@ public class ClaymoreItem extends SwordItem implements IMeleeWeapon, IComboWeapo
 
     @Override
     public boolean hasSharpnessBuiltIn(ItemStack stack) {
-        return stack.getItem() == ItemRegistry.BROADSWORD.get();
+        return stack.getItem() == ItemRegistry.BROADSWORD.get()
+                || stack.getItem() == ItemRegistry.FROST_SLAYER.get();
     }
 
     @Override

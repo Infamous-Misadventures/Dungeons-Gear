@@ -52,6 +52,20 @@ public class DungeonsGearConfig {
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> SUPER_RARE_LOOT_TABLES_BLACKLIST;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> ENEMY_BLACKLIST;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_AREA_OF_EFFECT_ON_PLAYERS;
+
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> ENCHANTMENT_BLACKLIST;
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> TREASURE_ONLY_ENCHANTMENTS;
+
+    public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_MELEE_WEAPON_LOOT;
+    public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_RANGED_WEAPON_LOOT;
+    public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_ARMOR_LOOT;
+    public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_ARTIFACT_LOOT;
+
+    public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_MELEE_WEAPON_TAB;
+    public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_RANGED_WEAPON_TAB;
+    public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_ARMOR_TAB;
+    public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_ARTIFACT_TAB;
+
     private static CommentedFileConfig cfg;
 
     public DungeonsGearConfig() {
@@ -88,16 +102,53 @@ public class DungeonsGearConfig {
                 .comment("Enable applying enchantments together to create combinations would  be considered too overpowered. \n" +
                         "If you don't want overpowered enchantment combinations, like Sharpness and Committed on a sword, disable this feature. [true / false]")
                 .define("enableOverpoweredEnchantmentCombos", false);
-        ENABLE_ELENAI_DODGE_COMPAT = builder
-                .comment("Enable Elenai Dodge 2 compatibility. Effects that trigger on jump will now trigger on dodge. \n" +
-                        "Does nothing if Elenai Dodge is not installed. [true / false]")
-                .define("enableElenaiDodgeCompat", true);
-        ENABLE_WAR_DANCE_COMPAT = builder
-                .comment("Enable Project: War Dance compatibility. \n" +
-                        "Dual wield weapon offhand functions are suppressed in favor of using War Dance's offhand attacks. \n" +
-                        "Block reach attributes are added to spears so they benefit from skills. \n" +
-                        "Does nothing if Project: War Dance is not installed. [true / false]")
-                .define("enableProjectWarDanceCompat", true);
+        ENCHANTMENT_BLACKLIST = builder
+                .comment("Add enchantments that should be prevented from being applied to any gear. \n"
+                        + "To do so, enter their registry names.")
+                .defineList("enchantmentBlacklist", Lists.newArrayList(
+
+                        ),
+                        (itemRaw) -> itemRaw instanceof String);
+        TREASURE_ONLY_ENCHANTMENTS = builder
+                .comment("Add enchantments that should be designated as treasure-only. \n"
+                        + "To do so, enter their registry names.")
+                .defineList("treasureOnlyEnchantments", Lists.newArrayList(
+
+                        ),
+                        (itemRaw) -> itemRaw instanceof String);
+        ENABLE_MELEE_WEAPON_LOOT = builder
+                .comment("Enable melee weapons appearing in chest loot and trades. \n" +
+                        "If you want to disable obtaining this mod's melee weapons, disable this feature. [true / false]")
+                .define("enableMeleeWeaponLoot", true);
+        ENABLE_RANGED_WEAPON_LOOT = builder
+                .comment("Enable ranged weapons appearing in chest loot and trades. \n" +
+                        "If you want to disable obtaining this mod's ranged weapons, disable this feature. [true / false]")
+                .define("enableRangedWeaponLoot", true);
+        ENABLE_ARMOR_LOOT = builder
+                .comment("Enable armors appearing in chest loot and trades. \n" +
+                        "If you want to disable obtaining this mod's armors, disable this feature. [true / false]")
+                .define("enableArmorLoot", true);
+        ENABLE_ARTIFACT_LOOT = builder
+                .comment("Enable artifacts appearing in chest loot and trades. \n" +
+                        "If you want to disable obtaining this mod's artifacts, disable this feature. [true / false]")
+                .define("enableArtifactLoot", true);
+
+        ENABLE_MELEE_WEAPON_TAB = builder
+                .comment("Enable melee weapons appearing in their own tab in the creative menu. \n" +
+                        "Disabling this feature puts them in the COMBAT tab. [true / false]")
+                .define("enableMeleeWeaponTab", true);
+        ENABLE_RANGED_WEAPON_TAB = builder
+                .comment("Enable ranged weapons appearing in their own tab in the creative menu. \n" +
+                        "Disabling this feature puts them in the COMBAT tab. [true / false]")
+                .define("enableRangedWeaponTab", true);
+        ENABLE_ARMOR_TAB = builder
+                .comment("Enable armors appearing in their own tab in the creative menu. \n" +
+                        "Disabling this feature puts them in the COMBAT tab. [true / false]")
+                .define("enableArmorTab", true);
+        ENABLE_ARTIFACT_TAB = builder
+                .comment("Enable artifacts appearing in their own tab in the creative menu. \n" +
+                        "Disabling this feature puts them in the COMBAT tab. [true / false]")
+                .define("enableArtifactTab", true);
         COMMON_ITEM_VALUE = builder
                 .comment("The emerald value for a common weapon or armor [0-64, default: 12]")
                 .defineInRange("commonItemValue", 12, 0, 64);
@@ -108,6 +159,20 @@ public class DungeonsGearConfig {
                 .comment("The emerald value for an artifact [0-64, default: 24]")
                 .defineInRange("artifactValue", 24, 0, 64);
         builder.pop();
+
+        builder.comment("Compatibility Configuration").push("compatibility_configuration");
+        ENABLE_ELENAI_DODGE_COMPAT = builder
+                .comment("Enable Elenai Dodge 2 compatibility. Effects that trigger on jump will now trigger on dodge. \n" +
+                        "Does nothing if Elenai Dodge is not installed. [true / false]")
+                .define("enableElenaiDodgeCompat", true);
+        ENABLE_WAR_DANCE_COMPAT = builder
+                .comment("Enable Project: War Dance compatibility. \n" +
+                        "Dual wield weapon offhand functions are suppressed in favor of using War Dance's offhand attacks. \n" +
+                        "Block reach attributes are added to spears so they benefit from skills. \n" +
+                        "Does nothing if Project: War Dance is not installed. [true / false]")
+                .define("enableProjectWarDanceCompat", true);
+        builder.pop();
+
 
         builder.comment("Item Configuration").push("item_configuration");
         builder.comment("For armor durability configuration reference, here are the vanilla armor durability multiplier values: \n" +
@@ -167,7 +232,7 @@ public class DungeonsGearConfig {
         ENABLE_AREA_OF_EFFECT_ON_PLAYERS = builder
                 .comment("Enable area of effects also being applied to players. \n" +
                         "If you do not want area of effects being applied to other players, disable this feature. [true / false]")
-                .define("enableAreaOfEffectOnPlayers", true);
+                .define("enableAreaOfEffectOnPlayers", false);
         ENEMY_BLACKLIST = builder
                 .comment("Add entities that will never be targeted by aggressive Dungeons Gear effects. \n"
                         + "To do so, enter their registry names.")

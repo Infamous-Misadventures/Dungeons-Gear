@@ -200,6 +200,8 @@
   "lore.dungeons_gear.nocturnal_bow": "The souls bound to the bow guide the arrows to their targets and cause it to glow slightly.",
   "item.dungeons_gear.soul_bow": "Soul Bow",
   "lore.dungeons_gear.soul_bow": "The Soul Bow shimmers with all the beauty and fury of an attacking Vex.",
+  "item.dungeons_gear.shivering_bow": "Shivering Bow",
+  "lore.dungeons_gear.shivering_bow": "The Shivering Bow pierces even the most ancient ice and strikes a chill into the heart of any enemy.",
 
   "item.dungeons_gear.the_green_menace": "The Green Menace",
   "lore.dungeons_gear.the_green_menace": "The arrows fired from the Green Menace always hit their intended target, even in the thickest fog.",
@@ -211,9 +213,14 @@
   "item.dungeons_gear.echo_of_the_valley": "Echo of the Valley",
   "lore.dungeons_gear.echo_of_the_valley": "This bow calls upon the twisting winds of the hidden valley where it was first strung.",
   "item.dungeons_gear.burst_gale_bow": "Burst Gale Bow",
-  "lore.dungeons_gear.burst_gale_bow": "A bow infused with the force of a rolling wind which can flare up in an instant",
+  "lore.dungeons_gear.burst_gale_bow": "A bow infused with the force of a rolling wind which can flare up in an instant.",
   "item.dungeons_gear.wind_bow": "Wind Bow",
   "lore.dungeons_gear.wind_bow": "A mesmerizing bow that captures the power of the wind to fire mighty Gale Arrows.",
+
+  "item.dungeons_gear.twisting_vine_bow": "Twisting Vine Bow",
+  "lore.dungeons_gear.twisting_vine_bow": "This bow writhes within your grasp as if trying to wrap its tendrils around everything in its path.",
+  "item.dungeons_gear.weeping_vine_bow": "Weeping Vine Bow",
+  "lore.dungeons_gear.weeping_vine_bow": "The Weeping Vine Bow's toxic vines create a poisonous haze on the battlefield.",
 
   "item.dungeons_gear.burst_crossbow": "Burst Crossbow",
   "lore.dungeons_gear.burst_crossbow": "A tactical crossbow favored by warriors and hunters alike, the Burst Crossbow is a powerful tool for any hero.",
@@ -267,6 +274,11 @@
   "item.dungeons_gear.soul_crossbow": "Soul Crossbow",
   "lore.dungeons_gear.soul_crossbow": "The Soul Crossbow was crafted by the mysterious Evokers and Enchanters of the Woodland Mansions.",
 
+  "item.dungeons_gear.cog_crossbow": "Cog Crossbow",
+  "lore.dungeons_gear.cog_crossbow": "The gears of this ancient Cog Crossbow still turn up smoothly, making it a reliable weapon choice to this day.",
+  "item.dungeons_gear.pride_of_the_piglins": "Pride of the Piglins",
+  "lore.dungeons_gear.pride_of_the_piglins": "Found in the farthest reaches of the Nether, the Pride of the Piglins is both vintage and vicious.",
+
   "ability.dungeons_gear.accelerate": "Firerate Increase Upon Firing (Accelerate I)",
   "ability.dungeons_gear.bonus_shot": "Shoots Two Enemies At Once (Bonus Shot I)",
   "ability.dungeons_gear.chain_reaction": "Chance Of Chain Reaction (Chain Reaction I)",
@@ -301,7 +313,9 @@
   "ability.dungeons_gear.supercharged": "Super Charged Arrows (Supercharge I)",
   "ability.dungeons_gear.tempo_theft": "Steals Speed (Tempo Theft I)",
   "ability.dungeons_gear.wild_rage": "Chance To Enrage Mobs (Wild Rage I)",
+  "ability.dungeons_gear.wind_up_atack": "Wind-Up Attack",
 
+  "penalty.dungeons_gear.can_overheat": "Can Overheat",
   "penalty.dungeons_gear.slow_fire_rate": "Slow Firerate",
 
   "item.dungeons_gear.battle_robe": "Battle Robe",
@@ -584,6 +598,8 @@
   "lore.dungeons_gear.great_axeblade": "A lucky blacksmith turned a workshop blunder into a battlefield wonder, fusing two weapons into something new.",
   "item.dungeons_gear.claymore": "Claymore",
   "lore.dungeons_gear.claymore": "A massive sword that seems impossibly heavy yet rests easily in a just warrior's hands.",
+  "item.dungeons_gear.frost_slayer": "Frost Slayer",
+  "lore.dungeons_gear.frost_slayer": "The legendary Frost Slayer returns to the battlefield only in the darkest and coldest days of winter.",
 
   "item.dungeons_gear.dancers_sword": "Dancer's Sword",
   "lore.dungeons_gear.dancers_sword": "Warriors who view battle as a dance with death prefer double-bladed swords.",
@@ -720,10 +736,21 @@
   "item.dungeons_gear.vine_whip": "Vine Whip",
   "lore.dungeons_gear.vine_whip": "A sturdy whip made from thick, thorn-laden vines capable of poisoning anything it touches. Be careful not to scratch yourself!",
 
+  "item.dungeons_gear.boneclub": "Boneclub",
+  "lore.dungeons_gear.boneclub": "Those who wield a Bone Club prefer as less-subtle approach to problem-solving.",
+  "item.dungeons_gear.bone_cudgel": "Bone Cudgel",
+  "lore.dungeons_gear.bone_cudgel": "The Bone Cudgel is old enough to be considered an ancient treasure, but still menacing even by modern standards.",
+
+  "item.dungeons_gear.broken_sawblade": "Broken Sawblade",
+  "lore.dungeons_gear.broken_sawblade": "The Broken Sawblade has been ravaged by time, but it still does considerable damage.",
+  "item.dungeons_gear.mechanized_sawblade": "Mechanized Sawblade",
+  "lore.dungeons_gear.mechanized_sawblade": "The Mechanized Sawblade still glows from the fires of the Nether where it was forged.",
+
   "ability.dungeons_gear.boosts_attack_speed": "Boosts Attack Speed",
   "ability.dungeons_gear.busy_bee": "Chance to Summon A Bee (Busy Bee I)",
-  "ability.dungeons_gear.committed": "Increased Damage To Wounded Mobs (Committed I)",
   "ability.dungeons_gear.chains": "Binds And Chains Enemies (Chains I)",
+  "ability.dungeons_gear.committed": "Increased Damage To Wounded Mobs (Committed I)",
+  "ability.dungeons_gear.continuous_attacks": "Continuous Attacks",
   "ability.dungeons_gear.critical_hit": "Increased Critical Hit Chance (Critical Hit I)",
   "ability.dungeons_gear.echo": "Sometimes Strikes Twice (Echo I)",
   "ability.dungeons_gear.exploding": "Defeated Mobs Explode (Exploding I)",
@@ -732,6 +759,7 @@
   "ability.dungeons_gear.fortune": "Mobs Drop More Loot (Fortune I)",
   "ability.dungeons_gear.freezing": "Slows Mobs (Freezing I)",
   "ability.dungeons_gear.great_splash": "Great Splash",
+  "ability.dungeons_gear.illagers_bane": "Extra Damage To Illagers (Illager's Bane I)",
   "ability.dungeons_gear.knockback": "Powerful Pushback (Knockback I)",
   "ability.dungeons_gear.leeching": "Leeches Health From Mobs (Leeching I)",
   "ability.dungeons_gear.prospector": "Mobs Drop More Valuables (Prospector I)",

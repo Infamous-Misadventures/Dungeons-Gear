@@ -2,6 +2,7 @@ package com.infamous.dungeons_gear.loot;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 
 import java.util.*;
 
@@ -20,24 +21,66 @@ public class ChestLootHelper {
     private static final Random myRNG = new Random();
 
     public static List<ItemStack> generateLootFromValues(double uniqueItemChance, double artifactChance){
-        Item commonMeleeWeapon = getRandomSetElement(commonWeaponMap.keySet());
-        Item uniqueMeleeWeapon = getRandomSetElement(uniqueWeaponMap.keySet());
+        boolean selectedMeleeWeapon = false;
+        boolean selectedRangedWeapon = false;
+        boolean selectedArmor = false;
+        boolean selectedArtifact = false;
 
-        Item commonRangedWeapon = getRandomSetElement(commonRangedWeaponMap.keySet());
-        Item uniqueRangedWeapon = getRandomSetElement(uniqueRangedWeaponMap.keySet());
+        Item commonMeleeWeapon = Items.AIR;
+        Item uniqueMeleeWeapon = Items.AIR;
 
-        Item commonLeatherArmor = getRandomSetElement(commonLeatherArmorMap.keySet());
-        Item uniqueLeatherArmor = getRandomSetElement(uniqueLeatherArmorMap.keySet());
+        if(ConfigurableLootHelper.isMeleeWeaponLootEnabled()){
+            commonMeleeWeapon = getRandomSetElement(commonWeaponMap.keySet());
+            uniqueMeleeWeapon = getRandomSetElement(uniqueWeaponMap.keySet());
+            selectedMeleeWeapon = true;
+        }
+        Item commonRangedWeapon = Items.AIR;
+        Item uniqueRangedWeapon = Items.AIR;
 
-        Item commonMetalArmor = getRandomSetElement(commonMetalArmorMap.keySet());
-        Item uniqueMetalArmor = getRandomSetElement(uniqueMetalArmorMap.keySet());
+        if(ConfigurableLootHelper.isMeleeWeaponLootEnabled()){
+            commonRangedWeapon = getRandomSetElement(commonRangedWeaponMap.keySet());
+            uniqueRangedWeapon = getRandomSetElement(uniqueRangedWeaponMap.keySet());
+            selectedRangedWeapon = true;
+        }
 
-        Item artifact = getRandomSetElement(artifactMap.keySet());
+        Item commonLeatherArmor = Items.AIR;
+        Item uniqueLeatherArmor = Items.AIR;
+        Item commonMetalArmor = Items.AIR;
+        Item uniqueMetalArmor = Items.AIR;
+
+        if(ConfigurableLootHelper.isArmorLootEnabled()){
+            commonLeatherArmor = getRandomSetElement(commonLeatherArmorMap.keySet());
+            uniqueLeatherArmor = getRandomSetElement(uniqueLeatherArmorMap.keySet());
+
+            commonMetalArmor = getRandomSetElement(commonMetalArmorMap.keySet());
+            uniqueMetalArmor = getRandomSetElement(uniqueMetalArmorMap.keySet());
+            selectedArmor = true;
+        }
+
+        Item artifact = Items.AIR;
+
+        if(ConfigurableLootHelper.isArtifactLootEnabled()){
+            artifact = getRandomSetElement(artifactMap.keySet());
+            selectedArtifact = true;
+        }
 
         List<ItemStack> generatedLoot = new ArrayList<>(Collections.emptyList());
-        pickFromTwoTypes(uniqueItemChance, commonMeleeWeapon, uniqueMeleeWeapon, commonRangedWeapon, uniqueRangedWeapon, generatedLoot);
-        pickFromTwoTypes(uniqueItemChance, commonLeatherArmor, uniqueLeatherArmor, commonMetalArmor, uniqueMetalArmor, generatedLoot);
-        addArtifact(artifactChance, artifact, generatedLoot);
+
+        if(selectedMeleeWeapon && selectedRangedWeapon){
+            pickFromTwoTypes(uniqueItemChance, commonMeleeWeapon, uniqueMeleeWeapon, commonRangedWeapon, uniqueRangedWeapon, generatedLoot);
+        } else if(selectedMeleeWeapon){
+            addCommonOrUnique(uniqueItemChance, commonMeleeWeapon, uniqueMeleeWeapon, generatedLoot);
+
+        } else if(selectedRangedWeapon){
+            addCommonOrUnique(uniqueItemChance, commonRangedWeapon, uniqueRangedWeapon, generatedLoot);
+        }
+
+        if(selectedArmor){
+            pickFromTwoTypes(uniqueItemChance, commonLeatherArmor, uniqueLeatherArmor, commonMetalArmor, uniqueMetalArmor, generatedLoot);
+        }
+        if(selectedArtifact){
+            addArtifact(artifactChance, artifact, generatedLoot);
+        }
 
         return generatedLoot;
     }

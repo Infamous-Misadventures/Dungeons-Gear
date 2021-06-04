@@ -26,7 +26,6 @@ public abstract class AbstractDungeonsBowItem extends BowItem implements IRanged
 
     public AbstractDungeonsBowItem(Properties builder, float defaultChargeTimeIn, boolean isUniqueIn) {
         super(builder
-                .group(DungeonsGear.RANGED_WEAPON_GROUP)
                 .maxDamage(DungeonsGearConfig.BOW_DURABILITY.get())
         );
         this.defaultChargeTime = defaultChargeTimeIn;

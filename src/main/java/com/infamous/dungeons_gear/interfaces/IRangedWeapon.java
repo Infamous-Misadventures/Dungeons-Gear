@@ -46,6 +46,8 @@ public interface IRangedWeapon<T extends Item> {
 
     default boolean shootsGaleArrows(ItemStack stack){ return false;}
 
+    default boolean hasWindUpAttack(ItemStack stack){ return false;}
+
     // Enchantment Abilities
     default boolean hasTempoTheftBuiltIn(ItemStack stack){
         return false;

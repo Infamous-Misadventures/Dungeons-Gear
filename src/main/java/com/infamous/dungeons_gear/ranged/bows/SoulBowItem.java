@@ -18,7 +18,8 @@ public class SoulBowItem extends AbstractDungeonsBowItem implements ISoulGathere
 
     @Override
     public boolean hasTempoTheftBuiltIn(ItemStack stack) {
-        return stack.getItem() == ItemRegistry.NOCTURNAL_BOW.get();
+        return stack.getItem() == ItemRegistry.NOCTURNAL_BOW.get()
+                || stack.getItem() == ItemRegistry.SHIVERING_BOW.get();
     }
 
     @Override

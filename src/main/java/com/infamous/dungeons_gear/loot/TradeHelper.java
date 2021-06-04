@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.loot;
 
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.merchant.villager.VillagerTrades;

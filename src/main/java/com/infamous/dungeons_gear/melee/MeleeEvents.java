@@ -2,11 +2,12 @@ package com.infamous.dungeons_gear.melee;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
-import com.infamous.dungeons_gear.init.ItemRegistry;
+import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -23,7 +24,6 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class MeleeEvents {
 
-
     @SubscribeEvent
     public static void onMeleeDamage(LivingDamageEvent event){
         if(event.getSource().getImmediateSource() instanceof AbstractArrowEntity) return;
@@ -32,23 +32,35 @@ public class MeleeEvents {
             LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
             LivingEntity victim = event.getEntityLiving();
             ItemStack mainhand = attacker.getHeldItemMainhand();
-            if(mainhand.getItem() == ItemRegistry.FIREBRAND.get()){
+            if(hasFireAspectBuiltIn(mainhand)){
                 int fireAspectLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FIRE_ASPECT, mainhand);
                 victim.setFire(4 + fireAspectLevel * 4);
             }
-            else if (attacker.getHeldItemMainhand().getItem() == ItemRegistry.GRAVE_BANE.get()) {
+            else if (hasSmiteBuiltIn(mainhand)) {
                 if(victim.isEntityUndead()){
                     float currentDamage = event.getAmount();
                     event.setAmount(currentDamage + 2.5f);
                 }
             }
-            else if (attacker.getHeldItemMainhand().getItem() == ItemRegistry.DARK_KATANA.get()) {
-                if(victim.isEntityUndead()){
+            else if (hasIllagersBaneBuiltIn(mainhand)) {
+                if(victim.getCreatureAttribute() == CreatureAttribute.ILLAGER){
                     float currentDamage = event.getAmount();
                     event.setAmount(currentDamage + 2.5f);
                 }
             }
         }
+    }
+
+    private static boolean hasFireAspectBuiltIn(ItemStack mainhand) {
+        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasFireAspectBuiltIn(mainhand);
+    }
+
+    private static boolean hasSmiteBuiltIn(ItemStack mainhand) {
+        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasSmiteBuiltIn(mainhand);
+    }
+
+    private static boolean hasIllagersBaneBuiltIn(ItemStack mainhand) {
+        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasIllagersBaneBuiltIn(mainhand);
     }
 
     @SubscribeEvent
@@ -110,9 +122,13 @@ public class MeleeEvents {
         if(event.getDamageSource().getTrueSource() instanceof LivingEntity){
             LivingEntity attacker = (LivingEntity) event.getDamageSource().getTrueSource();
             int lootingLevel = event.getLootingLevel();
-            if(attacker.getHeldItemMainhand().getItem() == ItemRegistry.FORTUNE_SPEAR.get()){
+            if(hasFortuneBuiltIn(attacker.getHeldItemMainhand())){
                 event.setLootingLevel(lootingLevel + 1);
             }
         }
+    }
+
+    private static boolean hasFortuneBuiltIn(ItemStack mainhand) {
+        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasFortuneBuiltIn(mainhand);
     }
 }

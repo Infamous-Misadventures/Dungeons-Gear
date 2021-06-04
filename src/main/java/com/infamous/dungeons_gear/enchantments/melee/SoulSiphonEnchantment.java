@@ -2,9 +2,8 @@ package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.init.ItemRegistry;
+import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,7 +19,7 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 
 @Mod.EventBusSubscriber(modid = MODID)
-public class SoulSiphonEnchantment extends Enchantment {
+public class SoulSiphonEnchantment extends DungeonsEnchantment {
 
     public SoulSiphonEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlotType[]{

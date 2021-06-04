@@ -1,8 +1,10 @@
 package com.infamous.dungeons_gear.enchantments.types;
 
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.DamageEnchantment;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ItemStack;
 
 public class ModDamageEnchantment extends DamageEnchantment {
     private static final String[] DAMAGE_NAMES = new String[]{"all", "undead", "arthropods", "illager"};
@@ -40,5 +42,27 @@ public class ModDamageEnchantment extends DamageEnchantment {
         } else {
             return 0.0F;
         }
+    }
+
+    @Override
+    public boolean canApply(ItemStack stack) {
+        return ModEnchantmentHelper.isNotBlacklistedEnchant(this)
+                && super.canApply(stack);
+    }
+
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack) {
+        return ModEnchantmentHelper.isNotBlacklistedEnchant(this)
+                && super.canApplyAtEnchantingTable(stack);
+    }
+
+    @Override
+    public boolean isAllowedOnBooks() {
+        return ModEnchantmentHelper.isNotBlacklistedEnchant(this);
+    }
+
+    @Override
+    public boolean isTreasureEnchantment() {
+        return ModEnchantmentHelper.isTreasureEnchant(this);
     }
 }
