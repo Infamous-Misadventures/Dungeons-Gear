@@ -47,6 +47,7 @@ public class DeflectEnchantment extends DungeonsEnchantment {
         if(!ModEnchantmentHelper.arrowHitLivingEntity(rayTraceResult)) return;
         AbstractArrowEntity arrow = event.getArrow();
         if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
+        if(arrow.getPierceLevel()>0) return;
         LivingEntity victim = (LivingEntity) ((EntityRayTraceResult)rayTraceResult).getEntity();
         if(ModEnchantmentHelper.hasEnchantment(victim, ArmorEnchantmentList.DEFLECT)){
             int deflectLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.DEFLECT, victim);

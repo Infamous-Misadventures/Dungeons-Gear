@@ -175,6 +175,24 @@ public class DungeonsGearConfig {
 
 
         builder.comment("Item Configuration").push("item_configuration");
+        builder.comment("For armor durability configuration reference, here are the vanilla armor durability multiplier values: \n" +
+                "Leather - 5\n" +
+                "Gold = 7\n" +
+                "Iron = 14\n" +
+                "Turtle = 25\n" +
+                "Diamond = 33\n" +
+                "Netherite = 37"
+        ).push("armor_durability_multiplier_reference").pop();
+        builder.comment("For tool durability configuration reference, here are the vanilla tool durability values: \n" +
+                "Gold - 32\n" +
+                "Wood = 59\n" +
+                "Stone = 131\n" +
+                "Iron = 250\n" +
+                "Crossbow - 326\n" +
+                "Bow - 384\n" +
+                "Diamond = 1561\n" +
+                "Netherite = 2031"
+        ).push("tool_durability_reference").pop();
         VEST_ARMOR_DURABILITY = builder
                 .comment("Set the durability multiplier for armors that can be classified as a vest, such as Hunter's Armor. [0-1024, default: 14")
                 .defineInRange("vestArmorDurabilityMultiplier", 14, 0, 1024);
@@ -215,6 +233,38 @@ public class DungeonsGearConfig {
                 .comment("Enable area of effects also being applied to players. \n" +
                         "If you do not want area of effects being applied to other players, disable this feature. [true / false]")
                 .define("enableAreaOfEffectOnPlayers", false);
+        ENEMY_BLACKLIST = builder
+                .comment("Add entities that will never be targeted by aggressive Dungeons Gear effects. \n"
+                        + "To do so, enter their registry names.")
+                .defineList("effectTargetBlacklist", Lists.newArrayList(
+                        "minecraft:chicken",
+                        "minecraft:cow",
+                        "minecraft:pig",
+                        "minecraft:sheep",
+                        "minecraft:bee",
+                        "minecraft:wolf",
+                        "minecraft:fox",
+                        "minecraft:villager",
+                        "minecraft:horse",
+                        "minecraft:donkey",
+                        "minecraft:mooshroom",
+                        "minecraft:parrot",
+                        "minecraft:ocelot",
+                        "minecraft:rabbit",
+                        "minecraft:squid",
+                        "minecraft:strider",
+                        "minecraft:turtle",
+                        "minecraft:salmon",
+                        "minecraft:cod",
+                        "minecraft:pufferfish",
+                        "minecraft:tropical_fish",
+                        "minecraft:dolphin",
+                        "minecraft:panda",
+                        "minecraft:polar_bear",
+                        "minecraft:bat",
+                        "minecraft:trader_llama"
+                        ),
+                        (itemRaw) -> itemRaw instanceof String);
         builder.pop();
 
         builder.comment("Common Loot Table Configuration").push("common_loot_table_configuration");
@@ -322,41 +372,6 @@ public class DungeonsGearConfig {
         ARTIFACT_SUPER_RARE_LOOT = builder
                 .comment("The decimal chance for an artifact to appear in super rare loot tables [0.0-1.0, default: 1.0]")
                 .defineInRange("artifactSuperRareLoot", 1.0, 0, 1.0);
-        builder.pop();
-
-        builder.comment("Entity Configuration").push("super_rare_loot_table_configuration");
-        ENEMY_BLACKLIST = builder
-                .comment("Add entities that will never be targeted by aggressive Dungeons Gear effects. \n"
-                        + "To do so, enter their registry names.")
-                .defineList("effectTargetBlacklist", Lists.newArrayList(
-                        "minecraft:chicken",
-                        "minecraft:cow",
-                        "minecraft:pig",
-                        "minecraft:sheep",
-                        "minecraft:bee",
-                        "minecraft:wolf",
-                        "minecraft:fox",
-                        "minecraft:villager",
-                        "minecraft:horse",
-                        "minecraft:donkey",
-                        "minecraft:mooshroom",
-                        "minecraft:parrot",
-                        "minecraft:ocelot",
-                        "minecraft:rabbit",
-                        "minecraft:squid",
-                        "minecraft:strider",
-                        "minecraft:turtle",
-                        "minecraft:salmon",
-                        "minecraft:cod",
-                        "minecraft:pufferfish",
-                        "minecraft:tropical_fish",
-                        "minecraft:dolphin",
-                        "minecraft:panda",
-                        "minecraft:polar_bear",
-                        "minecraft:bat",
-                        "minecraft:trader_llama"
-                        ),
-                        (itemRaw) -> itemRaw instanceof String);
         builder.pop();
     }
 }

@@ -38,7 +38,7 @@ public class AreaOfEffectHelper {
         List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, target, nearbyEntity));
         PROXY.spawnParticles(target, ParticleTypes.PORTAL);
         for (LivingEntity nearbyEntity : nearbyEntities) {
-            pullVicitimTowardsTarget(target,nearbyEntity, particleType);
+            pullVicitimTowardsTarget(target, nearbyEntity, particleType);
         }
     }
 
@@ -157,8 +157,9 @@ public class AreaOfEffectHelper {
     public static void causeShockwave(LivingEntity attacker, LivingEntity target, float damageAmount, float distance) {
         World world = target.getEntityWorld();
         DamageSource shockwave = DamageSource.causeExplosionDamage(attacker);
-
-        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, target, nearbyEntity));
+        Vector3d vec1=target.getPositionVec();
+        Vector3d vec2=attacker.getPositionVec();
+        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.isFacingEntity(attacker, nearbyEntity, vec1.subtract(vec2), 60) && AbilityHelper.canApplyToEnemy(attacker, target, nearbyEntity));
         if (nearbyEntities.isEmpty()) return;
         for (LivingEntity nearbyEntity : nearbyEntities) {
             nearbyEntity.attackEntityFrom(shockwave, damageAmount);
