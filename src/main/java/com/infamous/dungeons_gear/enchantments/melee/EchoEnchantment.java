@@ -37,11 +37,11 @@ public class EchoEnchantment extends AOEDamageEnchantment {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onVanillaCriticalHit(CriticalHitEvent event) {
-        if (event.getPlayer() != null
+        if (event.getPlayer() != null && event.getTarget() instanceof LivingEntity
                 && (event.getResult() == Event.Result.ALLOW || (event.getResult() == Event.Result.DEFAULT && event.isVanillaCritical()))
         ) {
             PlayerEntity attacker = (PlayerEntity) event.getPlayer();
-            LivingEntity victim = event.getEntityLiving();
+            LivingEntity victim = (LivingEntity) event.getTarget();
             ItemStack mainhand = attacker.getHeldItemMainhand();
             boolean uniqueWeaponFlag = hasEchoBuiltIn(mainhand);
             if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.ECHO) || uniqueWeaponFlag) {

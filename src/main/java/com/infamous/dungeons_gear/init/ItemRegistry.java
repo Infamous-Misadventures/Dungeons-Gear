@@ -36,33 +36,33 @@ public class ItemRegistry {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
 
-    //DPS 7.2 (14.4), crits once per 2.5 (1.25) seconds
+    //DPS 9.6 (19.2), crits once per 2.5 (1.25) seconds
     public static final RegistryObject<Item> DAGGER = ITEMS.register("dagger",
-            () -> new DaggerItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new DaggerItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
     public static final RegistryObject<Item> FANG_OF_FROST = ITEMS.register("fang_of_frost",
-            () -> new DaggerItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DaggerItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> MOON_DAGGER = ITEMS.register("moon_dagger",
-            () -> new DaggerItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DaggerItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> SHEAR_DAGGER = ITEMS.register("shear_dagger",
-            () -> new DaggerItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DaggerItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
 
-    //DPS 8 (16), crits once per 3 (1.5) seconds
+    //DPS 10 (20), crits once per 3 (1.5) seconds
     public static final RegistryObject<Item> SICKLE = ITEMS.register("sickle",
-            () -> new SickleItem(ToolMaterialList.METAL, 3, (2.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new SickleItem(ToolMaterialList.METAL, 4, (2.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
     public static final RegistryObject<Item> NIGHTMARES_BITE = ITEMS.register("nightmares_bite",
-            () -> new SickleItem(ToolMaterialList.METAL, 3, (2.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new SickleItem(ToolMaterialList.METAL, 4, (2.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> THE_LAST_LAUGH = ITEMS.register("the_last_laugh",
-            () -> new SickleItem(ToolMaterialList.METAL, 3, (2.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new SickleItem(ToolMaterialList.METAL, 4, (2.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
 
-    //DPS 7.2/8 (14.4/16), crits once per 2.92/1 (1.46/0.5) seconds
+    //DPS 9.6/8 (19.2/16), crits once per 2.92/1 (1.46/0.5) seconds
     public static final RegistryObject<Item> GAUNTLET = ITEMS.register("gauntlet",
-            () -> new GauntletItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new GauntletItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
     public static final RegistryObject<Item> FIGHTERS_BINDING = ITEMS.register("fighters_binding",
             () -> new GauntletItem(ToolMaterialList.METAL, 1, (4.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> MAULER = ITEMS.register("mauler",
-            () -> new GauntletItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new GauntletItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> SOUL_FIST = ITEMS.register("soul_fist",
-            () -> new GauntletItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new GauntletItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
 
     //DPS 8, crits once per 3.5 seconds
     public static final RegistryObject<Item> RAPIER = ITEMS.register("rapier",
@@ -192,7 +192,7 @@ public class ItemRegistry {
     public static final RegistryObject<Item> VINE_WHIP = ITEMS.register("vine_whip",
             () -> new WhipItem(ToolMaterialList.METAL, 6, (1.0f-4.0f), 2.5F, new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
 
-    // Tempest Knives
+    //DPS 7.2, crits once per 1.25 seconds
     public static final RegistryObject<Item> TEMPEST_KNIFE = ITEMS.register("tempest_knife",
             () -> new TempestKnifeItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
     public static final RegistryObject<Item> RESOLUTE_TEMPEST_KNIFE = ITEMS.register("resolute_tempest_knife",
