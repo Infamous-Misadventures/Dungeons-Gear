@@ -486,75 +486,119 @@ public class CrossbowItemModelsProperties {
 					return livingEntity != null && DualCrossbowItem.isCharged(stack) ? 1.0F : 0.0F;
 				});
 
-		/*
+
 		// BURST CROSSBOW
-		ItemModelsProperties.registerProperty(DeferredItemInit.BURST_CROSSBOW.get(), new ResourceLocation("pull"),
-				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
-					if (p_239427_2_ == null) {
+		ItemModelsProperties.registerProperty(ItemRegistry.BURST_CROSSBOW.get(), new ResourceLocation("pull"),
+				(stack, clientWorld, livingEntity) -> {
+					if (livingEntity == null) {
 						return 0.0F;
 					} else {
-						return BurstCrossbowItem.isCharged(p_239427_0_) ? 0.0F
-								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
+						return BurstCrossbowItem.isCharged(stack) ? 0.0F
+								: (float) (stack.getUseDuration() - livingEntity.getItemInUseCount())
+								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(stack);
 					}
 				});
-		ItemModelsProperties.registerProperty(DeferredItemInit.BURST_CROSSBOW.get(), new ResourceLocation("pulling"),
-				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
-					return p_239426_2_ != null && p_239426_2_.isHandActive()
-							&& p_239426_2_.getActiveItemStack() == p_239426_0_ && !BurstCrossbowItem.isCharged(p_239426_0_)
+		ItemModelsProperties.registerProperty(ItemRegistry.BURST_CROSSBOW.get(), new ResourceLocation("pulling"),
+				(stack, clientWorld, livingEntity) -> {
+					return livingEntity != null && livingEntity.isHandActive()
+							&& livingEntity.getActiveItemStack() == stack && !BurstCrossbowItem.isCharged(stack)
 							? 1.0F
 							: 0.0F;
 				});
-		ItemModelsProperties.registerProperty(DeferredItemInit.BURST_CROSSBOW.get(), new ResourceLocation("charged"),
-				(p_239425_0_, p_239425_1_, p_239425_2_) -> {
-					return p_239425_2_ != null && BurstCrossbowItem.isCharged(p_239425_0_) ? 1.0F : 0.0F;
+		ItemModelsProperties.registerProperty(ItemRegistry.BURST_CROSSBOW.get(), new ResourceLocation("charged"),
+				(stack, clientWorld, livingEntity) -> {
+					return livingEntity != null && BurstCrossbowItem.isCharged(stack) ? 1.0F : 0.0F;
 				});
 
 		// SOUL HUNTER CROSSBOW
-		ItemModelsProperties.registerProperty(DeferredItemInit.SOUL_HUNTER_CROSSBOW.get(), new ResourceLocation("pull"),
-				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
-					if (p_239427_2_ == null) {
+		ItemModelsProperties.registerProperty(ItemRegistry.SOUL_HUNTER_CROSSBOW.get(), new ResourceLocation("pull"),
+				(stack, clientWorld, livingEntity) -> {
+					if (livingEntity == null) {
 						return 0.0F;
 					} else {
-						return BurstCrossbowItem.isCharged(p_239427_0_) ? 0.0F
-								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
+						return BurstCrossbowItem.isCharged(stack) ? 0.0F
+								: (float) (stack.getUseDuration() - livingEntity.getItemInUseCount())
+								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(stack);
 					}
 				});
-		ItemModelsProperties.registerProperty(DeferredItemInit.SOUL_HUNTER_CROSSBOW.get(), new ResourceLocation("pulling"),
-				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
-					return p_239426_2_ != null && p_239426_2_.isHandActive()
-							&& p_239426_2_.getActiveItemStack() == p_239426_0_ && !BurstCrossbowItem.isCharged(p_239426_0_)
+		ItemModelsProperties.registerProperty(ItemRegistry.SOUL_HUNTER_CROSSBOW.get(), new ResourceLocation("pulling"),
+				(stack, clientWorld, livingEntity) -> {
+					return livingEntity != null && livingEntity.isHandActive()
+							&& livingEntity.getActiveItemStack() == stack && !BurstCrossbowItem.isCharged(stack)
 							? 1.0F
 							: 0.0F;
 				});
-		ItemModelsProperties.registerProperty(DeferredItemInit.SOUL_HUNTER_CROSSBOW.get(), new ResourceLocation("charged"),
-				(p_239425_0_, p_239425_1_, p_239425_2_) -> {
-					return p_239425_2_ != null && BurstCrossbowItem.isCharged(p_239425_0_) ? 1.0F : 0.0F;
+		ItemModelsProperties.registerProperty(ItemRegistry.SOUL_HUNTER_CROSSBOW.get(), new ResourceLocation("charged"),
+				(stack, clientWorld, livingEntity) -> {
+					return livingEntity != null && BurstCrossbowItem.isCharged(stack) ? 1.0F : 0.0F;
 				});
 		// CORRUPTED CROSSBOW
-		ItemModelsProperties.registerProperty(DeferredItemInit.CORRUPTED_CROSSBOW.get(), new ResourceLocation("pull"),
-				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
-					if (p_239427_2_ == null) {
+		ItemModelsProperties.registerProperty(ItemRegistry.CORRUPTED_CROSSBOW.get(), new ResourceLocation("pull"),
+				(stack, clientWorld, livingEntity) -> {
+					if (livingEntity == null) {
 						return 0.0F;
 					} else {
-						return BurstCrossbowItem.isCharged(p_239427_0_) ? 0.0F
-								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(p_239427_0_);
+						return BurstCrossbowItem.isCharged(stack) ? 0.0F
+								: (float) (stack.getUseDuration() - livingEntity.getItemInUseCount())
+								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(stack);
 					}
 				});
-		ItemModelsProperties.registerProperty(DeferredItemInit.CORRUPTED_CROSSBOW.get(), new ResourceLocation("pulling"),
-				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
-					return p_239426_2_ != null && p_239426_2_.isHandActive()
-							&& p_239426_2_.getActiveItemStack() == p_239426_0_ && !BurstCrossbowItem.isCharged(p_239426_0_)
+		ItemModelsProperties.registerProperty(ItemRegistry.CORRUPTED_CROSSBOW.get(), new ResourceLocation("pulling"),
+				(stack, clientWorld, livingEntity) -> {
+					return livingEntity != null && livingEntity.isHandActive()
+							&& livingEntity.getActiveItemStack() == stack && !BurstCrossbowItem.isCharged(stack)
 							? 1.0F
 							: 0.0F;
 				});
-		ItemModelsProperties.registerProperty(DeferredItemInit.CORRUPTED_CROSSBOW.get(), new ResourceLocation("charged"),
-				(p_239425_0_, p_239425_1_, p_239425_2_) -> {
-					return p_239425_2_ != null && BurstCrossbowItem.isCharged(p_239425_0_) ? 1.0F : 0.0F;
+		ItemModelsProperties.registerProperty(ItemRegistry.CORRUPTED_CROSSBOW.get(), new ResourceLocation("charged"),
+				(stack, clientWorld, livingEntity) -> {
+					return livingEntity != null && BurstCrossbowItem.isCharged(stack) ? 1.0F : 0.0F;
 				});
 
-		 */
+		// COG CROSSBOW
+		ItemModelsProperties.registerProperty(ItemRegistry.COG_CROSSBOW.get(), new ResourceLocation("pull"),
+				(stack, clientWorld, livingEntity) -> {
+					if (livingEntity == null) {
+						return 0.0F;
+					} else {
+						return CogCrossbowItem.isCharged(stack) ? 0.0F
+								: (float) (stack.getUseDuration() - livingEntity.getItemInUseCount())
+								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(stack);
+					}
+				});
+		ItemModelsProperties.registerProperty(ItemRegistry.COG_CROSSBOW.get(), new ResourceLocation("pulling"),
+				(stack, clientWorld, livingEntity) -> {
+					return livingEntity != null && livingEntity.isHandActive()
+							&& livingEntity.getActiveItemStack() == stack && !CogCrossbowItem.isCharged(stack)
+							? 1.0F
+							: 0.0F;
+				});
+		ItemModelsProperties.registerProperty(ItemRegistry.COG_CROSSBOW.get(), new ResourceLocation("charged"),
+				(stack, clientWorld, livingEntity) -> {
+					return livingEntity != null && CogCrossbowItem.isCharged(stack) ? 1.0F : 0.0F;
+				});
+		// PRIDE OF THE PIGLINS
+		ItemModelsProperties.registerProperty(ItemRegistry.PRIDE_OF_THE_PIGLINS.get(), new ResourceLocation("pull"),
+				(stack, clientWorld, livingEntity) -> {
+					if (livingEntity == null) {
+						return 0.0F;
+					} else {
+						return CogCrossbowItem.isCharged(stack) ? 0.0F
+								: (float) (stack.getUseDuration() - livingEntity.getItemInUseCount())
+								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(stack);
+					}
+				});
+		ItemModelsProperties.registerProperty(ItemRegistry.PRIDE_OF_THE_PIGLINS.get(), new ResourceLocation("pulling"),
+				(stack, clientWorld, livingEntity) -> {
+					return livingEntity != null && livingEntity.isHandActive()
+							&& livingEntity.getActiveItemStack() == stack && !CogCrossbowItem.isCharged(stack)
+							? 1.0F
+							: 0.0F;
+				});
+		ItemModelsProperties.registerProperty(ItemRegistry.PRIDE_OF_THE_PIGLINS.get(), new ResourceLocation("charged"),
+				(stack, clientWorld, livingEntity) -> {
+					return livingEntity != null && CogCrossbowItem.isCharged(stack) ? 1.0F : 0.0F;
+				});
+
 	}
 }

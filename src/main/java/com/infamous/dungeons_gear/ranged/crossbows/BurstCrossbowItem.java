@@ -78,7 +78,7 @@ public class BurstCrossbowItem extends AbstractDungeonsCrossbowItem implements I
 
     @Override
     public int getGatherAmount(ItemStack stack) {
-        if(stack.getItem() == ItemRegistry.BURST_CROSSBOW.get()){
+        if(stack.getItem() == ItemRegistry.SOUL_HUNTER_CROSSBOW.get()){
             return 1;
         }
         else return 0;

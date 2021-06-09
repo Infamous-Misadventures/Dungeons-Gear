@@ -1,0 +1,36 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "item/handheld",
+	"textures": {
+		"layer0": "dungeons_gear:item/mechanized_sawblade"
+	},
+	"gui_light": "front",
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [0, 90, 45],
+			"translation": [0, 6.5, 2.25],
+			"scale": [2, 2, 1]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [0, -90, -45],
+			"translation": [0, 6.5, 2.25],
+			"scale": [2, 2, 1]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 90, 45],
+			"translation": [0, 4, 0],
+			"scale": [2, 2, 1]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, -90, -45],
+			"translation": [0, 4, 0],
+			"scale": [2, 2, 1]
+		},
+		"gui": {
+			"scale": [1.33, 1.33, 1.33]
+		},
+		"fixed": {
+			"scale": [1.33, 1.33, 1.33]
+		}
+	}
+}

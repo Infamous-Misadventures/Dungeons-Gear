@@ -1,0 +1,58 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "dungeons_gear:item/twisting_vine_bow"
+	},
+	"gui_light": "front",
+	"overrides": [
+		{
+			"predicate": {
+				"pulling": 1
+			},
+			"model": "dungeons_gear:item/twisting_vine_bow_pulling_0"
+		},
+		{
+			"predicate": {
+				"pulling": 1,
+				"pull": 0.65
+			},
+			"model": "dungeons_gear:item/twisting_vine_bow_pulling_1"
+		},
+		{
+			"predicate": {
+				"pulling": 1,
+				"pull": 0.9
+			},
+			"model": "dungeons_gear:item/twisting_vine_bow_pulling_2"
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [-80, 260, -40],
+			"translation": [-1, -2, 2.5],
+			"scale": [2, 2, 1]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [-80, -280, 40],
+			"translation": [-1, -2, 2.5],
+			"scale": [2, 2, 1]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, -90, 25],
+			"translation": [1.13, 3.2, 1.13],
+			"scale": [2, 2, 1]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 90, -25],
+			"translation": [1.13, 3.2, 1.13],
+			"scale": [2, 2, 1]
+		},
+		"gui": {
+			"scale": [1.5, 1.5, 1.5]
+		},
+		"fixed": {
+			"scale": [1.75, 1.75, 1]
+		}
+	}
+}
