@@ -216,9 +216,9 @@ public class ItemRegistry {
 
     // bone clubs TODO: Change stats
     public static final RegistryObject<Item> BONECLUB = ITEMS.register("boneclub",
-            () -> new GauntletItem(ToolMaterialList.METAL, 7, (1.1f-4.0f), MELEE_WEAPON_PROPERTIES, false));
+            () -> new BoneClubItem(ToolMaterialList.METAL, 7, (1.1f-4.0f), MELEE_WEAPON_PROPERTIES, false));
     public static final RegistryObject<Item> BONE_CUDGEL = ITEMS.register("bone_cudgel",
-            () -> new GauntletItem(ToolMaterialList.METAL, 7, (1.1f-4.0f), MELEE_WEAPON_PROPERTIES, true));
+            () -> new BoneClubItem(ToolMaterialList.METAL, 7, (1.1f-4.0f), MELEE_WEAPON_PROPERTIES, true));
 
     // sawblades TODO: Change stats
     public static final RegistryObject<Item> BROKEN_SAWBLADE = ITEMS.register("broken_sawblade",
@@ -670,7 +670,8 @@ public class ItemRegistry {
         commonRangedWeaponMap.put(SOUL_BOW.get(), SOUL_BOW.get().getRegistryName());
         commonRangedWeaponMap.put(TRICKBOW.get(), TRICKBOW.get().getRegistryName());
         commonRangedWeaponMap.put(SNOW_BOW.get(), SNOW_BOW.get().getRegistryName());
-        //commonRangedWeaponMap.put(WIND_BOW.get(), WIND_BOW.get().getRegistryName());
+        commonRangedWeaponMap.put(WIND_BOW.get(), WIND_BOW.get().getRegistryName());
+        uniqueRangedWeaponMap.put(TWISTING_VINE_BOW.get(), TWISTING_VINE_BOW.get().getRegistryName());
     }
 
     private static void putCommonCrossbowsInMap() {
@@ -681,6 +682,7 @@ public class ItemRegistry {
         commonRangedWeaponMap.put(SOUL_CROSSBOW.get(), SOUL_CROSSBOW.get().getRegistryName());
         commonRangedWeaponMap.put(DUAL_CROSSBOW.get(), DUAL_CROSSBOW.get().getRegistryName());
         commonRangedWeaponMap.put(BURST_CROSSBOW.get(), BURST_CROSSBOW.get().getRegistryName());
+        commonRangedWeaponMap.put(COG_CROSSBOW.get(), COG_CROSSBOW.get().getRegistryName());
     }
 
     private static void putUniqueCrossbowsInMap() {
@@ -699,6 +701,7 @@ public class ItemRegistry {
         uniqueRangedWeaponMap.put(IMPLODING_CROSSBOW.get(), IMPLODING_CROSSBOW.get().getRegistryName());
         uniqueRangedWeaponMap.put(SOUL_HUNTER_CROSSBOW.get(), SOUL_HUNTER_CROSSBOW.get().getRegistryName());
         uniqueRangedWeaponMap.put(CORRUPTED_CROSSBOW.get(), CORRUPTED_CROSSBOW.get().getRegistryName());
+        commonRangedWeaponMap.put(PRIDE_OF_THE_PIGLINS.get(), PRIDE_OF_THE_PIGLINS.get().getRegistryName());
     }
 
     private static void putUniqueBowsInMap() {
@@ -720,8 +723,10 @@ public class ItemRegistry {
         uniqueRangedWeaponMap.put(HAUNTED_BOW.get(), HAUNTED_BOW.get().getRegistryName());
         uniqueRangedWeaponMap.put(ANCIENT_BOW.get(), ANCIENT_BOW.get().getRegistryName());
         uniqueRangedWeaponMap.put(LOVE_SPELL_BOW.get(), LOVE_SPELL_BOW.get().getRegistryName());
-        //uniqueRangedWeaponMap.put(BURST_GALE_BOW.get(), BURST_GALE_BOW.get().getRegistryName());
-        //uniqueRangedWeaponMap.put(ECHO_OF_THE_VALLEY.get(), ECHO_OF_THE_VALLEY.get().getRegistryName());
+        uniqueRangedWeaponMap.put(BURST_GALE_BOW.get(), BURST_GALE_BOW.get().getRegistryName());
+        uniqueRangedWeaponMap.put(ECHO_OF_THE_VALLEY.get(), ECHO_OF_THE_VALLEY.get().getRegistryName());
+        uniqueRangedWeaponMap.put(WEEPING_VINE_BOW.get(), WEEPING_VINE_BOW.get().getRegistryName());
+        uniqueRangedWeaponMap.put(SHIVERING_BOW.get(), SHIVERING_BOW.get().getRegistryName());
     }
 
     private static void putCommonMeleeWeaponsInMap() {
@@ -742,6 +747,8 @@ public class ItemRegistry {
         commonWeaponMap.put(DAGGER.get(), DAGGER.get().getRegistryName());
         commonWeaponMap.put(RAPIER.get(), RAPIER.get().getRegistryName());
         commonWeaponMap.put(TEMPEST_KNIFE.get(), TEMPEST_KNIFE.get().getRegistryName());
+        commonWeaponMap.put(BROKEN_SAWBLADE.get(), BROKEN_SAWBLADE.get().getRegistryName());
+        commonWeaponMap.put(BONECLUB.get(), BONECLUB.get().getRegistryName());
     }
 
     private static void putUniqueMeleeWeaponsInMap() {
@@ -785,6 +792,9 @@ public class ItemRegistry {
         uniqueWeaponMap.put(SHEAR_DAGGER.get(), SHEAR_DAGGER.get().getRegistryName());
         uniqueWeaponMap.put(RESOLUTE_TEMPEST_KNIFE.get(), RESOLUTE_TEMPEST_KNIFE.get().getRegistryName());
         uniqueWeaponMap.put(CHILL_GALE_KNIFE.get(), CHILL_GALE_KNIFE.get().getRegistryName());
+        commonWeaponMap.put(MECHANIZED_SAWBLADE.get(), MECHANIZED_SAWBLADE.get().getRegistryName());
+        commonWeaponMap.put(BONE_CUDGEL.get(), BONE_CUDGEL.get().getRegistryName());
+        commonWeaponMap.put(FROST_SLAYER.get(), FROST_SLAYER.get().getRegistryName());
     }
 
     private static void putArtifactsInMap() {
