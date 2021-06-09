@@ -1,5 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.types;
 
+import com.infamous.dungeons_gear.DungeonsGear;
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
@@ -20,7 +22,7 @@ public class DungeonsEnchantment extends Enchantment {
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack) {
         return ModEnchantmentHelper.isNotBlacklistedEnchant(this)
-                && super.canApplyAtEnchantingTable(stack);
+                && super.canApplyAtEnchantingTable(stack) && ((stack.getItem().getRegistryName() != null && stack.getItem().getRegistryName().getNamespace().equals(DungeonsGear.MODID)) || DungeonsGearConfig.ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR.get());
     }
 
     @Override
