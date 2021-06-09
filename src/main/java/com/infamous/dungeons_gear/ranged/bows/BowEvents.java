@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.ranged.bows;
 
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
+import com.infamous.dungeons_gear.capabilities.bow.IBow;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.interfaces.IRangedWeapon;
 import com.infamous.dungeons_gear.utilties.AbilityHelper;
@@ -38,7 +38,7 @@ public class BowEvents {
         int charge = event.getCharge();
         ItemStack stack = event.getBow();
         if(stack.getItem() instanceof BowItem){
-            IWeapon weaponCap = CapabilityHelper.getWeaponCapability(stack);
+            IBow weaponCap = CapabilityHelper.getWeaponCapability(stack);
             if(weaponCap == null) return;
             long lastFiredTime = weaponCap.getLastFiredTime();
             float bowChargeTime = weaponCap.getBowChargeTime();

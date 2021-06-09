@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.combat;
 
 import com.infamous.dungeons_gear.init.AttributeRegistry;
-import com.infamous.dungeons_gear.interfaces.IOffhandAttack;
+import com.infamous.dungeons_gear.interfaces.IDualWieldWeapon;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -19,7 +19,7 @@ public class CombatEventHandler {
         PlayerEntity player = mc.player;
         if (Minecraft.getInstance().world != null && Minecraft.getInstance().currentScreen == null && !Minecraft.getInstance().isGamePaused() && player != null && !player.isActiveItemStackBlocking()) {
             ItemStack offhand = player.getHeldItemOffhand();
-            if (offhand.getItem() instanceof IOffhandAttack && ((IOffhandAttack<?>) offhand.getItem()).canAttack(player, offhand)) {
+            if (offhand.getItem() instanceof IDualWieldWeapon && ((IDualWieldWeapon<?>) offhand.getItem()).canAttack(player, offhand)) {
                 float reach = (float) 3.0D;
                 if (mc.player != null) {
                     reach = (float) mc.player.getBaseAttributeValue(AttributeRegistry.ATTACK_REACH.get());

@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.ranged.crossbows;
 
-import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
+import com.infamous.dungeons_gear.capabilities.bow.IBow;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.interfaces.IRangedWeapon;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
@@ -37,7 +37,7 @@ public class CrossbowEvents {
         long worldTime = world.getGameTime();
         ItemStack stack = event.getItemStack();
         if (stack.getItem() instanceof CrossbowItem & CrossbowItem.isCharged(stack)) {
-            IWeapon weaponCap = CapabilityHelper.getWeaponCapability(stack);
+            IBow weaponCap = CapabilityHelper.getWeaponCapability(stack);
             if (weaponCap == null) return;
             long lastFiredTime = weaponCap.getLastFiredTime();
             int crossbowChargeTime = weaponCap.getCrossbowChargeTime();

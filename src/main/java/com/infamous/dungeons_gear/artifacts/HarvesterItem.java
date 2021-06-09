@@ -4,6 +4,7 @@ import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
+import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.client.util.ITooltipFlag;
@@ -30,10 +31,7 @@ public class HarvesterItem extends ArtifactItem implements ISoulGatherer {
         PlayerEntity playerIn = c.getPlayer();
         ItemStack itemstack = c.getItem();
 
-        if (playerIn.experienceTotal >= this.getActivationCost(itemstack) || playerIn.isCreative()) {
-            if (!playerIn.isCreative()) {
-                playerIn.giveExperiencePoints(-1 * this.getActivationCost(itemstack));
-            }
+        if (playerIn.isCreative() || CapabilityHelper.getComboCapability(playerIn).consumeSouls(getActivationCost(itemstack))) {
             SoundHelper.playGenericExplodeSound(playerIn);
             AOECloudHelper.spawnExplosionCloud(playerIn, playerIn, 3.0F);
             causeMagicExplosionAttack(playerIn, playerIn, 15, 3.0F);

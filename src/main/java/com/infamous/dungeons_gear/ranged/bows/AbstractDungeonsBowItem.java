@@ -1,8 +1,6 @@
 package com.infamous.dungeons_gear.ranged.bows;
 
-import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
-import com.infamous.dungeons_gear.capabilities.weapon.WeaponProvider;
+import com.infamous.dungeons_gear.capabilities.bow.IBow;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.interfaces.IRangedWeapon;
@@ -160,7 +158,7 @@ public abstract class AbstractDungeonsBowItem extends BowItem implements IRanged
         int accelerateLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.ACCELERATE, stack);
         if(this.hasAccelerateBuiltIn(stack)) accelerateLevel++;
 
-        IWeapon weaponCap = CapabilityHelper.getWeaponCapability(stack);
+        IBow weaponCap = CapabilityHelper.getWeaponCapability(stack);
         if(weaponCap == null) return Math.max(this.getDefaultChargeTime() - 5 * quickChargeLevel, 0);
         float bowChargeTime = weaponCap.getBowChargeTime();
         long lastFiredTime = weaponCap.getLastFiredTime();

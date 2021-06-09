@@ -3,10 +3,13 @@ package com.infamous.dungeons_gear;
 import com.infamous.dungeons_gear.capabilities.combo.Combo;
 import com.infamous.dungeons_gear.capabilities.combo.ComboStorage;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
+import com.infamous.dungeons_gear.capabilities.offhand.IOffhand;
+import com.infamous.dungeons_gear.capabilities.offhand.Offhand;
+import com.infamous.dungeons_gear.capabilities.offhand.OffhandStorage;
 import com.infamous.dungeons_gear.capabilities.summoning.*;
-import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
-import com.infamous.dungeons_gear.capabilities.weapon.Weapon;
-import com.infamous.dungeons_gear.capabilities.weapon.WeaponStorage;
+import com.infamous.dungeons_gear.capabilities.bow.IBow;
+import com.infamous.dungeons_gear.capabilities.bow.Bow;
+import com.infamous.dungeons_gear.capabilities.bow.BowStorage;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
 import com.infamous.dungeons_gear.compat.ElenaiCompat;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
@@ -91,7 +94,8 @@ public class DungeonsGear
         CapabilityManager.INSTANCE.register(ISummonable.class, new SummonableStorage(), Summonable::new);
         CapabilityManager.INSTANCE.register(ICombo.class, new ComboStorage(), Combo::new);
         CapabilityManager.INSTANCE.register(ISummoner.class, new SummonerStorage(), Summoner::new);
-        CapabilityManager.INSTANCE.register(IWeapon.class, new WeaponStorage(), Weapon::new);
+        CapabilityManager.INSTANCE.register(IBow.class, new BowStorage(), Bow::new);
+        CapabilityManager.INSTANCE.register(IOffhand.class, new OffhandStorage(), Offhand::new);
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {

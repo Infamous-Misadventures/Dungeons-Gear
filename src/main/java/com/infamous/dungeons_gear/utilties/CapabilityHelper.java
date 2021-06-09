@@ -6,10 +6,9 @@ import com.infamous.dungeons_gear.capabilities.summoning.ISummonable;
 import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
 import com.infamous.dungeons_gear.capabilities.summoning.SummonableProvider;
 import com.infamous.dungeons_gear.capabilities.summoning.SummonerProvider;
-import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
-import com.infamous.dungeons_gear.capabilities.weapon.WeaponProvider;
+import com.infamous.dungeons_gear.capabilities.bow.IBow;
+import com.infamous.dungeons_gear.capabilities.bow.BowProvider;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
 
@@ -48,9 +47,9 @@ public class CapabilityHelper {
     }
 
     @Nullable
-    public static IWeapon getWeaponCapability(ItemStack stack)
+    public static IBow getWeaponCapability(ItemStack stack)
     {
-        LazyOptional<IWeapon> lazyCap = stack.getCapability(WeaponProvider.WEAPON_CAPABILITY);
+        LazyOptional<IBow> lazyCap = stack.getCapability(BowProvider.WEAPON_CAPABILITY);
         if (lazyCap.isPresent()) {
             return lazyCap.orElseThrow(() -> new IllegalStateException("Couldn't get the weapon capability from the ItemStack!"));
         }

@@ -1,6 +1,5 @@
-package com.infamous.dungeons_gear.capabilities.weapon;
+package com.infamous.dungeons_gear.capabilities.bow;
 
-import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.Direction;
@@ -8,11 +7,11 @@ import net.minecraftforge.common.capabilities.Capability;
 
 import javax.annotation.Nullable;
 
-public class WeaponStorage implements Capability.IStorage<IWeapon> {
+public class BowStorage implements Capability.IStorage<IBow> {
 
     @Nullable
     @Override
-    public INBT writeNBT(Capability<IWeapon> capability, IWeapon instance, Direction side) {
+    public INBT writeNBT(Capability<IBow> capability, IBow instance, Direction side) {
         CompoundNBT tag = new CompoundNBT();
         tag.putInt("fuseShotCounter", instance.getFuseShotCounter());
         tag.putFloat("bowChargeTime", instance.getBowChargeTime());
@@ -22,7 +21,7 @@ public class WeaponStorage implements Capability.IStorage<IWeapon> {
     }
 
     @Override
-    public void readNBT(Capability<IWeapon> capability, IWeapon instance, Direction side, INBT nbt) {
+    public void readNBT(Capability<IBow> capability, IBow instance, Direction side, INBT nbt) {
         CompoundNBT tag = (CompoundNBT) nbt;
         instance.setFuseShotCounter(tag.getInt("fuseShotCounter"));
         instance.setBowChargeTime(tag.getFloat("bowChargeTime"));

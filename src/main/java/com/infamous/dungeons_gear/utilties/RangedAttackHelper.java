@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.utilties;
 
-import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
+import com.infamous.dungeons_gear.capabilities.bow.IBow;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.ranged.bows.AbstractDungeonsBowItem;
@@ -19,7 +19,7 @@ public class RangedAttackHelper {
         int quickChargeLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.QUICK_CHARGE, stack);
         int accelerateLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.ACCELERATE, stack);
 
-        IWeapon weaponCap = CapabilityHelper.getWeaponCapability(stack);
+        IBow weaponCap = CapabilityHelper.getWeaponCapability(stack);
         if(weaponCap == null) return Math.max(25 - 5 * quickChargeLevel, 0);
         int crossbowChargeTime = weaponCap.getCrossbowChargeTime();
         long lastFiredTime = weaponCap.getLastFiredTime();
@@ -50,7 +50,7 @@ public class RangedAttackHelper {
         int quickChargeLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.QUICK_CHARGE, stack);
         int accelerateLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.ACCELERATE, stack);
 
-        IWeapon weaponCap = CapabilityHelper.getWeaponCapability(stack);
+        IBow weaponCap = CapabilityHelper.getWeaponCapability(stack);
         if(weaponCap == null) return Math.max(20.0F - 5 * quickChargeLevel, 0);
         float bowChargeTime = weaponCap.getBowChargeTime();
         long lastFiredTime = weaponCap.getLastFiredTime();

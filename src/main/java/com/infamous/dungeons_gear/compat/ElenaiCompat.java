@@ -1,6 +1,7 @@
 package com.infamous.dungeons_gear.compat;
 
 import com.elenai.elenaidodge2.api.DodgeEvent;
+import com.elenai.elenaidodge2.api.FeathersHelper;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.interfaces.IArmor;
 import com.infamous.dungeons_gear.utilties.ArmorEffectHelper;
@@ -25,7 +26,14 @@ public class ElenaiCompat {
             int jumpCooldownTimer = comboCap.getJumpCooldownTimer();
 
             if (jumpCooldownTimer <= 0) {
-                ArmorEffectHelper.handleJumpBoost(playerEntity, helmet, chestplate);
+                float jumpBoost = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getLongerRolls() : 0;
+                float jumpBoost2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getLongerRolls() : 0;
+                float totalJumpBoost = jumpBoost * 0.02F + jumpBoost2 * 0.02F;
+
+                if (totalJumpBoost > 0) {
+                    event.setForce(event.getForce()*(1+totalJumpBoost));
+                }
+
 
                 ArmorEffectHelper.handleInvulnerableJump(playerEntity, helmet, chestplate);
 

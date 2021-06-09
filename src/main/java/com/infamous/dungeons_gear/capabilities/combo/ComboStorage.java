@@ -28,6 +28,7 @@ public class ComboStorage implements Capability.IStorage<ICombo> {
         tag.putInt("poisonImmunityTimer", instance.getPoisonImmunityTimer());
         tag.putInt("lastShoutTimer", instance.getLastShoutTimer());
         tag.putDouble("dynamoMultiplier", instance.getDynamoMultiplier());
+        tag.putFloat("souls", instance.getSouls());
         return tag;
     }
 
@@ -49,5 +50,6 @@ public class ComboStorage implements Capability.IStorage<ICombo> {
         instance.setPoisonImmunityTimer(tag.getInt("poisonImmunityTimer"));
         instance.setLastShoutTimer(tag.getInt("lastShoutTimer"));
         instance.setDynamoMultiplier(tag.getInt("dynamoMultiplier"));
+        instance.setSouls(tag.getFloat("souls"));
     }
 }

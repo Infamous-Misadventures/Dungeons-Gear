@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.combat;
 
 import com.infamous.dungeons_gear.init.AttributeRegistry;
-import com.infamous.dungeons_gear.interfaces.IOffhandAttack;
+import com.infamous.dungeons_gear.interfaces.IDualWieldWeapon;
 import com.infamous.dungeons_gear.utilties.PlayerAttackHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -44,7 +44,7 @@ public class PacketOffhandAttack {
                         if (target != null) {
                                 ItemStack offhand = player.getHeldItemOffhand();
                                 if (!offhand.isEmpty()) {
-                                    if (offhand.getItem() instanceof IOffhandAttack) {
+                                    if (offhand.getItem() instanceof IDualWieldWeapon) {
                                         float reach = (float) player.getBaseAttributeValue(AttributeRegistry.ATTACK_REACH.get());
                                         if(player.isCreative()) reach *= 2.0D;
 

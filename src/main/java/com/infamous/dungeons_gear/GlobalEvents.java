@@ -1,9 +1,13 @@
 package com.infamous.dungeons_gear;
 
 
+import com.infamous.dungeons_gear.artifacts.ArtifactItem;
+import com.infamous.dungeons_gear.artifacts.beacon.AbstractBeaconItem;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
-import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
+import com.infamous.dungeons_gear.capabilities.bow.IBow;
 import com.infamous.dungeons_gear.effects.CustomEffects;
+import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
+import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.init.PotionList;
 import com.infamous.dungeons_gear.interfaces.IArmor;
@@ -24,9 +28,14 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.PotionUtils;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
+import net.minecraft.util.IndirectEntityDamageSource;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -72,7 +81,7 @@ public class GlobalEvents {
         int fuseShotLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.FUSE_SHOT, stack);
         if (hasFuseShotBuiltIn(stack)) fuseShotLevel++;
         if (fuseShotLevel > 0) {
-            IWeapon weaponCap = CapabilityHelper.getWeaponCapability(stack);
+            IBow weaponCap = CapabilityHelper.getWeaponCapability(stack);
             if (weaponCap == null) return;
             int fuseShotCounter = weaponCap.getFuseShotCounter();
             // 6 - 1, 6 - 2, 6 - 3
@@ -194,44 +203,75 @@ public class GlobalEvents {
     }
 
     @SubscribeEvent
-    public static void onSoulGatheringItemsXPDrop(LivingExperienceDropEvent event) {
-        if (event.getAttackingPlayer() != null) {
-            PlayerEntity attacker = event.getAttackingPlayer();
-            int originalExperience = event.getDroppedExperience();
-            int additionalExperienceCounter = 0;
-            ItemStack mainhand = attacker.getHeldItemMainhand();
-            ItemStack offhand = attacker.getHeldItemOffhand();
-            if (mainhand.getItem() instanceof ISoulGatherer) {
-                additionalExperienceCounter += ((ISoulGatherer) mainhand.getItem()).getGatherAmount(mainhand);
+    public static void onSoulGatheringItemsXPDrop(LivingDeathEvent event) {
+        if (event.getSource().getTrueSource() instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) event.getSource().getTrueSource();
+            int souls = 0;
+            ItemStack mainhand = player.getHeldItemMainhand();
+            ItemStack offhand = player.getHeldItemOffhand();
+            if (mainhand.getItem() instanceof ISoulGatherer && !(mainhand.getItem() instanceof ArtifactItem)) {
+                souls += ((ISoulGatherer) mainhand.getItem()).getGatherAmount(mainhand);
             }
-            if (offhand.getItem() instanceof ISoulGatherer) {
-                additionalExperienceCounter += ((ISoulGatherer) offhand.getItem()).getGatherAmount(offhand);
+            if (offhand.getItem() instanceof ISoulGatherer && !(offhand.getItem() instanceof ArtifactItem)) {
+                souls += ((ISoulGatherer) offhand.getItem()).getGatherAmount(offhand);
             }
-
-            ItemStack helmet = attacker.getItemStackFromSlot(EquipmentSlotType.HEAD);
-            ItemStack chestplate = attacker.getItemStackFromSlot(EquipmentSlotType.CHEST);
+            int counter = 0;
+            for (ItemStack is : player.inventory.offHandInventory)
+                if (is.getItem() instanceof ArtifactItem && is.getItem() instanceof ISoulGatherer) {
+                    souls += ((ISoulGatherer) is.getItem()).getGatherAmount(is);
+                    counter++;
+                }
+            for (ItemStack is : player.inventory.mainInventory)
+                if (is.getItem() instanceof ArtifactItem && is.getItem() instanceof ISoulGatherer) {
+                    souls += ((ISoulGatherer) is.getItem()).getGatherAmount(is);
+                    if (++counter == 3) break;
+                }
+            ItemStack helmet = player.getItemStackFromSlot(EquipmentSlotType.HEAD);
+            ItemStack chestplate = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
 
             float soulsGathered = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getSoulsGathered() : 0;
             float soulsGathered2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getSoulsGathered() : 0;
-            float totalSoulsGathered = soulsGathered * 0.01F + soulsGathered2 * 0.01F;
+            float totalSoulsGathered = 1 + soulsGathered * 0.01F + soulsGathered2 * 0.01F;
 
             if (totalSoulsGathered > 0) {
-                additionalExperienceCounter += originalExperience * totalSoulsGathered;
+                souls = (int) (souls * totalSoulsGathered);
             }
 
-            event.setDroppedExperience(originalExperience + additionalExperienceCounter);
+            if (souls > 0) {
+                CapabilityHelper.getComboCapability(player).setSouls(CapabilityHelper.getComboCapability(player).getSouls() + souls);
+                if (event.getSource().getImmediateSource() instanceof AbstractArrowEntity) {
+                    AbstractArrowEntity arrowEntity = (AbstractArrowEntity) event.getSource().getImmediateSource();
+                    int animaConduitLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrowEntity, MeleeRangedEnchantmentList.ANIMA_CONDUIT);
+                    if (animaConduitLevel > 0) {
+                        if (event.getSource().getTrueSource() instanceof LivingEntity) {
+                            LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
+                            if (attacker instanceof PlayerEntity) {
+                                double soulsToHealth = player.getMaxHealth() * souls * (0.02 * animaConduitLevel);
+                                PROXY.spawnParticles(player, ParticleTypes.SOUL);
+                                player.heal((float) soulsToHealth);
+                            }
+                        }
+                    }
+                } else if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.ANIMA_CONDUIT)) {
+                    int animaConduitLevel = EnchantmentHelper.getEnchantmentLevel(MeleeRangedEnchantmentList.ANIMA_CONDUIT, mainhand);
+                    double soulsToHealth = player.getMaxHealth() * souls * (0.02 * animaConduitLevel);
+                    PROXY.spawnParticles(player, ParticleTypes.SOUL);
+                    player.heal((float) soulsToHealth);
+                }
+            }
         }
+
     }
 
     @SubscribeEvent
-    public static void onGaleArrowImpact(ProjectileImpactEvent.Arrow event){
+    public static void onGaleArrowImpact(ProjectileImpactEvent.Arrow event) {
         RayTraceResult rayTraceResult = event.getRayTraceResult();
-        if(!ModEnchantmentHelper.arrowHitLivingEntity(rayTraceResult)) return;
+        if (!ModEnchantmentHelper.arrowHitLivingEntity(rayTraceResult)) return;
         AbstractArrowEntity arrow = event.getArrow();
-        if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
-        LivingEntity shooter = (LivingEntity)arrow.func_234616_v_();
+        if (!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
+        LivingEntity shooter = (LivingEntity) arrow.func_234616_v_();
         boolean isGaleArrow = arrow.getTags().contains("GaleArrow");
-        if(isGaleArrow) {
+        if (isGaleArrow) {
             if (rayTraceResult instanceof EntityRayTraceResult) {
                 EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult) rayTraceResult;
                 if (entityRayTraceResult.getEntity() instanceof LivingEntity) {
