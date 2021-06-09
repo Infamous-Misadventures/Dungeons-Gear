@@ -1,0 +1,6 @@
+{
+    "parent": "dungeons_gear:item/pride_of_the_piglins",
+    "textures": {
+        "layer0": "dungeons_gear:item/pride_of_the_piglins_pulling_2"
+    }
+}
