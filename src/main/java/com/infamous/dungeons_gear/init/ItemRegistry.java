@@ -726,6 +726,7 @@ public class ItemRegistry {
         uniqueRangedWeaponMap.put(BURST_GALE_BOW.get(), BURST_GALE_BOW.get().getRegistryName());
         uniqueRangedWeaponMap.put(ECHO_OF_THE_VALLEY.get(), ECHO_OF_THE_VALLEY.get().getRegistryName());
         uniqueRangedWeaponMap.put(WEEPING_VINE_BOW.get(), WEEPING_VINE_BOW.get().getRegistryName());
+        uniqueRangedWeaponMap.put(SHIVERING_BOW.get(), SHIVERING_BOW.get().getRegistryName());
     }
 
     private static void putCommonMeleeWeaponsInMap() {
@@ -793,6 +794,7 @@ public class ItemRegistry {
         uniqueWeaponMap.put(CHILL_GALE_KNIFE.get(), CHILL_GALE_KNIFE.get().getRegistryName());
         commonWeaponMap.put(MECHANIZED_SAWBLADE.get(), MECHANIZED_SAWBLADE.get().getRegistryName());
         commonWeaponMap.put(BONE_CUDGEL.get(), BONE_CUDGEL.get().getRegistryName());
+        commonWeaponMap.put(FROST_SLAYER.get(), FROST_SLAYER.get().getRegistryName());
     }
 
     private static void putArtifactsInMap() {
