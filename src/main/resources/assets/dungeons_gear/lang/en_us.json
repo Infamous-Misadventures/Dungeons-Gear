@@ -25,6 +25,8 @@
   "item.minecraft.splash_potion.effect.oakwood_brew": "Splash Potion of Oakwood Armor",
   "item.minecraft.lingering_potion.effect.shadow_brew": "Lingering Potion of Shadow Form",
   "item.minecraft.lingering_potion.effect.oakwood_brew": "Lingering Potion of Oakwood Armor",
+  "item.minecraft.tipped_arrow.effect.shadow_brew": "Arrow of Shadow Brew",
+  "item.minecraft.tipped_arrow.effect.oakwood_brew": "Arrow of Oakwood Brew",
 
   "enchantment.dungeons_gear.anima_conduit": "Anima Conduit",
   "enchantment.dungeons_gear.anima_conduit.desc": "Each XP orb you absorb grants a small amount of health.",
@@ -61,6 +63,8 @@
   "enchantment.dungeons_gear.radiance.desc": "Has a 20% chance to spawn a circular area that heals all allies within it.",
   "enchantment.dungeons_gear.rampaging": "Rampaging",
   "enchantment.dungeons_gear.rampaging.desc": "After defeating a mob, there is a 10% chance to increase your attack speed by 50% for a short time.",
+  "enchantment.dungeons_gear.rushdown": "Rushdown",
+  "enchantment.dungeons_gear.rushdown.desc": "Speed burst after mob defeated.",
   "enchantment.dungeons_gear.shockwave": "Shockwave",
   "enchantment.dungeons_gear.shockwave.desc": "A critical hit launches a shockwave, damaging enemies.",
   "enchantment.dungeons_gear.soul_siphon": "Soul Siphon",
