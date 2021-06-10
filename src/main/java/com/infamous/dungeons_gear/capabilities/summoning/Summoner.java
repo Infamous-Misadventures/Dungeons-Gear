@@ -30,6 +30,15 @@ public class Summoner implements ISummoner {
     }
 
     @Override
+    public void copyFrom(ISummoner summoner) {
+        this.setSummonedBat(summoner.getSummonedBat());
+        this.setSummonedGolem(summoner.getSummonedGolem());
+        this.setSummonedLlama(summoner.getSummonedLlama());
+        this.setSummonedSheep(summoner.getSummonedSheep());
+        this.setSummonedWolf(summoner.getSummonedBat());
+    }
+
+    @Override
     public void setSummonedGolem(@Nullable UUID golem) {
         this.summonedGolem = golem;
     }

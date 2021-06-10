@@ -5,6 +5,8 @@ import java.util.UUID;
 
 public interface ISummoner {
 
+    void copyFrom(ISummoner summoner);
+
     void setSummonedGolem(UUID golem);
     void setSummonedWolf(UUID wolf);
     void setSummonedLlama(UUID llama);

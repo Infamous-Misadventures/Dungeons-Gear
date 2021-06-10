@@ -32,6 +32,7 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -448,6 +449,18 @@ public class ArtifactEvents {
                     }
                 }
             }
+        }
+    }
+
+    // Preserves ownership of summoned mobs on respawn
+    // Prevents problems like summoning an entirely new summon of the same type
+    // as one you already have after you respawn
+    @SubscribeEvent
+    public static void cloneSummonerCaps(PlayerEvent.Clone event){
+        ISummoner oldSummonerCap = CapabilityHelper.getSummonerCapability(event.getOriginal());
+        ISummoner newSummonerCap = CapabilityHelper.getSummonerCapability(event.getPlayer());
+        if (oldSummonerCap != null && newSummonerCap != null) {
+            newSummonerCap.copyFrom(oldSummonerCap);
         }
     }
 }
