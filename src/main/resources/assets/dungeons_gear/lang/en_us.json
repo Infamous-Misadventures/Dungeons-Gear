@@ -4,7 +4,7 @@
   "attribute.name.artifactCooldown": "Artifact Cooldown",
   "attribute.name.healthPotionsHealNearbyAllies": "Health Potions Heal Nearby Allies",
   "attribute.name.healthPotionBoost": "Health Potion Boost",
-  "attribute.name.soulsGathered": "XP Gathered",
+  "attribute.name.soulsGathered": "Souls Gathered",
   "attribute.name.lifeSteal": "Life Steal",
   "attribute.name.chanceToTeleportAwayWhenHit": "Chance To Teleport Away When Hit",
   "attribute.name.arrowsPerBundle": "Arrows Per Bundle",
@@ -29,9 +29,9 @@
   "item.minecraft.tipped_arrow.effect.oakwood_brew": "Arrow of Oakwood Armor",
 
   "enchantment.dungeons_gear.anima_conduit": "Anima Conduit",
-  "enchantment.dungeons_gear.anima_conduit.desc": "Each XP orb you absorb grants a small amount of health.",
+  "enchantment.dungeons_gear.anima_conduit.desc": "Each soul you absorb grants a small amount of health.",
   "enchantment.dungeons_gear.enigma_resonator": "Enigma Resonator",
-  "enchantment.dungeons_gear.enigma_resonator.desc": "Give a chance to inflict 50% more damage based on the amount of XP you have.",
+  "enchantment.dungeons_gear.enigma_resonator.desc": "Give a chance to inflict 50% more damage based on the amount of souls you have.",
   "enchantment.dungeons_gear.freezing": "Freezing",
   "enchantment.dungeons_gear.freezing.desc": "Slows mobs after hit for three seconds.",
   "enchantment.dungeons_gear.gravity": "Gravity",
@@ -68,7 +68,7 @@
   "enchantment.dungeons_gear.shockwave": "Shockwave",
   "enchantment.dungeons_gear.shockwave.desc": "A critical hit launches a shockwave, damaging enemies.",
   "enchantment.dungeons_gear.soul_siphon": "Soul Siphon",
-  "enchantment.dungeons_gear.soul_siphon.desc": "When you hit an enemy, gain a 10% chance to grant you a bunch of extra XP.",
+  "enchantment.dungeons_gear.soul_siphon.desc": "When you hit an enemy, gain a 10% chance to grant you a bunch of extra souls.",
   "enchantment.dungeons_gear.stunning": "Stunning",
   "enchantment.dungeons_gear.stunning.desc": "Chance to temporarily stun enemies.",
   "enchantment.dungeons_gear.swirling": "Swirling",
@@ -314,7 +314,7 @@
   "ability.dungeons_gear.replenish": "Chance To Regain Arrows (Replenish I)",
   "ability.dungeons_gear.ricochet": "Chance To Ricochet (Ricochet I)",
   "ability.dungeons_gear.roll_charge": "Jumping Charges Next Arrow (Roll Charge I)",
-  "ability.dungeons_gear.soul_gathering": "+%d XP Gathering",
+  "ability.dungeons_gear.soul_gathering": "+%d Soul Gathering",
   "ability.dungeons_gear.strong_charged": "Strong Charged Attacks",
   "ability.dungeons_gear.supercharged": "Super Charged Arrows (Supercharge I)",
   "ability.dungeons_gear.tempo_theft": "Steals Speed (Tempo Theft I)",
@@ -514,7 +514,7 @@
 
   "item.dungeons_gear.lightning_rod": "Lightning Rod",
   "lore.dungeons_gear.lightning_rod": "Crafted by Illager Geomancers, this item is enchanted with the power of a storming sky.",
-  "ability.dungeons_gear.lightning_rod": "You can spend XP to attack nearby enemies with a lightning strike.",
+  "ability.dungeons_gear.lightning_rod": "You can spend souls to attack nearby enemies with a lightning strike.",
 
   "item.dungeons_gear.iron_hide_amulet": "Iron Hide Amulet",
   "lore.dungeons_gear.iron_hide_amulet": "The Iron Hide Amulet is both ancient and timeless. Sand mysteriously and endlessly slips through the cracks in the iron.",
@@ -594,7 +594,7 @@
 
   "artifact.dungeons_gear.duration": "%d Seconds Duration",
   "artifact.dungeons_gear.cooldown": "%d Seconds Cooldown",
-  "artifact.dungeons_gear.activation": "Requires %d XP Per Use",
+  "artifact.dungeons_gear.activation": "Souls Per Use: %d",
 
   "item.dungeons_gear.broadsword": "Broadsword",
   "lore.dungeons_gear.broadsword": "Only those with the strength of a champion and the heart of a hero can carry this massive blade.",
@@ -615,9 +615,9 @@
   "lore.dungeons_gear.cutlass": "This curved blade, wielded by the warriors of the Squid Coast, requires a steady hand in battle.",
 
   "item.dungeons_gear.fang_of_frost": "Fangs Of Frost",
-  "lore.dungeons_gear.fang_of_frost": "This lauded dagger of the northern mountains is known to freeze its foes to solid ice.",
+  "lore.dungeons_gear.fang_of_frost": "These lauded daggers of the northern mountains are known to freeze their foes to solid ice.",
   "item.dungeons_gear.moon_dagger": "Moon Daggers",
-  "lore.dungeons_gear.moon_dagger": "This curved blade shines like the crescent moon on a dark night.",
+  "lore.dungeons_gear.moon_dagger": "These curved blades shine like the crescent moon on a dark night.",
   "item.dungeons_gear.dagger": "Daggers",
   "lore.dungeons_gear.dagger": "Daggers are the weapon of cravens - or so folks say.",
   "item.dungeons_gear.shear_dagger": "Shear Daggers",
@@ -656,7 +656,7 @@
   "item.dungeons_gear.fighters_binding": "Fighter's Bindings",
   "lore.dungeons_gear.fighters_binding": "Made in the wilds beyond the mountains, these gauntlets have been worn by warriors for centuries.",
   "item.dungeons_gear.mauler": "Maulers",
-  "lore.dungeons_gear.mauler": "This claw-like weapon, wielded by ancient Illager soldiers, is savage in battle.",
+  "lore.dungeons_gear.mauler": "These claw-like weapons, wielded by ancient Illager soldiers, are savage in battle.",
   "item.dungeons_gear.soul_fist": "Soul Fists",
   "lore.dungeons_gear.soul_fist": "Soul Fists are gauntlets clad with great gemstones, each containing a powerful soul.",
 
@@ -696,9 +696,9 @@
   "lore.dungeons_gear.freezing_foil": "This needle-like blade is cold to the touch and makes quick work of any cut.",
 
   "item.dungeons_gear.nightmares_bite": "Nightmare's Bite",
-  "lore.dungeons_gear.nightmares_bite": "The blade of Nightmare's Bite drips with deadly venom, still potent after all these years.",
+  "lore.dungeons_gear.nightmares_bite": "The twin blades of Nightmare's Bite drip with deadly venom, still potent after all these years.",
   "item.dungeons_gear.the_last_laugh": "The Last Laugh",
-  "lore.dungeons_gear.the_last_laugh": "Strange, distorted laughter seems to whisper from this menacing looking sickle.",
+  "lore.dungeons_gear.the_last_laugh": "Strange, distorted laughter seems to whisper from these menacing looking sickles.",
   "item.dungeons_gear.sickle": "Sickles",
   "lore.dungeons_gear.sickle": "A ceremonial weapon that hails from the same region as the Desert Temple.",
 
@@ -777,7 +777,7 @@
   "ability.dungeons_gear.sharpness": "Extra Damage (Sharpness I)",
   "ability.dungeons_gear.shockwave": "Casts Shockwaves (Shockwave I)",
   "ability.dungeons_gear.smite": "Extra Damage To Undead (Smite I)",
-  "ability.dungeons_gear.soul_siphon": "Chance To Gain XP (Soul Siphon I)",
+  "ability.dungeons_gear.soul_siphon": "Chance To Gain Souls (Soul Siphon I)",
   "ability.dungeons_gear.spin_attack": "Spin Attack",
   "ability.dungeons_gear.stunning": "Stuns Mobs (Stunning I)",
   "ability.dungeons_gear.stylish_combo": "Increased Damage on Third, Sixth, Eighth, and Final Hit of a Combo",

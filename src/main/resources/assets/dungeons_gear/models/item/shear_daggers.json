@@ -1,0 +1,6 @@
+{
+    "parent": "item/handheld",
+    "textures": {
+        "layer0": "dungeons_gear:item/shear_daggers"
+    }
+}

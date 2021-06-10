@@ -24,7 +24,7 @@ public abstract class AbstractBeaconItem extends ArtifactItem implements ISoulGa
 
     public static final double RAYTRACE_DISTANCE = 256;
     public static final float BEAM_DAMAGE_PER_TICK = 0.5F; // 10.0F damage per second
-    public static final float EXPERIENCE_COST_PER_TICK = -0.625f;
+    public static final float EXPERIENCE_COST_PER_TICK = 0.625f;
 
     public AbstractBeaconItem(Properties properties) {
         super(properties);

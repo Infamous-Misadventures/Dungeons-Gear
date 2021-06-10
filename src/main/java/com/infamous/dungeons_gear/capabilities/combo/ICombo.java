@@ -4,6 +4,7 @@ package com.infamous.dungeons_gear.capabilities.combo;
 public interface ICombo {
 
     void setSouls(float soul);
+    void addSouls(float amount, float until);
     boolean consumeSouls(float amount);
     float getSouls();
 

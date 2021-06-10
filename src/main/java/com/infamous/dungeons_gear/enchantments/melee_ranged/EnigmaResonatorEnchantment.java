@@ -50,13 +50,13 @@ public class EnigmaResonatorEnchantment extends DamageBoostEnchantment {
                 float soulsCriticalBoostChanceCap;
                 soulsCriticalBoostChanceCap = 0.1F + 0.05F * enigmaResonatorLevel;
                 float soulsCriticalBoostRand = attacker.getRNG().nextFloat();
-                if (soulsCriticalBoostRand <= Math.min(numSouls / 50.0, soulsCriticalBoostChanceCap)) {
+                if (soulsCriticalBoostRand <= Math.min(numSouls / 300.0, soulsCriticalBoostChanceCap)) {
                     success = true;
                 }
             }
             if (uniqueWeaponFlag) {
                 float soulsCriticalBoostRand = attacker.getRNG().nextFloat();
-                if (soulsCriticalBoostRand <= Math.min(numSouls / 50.0, 0.15F)) {
+                if (soulsCriticalBoostRand <= Math.min(numSouls / 300.0, 0.15F)) {
                     success = true;
                 }
             }

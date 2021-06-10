@@ -10,6 +10,7 @@ import com.infamous.dungeons_gear.capabilities.summoning.*;
 import com.infamous.dungeons_gear.capabilities.bow.IBow;
 import com.infamous.dungeons_gear.capabilities.bow.Bow;
 import com.infamous.dungeons_gear.capabilities.bow.BowStorage;
+import com.infamous.dungeons_gear.client.ClientProxy;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
 import com.infamous.dungeons_gear.compat.ElenaiCompat;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
@@ -19,6 +20,7 @@ import com.infamous.dungeons_gear.groups.ArtifactGroup;
 import com.infamous.dungeons_gear.init.AttributeRegistry;
 import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.init.ParticleInit;
+import com.infamous.dungeons_gear.items.DualWieldItemProperties;
 import com.infamous.dungeons_gear.items.VanillaItemModelProperties;
 import com.infamous.dungeons_gear.items.BowItemModelsProperties;
 import com.infamous.dungeons_gear.items.CrossbowItemModelsProperties;
@@ -100,6 +102,7 @@ public class DungeonsGear
 
     private void doClientStuff(final FMLClientSetupEvent event) {
 
+        MinecraftForge.EVENT_BUS.register(new DualWieldItemProperties());
         MinecraftForge.EVENT_BUS.register(new CrossbowItemModelsProperties());
         MinecraftForge.EVENT_BUS.register(new BowItemModelsProperties());
         MinecraftForge.EVENT_BUS.register(new VanillaItemModelProperties());

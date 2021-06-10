@@ -1,5 +1,6 @@
-package com.infamous.dungeons_gear;
+package com.infamous.dungeons_gear.client;
 
+import com.infamous.dungeons_gear.CommonProxy;
 import net.minecraft.entity.Entity;
 import net.minecraft.particles.BasicParticleType;
 

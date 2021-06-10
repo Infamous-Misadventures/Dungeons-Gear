@@ -14,10 +14,7 @@ import com.infamous.dungeons_gear.interfaces.IArmor;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IRangedWeapon;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
-import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
-import com.infamous.dungeons_gear.utilties.CapabilityHelper;
-import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
-import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
+import com.infamous.dungeons_gear.utilties.*;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -238,7 +235,7 @@ public class GlobalEvents {
             }
 
             if (souls > 0) {
-                CapabilityHelper.getComboCapability(player).setSouls(CapabilityHelper.getComboCapability(player).getSouls() + souls);
+                SoulHelper.addSoul(player, souls);
                 if (event.getSource().getImmediateSource() instanceof AbstractArrowEntity) {
                     AbstractArrowEntity arrowEntity = (AbstractArrowEntity) event.getSource().getImmediateSource();
                     int animaConduitLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrowEntity, MeleeRangedEnchantmentList.ANIMA_CONDUIT);
