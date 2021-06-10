@@ -5,6 +5,8 @@ import com.infamous.dungeons_gear.artifacts.ArtifactItem;
 import com.infamous.dungeons_gear.artifacts.beacon.AbstractBeaconItem;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.capabilities.bow.IBow;
+import com.infamous.dungeons_gear.combat.NetworkHandler;
+import com.infamous.dungeons_gear.combat.PacketUpdateSouls;
 import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
@@ -20,6 +22,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.BowItem;
@@ -43,6 +46,7 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.Optional;
 
@@ -69,6 +73,8 @@ public class GlobalEvents {
                     handleRangedEnchantments(arrowEntity, shooter, offhandStack);
                 }
             }
+        }else if(event.getEntity() instanceof ServerPlayerEntity){
+            NetworkHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getEntity()), new PacketUpdateSouls(CapabilityHelper.getComboCapability(event.getEntity()).getSouls()));
         }
     }
 

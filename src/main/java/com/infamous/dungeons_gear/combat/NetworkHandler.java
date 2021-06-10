@@ -6,12 +6,12 @@ import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 
 public class NetworkHandler {
-    public static final SimpleChannel INSTANCE = NetworkRegistry.ChannelBuilder.named(
-            new ResourceLocation(DungeonsGear.MODID, "network"))
-            .clientAcceptedVersions("1"::equals)
-            .serverAcceptedVersions("1"::equals)
-            .networkProtocolVersion(() -> "1")
-            .simpleChannel();
+    private static final String PROTOCOL_VERSION = "1";
+    public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
+            new ResourceLocation(DungeonsGear.MODID, "network"),
+            () -> PROTOCOL_VERSION,
+            PROTOCOL_VERSION::equals,
+            PROTOCOL_VERSION::equals);
     protected static int packetID = 0;
 
     public NetworkHandler() {

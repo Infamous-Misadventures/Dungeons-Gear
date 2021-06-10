@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = DungeonsGear.MODID)
 public class SoulRender {
     private static final ResourceLocation hud = new ResourceLocation(DungeonsGear.MODID, "textures/misc/soul.png");
-    private static float increment=0;
+    private static float increment = 0;
 
     @SubscribeEvent
     public static void displaySoul(RenderGameOverlayEvent.Post event) {
@@ -31,7 +31,7 @@ public class SoulRender {
             PlayerEntity p = (PlayerEntity) mc.getRenderViewEntity();
             float souls = CapabilityHelper.getComboCapability(p).getSouls();
             float maxSouls = 300;
-            int halfOfScreen = sr.getScaledWidth() / 2;
+            int width = sr.getScaledWidth();
 
             GlStateManager.enableRescaleNormal();
             RenderSystem.enableBlend();
@@ -39,21 +39,21 @@ public class SoulRender {
             RenderHelper.enableStandardItemLighting();
 
             mc.getProfiler().startSection("soulBar");
-            boolean close=true;
-            if(increment<souls){
+            boolean close = true;
+            if (increment < souls) {
                 increment++;
-                close=false;
+                close = false;
             }
-            if (increment>souls){
+            if (increment > souls) {
                 increment--;
-                close=!close;
+                close = !close;
             }
-            if(close)increment=souls;
+            if (close) increment = souls;
             if (increment > 0) {
-                int k = (int) (increment / maxSouls * 183.0F);
-                int l = sr.getScaledHeight() - 38;
-                AbstractGui.blit(event.getMatrixStack(), halfOfScreen - 91, l, 0, 0, 182, 5, 182, 10);
-                AbstractGui.blit(event.getMatrixStack(), halfOfScreen - 91, l, 0, 5, k, 5, 182, 10);
+                int k = (int) (increment / maxSouls * 122.0F);
+                int l = sr.getScaledHeight() - 7;
+                AbstractGui.blit(event.getMatrixStack(), width - 123, l, 0, 0, 122, 5, 121, 10);
+                AbstractGui.blit(event.getMatrixStack(), width - 123, l, 0, 5, k, 5, 121, 10);
             }
 
             mc.getProfiler().endSection();
