@@ -1,0 +1,6 @@
+{
+    "parent": "dungeons_gear:item/nightmares_bite",
+    "textures": {
+        "layer0": "dungeons_gear:item/nightmares_bites"
+    }
+}

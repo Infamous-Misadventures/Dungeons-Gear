@@ -1,0 +1,6 @@
+{
+    "parent": "dungeons_gear:item/fang_of_frost",
+    "textures": {
+        "layer0": "dungeons_gear:item/fangs_of_frost"
+    }
+}

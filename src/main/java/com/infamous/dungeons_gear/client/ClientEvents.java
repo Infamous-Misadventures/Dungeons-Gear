@@ -1,5 +1,6 @@
-package com.infamous.dungeons_gear;
+package com.infamous.dungeons_gear.client;
 
+import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.artifacts.beacon.AbstractBeaconItem;
 import com.infamous.dungeons_gear.artifacts.beacon.BeaconBeamRenderer;
 import com.infamous.dungeons_gear.interfaces.IArmor;

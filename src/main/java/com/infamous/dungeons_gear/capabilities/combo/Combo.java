@@ -67,6 +67,11 @@ public class Combo implements ICombo {
     public void setSouls(float soul) {
         this.soul = soul;
     }
+
+    @Override
+    public void addSouls(float amount, float until) {
+        soul=MathHelper.clamp(soul+amount, 0, until);
+    }
 /*
     @Override
     public void setGhostForm(boolean ghostForm) {

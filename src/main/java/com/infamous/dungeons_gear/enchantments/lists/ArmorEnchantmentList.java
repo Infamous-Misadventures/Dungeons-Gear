@@ -27,4 +27,5 @@ public class ArmorEnchantmentList {
     public static Enchantment SPEED_SYNERGY;
     public static Enchantment SURPRISE_GIFT;
     public static Enchantment SWIFTFOOTED;
+    public static Enchantment BAG_OF_SOULS;
 }

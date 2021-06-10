@@ -83,6 +83,7 @@ public class EnchantmentInit {
                     SWIFTFOOTED = new SwiftfootedEnchantment().setRegistryName(location("swiftfooted")),
                     TUMBLEBEE = new TumblebeeEnchantment().setRegistryName(location("tumblebee")),
                     RECYCLER = new RecyclerEnchantment().setRegistryName(location("recycler"))
+                    //BAG_OF_SOULS = new BagOfSoulsEnchantment().setRegistryName(location("bag_of_souls"))
                     );
 
             putItemsInMap();

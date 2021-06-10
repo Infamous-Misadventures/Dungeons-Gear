@@ -20,6 +20,7 @@ public class NetworkHandler {
     public static void init() {
         INSTANCE.registerMessage(getPacketID(), PacketOffhandAttack.class, PacketOffhandAttack::encode, PacketOffhandAttack::decode, PacketOffhandAttack.OffhandHandler::handle);
         INSTANCE.registerMessage(getPacketID(), PacketBreakItem.class, PacketBreakItem::encode, PacketBreakItem::decode, PacketBreakItem.BreakItemHandler::handle);
+        INSTANCE.registerMessage(getPacketID(), PacketUpdateSouls.class, PacketUpdateSouls::encode, PacketUpdateSouls::decode, PacketUpdateSouls.UpdateSoulsHandler::handle);
     }
 
     public static int getPacketID() {
