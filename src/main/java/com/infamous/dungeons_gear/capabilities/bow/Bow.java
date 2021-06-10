@@ -1,15 +1,13 @@
-package com.infamous.dungeons_gear.capabilities.weapon;
+package com.infamous.dungeons_gear.capabilities.bow;
 
-import com.infamous.dungeons_gear.capabilities.combo.ICombo;
-
-public class Weapon implements IWeapon {
+public class Bow implements IBow {
 
     private int fuseShotCounter;
     private float bowChargeTime;
     private int crossbowChargeTime;
     private long lastFiredTime;
 
-    public Weapon(){
+    public Bow(){
         this.fuseShotCounter = 0;
         this.bowChargeTime = 0;
         this.crossbowChargeTime = 0;

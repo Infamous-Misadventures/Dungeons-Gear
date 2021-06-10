@@ -2,9 +2,11 @@ package com.infamous.dungeons_gear.capabilities;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.capabilities.combo.ComboProvider;
+import com.infamous.dungeons_gear.capabilities.offhand.OffhandProvider;
 import com.infamous.dungeons_gear.capabilities.summoning.SummonableProvider;
 import com.infamous.dungeons_gear.capabilities.summoning.SummonerProvider;
-import com.infamous.dungeons_gear.capabilities.weapon.WeaponProvider;
+import com.infamous.dungeons_gear.capabilities.bow.BowProvider;
+import com.infamous.dungeons_gear.interfaces.IDualWieldWeapon;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.passive.horse.LlamaEntity;
@@ -32,7 +34,9 @@ public class CapabilityHandler {
     @SubscribeEvent
     public static void onAttachItemCapabilities(AttachCapabilitiesEvent<ItemStack> event) {
         if (event.getObject().getItem() instanceof ShootableItem)
-            event.addCapability(new ResourceLocation(DungeonsGear.MODID, "weapon"), new WeaponProvider());
+            event.addCapability(new ResourceLocation(DungeonsGear.MODID, "bow"), new BowProvider());
+        if (event.getObject().getItem() instanceof IDualWieldWeapon)
+            event.addCapability(new ResourceLocation(DungeonsGear.MODID, "dualwield"), new OffhandProvider());
     }
 
     private static boolean isSummonableEntity(Entity entity) {

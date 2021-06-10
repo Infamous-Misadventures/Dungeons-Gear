@@ -30,7 +30,7 @@ public class TormentQuiver extends ArtifactItem implements ISoulGatherer {
         PlayerEntity playerIn = c.getPlayer();
         ItemStack itemstack = c.getItem();
 
-        if(playerIn.experienceTotal >= this.getActivationCost(itemstack) || playerIn.isCreative()){
+        if(playerIn.isCreative() || CapabilityHelper.getComboCapability(playerIn).consumeSouls(getActivationCost(itemstack))){
 
             ICombo comboCap = CapabilityHelper.getComboCapability(playerIn);
             if(comboCap == null) return new ActionResult<>(ActionResultType.FAIL, itemstack);

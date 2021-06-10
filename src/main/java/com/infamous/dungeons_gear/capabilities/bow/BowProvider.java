@@ -1,6 +1,5 @@
-package com.infamous.dungeons_gear.capabilities.weapon;
+package com.infamous.dungeons_gear.capabilities.bow;
 
-import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
@@ -11,12 +10,12 @@ import net.minecraftforge.common.util.LazyOptional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class WeaponProvider implements ICapabilitySerializable<INBT> {
+public class BowProvider implements ICapabilitySerializable<INBT> {
 
-    @CapabilityInject(IWeapon.class)
-    public static final Capability<IWeapon> WEAPON_CAPABILITY = null;
+    @CapabilityInject(IBow.class)
+    public static final Capability<IBow> WEAPON_CAPABILITY = null;
 
-    private LazyOptional<IWeapon> instance = LazyOptional.of(WEAPON_CAPABILITY::getDefaultInstance);
+    private LazyOptional<IBow> instance = LazyOptional.of(WEAPON_CAPABILITY::getDefaultInstance);
 
     @Nonnull
     @Override

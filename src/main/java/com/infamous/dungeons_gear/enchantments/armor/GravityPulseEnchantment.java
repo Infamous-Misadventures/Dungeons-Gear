@@ -44,7 +44,7 @@ public class GravityPulseEnchantment extends PulseEnchantment {
         PlayerEntity player = event.player;
         if(player == null) return;
         if(event.phase == TickEvent.Phase.START) return;
-        if(player.isAlive()){
+        if(player.isAlive()&&player.isServerWorld()){
             ICombo comboCap = CapabilityHelper.getComboCapability(player);
             if(comboCap == null) return;
             int gravityPulseTimer = comboCap.getGravityPulseTimer();

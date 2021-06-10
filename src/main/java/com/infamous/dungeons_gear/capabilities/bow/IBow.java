@@ -1,7 +1,7 @@
-package com.infamous.dungeons_gear.capabilities.weapon;
+package com.infamous.dungeons_gear.capabilities.bow;
 
 
-public interface IWeapon {
+public interface IBow {
 
     void setFuseShotCounter(int comboTimer);
     int getFuseShotCounter();

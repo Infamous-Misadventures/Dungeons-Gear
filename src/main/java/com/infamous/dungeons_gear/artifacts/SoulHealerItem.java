@@ -4,6 +4,7 @@ import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
+import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,39 +24,29 @@ import java.util.List;
 public class SoulHealerItem extends ArtifactItem implements ISoulGatherer {
     public SoulHealerItem(Properties properties) {
         super(properties);
-        procOnItemUse=true;
+        procOnItemUse = true;
     }
 
     public ActionResult<ItemStack> procArtifact(ItemUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
         ItemStack itemstack = c.getItem();
 
-        if(playerIn.experienceTotal >= this.getActivationCost(itemstack) || playerIn.isCreative()){
-            if((playerIn.getHealth() < playerIn.getMaxHealth())){
+        if (playerIn.isCreative() || CapabilityHelper.getComboCapability(playerIn).consumeSouls(getActivationCost(itemstack))) {
+            if ((playerIn.getHealth() < playerIn.getMaxHealth())) {
                 float currentHealth = playerIn.getHealth();
                 float maxHealth = playerIn.getMaxHealth();
                 float lostHealth = maxHealth - currentHealth;
-                float healedAmount;
-                if(lostHealth < (maxHealth * 0.01F * this.getActivationCost(itemstack))){
-                    playerIn.setHealth(currentHealth + lostHealth);
-                    healedAmount = lostHealth;
-                }
-                else{
-                    playerIn.setHealth(currentHealth + (maxHealth * 0.01F * this.getActivationCost(itemstack)));
-                    healedAmount = (maxHealth * 0.01F * this.getActivationCost(itemstack));
-                }
-                if(!playerIn.isCreative()){
-                    playerIn.giveExperiencePoints((int)(-healedAmount));
+                float toHeal = Math.min(lostHealth, Math.min(maxHealth / 5, CapabilityHelper.getComboCapability(playerIn).getSouls() * 0.01f));
+                if (playerIn.isCreative() || CapabilityHelper.getComboCapability(playerIn).consumeSouls(toHeal * 100)) {
+                    playerIn.heal(toHeal);
                     itemstack.damageItem(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemstack)));
                 }
-
                 ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem());
-            }
-            else{
+            } else {
                 float healedAmount = AreaOfEffectHelper.healMostInjuredAlly(playerIn, 12);
-                if(healedAmount > 0){
+                if (healedAmount > 0) {
                     itemstack.damageItem(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemstack)));
-                    playerIn.giveExperiencePoints((int)(-healedAmount));
+                    playerIn.giveExperiencePoints((int) (-healedAmount));
 
                     ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem());
                 }
@@ -66,8 +57,7 @@ public class SoulHealerItem extends ArtifactItem implements ISoulGatherer {
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
-    {
+    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }

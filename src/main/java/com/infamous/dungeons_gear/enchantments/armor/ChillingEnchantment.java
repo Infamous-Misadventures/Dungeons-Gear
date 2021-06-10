@@ -45,7 +45,7 @@ public class ChillingEnchantment extends PulseEnchantment {
         PlayerEntity player = event.player;
         if(player == null) return;
         if(event.phase == TickEvent.Phase.START) return;
-        if(player.isAlive()){
+        if(player.isAlive()&&player.isServerWorld()){
             ICombo comboCap = CapabilityHelper.getComboCapability(player);
             if(comboCap == null) return;
             int freezeNearbyTimer = comboCap.getFreezeNearbyTimer();

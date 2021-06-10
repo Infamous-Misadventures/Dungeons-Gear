@@ -31,7 +31,7 @@ import static com.infamous.dungeons_gear.utilties.AbilityHelper.isPetOfAttacker;
 
 public class AreaOfEffectHelper {
 
-    public static final double PULL_IN_SPEED_FACTOR = 0.5;
+    public static final double PULL_IN_SPEED_FACTOR = 0.15;
 
     public static void pullInNearbyEntities(LivingEntity attacker, LivingEntity target, float distance, BasicParticleType particleType) {
         World world = target.getEntityWorld();
@@ -121,27 +121,18 @@ public class AreaOfEffectHelper {
         World world = healer.getEntityWorld();
         List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, healer.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canHealEntity(healer, nearbyEntity));
         if (!nearbyEntities.isEmpty()) {
-            nearbyEntities.sort((o1, o2) -> {
-                float o1LostHealth = o1.getMaxHealth() - o1.getHealth();
-                float o2LostHealth = o2.getMaxHealth() - o2.getHealth();
-                return Float.compare(o1LostHealth, o2LostHealth);
-            });
-            LivingEntity mostInjuredAlly = nearbyEntities.get(nearbyEntities.size() - 1);
-            float currentHealth = mostInjuredAlly.getHealth();
-            float maxHealth = mostInjuredAlly.getMaxHealth();
-            float lostHealth = maxHealth - currentHealth;
-            float healedAmount;
-            if (lostHealth < (maxHealth * 0.20F)) {
-                mostInjuredAlly.setHealth(currentHealth + lostHealth);
-                PROXY.spawnParticles(mostInjuredAlly, ParticleTypes.HEART);
-                healedAmount = lostHealth;
-                return healedAmount;
-            } else {
-                mostInjuredAlly.setHealth(currentHealth + (maxHealth * 0.20F));
-                PROXY.spawnParticles(mostInjuredAlly, ParticleTypes.HEART);
-                healedAmount = (maxHealth * 0.20F);
-                return healedAmount;
+            float lostHealth = 0;
+            LivingEntity mostInjuredAlly = null;
+            for (LivingEntity injure : nearbyEntities) {
+                if (mostInjuredAlly == null || injure.getMaxHealth() - injure.getHealth() > lostHealth) {
+                    mostInjuredAlly = injure;
+                    lostHealth = injure.getMaxHealth() - injure.getHealth();
+                }
             }
+            float heal = Math.min(lostHealth, Math.min(mostInjuredAlly.getMaxHealth() / 5, CapabilityHelper.getComboCapability(healer).getSouls() * 0.01f));
+            mostInjuredAlly.heal(heal);
+            PROXY.spawnParticles(mostInjuredAlly, ParticleTypes.HEART);
+            return heal;
         } else return 0;
     }
 
@@ -157,8 +148,8 @@ public class AreaOfEffectHelper {
     public static void causeShockwave(LivingEntity attacker, LivingEntity target, float damageAmount, float distance) {
         World world = target.getEntityWorld();
         DamageSource shockwave = DamageSource.causeExplosionDamage(attacker);
-        Vector3d vec1=target.getPositionVec();
-        Vector3d vec2=attacker.getPositionVec();
+        Vector3d vec1 = target.getPositionVec();
+        Vector3d vec2 = attacker.getPositionVec();
         List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.isFacingEntity(attacker, nearbyEntity, vec1.subtract(vec2), 60) && AbilityHelper.canApplyToEnemy(attacker, target, nearbyEntity));
         if (nearbyEntities.isEmpty()) return;
         for (LivingEntity nearbyEntity : nearbyEntities) {

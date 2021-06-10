@@ -1,27 +1,20 @@
 package com.infamous.dungeons_gear.ranged.crossbows;
 
-import com.google.common.collect.Lists;
-import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_gear.capabilities.weapon.IWeapon;
+import com.infamous.dungeons_gear.capabilities.bow.IBow;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.interfaces.IRangedWeapon;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.RangedAttackHelper;
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.ICrossbowUser;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.entity.projectile.FireworkRocketEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.*;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.stats.Stats;
 import net.minecraft.util.*;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector3d;
@@ -148,7 +141,7 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
         int accelerateLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.ACCELERATE, stack);
         if (this.hasAccelerateBuiltIn(stack)) accelerateLevel++;
 
-        IWeapon weaponCap = CapabilityHelper.getWeaponCapability(stack);
+        IBow weaponCap = CapabilityHelper.getWeaponCapability(stack);
         if (weaponCap == null) return Math.max(this.getDefaultChargeTime() - 5 * quickChargeLevel, 0);
         int crossbowChargeTime = weaponCap.getCrossbowChargeTime();
         long lastFiredTime = weaponCap.getLastFiredTime();
@@ -277,12 +270,16 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
                 projectileentity.shoot((double) vector3f.getX(), (double) vector3f.getY(), (double) vector3f.getZ(), velocity, inaccuracy);
             }
 
-            crossbow.damageItem(flag ? 3 : 1, shooter, (p_220017_1_) -> {
-                p_220017_1_.sendBreakAnimation(handIn);
-            });
+            damageItem(flag?3:1, crossbow, shooter, handIn);
             worldIn.addEntity(projectileentity);
             worldIn.playSound((PlayerEntity) null, shooter.getPosX(), shooter.getPosY(), shooter.getPosZ(), SoundEvents.ITEM_CROSSBOW_SHOOT, SoundCategory.PLAYERS, 1.0F, soundPitch);
         }
+    }
+
+    protected void damageItem(int amount, ItemStack crossbow, LivingEntity shooter, Hand handIn){
+        crossbow.damageItem(amount, shooter, (p_220017_1_) -> {
+            p_220017_1_.sendBreakAnimation(handIn);
+        });
     }
 
     protected static boolean hasAmmo(LivingEntity entityIn, ItemStack stack) {

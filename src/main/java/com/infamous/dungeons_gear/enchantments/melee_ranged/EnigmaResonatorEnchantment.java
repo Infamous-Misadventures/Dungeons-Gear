@@ -7,6 +7,7 @@ import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
+import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.DamageEnchantment;
 import net.minecraft.enchantment.Enchantment;
@@ -41,7 +42,7 @@ public class EnigmaResonatorEnchantment extends DamageBoostEnchantment {
         ItemStack mainhand = attacker.getHeldItemMainhand();
         boolean uniqueWeaponFlag = hasEnigmaResonatorBuiltIn(mainhand);
 
-        int numSouls = Math.min(attacker.experienceTotal, 50);
+        int numSouls = (int) CapabilityHelper.getComboCapability(attacker).getSouls();
         if (!event.isVanillaCritical()) {
             boolean success = false;
             if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.ENIGMA_RESONATOR)) {

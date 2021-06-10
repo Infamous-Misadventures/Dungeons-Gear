@@ -3,6 +3,10 @@ package com.infamous.dungeons_gear.capabilities.combo;
 
 public interface ICombo {
 
+    void setSouls(float soul);
+    boolean consumeSouls(float amount);
+    float getSouls();
+
     void setComboTimer(int comboTimer);
     int getComboTimer();
 

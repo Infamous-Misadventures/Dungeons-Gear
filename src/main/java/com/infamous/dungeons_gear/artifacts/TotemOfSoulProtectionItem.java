@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.artifacts;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
+import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -48,10 +49,7 @@ public class TotemOfSoulProtectionItem extends ArtifactItem implements ISoulGath
                 blockPos = itemUseContextPos.offset(itemUseContextFace);
             }
             if(itemUseContextPlayer != null) {
-                if(itemUseContextPlayer.experienceTotal >= this.getActivationCost(itemUseContextItem) || itemUseContextPlayer.isCreative()){
-                    if(!itemUseContextPlayer.isCreative()){
-                        itemUseContextPlayer.giveExperiencePoints(-1 * this.getActivationCost(itemUseContextItem));
-                    }
+                if(itemUseContextPlayer.isCreative() || CapabilityHelper.getComboCapability(itemUseContextPlayer).consumeSouls(getActivationCost(itemUseContextItem))){
                     spawnSoulProtectionCloudAtPos(itemUseContextPlayer, blockPos, 100);
                     itemUseContextItem.damageItem(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemUseContextItem)));
 

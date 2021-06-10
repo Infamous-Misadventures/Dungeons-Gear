@@ -3,18 +3,20 @@ package com.infamous.dungeons_gear.melee;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import com.infamous.dungeons_gear.capabilities.offhand.OffhandProvider;
 import com.infamous.dungeons_gear.combat.CombatEventHandler;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
 import com.infamous.dungeons_gear.init.AttributeRegistry;
 import com.infamous.dungeons_gear.init.ItemRegistry;
 import com.infamous.dungeons_gear.interfaces.IComboWeapon;
-import com.infamous.dungeons_gear.interfaces.IOffhandAttack;
+import com.infamous.dungeons_gear.interfaces.IDualWieldWeapon;
 import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -26,15 +28,13 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeMod;
 
 import java.util.List;
 import java.util.UUID;
 
-public class SickleItem extends SwordItem implements IOffhandAttack, IMeleeWeapon, IComboWeapon {
+public class SickleItem extends SwordItem implements IDualWieldWeapon, IMeleeWeapon, IComboWeapon {
     private static final UUID ATTACK_REACH_MODIFIER = UUID.fromString("CB3F55D3-645C-4F38-A497-9C13A34DB5CF");
     private final boolean unique;
     private final float attackDamage, attackSpeed;
@@ -78,12 +78,20 @@ public class SickleItem extends SwordItem implements IOffhandAttack, IMeleeWeapo
         }
     }
 
-    public boolean hitEntity(ItemStack p_77644_1_, LivingEntity p_77644_2_, LivingEntity p_77644_3_) {
-        p_77644_2_.hurtResistantTime = 0;
-        p_77644_1_.damageItem(1, p_77644_3_, (p_220045_0_) -> {
-            p_220045_0_.sendBreakAnimation(EquipmentSlotType.MAINHAND);
-        });
-        return true;
+    @Override
+    public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        target.hurtResistantTime = 0;
+        if (stack.getCapability(OffhandProvider.OFFHAND_CAPABILITY).isPresent()) {
+            if (!stack.getCapability(OffhandProvider.OFFHAND_CAPABILITY).resolve().get().getLinkedItemStack().isEmpty())
+                stack = stack.getCapability(OffhandProvider.OFFHAND_CAPABILITY).resolve().get().getLinkedItemStack();
+        }
+        return super.hitEntity(stack, target, attacker);
+    }
+
+    @Override
+    public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+        if (entityIn instanceof LivingEntity && !worldIn.isRemote)
+            update((LivingEntity) entityIn, stack, itemSlot);
     }
 
     public boolean onBlockDestroyed(ItemStack p_179218_1_, World p_179218_2_, BlockState p_179218_3_, BlockPos p_179218_4_, LivingEntity p_179218_5_) {

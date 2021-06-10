@@ -1,7 +1,10 @@
 package com.infamous.dungeons_gear.capabilities.combo;
 
+import net.minecraft.util.math.MathHelper;
+
 public class Combo implements ICombo {
 
+    private float soul;
     private int comboTimer;
     //private boolean ghostForm;
     private boolean shadowForm;
@@ -21,6 +24,7 @@ public class Combo implements ICombo {
     private float cachedCooldown;//no need to be saved, it's stored and used in the span of a tick
 
     public Combo() {
+        this.soul = 0;
         this.comboTimer = 0;
         this.comboCount = 0;
         //this.ghostForm = false;
@@ -44,7 +48,24 @@ public class Combo implements ICombo {
 
     @Override
     public void setComboTimer(int comboTimer) {
-        this.comboTimer = comboTimer;
+        this.comboTimer = MathHelper.clamp(comboTimer, 0, 300);
+    }
+
+    @Override
+    public boolean consumeSouls(float amount) {
+        if (soul < amount) return false;
+        soul -= amount;
+        return true;
+    }
+
+    @Override
+    public float getSouls() {
+        return soul;
+    }
+
+    @Override
+    public void setSouls(float soul) {
+        this.soul = soul;
     }
 /*
     @Override

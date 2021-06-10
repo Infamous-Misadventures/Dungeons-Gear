@@ -1,8 +1,11 @@
 package com.infamous.dungeons_gear.ranged.crossbows;
 
+import com.infamous.dungeons_gear.capabilities.offhand.OffhandProvider;
 import com.infamous.dungeons_gear.init.ItemRegistry;
+import com.infamous.dungeons_gear.interfaces.IDualWieldWeapon;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
@@ -12,7 +15,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class DualCrossbowItem extends AbstractDungeonsCrossbowItem {
+public class DualCrossbowItem extends AbstractDungeonsCrossbowItem implements IDualWieldWeapon {
 
     public DualCrossbowItem(Properties builder, int defaultChargeTimeIn, boolean isUniqueIn) {
         super(builder, defaultChargeTimeIn, isUniqueIn);
@@ -66,5 +69,20 @@ public class DualCrossbowItem extends AbstractDungeonsCrossbowItem {
     @Override
     void fireProjectile(World worldIn, LivingEntity shooter, Hand handIn, ItemStack crossbow, ItemStack projectile, float soundPitch, boolean isCreativeMode, float velocity, float inaccuracy, float projectileAngle) {
         super.fireProjectile(worldIn, shooter, handIn, crossbow, projectile, soundPitch, isCreativeMode, velocity, inaccuracy, projectileAngle);
+    }
+
+    @Override
+    protected void damageItem(int amount, ItemStack stack, LivingEntity shooter, Hand handIn){
+        if (stack.getCapability(OffhandProvider.OFFHAND_CAPABILITY).isPresent()) {
+            if (!stack.getCapability(OffhandProvider.OFFHAND_CAPABILITY).resolve().get().getLinkedItemStack().isEmpty())
+                stack = stack.getCapability(OffhandProvider.OFFHAND_CAPABILITY).resolve().get().getLinkedItemStack();
+        }
+        super.damageItem(amount, stack, shooter, handIn);
+    }
+
+    @Override
+    public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+        if (entityIn instanceof LivingEntity && !worldIn.isRemote)
+            update((LivingEntity) entityIn, stack, itemSlot);
     }
 }
