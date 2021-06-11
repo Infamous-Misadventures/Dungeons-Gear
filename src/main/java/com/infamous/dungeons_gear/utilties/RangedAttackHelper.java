@@ -2,9 +2,11 @@ package com.infamous.dungeons_gear.utilties;
 
 import com.infamous.dungeons_gear.capabilities.bow.IBow;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
-import com.infamous.dungeons_gear.init.ItemRegistry;
-import com.infamous.dungeons_gear.ranged.bows.AbstractDungeonsBowItem;
-import com.infamous.dungeons_gear.ranged.crossbows.AbstractDungeonsCrossbowItem;
+import com.infamous.dungeons_gear.enchantments.ranged.WildRageEnchantment;
+import com.infamous.dungeons_gear.items.ItemRegistry;
+import com.infamous.dungeons_gear.items.interfaces.IRangedWeapon;
+import com.infamous.dungeons_gear.items.ranged.bows.AbstractDungeonsBowItem;
+import com.infamous.dungeons_gear.items.ranged.crossbows.AbstractDungeonsCrossbowItem;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
@@ -77,7 +79,9 @@ public class RangedAttackHelper {
         if(stack.getItem() == ItemRegistry.RED_SNAKE.get()) arrowEntity.addTag("RedSnake");
         if(stack.getItem() == ItemRegistry.SABREWING.get()) arrowEntity.addTag("Sabrewing");
         if(stack.getItem() == ItemRegistry.THE_GREEN_MENACE.get()) arrowEntity.addTag("TheGreenMenace");
-        if(stack.getItem() == ItemRegistry.THE_PINK_SCOUNDREL.get()) arrowEntity.addTag("ThePinkScoundrel");
+        if(stack.getItem() instanceof IRangedWeapon && ((IRangedWeapon<?>) stack.getItem()).hasWildRageBuiltIn(stack)) {
+            arrowEntity.addTag(WildRageEnchantment.INTRINSIC_WILD_RAGE);
+        }
         if(stack.getItem() == ItemRegistry.TWIN_BOW.get()) arrowEntity.addTag("TwinBow");
         if(stack.getItem() == ItemRegistry.HUNTING_BOW.get()) arrowEntity.addTag("HuntingBow");
         if(stack.getItem() == ItemRegistry.LONGBOW.get()) arrowEntity.addTag("Longbow");
@@ -135,10 +139,10 @@ public class RangedAttackHelper {
         return chargeTime;
     }
 
-    public static float getvVanillaOrModdedCrossbowArrowVelocity(ItemStack stack) {
+    public static float getVanillaOrModdedCrossbowArrowVelocity(ItemStack stack) {
         float arrowVelocity;
         if(stack.getItem() instanceof AbstractDungeonsCrossbowItem){
-            arrowVelocity = ((AbstractDungeonsCrossbowItem)stack.getItem()).func_220013_l(stack);
+            arrowVelocity = AbstractDungeonsCrossbowItem.getArrowVelocity(stack);
         }
         else{
             arrowVelocity = hasChargedProjectile(stack, Items.FIREWORK_ROCKET) ? 1.6F : 3.15F;

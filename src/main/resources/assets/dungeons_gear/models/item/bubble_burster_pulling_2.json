@@ -1,0 +1,6 @@
+{
+    "parent": "dungeons_gear:item/bubble_burster",
+    "textures": {
+        "layer0": "dungeons_gear:item/bubble_burster_pulling_2"
+    }
+}

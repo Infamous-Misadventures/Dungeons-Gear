@@ -1,7 +1,6 @@
 package com.infamous.dungeons_gear.items;
 
-import com.infamous.dungeons_gear.init.ItemRegistry;
-import com.infamous.dungeons_gear.ranged.crossbows.*;
+import com.infamous.dungeons_gear.items.ranged.crossbows.*;
 import com.infamous.dungeons_gear.utilties.RangedAttackHelper;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.util.Hand;
@@ -598,6 +597,52 @@ public class CrossbowItemModelsProperties {
 		ItemModelsProperties.registerProperty(ItemRegistry.PRIDE_OF_THE_PIGLINS.get(), new ResourceLocation("charged"),
 				(stack, clientWorld, livingEntity) -> {
 					return livingEntity != null && CogCrossbowItem.isCharged(stack) ? 1.0F : 0.0F;
+				});
+
+
+		// HARPOON CROSSBOW
+		ItemModelsProperties.registerProperty(ItemRegistry.HARPOON_CROSSBOW.get(), new ResourceLocation("pull"),
+				(stack, clientWorld, livingEntity) -> {
+					if (livingEntity == null) {
+						return 0.0F;
+					} else {
+						return HarpoonCrossbowItem.isCharged(stack) ? 0.0F
+								: (float) (stack.getUseDuration() - livingEntity.getItemInUseCount())
+								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(stack);
+					}
+				});
+		ItemModelsProperties.registerProperty(ItemRegistry.HARPOON_CROSSBOW.get(), new ResourceLocation("pulling"),
+				(stack, clientWorld, livingEntity) -> {
+					return livingEntity != null && livingEntity.isHandActive()
+							&& livingEntity.getActiveItemStack() == stack && !HarpoonCrossbowItem.isCharged(stack)
+							? 1.0F
+							: 0.0F;
+				});
+		ItemModelsProperties.registerProperty(ItemRegistry.HARPOON_CROSSBOW.get(), new ResourceLocation("charged"),
+				(stack, clientWorld, livingEntity) -> {
+					return livingEntity != null && HarpoonCrossbowItem.isCharged(stack) ? 1.0F : 0.0F;
+				});
+		// NAUTICAL CROSSBOW
+		ItemModelsProperties.registerProperty(ItemRegistry.NAUTICAL_CROSSBOW.get(), new ResourceLocation("pull"),
+				(stack, clientWorld, livingEntity) -> {
+					if (livingEntity == null) {
+						return 0.0F;
+					} else {
+						return HarpoonCrossbowItem.isCharged(stack) ? 0.0F
+								: (float) (stack.getUseDuration() - livingEntity.getItemInUseCount())
+								/ (float) RangedAttackHelper.getModdedCrossbowChargeTime(stack);
+					}
+				});
+		ItemModelsProperties.registerProperty(ItemRegistry.NAUTICAL_CROSSBOW.get(), new ResourceLocation("pulling"),
+				(stack, clientWorld, livingEntity) -> {
+					return livingEntity != null && livingEntity.isHandActive()
+							&& livingEntity.getActiveItemStack() == stack && !HarpoonCrossbowItem.isCharged(stack)
+							? 1.0F
+							: 0.0F;
+				});
+		ItemModelsProperties.registerProperty(ItemRegistry.NAUTICAL_CROSSBOW.get(), new ResourceLocation("charged"),
+				(stack, clientWorld, livingEntity) -> {
+					return livingEntity != null && HarpoonCrossbowItem.isCharged(stack) ? 1.0F : 0.0F;
 				});
 
 	}

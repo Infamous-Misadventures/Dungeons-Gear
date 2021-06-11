@@ -1,9 +1,8 @@
 package com.infamous.dungeons_gear.utilties;
 
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
-import com.infamous.dungeons_gear.init.ItemRegistry;
-import com.infamous.dungeons_gear.interfaces.IRangedWeapon;
-import com.infamous.dungeons_gear.ranged.crossbows.AbstractDungeonsCrossbowItem;
+import com.infamous.dungeons_gear.items.interfaces.IRangedWeapon;
+import com.infamous.dungeons_gear.items.ranged.crossbows.AbstractDungeonsCrossbowItem;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;

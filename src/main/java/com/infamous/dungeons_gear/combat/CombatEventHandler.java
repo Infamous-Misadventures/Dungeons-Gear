@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.combat;
 
 import com.infamous.dungeons_gear.init.AttributeRegistry;
-import com.infamous.dungeons_gear.interfaces.IDualWieldWeapon;
+import com.infamous.dungeons_gear.items.interfaces.IDualWieldWeapon;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;

@@ -1,8 +1,5 @@
 package com.infamous.dungeons_gear.items;
 
-import com.infamous.dungeons_gear.init.ItemRegistry;
-import com.infamous.dungeons_gear.ranged.crossbows.RapidCrossbowItem;
-import com.infamous.dungeons_gear.utilties.RangedAttackHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.util.ResourceLocation;

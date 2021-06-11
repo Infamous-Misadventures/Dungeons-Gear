@@ -1,7 +1,6 @@
 package com.infamous.dungeons_gear.items;
 
-import com.infamous.dungeons_gear.init.ItemRegistry;
-import com.infamous.dungeons_gear.ranged.bows.*;
+import com.infamous.dungeons_gear.items.ranged.bows.*;
 import com.infamous.dungeons_gear.utilties.RangedAttackHelper;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.util.ResourceLocation;
@@ -472,6 +471,25 @@ public class BowItemModelsProperties {
 							: 0.0F;
 				});
 
+		// SUGAR RUSH
+		ItemModelsProperties.registerProperty(ItemRegistry.SUGAR_RUSH.get(), new ResourceLocation("pull"),
+				(stack, clientWorld, livingEntity) -> {
+					if (livingEntity == null) {
+						return 0.0F;
+					} else {
+						return !(livingEntity.getActiveItemStack().getItem() instanceof TrickbowItem) ? 0.0F
+								: (float) (stack.getUseDuration() - livingEntity.getItemInUseCount())
+								/ RangedAttackHelper.getModdedBowChargeTime(livingEntity.getActiveItemStack());
+					}
+				});
+		ItemModelsProperties.registerProperty(ItemRegistry.SUGAR_RUSH.get(), new ResourceLocation("pulling"),
+				(stack, clientWorld, livingEntity) -> {
+					return livingEntity != null && livingEntity.isHandActive()
+							&& livingEntity.getActiveItemStack() == stack
+							? 1.0F
+							: 0.0F;
+				});
+
 		// SNOW BOW
 		ItemModelsProperties.registerProperty(ItemRegistry.SNOW_BOW.get(), new ResourceLocation("pull"),
 				(stack, clientWorld, livingEntity) -> {
@@ -598,6 +616,44 @@ public class BowItemModelsProperties {
 					}
 				});
 		ItemModelsProperties.registerProperty(ItemRegistry.WEEPING_VINE_BOW.get(), new ResourceLocation("pulling"),
+				(stack, clientWorld, livingEntity) -> {
+					return livingEntity != null && livingEntity.isHandActive()
+							&& livingEntity.getActiveItemStack() == stack
+							? 1.0F
+							: 0.0F;
+				});
+
+		// BUBBLE BOW
+		ItemModelsProperties.registerProperty(ItemRegistry.BUBBLE_BOW.get(), new ResourceLocation("pull"),
+				(stack, clientWorld, livingEntity) -> {
+					if (livingEntity == null) {
+						return 0.0F;
+					} else {
+						return !(livingEntity.getActiveItemStack().getItem() instanceof BubbleBowItem) ? 0.0F
+								: (float) (stack.getUseDuration() - livingEntity.getItemInUseCount())
+								/ RangedAttackHelper.getModdedBowChargeTime(livingEntity.getActiveItemStack());
+					}
+				});
+		ItemModelsProperties.registerProperty(ItemRegistry.BUBBLE_BOW.get(), new ResourceLocation("pulling"),
+				(stack, clientWorld, livingEntity) -> {
+					return livingEntity != null && livingEntity.isHandActive()
+							&& livingEntity.getActiveItemStack() == stack
+							? 1.0F
+							: 0.0F;
+				});
+
+		// BUBBLE BURSTER
+		ItemModelsProperties.registerProperty(ItemRegistry.BUBBLE_BURSTER.get(), new ResourceLocation("pull"),
+				(stack, clientWorld, livingEntity) -> {
+					if (livingEntity == null) {
+						return 0.0F;
+					} else {
+						return !(livingEntity.getActiveItemStack().getItem() instanceof BubbleBowItem) ? 0.0F
+								: (float) (stack.getUseDuration() - livingEntity.getItemInUseCount())
+								/ RangedAttackHelper.getModdedBowChargeTime(livingEntity.getActiveItemStack());
+					}
+				});
+		ItemModelsProperties.registerProperty(ItemRegistry.BUBBLE_BURSTER.get(), new ResourceLocation("pulling"),
 				(stack, clientWorld, livingEntity) -> {
 					return livingEntity != null && livingEntity.isHandActive()
 							&& livingEntity.getActiveItemStack() == stack

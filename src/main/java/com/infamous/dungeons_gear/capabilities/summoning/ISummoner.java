@@ -1,6 +1,5 @@
 package com.infamous.dungeons_gear.capabilities.summoning;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface ISummoner {

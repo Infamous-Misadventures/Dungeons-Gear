@@ -1,12 +1,12 @@
 package com.infamous.dungeons_gear.capabilities;
 
 import com.infamous.dungeons_gear.DungeonsGear;
+import com.infamous.dungeons_gear.capabilities.bow.BowProvider;
 import com.infamous.dungeons_gear.capabilities.combo.ComboProvider;
 import com.infamous.dungeons_gear.capabilities.offhand.OffhandProvider;
 import com.infamous.dungeons_gear.capabilities.summoning.SummonableProvider;
 import com.infamous.dungeons_gear.capabilities.summoning.SummonerProvider;
-import com.infamous.dungeons_gear.capabilities.bow.BowProvider;
-import com.infamous.dungeons_gear.interfaces.IDualWieldWeapon;
+import com.infamous.dungeons_gear.items.interfaces.IDualWieldWeapon;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.passive.horse.LlamaEntity;

@@ -62,7 +62,9 @@ public enum ToolMaterialList implements IItemTier {
      */
 
     METAL(0.0F, 6.0f, DungeonsGearConfig.METAL_MELEE_WEAPON_DURABILITY.get(), 2, 14, () -> Ingredient.fromTag(ItemTagWrappers.METAL_MELEE_WEAPON_REPAIR_ITEMS)),
-    DIAMOND(1.0F, 8.0f, 1561, 3, 10, () -> Ingredient.fromTag(Tags.Items.GEMS_DIAMOND));
+    STONE(0.0F, 4.0F, 131, 1, 5, () -> Ingredient.fromTag(Tags.Items.COBBLESTONE)),
+    GOLD(0.0F, 12.0F, 32, 0, 22, () -> Ingredient.fromTag(Tags.Items.INGOTS_GOLD)),
+    DIAMOND(0.0F, 8.0f, 1561, 3, 10, () -> Ingredient.fromTag(Tags.Items.GEMS_DIAMOND));
 
     private float attackDamage, efficiency;
     private int durability;

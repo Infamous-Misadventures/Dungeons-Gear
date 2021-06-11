@@ -1,9 +1,9 @@
 package com.infamous.dungeons_gear.client;
 
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_gear.artifacts.beacon.AbstractBeaconItem;
-import com.infamous.dungeons_gear.artifacts.beacon.BeaconBeamRenderer;
-import com.infamous.dungeons_gear.interfaces.IArmor;
+import com.infamous.dungeons_gear.items.artifacts.beacon.AbstractBeaconItem;
+import com.infamous.dungeons_gear.items.artifacts.beacon.BeaconBeamRenderer;
+import com.infamous.dungeons_gear.items.interfaces.IArmor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;

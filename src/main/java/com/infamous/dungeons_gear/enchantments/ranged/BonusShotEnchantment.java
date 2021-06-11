@@ -3,7 +3,7 @@ package com.infamous.dungeons_gear.enchantments.ranged;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
-import com.infamous.dungeons_gear.interfaces.IRangedWeapon;
+import com.infamous.dungeons_gear.items.interfaces.IRangedWeapon;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
 import com.infamous.dungeons_gear.utilties.RangedAttackHelper;
@@ -44,7 +44,7 @@ public class BonusShotEnchantment extends DungeonsEnchantment {
                     float damageMultiplier;
                     damageMultiplier = 0.1F + (bonusShotLevel-1 * 0.07F);
                     if(uniqueWeaponFlag) damageMultiplier += 0.1F;
-                    float arrowVelocity = RangedAttackHelper.getvVanillaOrModdedCrossbowArrowVelocity(stack);
+                    float arrowVelocity = RangedAttackHelper.getVanillaOrModdedCrossbowArrowVelocity(stack);
                     ProjectileEffectHelper.fireBonusShotTowardsOtherEntity(player, 10,
                             damageMultiplier, arrowVelocity);
                 }

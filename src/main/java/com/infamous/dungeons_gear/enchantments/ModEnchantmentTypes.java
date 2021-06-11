@@ -1,9 +1,9 @@
 package com.infamous.dungeons_gear.enchantments;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.interfaces.IArmor;
-import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
-import com.infamous.dungeons_gear.interfaces.IRangedWeapon;
+import com.infamous.dungeons_gear.items.interfaces.IArmor;
+import com.infamous.dungeons_gear.items.interfaces.IMeleeWeapon;
+import com.infamous.dungeons_gear.items.interfaces.IRangedWeapon;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.item.*;
 

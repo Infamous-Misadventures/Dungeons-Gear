@@ -1,10 +1,10 @@
 package com.infamous.dungeons_gear.utilties;
 
-import com.infamous.dungeons_gear.artifacts.ArtifactItem;
-import com.infamous.dungeons_gear.interfaces.IArmor;
-import com.infamous.dungeons_gear.interfaces.IMeleeWeapon;
-import com.infamous.dungeons_gear.interfaces.IRangedWeapon;
-import com.infamous.dungeons_gear.interfaces.ISoulGatherer;
+import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
+import com.infamous.dungeons_gear.items.interfaces.IArmor;
+import com.infamous.dungeons_gear.items.interfaces.IMeleeWeapon;
+import com.infamous.dungeons_gear.items.interfaces.IRangedWeapon;
+import com.infamous.dungeons_gear.items.interfaces.ISoulGatherer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -133,11 +133,14 @@ public class DescriptionHelper {
             if (meleeWeapon.hasCriticalHitBuiltIn(itemStack)) {
                 abilities.add("critical_hit");
             }
-            if (meleeWeapon.hasDynamoBuiltIn(itemStack)) {
-                abilities.add("dynamo");
+            if (meleeWeapon.dealsAbsorbedDamageDuringAttackCombo(itemStack)) {
+                abilities.add("deals_absorbed_damage_during_attack_combo");
             }
             if (meleeWeapon.canDualWield(itemStack)) {
                 abilities.add("dual_wield");
+            }
+            if (meleeWeapon.hasDynamoBuiltIn(itemStack)) {
+                abilities.add("dynamo");
             }
             if (meleeWeapon.hasEchoBuiltIn(itemStack)) {
                 abilities.add("echo");
@@ -186,6 +189,9 @@ public class DescriptionHelper {
             }
             if (meleeWeapon.hasRampagingBuiltIn(itemStack)) {
                 abilities.add("rampaging");
+            }
+            if (meleeWeapon.hasRapidSlashes(itemStack)) {
+                abilities.add("rapid_slashes");
             }
             if (meleeWeapon.hasReliableCombo(itemStack)) {
                 abilities.add("reliable_combo");
@@ -241,6 +247,9 @@ public class DescriptionHelper {
             if(rangedWeapon.hasBonusShotBuiltIn(itemStack)){
                 abilities.add("bonus_shot");
             }
+            if(rangedWeapon.hasBubbleDamage(itemStack)){
+                abilities.add("bubble_damage");
+            }
             if(rangedWeapon.hasChainReactionBuiltIn(itemStack)){
                 abilities.add("chain_reaction");
             }
@@ -264,6 +273,9 @@ public class DescriptionHelper {
             }
             if(rangedWeapon.shootsFasterArrows(itemStack)){
                 abilities.add("faster_arrows");
+            }
+            if(rangedWeapon.firesHarpoons(itemStack)){
+                abilities.add("fires_harpoons");
             }
             if(rangedWeapon.shootsFreezingArrows(itemStack)){
                 abilities.add("freezing_arrows");

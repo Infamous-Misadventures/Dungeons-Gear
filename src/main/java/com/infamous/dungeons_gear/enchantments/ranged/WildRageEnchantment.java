@@ -24,6 +24,8 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 @Mod.EventBusSubscriber(modid= MODID)
 public class WildRageEnchantment extends DungeonsEnchantment {
 
+    public static final String INTRINSIC_WILD_RAGE = "IntrinsicWildRage";
+
     public WildRageEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.ARMOR_RANGED, new EquipmentSlotType[]{
                 EquipmentSlotType.MAINHAND,
@@ -45,7 +47,7 @@ public class WildRageEnchantment extends DungeonsEnchantment {
         if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
         LivingEntity shooter = (LivingEntity)arrow.func_234616_v_();
         int wildRageLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.WILD_RAGE);
-        boolean uniqueWeaponFlag = arrow.getTags().contains("ThePinkScoundrel");
+        boolean uniqueWeaponFlag = arrow.getTags().contains(INTRINSIC_WILD_RAGE);
         MobEntity victim = (MobEntity) ((EntityRayTraceResult)rayTraceResult).getEntity();
         if(!(victim instanceof IMob) || !(victim.isNonBoss())) return;
         if(wildRageLevel > 0){

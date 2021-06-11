@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.mixin;
 
-import com.infamous.dungeons_gear.ranged.crossbows.AbstractDungeonsCrossbowItem;
+import com.infamous.dungeons_gear.items.ranged.crossbows.AbstractDungeonsCrossbowItem;
 import com.infamous.dungeons_gear.utilties.RangedAttackHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.CrossbowItem;
@@ -13,11 +13,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
-
-import java.util.List;
 
 @Mixin(CrossbowItem.class)
 public abstract class CrossbowItemMixin {

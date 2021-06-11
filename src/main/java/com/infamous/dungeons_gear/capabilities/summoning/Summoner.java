@@ -1,8 +1,6 @@
 package com.infamous.dungeons_gear.capabilities.summoning;
 
 import javax.annotation.Nullable;
-import java.util.Collections;
-import java.util.List;
 import java.util.UUID;
 
 public class Summoner implements ISummoner {
