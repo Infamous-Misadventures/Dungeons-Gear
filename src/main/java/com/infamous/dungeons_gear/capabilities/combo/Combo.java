@@ -8,8 +8,12 @@ public class Combo implements ICombo {
     private int comboTimer;
     //private boolean ghostForm;
     private boolean shadowForm;
+
     private int flamingArrowCount;
     private int tormentArrowCount;
+    private int thunderingArrowCount;
+    private int harpoonCount;
+
     private int burnNearbyTimer;
     private int freezeNearbyTimer;
     private int snowballNearbyTimer;
@@ -29,8 +33,12 @@ public class Combo implements ICombo {
         this.comboCount = 0;
         //this.ghostForm = false;
         this.shadowForm = false;
+
         this.flamingArrowCount = 0;
         this.tormentArrowCount = 0;
+        this.thunderingArrowCount = 0;
+        this.harpoonCount = 0;
+
         this.arrowsInCounter = 0;
         this.burnNearbyTimer = 10;
         this.burnNearbyTimer = 40;
@@ -61,6 +69,11 @@ public class Combo implements ICombo {
     @Override
     public float getSouls() {
         return soul;
+    }
+
+    @Override
+    public float getMaxSouls() {
+        return 300;
     }
 
     @Override
@@ -101,18 +114,38 @@ public class Combo implements ICombo {
     }
 
     @Override
-    public void setFlamingArrowsCount(int flamingArrowsTimer) {
-        this.flamingArrowCount = flamingArrowsTimer;
+    public void setFlamingArrowsCount(int flamingArrowsCount) {
+        this.flamingArrowCount = flamingArrowsCount;
     }
 
     @Override
-    public int getTormentArrowCount() {
+    public int getTormentArrowsCount() {
         return this.tormentArrowCount;
     }
 
     @Override
-    public void setTormentArrowCount(int tormentsArrowsTimer) {
-        this.tormentArrowCount = tormentsArrowsTimer;
+    public int getThunderingArrowsCount() {
+        return this.thunderingArrowCount;
+    }
+
+    @Override
+    public int getHarpoonCount() {
+        return this.harpoonCount;
+    }
+
+    @Override
+    public void setTormentArrowCount(int tormentsArrowsCount) {
+        this.tormentArrowCount = tormentsArrowsCount;
+    }
+
+    @Override
+    public void setThunderingArrowsCount(int thunderingArrowsCount) {
+        this.thunderingArrowCount = thunderingArrowsCount;
+    }
+
+    @Override
+    public void setHarpoonCount(int harpoonCount) {
+        this.harpoonCount = harpoonCount;
     }
 
     @Override

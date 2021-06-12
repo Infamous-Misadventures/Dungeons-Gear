@@ -1,6 +1,7 @@
 package com.infamous.dungeons_gear.client;
 
 import com.infamous.dungeons_gear.DungeonsGear;
+import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -28,9 +29,14 @@ public class SoulRender {
             //draw souls
             mc.getTextureManager().bindTexture(hud);
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+
             PlayerEntity p = (PlayerEntity) mc.getRenderViewEntity();
-            float souls = CapabilityHelper.getComboCapability(p).getSouls();
-            float maxSouls = 300;
+            if(p == null) return;
+            ICombo comboCapability = CapabilityHelper.getComboCapability(p);
+            if(comboCapability == null) return;
+
+            float souls = comboCapability.getSouls();
+            float maxSouls = comboCapability.getMaxSouls();
             int width = sr.getScaledWidth();
 
             GlStateManager.enableRescaleNormal();

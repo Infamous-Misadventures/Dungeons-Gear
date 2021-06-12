@@ -7,6 +7,7 @@ public interface ICombo {
     void addSouls(float amount, float until);
     boolean consumeSouls(float amount);
     float getSouls();
+    float getMaxSouls();
 
     void setComboTimer(int comboTimer);
     int getComboTimer();
@@ -17,11 +18,15 @@ public interface ICombo {
     void setShadowForm(boolean shadowForm);
     boolean getShadowForm();
 
-    void setFlamingArrowsCount(int flamingArrowsTimer);
-    void setTormentArrowCount(int tormentsArrowsTimer);
+    void setFlamingArrowsCount(int flamingArrowsCount);
+    void setTormentArrowCount(int tormentsArrowsCount);
+    void setThunderingArrowsCount(int thunderingArrowsCount);
+    void setHarpoonCount(int harpoonCount);
 
     int getFlamingArrowsCount();
-    int getTormentArrowCount();
+    int getTormentArrowsCount();
+    int getThunderingArrowsCount();
+    int getHarpoonCount();
 
     int getArrowsInCounter();
     void setArrowsInCounter(int arrowsInCounter);
@@ -58,4 +63,6 @@ public interface ICombo {
 
     float getCachedCooldown();
     void setCachedCooldown(float cooldown);
+
+
 }

@@ -12,6 +12,7 @@ import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.particles.BasicParticleType;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
@@ -273,6 +274,24 @@ public class AreaOfEffectHelper {
                 LivingEntity nearbyEntity = nearbyEntities.get(i);
                 //castLightningBolt(attacker, nearbyEntity);
                 electrify(attacker, nearbyEntity, damageAmount);
+            }
+        }
+    }
+
+    public static void electrifyNearbyEnemies(AbstractArrowEntity arrow, float distance, float damageAmount, int limit) {
+        World world = arrow.getEntityWorld();
+        Entity shooter = arrow.func_234616_v_();
+        if(shooter instanceof LivingEntity){
+            LivingEntity livingShooter = (LivingEntity) shooter;
+            List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, arrow.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(livingShooter, nearbyEntity));
+            if (nearbyEntities.isEmpty()) return;
+            if (limit > nearbyEntities.size()) limit = nearbyEntities.size();
+            for (int i = 0; i < limit; i++) {
+                if (nearbyEntities.size() >= i + 1) {
+                    LivingEntity nearbyEntity = nearbyEntities.get(i);
+                    //castLightningBolt(arrow, nearbyEntity);
+                    electrify(livingShooter, nearbyEntity, damageAmount);
+                }
             }
         }
     }

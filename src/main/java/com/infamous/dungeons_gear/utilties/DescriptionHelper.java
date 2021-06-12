@@ -67,9 +67,15 @@ public class DescriptionHelper {
 
     public static void addArtifactInfo(List<ITextComponent> list, ItemStack itemStack) {
         if (itemStack.getItem() instanceof ArtifactItem) {
+
+            list.add(new TranslationTextComponent(
+                    "ability.dungeons_gear." + itemStack.getItem().getRegistryName().getPath())
+                    .mergeStyle(TextFormatting.GREEN));
+
             ArtifactItem artifactItem = (ArtifactItem) itemStack.getItem();
             int durationInSeconds = artifactItem.getDurationInSeconds();
             int cooldownInSeconds = artifactItem.getCooldownInSeconds();
+
             if(durationInSeconds > 0) {
                 list.add(new TranslationTextComponent(
                         "artifact.dungeons_gear.duration", durationInSeconds)

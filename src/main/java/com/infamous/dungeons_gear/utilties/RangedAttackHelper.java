@@ -7,6 +7,7 @@ import com.infamous.dungeons_gear.items.ItemRegistry;
 import com.infamous.dungeons_gear.items.interfaces.IRangedWeapon;
 import com.infamous.dungeons_gear.items.ranged.bows.AbstractDungeonsBowItem;
 import com.infamous.dungeons_gear.items.ranged.crossbows.AbstractDungeonsCrossbowItem;
+import com.infamous.dungeons_gear.items.ranged.crossbows.HarpoonCrossbowItem;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
@@ -115,6 +116,10 @@ public class RangedAttackHelper {
         if(stack.getItem() == ItemRegistry.SCATTER_CROSSBOW.get()) arrowEntity.addTag("ScatterCrossbow");
         if(stack.getItem() == ItemRegistry.SOUL_CROSSBOW.get()) arrowEntity.addTag("SoulCrossbow");
         if(stack.getItem() == ItemRegistry.IMPLODING_CROSSBOW.get()) arrowEntity.addTag("ImplodingCrossbow");
+
+        if(stack.getItem() instanceof IRangedWeapon && ((IRangedWeapon<?>) stack.getItem()).firesHarpoons(stack)) {
+            arrowEntity.addTag(HarpoonCrossbowItem.HARPOON);
+        }
     }
 
     public static int getModdedCrossbowChargeTime(ItemStack stack){

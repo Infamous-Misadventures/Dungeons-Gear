@@ -424,7 +424,7 @@ public class ItemRegistry {
     public static final RegistryObject<Item> FLAMING_QUIVER = ITEMS.register("flaming_quiver",
             () -> new FlamingQuiverItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> TORMENT_QUIVER = ITEMS.register("torment_quiver",
-            () -> new TormentQuiver(ARTIFACT_PROPERTIES));
+            () -> new TormentQuiverItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> TOTEM_OF_REGENERATION = ITEMS.register("totem_of_regeneration",
             () -> new TotemOfRegenerationItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> TOTEM_OF_SHIELDING = ITEMS.register("totem_of_shielding",
@@ -439,6 +439,10 @@ public class ItemRegistry {
             () -> new EnchantedGrassItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> CORRUPTED_PUMPKIN = ITEMS.register("corrupted_pumpkin",
             () -> new CorruptedPumpkinItem(ARTIFACT_PROPERTIES));
+    public static final RegistryObject<Item> THUNDERING_QUIVER = ITEMS.register("thundering_quiver",
+            () -> new ThunderingQuiverItem(ARTIFACT_PROPERTIES));
+    public static final RegistryObject<Item> HARPOON_QUIVER = ITEMS.register("harpoon_quiver",
+            () -> new HarpoonQuiverItem(ARTIFACT_PROPERTIES));
 
     public static final RegistryObject<Item> HUNTERS_ARMOR = ITEMS.register("hunters_vest",
             () -> new HuntersArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
@@ -702,6 +706,7 @@ public class ItemRegistry {
         commonRangedWeaponMap.put(SNOW_BOW.get(), SNOW_BOW.get().getRegistryName());
         commonRangedWeaponMap.put(WIND_BOW.get(), WIND_BOW.get().getRegistryName());
         uniqueRangedWeaponMap.put(TWISTING_VINE_BOW.get(), TWISTING_VINE_BOW.get().getRegistryName());
+        uniqueRangedWeaponMap.put(BUBBLE_BOW.get(), BUBBLE_BOW.get().getRegistryName());
     }
 
     private static void putCommonCrossbowsInMap() {
@@ -713,6 +718,7 @@ public class ItemRegistry {
         commonRangedWeaponMap.put(DUAL_CROSSBOW.get(), DUAL_CROSSBOW.get().getRegistryName());
         commonRangedWeaponMap.put(BURST_CROSSBOW.get(), BURST_CROSSBOW.get().getRegistryName());
         commonRangedWeaponMap.put(COG_CROSSBOW.get(), COG_CROSSBOW.get().getRegistryName());
+        commonRangedWeaponMap.put(HARPOON_CROSSBOW.get(), HARPOON_CROSSBOW.get().getRegistryName());
     }
 
     private static void putUniqueCrossbowsInMap() {
@@ -732,6 +738,7 @@ public class ItemRegistry {
         uniqueRangedWeaponMap.put(SOUL_HUNTER_CROSSBOW.get(), SOUL_HUNTER_CROSSBOW.get().getRegistryName());
         uniqueRangedWeaponMap.put(CORRUPTED_CROSSBOW.get(), CORRUPTED_CROSSBOW.get().getRegistryName());
         commonRangedWeaponMap.put(PRIDE_OF_THE_PIGLINS.get(), PRIDE_OF_THE_PIGLINS.get().getRegistryName());
+        commonRangedWeaponMap.put(NAUTICAL_CROSSBOW.get(), NAUTICAL_CROSSBOW.get().getRegistryName());
     }
 
     private static void putUniqueBowsInMap() {
@@ -757,6 +764,7 @@ public class ItemRegistry {
         uniqueRangedWeaponMap.put(ECHO_OF_THE_VALLEY.get(), ECHO_OF_THE_VALLEY.get().getRegistryName());
         uniqueRangedWeaponMap.put(WEEPING_VINE_BOW.get(), WEEPING_VINE_BOW.get().getRegistryName());
         uniqueRangedWeaponMap.put(SHIVERING_BOW.get(), SHIVERING_BOW.get().getRegistryName());
+        uniqueRangedWeaponMap.put(BUBBLE_BURSTER.get(), BUBBLE_BURSTER.get().getRegistryName());
     }
 
     private static void putCommonMeleeWeaponsInMap() {
@@ -858,5 +866,7 @@ public class ItemRegistry {
         artifactMap.put(BUZZY_NEST.get(), BUZZY_NEST.get().getRegistryName());
         artifactMap.put(ENCHANTED_GRASS.get(), ENCHANTED_GRASS.get().getRegistryName());
         artifactMap.put(CORRUPTED_PUMPKIN.get(), CORRUPTED_PUMPKIN.get().getRegistryName());
+        artifactMap.put(THUNDERING_QUIVER.get(), THUNDERING_QUIVER.get().getRegistryName());
+        artifactMap.put(HARPOON_QUIVER.get(), HARPOON_QUIVER.get().getRegistryName());
     }
 }

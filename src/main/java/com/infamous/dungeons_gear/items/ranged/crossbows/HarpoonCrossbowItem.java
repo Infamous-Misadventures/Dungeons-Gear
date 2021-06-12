@@ -10,6 +10,8 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class HarpoonCrossbowItem extends AbstractDungeonsCrossbowItem{
+    public static final String HARPOON = "Harpoon";
+
     public HarpoonCrossbowItem(Properties builder, int defaultChargeTimeIn, boolean isUniqueIn) {
         super(builder, defaultChargeTimeIn, isUniqueIn);
     }

@@ -17,8 +17,12 @@ public class ComboStorage implements Capability.IStorage<ICombo> {
         tag.putInt("comboCount", instance.getComboCount());
         //tag.putBoolean("ghostForm", instance.getGhostForm());
         tag.putBoolean("shadowForm", instance.getShadowForm());
+
         tag.putInt("flamingArrowsCount", instance.getFlamingArrowsCount());
-        tag.putInt("tormentArrowsCount", instance.getTormentArrowCount());
+        tag.putInt("tormentArrowsCount", instance.getTormentArrowsCount());
+        tag.putInt("thunderingArrowsCount", instance.getThunderingArrowsCount());
+        tag.putInt("harpoonCount", instance.getHarpoonCount());
+
         tag.putInt("arrowsInCounter", instance.getArrowsInCounter());
         tag.putInt("burnNearbyTimer", instance.getBurnNearbyTimer());
         tag.putInt("freezeNearbyTimer", instance.getFreezeNearbyTimer());
@@ -39,8 +43,12 @@ public class ComboStorage implements Capability.IStorage<ICombo> {
         instance.setComboCount(tag.getInt("comboCount"));
         //instance.setGhostForm(tag.getBoolean("ghostForm"));
         instance.setShadowForm(tag.getBoolean("shadowForm"));
+
         instance.setFlamingArrowsCount(tag.getInt("flamingArrowsCount"));
         instance.setTormentArrowCount(tag.getInt("tormentArrowsCount"));
+        instance.setThunderingArrowsCount(tag.getInt("thunderingArrowsCount"));
+        instance.setHarpoonCount(tag.getInt("harpoonCount"));
+
         instance.setArrowsInCounter(tag.getInt("arrowsInCounter"));
         instance.setBurnNearbyTimer(tag.getInt("burnNearbyTimer"));
         instance.setFreezeNearbyTimer(tag.getInt("freezeNearbyTimer"));

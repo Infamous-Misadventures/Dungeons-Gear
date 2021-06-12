@@ -7,8 +7,7 @@ import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
 import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.goals.*;
 import com.infamous.dungeons_gear.items.ItemRegistry;
-import com.infamous.dungeons_gear.utilties.CapabilityHelper;
-import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
+import com.infamous.dungeons_gear.utilties.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
@@ -272,13 +271,26 @@ public class ArtifactEvents {
                     count--;
                     comboCap.setFlamingArrowsCount(count);
                 }
-                if(comboCap.getTormentArrowCount() > 0){
-                    arrowEntity.addTag("TormentArrow");
-                    int count = comboCap.getTormentArrowCount();
+                if(comboCap.getTormentArrowsCount() > 0){
+                    arrowEntity.addTag(TormentQuiverItem.TORMENT_ARROW);
+                    int count = comboCap.getTormentArrowsCount();
                     arrowEntity.setNoGravity(true);
                     arrowEntity.setMotion(arrowEntity.getMotion().scale(0.5D));
                     count--;
                     comboCap.setTormentArrowCount(count);
+                }
+                if(comboCap.getThunderingArrowsCount() > 0){
+                    arrowEntity.addTag(ThunderingQuiverItem.THUNDERING_ARROW);
+                    int count = comboCap.getThunderingArrowsCount();
+                    count--;
+                    comboCap.setThunderingArrowsCount(count);
+                }
+                if(comboCap.getHarpoonCount() > 0){
+                    arrowEntity.addTag(HarpoonQuiverItem.HARPOON_QUIVER);
+                    int count = comboCap.getHarpoonCount();
+                    count--;
+                    comboCap.setHarpoonCount(count);
+                    arrowEntity.setMotion(arrowEntity.getMotion().scale(1.5D));
                 }
             }
         }
@@ -286,7 +298,7 @@ public class ArtifactEvents {
 
 
     @SubscribeEvent
-    public static void onTormentArrowImpact(ProjectileImpactEvent.Arrow event)  {
+    public static void onSpecialArrowImpact(ProjectileImpactEvent.Arrow event)  {
 
         AbstractArrowEntity arrowEntity = event.getArrow();
         Entity shooter = arrowEntity.func_234616_v_();
@@ -294,7 +306,7 @@ public class ArtifactEvents {
         if (!(shooter instanceof PlayerEntity))return;
         PlayerEntity player = (PlayerEntity) shooter;
 
-        if (arrowEntity.getTags().contains("TormentArrow")){
+        if (arrowEntity.getTags().contains(TormentQuiverItem.TORMENT_ARROW)){
             if (arrowEntity.ticksExisted > 1200){
                 arrowEntity.remove();
                 event.setCanceled(true);
@@ -312,6 +324,16 @@ public class ArtifactEvents {
             }
 
             if(event.getRayTraceResult() instanceof BlockRayTraceResult)event.setCanceled(true);
+        }
+        if (arrowEntity.getTags().contains(ThunderingQuiverItem.THUNDERING_ARROW)){
+            if(event.getRayTraceResult() instanceof EntityRayTraceResult){
+                EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult) event.getRayTraceResult();
+                Entity targetEntity = entityRayTraceResult.getEntity();
+                if(targetEntity instanceof LivingEntity){
+                    SoundHelper.playLightningStrikeSounds(arrowEntity);
+                    AreaOfEffectHelper.electrifyNearbyEnemies(arrowEntity, 5, 5, Integer.MAX_VALUE);
+                }
+            }
         }
     }
 

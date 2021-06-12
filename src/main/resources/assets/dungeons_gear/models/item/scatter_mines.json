@@ -1,0 +1,104 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [32, 32],
+	"textures": {
+		"0": "dungeons_gear:item/scatter_mines",
+		"particle": "dungeons_gear:item/scatter_mines"
+	},
+	"elements": [
+		{
+			"name": "mine",
+			"from": [4.75, 0, 4.75],
+			"to": [11.25, 6.5, 11.25],
+			"rotation": {"angle": -22.5, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 6.5, 6.5], "texture": "#0"},
+				"east": {"uv": [0, 0, 6.5, 6.5], "texture": "#0"},
+				"south": {"uv": [0, 0, 6.5, 6.5], "texture": "#0"},
+				"west": {"uv": [0, 0, 6.5, 6.5], "texture": "#0"},
+				"up": {"uv": [0, 0, 6.5, 6.5], "texture": "#0"},
+				"down": {"uv": [0, 0, 6.5, 6.5], "texture": "#0"}
+			}
+		},
+		{
+			"name": "charge",
+			"from": [0.9, 4.6, 5.9],
+			"to": [5.7, 4.6, 12.1],
+			"rotation": {"angle": -22.5, "axis": "x", "origin": [5.5, 4, 12]},
+			"faces": {
+				"north": {"uv": [0, 0, 2.5, 0], "texture": "#0"},
+				"east": {"uv": [0, 0, 2.5, 0], "texture": "#0"},
+				"south": {"uv": [0, 0, 2.5, 0], "texture": "#0"},
+				"west": {"uv": [0, 0, 2.5, 0], "texture": "#0"},
+				"up": {"uv": [6.5, 0, 12, 5.5], "rotation": 180, "texture": "#0"},
+				"down": {"uv": [7, 10.5, 12.5, 16], "texture": "#0"}
+			}
+		},
+		{
+			"name": "charge",
+			"from": [5, 5.6, 10.85],
+			"to": [10, 9.7, 10.85],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [5.1, 6.3, 10.25]},
+			"faces": {
+				"north": {"uv": [6.5, 6, 11, 10.5], "texture": "#0"},
+				"east": {"uv": [0, 0, 0, 1.75], "texture": "#0"},
+				"south": {"uv": [11, 6, 15.5, 10.5], "texture": "#0"},
+				"west": {"uv": [0, 0, 0, 1.75], "texture": "#0"},
+				"up": {"uv": [0, 0, 1.75, 0], "texture": "#0"},
+				"down": {"uv": [0, 0, 1.75, 0], "texture": "#0"}
+			}
+		},
+		{
+			"name": "charge",
+			"from": [7.2, 4.5, 3],
+			"to": [13.7, 4.5, 7.7],
+			"rotation": {"angle": -45, "axis": "x", "origin": [8, 3, 7.5]},
+			"faces": {
+				"north": {"uv": [0, 0, 3.25, 0], "texture": "#0"},
+				"east": {"uv": [0, 0, 2.25, 0], "texture": "#0"},
+				"south": {"uv": [0, 0, 3.25, 0], "texture": "#0"},
+				"west": {"uv": [0, 0, 2.25, 0], "texture": "#0"},
+				"up": {"uv": [0, 6.5, 6.5, 11], "rotation": 180, "texture": "#0"},
+				"down": {"uv": [0, 11.5, 6.5, 16], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [0, -27, 0],
+			"translation": [-1, 2.5, -0.75],
+			"scale": [0.87, 0.87, 0.87]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [0, 16, 0],
+			"translation": [-0.75, 2.5, -0.75],
+			"scale": [0.87, 0.87, 0.87]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 108, 0],
+			"translation": [1.75, 5.75, 0.25],
+			"scale": [0.65, 0.65, 0.65]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 153, 0],
+			"translation": [1.75, 5.75, 0.25],
+			"scale": [0.65, 0.65, 0.65]
+		},
+		"ground": {
+			"translation": [0, 3.25, 0]
+		},
+		"gui": {
+			"rotation": [18, -180, -17],
+			"translation": [-2.5, 3.75, 0],
+			"scale": [1.22, 1.22, 1.22]
+		},
+		"head": {
+			"translation": [0, 14.25, -1.5]
+		},
+		"fixed": {
+			"rotation": [0, 22.5, 0],
+			"translation": [0, 7.75, -1],
+			"scale": [1.64, 1.64, 1.64]
+		}
+	}
+}

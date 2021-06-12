@@ -604,6 +604,14 @@
   "lore.dungeons_gear.corrupted_pumpkin": "The Corrupted Pumpkin glows with supernatural power, illuminating even the darkest nights with its powerful beacon.",
   "ability.dungeons_gear.corrupted_pumpkin": "Fires a high-powered beam that continuously damages mobs.",
 
+  "item.dungeons_gear.thundering_quiver": "Thundering Quiver",
+  "lore.dungeons_gear.thundering_quiver": "This copper quiver channels the power of lightning.",
+  "ability.dungeons_gear.thundering_quiver": "Grants 5 electrified arrows.",
+
+  "item.dungeons_gear.harpoon_quiver": "Harpoon Quiver",
+  "lore.dungeons_gear.harpoon_quiver": "This quiver holds a number of harpoons that swiftly pierce through enemies on land or underwater.",
+  "ability.dungeons_gear.harpoon_quiver": "Grants 5 harpoons.",
+
   "artifact.dungeons_gear.duration": "%d Seconds Duration",
   "artifact.dungeons_gear.cooldown": "%d Seconds Cooldown",
   "artifact.dungeons_gear.activation": "Souls Per Use: %d",
