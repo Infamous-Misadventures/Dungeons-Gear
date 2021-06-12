@@ -75,9 +75,7 @@ public class CrossbowEvents {
         AbstractArrowEntity arrowEntity = event.getArrow();
         if (arrowEntity.func_234616_v_() instanceof LivingEntity) {
             LivingEntity shooter = (LivingEntity) arrowEntity.func_234616_v_();
-            boolean explodingCrossbowFlag = arrowEntity.getTags().contains("ExplodingCrossbow")
-                    || arrowEntity.getTags().contains("FireboltThrower")
-                    || arrowEntity.getTags().contains("ImplodingCrossbow");
+            boolean explodingCrossbowFlag = arrowEntity.getTags().contains(IRangedWeapon.EXPLOSIVE_TAG);
             if (explodingCrossbowFlag) {
                 if (event.getRayTraceResult() instanceof BlockRayTraceResult) {
                     BlockRayTraceResult blockRayTraceResult = (BlockRayTraceResult) event.getRayTraceResult();
@@ -106,25 +104,16 @@ public class CrossbowEvents {
                 AbstractArrowEntity arrowEntity = (AbstractArrowEntity) event.getSource().getImmediateSource();
                 if (arrowEntity.func_234616_v_() instanceof LivingEntity) {
                     LivingEntity shooter = (LivingEntity) arrowEntity.func_234616_v_();
-                    boolean explodingCrossbowFlag = arrowEntity.getTags().contains("ExplodingCrossbow")
-                            || arrowEntity.getTags().contains("FireboltThrower")
-                            || arrowEntity.getTags().contains("ImplodingCrossbow");
+                    boolean explodingCrossbowFlag = arrowEntity.getTags().contains(IRangedWeapon.EXPLOSIVE_TAG);
                     if (explodingCrossbowFlag) {
                         LivingEntity victim = event.getEntityLiving();
                         SoundHelper.playGenericExplodeSound(victim);
                         AOECloudHelper.spawnExplosionCloud(shooter, victim, 3.0F);
                         AreaOfEffectHelper.causeExplosionAttack(shooter, victim, event.getAmount(), 3.0F);
                     }
-                    boolean rapidFireFlag = arrowEntity.getTags().contains("BabyCrossbow")
-                            || arrowEntity.getTags().contains("BowOfLostSouls")
-                            || arrowEntity.getTags().contains("HarpCrossbow")
-                            || arrowEntity.getTags().contains("LightningHarpCrossbow")
-                            || arrowEntity.getTags().contains("DualCrossbow")
-                            || arrowEntity.getTags().contains("SoulHunterCrossbow")
-                            || arrowEntity.getTags().contains("CorruptedCrossbow")
-                            || arrowEntity.getTags().contains("ScatterCrossbow")
-                            || arrowEntity.getTags().contains("BurstCrossbow");
-                    if (rapidFireFlag) {
+                    boolean canLandMultipleHits = arrowEntity.getTags().contains(IRangedWeapon.DUAL_WIELD_TAG)
+                            || arrowEntity.getTags().contains(IRangedWeapon.MULTISHOT_TAG);
+                    if (canLandMultipleHits) {
                         event.getEntityLiving().hurtResistantTime = 0;
                     }
                 }

@@ -22,6 +22,8 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 @Mod.EventBusSubscriber(modid= MODID)
 public class RicochetEnchantment extends DungeonsEnchantment {
 
+    public static final String INTRINSIC_RICOCHET_TAG = "IntrinsicRicochet";
+
     public RicochetEnchantment() {
         super(Rarity.RARE, EnchantmentType.CROSSBOW, new EquipmentSlotType[]{
                 EquipmentSlotType.MAINHAND});
@@ -48,7 +50,7 @@ public class RicochetEnchantment extends DungeonsEnchantment {
         LivingEntity victim = (LivingEntity) entityRayTraceResult.getEntity();
 
         int ricochetLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrowEntity, RangedEnchantmentList.RICOCHET);
-        boolean uniqueWeaponFlag = arrowEntity.getTags().contains("LightningHarpCrossbow") || arrowEntity.getTags().contains("SlayerCrossbow");
+        boolean uniqueWeaponFlag = arrowEntity.getTags().contains(INTRINSIC_RICOCHET_TAG);
         if(ricochetLevel > 0){
             float chainReactionRand = shooter.getRNG().nextFloat();
             if(chainReactionRand <= 0.2F * ricochetLevel){

@@ -27,6 +27,8 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 @Mod.EventBusSubscriber(modid = MODID)
 public class GravityEnchantment extends DungeonsEnchantment {
 
+    public static final String INTRINSIC_GRAVITY_TAG = "IntrinsicGravity";
+
     public GravityEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.MELEE_RANGED, new EquipmentSlotType[]{
             EquipmentSlotType.MAINHAND});
@@ -72,7 +74,7 @@ public class GravityEnchantment extends DungeonsEnchantment {
         if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
         LivingEntity shooter = (LivingEntity)arrow.func_234616_v_();
         int gravityLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrow, MeleeRangedEnchantmentList.GRAVITY);
-        boolean uniqueWeaponFlag = arrow.getTags().contains("Voidcaller") || arrow.getTags().contains("ImplodingCrossbow");
+        boolean uniqueWeaponFlag = arrow.getTags().contains(INTRINSIC_GRAVITY_TAG);
         if(uniqueWeaponFlag
                 && !(gravityLevel > 0)){
             if(rayTraceResult instanceof EntityRayTraceResult){

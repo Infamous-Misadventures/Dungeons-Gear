@@ -33,6 +33,8 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 @Mod.EventBusSubscriber(modid = MODID)
 public class PoisonCloudEnchantment extends DungeonsEnchantment {
 
+    public static final String INTRINSIC_POISON_CLOUD_TAG = "IntrinsicPoisonCloud";
+
     public PoisonCloudEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.MELEE_RANGED, new EquipmentSlotType[]{
                 EquipmentSlotType.MAINHAND});
@@ -82,7 +84,7 @@ public class PoisonCloudEnchantment extends DungeonsEnchantment {
         LivingEntity shooter = (LivingEntity)arrow.func_234616_v_();
 
         int poisonLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrow, MeleeRangedEnchantmentList.POISON_CLOUD);
-        boolean uniqueWeaponFlag = arrow.getTags().contains("TheGreenMenace");
+        boolean uniqueWeaponFlag = arrow.getTags().contains(INTRINSIC_POISON_CLOUD_TAG);
 
         if(poisonLevel > 0){
             if(rayTraceResult instanceof EntityRayTraceResult){

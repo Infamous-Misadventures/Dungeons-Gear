@@ -41,6 +41,10 @@ import java.util.UUID;
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class ArtifactEvents {
 
+    public static final String FIRE_SHEEP_TAG = "FireSheep";
+    public static final String POISON_SHEEP_TAG = "PoisonSheep";
+    public static final String SPEED_SHEEP_TAG = "SpeedSheep";
+
     @SubscribeEvent
     public static void reAddSummonableGoals(EntityJoinWorldEvent event){
         if(isEntitySummonable(event.getEntity())){
@@ -99,7 +103,7 @@ public class ArtifactEvents {
             if(event.getEntity() instanceof SheepEntity){
                 SheepEntity sheepEntity = (SheepEntity) event.getEntity();
                 if(summonableCap.getSummoner() != null){
-                    if(sheepEntity.getTags().contains("Fire") || sheepEntity.getTags().contains("Poison")){
+                    if(sheepEntity.getTags().contains(FIRE_SHEEP_TAG) || sheepEntity.getTags().contains(POISON_SHEEP_TAG)){
                         sheepEntity.goalSelector.addGoal(1, new SheepMeleeAttackGoal(sheepEntity, 1.0D, true));
 
                         sheepEntity.targetSelector.addGoal(1, new SheepOwnerHurtByTargetGoal(sheepEntity));
@@ -120,10 +124,10 @@ public class ArtifactEvents {
             ISummonable summonableCap = CapabilityHelper.getSummonableCapability(sheepEntity);
             if(summonableCap == null) return;
             if(summonableCap.getSummoner() != null){
-                if(sheepEntity.getTags().contains("Fire")){
+                if(sheepEntity.getTags().contains(FIRE_SHEEP_TAG)){
                     event.getEntityLiving().setFire(100);
                 }
-                else if(sheepEntity.getTags().contains("Poison")){
+                else if(sheepEntity.getTags().contains(POISON_SHEEP_TAG)){
                     EffectInstance poison = new EffectInstance(Effects.POISON, 100);
                     event.getEntityLiving().addPotionEffect(poison);
                 }
@@ -142,7 +146,7 @@ public class ArtifactEvents {
                     Entity summoner = ((ServerWorld) sheepEntity.world).getEntityByUuid(summonableCap.getSummoner());
                     if(summoner instanceof PlayerEntity){
                         PlayerEntity playerEntity = (PlayerEntity)summoner;
-                        if(!playerEntity.isPotionActive(Effects.SPEED) && sheepEntity.getTags().contains("Speed")){
+                        if(!playerEntity.isPotionActive(Effects.SPEED) && sheepEntity.getTags().contains(SPEED_SHEEP_TAG)){
                             EffectInstance speed = new EffectInstance(Effects.SPEED, 100);
                             playerEntity.addPotionEffect(speed);
                         }

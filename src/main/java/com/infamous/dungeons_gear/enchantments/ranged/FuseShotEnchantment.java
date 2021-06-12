@@ -27,6 +27,8 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 @Mod.EventBusSubscriber(modid= MODID)
 public class FuseShotEnchantment extends DungeonsEnchantment {
 
+    public static final String FUSE_SHOT_TAG = "FuseShot";
+
     public FuseShotEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.RANGED, new EquipmentSlotType[]{
                 EquipmentSlotType.MAINHAND});
@@ -42,7 +44,7 @@ public class FuseShotEnchantment extends DungeonsEnchantment {
         AbstractArrowEntity arrowEntity = event.getArrow();
         if(ModEnchantmentHelper.shooterIsLiving(arrowEntity)){
             LivingEntity shooter =(LivingEntity) arrowEntity.func_234616_v_();
-            if(arrowEntity.getTags().contains("FuseShot")){
+            if(arrowEntity.getTags().contains(FUSE_SHOT_TAG)){
                 if(event.getRayTraceResult() instanceof BlockRayTraceResult){
                     BlockRayTraceResult blockRayTraceResult = (BlockRayTraceResult)event.getRayTraceResult();
                     BlockPos blockPos = blockRayTraceResult.getPos();
@@ -70,7 +72,7 @@ public class FuseShotEnchantment extends DungeonsEnchantment {
                 LivingEntity victim = event.getEntityLiving();
                 if (indirectEntityDamageSource.getTrueSource() instanceof LivingEntity) {
                     LivingEntity archer = (LivingEntity) indirectEntityDamageSource.getTrueSource();
-                    if(arrowEntity.getTags().contains("FuseShot")) {
+                    if(arrowEntity.getTags().contains(FUSE_SHOT_TAG)) {
                         SoundHelper.playGenericExplodeSound(arrowEntity);
                         AOECloudHelper.spawnExplosionCloud(archer, victim, 3.0f);
                         AreaOfEffectHelper.causeExplosionAttack(archer, victim, event.getAmount(), 3.0f);

@@ -8,6 +8,7 @@ import com.infamous.dungeons_gear.combat.PacketUpdateSouls;
 import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
+import com.infamous.dungeons_gear.enchantments.ranged.FuseShotEnchantment;
 import com.infamous.dungeons_gear.init.PotionList;
 import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_gear.items.interfaces.IArmor;
@@ -49,6 +50,8 @@ import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class GlobalEvents {
 
+    public static final String STUNNED_TAG = "Stunned";
+
     @SubscribeEvent
     public static void onArrowJoinWorld(EntityJoinWorldEvent event) {
         if (event.getEntity() instanceof AbstractArrowEntity) {
@@ -83,7 +86,7 @@ public class GlobalEvents {
             // 6 - 1, 6 - 2, 6 - 3
             // zero indexing, so subtract 1 as well
             if (fuseShotCounter == 6 - fuseShotLevel - 1) {
-                arrowEntity.addTag("FuseShot");
+                arrowEntity.addTag(FuseShotEnchantment.FUSE_SHOT_TAG);
                 weaponCap.setFuseShotCounter(0);
             } else {
                 weaponCap.setFuseShotCounter(fuseShotCounter + 1);
@@ -140,14 +143,14 @@ public class GlobalEvents {
     public static void onStunnedMob(LivingEvent.LivingUpdateEvent event) {
         if (event.getEntityLiving() instanceof MobEntity) {
             MobEntity mobEntity = (MobEntity) event.getEntityLiving();
-            if (mobEntity.getActivePotionEffect(CustomEffects.STUNNED) != null && !mobEntity.getTags().contains("Stunned")) {
+            if (mobEntity.getActivePotionEffect(CustomEffects.STUNNED) != null && !mobEntity.getTags().contains(STUNNED_TAG)) {
                 if (!mobEntity.isAIDisabled()) {
                     mobEntity.setNoAI(true);
-                    mobEntity.addTag("Stunned");
+                    mobEntity.addTag(STUNNED_TAG);
                 }
-            } else if (mobEntity.isAIDisabled() && mobEntity.getTags().contains("Stunned")) {
+            } else if (mobEntity.isAIDisabled() && mobEntity.getTags().contains(STUNNED_TAG)) {
                 mobEntity.setNoAI(false);
-                mobEntity.removeTag("Stunned");
+                mobEntity.removeTag(STUNNED_TAG);
             }
         }
     }
@@ -266,7 +269,7 @@ public class GlobalEvents {
         AbstractArrowEntity arrow = event.getArrow();
         if (!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
         LivingEntity shooter = (LivingEntity) arrow.func_234616_v_();
-        boolean isGaleArrow = arrow.getTags().contains("GaleArrow");
+        boolean isGaleArrow = arrow.getTags().contains(IRangedWeapon.GALE_ARROW_TAG);
         if (isGaleArrow) {
             if (rayTraceResult instanceof EntityRayTraceResult) {
                 EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult) rayTraceResult;

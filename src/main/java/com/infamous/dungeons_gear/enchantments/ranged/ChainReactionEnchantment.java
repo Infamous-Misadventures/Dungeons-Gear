@@ -19,6 +19,8 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 @Mod.EventBusSubscriber(modid = MODID)
 public class ChainReactionEnchantment extends DungeonsEnchantment {
 
+    public static final String INTRINSIC_CHAIN_REACTION_TAG = "IntrinsicChainReaction";
+
     public ChainReactionEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.RANGED, new EquipmentSlotType[]{
                 EquipmentSlotType.MAINHAND});
@@ -43,7 +45,7 @@ public class ChainReactionEnchantment extends DungeonsEnchantment {
                             ProjectileEffectHelper.fireChainReactionProjectiles(victim.getEntityWorld(), attacker, victim, 3.15F, 1.0F, arrowEntity);
                         }
                     }
-                    if (arrowEntity.getTags().contains("FireboltThrower")) {
+                    if (arrowEntity.getTags().contains(INTRINSIC_CHAIN_REACTION_TAG)) {
                         float chainReactionRand = attacker.getRNG().nextFloat();
                         if (chainReactionRand <= 0.1F) {
                             ProjectileEffectHelper.fireChainReactionProjectiles(victim.getEntityWorld(), attacker, victim, 3.15F, 1.0F, arrowEntity);

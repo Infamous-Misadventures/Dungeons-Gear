@@ -83,15 +83,9 @@ public class BowEvents {
             if(arrowEntity.func_234616_v_() instanceof LivingEntity){
                 LivingEntity shooter = (LivingEntity)arrowEntity.func_234616_v_();
                 LivingEntity victim = (LivingEntity) ((EntityRayTraceResult)rayTraceResult).getEntity();
-                boolean huntingBowFlag = arrowEntity.getTags().contains("HuntingBow")
-                        || arrowEntity.getTags().contains("HuntersPromise")
-                        || arrowEntity.getTags().contains("MastersBow")
-                        || arrowEntity.getTags().contains("AncientBow");
-                boolean snowBowFlag = arrowEntity.getTags().contains("SnowBow")
-                        || arrowEntity.getTags().contains("WintersTouch");
-                boolean trickbowFlag = arrowEntity.getTags().contains("Trickbow")
-                        || arrowEntity.getTags().contains("TheGreenMenace")
-                        || arrowEntity.getTags().contains("ThePinkScoundrel");
+                boolean huntingBowFlag = arrowEntity.getTags().contains(IRangedWeapon.HUNTING_TAG);
+                boolean snowBowFlag = arrowEntity.getTags().contains(IRangedWeapon.FREEZING_TAG);
+                boolean trickbowFlag = arrowEntity.getTags().contains(IRangedWeapon.RELIABLE_RICOCHET_TAG);
                 if(huntingBowFlag){
                     AbilityHelper.makeNearbyPetsAttackTarget(victim, shooter);
                 }

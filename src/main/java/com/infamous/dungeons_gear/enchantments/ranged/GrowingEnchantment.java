@@ -21,6 +21,8 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 @Mod.EventBusSubscriber(modid= MODID)
 public class GrowingEnchantment extends DungeonsEnchantment {
 
+    public static final String INTRINSIC_GROWING_TAG = "IntrinsicGrowing";
+
     public GrowingEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.RANGED, new EquipmentSlotType[]{
                 EquipmentSlotType.MAINHAND});
@@ -44,7 +46,7 @@ public class GrowingEnchantment extends DungeonsEnchantment {
         LivingEntity shooter = (LivingEntity)arrow.func_234616_v_();
         LivingEntity victim = (LivingEntity) ((EntityRayTraceResult)rayTraceResult).getEntity();
         int growingLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.GROWING);
-        boolean uniqueWeaponFlag = arrow.getTags().contains("Bonebow") || arrow.getTags().contains("BabyCrossbow");
+        boolean uniqueWeaponFlag = arrow.getTags().contains(INTRINSIC_GROWING_TAG);
         if(growingLevel > 0 || uniqueWeaponFlag){
             double originalDamage = arrow.getDamage();
             double damageModifierCap = 0;

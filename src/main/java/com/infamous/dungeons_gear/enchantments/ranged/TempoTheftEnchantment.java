@@ -20,6 +20,8 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 @Mod.EventBusSubscriber(modid= MODID)
 public class TempoTheftEnchantment extends DungeonsEnchantment {
 
+    public static final String INTRINSIC_TEMPO_THEFT_TAG = "IntrinsicTempoTheft";
+
     public TempoTheftEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.RANGED, new EquipmentSlotType[]{
                 EquipmentSlotType.MAINHAND});
@@ -38,7 +40,7 @@ public class TempoTheftEnchantment extends DungeonsEnchantment {
         LivingEntity shooter = (LivingEntity)arrow.func_234616_v_();
         LivingEntity victim = (LivingEntity) ((EntityRayTraceResult)rayTraceResult).getEntity();
         int tempoTheftLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.TEMPO_THEFT);
-        boolean uniqueWeaponFlag = arrow.getTags().contains("NocturnalBow");
+        boolean uniqueWeaponFlag = arrow.getTags().contains(INTRINSIC_TEMPO_THEFT_TAG);
         if(tempoTheftLevel > 0 || uniqueWeaponFlag){
             if(uniqueWeaponFlag) tempoTheftLevel++;
             AbilityHelper.stealSpeedFromTarget(shooter, victim, tempoTheftLevel);

@@ -21,6 +21,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ReplenishEnchantment extends DungeonsEnchantment {
 
+    public static final String INTRINSIC_REPLENISH_TAG = "IntrinsicReplenish";
+
     public ReplenishEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.RANGED, new EquipmentSlotType[]{
                 EquipmentSlotType.MAINHAND});
@@ -58,7 +60,7 @@ public class ReplenishEnchantment extends DungeonsEnchantment {
                     shooter.world.addEntity(arrowDrop);
                 }
             }
-            if(arrow.getTags().contains("HuntersPromise")){
+            if(arrow.getTags().contains(INTRINSIC_REPLENISH_TAG)){
                 float replenishRand = shooter.getRNG().nextFloat();
                 if(replenishRand <=  0.1F){
                     ItemEntity arrowDrop = new ItemEntity(player.world, player.getPosX(), player.getPosY(), player.getPosZ(), new ItemStack(Items.ARROW));

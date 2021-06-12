@@ -21,6 +21,8 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 @Mod.EventBusSubscriber(modid= MODID)
 public class RadianceShotEnchantment extends DungeonsEnchantment {
 
+    public static final String INTRINSIC_RADIANCE_SHOT_TAG = "IntrinsicRadianceShot";
+
     public RadianceShotEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.RANGED, new EquipmentSlotType[]{
                 EquipmentSlotType.MAINHAND});
@@ -37,7 +39,7 @@ public class RadianceShotEnchantment extends DungeonsEnchantment {
         if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
         LivingEntity shooter = (LivingEntity)arrow.func_234616_v_();
         int radianceShotLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.RADIANCE_SHOT);
-        boolean uniqueWeaponFlag = arrow.getTags().contains("Sabrewing") || arrow.getTags().contains("LoveSpellBow");
+        boolean uniqueWeaponFlag = arrow.getTags().contains(INTRINSIC_RADIANCE_SHOT_TAG);
         if(radianceShotLevel > 0){
             float radianceShotRand = shooter.getRNG().nextFloat();
             if(radianceShotRand <=  0.2F){

@@ -5,6 +5,15 @@ import net.minecraft.item.ItemStack;
 
 public interface IRangedWeapon<T extends Item> {
 
+    String HARPOON_TAG = "Harpoon";
+    String HUNTING_TAG = "Hunting";
+    String RELIABLE_RICOCHET_TAG = "ReliableRicochet";
+    String FREEZING_TAG = "Freezing";
+    String EXPLOSIVE_TAG = "Explosive";
+    String MULTISHOT_TAG = "Multishot";
+    String DUAL_WIELD_TAG = "DualWield";
+    String GALE_ARROW_TAG = "GaleArrow";
+
     // Non-Enchantment Abilities
     default boolean shootsFasterArrows(ItemStack stack){
         return false;

@@ -1,11 +1,10 @@
 package com.infamous.dungeons_gear.mixin;
 
 import com.infamous.dungeons_gear.items.artifacts.HarpoonQuiverItem;
-import com.infamous.dungeons_gear.items.ranged.crossbows.HarpoonCrossbowItem;
+import com.infamous.dungeons_gear.items.interfaces.IRangedWeapon;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,7 +25,7 @@ public abstract class AbstractArrowEntityMixin extends Entity {
     @Inject(at = @At("RETURN"), method = "getWaterDrag", cancellable = true)
     private void checkForHarpoon(CallbackInfoReturnable<Float> cir){
         if(this.getTags().contains(HarpoonQuiverItem.HARPOON_QUIVER)
-                || this.getTags().contains(HarpoonCrossbowItem.HARPOON)){
+                || this.getTags().contains(IRangedWeapon.HARPOON_TAG)){
             cir.setReturnValue(0.99F);
         }
     }
