@@ -98,7 +98,7 @@ public class CrossbowEvents {
     }
 
     @SubscribeEvent
-    public static void onExplodingCrossbowDamage(LivingDamageEvent event) {
+    public static void onCrossbowDamage(LivingDamageEvent event) {
         if (event.getSource() instanceof IndirectEntityDamageSource) {
             if (event.getSource().getImmediateSource() instanceof AbstractArrowEntity) {
                 AbstractArrowEntity arrowEntity = (AbstractArrowEntity) event.getSource().getImmediateSource();
