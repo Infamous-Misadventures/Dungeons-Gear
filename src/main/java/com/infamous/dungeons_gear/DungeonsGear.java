@@ -88,9 +88,7 @@ public class DungeonsGear
 
     private void setup(final FMLCommonSetupEvent event)
     {
-        DeferredWorkQueue.runLater(
-                NetworkHandler::init
-        );
+        NetworkHandler.init();
         ItemRegistry.putItemsInMap();
         WeaponAttributeHandler.setWeaponAttributeModifiers();
         CapabilityManager.INSTANCE.register(ISummonable.class, new SummonableStorage(), Summonable::new);

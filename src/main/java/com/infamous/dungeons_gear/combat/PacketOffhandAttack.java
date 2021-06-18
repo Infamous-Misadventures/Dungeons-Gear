@@ -33,6 +33,7 @@ public class PacketOffhandAttack {
 
         public static void handle(PacketOffhandAttack packet, Supplier<NetworkEvent.Context> ctx) {
             if (packet != null) {
+                ctx.get().setPacketHandled(true);
                 ((NetworkEvent.Context)ctx.get()).enqueueWork(new Runnable() {
                     @Override
                     public void run() {
