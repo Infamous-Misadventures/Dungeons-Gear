@@ -47,6 +47,17 @@ public class ArmorEvents {
     }
 
     @SubscribeEvent
+    public static void respawnPetBat(TickEvent.PlayerTickEvent event) {
+        if (event.player.ticksExisted % 140 == 0)
+            for (ItemStack i : event.player.getArmorInventoryList()) {
+                if (i.getItem() instanceof IArmor && ((IArmor) i.getItem()).doGivesYouAPetBat()) {
+                    ArmorEffectHelper.summonOrTeleportBat(event.player, event.player.world);
+                    return;
+                }
+            }
+    }
+
+    @SubscribeEvent
     public static void onDamageInvolvingSpecialArmor(LivingDamageEvent event) {
 
         // Handling armors that boost ranged or magic damage - Attacker POV
@@ -186,7 +197,7 @@ public class ArmorEvents {
     }
 
     private static double getLifeSteal(ItemStack stack) {
-        if(stack.getItem() instanceof IArmor){
+        if (stack.getItem() instanceof IArmor) {
             return ((IArmor) stack.getItem()).getLifeSteal();
         }
         return 0;

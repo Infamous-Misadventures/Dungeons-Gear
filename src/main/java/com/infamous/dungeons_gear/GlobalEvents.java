@@ -3,8 +3,10 @@ package com.infamous.dungeons_gear;
 
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.capabilities.bow.IBow;
+import com.infamous.dungeons_gear.capabilities.summoning.SummonableProvider;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketUpdateSouls;
+import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
 import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
@@ -69,7 +71,7 @@ public class GlobalEvents {
                     handleRangedEnchantments(arrowEntity, shooter, offhandStack);
                 }
             }
-        }else if(event.getEntity() instanceof ServerPlayerEntity){
+        } else if (event.getEntity() instanceof ServerPlayerEntity) {
             NetworkHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getEntity()), new PacketUpdateSouls(CapabilityHelper.getComboCapability(event.getEntity()).getSouls()));
         }
     }
@@ -197,6 +199,16 @@ public class GlobalEvents {
                 ICombo comboCap = CapabilityHelper.getComboCapability(playerEntity);
                 if (comboCap == null) return;
                 comboCap.setShadowForm(false);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void petDeath(LivingDamageEvent event) {
+        if (DungeonsGearCompatibility.saveYourPets) {
+            if (CapabilityHelper.getSummonableCapability(event.getEntityLiving()) != null && event.getAmount() > event.getEntityLiving().getMaxHealth()) {
+                event.getEntityLiving().remove();
+                //so summoned wolves and llamas are disposable
             }
         }
     }
