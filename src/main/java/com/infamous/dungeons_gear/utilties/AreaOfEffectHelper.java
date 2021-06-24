@@ -50,10 +50,13 @@ public class AreaOfEffectHelper {
                 switch (randomEffectId){
                     case 1:
                         electrify(playerIn, nearbyEntity, 5);
+                        break;
                     case 2:
                         freezeEnemy(0, nearbyEntity, 8);
+                        break;
                     case 3:
                         nearbyEntity.setFire(8);
+                        break;
                 }
             }
         }
@@ -302,6 +305,11 @@ public class AreaOfEffectHelper {
         victim.attackEntityFrom(lightning, damageAmount);
     }
 
+    public static void levitate(int amplifier, LivingEntity nearbyEntity, int durationInSeconds) {
+        EffectInstance levitation = new EffectInstance(Effects.LEVITATION, durationInSeconds * 20, amplifier);
+        nearbyEntity.addPotionEffect(levitation);
+    }
+
     public static void electrifyNearbyEnemies(LivingEntity attacker, float distance, float damageAmount, int limit) {
         World world = attacker.getEntityWorld();
 
@@ -313,6 +321,20 @@ public class AreaOfEffectHelper {
                 LivingEntity nearbyEntity = nearbyEntities.get(i);
                 //castLightningBolt(attacker, nearbyEntity);
                 electrify(attacker, nearbyEntity, damageAmount);
+            }
+        }
+    }
+
+    public static void levitateNearbyEnemies(LivingEntity attacker, float distance, int limit, int amplifier, int durationInSeconds) {
+        World world = attacker.getEntityWorld();
+
+        List<LivingEntity> nearbyEntities = getNearbyEnemies(attacker, distance, world);
+        if (nearbyEntities.isEmpty()) return;
+        if (limit > nearbyEntities.size()) limit = nearbyEntities.size();
+        for (int i = 0; i < limit; i++) {
+            if (nearbyEntities.size() >= i + 1) {
+                LivingEntity nearbyEntity = nearbyEntities.get(i);
+                levitate(amplifier, nearbyEntity, durationInSeconds);
             }
         }
     }

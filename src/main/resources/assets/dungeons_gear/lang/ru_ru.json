@@ -831,5 +831,11 @@
   "item.dungeons_gear.satchel_of_elements": "Satchel of Elements",
   "lore.dungeons_gear.satchel_of_elements": "Mysteries surround this primordial satchel. Will it unleash fire, ice, or something a lot less nice?",
   "ability.dungeons_gear.satchel_of_elements": "Hits up to 7 nearby mobs with an elemental status effect: struck by lightning, frozen, or set ablaze.",
-  "effect.dungeons_gear.party_starter": "Party Starter"
+  "effect.dungeons_gear.party_starter": "Party Starter",
+  "item.dungeons_gear.powershaker": "Powershaker",
+  "lore.dungeons_gear.powershaker": "The Powershaker is a smashing good time, though it may not be as fun for your enemies.",
+  "ability.dungeons_gear.powershaker": "When Powershaker is activated, your next 3 melee attacks cause mobs to explode.",
+  "item.dungeons_gear.updraft_tome": "Updraft Tome",
+  "lore.dungeons_gear.updraft_tome": "An ancient book filled with illegible glyphs, you feel a strange breeze as you flip the pages.",
+  "ability.dungeons_gear.updraft_tome": "Launch up to 5 enemies into the air, stunning and damaging them."
 }

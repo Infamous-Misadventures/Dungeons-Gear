@@ -629,6 +629,10 @@
   "lore.dungeons_gear.powershaker": "The Powershaker is a smashing good time, though it may not be as fun for your enemies.",
   "ability.dungeons_gear.powershaker": "When Powershaker is activated, your next 3 melee attacks cause mobs to explode.",
 
+  "item.dungeons_gear.updraft_tome": "Updraft Tome",
+  "lore.dungeons_gear.updraft_tome": "An ancient book filled with illegible glyphs, you feel a strange breeze as you flip the pages.",
+  "ability.dungeons_gear.updraft_tome": "Launch up to 5 enemies into the air, stunning and damaging them.",
+
   "artifact.dungeons_gear.duration": "%d Seconds Duration",
   "artifact.dungeons_gear.cooldown": "%d Seconds Cooldown",
   "artifact.dungeons_gear.activation": "Souls Per Use: %d",

@@ -450,6 +450,8 @@ public class ItemRegistry {
             () -> new SatchelOfElementsItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> POWERSHAKER = ITEMS.register("powershaker",
             () -> new PowershakerItem(ARTIFACT_PROPERTIES));
+    public static final RegistryObject<Item> UPDRAFT_TOME = ITEMS.register("updraft_tome",
+            () -> new UpdraftTomeItem(ARTIFACT_PROPERTIES));
 
     public static final RegistryObject<Item> HUNTERS_ARMOR = ITEMS.register("hunters_vest",
             () -> new HuntersArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
@@ -879,5 +881,6 @@ public class ItemRegistry {
         artifactMap.put(SATCHEL_OF_SNACKS.get(), SATCHEL_OF_SNACKS.get().getRegistryName());
         artifactMap.put(SATCHEL_OF_ELEMENTS.get(), SATCHEL_OF_ELEMENTS.get().getRegistryName());
         artifactMap.put(POWERSHAKER.get(), POWERSHAKER.get().getRegistryName());
+        artifactMap.put(UPDRAFT_TOME.get(), UPDRAFT_TOME.get().getRegistryName());
     }
 }
