@@ -17,7 +17,8 @@ public class EffectInit {
             effectRegistryEvent.getRegistry().registerAll(
                     CustomEffects.SHIELDING = new CustomEffect(EffectType.BENEFICIAL, 10044730).setRegistryName(makeResourceName("shielding")),
                     CustomEffects.SOUL_PROTECTION = new CustomEffect(EffectType.BENEFICIAL, 2445989).setRegistryName(makeResourceName("soul_protection")),
-                    CustomEffects.STUNNED = new CustomEffect(EffectType.HARMFUL, 4738376).setRegistryName(makeResourceName("stunned"))
+                    CustomEffects.STUNNED = new CustomEffect(EffectType.HARMFUL, 4738376).setRegistryName(makeResourceName("stunned")),
+                    CustomEffects.PARTY_STARTER = new CustomEffect(EffectType.BENEFICIAL, 0xE25822).setRegistryName(makeResourceName("party_starter"))
             );
         }
 

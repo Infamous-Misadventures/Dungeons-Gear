@@ -63,6 +63,7 @@ public class SurpriseGiftEnchantment extends DropsEnchantment {
                     List<ItemStack> giftList = Arrays.asList(strengthPotion, speedPotion, shadowBrew, oakwoodBrew
                             //,arrowBundle
                     );
+                    // TODO: Add more potions
 
                     while(surpriseGiftChance > 0){
                         float surpriseGiftRand = player.getRNG().nextFloat();

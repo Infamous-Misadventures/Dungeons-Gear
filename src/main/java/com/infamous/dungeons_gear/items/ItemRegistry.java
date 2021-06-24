@@ -35,7 +35,6 @@ public class ItemRegistry {
     public static Map<Item, ResourceLocation> commonWeaponMap = new HashMap<Item, ResourceLocation>();
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
-
     
     public static final Item.Properties MELEE_WEAPON_PROPERTIES = DungeonsGearConfig.ENABLE_MELEE_WEAPON_TAB.get() ?
             new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP) : new Item.Properties().group(ItemGroup.COMBAT);
@@ -443,6 +442,14 @@ public class ItemRegistry {
             () -> new ThunderingQuiverItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> HARPOON_QUIVER = ITEMS.register("harpoon_quiver",
             () -> new HarpoonQuiverItem(ARTIFACT_PROPERTIES));
+    public static final RegistryObject<Item> SATCHEL_OF_ELIXIRS = ITEMS.register("satchel_of_elixirs",
+            () -> new SatchelOfElixirsItem(ARTIFACT_PROPERTIES));
+    public static final RegistryObject<Item> SATCHEL_OF_SNACKS = ITEMS.register("satchel_of_snacks",
+            () -> new SatchelOfSnacksItem(ARTIFACT_PROPERTIES));
+    public static final RegistryObject<Item> SATCHEL_OF_ELEMENTS = ITEMS.register("satchel_of_elements",
+            () -> new SatchelOfElementsItem(ARTIFACT_PROPERTIES));
+    public static final RegistryObject<Item> POWERSHAKER = ITEMS.register("powershaker",
+            () -> new PowershakerItem(ARTIFACT_PROPERTIES));
 
     public static final RegistryObject<Item> HUNTERS_ARMOR = ITEMS.register("hunters_vest",
             () -> new HuntersArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
@@ -868,5 +875,9 @@ public class ItemRegistry {
         artifactMap.put(CORRUPTED_PUMPKIN.get(), CORRUPTED_PUMPKIN.get().getRegistryName());
         artifactMap.put(THUNDERING_QUIVER.get(), THUNDERING_QUIVER.get().getRegistryName());
         artifactMap.put(HARPOON_QUIVER.get(), HARPOON_QUIVER.get().getRegistryName());
+        artifactMap.put(SATCHEL_OF_ELIXIRS.get(), SATCHEL_OF_ELIXIRS.get().getRegistryName());
+        artifactMap.put(SATCHEL_OF_SNACKS.get(), SATCHEL_OF_SNACKS.get().getRegistryName());
+        artifactMap.put(SATCHEL_OF_ELEMENTS.get(), SATCHEL_OF_ELEMENTS.get().getRegistryName());
+        artifactMap.put(POWERSHAKER.get(), POWERSHAKER.get().getRegistryName());
     }
 }

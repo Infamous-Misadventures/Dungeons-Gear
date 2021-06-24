@@ -27,7 +27,7 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class FoodReservesEnchantment extends DropsEnchantment {
-    private static final List<Item> foodList = Arrays.asList(Items.APPLE, Items.BREAD, Items.COOKED_PORKCHOP, Items.MELON_SLICE, Items.COOKED_SALMON);
+    public static final List<Item> FOOD_LIST = Arrays.asList(Items.APPLE, Items.BREAD, Items.COOKED_PORKCHOP, Items.MELON_SLICE, Items.COOKED_SALMON);
 
     public FoodReservesEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlotType[]{
@@ -57,7 +57,7 @@ public class FoodReservesEnchantment extends DropsEnchantment {
                 if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.FOOD_RESERVES)){
                     int foodReservesLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.FOOD_RESERVES, player);
                     while(foodReservesLevel > 0){
-                        Item foodToDrop = foodList.get(player.getRNG().nextInt(foodList.size()));
+                        Item foodToDrop = FOOD_LIST.get(player.getRNG().nextInt(FOOD_LIST.size()));
                         ItemEntity foodDrop = new ItemEntity(player.world, player.getPosX(), player.getPosY(), player.getPosZ(), new ItemStack(foodToDrop));
                         player.world.addEntity(foodDrop);
                         foodReservesLevel--;

@@ -4,10 +4,13 @@ import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.capabilities.summoning.ISummonable;
 import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
+import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.effects.CustomEffects;
+import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.goals.*;
 import com.infamous.dungeons_gear.items.ItemRegistry;
 import com.infamous.dungeons_gear.utilties.*;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
@@ -20,6 +23,7 @@ import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.world.World;
@@ -27,10 +31,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
+import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -125,7 +126,7 @@ public class ArtifactEvents {
             if(summonableCap == null) return;
             if(summonableCap.getSummoner() != null){
                 if(sheepEntity.getTags().contains(FIRE_SHEEP_TAG)){
-                    event.getEntityLiving().setFire(100);
+                    event.getEntityLiving().setFire(5);
                 }
                 else if(sheepEntity.getTags().contains(POISON_SHEEP_TAG)){
                     EffectInstance poison = new EffectInstance(Effects.POISON, 100);
@@ -257,6 +258,45 @@ public class ArtifactEvents {
             event.getEntityLiving().addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 900, 1));
             event.getEntityLiving().addPotionEffect(new EffectInstance(Effects.ABSORPTION, 100, 1));
         }
+    }
+
+
+
+    @SubscribeEvent
+    public static void onPartyStarterAttack(LivingAttackEvent event){
+        if (isProbablyNotMeleeDamage(event.getSource())) return;
+
+        LivingEntity victim = event.getEntityLiving();
+        Entity trueSource = event.getSource().getTrueSource();
+        if(trueSource instanceof LivingEntity) {
+            LivingEntity attacker = (LivingEntity) trueSource;
+            EffectInstance partyStarter = attacker.getActivePotionEffect(CustomEffects.PARTY_STARTER);
+            if (partyStarter != null) {
+                int partyStarterLevel = partyStarter.getAmplifier() + 1;
+
+                SoundHelper.playGenericExplodeSound(victim);
+                if(!attacker.world.isRemote){
+                    float explosionDamage;
+                    explosionDamage = victim.getMaxHealth() * 0.2F * partyStarterLevel;
+                    AOECloudHelper.spawnExplosionCloud(attacker, victim, 3.0F);
+                    AreaOfEffectHelper.causeExplosionAttack(attacker, victim, explosionDamage, 3.0F);
+
+                }
+                partyStarterLevel--;
+                if(partyStarterLevel <= 0){
+                    attacker.removePotionEffect(CustomEffects.PARTY_STARTER);
+                } else{
+                    ObfuscationReflectionHelper.setPrivateValue(EffectInstance.class, partyStarter, partyStarterLevel - 1, "field_76461_c");
+                }
+            }
+        }
+    }
+
+    private static boolean isProbablyNotMeleeDamage(DamageSource damageSource) {
+        return damageSource.isFireDamage()
+                || damageSource.isExplosion()
+                || damageSource.isMagicDamage()
+                || damageSource.isProjectile();
     }
 
 
