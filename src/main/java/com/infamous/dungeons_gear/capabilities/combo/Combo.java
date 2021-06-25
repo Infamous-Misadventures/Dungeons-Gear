@@ -34,6 +34,7 @@ public class Combo implements ICombo {
     private float cachedCooldown;//no need to be saved, it's stored and used in the span of a tick
 
     private BlockPos lastExplorerCheckpoint;
+    private BlockPos lastLuckyExplorerCheckpoint;
 
     public Combo() {
         this.souls = 0;
@@ -56,6 +57,7 @@ public class Combo implements ICombo {
         this.poisonImmunityTimer = 0;
         this.dynamoMultiplier = 1.0D;
         this.lastExplorerCheckpoint = BlockPos.ZERO;
+        this.lastLuckyExplorerCheckpoint = BlockPos.ZERO;
     }
 
     @Override
@@ -291,5 +293,15 @@ public class Combo implements ICombo {
     @Override
     public void setLastExplorerCheckpoint(BlockPos blockPos) {
         this.lastExplorerCheckpoint = blockPos;
+    }
+
+    @Override
+    public BlockPos getLastLuckyExplorerCheckpoint() {
+        return this.lastLuckyExplorerCheckpoint;
+    }
+
+    @Override
+    public void setLastLuckyExplorerCheckpoint(BlockPos blockPos) {
+        this.lastLuckyExplorerCheckpoint = blockPos;
     }
 }

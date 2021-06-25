@@ -134,6 +134,8 @@
   "enchantment.dungeons_gear.gravity_pulse.desc": "A blast occurs every five seconds that pulls nearby enemies towards you.",
   "enchantment.dungeons_gear.health_synergy": "Health Synergy",
   "enchantment.dungeons_gear.health_synergy.desc": "When activating any artifact, you regain a small amount of health.",
+  "enchantment.dungeons_gear.lucky_explorer": "Lucky Explorer",
+  "enchantment.dungeons_gear.lucky_explorer.desc": "Chance to spawn emeralds with every block explored.",
   "enchantment.dungeons_gear.potion_barrier": "Potion Barrier",
   "enchantment.dungeons_gear.potion_barrier.desc": "Whenever you use a healing potion, you take -80% damage for a short duration.",
   "enchantment.dungeons_gear.snowball": "Snowball",

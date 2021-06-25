@@ -40,6 +40,9 @@ public class ComboStorage implements Capability.IStorage<ICombo> {
         BlockPos lastExplorerCheckpoint = instance.getLastExplorerCheckpoint();
         tag.put("lastExplorerCheckpoint", this.newDoubleNBTList(lastExplorerCheckpoint.getX(), lastExplorerCheckpoint.getY(), lastExplorerCheckpoint.getZ()));
 
+        BlockPos lastLuckyExplorerCheckpoint = instance.getLastLuckyExplorerCheckpoint();
+        tag.put("lastLuckyExplorerCheckpoint", this.newDoubleNBTList(lastLuckyExplorerCheckpoint.getX(), lastLuckyExplorerCheckpoint.getY(), lastLuckyExplorerCheckpoint.getZ()));
+
         return tag;
     }
 
@@ -70,6 +73,10 @@ public class ComboStorage implements Capability.IStorage<ICombo> {
         ListNBT listnbt = tag.getList("lastExplorerCheckpoint", 6);
         BlockPos lastExplorerCheckpoint = new BlockPos(listnbt.getDouble(0), listnbt.getDouble(1), listnbt.getDouble(2));
         instance.setLastExplorerCheckpoint(lastExplorerCheckpoint);
+
+        ListNBT listnbt1 = tag.getList("lastLuckyExplorerCheckpoint", 6);
+        BlockPos lastLuckyExplorerCheckpoint = new BlockPos(listnbt1.getDouble(0), listnbt1.getDouble(1), listnbt1.getDouble(2));
+        instance.setLastLuckyExplorerCheckpoint(lastLuckyExplorerCheckpoint);
     }
 
     private ListNBT newDoubleNBTList(double... numbers){

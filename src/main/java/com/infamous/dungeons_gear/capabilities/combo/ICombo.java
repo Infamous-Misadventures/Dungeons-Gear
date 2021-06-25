@@ -70,4 +70,7 @@ public interface ICombo {
     BlockPos getLastExplorerCheckpoint();
     void setLastExplorerCheckpoint(BlockPos blockPos);
 
+    BlockPos getLastLuckyExplorerCheckpoint();
+    void setLastLuckyExplorerCheckpoint(BlockPos blockPos);
+
 }

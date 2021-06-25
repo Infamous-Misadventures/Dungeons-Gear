@@ -77,6 +77,7 @@ public class EnchantmentInit {
                     FRENZIED = new FrenziedEnchantment().setRegistryName(location("frenzied")),
                     GRAVITY_PULSE = new GravityPulseEnchantment().setRegistryName(location("gravity_pulse")),
                     HEALTH_SYNERGY = new HealthSynergyEnchantment().setRegistryName(location("health_synergy")),
+                    LUCKY_EXPLORER = new LuckyExplorerEnchantment().setRegistryName(location("lucky_explorer")),
                     POTION_BARRIER = new PotionBarrierEnchantment().setRegistryName(location("potion_barrier")),
                     SNOWBALL = new SnowballEnchantment().setRegistryName(location("snowball")),
                     SPEED_SYNERGY = new SpeedSynergyEnchantment().setRegistryName(location("speed_synergy")),

@@ -841,5 +841,7 @@
   "enchantment.dungeons_gear.bag_of_souls": "Bag of Souls",
   "enchantment.dungeons_gear.bag_of_souls.desc": "Increases the maximum number of souls that can be carried.",
   "enchantment.dungeons_gear.explorer": "Explorer",
-  "enchantment.dungeons_gear.explorer.desc": "For every one hundred blocks explored, you regain a small amount of health."
+  "enchantment.dungeons_gear.explorer.desc": "For every one hundred blocks explored, you regain a small amount of health.",
+  "enchantment.dungeons_gear.lucky_explorer": "Lucky Explorer",
+  "enchantment.dungeons_gear.lucky_explorer.desc": "Chance to spawn emeralds with every block explored."
 }

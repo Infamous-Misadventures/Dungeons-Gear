@@ -19,6 +19,7 @@ public class ArmorEnchantmentList {
     public static Enchantment FRENZIED;
     public static Enchantment GRAVITY_PULSE;
     public static Enchantment HEALTH_SYNERGY;
+    public static Enchantment LUCKY_EXPLORER;
     public static Enchantment POTION_BARRIER;
     public static Enchantment RECYCLER;
     public static Enchantment REGENERATION;
