@@ -106,7 +106,7 @@ public class DungeonsGearConfig {
                 .comment("Add enchantments that should be prevented from being applied to any gear. \n"
                         + "To do so, enter their registry names.")
                 .defineList("enchantmentBlacklist", Lists.newArrayList(
-
+                        "dungeons_gear:lucky_explorer"
                         ),
                         (itemRaw) -> itemRaw instanceof String);
         TREASURE_ONLY_ENCHANTMENTS = builder

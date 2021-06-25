@@ -4,13 +4,10 @@ import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.capabilities.summoning.ISummonable;
 import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
-import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.effects.CustomEffects;
-import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.goals.*;
 import com.infamous.dungeons_gear.items.ItemRegistry;
 import com.infamous.dungeons_gear.utilties.*;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
@@ -23,7 +20,6 @@ import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.world.World;
@@ -264,7 +260,7 @@ public class ArtifactEvents {
 
     @SubscribeEvent
     public static void onPartyStarterAttack(LivingAttackEvent event){
-        if (isProbablyNotMeleeDamage(event.getSource())) return;
+        if (PlayerAttackHelper.isProbablyNotMeleeDamage(event.getSource())) return;
 
         LivingEntity victim = event.getEntityLiving();
         Entity trueSource = event.getSource().getTrueSource();
@@ -290,13 +286,6 @@ public class ArtifactEvents {
                 }
             }
         }
-    }
-
-    private static boolean isProbablyNotMeleeDamage(DamageSource damageSource) {
-        return damageSource.isFireDamage()
-                || damageSource.isExplosion()
-                || damageSource.isMagicDamage()
-                || damageSource.isProjectile();
     }
 
 

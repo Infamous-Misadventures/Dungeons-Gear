@@ -36,8 +36,9 @@ public class EnchantmentInit {
                     CRITICAL_HIT = new CriticalHitEnchantment().setRegistryName(location("critical_hit")),
                     ECHO = new EchoEnchantment().setRegistryName(location("echo")),
                     EXPLODING = new ExplodingEnchantment().setRegistryName(location("exploding")),
-                    LEECHING = new LeechingEnchantment().setRegistryName(location("leeching")),
+                    GUARDING_STRIKE = new GuardingStrikeEnchantment().setRegistryName(location("guarding_strike")),
                     ILLAGERS_BANE = new ModDamageEnchantment(Enchantment.Rarity.UNCOMMON, 3, EquipmentSlotType.MAINHAND).setRegistryName(location("illagers_bane")),
+                    LEECHING = new LeechingEnchantment().setRegistryName(location("leeching")),
                     PROSPECTOR = new ProspectorEnchantment().setRegistryName(location("prospector")),
                     RADIANCE = new RadianceEnchantment().setRegistryName(location("radiance")),
                     RAMPAGING = new RampagingEnchantment().setRegistryName(location("rampaging")),
@@ -64,10 +65,12 @@ public class EnchantmentInit {
 
 
                     ALTRUISTIC = new AltruisticEnchantment().setRegistryName(location("altruistic")),
+                    BAG_OF_SOULS = new BagOfSoulsEnchantment().setRegistryName(location("bag_of_souls")),
                     BURNING = new BurningEnchantment().setRegistryName(location("burning")),
                     CHILLING = new ChillingEnchantment().setRegistryName(location("chilling")),
                     COOLDOWN = new CooldownEnchantment().setRegistryName(location("cooldown")),
                     COWARDICE = new CowardiceEnchantment().setRegistryName(location("cowardice")),
+                    DEATH_BARTER = new DeathBarterEnchantment().setRegistryName(location("death_barter")),
                     DEFLECT = new DeflectEnchantment().setRegistryName(location("deflect")),
                     ELECTRIFIED = new ElectrifiedEnchantment().setRegistryName(location("electrified")),
                     EXPLORER = new ExplorerEnchantment().setRegistryName(location("explorer")),
@@ -79,13 +82,13 @@ public class EnchantmentInit {
                     HEALTH_SYNERGY = new HealthSynergyEnchantment().setRegistryName(location("health_synergy")),
                     LUCKY_EXPLORER = new LuckyExplorerEnchantment().setRegistryName(location("lucky_explorer")),
                     POTION_BARRIER = new PotionBarrierEnchantment().setRegistryName(location("potion_barrier")),
+                    RECYCLER = new RecyclerEnchantment().setRegistryName(location("recycler")),
+                    RUSH = new RushEnchantment().setRegistryName(location("rush")),
                     SNOWBALL = new SnowballEnchantment().setRegistryName(location("snowball")),
                     SPEED_SYNERGY = new SpeedSynergyEnchantment().setRegistryName(location("speed_synergy")),
                     SURPRISE_GIFT = new SurpriseGiftEnchantment().setRegistryName(location("surprise_gift")),
                     SWIFTFOOTED = new SwiftfootedEnchantment().setRegistryName(location("swiftfooted")),
-                    TUMBLEBEE = new TumblebeeEnchantment().setRegistryName(location("tumblebee")),
-                    RECYCLER = new RecyclerEnchantment().setRegistryName(location("recycler")),
-                    BAG_OF_SOULS = new BagOfSoulsEnchantment().setRegistryName(location("bag_of_souls"))
+                    TUMBLEBEE = new TumblebeeEnchantment().setRegistryName(location("tumblebee"))
                     );
 
             putItemsInMap();

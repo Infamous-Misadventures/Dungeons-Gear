@@ -10,6 +10,7 @@ public class ArmorEnchantmentList {
     public static Enchantment CHILLING;
     public static Enchantment COOLDOWN;
     public static Enchantment COWARDICE;
+    public static Enchantment DEATH_BARTER;
     public static Enchantment DEFLECT;
     public static Enchantment ELECTRIFIED;
     public static Enchantment EXPLORER;
@@ -24,6 +25,7 @@ public class ArmorEnchantmentList {
     public static Enchantment RECYCLER;
     public static Enchantment REGENERATION;
     public static Enchantment SHIELDING;
+    public static Enchantment RUSH;
     public static Enchantment SNOWBALL;
     public static Enchantment SPEED_SYNERGY;
     public static Enchantment SURPRISE_GIFT;

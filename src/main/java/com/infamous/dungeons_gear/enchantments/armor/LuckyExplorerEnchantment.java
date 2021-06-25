@@ -5,7 +5,7 @@ import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DropsEnchantment;
-import com.infamous.dungeons_gear.enchantments.types.HealthAbilityEnchantment;
+import com.infamous.dungeons_gear.enchantments.types.IEmeraldsEnchantment;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -23,7 +23,7 @@ import net.minecraftforge.fml.common.Mod;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
 @Mod.EventBusSubscriber(modid = MODID)
-public class LuckyExplorerEnchantment extends DropsEnchantment {
+public class LuckyExplorerEnchantment extends DropsEnchantment implements IEmeraldsEnchantment {
 
     public LuckyExplorerEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlotType[]{
@@ -73,6 +73,7 @@ public class LuckyExplorerEnchantment extends DropsEnchantment {
 
     @Override
     public boolean canApplyTogether(Enchantment enchantment) {
-        return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof DropsEnchantment);
+        return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get()
+                || (!(enchantment instanceof DropsEnchantment) && !(enchantment instanceof IEmeraldsEnchantment));
     }
 }

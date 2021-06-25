@@ -843,5 +843,11 @@
   "enchantment.dungeons_gear.explorer": "Explorer",
   "enchantment.dungeons_gear.explorer.desc": "For every one hundred blocks explored, you regain a small amount of health.",
   "enchantment.dungeons_gear.lucky_explorer": "Lucky Explorer",
-  "enchantment.dungeons_gear.lucky_explorer.desc": "Chance to spawn emeralds with every block explored."
+  "enchantment.dungeons_gear.lucky_explorer.desc": "Chance to spawn emeralds with every block explored.",
+  "enchantment.dungeons_gear.death_barter": "Death Barter",
+  "enchantment.dungeons_gear.death_barter.desc": "The first amount of emeralds collected are stored and then spent to save the player from death.",
+  "enchantment.dungeons_gear.rush": "Rush",
+  "enchantment.dungeons_gear.rush.desc": "Increases movement speed for one second after taking damage.",
+  "enchantment.dungeons_gear.guarding_strike": "Guarding Strike",
+  "enchantment.dungeons_gear.guarding_strike.desc": "When you defeat a mob, you are given a temporary shield that reduces damage by 50%."
 }

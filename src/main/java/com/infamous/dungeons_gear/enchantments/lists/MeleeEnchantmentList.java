@@ -9,6 +9,7 @@ public class MeleeEnchantmentList {
     public static Enchantment CRITICAL_HIT;
     public static Enchantment ECHO;
     public static Enchantment EXPLODING;
+    public static Enchantment GUARDING_STRIKE;
     public static Enchantment LEECHING;
     public static Enchantment ILLAGERS_BANE;
     public static Enchantment PROSPECTOR;
