@@ -1,8 +1,11 @@
 package com.infamous.dungeons_gear.capabilities.combo;
 
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.DoubleNBT;
 import net.minecraft.nbt.INBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 
 import javax.annotation.Nullable;
@@ -33,6 +36,10 @@ public class ComboStorage implements Capability.IStorage<ICombo> {
         tag.putInt("lastShoutTimer", instance.getLastShoutTimer());
         tag.putDouble("dynamoMultiplier", instance.getDynamoMultiplier());
         tag.putFloat("souls", instance.getSouls());
+
+        BlockPos lastExplorerCheckpoint = instance.getLastExplorerCheckpoint();
+        tag.put("lastExplorerCheckpoint", this.newDoubleNBTList(lastExplorerCheckpoint.getX(), lastExplorerCheckpoint.getY(), lastExplorerCheckpoint.getZ()));
+
         return tag;
     }
 
@@ -59,5 +66,19 @@ public class ComboStorage implements Capability.IStorage<ICombo> {
         instance.setLastShoutTimer(tag.getInt("lastShoutTimer"));
         instance.setDynamoMultiplier(tag.getInt("dynamoMultiplier"));
         instance.setSouls(tag.getFloat("souls"), null);
+
+        ListNBT listnbt = tag.getList("lastExplorerCheckpoint", 6);
+        BlockPos lastExplorerCheckpoint = new BlockPos(listnbt.getDouble(0), listnbt.getDouble(1), listnbt.getDouble(2));
+        instance.setLastExplorerCheckpoint(lastExplorerCheckpoint);
+    }
+
+    private ListNBT newDoubleNBTList(double... numbers){
+        ListNBT listnbt = new ListNBT();
+
+        for(double d0 : numbers) {
+            listnbt.add(DoubleNBT.valueOf(d0));
+        }
+
+        return listnbt;
     }
 }

@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.capabilities.combo;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 
 import javax.annotation.Nullable;
@@ -32,6 +33,8 @@ public class Combo implements ICombo {
     private int offhandCooldown;
     private float cachedCooldown;//no need to be saved, it's stored and used in the span of a tick
 
+    private BlockPos lastExplorerCheckpoint;
+
     public Combo() {
         this.souls = 0;
         this.comboTimer = 0;
@@ -52,6 +55,7 @@ public class Combo implements ICombo {
         this.jumpCooldownTimer = 0;
         this.poisonImmunityTimer = 0;
         this.dynamoMultiplier = 1.0D;
+        this.lastExplorerCheckpoint = BlockPos.ZERO;
     }
 
     @Override
@@ -277,5 +281,15 @@ public class Combo implements ICombo {
     @Override
     public void setCachedCooldown(float cooldown) {
         cachedCooldown = cooldown;
+    }
+
+    @Override
+    public BlockPos getLastExplorerCheckpoint() {
+        return this.lastExplorerCheckpoint;
+    }
+
+    @Override
+    public void setLastExplorerCheckpoint(BlockPos blockPos) {
+        this.lastExplorerCheckpoint = blockPos;
     }
 }

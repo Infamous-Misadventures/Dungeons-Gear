@@ -837,5 +837,9 @@
   "ability.dungeons_gear.powershaker": "When Powershaker is activated, your next 3 melee attacks cause mobs to explode.",
   "item.dungeons_gear.updraft_tome": "Updraft Tome",
   "lore.dungeons_gear.updraft_tome": "An ancient book filled with illegible glyphs, you feel a strange breeze as you flip the pages.",
-  "ability.dungeons_gear.updraft_tome": "Launch up to 5 enemies into the air, stunning and damaging them."
+  "ability.dungeons_gear.updraft_tome": "Launch up to 5 enemies into the air, stunning and damaging them.",
+  "enchantment.dungeons_gear.bag_of_souls": "Bag of Souls",
+  "enchantment.dungeons_gear.bag_of_souls.desc": "Increases the maximum number of souls that can be carried.",
+  "enchantment.dungeons_gear.explorer": "Explorer",
+  "enchantment.dungeons_gear.explorer.desc": "For every one hundred blocks explored, you regain a small amount of health."
 }

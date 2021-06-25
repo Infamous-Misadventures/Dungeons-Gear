@@ -2,6 +2,7 @@ package com.infamous.dungeons_gear.capabilities.combo;
 
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nullable;
 
@@ -66,5 +67,7 @@ public interface ICombo {
     float getCachedCooldown();
     void setCachedCooldown(float cooldown);
 
+    BlockPos getLastExplorerCheckpoint();
+    void setLastExplorerCheckpoint(BlockPos blockPos);
 
 }

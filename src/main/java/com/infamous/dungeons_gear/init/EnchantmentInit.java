@@ -70,6 +70,7 @@ public class EnchantmentInit {
                     COWARDICE = new CowardiceEnchantment().setRegistryName(location("cowardice")),
                     DEFLECT = new DeflectEnchantment().setRegistryName(location("deflect")),
                     ELECTRIFIED = new ElectrifiedEnchantment().setRegistryName(location("electrified")),
+                    EXPLORER = new ExplorerEnchantment().setRegistryName(location("explorer")),
                     FINAL_SHOUT = new FinalShoutEnchantment().setRegistryName(location("final_shout")),
                     FIRE_TRAIL = new FireTrailEnchantment().setRegistryName(location("fire_trail")),
                     FOOD_RESERVES = new FoodReservesEnchantment().setRegistryName(location("food_reserves")),
