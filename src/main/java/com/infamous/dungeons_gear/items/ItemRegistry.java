@@ -171,11 +171,11 @@ public class ItemRegistry {
 
     //DPS 7.2, crits once per 1.25 seconds
     public static final RegistryObject<Item> SOUL_KNIFE = ITEMS.register("soul_knife",
-            () -> new SoulKnifeItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), MELEE_WEAPON_PROPERTIES, false));
+            () -> new SoulKnifeItem(ToolMaterialList.METAL, 8, (0.8f-4.0f), MELEE_WEAPON_PROPERTIES, false));
     public static final RegistryObject<Item> ETERNAL_KNIFE = ITEMS.register("eternal_knife",
-            () -> new SoulKnifeItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), MELEE_WEAPON_PROPERTIES, true));
+            () -> new SoulKnifeItem(ToolMaterialList.METAL, 8, (0.8f-4.0f), MELEE_WEAPON_PROPERTIES, true));
     public static final RegistryObject<Item> TRUTHSEEKER = ITEMS.register("truthseeker",
-            () -> new SoulKnifeItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), MELEE_WEAPON_PROPERTIES, true));
+            () -> new SoulKnifeItem(ToolMaterialList.METAL, 8, (0.8f-4.0f), MELEE_WEAPON_PROPERTIES, true));
 
     //DPS 9.6, crits once per 3.3 seconds
     public static final RegistryObject<Item> CLAYMORE = ITEMS.register("claymore",
@@ -211,7 +211,7 @@ public class ItemRegistry {
     public static final RegistryObject<Item> VINE_WHIP = ITEMS.register("vine_whip",
             () -> new WhipItem(ToolMaterialList.METAL, 6, (1.0f-4.0f), 2.5F, MELEE_WEAPON_PROPERTIES, true));
 
-    //DPS 7.2, crits once per 1.25 seconds TODO: Change stats
+    //DPS 7.2, crits once per 1.25 seconds
     public static final RegistryObject<Item> TEMPEST_KNIFE = ITEMS.register("tempest_knife",
             () -> new TempestKnifeItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), MELEE_WEAPON_PROPERTIES, false));
     public static final RegistryObject<Item> RESOLUTE_TEMPEST_KNIFE = ITEMS.register("resolute_tempest_knife",
@@ -219,29 +219,29 @@ public class ItemRegistry {
     public static final RegistryObject<Item> CHILL_GALE_KNIFE = ITEMS.register("chill_gale_knife",
             () -> new TempestKnifeItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), MELEE_WEAPON_PROPERTIES, true));
 
-    // bone clubs TODO: Change stats
+    //DPS 10.4, crits once per 2.5 seconds
     public static final RegistryObject<Item> BONECLUB = ITEMS.register("boneclub",
-            () -> new BoneClubItem(ToolMaterialList.METAL, 7, (1.1f-4.0f), MELEE_WEAPON_PROPERTIES, false));
+            () -> new BoneClubItem(ToolMaterialList.METAL, 12, (0.8f-4.0f), MELEE_WEAPON_PROPERTIES, false));
     public static final RegistryObject<Item> BONE_CUDGEL = ITEMS.register("bone_cudgel",
-            () -> new BoneClubItem(ToolMaterialList.METAL, 7, (1.1f-4.0f), MELEE_WEAPON_PROPERTIES, true));
+            () -> new BoneClubItem(ToolMaterialList.METAL, 12, (0.8f-4.0f), MELEE_WEAPON_PROPERTIES, true));
 
-    // sawblades TODO: Change stats
+    // sawblades TODO: How the bloody murder am I supposed to change this thing?
     public static final RegistryObject<Item> BROKEN_SAWBLADE = ITEMS.register("broken_sawblade",
-            () -> new SawbladeItem(ToolMaterialList.METAL, 5, (1.6f-4.0f), MELEE_WEAPON_PROPERTIES, false));
+            () -> new SawbladeItem(ToolMaterialList.METAL, 5, (3.0f-4.0f), MELEE_WEAPON_PROPERTIES, false));
     public static final RegistryObject<Item> MECHANIZED_SAWBLADE = ITEMS.register("mechanized_sawblade",
-            () -> new SawbladeItem(ToolMaterialList.METAL, 5, (1.6f-4.0f), MELEE_WEAPON_PROPERTIES, true));
+            () -> new SawbladeItem(ToolMaterialList.METAL, 5, (3.0f-4.0f), MELEE_WEAPON_PROPERTIES, true));
 
-    // coral blades TODO: Change stats
+    //DPS 7.2, crits once per 1.25 seconds
     public static final RegistryObject<Item> CORAL_BLADE = ITEMS.register("coral_blade",
-            () -> new CoralBladeItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), MELEE_WEAPON_PROPERTIES, false));
+            () -> new CoralBladeItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), MELEE_WEAPON_PROPERTIES, false));
     public static final RegistryObject<Item> SPONGE_STRIKER = ITEMS.register("sponge_striker",
-            () -> new CoralBladeItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), MELEE_WEAPON_PROPERTIES, true));
+            () -> new CoralBladeItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), MELEE_WEAPON_PROPERTIES, true));
 
-    // anchors TODO: Change stats
+    //DPS 8, crits once per 1.25 seconds
     public static final RegistryObject<Item> ANCHOR = ITEMS.register("anchor",
-            () -> new AnchorItem(ToolMaterialList.METAL, 7, (1.1f-4.0f), 0.1F, MELEE_WEAPON_PROPERTIES, false));
+            () -> new AnchorItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), 0.1F, MELEE_WEAPON_PROPERTIES, false));
     public static final RegistryObject<Item> ENCRUSTED_ANCHOR = ITEMS.register("encrusted_anchor",
-            () -> new AnchorItem(ToolMaterialList.METAL, 7, (1.1f-4.0f), 0.1F, MELEE_WEAPON_PROPERTIES, true));
+            () -> new AnchorItem(ToolMaterialList.METAL, 9, (0.8f-4.0f), 0.1F, MELEE_WEAPON_PROPERTIES, true));
 
 
     public static final RegistryObject<Item> BONEBOW = ITEMS.register("bonebow",

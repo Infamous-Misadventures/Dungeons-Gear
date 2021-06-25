@@ -56,7 +56,7 @@ public class FinalShoutEnchantment extends HealthAbilityEnchantment {
                             }
                         for (ItemStack is : player.inventory.mainInventory)
                             if (is.getItem() instanceof ArtifactItem && !(is.getItem() instanceof AbstractBeaconItem)) {
-                                ((ArtifactItem) is.getItem()).procArtifact(new ItemUseContext(player.world, player, null, is, new BlockRayTraceResult(player.getPositionVec(), Direction.UP, player.getPosition(), false)));
+                                ((ArtifactItem) is.getItem()).procArtifact(new ItemUseContext(player.world, player, Hand.MAIN_HAND, is, new BlockRayTraceResult(player.getPositionVec(), Direction.UP, player.getPosition(), false)));
                                 if (++proc == 3) break;
                             }
                         if (proc > 0) {

@@ -50,7 +50,7 @@ public class SnowballEnchantment extends PulseEnchantment {
                     ProjectileEffectHelper.fireSnowballAtNearbyEnemy(player, 10);
                     comboCap.setSnowballNearbyTimer(Math.max(100 - (snowballLevel - 1) * 40, 20));
                 } else {
-                    if (snowballNearbyTimer == 100) snowballNearbyTimer -= Math.max(100, 20 + snowballLevel * 20);
+                    //if (snowballNearbyTimer == 100) snowballNearbyTimer -= Math.max(100, 20 + snowballLevel * 20);//what's this do?
                     comboCap.setSnowballNearbyTimer(Math.max(snowballNearbyTimer - 1, 0));
                 }
             } else {
