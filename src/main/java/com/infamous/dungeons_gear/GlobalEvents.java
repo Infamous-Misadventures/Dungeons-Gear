@@ -237,7 +237,7 @@ public class GlobalEvents {
             }
 
             if (souls > 0) {
-                SoulHelper.addSoul(player, souls);
+                SoulHelper.addSouls(player, souls);
                 if (event.getSource().getImmediateSource() instanceof AbstractArrowEntity) {
                     AbstractArrowEntity arrowEntity = (AbstractArrowEntity) event.getSource().getImmediateSource();
                     int animaConduitLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrowEntity, MeleeRangedEnchantmentList.ANIMA_CONDUIT);

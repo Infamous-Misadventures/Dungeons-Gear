@@ -1,10 +1,15 @@
 package com.infamous.dungeons_gear.capabilities.combo;
 
+import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
+
+import javax.annotation.Nullable;
 
 public class Combo implements ICombo {
 
-    private float soul;
+    private float souls;
     private int comboTimer;
     //private boolean ghostForm;
     private boolean shadowForm;
@@ -28,7 +33,7 @@ public class Combo implements ICombo {
     private float cachedCooldown;//no need to be saved, it's stored and used in the span of a tick
 
     public Combo() {
-        this.soul = 0;
+        this.souls = 0;
         this.comboTimer = 0;
         this.comboCount = 0;
         //this.ghostForm = false;
@@ -61,29 +66,35 @@ public class Combo implements ICombo {
 
     @Override
     public boolean consumeSouls(float amount) {
-        if (soul < amount) return false;
-        soul -= amount;
+        if (souls < amount) return false;
+        souls -= amount;
         return true;
     }
 
     @Override
     public float getSouls() {
-        return soul;
+        return souls;
     }
 
     @Override
-    public float getMaxSouls() {
-        return 300;
+    public float getMaxSouls(@Nullable LivingEntity living) {
+        if(living == null) return 300;
+
+        int bagOfSoulsLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.BAG_OF_SOULS, living);
+        if(bagOfSoulsLevel > 0){
+            return 300 + (100 * bagOfSoulsLevel);
+        } else{
+            return 300;
+        }
     }
 
     @Override
-    public void setSouls(float soul) {
-        this.soul = soul;
-    }
-
-    @Override
-    public void addSouls(float amount, float until) {
-        soul=MathHelper.clamp(soul+amount, 0, until);
+    public void setSouls(float soul, @Nullable LivingEntity living) {
+        if(living != null){
+            this.souls = MathHelper.clamp(soul, 0, this.getMaxSouls(living));
+        } else{
+            this.souls = Math.max(soul, 0);
+        }
     }
 /*
     @Override

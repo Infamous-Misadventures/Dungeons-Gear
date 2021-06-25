@@ -106,6 +106,8 @@
 
   "enchantment.dungeons_gear.altruistic": "Altruistic",
   "enchantment.dungeons_gear.altruistic.desc": "Heals allies around you depending on how much damage you take.",
+  "enchantment.dungeons_gear.bag_of_souls": "Bag of Souls",
+  "enchantment.dungeons_gear.bag_of_souls.desc": "Increases the maximum number of souls that can be carried.",
   "enchantment.dungeons_gear.burning": "Burning",
   "enchantment.dungeons_gear.burning.desc": "Every 0.5 seconds damages all nearby enemies.",
   "enchantment.dungeons_gear.chilling": "Chilling",

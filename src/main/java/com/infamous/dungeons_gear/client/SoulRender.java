@@ -36,7 +36,7 @@ public class SoulRender {
             if(comboCapability == null) return;
 
             float souls = comboCapability.getSouls();
-            float maxSouls = comboCapability.getMaxSouls();
+            float maxSouls = comboCapability.getMaxSouls(p);
             int width = sr.getScaledWidth();
 
             GlStateManager.enableRescaleNormal();

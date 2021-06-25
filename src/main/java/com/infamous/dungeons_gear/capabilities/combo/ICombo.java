@@ -1,13 +1,15 @@
 package com.infamous.dungeons_gear.capabilities.combo;
 
 
-public interface ICombo {
+import net.minecraft.entity.LivingEntity;
 
-    void setSouls(float soul);
-    void addSouls(float amount, float until);
+import javax.annotation.Nullable;
+
+public interface ICombo {
+    void setSouls(float soul, @Nullable LivingEntity living);
     boolean consumeSouls(float amount);
     float getSouls();
-    float getMaxSouls();
+    float getMaxSouls(@Nullable LivingEntity living);
 
     void setComboTimer(int comboTimer);
     int getComboTimer();

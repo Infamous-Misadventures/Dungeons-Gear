@@ -1,7 +1,9 @@
 package com.infamous.dungeons_gear.combat;
 
+import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
@@ -35,10 +37,13 @@ public class PacketUpdateSouls {
 
                     @Override
                     public void run() {
-                        if (Minecraft.getInstance().player != null
-                                && CapabilityHelper.getComboCapability(Minecraft.getInstance().player) != null)
-                            CapabilityHelper.getComboCapability(Minecraft.getInstance().player)
-                                    .setSouls(packet.newAmount);
+                        ClientPlayerEntity player = Minecraft.getInstance().player;
+                        if (player != null) {
+                            ICombo comboCap = CapabilityHelper.getComboCapability(player);
+                            if (comboCap != null) {
+                                comboCap.setSouls(packet.newAmount, player);
+                            }
+                        }
                     }
                 }));
             }
