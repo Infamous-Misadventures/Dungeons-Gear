@@ -350,9 +350,9 @@
   "penalty.dungeons_gear.slow_fire_rate": "Slow Firerate",
 
   "item.dungeons_gear.battle_robe": "Battle Robe",
-  "lore.dungeons_gear.battle_robe": "The distinguished Splendid Robe is worn by the hardened Illager warriors who protect the Arch-Illager.",
+  "lore.dungeons_gear.battle_robe": "The Battle Robe is worn by the distinguished Illager Evokers of the Arch-Illager's court.",
   "item.dungeons_gear.splendid_robe": "Splendid Robe",
-  "lore.dungeons_gear.splendid_robe": "The Battle Robe is worn by the distinguished Illager Evokers of the Arch-Illager's court.",
+  "lore.dungeons_gear.splendid_robe": "The distinguished Splendid Robe is worn by the hardened Illager warriors who protect the Arch-Illager.",
 
   "item.dungeons_gear.champions_chestplate": "Champion's Chestplate",
   "lore.dungeons_gear.champions_chestplate": "Given to the champions of the Overworld by the free villagers as a token of their thanks for many years of protection and assistance. The mark of a true hero.",
@@ -796,7 +796,7 @@
   "item.dungeons_gear.resolute_tempest_knife": "Resolute Tempest Knife",
   "lore.dungeons_gear.resolute_tempest_knife": "Passed down by nomads who roam the mountain peaks, this knife has been used in countless battles.",
   "item.dungeons_gear.chill_gale_knife": "Chill Gale Knife",
-  "lore.dungeons_gear.chill_gale_knife": "Crafted from the never-melting ice atop the mountain peaks, this knife is forever icy to the touch",
+  "lore.dungeons_gear.chill_gale_knife": "Crafted from the never-melting ice atop the mountain peaks, this knife is forever icy to the touch.",
 
   "item.dungeons_gear.whip": "Whip",
   "lore.dungeons_gear.whip": "A whip made of sturdy rope, very dangerous in the right hands.",
@@ -804,7 +804,7 @@
   "lore.dungeons_gear.vine_whip": "A sturdy whip made from thick, thorn-laden vines capable of poisoning anything it touches. Be careful not to scratch yourself!",
 
   "item.dungeons_gear.boneclub": "Boneclub",
-  "lore.dungeons_gear.boneclub": "Those who wield a Bone Club prefer as less-subtle approach to problem-solving.",
+  "lore.dungeons_gear.boneclub": "Those who wield a Bone Club prefer a less-subtle approach to problem-solving.",
   "item.dungeons_gear.bone_cudgel": "Bone Cudgel",
   "lore.dungeons_gear.bone_cudgel": "The Bone Cudgel is old enough to be considered an ancient treasure, but still menacing even by modern standards.",
 
