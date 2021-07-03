@@ -4,11 +4,10 @@ import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.TargetGoal;
 import net.minecraft.entity.passive.BatEntity;
-import net.minecraft.entity.passive.horse.LlamaEntity;
 
 import java.util.EnumSet;
 
-import static com.infamous.dungeons_gear.goals.GoalUtils.getOwner;
+import static com.infamous.dungeons_gear.capabilities.summoning.SummoningHelper.getSummoner;
 import static com.infamous.dungeons_gear.goals.GoalUtils.shouldAttackEntity;
 
 public class BatOwnerHurtByTargetGoal extends TargetGoal {
@@ -24,7 +23,7 @@ public class BatOwnerHurtByTargetGoal extends TargetGoal {
 
     public boolean shouldExecute() {
         //if (this.batEntity.isTame()) {
-            LivingEntity owner = getOwner(this.batEntity);
+            LivingEntity owner = getSummoner(this.batEntity);
             if (owner == null) {
                 return false;
             } else {
@@ -39,7 +38,7 @@ public class BatOwnerHurtByTargetGoal extends TargetGoal {
 
     public void startExecuting() {
         this.goalOwner.setAttackTarget(this.attacker);
-        LivingEntity owner = getOwner(this.batEntity);
+        LivingEntity owner = getSummoner(this.batEntity);
         if (owner != null) {
             this.timestamp = owner.getRevengeTimer();
         }

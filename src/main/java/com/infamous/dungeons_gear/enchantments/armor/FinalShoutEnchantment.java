@@ -16,6 +16,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -51,12 +52,15 @@ public class FinalShoutEnchantment extends HealthAbilityEnchantment {
                         int proc = 0;
                         for (ItemStack is : player.inventory.offHandInventory)
                             if (is.getItem() instanceof ArtifactItem && !(is.getItem() instanceof AbstractBeaconItem)) {
-                                ((ArtifactItem) is.getItem()).procArtifact(new ItemUseContext(player, Hand.OFF_HAND, new BlockRayTraceResult(player.getPositionVec(), Direction.UP, player.getPosition(), false)));
+                                ActionResult<ItemStack> procResult = ((ArtifactItem) is.getItem()).procArtifact(new ItemUseContext(player, Hand.OFF_HAND, new BlockRayTraceResult(player.getPositionVec(), Direction.UP, player.getPosition(), false)));
+                                if(procResult.getType().isSuccessOrConsume() && !player.world.isRemote) ArtifactItem.triggerSynergy(player, is);
                                 proc++;
                             }
                         for (ItemStack is : player.inventory.mainInventory)
                             if (is.getItem() instanceof ArtifactItem && !(is.getItem() instanceof AbstractBeaconItem)) {
-                                ((ArtifactItem) is.getItem()).procArtifact(new ItemUseContext(player.world, player, Hand.MAIN_HAND, is, new BlockRayTraceResult(player.getPositionVec(), Direction.UP, player.getPosition(), false)));
+                                ActionResult<ItemStack> procResult = ((ArtifactItem) is.getItem()).procArtifact(new ItemUseContext(player.world, player, Hand.MAIN_HAND, is, new BlockRayTraceResult(player.getPositionVec(), Direction.UP, player.getPosition(), false)));
+                                if(procResult.getType().isSuccessOrConsume() && !player.world.isRemote) ArtifactItem.triggerSynergy(player, is);
+
                                 if (++proc == 3) break;
                             }
                         if (proc > 0) {

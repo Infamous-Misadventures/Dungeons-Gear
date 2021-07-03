@@ -9,6 +9,7 @@
     "AreaEffectCloudEntityMixin",
     "BowItemMixin",
     "ContainerMinecartEntityMixin",
+    "CooldownAccessor",
     "CrossbowItemMixin",
     "HurtByTargetGoalMixin",
     "LockableLootTileEntityMixin",

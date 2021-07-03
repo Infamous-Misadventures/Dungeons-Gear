@@ -55,7 +55,7 @@ public class IceWandItem extends ArtifactItem {
             IceCloudEntity iceCloudEntity = new IceCloudEntity(world, playerIn, target);
             world.addEntity(iceCloudEntity);
             stack.damageItem(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), stack)));
-            ArtifactItem.setArtifactCooldown(playerIn, stack.getItem());
+            ArtifactItem.putArtifactOnCooldown(playerIn, stack.getItem());
             return ActionResultType.SUCCESS;
         }
         return ActionResultType.PASS;

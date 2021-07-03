@@ -31,4 +31,15 @@ public class ArmorEnchantmentList {
     public static Enchantment SURPRISE_GIFT;
     public static Enchantment SWIFTFOOTED;
     public static Enchantment BAG_OF_SOULS;
+
+    public static Enchantment BEAST_BOSS;
+    public static Enchantment BEAST_BURST;
+    public static Enchantment BEAST_SURGE;
+
+    public static Enchantment FIRE_FOCUS;
+    public static Enchantment POISON_FOCUS;
+    public static Enchantment LIGHTNING_FOCUS;
+    public static Enchantment SOUL_FOCUS;
+
+    public static Enchantment RECKLESS;
 }

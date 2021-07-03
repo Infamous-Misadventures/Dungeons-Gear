@@ -43,6 +43,10 @@ public class ComboStorage implements Capability.IStorage<ICombo> {
         BlockPos lastLuckyExplorerCheckpoint = instance.getLastLuckyExplorerCheckpoint();
         tag.put("lastLuckyExplorerCheckpoint", this.newDoubleNBTList(lastLuckyExplorerCheckpoint.getX(), lastLuckyExplorerCheckpoint.getY(), lastLuckyExplorerCheckpoint.getZ()));
 
+        tag.putBoolean("artifactSynergy", instance.hasArtifactSynergy());
+
+        tag.putInt("painCycleStacks", instance.getPainCycleStacks());
+
         return tag;
     }
 
@@ -77,6 +81,10 @@ public class ComboStorage implements Capability.IStorage<ICombo> {
         ListNBT listnbt1 = tag.getList("lastLuckyExplorerCheckpoint", 6);
         BlockPos lastLuckyExplorerCheckpoint = new BlockPos(listnbt1.getDouble(0), listnbt1.getDouble(1), listnbt1.getDouble(2));
         instance.setLastLuckyExplorerCheckpoint(lastLuckyExplorerCheckpoint);
+
+        instance.setArtifactSynergy(tag.getBoolean("artifactSynergy"));
+
+        instance.setPainCycleStacks(tag.getInt("painCycleStacks"));
     }
 
     private ListNBT newDoubleNBTList(double... numbers){

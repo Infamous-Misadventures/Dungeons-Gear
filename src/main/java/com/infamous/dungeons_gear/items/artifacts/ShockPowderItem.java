@@ -28,7 +28,7 @@ public class ShockPowderItem extends ArtifactItem {
         AreaOfEffectHelper.stunNearbyEnemies(c.getWorld(), playerIn);
         itemstack.damageItem(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemstack)));
 
-        ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem());
+        ArtifactItem.putArtifactOnCooldown(playerIn, itemstack.getItem());
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }
 

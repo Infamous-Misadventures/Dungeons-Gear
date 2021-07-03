@@ -47,7 +47,7 @@ public class TotemOfShieldingItem extends ArtifactItem {
                 spawnShieldingCloudAtPos(itemUseContextPlayer, blockPos, 100);
                 itemUseContextItem.damageItem(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemUseContextItem)));
 
-                ArtifactItem.setArtifactCooldown(itemUseContextPlayer, itemUseContextItem.getItem());
+                ArtifactItem.putArtifactOnCooldown(itemUseContextPlayer, itemUseContextItem.getItem());
             }
         }
         return ActionResult.resultConsume(itemUseContext.getItem());

@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.goals;
 
+import com.infamous.dungeons_gear.capabilities.summoning.SummoningHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.entity.LivingEntity;
@@ -44,7 +45,7 @@ public class IronGolemFollowOwnerGoal extends Goal {
      * method as well.
      */
     public boolean shouldExecute() {
-        LivingEntity livingentity = getOwner(this.ironGolemEntity);
+        LivingEntity livingentity = SummoningHelper.getSummoner(this.ironGolemEntity);
         if (livingentity == null) {
             return false;
         } else if (livingentity.isSpectator()) {

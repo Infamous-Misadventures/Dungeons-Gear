@@ -33,7 +33,7 @@ public class LightningRodItem extends ArtifactItem implements ISoulGatherer {
             AreaOfEffectHelper.electrifyNearbyEnemies(playerIn, 5, 5, Integer.MAX_VALUE);
             SoundHelper.playLightningStrikeSounds(playerIn);
             itemstack.damageItem(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemstack)));
-            ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem());
+            ArtifactItem.putArtifactOnCooldown(playerIn, itemstack.getItem());
         }
 
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);

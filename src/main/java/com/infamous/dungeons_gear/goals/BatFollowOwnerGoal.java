@@ -5,14 +5,13 @@ import net.minecraft.block.LeavesBlock;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.passive.BatEntity;
-import net.minecraft.entity.passive.horse.LlamaEntity;
 import net.minecraft.pathfinding.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
 
 import java.util.EnumSet;
 
-import static com.infamous.dungeons_gear.goals.GoalUtils.getOwner;
+import static com.infamous.dungeons_gear.capabilities.summoning.SummoningHelper.getSummoner;
 
 public class BatFollowOwnerGoal extends Goal {
     private final BatEntity batEntity;
@@ -45,7 +44,7 @@ public class BatFollowOwnerGoal extends Goal {
      * method as well.
      */
     public boolean shouldExecute() {
-        LivingEntity livingentity = getOwner(this.batEntity);
+        LivingEntity livingentity = getSummoner(this.batEntity);
         if (livingentity == null) {
             return false;
         } else if (livingentity.isSpectator()) {

@@ -43,16 +43,16 @@ public class ModEnchantmentTypes {
                             (item instanceof IRangedWeapon || item instanceof IArmor)
     );
 
-    public static final EquipmentSlotType[] MELEE_RANGED_SLOT= new EquipmentSlotType[]{
+    public static final EquipmentSlotType[] WEAPON_SLOT = new EquipmentSlotType[]{
             EquipmentSlotType.MAINHAND};
 
-    public static final EquipmentSlotType[] ARMOR_SLOT= new EquipmentSlotType[]{
+    public static final EquipmentSlotType[] ARMOR_SLOT = new EquipmentSlotType[]{
             EquipmentSlotType.HEAD,
             EquipmentSlotType.CHEST,
             EquipmentSlotType.LEGS,
             EquipmentSlotType.FEET};
 
-    public static final EquipmentSlotType[] ARMOR_RANGED_SLOT= new EquipmentSlotType[]{
+    public static final EquipmentSlotType[] ARMOR_RANGED_SLOT = new EquipmentSlotType[]{
             EquipmentSlotType.MAINHAND,
             EquipmentSlotType.HEAD,
             EquipmentSlotType.CHEST,

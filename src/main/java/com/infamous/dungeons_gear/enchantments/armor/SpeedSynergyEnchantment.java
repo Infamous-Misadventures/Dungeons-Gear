@@ -39,18 +39,4 @@ public class SpeedSynergyEnchantment extends ArtifactEnchantment {
     public boolean canApplyTogether(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof ArtifactEnchantment);
     }
-
-    @SubscribeEvent
-    public static void onArtifactUsed(PlayerInteractEvent.RightClickItem event){
-        PlayerEntity player = event.getPlayer();
-        Hand activeHand = event.getHand();
-        ItemStack itemStack = player.getHeldItem(activeHand);
-        if(itemStack.getItem() instanceof ArtifactItem){
-            if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.SPEED_SYNERGY)){
-                int speedSynergyLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.SPEED_SYNERGY, player);
-                EffectInstance speedBoost = new EffectInstance(Effects.SPEED, 20 * speedSynergyLevel);
-                player.addPotionEffect(speedBoost);
-            }
-        }
-    }
 }

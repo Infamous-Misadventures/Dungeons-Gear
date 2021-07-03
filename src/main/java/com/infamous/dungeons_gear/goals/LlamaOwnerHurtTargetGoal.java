@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.goals;
 
+import com.infamous.dungeons_gear.capabilities.summoning.SummoningHelper;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.TargetGoal;
@@ -31,7 +32,7 @@ public class LlamaOwnerHurtTargetGoal extends TargetGoal {
 
     public boolean shouldExecute() {
         if (this.llamaEntity.isTame()) {
-            LivingEntity owner = getOwner(this.llamaEntity);
+            LivingEntity owner = SummoningHelper.getSummoner(this.llamaEntity);
             if (owner == null) {
                 return false;
             } else {
@@ -46,7 +47,7 @@ public class LlamaOwnerHurtTargetGoal extends TargetGoal {
 
     public void startExecuting() {
         this.goalOwner.setAttackTarget(this.attacker);
-        LivingEntity owner = getOwner(this.llamaEntity);
+        LivingEntity owner = SummoningHelper.getSummoner(this.llamaEntity);
         if (owner != null) {
             this.timestamp = owner.getLastAttackedEntityTime();
         }

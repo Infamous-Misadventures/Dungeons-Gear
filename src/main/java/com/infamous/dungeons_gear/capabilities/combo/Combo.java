@@ -35,6 +35,8 @@ public class Combo implements ICombo {
 
     private BlockPos lastExplorerCheckpoint;
     private BlockPos lastLuckyExplorerCheckpoint;
+    private boolean artifactSynergy;
+    private int painCycleStacks;
 
     public Combo() {
         this.souls = 0;
@@ -58,6 +60,9 @@ public class Combo implements ICombo {
         this.dynamoMultiplier = 1.0D;
         this.lastExplorerCheckpoint = BlockPos.ZERO;
         this.lastLuckyExplorerCheckpoint = BlockPos.ZERO;
+
+        this.artifactSynergy = false;
+        this.painCycleStacks = 0;
     }
 
     @Override
@@ -303,5 +308,25 @@ public class Combo implements ICombo {
     @Override
     public void setLastLuckyExplorerCheckpoint(BlockPos blockPos) {
         this.lastLuckyExplorerCheckpoint = blockPos;
+    }
+
+    @Override
+    public boolean hasArtifactSynergy() {
+        return this.artifactSynergy;
+    }
+
+    @Override
+    public void setArtifactSynergy(boolean artifactSynergy) {
+        this.artifactSynergy = artifactSynergy;
+    }
+
+    @Override
+    public int getPainCycleStacks() {
+        return this.painCycleStacks;
+    }
+
+    @Override
+    public void setPainCycleStacks(int painCycleStacks) {
+        this.painCycleStacks = painCycleStacks;
     }
 }

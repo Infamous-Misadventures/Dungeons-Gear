@@ -49,7 +49,7 @@ public class TotemOfSoulProtectionItem extends ArtifactItem implements ISoulGath
                     spawnSoulProtectionCloudAtPos(itemUseContextPlayer, blockPos, 100);
                     itemUseContextItem.damageItem(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemUseContextItem)));
 
-                    ArtifactItem.setArtifactCooldown(itemUseContextPlayer, itemUseContextItem.getItem());
+                    ArtifactItem.putArtifactOnCooldown(itemUseContextPlayer, itemUseContextItem.getItem());
                 }
             }
         }

@@ -55,6 +55,8 @@ public class DungeonsGearConfig {
 
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> ENCHANTMENT_BLACKLIST;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> TREASURE_ONLY_ENCHANTMENTS;
+    public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_ENCHANTMENT_TRADES;
+    public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_ENCHANTMENT_LOOT;
 
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_MELEE_WEAPON_LOOT;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_RANGED_WEAPON_LOOT;
@@ -93,6 +95,14 @@ public class DungeonsGearConfig {
                 .comment("Enable Weaponsmith, Fletcher, Armorer and Leatherworker Villagers trading Dungeons Gear items. \n" +
                         "If you have other mods messing with the trades of those professions or simply don't want it, disable this feature. [true / false]")
                 .define("enableVillagerTrades", true);
+        ENABLE_ENCHANTMENT_TRADES = builder
+                .comment("Enable Librarian Villagers trading books enchanted with this mod's enchantments. \n" +
+                        "Disable this feature if you want to prevent this. [true / false]")
+                .define("enableEnchantmentTrades", true);
+        ENABLE_ENCHANTMENT_LOOT = builder
+                .comment("Enable enchantments from this mod appearing in any type of generated loot. \n" +
+                        "Disable this feature if you want to prevent this. [true / false]")
+                .define("enableEnchantmentLoot", true);
         ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR = builder
                 .comment("Enable applying enchantments from this mod on non-Dungeons gear using the Enchanting Table. \n" +
                         "If you don't want your enchantments to become too cluttered for non-Dungeons gear, or simply don't like it, disable this feature. \n" +
@@ -237,32 +247,35 @@ public class DungeonsGearConfig {
                 .comment("Add entities that will never be targeted by aggressive Dungeons Gear effects. \n"
                         + "To do so, enter their registry names.")
                 .defineList("effectTargetBlacklist", Lists.newArrayList(
-                        "minecraft:chicken",
-                        "minecraft:cow",
-                        "minecraft:pig",
-                        "minecraft:sheep",
+                        "guardvillagers:guard",
+                        "minecraft:bat",
                         "minecraft:bee",
-                        "minecraft:wolf",
-                        "minecraft:fox",
-                        "minecraft:villager",
-                        "minecraft:horse",
+                        "minecraft:chicken",
+                        "minecraft:cod",
+                        "minecraft:cow",
+                        "minecraft:dolphin",
                         "minecraft:donkey",
+                        "minecraft:fox",
+                        "minecraft:horse",
+                        "minecraft:iron_golem",
                         "minecraft:mooshroom",
-                        "minecraft:parrot",
                         "minecraft:ocelot",
+                        "minecraft:panda",
+                        "minecraft:parrot",
+                        "minecraft:pig",
+                        "minecraft:polar_bear",
+                        "minecraft:pufferfish",
                         "minecraft:rabbit",
+                        "minecraft:salmon",
+                        "minecraft:sheep",
                         "minecraft:squid",
                         "minecraft:strider",
-                        "minecraft:turtle",
-                        "minecraft:salmon",
-                        "minecraft:cod",
-                        "minecraft:pufferfish",
+                        "minecraft:trader_llama",
                         "minecraft:tropical_fish",
-                        "minecraft:dolphin",
-                        "minecraft:panda",
-                        "minecraft:polar_bear",
-                        "minecraft:bat",
-                        "minecraft:trader_llama"
+                        "minecraft:turtle",
+                        "minecraft:villager",
+                        "minecraft:wandering_trader",
+                        "minecraft:wolf"
                         ),
                         (itemRaw) -> itemRaw instanceof String);
         builder.pop();

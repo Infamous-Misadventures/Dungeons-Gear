@@ -37,17 +37,4 @@ public class HealthSynergyEnchantment extends ArtifactEnchantment {
     public boolean canApplyTogether(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof ArtifactEnchantment);
     }
-
-    @SubscribeEvent
-    public static void onArtifactUsed(PlayerInteractEvent.RightClickItem event){
-        PlayerEntity player = event.getPlayer();
-        Hand activeHand = event.getHand();
-        ItemStack itemStack = player.getHeldItem(activeHand);
-        if(itemStack.getItem() instanceof ArtifactItem){
-            if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.HEALTH_SYNERGY)){
-                int healthSynergyLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.HEALTH_SYNERGY, player);
-                player.heal(0.2F + (0.1F * healthSynergyLevel));
-            }
-        }
-    }
 }
