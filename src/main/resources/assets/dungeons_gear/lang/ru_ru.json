@@ -871,5 +871,11 @@
   "enchantment.dungeons_gear.reckless": "Reckless",
   "enchantment.dungeons_gear.reckless.desc": "Your health is decreased by 60%, but your melee damage is increased.",
   "enchantment.dungeons_gear.soul_focus": "Soul Focus",
-  "enchantment.dungeons_gear.soul_focus.desc": "Increases the amount of soul damage you deal."
+  "enchantment.dungeons_gear.soul_focus.desc": "Increases the amount of soul damage you deal.",
+  "enchantment.dungeons_gear.fortune_of_the_sea": "Fortune of the Sea",
+  "enchantment.dungeons_gear.fortune_of_the_sea.desc": "Increases your luck, which boosts the chance that rare drops become unique.",
+  "item.dungeons_gear.eye_of_the_guardian": "Eye of the Guardian",
+  "lore.dungeons_gear.eye_of_the_guardian": "The Eye of the Guardian holds a power that awakens in the hands of a worthy hero.",
+  "ability.dungeons_gear.eye_of_the_guardian": "Fires a beam of energy that locks you into place as it deals damage to enemies in its path.",
+  "artifact.dungeons_gear.charge_time": "%d Seconds To Charge"
 }

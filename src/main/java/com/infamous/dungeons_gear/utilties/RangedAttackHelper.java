@@ -5,7 +5,6 @@ import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.melee_ranged.GravityEnchantment;
 import com.infamous.dungeons_gear.enchantments.melee_ranged.PoisonCloudEnchantment;
 import com.infamous.dungeons_gear.enchantments.ranged.*;
-import com.infamous.dungeons_gear.items.ItemRegistry;
 import com.infamous.dungeons_gear.items.interfaces.IRangedWeapon;
 import com.infamous.dungeons_gear.items.ranged.bows.AbstractDungeonsBowItem;
 import com.infamous.dungeons_gear.items.ranged.crossbows.AbstractDungeonsCrossbowItem;

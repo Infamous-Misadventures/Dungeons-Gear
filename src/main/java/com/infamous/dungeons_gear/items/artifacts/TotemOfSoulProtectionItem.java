@@ -79,7 +79,7 @@ public class TotemOfSoulProtectionItem extends ArtifactItem implements ISoulGath
     }
 
     @Override
-    public int getActivationCost(ItemStack stack) {
+    public float getActivationCost(ItemStack stack) {
         return 5;
     }
 }

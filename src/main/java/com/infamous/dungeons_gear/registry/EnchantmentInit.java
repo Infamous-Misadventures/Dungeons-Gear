@@ -1,4 +1,4 @@
-package com.infamous.dungeons_gear.init;
+package com.infamous.dungeons_gear.registry;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.enchantments.armor.*;
@@ -84,6 +84,7 @@ public class EnchantmentInit {
                     FIRE_FOCUS = new FireFocusEnchantment().setRegistryName(location("fire_focus")),
                     FIRE_TRAIL = new FireTrailEnchantment().setRegistryName(location("fire_trail")),
                     FOOD_RESERVES = new FoodReservesEnchantment().setRegistryName(location("food_reserves")),
+                    FORTUNE_OF_THE_SEA = new FortuneOfTheSeaEnchantment().setRegistryName(location("fortune_of_the_sea")),
                     FRENZIED = new FrenziedEnchantment().setRegistryName(location("frenzied")),
                     GRAVITY_PULSE = new GravityPulseEnchantment().setRegistryName(location("gravity_pulse")),
                     HEALTH_SYNERGY = new HealthSynergyEnchantment().setRegistryName(location("health_synergy")),

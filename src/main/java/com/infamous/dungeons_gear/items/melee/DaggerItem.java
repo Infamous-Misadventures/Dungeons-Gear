@@ -2,12 +2,11 @@ package com.infamous.dungeons_gear.items.melee;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import com.infamous.dungeons_gear.capabilities.offhand.IOffhand;
 import com.infamous.dungeons_gear.capabilities.offhand.OffhandProvider;
 import com.infamous.dungeons_gear.combat.CombatEventHandler;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
-import com.infamous.dungeons_gear.init.AttributeRegistry;
-import com.infamous.dungeons_gear.items.ItemRegistry;
+import com.infamous.dungeons_gear.registry.AttributeRegistry;
+import com.infamous.dungeons_gear.registry.ItemRegistry;
 import com.infamous.dungeons_gear.items.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.items.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.items.interfaces.IDualWieldWeapon;
@@ -124,7 +123,7 @@ public class DaggerItem extends SwordItem implements IDualWieldWeapon, IMeleeWea
     }
 
     @Override
-    public int getActivationCost(ItemStack stack) {
+    public float getActivationCost(ItemStack stack) {
         return 0;
     }
 

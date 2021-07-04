@@ -53,7 +53,7 @@ public class HarvesterItem extends ArtifactItem implements ISoulGatherer {
     }
 
     @Override
-    public int getActivationCost(ItemStack stack) {
+    public float getActivationCost(ItemStack stack) {
         return 40;
     }
 

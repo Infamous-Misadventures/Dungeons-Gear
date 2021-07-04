@@ -146,6 +146,8 @@
   "enchantment.dungeons_gear.fire_trail.desc": "Jumping or dodging creates a trail of fire behind you, which deals damage to nearby mobs.",
   "enchantment.dungeons_gear.food_reserves": "Food Reserves",
   "enchantment.dungeons_gear.food_reserves.desc": "Whenever you use a healing potion, you also create random food items.",
+  "enchantment.dungeons_gear.fortune_of_the_sea": "Fortune of the Sea",
+  "enchantment.dungeons_gear.fortune_of_the_sea.desc": "Increases your luck, which boosts the chance that rare drops become unique.",
   "enchantment.dungeons_gear.frenzied": "Frenzied",
   "enchantment.dungeons_gear.frenzied.desc": "While you are at less than half health, your attack speed is increased.",
   "enchantment.dungeons_gear.gravity_pulse": "Gravity Pulse",
@@ -370,6 +372,8 @@
 
   "penalty.dungeons_gear.can_overheat": "Can Overheat",
   "penalty.dungeons_gear.slow_fire_rate": "Slow Firerate",
+
+  "ability.dungeons_gear.soul_gathering": "+%d Soul Gathering",
 
   "item.dungeons_gear.battle_robe": "Battle Robe",
   "lore.dungeons_gear.battle_robe": "The Battle Robe is worn by the distinguished Illager Evokers of the Arch-Illager's court.",
@@ -667,9 +671,14 @@
   "lore.dungeons_gear.updraft_tome": "An ancient book filled with illegible glyphs, you feel a strange breeze as you flip the pages.",
   "ability.dungeons_gear.updraft_tome": "Launch up to 5 enemies into the air, stunning and damaging them.",
 
+  "item.dungeons_gear.eye_of_the_guardian": "Eye of the Guardian",
+  "lore.dungeons_gear.eye_of_the_guardian": "The Eye of the Guardian holds a power that awakens in the hands of a worthy hero.",
+  "ability.dungeons_gear.eye_of_the_guardian": "Fires a beam of energy that locks you into place as it deals damage to enemies in its path.",
+
+  "artifact.dungeons_gear.charge_time": "%d Seconds Charge-Up",
   "artifact.dungeons_gear.duration": "%d Seconds Duration",
   "artifact.dungeons_gear.cooldown": "%d Seconds Cooldown",
-  "artifact.dungeons_gear.activation": "Souls Per Use: %d",
+  "artifact.dungeons_gear.activation": "Requires %d Souls",
 
   "item.dungeons_gear.broadsword": "Broadsword",
   "lore.dungeons_gear.broadsword": "Only those with the strength of a champion and the heart of a hero can carry this massive blade.",

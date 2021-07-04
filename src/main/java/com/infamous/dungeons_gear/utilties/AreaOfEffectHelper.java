@@ -4,7 +4,7 @@ import com.infamous.dungeons_gear.damagesources.ElectricShockDamageSource;
 import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.goals.LoverHurtByTargetGoal;
 import com.infamous.dungeons_gear.goals.LoverHurtTargetGoal;
-import com.infamous.dungeons_gear.init.ParticleInit;
+import com.infamous.dungeons_gear.registry.ParticleInit;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;

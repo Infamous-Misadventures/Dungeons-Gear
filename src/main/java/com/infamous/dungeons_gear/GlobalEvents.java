@@ -3,7 +3,6 @@ package com.infamous.dungeons_gear;
 
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.capabilities.bow.IBow;
-import com.infamous.dungeons_gear.capabilities.summoning.SummonableProvider;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketUpdateSouls;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
@@ -11,7 +10,7 @@ import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.ranged.FuseShotEnchantment;
-import com.infamous.dungeons_gear.init.PotionList;
+import com.infamous.dungeons_gear.registry.PotionList;
 import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_gear.items.interfaces.IArmor;
 import com.infamous.dungeons_gear.items.interfaces.IComboWeapon;

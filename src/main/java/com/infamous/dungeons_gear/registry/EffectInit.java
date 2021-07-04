@@ -1,4 +1,4 @@
-package com.infamous.dungeons_gear.init;
+package com.infamous.dungeons_gear.registry;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.effects.CustomEffect;

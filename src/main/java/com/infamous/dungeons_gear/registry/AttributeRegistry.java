@@ -1,4 +1,4 @@
-package com.infamous.dungeons_gear.init;
+package com.infamous.dungeons_gear.registry;
 
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.RangedAttribute;

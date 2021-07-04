@@ -7,7 +7,7 @@ import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
 import com.infamous.dungeons_gear.capabilities.summoning.SummoningHelper;
 import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.goals.*;
-import com.infamous.dungeons_gear.items.ItemRegistry;
+import com.infamous.dungeons_gear.registry.ItemRegistry;
 import com.infamous.dungeons_gear.utilties.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;

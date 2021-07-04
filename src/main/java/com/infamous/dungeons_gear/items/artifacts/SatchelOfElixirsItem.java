@@ -2,7 +2,7 @@ package com.infamous.dungeons_gear.items.artifacts;
 
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
-import com.infamous.dungeons_gear.init.PotionList;
+import com.infamous.dungeons_gear.registry.PotionList;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.ItemEntity;

@@ -42,4 +42,5 @@ public class ArmorEnchantmentList {
     public static Enchantment SOUL_FOCUS;
 
     public static Enchantment RECKLESS;
+    public static Enchantment FORTUNE_OF_THE_SEA;
 }

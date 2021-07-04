@@ -43,8 +43,9 @@ public class PainCycleEnchantment extends DungeonsEnchantment {
             ICombo comboCap = CapabilityHelper.getComboCapability(attacker);
             if(comboCap != null){
                 int painCycleLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.PAIN_CYCLE, mainhand);
-                if(painCycleLevel > 0){
-                    attacker.attackEntityFrom(DamageSource.MAGIC, 2); // 1 heart of damage
+                int painDamage = 2;
+                if(painCycleLevel > 0 && attacker.getHealth() > painDamage){
+                    attacker.attackEntityFrom(DamageSource.MAGIC, painDamage); // 1 heart of damage
                     comboCap.setPainCycleStacks(comboCap.getPainCycleStacks() + 1);
                     if(comboCap.getPainCycleStacks() >= 5){
                         int painCycleMultiplier = 2 + painCycleLevel;

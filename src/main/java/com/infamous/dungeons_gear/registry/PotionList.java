@@ -1,4 +1,4 @@
-package com.infamous.dungeons_gear.init;
+package com.infamous.dungeons_gear.registry;
 
 import net.minecraft.potion.Potion;
 

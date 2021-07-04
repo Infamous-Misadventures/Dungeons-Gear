@@ -142,7 +142,7 @@ public class ClientEvents {
                     ItemStack heldItem = AbstractBeaconItem.getBeacon(player);
                     if (player.isHandActive()
                             && heldItem.getItem() instanceof AbstractBeaconItem
-                            && AbstractBeaconItem.canFire(player, heldItem)) {
+                            && ((AbstractBeaconItem)heldItem.getItem()).canFire(player, heldItem)) {
                             BeaconBeamRenderer.renderBeam(event, player, Minecraft.getInstance().getRenderPartialTicks());
                     }
                 }
