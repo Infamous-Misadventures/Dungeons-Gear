@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.minecart.ContainerMinecartEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
@@ -21,6 +22,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
@@ -178,6 +180,10 @@ public class GlobalLootModifier{
         if(!DungeonsGearConfig.ENABLE_DUNGEONS_GEAR_LOOT.get()){
             return;
         }
+
+        Entity thisEntity = context.get(LootParameters.THIS_ENTITY);
+        final PlayerEntity player = thisEntity instanceof PlayerEntity ? (PlayerEntity) thisEntity : null;
+
         Entity contextEntity = context.get(LootParameters.KILLER_ENTITY);
         if(contextEntity instanceof ContainerMinecartEntity){
             ContainerMinecartEntity containerMinecartEntity = (ContainerMinecartEntity)contextEntity;
@@ -186,7 +192,7 @@ public class GlobalLootModifier{
                 String lootTablePath = lootTable.toString();
                 lootTables.forEach((path) ->{
                     if(lootTablePath.contains(path) && !lootTableBlacklist.contains(lootTablePath)){
-                        generatedLoot.addAll(ChestLootHelper.generateLootFromValues(uniqueItemChance, artifactChance));
+                        generatedLoot.addAll(ChestLootHelper.generateLootFromValues(uniqueItemChance, artifactChance, player));
                     }
                 });
             }
@@ -208,7 +214,7 @@ public class GlobalLootModifier{
                         String lootTablePath = lootTable.toString();
                         lootTables.forEach((path) ->{
                             if(lootTablePath.contains(path) && !lootTableBlacklist.contains(lootTablePath)){
-                                generatedLoot.addAll(ChestLootHelper.generateLootFromValues(uniqueItemChance, artifactChance));
+                                generatedLoot.addAll(ChestLootHelper.generateLootFromValues(uniqueItemChance, artifactChance, player));
                             }
                         });
                     }

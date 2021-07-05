@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.items.melee;
 
-import com.infamous.dungeons_gear.items.ItemRegistry;
+import com.infamous.dungeons_gear.registry.ItemRegistry;
 import com.infamous.dungeons_gear.items.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.items.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.items.interfaces.ISoulGatherer;
@@ -65,7 +65,7 @@ public class SoulKnifeItem extends SwordItem implements IMeleeWeapon, ISoulGathe
     }
 
     @Override
-    public int getActivationCost(ItemStack stack) {
+    public float getActivationCost(ItemStack stack) {
         return 0;
     }
 }

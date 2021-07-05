@@ -21,5 +21,7 @@ public class RangedEnchantmentList {
     public static Enchantment UNCHANTING;
     public static Enchantment WILD_RAGE;
 
+    public static Enchantment COOLDOWN_SHOT;
+
     public static Map<Enchantment, String> rangedEnchantmentToStringMap = new HashMap<Enchantment, String>();
 }

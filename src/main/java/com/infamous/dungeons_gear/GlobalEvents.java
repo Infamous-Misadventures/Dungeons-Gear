@@ -10,7 +10,7 @@ import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.ranged.FuseShotEnchantment;
-import com.infamous.dungeons_gear.init.PotionList;
+import com.infamous.dungeons_gear.registry.PotionList;
 import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_gear.items.interfaces.IArmor;
 import com.infamous.dungeons_gear.items.interfaces.IComboWeapon;

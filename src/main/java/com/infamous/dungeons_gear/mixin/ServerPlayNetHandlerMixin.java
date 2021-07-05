@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.mixin;
 
-import com.infamous.dungeons_gear.init.AttributeRegistry;
+import com.infamous.dungeons_gear.registry.AttributeRegistry;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.play.ServerPlayNetHandler;
 import net.minecraft.network.play.client.CUseEntityPacket;

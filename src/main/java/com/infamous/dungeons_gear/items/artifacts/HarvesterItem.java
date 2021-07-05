@@ -3,10 +3,7 @@ package com.infamous.dungeons_gear.items.artifacts;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.items.interfaces.ISoulGatherer;
-import com.infamous.dungeons_gear.utilties.AOECloudHelper;
-import com.infamous.dungeons_gear.utilties.CapabilityHelper;
-import com.infamous.dungeons_gear.utilties.DescriptionHelper;
-import com.infamous.dungeons_gear.utilties.SoundHelper;
+import com.infamous.dungeons_gear.utilties.*;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -17,8 +14,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
-
-import static com.infamous.dungeons_gear.utilties.AreaOfEffectHelper.causeMagicExplosionAttack;
 
 public class HarvesterItem extends ArtifactItem implements ISoulGatherer {
     public HarvesterItem(Properties properties) {
@@ -32,10 +27,10 @@ public class HarvesterItem extends ArtifactItem implements ISoulGatherer {
         if (playerIn.isCreative() || CapabilityHelper.getComboCapability(playerIn).consumeSouls(getActivationCost(itemstack))) {
             SoundHelper.playGenericExplodeSound(playerIn);
             AOECloudHelper.spawnExplosionCloud(playerIn, playerIn, 3.0F);
-            causeMagicExplosionAttack(playerIn, playerIn, 15, 3.0F);
+            AreaOfEffectHelper.causeMagicExplosionAttack(playerIn, playerIn, 15, 3.0F);
 
             itemstack.damageItem(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemstack)));
-            ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem());
+            ArtifactItem.putArtifactOnCooldown(playerIn, itemstack.getItem());
         }
 
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
@@ -58,7 +53,7 @@ public class HarvesterItem extends ArtifactItem implements ISoulGatherer {
     }
 
     @Override
-    public int getActivationCost(ItemStack stack) {
+    public float getActivationCost(ItemStack stack) {
         return 40;
     }
 

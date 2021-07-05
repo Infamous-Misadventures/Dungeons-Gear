@@ -47,7 +47,7 @@ public class FoodReservesEnchantment extends DropsEnchantment {
     }
 
     @SubscribeEvent
-    public static void onPlayerDamaged(LivingEntityUseItemEvent.Finish event){
+    public static void onPlayerUsedHealthPotion(LivingEntityUseItemEvent.Finish event){
         if(!(event.getEntityLiving() instanceof PlayerEntity)) return;
         PlayerEntity player = (PlayerEntity) event.getEntityLiving();
         if(player.isAlive()){

@@ -1,4 +1,4 @@
-package com.infamous.dungeons_gear.init;
+package com.infamous.dungeons_gear.registry;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.enchantments.armor.*;
@@ -30,6 +30,7 @@ public class EnchantmentInit {
                     POISON_CLOUD = new PoisonCloudEnchantment().setRegistryName(location("poison_cloud")),
                     DYNAMO = new DynamoEnchantment().setRegistryName(location("dynamo")),
 
+                    ARTIFACT_SYNERGY = new ArtifactSynergyEnchantment().setRegistryName(location("artifact_synergy")),
                     BUSY_BEE = new BusyBeeEnchantment().setRegistryName(location("busy_bee")),
                     CHAINS = new ChainsEnchantment().setRegistryName(location("chains")),
                     COMMITTED = new CommittedEnchantment().setRegistryName(location("committed")),
@@ -39,6 +40,7 @@ public class EnchantmentInit {
                     GUARDING_STRIKE = new GuardingStrikeEnchantment().setRegistryName(location("guarding_strike")),
                     ILLAGERS_BANE = new ModDamageEnchantment(Enchantment.Rarity.UNCOMMON, 3, EquipmentSlotType.MAINHAND).setRegistryName(location("illagers_bane")),
                     LEECHING = new LeechingEnchantment().setRegistryName(location("leeching")),
+                    PAIN_CYCLE = new PainCycleEnchantment().setRegistryName(location("pain_cycle")),
                     PROSPECTOR = new ProspectorEnchantment().setRegistryName(location("prospector")),
                     RADIANCE = new RadianceEnchantment().setRegistryName(location("radiance")),
                     RAMPAGING = new RampagingEnchantment().setRegistryName(location("rampaging")),
@@ -53,6 +55,7 @@ public class EnchantmentInit {
                     ACCELERATE = new AccelerateEnchantment().setRegistryName(location("accelerate")),
                     BONUS_SHOT = new BonusShotEnchantment().setRegistryName(location("bonus_shot")),
                     CHAIN_REACTION = new ChainReactionEnchantment().setRegistryName(location("chain_reaction")),
+                    COOLDOWN_SHOT = new CooldownShotEnchantment().setRegistryName(location("cooldown_shot")),
                     FUSE_SHOT = new FuseShotEnchantment().setRegistryName(location("fuse_shot")),
                     GROWING = new GrowingEnchantment().setRegistryName(location("growing")),
                     REPLENISH = new ReplenishEnchantment().setRegistryName(location("replenish")),
@@ -67,6 +70,9 @@ public class EnchantmentInit {
                     ALTRUISTIC = new AltruisticEnchantment().setRegistryName(location("altruistic")),
                     BAG_OF_SOULS = new BagOfSoulsEnchantment().setRegistryName(location("bag_of_souls")),
                     BURNING = new BurningEnchantment().setRegistryName(location("burning")),
+                    BEAST_BOSS = new BeastBossEnchantment().setRegistryName(location("beast_boss")),
+                    BEAST_BURST = new BeastBurstEnchantment().setRegistryName(location("beast_burst")),
+                    BEAST_SURGE = new BeastSurgeEnchantment().setRegistryName(location("beast_surge")),
                     CHILLING = new ChillingEnchantment().setRegistryName(location("chilling")),
                     COOLDOWN = new CooldownEnchantment().setRegistryName(location("cooldown")),
                     COWARDICE = new CowardiceEnchantment().setRegistryName(location("cowardice")),
@@ -75,15 +81,21 @@ public class EnchantmentInit {
                     ELECTRIFIED = new ElectrifiedEnchantment().setRegistryName(location("electrified")),
                     EXPLORER = new ExplorerEnchantment().setRegistryName(location("explorer")),
                     FINAL_SHOUT = new FinalShoutEnchantment().setRegistryName(location("final_shout")),
+                    FIRE_FOCUS = new FireFocusEnchantment().setRegistryName(location("fire_focus")),
                     FIRE_TRAIL = new FireTrailEnchantment().setRegistryName(location("fire_trail")),
                     FOOD_RESERVES = new FoodReservesEnchantment().setRegistryName(location("food_reserves")),
+                    FORTUNE_OF_THE_SEA = new FortuneOfTheSeaEnchantment().setRegistryName(location("fortune_of_the_sea")),
                     FRENZIED = new FrenziedEnchantment().setRegistryName(location("frenzied")),
                     GRAVITY_PULSE = new GravityPulseEnchantment().setRegistryName(location("gravity_pulse")),
                     HEALTH_SYNERGY = new HealthSynergyEnchantment().setRegistryName(location("health_synergy")),
+                    LIGHTNING_FOCUS = new LightningFocusEnchantment().setRegistryName(location("lightning_focus")),
                     LUCKY_EXPLORER = new LuckyExplorerEnchantment().setRegistryName(location("lucky_explorer")),
+                    POISON_FOCUS = new PoisonFocusEnchantment().setRegistryName(location("poison_focus")),
                     POTION_BARRIER = new PotionBarrierEnchantment().setRegistryName(location("potion_barrier")),
+                    RECKLESS = new RecklessEnchantment().setRegistryName(location("reckless")),
                     RECYCLER = new RecyclerEnchantment().setRegistryName(location("recycler")),
                     RUSH = new RushEnchantment().setRegistryName(location("rush")),
+                    SOUL_FOCUS = new SoulFocusEnchantment().setRegistryName(location("soul_focus")),
                     SNOWBALL = new SnowballEnchantment().setRegistryName(location("snowball")),
                     SPEED_SYNERGY = new SpeedSynergyEnchantment().setRegistryName(location("speed_synergy")),
                     SURPRISE_GIFT = new SurpriseGiftEnchantment().setRegistryName(location("surprise_gift")),
@@ -91,10 +103,10 @@ public class EnchantmentInit {
                     TUMBLEBEE = new TumblebeeEnchantment().setRegistryName(location("tumblebee"))
                     );
 
-            putItemsInMap();
+            putImpactRangedEnchantmentsInMap();
         }
 
-        private static void putItemsInMap() {
+        private static void putImpactRangedEnchantmentsInMap() {
             //rangedEnchantmentMap.put(ACCELERATE, "Accelerate");
             //rangedEnchantmentToStringMap.put(BONUS_SHOT, "BonusShot");
             rangedEnchantmentToStringMap.put(CHAIN_REACTION, "ChainReaction");

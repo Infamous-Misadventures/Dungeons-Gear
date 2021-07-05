@@ -1,11 +1,14 @@
-package com.infamous.dungeons_gear.items;
+package com.infamous.dungeons_gear.registry;
 
 import com.infamous.dungeons_gear.DungeonsGear;
+import com.infamous.dungeons_gear.items.ArmorMaterialList;
+import com.infamous.dungeons_gear.items.ToolMaterialList;
 import com.infamous.dungeons_gear.items.armor.*;
 import com.infamous.dungeons_gear.items.artifacts.*;
 import com.infamous.dungeons_gear.items.artifacts.beacon.CorruptedBeaconItem;
 import com.infamous.dungeons_gear.items.artifacts.beacon.CorruptedPumpkinItem;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
+import com.infamous.dungeons_gear.items.artifacts.beacon.EyeOfTheGuardianItem;
 import com.infamous.dungeons_gear.items.melee.*;
 import com.infamous.dungeons_gear.items.ranged.bows.*;
 import com.infamous.dungeons_gear.items.ranged.crossbows.*;
@@ -452,6 +455,8 @@ public class ItemRegistry {
             () -> new PowershakerItem(ARTIFACT_PROPERTIES));
     public static final RegistryObject<Item> UPDRAFT_TOME = ITEMS.register("updraft_tome",
             () -> new UpdraftTomeItem(ARTIFACT_PROPERTIES));
+    public static final RegistryObject<Item> EYE_OF_THE_GUARDIAN = ITEMS.register("eye_of_the_guardian",
+            () -> new EyeOfTheGuardianItem(ARTIFACT_PROPERTIES));
 
     public static final RegistryObject<Item> HUNTERS_ARMOR = ITEMS.register("hunters_vest",
             () -> new HuntersArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
@@ -882,5 +887,6 @@ public class ItemRegistry {
         artifactMap.put(SATCHEL_OF_ELEMENTS.get(), SATCHEL_OF_ELEMENTS.get().getRegistryName());
         artifactMap.put(POWERSHAKER.get(), POWERSHAKER.get().getRegistryName());
         artifactMap.put(UPDRAFT_TOME.get(), UPDRAFT_TOME.get().getRegistryName());
+        artifactMap.put(EYE_OF_THE_GUARDIAN.get(), EYE_OF_THE_GUARDIAN.get().getRegistryName());
     }
 }

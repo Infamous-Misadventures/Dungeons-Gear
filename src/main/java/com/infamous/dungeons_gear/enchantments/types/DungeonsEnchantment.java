@@ -14,6 +14,20 @@ public class DungeonsEnchantment extends Enchantment {
     }
 
     @Override
+    public boolean canVillagerTrade() {
+        return ModEnchantmentHelper.isNotBlacklistedEnchant(this)
+                && DungeonsGearConfig.ENABLE_ENCHANTMENT_TRADES.get()
+                && super.canVillagerTrade();
+    }
+
+    @Override
+    public boolean canGenerateInLoot() {
+        return ModEnchantmentHelper.isNotBlacklistedEnchant(this)
+                && DungeonsGearConfig.ENABLE_ENCHANTMENT_LOOT.get()
+                && super.canGenerateInLoot();
+    }
+
+    @Override
     public boolean canApply(ItemStack stack) {
         return ModEnchantmentHelper.isNotBlacklistedEnchant(this)
                 && super.canApply(stack);

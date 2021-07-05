@@ -2,12 +2,12 @@ package com.infamous.dungeons_gear.items.artifacts.beacon;
 
 public class BeaconBeamColor {
 
-    private short redValue;
-    private short greenValue;
-    private short blueValue;
-    private short innerRedValue;
-    private short innerGreenValue;
-    private short innerBlueValue;
+    private final short redValue;
+    private final short greenValue;
+    private final short blueValue;
+    private final short innerRedValue;
+    private final short innerGreenValue;
+    private final short innerBlueValue;
 
     public BeaconBeamColor(short redValue, short greenValue, short blueValue, short innerRedValue, short innerGreenValue, short innerBlueValue){
         this.redValue = redValue;

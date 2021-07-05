@@ -4,7 +4,6 @@ import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
-import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -29,7 +28,7 @@ public class UpdraftTomeItem extends ArtifactItem {
         AreaOfEffectHelper.levitateNearbyEnemies(playerIn, 8, 5, 0, 5);
         itemstack.damageItem(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemstack)));
 
-        ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem());
+        ArtifactItem.putArtifactOnCooldown(playerIn, itemstack.getItem());
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }
 

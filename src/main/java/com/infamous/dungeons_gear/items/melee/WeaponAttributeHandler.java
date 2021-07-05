@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.items.melee;
 
-import com.infamous.dungeons_gear.items.ItemRegistry;
+import com.infamous.dungeons_gear.registry.ItemRegistry;
 
 public class WeaponAttributeHandler {
 

@@ -73,4 +73,9 @@ public interface ICombo {
     BlockPos getLastLuckyExplorerCheckpoint();
     void setLastLuckyExplorerCheckpoint(BlockPos blockPos);
 
+    boolean hasArtifactSynergy();
+    void setArtifactSynergy(boolean artifactSynergy);
+
+    int getPainCycleStacks();
+    void setPainCycleStacks(int painCycleStacks);
 }

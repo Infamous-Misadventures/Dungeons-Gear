@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.items;
 
+import com.infamous.dungeons_gear.registry.ItemRegistry;
 import com.infamous.dungeons_gear.items.ranged.bows.*;
 import com.infamous.dungeons_gear.utilties.RangedAttackHelper;
 import net.minecraft.item.ItemModelsProperties;

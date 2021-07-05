@@ -91,6 +91,12 @@ public class PlayerAttackHelper {
         return damageSource.isFireDamage()
                 || damageSource.isExplosion()
                 || damageSource.isMagicDamage()
-                || damageSource.isProjectile();
+                || damageSource.isProjectile()
+                || !isDirectDamage(damageSource);
+    }
+
+    private static boolean isDirectDamage(DamageSource damageSource) {
+        return damageSource.getDamageType().equals("mob")
+                || damageSource.getDamageType().equals("player");
     }
 }

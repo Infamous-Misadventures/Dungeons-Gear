@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.items;
 
+import com.infamous.dungeons_gear.registry.ItemRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.util.ResourceLocation;

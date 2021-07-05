@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.goals;
 
+import com.infamous.dungeons_gear.capabilities.summoning.SummoningHelper;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.TargetGoal;
@@ -22,7 +23,7 @@ public class GolemOwnerHurtTargetGoal extends TargetGoal {
 
     public boolean shouldExecute() {
         if (this.ironGolemEntity.isPlayerCreated()) {
-            LivingEntity owner = getOwner(this.ironGolemEntity);
+            LivingEntity owner = SummoningHelper.getSummoner(this.ironGolemEntity);
             if (owner == null) {
                 return false;
             } else {
@@ -37,7 +38,7 @@ public class GolemOwnerHurtTargetGoal extends TargetGoal {
 
     public void startExecuting() {
         this.goalOwner.setAttackTarget(this.attacker);
-        LivingEntity owner = getOwner(this.ironGolemEntity);
+        LivingEntity owner = SummoningHelper.getSummoner(this.ironGolemEntity);
         if (owner != null) {
             this.timestamp = owner.getLastAttackedEntityTime();
         }

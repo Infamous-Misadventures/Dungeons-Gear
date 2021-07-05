@@ -7,5 +7,5 @@ public interface ISoulGatherer<T extends Item> {
 
     int getGatherAmount(ItemStack stack);
 
-    int getActivationCost(ItemStack stack);
+    float getActivationCost(ItemStack stack);
 }

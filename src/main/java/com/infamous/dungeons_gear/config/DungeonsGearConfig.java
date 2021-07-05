@@ -55,6 +55,8 @@ public class DungeonsGearConfig {
 
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> ENCHANTMENT_BLACKLIST;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> TREASURE_ONLY_ENCHANTMENTS;
+    public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_ENCHANTMENT_TRADES;
+    public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_ENCHANTMENT_LOOT;
 
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_MELEE_WEAPON_LOOT;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_RANGED_WEAPON_LOOT;
@@ -93,6 +95,14 @@ public class DungeonsGearConfig {
                 .comment("Enable Weaponsmith, Fletcher, Armorer and Leatherworker Villagers trading Dungeons Gear items. \n" +
                         "If you have other mods messing with the trades of those professions or simply don't want it, disable this feature. [true / false]")
                 .define("enableVillagerTrades", true);
+        ENABLE_ENCHANTMENT_TRADES = builder
+                .comment("Enable Librarian Villagers trading books enchanted with this mod's enchantments. \n" +
+                        "Disable this feature if you want to prevent this. [true / false]")
+                .define("enableEnchantmentTrades", true);
+        ENABLE_ENCHANTMENT_LOOT = builder
+                .comment("Enable enchantments from this mod appearing in any type of generated loot. \n" +
+                        "Disable this feature if you want to prevent this. [true / false]")
+                .define("enableEnchantmentLoot", true);
         ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR = builder
                 .comment("Enable applying enchantments from this mod on non-Dungeons gear using the Enchanting Table. \n" +
                         "If you don't want your enchantments to become too cluttered for non-Dungeons gear, or simply don't like it, disable this feature. \n" +
@@ -175,24 +185,6 @@ public class DungeonsGearConfig {
 
 
         builder.comment("Item Configuration").push("item_configuration");
-        builder.comment("For armor durability configuration reference, here are the vanilla armor durability multiplier values: \n" +
-                "Leather - 5\n" +
-                "Gold = 7\n" +
-                "Iron = 14\n" +
-                "Turtle = 25\n" +
-                "Diamond = 33\n" +
-                "Netherite = 37"
-        ).push("armor_durability_multiplier_reference").pop();
-        builder.comment("For tool durability configuration reference, here are the vanilla tool durability values: \n" +
-                "Gold - 32\n" +
-                "Wood = 59\n" +
-                "Stone = 131\n" +
-                "Iron = 250\n" +
-                "Crossbow - 326\n" +
-                "Bow - 384\n" +
-                "Diamond = 1561\n" +
-                "Netherite = 2031"
-        ).push("tool_durability_reference").pop();
         VEST_ARMOR_DURABILITY = builder
                 .comment("Set the durability multiplier for armors that can be classified as a vest, such as Hunter's Armor. [0-1024, default: 14")
                 .defineInRange("vestArmorDurabilityMultiplier", 14, 0, 1024);
@@ -237,32 +229,35 @@ public class DungeonsGearConfig {
                 .comment("Add entities that will never be targeted by aggressive Dungeons Gear effects. \n"
                         + "To do so, enter their registry names.")
                 .defineList("effectTargetBlacklist", Lists.newArrayList(
-                        "minecraft:chicken",
-                        "minecraft:cow",
-                        "minecraft:pig",
-                        "minecraft:sheep",
+                        "guardvillagers:guard",
+                        "minecraft:bat",
                         "minecraft:bee",
-                        "minecraft:wolf",
-                        "minecraft:fox",
-                        "minecraft:villager",
-                        "minecraft:horse",
+                        "minecraft:chicken",
+                        "minecraft:cod",
+                        "minecraft:cow",
+                        "minecraft:dolphin",
                         "minecraft:donkey",
+                        "minecraft:fox",
+                        "minecraft:horse",
+                        "minecraft:iron_golem",
                         "minecraft:mooshroom",
-                        "minecraft:parrot",
                         "minecraft:ocelot",
+                        "minecraft:panda",
+                        "minecraft:parrot",
+                        "minecraft:pig",
+                        "minecraft:polar_bear",
+                        "minecraft:pufferfish",
                         "minecraft:rabbit",
+                        "minecraft:salmon",
+                        "minecraft:sheep",
                         "minecraft:squid",
                         "minecraft:strider",
-                        "minecraft:turtle",
-                        "minecraft:salmon",
-                        "minecraft:cod",
-                        "minecraft:pufferfish",
+                        "minecraft:trader_llama",
                         "minecraft:tropical_fish",
-                        "minecraft:dolphin",
-                        "minecraft:panda",
-                        "minecraft:polar_bear",
-                        "minecraft:bat",
-                        "minecraft:trader_llama"
+                        "minecraft:turtle",
+                        "minecraft:villager",
+                        "minecraft:wandering_trader",
+                        "minecraft:wolf"
                         ),
                         (itemRaw) -> itemRaw instanceof String);
         builder.pop();
@@ -286,7 +281,8 @@ public class DungeonsGearConfig {
                         ),
                         (itemRaw) -> itemRaw instanceof String);
         UNIQUE_ITEM_COMMON_LOOT = builder
-                .comment("The decimal chance for a unique item to appear in common loot tables instead of a common one [0.0-1.0, default: 0.25]")
+                .comment("The decimal chance for a unique item to appear in common loot tables instead of a common one [0.0-1.0, default: 0.25] \n"
+                        + "Note: If a player has the Fortune of the Sea enchantment, this value will effectively be increased by 0.1 per level of the enchantment for them.")
                 .defineInRange("uniqueItemCommonLoot", 0.25, 0.0, 1.0);
         ARTIFACT_COMMON_LOOT = builder
                 .comment("The decimal chance for an artifact to appear in common loot tables [0.0-1.0, default: 0.25]")
@@ -312,7 +308,8 @@ public class DungeonsGearConfig {
                         ),
                         (itemRaw) -> itemRaw instanceof String);
         UNIQUE_ITEM_UNCOMMON_LOOT = builder
-                .comment("The decimal chance for a unique item to appear in uncommon loot tables instead of a common one [0.0-1.0, default: 0.5]")
+                .comment("The decimal chance for a unique item to appear in uncommon loot tables instead of a common one [0.0-1.0, default: 0.5] \n"
+                        + "Note: If a player has the Fortune of the Sea enchantment, this value will effectively be increased by 0.1 per level of the enchantment for them.")
                 .defineInRange("uniqueItemUncommonLoot", 0.5, 0.0, 1.0);
         ARTIFACT_UNCOMMON_LOOT = builder
                 .comment("The decimal chance for an artifact to appear in uncommon loot tables [0.0-1.0, default: 0.5]")
@@ -342,7 +339,8 @@ public class DungeonsGearConfig {
                         ),
                         (itemRaw) -> itemRaw instanceof String);
         UNIQUE_ITEM_RARE_LOOT = builder
-                .comment("The decimal chance for a unique weapon to appear in rare loot table instead of a common ones [0.0-1.0, default: 0.75]")
+                .comment("The decimal chance for a unique weapon to appear in rare loot table instead of a common ones [0.0-1.0, default: 0.75] \n"
+                        + "Note: If a player has the Fortune of the Sea enchantment, this value will effectively be increased by 0.1 per level of the enchantment for them.")
                 .defineInRange("uniqueItemRareLoot", 0.75, 0.0, 1.0);
         ARTIFACT_RARE_LOOT = builder
                 .comment("The decimal chance for an artifact to appear in rare loot tables [0.0-1.0, default: 0.75]")
@@ -367,7 +365,8 @@ public class DungeonsGearConfig {
                         ),
                         (itemRaw) -> itemRaw instanceof String);
         UNIQUE_ITEM_SUPER_RARE_LOOT = builder
-                .comment("The decimal chance for a unique item to appear in super rare loot tables instead of a common one [0.0-1.0, default: 1.0]")
+                .comment("The decimal chance for a unique item to appear in super rare loot tables instead of a common one [0.0-1.0, default: 1.0] \n"
+                        + "Note: If a player has the Fortune of the Sea enchantment, this value will effectively be increased by 0.1 per level of the enchantment for them.")
                 .defineInRange("uniqueItemSuperRareLoot", 1.0, 0, 1.0);
         ARTIFACT_SUPER_RARE_LOOT = builder
                 .comment("The decimal chance for an artifact to appear in super rare loot tables [0.0-1.0, default: 1.0]")
