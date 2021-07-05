@@ -4,12 +4,26 @@ import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.*;
+import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.passive.horse.LlamaEntity;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
 
 public class SummoningHelper {
+
+    @Nullable
+    public static LivingEntity getOwnerForHorse(AbstractHorseEntity horseEntity){
+        try {
+            if(horseEntity.getOwnerUniqueId() != null){
+                UUID ownerUniqueId = horseEntity.getOwnerUniqueId();
+                return ownerUniqueId == null ? null : horseEntity.world.getPlayerByUuid(ownerUniqueId);
+            }
+            else return null;
+        } catch (IllegalArgumentException var2) {
+            return null;
+        }
+    }
 
     public static boolean isEntitySummonable(Entity target) {
         return target instanceof IronGolemEntity
