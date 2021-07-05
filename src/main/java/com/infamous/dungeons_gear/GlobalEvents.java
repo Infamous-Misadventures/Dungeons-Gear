@@ -3,7 +3,6 @@ package com.infamous.dungeons_gear;
 
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.capabilities.bow.IBow;
-import com.infamous.dungeons_gear.capabilities.summoning.SummonableProvider;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketUpdateSouls;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
@@ -110,7 +109,7 @@ public class GlobalEvents {
         return stack.getItem() instanceof IRangedWeapon && ((IRangedWeapon) stack.getItem()).hasFuseShotBuiltIn(stack);
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onCancelAttackBecauseStunned(LivingAttackEvent event) {
         if (event.getSource().getTrueSource() instanceof PlayerEntity) {
             PlayerEntity attacker = (PlayerEntity) event.getSource().getTrueSource();
@@ -205,6 +204,20 @@ public class GlobalEvents {
 
     @SubscribeEvent
     public static void petDeath(LivingDamageEvent event) {
+        //cancel friendly fire
+        LivingEntity ouch = event.getEntityLiving();
+        if (event.getSource().getTrueSource() instanceof LivingEntity) {
+            LivingEntity bonk = (LivingEntity) event.getSource().getTrueSource();
+            if (AbilityHelper.isPetOrColleagueRelation(ouch, bonk)) {
+                event.setCanceled(true);
+                ouch.setRevengeTarget(null);
+                if (ouch instanceof MobEntity)
+                    ((MobEntity) ouch).setAttackTarget(null);
+                bonk.setRevengeTarget(null);
+                if (bonk instanceof MobEntity)
+                    ((MobEntity) bonk).setAttackTarget(null);
+            }
+        }
         if (DungeonsGearCompatibility.saveYourPets) {
             if (CapabilityHelper.getSummonableCapability(event.getEntityLiving()) != null && event.getAmount() > event.getEntityLiving().getMaxHealth()) {
                 event.getEntityLiving().remove();
