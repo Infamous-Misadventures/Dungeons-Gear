@@ -66,7 +66,7 @@ public class DeathBarterEnchantment extends DungeonsEnchantment implements IEmer
         }
 
         int deathBarterLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.DEATH_BARTER, player);
-        int emeraldRequirement = 150 - Math.max(100, (50 * (deathBarterLevel - 1)));
+        int emeraldRequirement = 150 - Math.max(100, 50 * (deathBarterLevel - 1)); // will always need at least 50 emeralds even if the level exceeds 3
         if(deathBarterLevel > 0 && totalEmeraldCount >= emeraldRequirement){
 
             for(Integer slotIndex : emeraldSlotIndices){
