@@ -75,9 +75,35 @@ public class ProjectileEffectHelper {
             double towardsY = target.getPosYHeight(0.3333333333333333D) - arrowEntity.getPosY() + euclideanDist * (double) 0.2F;
             arrowEntity.func_234612_a_(attacker, attacker.rotationPitch, attacker.rotationYaw, 0.0F, arrowVelocity * 3.0F, 1.0F);
             setProjectileTowards(arrowEntity, towardsX, towardsY, towardsZ, 0);
+            arrowEntity.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
+            //arrowEntity.addTag("BonusProjectile"); // Commented this out because it should no longer be used, if a user reports a bug about this, uncomment this
+            attacker.world.addEntity(arrowEntity);
+        }
+    }
+
+    public static void fireBurstBowstringShots(LivingEntity attacker, int distance, double damageMultiplier, float arrowVelocity, int arrowsToFire) {
+        World world = attacker.getEntityWorld();
+        //boolean nullListFlag = arrowEntity.hitEntities == null;
+        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(attacker.getPosX() - distance, attacker.getPosY() - distance, attacker.getPosZ() - distance,
+                attacker.getPosX() + distance, attacker.getPosY() + distance, attacker.getPosZ() + distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
+        if (nearbyEntities.isEmpty()) return;
+
+        nearbyEntities.sort(Comparator.comparingDouble(livingEntity -> livingEntity.getDistanceSq(attacker)));
+        int amount = Math.min(arrowsToFire, nearbyEntities.size());
+        for(int i = 0; i < amount; i++){
+            LivingEntity target = nearbyEntities.get(i);
+            ArrowItem arrowItem = (ArrowItem) ((ArrowItem) (Items.ARROW));
+            AbstractArrowEntity arrowEntity = arrowItem.createArrow(world, new ItemStack(Items.ARROW), attacker);
+            arrowEntity.setDamage(arrowEntity.getDamage() * damageMultiplier);
+            // borrowed from AbstractSkeletonEntity
+            double towardsX = target.getPosX() - attacker.getPosX();
+            double towardsZ = target.getPosZ() - attacker.getPosZ();
+            double euclideanDist = (double) MathHelper.sqrt(towardsX * towardsX + towardsZ * towardsZ);
+            double towardsY = target.getPosYHeight(0.3333333333333333D) - arrowEntity.getPosY() + euclideanDist * (double) 0.2F;
+            arrowEntity.func_234612_a_(attacker, attacker.rotationPitch, attacker.rotationYaw, 0.0F, arrowVelocity * 3.0F, 1.0F);
+            setProjectileTowards(arrowEntity, towardsX, towardsY, towardsZ, 0);
             //
             arrowEntity.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
-            arrowEntity.addTag("BonusProjectile");
             attacker.world.addEntity(arrowEntity);
         }
     }

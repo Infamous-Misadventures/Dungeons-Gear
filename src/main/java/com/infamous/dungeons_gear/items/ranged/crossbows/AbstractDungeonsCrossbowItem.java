@@ -125,7 +125,11 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
     }
 
     public float getCrossbowCharge(int useTime, ItemStack stack) {
-        float f = (float) useTime / (float) this.getCrossbowChargeTime(stack);
+        float crossbowChargeTime = this.getCrossbowChargeTime(stack);
+        if(crossbowChargeTime <= 0){
+            crossbowChargeTime = 1;
+        }
+        float f = (float) useTime / crossbowChargeTime;
         if (f > 1.0F) {
             f = 1.0F;
         }

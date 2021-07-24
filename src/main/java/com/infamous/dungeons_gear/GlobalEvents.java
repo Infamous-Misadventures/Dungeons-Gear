@@ -9,6 +9,7 @@ import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
 import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
+import com.infamous.dungeons_gear.enchantments.ranged.BurstBowstringEnchantment;
 import com.infamous.dungeons_gear.enchantments.ranged.FuseShotEnchantment;
 import com.infamous.dungeons_gear.registry.PotionList;
 import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
@@ -305,4 +306,35 @@ public class GlobalEvents {
             }
         }
     }
+
+    @SubscribeEvent
+    public static void handleJumpAbilities(LivingEvent.LivingJumpEvent event) {
+        LivingEntity jumper = event.getEntityLiving();
+        if (jumper instanceof PlayerEntity && !DungeonsGearCompatibility.elenaiDodge) {
+            PlayerEntity playerEntity = (PlayerEntity) jumper;
+            ItemStack helmet = playerEntity.getItemStackFromSlot(EquipmentSlotType.HEAD);
+            ItemStack chestplate = playerEntity.getItemStackFromSlot(EquipmentSlotType.CHEST);
+            ICombo comboCap = CapabilityHelper.getComboCapability(playerEntity);
+            if (comboCap == null) return;
+            int jumpCooldownTimer = comboCap.getJumpCooldownTimer();
+
+            if (jumpCooldownTimer <= 0) {
+                ArmorEffectHelper.handleJumpBoost(playerEntity, helmet, chestplate);
+
+                ArmorEffectHelper.handleInvulnerableJump(playerEntity, helmet, chestplate);
+
+                ArmorEffectHelper.handleJumpEnchantments(playerEntity, helmet, chestplate);
+
+                BurstBowstringEnchantment.activateBurstBowString(jumper);
+            }
+
+            float jumpCooldown = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getLongerRollCooldown() : 0;
+            float jumpCooldown2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getLongerRollCooldown() : 0;
+            float totalJumpCooldown = jumpCooldown * 0.01F + jumpCooldown2 * 0.01F;
+
+            int jumpCooldownTimerLength = totalJumpCooldown > 0 ? 60 + (int) (60 * totalJumpCooldown) : 60;
+            comboCap.setJumpCooldownTimer(jumpCooldownTimerLength);
+        }
+    }
+
 }

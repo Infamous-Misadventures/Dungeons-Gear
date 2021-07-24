@@ -54,6 +54,7 @@ public class EnchantmentInit {
 
                     ACCELERATE = new AccelerateEnchantment().setRegistryName(location("accelerate")),
                     BONUS_SHOT = new BonusShotEnchantment().setRegistryName(location("bonus_shot")),
+                    BURST_BOWSTRING = new BurstBowstringEnchantment().setRegistryName(location("burst_bowstring")),
                     CHAIN_REACTION = new ChainReactionEnchantment().setRegistryName(location("chain_reaction")),
                     COOLDOWN_SHOT = new CooldownShotEnchantment().setRegistryName(location("cooldown_shot")),
                     FUSE_SHOT = new FuseShotEnchantment().setRegistryName(location("fuse_shot")),

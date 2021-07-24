@@ -291,33 +291,5 @@ public class ArmorEvents {
         }
     }
 
-    @SubscribeEvent
-    public static void handleJumpAbilities(LivingEvent.LivingJumpEvent event) {
-        LivingEntity livingEntity = event.getEntityLiving();
-        if (livingEntity instanceof PlayerEntity && !DungeonsGearCompatibility.elenaiDodge) {
-            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
-            ItemStack helmet = playerEntity.getItemStackFromSlot(EquipmentSlotType.HEAD);
-            ItemStack chestplate = playerEntity.getItemStackFromSlot(EquipmentSlotType.CHEST);
-            ICombo comboCap = CapabilityHelper.getComboCapability(playerEntity);
-            if (comboCap == null) return;
-            int jumpCooldownTimer = comboCap.getJumpCooldownTimer();
-
-            if (jumpCooldownTimer <= 0) {
-                ArmorEffectHelper.handleJumpBoost(playerEntity, helmet, chestplate);
-
-                ArmorEffectHelper.handleInvulnerableJump(playerEntity, helmet, chestplate);
-
-                ArmorEffectHelper.handleJumpEnchantments(playerEntity, helmet, chestplate);
-            }
-
-            float jumpCooldown = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getLongerRollCooldown() : 0;
-            float jumpCooldown2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getLongerRollCooldown() : 0;
-            float totalJumpCooldown = jumpCooldown * 0.01F + jumpCooldown2 * 0.01F;
-
-            int jumpCooldownTimerLength = totalJumpCooldown > 0 ? 60 + (int) (60 * totalJumpCooldown) : 60;
-            comboCap.setJumpCooldownTimer(jumpCooldownTimerLength);
-        }
-    }
-
 
 }

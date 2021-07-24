@@ -89,6 +89,8 @@
   "enchantment.dungeons_gear.accelerate.desc": "Increases charge speed for each consecutive shot. Resets one second after firing.",
   "enchantment.dungeons_gear.bonus_shot": "Bonus Shot",
   "enchantment.dungeons_gear.bonus_shot.desc": "Firing a shot also fires a second shot at a nearby enemy. The second shot has reduced damage.",
+  "enchantment.dungeons_gear.burst_bowstring": "Burst Bowstring",
+  "enchantment.dungeons_gear.burst_bowstring.desc": "Shoots nearby mobs when you roll, costing one arrow per roll. Projectiles deal 40% of a charged shot's damage.",
   "enchantment.dungeons_gear.chain_reaction": "Chain Reaction",
   "enchantment.dungeons_gear.chain_reaction.desc": "Has a chance to fire four arrows in all directions on impact.",
   "enchantment.dungeons_gear.cooldown_shot": "Cooldown Shot",

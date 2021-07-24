@@ -886,5 +886,7 @@
   "item.dungeons_gear.eye_of_the_guardian": "Eye of the Guardian",
   "lore.dungeons_gear.eye_of_the_guardian": "The Eye of the Guardian holds a power that awakens in the hands of a worthy hero.",
   "ability.dungeons_gear.eye_of_the_guardian": "Fires a beam of energy that locks you into place as it deals damage to enemies in its path.",
-  "artifact.dungeons_gear.charge_time": "%d Seconds Charge-Up"
+  "artifact.dungeons_gear.charge_time": "%d Seconds Charge-Up",
+  "enchantment.dungeons_gear.burst_bowstring": "Burst Bowstring",
+  "enchantment.dungeons_gear.burst_bowstring.desc": "Shoots nearby mobs when you roll, costing one arrow per roll. Projectiles deal 40% of a charged shot's damage."
 }

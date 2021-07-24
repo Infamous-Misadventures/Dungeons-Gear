@@ -121,6 +121,9 @@ public interface IRangedWeapon<T extends Item> {
     default boolean hasBonusShotBuiltIn(ItemStack stack){
         return false;
     }
+    default boolean hasBurstBowstringBuiltIn(ItemStack stack){
+        return false;
+    }
 
     default boolean hasPiercingBuiltIn(ItemStack stack){
         return false;

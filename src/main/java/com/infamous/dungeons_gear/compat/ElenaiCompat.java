@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.compat;
 import com.elenai.elenaidodge2.api.DodgeEvent;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
+import com.infamous.dungeons_gear.enchantments.ranged.BurstBowstringEnchantment;
 import com.infamous.dungeons_gear.items.interfaces.IArmor;
 import com.infamous.dungeons_gear.utilties.ArmorEffectHelper;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
@@ -38,6 +39,8 @@ public class ElenaiCompat {
                 ArmorEffectHelper.handleInvulnerableJump(playerEntity, helmet, chestplate);
 
                 ArmorEffectHelper.handleJumpEnchantments(playerEntity, helmet, chestplate);
+
+                BurstBowstringEnchantment.activateBurstBowString(playerEntity);
             }
 
             float jumpCooldown = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getLongerRollCooldown() : 0;
