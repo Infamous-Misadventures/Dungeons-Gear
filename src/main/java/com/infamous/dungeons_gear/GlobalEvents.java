@@ -7,10 +7,13 @@ import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketUpdateSouls;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
 import com.infamous.dungeons_gear.effects.CustomEffects;
+import com.infamous.dungeons_gear.enchantments.armor.AcrobatEnchantment;
+import com.infamous.dungeons_gear.enchantments.armor.MultiRollEnchantment;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.ranged.BurstBowstringEnchantment;
 import com.infamous.dungeons_gear.enchantments.ranged.FuseShotEnchantment;
+import com.infamous.dungeons_gear.enchantments.ranged.RollChargeEnchantment;
 import com.infamous.dungeons_gear.registry.PotionList;
 import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_gear.items.interfaces.IArmor;
@@ -142,9 +145,12 @@ public class GlobalEvents {
     }
 
     @SubscribeEvent
-    public static void onStunnedMob(LivingEvent.LivingUpdateEvent event) {
-        if (event.getEntityLiving() instanceof MobEntity) {
-            MobEntity mobEntity = (MobEntity) event.getEntityLiving();
+    public static void onLivingTick(LivingEvent.LivingUpdateEvent event) {
+        LivingEntity living = event.getEntityLiving();
+        RollChargeEnchantment.tickRollCharge(living);
+
+        if (living instanceof MobEntity) {
+            MobEntity mobEntity = (MobEntity) living;
             if (mobEntity.getActivePotionEffect(CustomEffects.STUNNED) != null && !mobEntity.getTags().contains(STUNNED_TAG)) {
                 if (!mobEntity.isAIDisabled()) {
                     mobEntity.setNoAI(true);
@@ -326,14 +332,19 @@ public class GlobalEvents {
                 ArmorEffectHelper.handleJumpEnchantments(playerEntity, helmet, chestplate);
 
                 BurstBowstringEnchantment.activateBurstBowString(jumper);
+
+                RollChargeEnchantment.activateRollCharge(jumper);
             }
+            MultiRollEnchantment.incrementJumpCounter(playerEntity);
 
-            float jumpCooldown = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getLongerRollCooldown() : 0;
-            float jumpCooldown2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getLongerRollCooldown() : 0;
-            float totalJumpCooldown = jumpCooldown * 0.01F + jumpCooldown2 * 0.01F;
+            if(MultiRollEnchantment.hasReachedJumpLimit(playerEntity)){
+                float jumpCooldown = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getLongerRollCooldown() : 0;
+                float jumpCooldown2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getLongerRollCooldown() : 0;
+                float totalJumpCooldown = jumpCooldown * 0.01F + jumpCooldown2 * 0.01F;
 
-            int jumpCooldownTimerLength = totalJumpCooldown > 0 ? 60 + (int) (60 * totalJumpCooldown) : 60;
-            comboCap.setJumpCooldownTimer(jumpCooldownTimerLength);
+                int jumpCooldownTimerLength = totalJumpCooldown > 0 ? 60 + (int) (60 * totalJumpCooldown) : 60;
+                AcrobatEnchantment.setJumpCooldown(comboCap, jumper, jumpCooldownTimerLength);
+            }
         }
     }
 

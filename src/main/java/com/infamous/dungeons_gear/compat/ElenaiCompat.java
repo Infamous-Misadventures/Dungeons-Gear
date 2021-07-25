@@ -3,7 +3,10 @@ package com.infamous.dungeons_gear.compat;
 import com.elenai.elenaidodge2.api.DodgeEvent;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
+import com.infamous.dungeons_gear.enchantments.armor.AcrobatEnchantment;
+import com.infamous.dungeons_gear.enchantments.armor.MultiRollEnchantment;
 import com.infamous.dungeons_gear.enchantments.ranged.BurstBowstringEnchantment;
+import com.infamous.dungeons_gear.enchantments.ranged.RollChargeEnchantment;
 import com.infamous.dungeons_gear.items.interfaces.IArmor;
 import com.infamous.dungeons_gear.utilties.ArmorEffectHelper;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
@@ -17,12 +20,11 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class ElenaiCompat {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void dodge(DodgeEvent.ServerDodgeEvent event) {
-        LivingEntity livingEntity = event.getPlayer();
+        PlayerEntity player = event.getPlayer();
         if (DungeonsGearCompatibility.elenaiDodge) {
-            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
-            ItemStack helmet = playerEntity.getItemStackFromSlot(EquipmentSlotType.HEAD);
-            ItemStack chestplate = playerEntity.getItemStackFromSlot(EquipmentSlotType.CHEST);
-            ICombo comboCap = CapabilityHelper.getComboCapability(playerEntity);
+            ItemStack helmet = player.getItemStackFromSlot(EquipmentSlotType.HEAD);
+            ItemStack chestplate = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
+            ICombo comboCap = CapabilityHelper.getComboCapability(player);
             if (comboCap == null) return;
             int jumpCooldownTimer = comboCap.getJumpCooldownTimer();
 
@@ -36,19 +38,25 @@ public class ElenaiCompat {
                 }
 
 
-                ArmorEffectHelper.handleInvulnerableJump(playerEntity, helmet, chestplate);
+                ArmorEffectHelper.handleInvulnerableJump(player, helmet, chestplate);
 
-                ArmorEffectHelper.handleJumpEnchantments(playerEntity, helmet, chestplate);
+                ArmorEffectHelper.handleJumpEnchantments(player, helmet, chestplate);
 
-                BurstBowstringEnchantment.activateBurstBowString(playerEntity);
+                BurstBowstringEnchantment.activateBurstBowString(player);
+
+                RollChargeEnchantment.activateRollCharge(player);
             }
 
-            float jumpCooldown = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getLongerRollCooldown() : 0;
-            float jumpCooldown2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getLongerRollCooldown() : 0;
-            float totalJumpCooldown = jumpCooldown * 0.01F + jumpCooldown2 * 0.01F;
+            MultiRollEnchantment.incrementJumpCounter(player);
 
-            int jumpCooldownTimerLength = totalJumpCooldown > 0 ? 60 + (int) (60 * totalJumpCooldown) : 60;
-            comboCap.setJumpCooldownTimer(jumpCooldownTimerLength);
+            if(MultiRollEnchantment.hasReachedJumpLimit(player)){
+                float jumpCooldown = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getLongerRollCooldown() : 0;
+                float jumpCooldown2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getLongerRollCooldown() : 0;
+                float totalJumpCooldown = jumpCooldown * 0.01F + jumpCooldown2 * 0.01F;
+
+                int jumpCooldownTimerLength = totalJumpCooldown > 0 ? 60 + (int) (60 * totalJumpCooldown) : 60;
+                AcrobatEnchantment.setJumpCooldown(comboCap, player, jumpCooldownTimerLength);
+            }
         }
     }
 }

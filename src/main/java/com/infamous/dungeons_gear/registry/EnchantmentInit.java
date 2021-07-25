@@ -5,9 +5,8 @@ import com.infamous.dungeons_gear.enchantments.armor.*;
 import com.infamous.dungeons_gear.enchantments.melee_ranged.*;
 import com.infamous.dungeons_gear.enchantments.melee.*;
 import com.infamous.dungeons_gear.enchantments.ranged.*;
-import com.infamous.dungeons_gear.enchantments.types.ModDamageEnchantment;
+import com.infamous.dungeons_gear.enchantments.melee.IllagersBaneEnchantment;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -29,6 +28,7 @@ public class EnchantmentInit {
                     GRAVITY = new GravityEnchantment().setRegistryName(location("gravity")),
                     POISON_CLOUD = new PoisonCloudEnchantment().setRegistryName(location("poison_cloud")),
                     DYNAMO = new DynamoEnchantment().setRegistryName(location("dynamo")),
+                    REFRESHMENT = new RefreshmentEnchantment().setRegistryName(location("refreshment")),
 
                     ARTIFACT_SYNERGY = new ArtifactSynergyEnchantment().setRegistryName(location("artifact_synergy")),
                     BUSY_BEE = new BusyBeeEnchantment().setRegistryName(location("busy_bee")),
@@ -38,7 +38,7 @@ public class EnchantmentInit {
                     ECHO = new EchoEnchantment().setRegistryName(location("echo")),
                     EXPLODING = new ExplodingEnchantment().setRegistryName(location("exploding")),
                     GUARDING_STRIKE = new GuardingStrikeEnchantment().setRegistryName(location("guarding_strike")),
-                    ILLAGERS_BANE = new ModDamageEnchantment(Enchantment.Rarity.UNCOMMON, 3, EquipmentSlotType.MAINHAND).setRegistryName(location("illagers_bane")),
+                    ILLAGERS_BANE = new IllagersBaneEnchantment().setRegistryName(location("illagers_bane")),
                     LEECHING = new LeechingEnchantment().setRegistryName(location("leeching")),
                     PAIN_CYCLE = new PainCycleEnchantment().setRegistryName(location("pain_cycle")),
                     PROSPECTOR = new ProspectorEnchantment().setRegistryName(location("prospector")),
@@ -59,15 +59,18 @@ public class EnchantmentInit {
                     COOLDOWN_SHOT = new CooldownShotEnchantment().setRegistryName(location("cooldown_shot")),
                     FUSE_SHOT = new FuseShotEnchantment().setRegistryName(location("fuse_shot")),
                     GROWING = new GrowingEnchantment().setRegistryName(location("growing")),
+                    OVERCHARGE = new OverchargeEnchantment().setRegistryName(location("overcharge")),
                     REPLENISH = new ReplenishEnchantment().setRegistryName(location("replenish")),
                     RADIANCE_SHOT = new RadianceShotEnchantment().setRegistryName(location("radiance_shot")),
                     RICOCHET = new RicochetEnchantment().setRegistryName(location("ricochet")),
+                    ROLL_CHARGE = new RollChargeEnchantment().setRegistryName(location("roll_charge")),
                     SUPERCHARGE = new SuperchargeEnchantment().setRegistryName(location("supercharge")),
                     TEMPO_THEFT = new TempoTheftEnchantment().setRegistryName(location("tempo_theft")),
                     //UNCHANTING = new UnchantingEnchantment().setRegistryName(location("unchanting")),
                     WILD_RAGE = new WildRageEnchantment().setRegistryName(location("wild_rage")),
 
 
+                    ACROBAT = new AcrobatEnchantment().setRegistryName(location("acrobat")),
                     ALTRUISTIC = new AltruisticEnchantment().setRegistryName(location("altruistic")),
                     BAG_OF_SOULS = new BagOfSoulsEnchantment().setRegistryName(location("bag_of_souls")),
                     BURNING = new BurningEnchantment().setRegistryName(location("burning")),
@@ -91,6 +94,7 @@ public class EnchantmentInit {
                     HEALTH_SYNERGY = new HealthSynergyEnchantment().setRegistryName(location("health_synergy")),
                     LIGHTNING_FOCUS = new LightningFocusEnchantment().setRegistryName(location("lightning_focus")),
                     LUCKY_EXPLORER = new LuckyExplorerEnchantment().setRegistryName(location("lucky_explorer")),
+                    MULTI_ROLL = new MultiRollEnchantment().setRegistryName(location("multi_roll")),
                     POISON_FOCUS = new PoisonFocusEnchantment().setRegistryName(location("poison_focus")),
                     POTION_BARRIER = new PotionBarrierEnchantment().setRegistryName(location("potion_barrier")),
                     RECKLESS = new RecklessEnchantment().setRegistryName(location("reckless")),
@@ -124,6 +128,7 @@ public class EnchantmentInit {
             rangedEnchantmentToStringMap.put(ENIGMA_RESONATOR, "EnigmaResonator");
             rangedEnchantmentToStringMap.put(GRAVITY, "Gravity");
             rangedEnchantmentToStringMap.put(POISON_CLOUD, "PoisonCloud");
+            rangedEnchantmentToStringMap.put(REFRESHMENT, "Refreshment");
         }
         private static ResourceLocation location(String name) {
             return new ResourceLocation(DungeonsGear.MODID, name);

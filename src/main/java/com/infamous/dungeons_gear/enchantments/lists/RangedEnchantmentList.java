@@ -23,6 +23,8 @@ public class RangedEnchantmentList {
 
     public static Enchantment COOLDOWN_SHOT;
     public static Enchantment BURST_BOWSTRING;
+    public static Enchantment ROLL_CHARGE;
+    public static Enchantment OVERCHARGE;
 
     public static Map<Enchantment, String> rangedEnchantmentToStringMap = new HashMap<Enchantment, String>();
 }

@@ -43,4 +43,6 @@ public class ArmorEnchantmentList {
 
     public static Enchantment RECKLESS;
     public static Enchantment FORTUNE_OF_THE_SEA;
+    public static Enchantment ACROBAT;
+    public static Enchantment MULTI_ROLL;
 }

@@ -888,5 +888,13 @@
   "ability.dungeons_gear.eye_of_the_guardian": "Fires a beam of energy that locks you into place as it deals damage to enemies in its path.",
   "artifact.dungeons_gear.charge_time": "%d Seconds Charge-Up",
   "enchantment.dungeons_gear.burst_bowstring": "Burst Bowstring",
-  "enchantment.dungeons_gear.burst_bowstring.desc": "Shoots nearby mobs when you roll, costing one arrow per roll. Projectiles deal 40% of a charged shot's damage."
+  "enchantment.dungeons_gear.burst_bowstring.desc": "Shoots nearby mobs when you roll, costing one arrow per roll. Projectiles deal 40% of a charged shot's damage.",
+  "enchantment.dungeons_gear.acrobat": "Acrobat",
+  "enchantment.dungeons_gear.acrobat.desc": "Reduces the cooldown time between your jump abilities.",
+  "enchantment.dungeons_gear.multi_roll": "Multi-Roll",
+  "enchantment.dungeons_gear.multi_roll.desc": "Grants extra jumps or dodges before triggering jump ability cooldown.",
+  "enchantment.dungeons_gear.refreshment": "Refreshment",
+  "enchantment.dungeons_gear.refreshment.desc": "Defeating a mob can turn a glass bottle in your inventory into a health potion.",
+  "enchantment.dungeons_gear.overcharge": "Overcharge",
+  "enchantment.dungeons_gear.overcharge.desc": "Continue to hold the ranged attack button to double, triple, or quadruple charge a bow, increasing its damage each time."
 }

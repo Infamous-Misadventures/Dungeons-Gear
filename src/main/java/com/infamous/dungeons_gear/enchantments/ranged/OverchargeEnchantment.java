@@ -6,17 +6,11 @@ import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
-import static com.infamous.dungeons_gear.DungeonsGear.MODID;
+public class OverchargeEnchantment extends DungeonsEnchantment {
 
-public class AccelerateEnchantment extends DungeonsEnchantment {
-
-    public AccelerateEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.RANGED, new EquipmentSlotType[]{
-                EquipmentSlotType.MAINHAND});
+    public OverchargeEnchantment() {
+        super(Rarity.RARE, ModEnchantmentTypes.BOW, ModEnchantmentTypes.WEAPON_SLOT);
     }
 
     public int getMaxLevel() {
@@ -25,6 +19,7 @@ public class AccelerateEnchantment extends DungeonsEnchantment {
 
     @Override
     public boolean canApplyTogether(Enchantment enchantment) {
-        return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || enchantment != Enchantments.QUICK_CHARGE;
+        return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get()
+                || (enchantment != Enchantments.QUICK_CHARGE && enchantment != RangedEnchantmentList.ACCELERATE);
     }
 }
