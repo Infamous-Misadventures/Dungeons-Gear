@@ -162,6 +162,8 @@
   "enchantment.dungeons_gear.gravity_pulse.desc": "A blast occurs every five seconds that pulls nearby enemies towards you.",
   "enchantment.dungeons_gear.health_synergy": "Health Synergy",
   "enchantment.dungeons_gear.health_synergy.desc": "When activating any artifact, you regain a small amount of health.",
+  "enchantment.dungeons_gear.life_boost": "Life Boost",
+  "enchantment.dungeons_gear.life_boost.desc": "Each time you expend a life, your maximum health increases.",
   "enchantment.dungeons_gear.lightning_focus": "Lightning Focus",
   "enchantment.dungeons_gear.lightning_focus.desc": "The lightning damage you deal is increased.",
   "enchantment.dungeons_gear.lucky_explorer": "Lucky Explorer",

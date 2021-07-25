@@ -92,6 +92,7 @@ public class EnchantmentInit {
                     FRENZIED = new FrenziedEnchantment().setRegistryName(location("frenzied")),
                     GRAVITY_PULSE = new GravityPulseEnchantment().setRegistryName(location("gravity_pulse")),
                     HEALTH_SYNERGY = new HealthSynergyEnchantment().setRegistryName(location("health_synergy")),
+                    LIFE_BOOST = new LifeBoostEnchantment().setRegistryName(location("life_boost")),
                     LIGHTNING_FOCUS = new LightningFocusEnchantment().setRegistryName(location("lightning_focus")),
                     LUCKY_EXPLORER = new LuckyExplorerEnchantment().setRegistryName(location("lucky_explorer")),
                     MULTI_ROLL = new MultiRollEnchantment().setRegistryName(location("multi_roll")),
