@@ -896,5 +896,9 @@
   "enchantment.dungeons_gear.refreshment": "Refreshment",
   "enchantment.dungeons_gear.refreshment.desc": "Defeating a mob can turn a glass bottle in your inventory into a health potion.",
   "enchantment.dungeons_gear.overcharge": "Overcharge",
-  "enchantment.dungeons_gear.overcharge.desc": "Continue to hold the ranged attack button to double, triple, or quadruple charge a bow, increasing its damage each time."
+  "enchantment.dungeons_gear.overcharge.desc": "Continue to hold the ranged attack button to double, triple, or quadruple charge a bow, increasing its damage each time.",
+  "enchantment.dungeons_gear.shock_web": "Shock Web",
+  "enchantment.dungeons_gear.shock_web.desc": "Beams of lightning connect the last few charged arrows fired, which deal lightning damage to enemies who touch a beam.",
+  "enchantment.dungeons_gear.life_boost": "Life Boost",
+  "enchantment.dungeons_gear.life_boost.desc": "Each time you expend a life, your maximum health increases."
 }

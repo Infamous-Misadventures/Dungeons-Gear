@@ -35,7 +35,9 @@ public class LifeBoostEnchantment extends DungeonsEnchantment {
     public static void onRespawn(PlayerEvent.Clone event){
         PlayerEntity oldPlayer = event.getOriginal();
         DamageSource lastDamageSource = oldPlayer.getLastDamageSource();
-        if(lastDamageSource != null && lastDamageSource.getTrueSource() == null) return; // must have been killed by another entity to receive the life boost
+        if(lastDamageSource != null
+                && (lastDamageSource.getTrueSource() == null || lastDamageSource.getTrueSource() == oldPlayer)) return;
+        // must have been killed by another entity to receive the life boost
 
         ModifiableAttributeInstance oldMaxHealth = oldPlayer.getAttribute(Attributes.MAX_HEALTH);
         double oldLifeBoostValue = 0;

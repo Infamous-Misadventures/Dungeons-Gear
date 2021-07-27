@@ -1,9 +1,11 @@
 package com.infamous.dungeons_gear.utilties;
 
+import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.items.interfaces.IRangedWeapon;
 import com.infamous.dungeons_gear.items.ranged.crossbows.AbstractDungeonsCrossbowItem;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
@@ -14,16 +16,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.World;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Predicate;
 
 import static net.minecraft.entity.Entity.horizontalMag;
 
@@ -199,20 +200,25 @@ public class ProjectileEffectHelper {
     }
 
     public static boolean soulsCriticalBoost(PlayerEntity attacker, ItemStack mainhand) {
-        int numSouls = Math.min(attacker.experienceTotal, 50);
+        ICombo comboCap = CapabilityHelper.getComboCapability(attacker);
+        if(comboCap == null) return false;
+
+
+        float soulsLimit = 50.0F;
+        float numSouls = Math.min(comboCap.getSouls(), soulsLimit);
         boolean uniqueWeaponFlag = hasEnigmaResonatorBuiltIn(mainhand);
         if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.ENIGMA_RESONATOR)) {
             int enigmaResonatorLevel = EnchantmentHelper.getEnchantmentLevel(MeleeRangedEnchantmentList.ENIGMA_RESONATOR, mainhand);
             float soulsCriticalBoostChanceCap;
             soulsCriticalBoostChanceCap = 0.1F + 0.05F * enigmaResonatorLevel;
             float soulsCriticalBoostRand = attacker.getRNG().nextFloat();
-            if (soulsCriticalBoostRand <= Math.min(numSouls / 50.0, soulsCriticalBoostChanceCap)) {
+            if (soulsCriticalBoostRand <= Math.min(numSouls / soulsLimit, soulsCriticalBoostChanceCap)) {
                 return true;
             }
         }
         if (uniqueWeaponFlag) {
             float soulsCriticalBoostRand = attacker.getRNG().nextFloat();
-            return soulsCriticalBoostRand <= Math.min(numSouls / 50.0, 0.15F);
+            return soulsCriticalBoostRand <= Math.min(numSouls / soulsLimit, 0.15F);
         }
         return false;
     }
@@ -236,5 +242,19 @@ public class ProjectileEffectHelper {
         projectileEntity.rotationPitch = (float) (MathHelper.atan2(vector3d.y, (double) f) * (double) (180F / (float) Math.PI));
         projectileEntity.prevRotationYaw = projectileEntity.rotationYaw;
         projectileEntity.prevRotationPitch = projectileEntity.rotationPitch;
+    }
+
+    public static List<LivingEntity> rayTraceEntities(World worldIn, Vector3d startVec, Vector3d endVec, AxisAlignedBB boundingBox, Predicate<LivingEntity> filter) {
+        List<LivingEntity> rayTraceEntities = new ArrayList<>();
+        List<LivingEntity> nearbyEntities = worldIn.getEntitiesWithinAABB(LivingEntity.class, boundingBox, filter);
+        for(LivingEntity nearbyEntity : nearbyEntities) {
+            AxisAlignedBB nearbyEntityBB = nearbyEntity.getBoundingBox().grow((double)0.3F);
+            Optional<Vector3d> entityClip = nearbyEntityBB.rayTrace(startVec, endVec);
+            if (entityClip.isPresent()) {
+                rayTraceEntities.add(nearbyEntity);
+            }
+        }
+
+        return rayTraceEntities;
     }
 }

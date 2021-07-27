@@ -111,6 +111,8 @@
   "enchantment.dungeons_gear.ricochet.desc": "Small chance for arrows to ricochet off mobs.",
   "enchantment.dungeons_gear.roll_charge": "Roll Charge",
   "enchantment.dungeons_gear.roll_charge.desc": "When you perform a jump or dodge, your next ranged attack within the timing window will automatically be fully charged.",
+  "enchantment.dungeons_gear.shock_web": "Shock Web",
+  "enchantment.dungeons_gear.shock_web.desc": "Beams of lightning connect the last few charged arrows fired, which deal lightning damage to enemies who touch a beam.",
   "enchantment.dungeons_gear.supercharge": "Supercharge",
   "enchantment.dungeons_gear.supercharge.desc": "Charged shots deal more damage and have more pushback.",
   "enchantment.dungeons_gear.tempo_theft": "Tempo Theft",

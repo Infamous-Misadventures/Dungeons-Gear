@@ -64,6 +64,7 @@ public class EnchantmentInit {
                     RADIANCE_SHOT = new RadianceShotEnchantment().setRegistryName(location("radiance_shot")),
                     RICOCHET = new RicochetEnchantment().setRegistryName(location("ricochet")),
                     ROLL_CHARGE = new RollChargeEnchantment().setRegistryName(location("roll_charge")),
+                    SHOCK_WEB = new ShockWebEnchantment().setRegistryName(location("shock_web")),
                     SUPERCHARGE = new SuperchargeEnchantment().setRegistryName(location("supercharge")),
                     TEMPO_THEFT = new TempoTheftEnchantment().setRegistryName(location("tempo_theft")),
                     //UNCHANTING = new UnchantingEnchantment().setRegistryName(location("unchanting")),
@@ -130,6 +131,7 @@ public class EnchantmentInit {
             rangedEnchantmentToStringMap.put(GRAVITY, "Gravity");
             rangedEnchantmentToStringMap.put(POISON_CLOUD, "PoisonCloud");
             rangedEnchantmentToStringMap.put(REFRESHMENT, "Refreshment");
+            rangedEnchantmentToStringMap.put(SHOCK_WEB, "ShockWeb");
         }
         private static ResourceLocation location(String name) {
             return new ResourceLocation(DungeonsGear.MODID, name);
