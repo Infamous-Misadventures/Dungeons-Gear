@@ -92,14 +92,16 @@ public class ShockWebEnchantment extends DungeonsEnchantment {
 
                 BlockPos fromPos = eventArrow.getPosition();
                 DungeonsGear.LOGGER.info("From Block: {}", world.getBlockState(fromPos));
-                Vector3d from = eventArrow.getPositionVec();
+                Vector3d from = eventArrow.getPositionVec().add(0, eventArrow.getHeight() * 0.5D, 0);
                 BlockPos toPos = nearbyArrow.getPosition();
                 DungeonsGear.LOGGER.info("To Block: {}", world.getBlockState(toPos));
-                Vector3d to = nearbyArrow.getPositionVec();
+                Vector3d to = nearbyArrow.getPositionVec().add(0, nearbyArrow.getHeight() * 0.5D, 0);
+                /*
                 RayTraceResult traceBetweenArrows = world.rayTraceBlocks(new RayTraceContext(from, to, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, eventArrow));
                 if (traceBetweenArrows.getType() != RayTraceResult.Type.MISS) {
                     to = traceBetweenArrows.getHitVec();
                 }
+                 */
                 List<LivingEntity> entitiesToShock = ProjectileEffectHelper.rayTraceEntities(world, from, to, boundingBox,
                         (nearbyEntity) -> AbilityHelper.canApplyToEnemy((LivingEntity)shooter, nearbyEntity));
                 if(entitiesToShock.isEmpty()) continue;
