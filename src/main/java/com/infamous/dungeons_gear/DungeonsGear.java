@@ -1,5 +1,8 @@
 package com.infamous.dungeons_gear;
 
+import com.infamous.dungeons_gear.capabilities.bow.Bow;
+import com.infamous.dungeons_gear.capabilities.bow.BowStorage;
+import com.infamous.dungeons_gear.capabilities.bow.IBow;
 import com.infamous.dungeons_gear.capabilities.combo.Combo;
 import com.infamous.dungeons_gear.capabilities.combo.ComboStorage;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
@@ -7,29 +10,27 @@ import com.infamous.dungeons_gear.capabilities.offhand.IOffhand;
 import com.infamous.dungeons_gear.capabilities.offhand.Offhand;
 import com.infamous.dungeons_gear.capabilities.offhand.OffhandStorage;
 import com.infamous.dungeons_gear.capabilities.summoning.*;
-import com.infamous.dungeons_gear.capabilities.bow.IBow;
-import com.infamous.dungeons_gear.capabilities.bow.Bow;
-import com.infamous.dungeons_gear.capabilities.bow.BowStorage;
 import com.infamous.dungeons_gear.client.ClientProxy;
+import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
 import com.infamous.dungeons_gear.compat.ElenaiCompat;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.entities.IceCloudRenderer;
+import com.infamous.dungeons_gear.entities.ModEntityTypes;
 import com.infamous.dungeons_gear.groups.ArmorGroup;
 import com.infamous.dungeons_gear.groups.ArtifactGroup;
+import com.infamous.dungeons_gear.groups.MeleeWeaponGroup;
+import com.infamous.dungeons_gear.groups.RangedWeaponGroup;
+import com.infamous.dungeons_gear.items.BowItemModelsProperties;
+import com.infamous.dungeons_gear.items.CrossbowItemModelsProperties;
+import com.infamous.dungeons_gear.items.DualWieldItemProperties;
+import com.infamous.dungeons_gear.items.VanillaItemModelProperties;
+import com.infamous.dungeons_gear.items.melee.WeaponAttributeHandler;
+import com.infamous.dungeons_gear.loot.ModLootFunctionTypes;
 import com.infamous.dungeons_gear.registry.AttributeRegistry;
 import com.infamous.dungeons_gear.registry.ItemRegistry;
 import com.infamous.dungeons_gear.registry.ParticleInit;
-import com.infamous.dungeons_gear.items.DualWieldItemProperties;
-import com.infamous.dungeons_gear.items.VanillaItemModelProperties;
-import com.infamous.dungeons_gear.items.BowItemModelsProperties;
-import com.infamous.dungeons_gear.items.CrossbowItemModelsProperties;
-import com.infamous.dungeons_gear.combat.NetworkHandler;
-import com.infamous.dungeons_gear.entities.ModEntityTypes;
-import com.infamous.dungeons_gear.groups.MeleeWeaponGroup;
-import com.infamous.dungeons_gear.groups.RangedWeaponGroup;
-import com.infamous.dungeons_gear.items.melee.WeaponAttributeHandler;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemGroup;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -95,6 +96,7 @@ public class DungeonsGear
         CapabilityManager.INSTANCE.register(ISummoner.class, new SummonerStorage(), Summoner::new);
         CapabilityManager.INSTANCE.register(IBow.class, new BowStorage(), Bow::new);
         CapabilityManager.INSTANCE.register(IOffhand.class, new OffhandStorage(), Offhand::new);
+        event.enqueueWork(ModLootFunctionTypes::register);
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {

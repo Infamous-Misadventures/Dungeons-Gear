@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.enchantments.armor;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.DropsEnchantment;
+import com.infamous.dungeons_gear.utilties.LootTableHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.registry.PotionList;
@@ -14,6 +15,8 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.*;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -55,21 +58,11 @@ public class SurpriseGiftEnchantment extends DropsEnchantment {
                     int surpriseGiftLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.SURPRISE_GIFT, player);
                     float surpriseGiftChance = 0.5F * surpriseGiftLevel;
 
-                    ItemStack strengthPotion = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), PotionList.SHORT_STRENGTH);
-                    ItemStack speedPotion = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), PotionList.SHORT_SWIFTNESS);
-                    ItemStack shadowBrew = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), PotionList.SHADOW_BREW);
-                    ItemStack oakwoodBrew = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), PotionList.OAKWOOD_BREW);
-                    //ItemStack arrowBundle = new ItemStack(Items.ARROW, 10);
-                    List<ItemStack> giftList = Arrays.asList(strengthPotion, speedPotion, shadowBrew, oakwoodBrew
-                            //,arrowBundle
-                    );
-                    // TODO: Add more potions
-
                     while(surpriseGiftChance > 0){
                         float surpriseGiftRand = player.getRNG().nextFloat();
                         if(surpriseGiftRand <= surpriseGiftChance){
-                            ItemStack potionToDrop = giftList.get(player.getRNG().nextInt(giftList.size()));
-                            ItemEntity surpriseGift = new ItemEntity(player.world, player.getPosX(), player.getPosY(), player.getPosZ(), potionToDrop);
+                            ItemStack itemStack = LootTableHelper.generateItemStack((ServerWorld) player.world, player.getPosition(), new ResourceLocation(MODID, "enchantments/surprise_gift"), player.getRNG());
+                            ItemEntity surpriseGift = new ItemEntity(player.world, player.getPosX(), player.getPosY(), player.getPosZ(), itemStack);
                             player.world.addEntity(surpriseGift);
                         }
                         surpriseGiftChance -= 1.0F;

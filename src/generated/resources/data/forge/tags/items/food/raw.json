@@ -1,0 +1,24 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:apple",
+    "minecraft:baked_potato",
+    "minecraft:beetroot",
+    "minecraft:carrot",
+    "minecraft:chicken",
+    "minecraft:chorus_fruit",
+    "minecraft:cod",
+    "minecraft:dried_kelp",
+    "minecraft:melon_slice",
+    "minecraft:mutton",
+    "minecraft:porkchop",
+    "minecraft:potato",
+    "minecraft:pufferfish",
+    "minecraft:rabbit",
+    "minecraft:rotten_flesh",
+    "minecraft:salmon",
+    "minecraft:spider_eye",
+    "minecraft:sweet_berries",
+    "minecraft:tropical_fish"
+  ]
+}
