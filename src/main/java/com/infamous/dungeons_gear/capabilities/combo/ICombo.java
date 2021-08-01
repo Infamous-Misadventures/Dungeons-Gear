@@ -78,4 +78,13 @@ public interface ICombo {
 
     int getPainCycleStacks();
     void setPainCycleStacks(int painCycleStacks);
+
+    int getRollChargeTicks();
+    void setRollChargeTicks(int rollChargeTicks);
+
+    int getJumpCounter();
+    void setJumpCounter(int jumpCounter);
+
+    int getRefreshmentCounter();
+    void setRefreshmentCounter(int refreshmentCounter);
 }

@@ -37,6 +37,9 @@ public class Combo implements ICombo {
     private BlockPos lastLuckyExplorerCheckpoint;
     private boolean artifactSynergy;
     private int painCycleStacks;
+    private int rollChargeTicks;
+    private int jumpCounter;
+    private int refreshmentCounter;
 
     public Combo() {
         this.souls = 0;
@@ -63,6 +66,9 @@ public class Combo implements ICombo {
 
         this.artifactSynergy = false;
         this.painCycleStacks = 0;
+        this.rollChargeTicks = 0;
+        this.jumpCounter = 0;
+        this.refreshmentCounter = 0;
     }
 
     @Override
@@ -328,5 +334,35 @@ public class Combo implements ICombo {
     @Override
     public void setPainCycleStacks(int painCycleStacks) {
         this.painCycleStacks = painCycleStacks;
+    }
+
+    @Override
+    public int getRollChargeTicks() {
+        return this.rollChargeTicks;
+    }
+
+    @Override
+    public void setRollChargeTicks(int rollChargeTicks) {
+        this.rollChargeTicks = rollChargeTicks;
+    }
+
+    @Override
+    public int getJumpCounter() {
+        return jumpCounter;
+    }
+
+    @Override
+    public void setJumpCounter(int jumpCounter) {
+        this.jumpCounter = jumpCounter;
+    }
+
+    @Override
+    public int getRefreshmentCounter() {
+        return refreshmentCounter;
+    }
+
+    @Override
+    public void setRefreshmentCounter(int refreshmentCounter) {
+        this.refreshmentCounter = refreshmentCounter;
     }
 }

@@ -122,6 +122,10 @@ public interface IRangedWeapon<T extends Item> {
         return false;
     }
 
+    default boolean hasBurstBowstringBuiltIn(ItemStack stack){
+        return false;
+    }
+
     default boolean hasPiercingBuiltIn(ItemStack stack){
         return false;
     }
@@ -148,4 +152,7 @@ public interface IRangedWeapon<T extends Item> {
 
     default boolean hasRollChargeBuiltIn(ItemStack stack){ return false;}
 
+    default boolean hasRefreshmentBuiltIn(ItemStack stack){
+        return false;
+    }
 }

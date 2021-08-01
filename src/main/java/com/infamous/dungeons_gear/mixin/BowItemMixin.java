@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.mixin;
 
+import com.infamous.dungeons_gear.utilties.RangedAttackHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
@@ -10,9 +11,6 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
-
-import static com.infamous.dungeons_gear.utilties.RangedAttackHelper.getVanillaArrowVelocity;
-
 
 @Mixin(BowItem.class)
 public class BowItemMixin {
@@ -28,7 +26,7 @@ public class BowItemMixin {
         i = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(stack, worldIn, playerentity, i, !itemstack.isEmpty() || flag);
         if (i < 0) return 0;
 
-        arrowVelocity = getVanillaArrowVelocity(stack, i);
+        arrowVelocity = RangedAttackHelper.getVanillaArrowVelocity(livingEntity, stack, i);
         return arrowVelocity;
     }
 }

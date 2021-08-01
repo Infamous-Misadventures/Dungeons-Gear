@@ -37,7 +37,7 @@ public class RecklessEnchantment extends DungeonsEnchantment {
         if (player.isAlive()) {
             player.getAttribute(Attributes.MAX_HEALTH).removeModifier(RECKLESS);
             player.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(RECKLESS);
-            int recklessLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.COWARDICE, player);
+            int recklessLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.RECKLESS, player);
             if (recklessLevel > 0) {
                 player.getAttribute(Attributes.MAX_HEALTH).applyNonPersistentModifier(new AttributeModifier(RECKLESS, "reckless multiplier", -0.6, AttributeModifier.Operation.MULTIPLY_TOTAL));
                 player.getAttribute(Attributes.ATTACK_DAMAGE).applyNonPersistentModifier(new AttributeModifier(RECKLESS, "reckless multiplier", 0.2 + (0.2 * recklessLevel), AttributeModifier.Operation.MULTIPLY_TOTAL));

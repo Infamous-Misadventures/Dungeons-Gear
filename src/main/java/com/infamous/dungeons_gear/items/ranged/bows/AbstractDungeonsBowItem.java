@@ -140,13 +140,15 @@ public abstract class AbstractDungeonsBowItem extends BowItem implements IRanged
 
     public float getBowArrowVelocity(ItemStack stack, int charge) {
         float bowChargeTime = getBowChargeTime(stack);
-        if(bowChargeTime <= 0){
-            bowChargeTime = 1;
-        }
         float arrowVelocity = (float)charge / bowChargeTime;
         arrowVelocity = (arrowVelocity * arrowVelocity + arrowVelocity * 2.0F) / 3.0F;
-        if (arrowVelocity > 1.0F) {
-            arrowVelocity = 1.0F;
+        float velocityLimit = 1.0F;
+        int overchargeLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.OVERCHARGE, stack);
+        if(overchargeLevel > 0){
+            velocityLimit += overchargeLevel;
+        }
+        if (arrowVelocity > velocityLimit) {
+            arrowVelocity = velocityLimit;
         }
 
         return arrowVelocity;
@@ -159,15 +161,16 @@ public abstract class AbstractDungeonsBowItem extends BowItem implements IRanged
         if(this.hasAccelerateBuiltIn(stack)) accelerateLevel++;
 
         IBow weaponCap = CapabilityHelper.getWeaponCapability(stack);
-        if(weaponCap == null) return Math.max(this.getDefaultChargeTime() - 5 * quickChargeLevel, 0);
+        int minTime = 1;
+        if(weaponCap == null) return Math.max(this.getDefaultChargeTime() - 5 * quickChargeLevel, minTime);
         float bowChargeTime = weaponCap.getBowChargeTime();
         long lastFiredTime = weaponCap.getLastFiredTime();
 
         if(accelerateLevel > 0 && lastFiredTime > 0){
-            return Math.max(bowChargeTime - 5 * quickChargeLevel, 0);
+            return Math.max(bowChargeTime - 5 * quickChargeLevel, minTime);
         }
         else {
-            return Math.max(this.getDefaultChargeTime() - 5 * quickChargeLevel, 0);
+            return Math.max(this.getDefaultChargeTime() - 5 * quickChargeLevel, minTime);
         }
     }
 

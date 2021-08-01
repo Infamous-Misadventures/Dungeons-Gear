@@ -275,45 +275,26 @@ public class ArmorEvents {
         if (player.isAlive()) {
             ICombo comboCap = CapabilityHelper.getComboCapability(player);
             if (comboCap == null) return;
+
             if (comboCap.getJumpCooldownTimer() > 0) {
                 comboCap.setJumpCooldownTimer(comboCap.getJumpCooldownTimer() - 1);
+            } else if(comboCap.getJumpCooldownTimer() < 0){
+                comboCap.setJumpCooldownTimer(0);
             }
+
             if (comboCap.getLastShoutTimer() > 0) {
                 comboCap.setLastShoutTimer(comboCap.getLastShoutTimer() - 1);
+            } else if(comboCap.getLastShoutTimer() < 0){
+                comboCap.setLastShoutTimer(0);
             }
+
+
             if (comboCap.getComboTimer() > 0) {
                 comboCap.setComboTimer(comboCap.getComboTimer() - 1);
-            } else if (comboCap.getComboCount() != 0)
+            } else if (comboCap.getComboCount() < 0){
                 comboCap.setComboCount(0);
-            comboCap.setOffhandCooldown(comboCap.getOffhandCooldown() + 1);
-        }
-    }
-
-    @SubscribeEvent
-    public static void handleJumpAbilities(LivingEvent.LivingJumpEvent event) {
-        LivingEntity livingEntity = event.getEntityLiving();
-        if (livingEntity instanceof PlayerEntity && !DungeonsGearCompatibility.elenaiDodge) {
-            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
-            ItemStack helmet = playerEntity.getItemStackFromSlot(EquipmentSlotType.HEAD);
-            ItemStack chestplate = playerEntity.getItemStackFromSlot(EquipmentSlotType.CHEST);
-            ICombo comboCap = CapabilityHelper.getComboCapability(playerEntity);
-            if (comboCap == null) return;
-            int jumpCooldownTimer = comboCap.getJumpCooldownTimer();
-
-            if (jumpCooldownTimer <= 0) {
-                ArmorEffectHelper.handleJumpBoost(playerEntity, helmet, chestplate);
-
-                ArmorEffectHelper.handleInvulnerableJump(playerEntity, helmet, chestplate);
-
-                ArmorEffectHelper.handleJumpEnchantments(playerEntity, helmet, chestplate);
             }
-
-            float jumpCooldown = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getLongerRollCooldown() : 0;
-            float jumpCooldown2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getLongerRollCooldown() : 0;
-            float totalJumpCooldown = jumpCooldown * 0.01F + jumpCooldown2 * 0.01F;
-
-            int jumpCooldownTimerLength = totalJumpCooldown > 0 ? 60 + (int) (60 * totalJumpCooldown) : 60;
-            comboCap.setJumpCooldownTimer(jumpCooldownTimerLength);
+            comboCap.setOffhandCooldown(comboCap.getOffhandCooldown() + 1);
         }
     }
 

@@ -10,4 +10,5 @@ public class MeleeRangedEnchantmentList {
     public static Enchantment GRAVITY;
     public static Enchantment POISON_CLOUD;
     public static Enchantment DYNAMO;
+    public static Enchantment REFRESHMENT;
 }
