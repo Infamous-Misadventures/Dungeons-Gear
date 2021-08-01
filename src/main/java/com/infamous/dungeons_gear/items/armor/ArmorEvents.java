@@ -4,6 +4,7 @@ package com.infamous.dungeons_gear.items.armor;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
+import com.infamous.dungeons_gear.enchantments.armor.ArrowHoarderEnchantment;
 import com.infamous.dungeons_gear.items.interfaces.IArmor;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.ArmorEffectHelper;
@@ -29,6 +30,9 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.StreamSupport;
+
+import static com.infamous.dungeons_gear.registry.ItemRegistry.ARROW_BUNDLE;
 
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class ArmorEvents {
@@ -248,25 +252,19 @@ public class ArmorEvents {
         if (event.getSource().getTrueSource() instanceof LivingEntity) {
             LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
             LivingEntity victim = (LivingEntity) event.getEntityLiving();
-            ItemStack helmet = attacker.getItemStackFromSlot(EquipmentSlotType.HEAD);
-            ItemStack chestplate = attacker.getItemStackFromSlot(EquipmentSlotType.CHEST);
-
-
-            int arrowDrops = helmet.getItem() instanceof IArmor ? ((IArmor) helmet.getItem()).getArrowsPerBundle() : 0;
-            int arrowDrops2 = chestplate.getItem() instanceof IArmor ? ((IArmor) chestplate.getItem()).getArrowsPerBundle() : 0;
-            int totalarrowDrops = arrowDrops + arrowDrops2;
-
-            // TODO: Add Arrow Bundles, rework this to add to Arrow Bundles
-            if (totalarrowDrops > 0) {
-                Collection<ItemEntity> itemEntities = event.getDrops();
-                if (victim instanceof IMob) {
-                    if (attacker.getRNG().nextFloat() <= 0.5F) {
-                        ItemEntity arrowDrop = new ItemEntity(victim.world, victim.getPosX(), victim.getPosY(), victim.getPosZ(), new ItemStack(Items.ARROW, totalarrowDrops));
-                        itemEntities.add(arrowDrop);
-                    }
-                }
+            int maxLevel = StreamSupport.stream(attacker.getArmorInventoryList().spliterator(), false).map(ArrowHoarderEnchantment::arrowHoarderLevel).max(Integer::compare).orElse(0);
+            int drops = (maxLevel / 4);
+            drops += attacker.getRNG().nextFloat() <= (maxLevel % 4) / 4.0F ? 1 : 0;
+            Collection<ItemEntity> itemEntities = event.getDrops();
+            if (drops > 0 && victim instanceof IMob && itemEntities.stream().anyMatch(itemEntity -> itemEntity.getItem().getItem().equals(Items.ARROW))) {
+                ItemEntity arrowDrop = new ItemEntity(victim.world, victim.getPosX(), victim.getPosY(), victim.getPosZ(), new ItemStack(ARROW_BUNDLE.get(), drops));
+                itemEntities.add(arrowDrop);
             }
         }
+    }
+
+    private static int getArrowHoarderBuiltIn(ItemStack helmet) {
+        return helmet.getItem() instanceof IArmor && ((IArmor) helmet.getItem()).hasArrowHoarderBuiltIn(helmet) ? 1 : 0;
     }
 
     @SubscribeEvent

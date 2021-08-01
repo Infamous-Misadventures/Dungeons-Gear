@@ -19,6 +19,8 @@ import java.util.Collection;
 import java.util.List;
 
 import static com.infamous.dungeons_gear.loot.ModLootFunctionTypes.ADD_POTION;
+import static net.minecraft.item.Items.POTION;
+import static net.minecraft.item.Items.TIPPED_ARROW;
 
 public class AddPotionLootFunction extends LootFunction
 {
@@ -45,22 +47,27 @@ public class AddPotionLootFunction extends LootFunction
     @Override
     protected ItemStack doApply(ItemStack stack, LootContext context)
     {
-        Potion potion = weightedPotionOptions.get(0).getFirst();
-        if (weightedPotionOptions.size() != 1)
-        {
-            float rnd = context.getRandom().nextFloat() * totalWeight;
-            for(int i=0;i<weightedPotionOptions.size();i++)
-            {
-                Pair<Potion, Float> pair = weightedPotionOptions.get(i);
-                if (rnd <= pair.getSecond())
-                {
-                    potion = pair.getFirst();
-                    break;
+        if(canAddPotionToItemStack(stack)) {
+            Potion potion = weightedPotionOptions.get(0).getFirst();
+            if (weightedPotionOptions.size() != 1) {
+                float rnd = context.getRandom().nextFloat() * totalWeight;
+                for (int i = 0; i < weightedPotionOptions.size(); i++) {
+                    Pair<Potion, Float> pair = weightedPotionOptions.get(i);
+                    if (rnd <= pair.getSecond()) {
+                        potion = pair.getFirst();
+                        break;
+                    }
+                    rnd -= pair.getSecond();
                 }
-                rnd -= pair.getSecond();
             }
+            return PotionUtils.addPotionToItemStack(stack, potion);
         }
-        return PotionUtils.addPotionToItemStack(stack, potion);
+        return stack;
+    }
+
+    private boolean canAddPotionToItemStack(ItemStack stack) {
+        return stack.getItem().equals(POTION) ||
+                stack.getItem().equals(TIPPED_ARROW);
     }
 
     @Override

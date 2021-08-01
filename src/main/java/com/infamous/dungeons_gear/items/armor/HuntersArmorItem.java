@@ -103,6 +103,11 @@ public class HuntersArmorItem extends ArmorItem implements IArmor {
     }
 
     @Override
+    public boolean hasArrowHoarderBuiltIn(ItemStack stack) {
+        return true;
+    }
+
+    @Override
     public int getArrowsPerBundle() {
         return 4;
     }

@@ -57,4 +57,5 @@ public interface IArmor<T extends Item> {
     default boolean hasPotionBarrierBuiltIn(ItemStack stack){return false;}
     default boolean hasSwiftfootedBuiltIn(ItemStack stack){return false;}
     default boolean hasChillingBuiltIn(ItemStack stack){return false;}
+    default boolean hasArrowHoarderBuiltIn(ItemStack stack){return false;}
 }

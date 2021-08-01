@@ -9,6 +9,7 @@ import java.util.function.BiConsumer;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.items.ItemTagWrappers.FOOD_PROCESSED;
+import static com.infamous.dungeons_gear.registry.ItemRegistry.ARROW_BUNDLE;
 import static net.minecraft.item.Items.*;
 import static net.minecraft.tags.ItemTags.ARROWS;
 
@@ -65,7 +66,8 @@ public class ModChestLootTables extends ChestLootTables {
         consumer.accept(new ResourceLocation(MODID, "enchantments/surprise_gift"),
                 LootTable.builder().
                         addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
-                                .addEntry(ItemLootEntry.builder(() -> POTION).acceptFunction(AddPotionLootFunction.builder()))));
+                                .addEntry(ItemLootEntry.builder(() -> POTION).weight(75).acceptFunction(AddPotionLootFunction.builder()))
+                                .addEntry(ItemLootEntry.builder(ARROW_BUNDLE::get).weight(25))));
     }
 
     private void luckyExplorerLootTable(BiConsumer<ResourceLocation, LootTable.Builder> consumer) {

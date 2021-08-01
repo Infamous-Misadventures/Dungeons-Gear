@@ -180,6 +180,8 @@
   "enchantment.dungeons_gear.surprise_gift.desc": "Whenever you use a healing potion, you sometimes create random consumables.",
   "enchantment.dungeons_gear.tumblebee": "Tumblebee",
   "enchantment.dungeons_gear.tumblebee.desc": "Chance to summon a bee when you jump or dodge, with up to 3 bees joining your side.",
+  "enchantment.dungeons_gear.arrow_hoarder": "Arrow Hoarder",
+  "enchantment.dungeons_gear.arrow_hoarder.desc": "Gives you a chance to find Arrow Bundles, which can be used to gain arrows.",
 
   "itemGroup.melee_weapons": "Dungeons: Melee Weapons",
   "itemGroup.ranged_weapons": "Dungeons: Ranged Weapons",
@@ -889,5 +891,7 @@
   "ability.dungeons_gear.thrust_attack": "Thrust Attack",
   "ability.dungeons_gear.thundering": "Fires Lightning Bolts (Thundering I)",
   "ability.dungeons_gear.weakening": "Weakens Enemy Attacks (Weakening I)",
-  "ability.dungeons_gear.wind_up_attack": "Wind-Up Attack"
+  "ability.dungeons_gear.wind_up_attack": "Wind-Up Attack",
+
+  "item.dungeons_gear.arrow_bundle": "Arrow Bundle"
 }

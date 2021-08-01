@@ -6,18 +6,12 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 75,
           "functions": [
             {
               "function": "dungeons_gear:add_potion"
             }
           ],
           "name": "minecraft:potion"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 25,
-          "name": "dungeons_gear:arrow_bundle"
         }
       ]
     }
