@@ -2,6 +2,7 @@ package com.infamous.dungeons_gear.registry;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.items.ArmorMaterialList;
+import com.infamous.dungeons_gear.items.ArrowBundleItem;
 import com.infamous.dungeons_gear.items.ToolMaterialList;
 import com.infamous.dungeons_gear.items.armor.*;
 import com.infamous.dungeons_gear.items.artifacts.*;
@@ -24,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
+import static com.infamous.dungeons_gear.DungeonsGear.RANGED_WEAPON_GROUP;
 
 public class ItemRegistry {
 
@@ -44,7 +46,7 @@ public class ItemRegistry {
     public static final Item.Properties ARMOR_PROPERTIES = DungeonsGearConfig.ENABLE_ARMOR_TAB.get() ?
             new Item.Properties().group(DungeonsGear.ARMOR_GROUP) : new Item.Properties().group(ItemGroup.COMBAT);
     public static final Item.Properties RANGED_WEAPON_PROPERTIES = DungeonsGearConfig.ENABLE_RANGED_WEAPON_TAB.get() ?
-            new Item.Properties().group(DungeonsGear.RANGED_WEAPON_GROUP) : new Item.Properties().group(ItemGroup.COMBAT);
+            new Item.Properties().group(RANGED_WEAPON_GROUP) : new Item.Properties().group(ItemGroup.COMBAT);
     public static final Item.Properties ARTIFACT_PROPERTIES = DungeonsGearConfig.ENABLE_ARTIFACT_TAB.get() ?
             new Item.Properties().group(DungeonsGear.ARTIFACT_GROUP) : new Item.Properties().group(ItemGroup.COMBAT);
 
@@ -615,6 +617,9 @@ public class ItemRegistry {
             () -> new WolfArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
     public static final RegistryObject<Item> FOX_ARMOR_HOOD = ITEMS.register("fox_hood",
             () -> new WolfArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
+
+    public static final RegistryObject<Item> ARROW_BUNDLE = ITEMS.register("arrow_bundle",
+            () -> new ArrowBundleItem(new Item.Properties().group(RANGED_WEAPON_GROUP)));
 
     public static void putItemsInMap() {
         putArtifactsInMap();

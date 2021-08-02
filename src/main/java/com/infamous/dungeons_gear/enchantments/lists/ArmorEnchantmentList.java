@@ -46,4 +46,6 @@ public class ArmorEnchantmentList {
     public static Enchantment ACROBAT;
     public static Enchantment MULTI_ROLL;
     public static Enchantment LIFE_BOOST;
+
+    public static Enchantment ARROW_HOARDER;
 }

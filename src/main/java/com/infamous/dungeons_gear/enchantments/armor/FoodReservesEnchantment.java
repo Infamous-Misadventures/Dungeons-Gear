@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.enchantments.armor;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.DropsEnchantment;
+import com.infamous.dungeons_gear.utilties.LootTableHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import net.minecraft.enchantment.Enchantment;
@@ -16,6 +17,8 @@ import net.minecraft.item.Items;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.PotionUtils;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -27,7 +30,6 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class FoodReservesEnchantment extends DropsEnchantment {
-    public static final List<Item> FOOD_LIST = Arrays.asList(Items.APPLE, Items.BREAD, Items.COOKED_PORKCHOP, Items.MELON_SLICE, Items.COOKED_SALMON);
 
     public FoodReservesEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlotType[]{
@@ -57,8 +59,8 @@ public class FoodReservesEnchantment extends DropsEnchantment {
                 if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.FOOD_RESERVES)){
                     int foodReservesLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.FOOD_RESERVES, player);
                     while(foodReservesLevel > 0){
-                        Item foodToDrop = FOOD_LIST.get(player.getRNG().nextInt(FOOD_LIST.size()));
-                        ItemEntity foodDrop = new ItemEntity(player.world, player.getPosX(), player.getPosY(), player.getPosZ(), new ItemStack(foodToDrop));
+                        ItemStack itemStack = LootTableHelper.generateItemStack((ServerWorld) player.world, player.getPosition(), new ResourceLocation(MODID, "enchantments/food_reserves"), player.getRNG());
+                        ItemEntity foodDrop = new ItemEntity(player.world, player.getPosX(), player.getPosY(), player.getPosZ(), itemStack);
                         player.world.addEntity(foodDrop);
                         foodReservesLevel--;
                     }

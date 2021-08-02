@@ -125,6 +125,9 @@ public class DescriptionHelper {
             if(armor.hasChillingBuiltIn(itemStack)){
                 abilities.add("chilling");
             }
+            if(armor.hasArrowHoarderBuiltIn(itemStack)){
+                abilities.add("arrow_hoarder");
+            }
         }
     }
 

@@ -80,6 +80,11 @@ public class GuardsArmorItem extends ArmorItem implements IArmor {
     }
 
     @Override
+    public boolean hasArrowHoarderBuiltIn(ItemStack stack) {
+        return true;
+    }
+
+    @Override
     public int getArrowsPerBundle() {
         return 4; // 8 out of 64
     }

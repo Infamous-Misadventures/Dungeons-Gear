@@ -7,6 +7,7 @@ import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DropsEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.IEmeraldsEnchantment;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
+import com.infamous.dungeons_gear.utilties.LootTableHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.ItemEntity;
@@ -14,7 +15,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -58,9 +61,12 @@ public class LuckyExplorerEnchantment extends DropsEnchantment implements IEmera
                     comboCap.setLastLuckyExplorerCheckpoint(currentPos);
                     int luckyExplorerLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.LUCKY_EXPLORER, player);
                     if(luckyExplorerLevel > 0){
-                        int emeraldCount = 1 + (luckyExplorerLevel - 1) * 2;
-                        ItemEntity emeraldDrop = new ItemEntity(player.world, player.getPosX(), player.getPosY(), player.getPosZ(), new ItemStack(Items.EMERALD, emeraldCount));
-                        player.world.addEntity(emeraldDrop);
+                        int rollCount = 1 + (luckyExplorerLevel - 1) * 2;
+                        for (int i = 0; i < rollCount; i++) {
+                            ItemStack itemStack = LootTableHelper.generateItemStack((ServerWorld) player.world, player.getPosition(), new ResourceLocation(MODID, "enchantments/lucky_explorer"), player.getRNG());
+                            ItemEntity emeraldDrop = new ItemEntity(player.world, player.getPosX(), player.getPosY(), player.getPosZ(), itemStack);
+                            player.world.addEntity(emeraldDrop);
+                        }
                     }
                 }
             }
