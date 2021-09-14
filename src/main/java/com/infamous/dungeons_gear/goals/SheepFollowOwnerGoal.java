@@ -11,7 +11,7 @@ import net.minecraft.world.IWorldReader;
 
 import java.util.EnumSet;
 
-import static com.infamous.dungeons_gear.goals.GoalUtils.getOwner;
+import static com.infamous.dungeons_gear.capabilities.summoning.SummoningHelper.getSummoner;
 
 public class SheepFollowOwnerGoal extends Goal {
     private final SheepEntity sheepEntity;
@@ -44,7 +44,7 @@ public class SheepFollowOwnerGoal extends Goal {
      * method as well.
      */
     public boolean shouldExecute() {
-        LivingEntity livingentity = getOwner(this.sheepEntity);
+        LivingEntity livingentity = getSummoner(this.sheepEntity);
         if (livingentity == null) {
             return false;
         } else if (livingentity.isSpectator()) {

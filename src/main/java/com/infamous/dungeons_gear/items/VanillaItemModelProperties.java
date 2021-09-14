@@ -23,7 +23,7 @@ public class VanillaItemModelProperties {
                         } else {
                             return livingEntity.getActiveItemStack() != stack ? 0.0F
                                     : (float) (stack.getUseDuration() - livingEntity.getItemInUseCount())
-                                    / RangedAttackHelper.getVanillaBowChargeTime(livingEntity.getActiveItemStack());
+                                    / RangedAttackHelper.getVanillaBowChargeTime(livingEntity, livingEntity.getActiveItemStack());
                         }
                     });
             bowModelProperties.put(new ResourceLocation("pulling"),
@@ -41,7 +41,7 @@ public class VanillaItemModelProperties {
                         } else {
                             return CrossbowItem.isCharged(stack) ? 0.0F
                                     : (float) (stack.getUseDuration() - livingEntity.getItemInUseCount())
-                                    / (float) RangedAttackHelper.getVanillaCrossbowChargeTime(stack);
+                                    / (float) RangedAttackHelper.getVanillaCrossbowChargeTime(livingEntity, stack);
                         }
                     });
             crossbowModelProperties.put(new ResourceLocation("pulling"),

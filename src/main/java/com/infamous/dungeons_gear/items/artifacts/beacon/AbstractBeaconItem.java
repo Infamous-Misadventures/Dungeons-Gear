@@ -1,8 +1,7 @@
 package com.infamous.dungeons_gear.items.artifacts.beacon;
 
-import com.infamous.dungeons_gear.DungeonsGear;
+import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
-import com.infamous.dungeons_gear.items.interfaces.ISoulGatherer;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.entity.Entity;
@@ -16,15 +15,14 @@ import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import javax.annotation.Nullable;
 
-public abstract class AbstractBeaconItem extends ArtifactItem implements ISoulGatherer {
+public abstract class AbstractBeaconItem extends ArtifactItem{
 
     public static final double RAYTRACE_DISTANCE = 256;
     public static final float BEAM_DAMAGE_PER_TICK = 0.5F; // 10.0F damage per second
-    public static final float EXPERIENCE_COST_PER_TICK = 0.625f;
+    public static final float SOUL_COST_PER_TICK = 0.625F;
 
     public AbstractBeaconItem(Properties properties) {
         super(properties);
@@ -36,13 +34,7 @@ public abstract class AbstractBeaconItem extends ArtifactItem implements ISoulGa
         return stackItem instanceof AbstractBeaconItem ? ((AbstractBeaconItem) stackItem).getBeamColor() : null;
     }
 
-    public static boolean canFire(PlayerEntity playerEntity, ItemStack stack) {
-        ISoulGatherer soulGatherer = stack.getItem() instanceof ISoulGatherer ? ((ISoulGatherer) stack.getItem()) : null;
-        if (soulGatherer != null) {
-            return CapabilityHelper.getComboCapability(playerEntity).getSouls() >= soulGatherer.getActivationCost(stack) || playerEntity.isCreative();
-        }
-        return false;
-    }
+    public abstract boolean canFire(PlayerEntity playerEntity, ItemStack stack);
 
     public static ItemStack getBeacon(PlayerEntity player) {
         ItemStack heldItem = player.getHeldItemMainhand();
@@ -60,18 +52,17 @@ public abstract class AbstractBeaconItem extends ArtifactItem implements ISoulGa
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         ItemStack itemstack = playerIn.getHeldItem(handIn);
-        if (worldIn.isRemote) {
-            if (canFire(playerIn, itemstack)) {
-                SoundHelper.playBeaconSound(playerIn, true);
-            }
-            return new ActionResult<>(ActionResultType.PASS, itemstack);
-        }
 
-        if (!canFire(playerIn, itemstack)) {
+        if(canFire(playerIn, itemstack)){
+            SoundHelper.playBeaconSound(playerIn, true);
+        } else{
             return new ActionResult<>(ActionResultType.FAIL, itemstack);
         }
 
-        playerIn.setActiveHand(handIn);
+        if (!worldIn.isRemote) {
+            playerIn.setActiveHand(handIn);
+            ArtifactItem.triggerSynergy(playerIn, itemstack);
+        }
         return new ActionResult<>(ActionResultType.PASS, itemstack);
     }
 
@@ -92,18 +83,15 @@ public abstract class AbstractBeaconItem extends ArtifactItem implements ISoulGa
 
     @Override
     public void onPlayerStoppedUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft) {
-        if (entityLiving instanceof PlayerEntity) {
-            SoundHelper.playBeaconSound(entityLiving, false);
-            entityLiving.resetActiveHand();
-        }
+        SoundHelper.playBeaconSound(entityLiving, false);
     }
 
     @Override
-    public void onUsingTick(ItemStack stack, LivingEntity livingEntity, int count) {
+    public void onUse(World world, LivingEntity livingEntity, ItemStack stack, int count) {
         if (livingEntity instanceof PlayerEntity) {
-            World world = livingEntity.getEntityWorld();
             PlayerEntity playerEntity = (PlayerEntity) livingEntity;
-            if (playerEntity.isCreative()||CapabilityHelper.getComboCapability(playerEntity).consumeSouls(EXPERIENCE_COST_PER_TICK)) {
+
+            if (playerEntity.isCreative()|| this.consumeTick(playerEntity)) {
                 RayTraceResult result = playerEntity.pick(RAYTRACE_DISTANCE, 1.0f, false);
                 Vector3d eyeVector = playerEntity.getEyePosition(1.0f);
                 Vector3d lookVector = playerEntity.getLook(1.0F);
@@ -113,45 +101,24 @@ public abstract class AbstractBeaconItem extends ArtifactItem implements ISoulGa
                         ProjectileHelper.rayTraceEntities(world, playerEntity, eyeVector, targetVector, axisalignedbb,
                                 entity -> entity instanceof LivingEntity && !entity.isSpectator() && entity.canBeCollidedWith());
                 if (entityraytraceresult != null && result.getHitVec().squareDistanceTo(eyeVector) > entityraytraceresult.getHitVec().squareDistanceTo(eyeVector)) {
-                    stack.damageItem(1, playerEntity, entity -> entity.sendBreakAnimation(playerEntity.getActiveHand()));
                     if (!world.isRemote()) {
                         Entity entity = entityraytraceresult.getEntity();
-                        //if (!resetHurtResistantTime(entity)) return;
                         entity.hurtResistantTime = 0;
                         entity.attackEntityFrom(DamageSource.causeIndirectMagicDamage(playerEntity, playerEntity), BEAM_DAMAGE_PER_TICK);
                     }
+                }
+                if(count % 20 == 0){ // damage the stack every second used, not every tick used
+                    stack.damageItem(1, playerEntity, entity -> entity.sendBreakAnimation(playerEntity.getActiveHand()));
                 }
             }
         }
     }
 
-    private boolean resetHurtResistantTime(Entity entity) {
-        String hurtResistantTime = "field_70172_ad";
-        Integer hurtResistanceTimer = ObfuscationReflectionHelper.getPrivateValue(Entity.class, entity, hurtResistantTime);
-        if (hurtResistanceTimer == null) {
-            DungeonsGear.LOGGER.error("Reflection error for hurtResistantTime!");
-            return false;
-        }
-        if (hurtResistanceTimer > 0) {
-            ObfuscationReflectionHelper.setPrivateValue(Entity.class, entity, 0, hurtResistantTime);
-            return true;
-        }
-        return true;
-    }
-
-    @Override
-    public int getGatherAmount(ItemStack stack) {
-        return 1;
-    }
+    protected abstract boolean consumeTick(PlayerEntity playerEntity);
 
     @Override
     public int getCooldownInSeconds() {
         return 0;
-    }
-
-    @Override
-    public int getActivationCost(ItemStack stack) {
-        return 1;
     }
 
     @Override

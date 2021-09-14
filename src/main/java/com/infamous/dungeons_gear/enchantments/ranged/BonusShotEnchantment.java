@@ -67,7 +67,7 @@ public class BonusShotEnchantment extends DungeonsEnchantment {
             float damageMultiplier;
             damageMultiplier = 0.1F + (bonusShotLevel-1 * 0.07F);
             if(uniqueWeaponFlag) damageMultiplier += 0.1F;
-            float arrowVelocity = RangedAttackHelper.getVanillaOrModdedBowArrowVelocity(stack, charge);
+            float arrowVelocity = RangedAttackHelper.getVanillaOrModdedBowArrowVelocity(livingEntity, stack, charge);
             if(arrowVelocity >= 0.1F){
                 ProjectileEffectHelper.fireBonusShotTowardsOtherEntity(livingEntity, 10, damageMultiplier, arrowVelocity);
             }

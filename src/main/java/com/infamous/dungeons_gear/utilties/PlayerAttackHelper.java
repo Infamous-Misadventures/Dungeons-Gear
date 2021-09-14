@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.SAnimateHandPacket;
 import net.minecraft.potion.EffectUtils;
 import net.minecraft.potion.Effects;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.world.GameType;
 import net.minecraft.world.server.ServerChunkProvider;
@@ -84,5 +85,18 @@ public class PlayerAttackHelper {
         e.ticksSinceLastSwing = cap.getOffhandCooldown();
         cap.setOffhandCooldown(tssl);
         e.setSilent(silent);
+    }
+
+    public static boolean isProbablyNotMeleeDamage(DamageSource damageSource) {
+        return damageSource.isFireDamage()
+                || damageSource.isExplosion()
+                || damageSource.isMagicDamage()
+                || damageSource.isProjectile()
+                || !isDirectDamage(damageSource);
+    }
+
+    private static boolean isDirectDamage(DamageSource damageSource) {
+        return damageSource.getDamageType().equals("mob")
+                || damageSource.getDamageType().equals("player");
     }
 }

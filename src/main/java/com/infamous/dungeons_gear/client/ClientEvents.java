@@ -38,13 +38,6 @@ public class ClientEvents {
             }
 
             // DOUBLE OR INT
-            if(armor.getArrowsPerBundle() > 0){
-                tooltip.add(index + 1, new TranslationTextComponent(
-                        "+" + armor.getArrowsPerBundle() + " ")
-                        .append(new TranslationTextComponent(
-                                "attribute.name.arrowsPerBundle"))
-                        .mergeStyle(TextFormatting.GREEN));
-            }
             if(armor.getArtifactCooldown() > 0){
                 tooltip.add(index + 1, new TranslationTextComponent(
                         "-" + armor.getArtifactCooldown() + "% ")
@@ -142,7 +135,7 @@ public class ClientEvents {
                     ItemStack heldItem = AbstractBeaconItem.getBeacon(player);
                     if (player.isHandActive()
                             && heldItem.getItem() instanceof AbstractBeaconItem
-                            && AbstractBeaconItem.canFire(player, heldItem)) {
+                            && ((AbstractBeaconItem)heldItem.getItem()).canFire(player, heldItem)) {
                             BeaconBeamRenderer.renderBeam(event, player, Minecraft.getInstance().getRenderPartialTicks());
                     }
                 }

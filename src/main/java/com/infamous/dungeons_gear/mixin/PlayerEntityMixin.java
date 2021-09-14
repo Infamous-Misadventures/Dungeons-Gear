@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.mixin;
 
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
-import com.infamous.dungeons_gear.init.AttributeRegistry;
+import com.infamous.dungeons_gear.registry.AttributeRegistry;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

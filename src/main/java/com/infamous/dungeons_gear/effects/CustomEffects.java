@@ -4,6 +4,7 @@ import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
 
 public class CustomEffects {
+    public static Effect PARTY_STARTER;
     public static Effect SHIELDING;
     public static Effect SOUL_PROTECTION;
     public static Effect STUNNED;

@@ -1,10 +1,16 @@
 package com.infamous.dungeons_gear.capabilities.combo;
 
+import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+
+import javax.annotation.Nullable;
 
 public class Combo implements ICombo {
 
-    private float soul;
+    private float souls;
     private int comboTimer;
     //private boolean ghostForm;
     private boolean shadowForm;
@@ -27,8 +33,16 @@ public class Combo implements ICombo {
     private int offhandCooldown;
     private float cachedCooldown;//no need to be saved, it's stored and used in the span of a tick
 
+    private BlockPos lastExplorerCheckpoint;
+    private BlockPos lastLuckyExplorerCheckpoint;
+    private boolean artifactSynergy;
+    private int painCycleStacks;
+    private int rollChargeTicks;
+    private int jumpCounter;
+    private int refreshmentCounter;
+
     public Combo() {
-        this.soul = 0;
+        this.souls = 0;
         this.comboTimer = 0;
         this.comboCount = 0;
         //this.ghostForm = false;
@@ -47,6 +61,14 @@ public class Combo implements ICombo {
         this.jumpCooldownTimer = 0;
         this.poisonImmunityTimer = 0;
         this.dynamoMultiplier = 1.0D;
+        this.lastExplorerCheckpoint = BlockPos.ZERO;
+        this.lastLuckyExplorerCheckpoint = BlockPos.ZERO;
+
+        this.artifactSynergy = false;
+        this.painCycleStacks = 0;
+        this.rollChargeTicks = 0;
+        this.jumpCounter = 0;
+        this.refreshmentCounter = 0;
     }
 
     @Override
@@ -61,29 +83,35 @@ public class Combo implements ICombo {
 
     @Override
     public boolean consumeSouls(float amount) {
-        if (soul < amount) return false;
-        soul -= amount;
+        if (souls < amount) return false;
+        souls -= amount;
         return true;
     }
 
     @Override
     public float getSouls() {
-        return soul;
+        return souls;
     }
 
     @Override
-    public float getMaxSouls() {
-        return 300;
+    public float getMaxSouls(@Nullable LivingEntity living) {
+        if(living == null) return 300;
+
+        int bagOfSoulsLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.BAG_OF_SOULS, living);
+        if(bagOfSoulsLevel > 0){
+            return 300 + (100 * bagOfSoulsLevel);
+        } else{
+            return 300;
+        }
     }
 
     @Override
-    public void setSouls(float soul) {
-        this.soul = soul;
-    }
-
-    @Override
-    public void addSouls(float amount, float until) {
-        soul=MathHelper.clamp(soul+amount, 0, until);
+    public void setSouls(float soul, @Nullable LivingEntity living) {
+        if(living != null){
+            this.souls = MathHelper.clamp(soul, 0, this.getMaxSouls(living));
+        } else{
+            this.souls = Math.max(soul, 0);
+        }
     }
 /*
     @Override
@@ -266,5 +294,75 @@ public class Combo implements ICombo {
     @Override
     public void setCachedCooldown(float cooldown) {
         cachedCooldown = cooldown;
+    }
+
+    @Override
+    public BlockPos getLastExplorerCheckpoint() {
+        return this.lastExplorerCheckpoint;
+    }
+
+    @Override
+    public void setLastExplorerCheckpoint(BlockPos blockPos) {
+        this.lastExplorerCheckpoint = blockPos;
+    }
+
+    @Override
+    public BlockPos getLastLuckyExplorerCheckpoint() {
+        return this.lastLuckyExplorerCheckpoint;
+    }
+
+    @Override
+    public void setLastLuckyExplorerCheckpoint(BlockPos blockPos) {
+        this.lastLuckyExplorerCheckpoint = blockPos;
+    }
+
+    @Override
+    public boolean hasArtifactSynergy() {
+        return this.artifactSynergy;
+    }
+
+    @Override
+    public void setArtifactSynergy(boolean artifactSynergy) {
+        this.artifactSynergy = artifactSynergy;
+    }
+
+    @Override
+    public int getPainCycleStacks() {
+        return this.painCycleStacks;
+    }
+
+    @Override
+    public void setPainCycleStacks(int painCycleStacks) {
+        this.painCycleStacks = painCycleStacks;
+    }
+
+    @Override
+    public int getRollChargeTicks() {
+        return this.rollChargeTicks;
+    }
+
+    @Override
+    public void setRollChargeTicks(int rollChargeTicks) {
+        this.rollChargeTicks = rollChargeTicks;
+    }
+
+    @Override
+    public int getJumpCounter() {
+        return jumpCounter;
+    }
+
+    @Override
+    public void setJumpCounter(int jumpCounter) {
+        this.jumpCounter = jumpCounter;
+    }
+
+    @Override
+    public int getRefreshmentCounter() {
+        return refreshmentCounter;
+    }
+
+    @Override
+    public void setRefreshmentCounter(int refreshmentCounter) {
+        this.refreshmentCounter = refreshmentCounter;
     }
 }

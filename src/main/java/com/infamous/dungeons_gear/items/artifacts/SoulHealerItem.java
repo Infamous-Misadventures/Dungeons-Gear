@@ -38,14 +38,12 @@ public class SoulHealerItem extends ArtifactItem implements ISoulGatherer {
                     playerIn.heal(toHeal);
                     itemstack.damageItem(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemstack)));
                 }
-                ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem());
+                ArtifactItem.putArtifactOnCooldown(playerIn, itemstack.getItem());
             } else {
                 float healedAmount = AreaOfEffectHelper.healMostInjuredAlly(playerIn, 12);
                 if (healedAmount > 0) {
                     itemstack.damageItem(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemstack)));
-                    playerIn.giveExperiencePoints((int) (-healedAmount));
-
-                    ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem());
+                    ArtifactItem.putArtifactOnCooldown(playerIn, itemstack.getItem());
                 }
             }
         }
@@ -75,7 +73,7 @@ public class SoulHealerItem extends ArtifactItem implements ISoulGatherer {
     }
 
     @Override
-    public int getActivationCost(ItemStack stack) {
+    public float getActivationCost(ItemStack stack) {
         return 20;
     }
 }

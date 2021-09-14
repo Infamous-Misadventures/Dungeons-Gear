@@ -1,13 +1,16 @@
 package com.infamous.dungeons_gear.capabilities.combo;
 
 
-public interface ICombo {
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.math.BlockPos;
 
-    void setSouls(float soul);
-    void addSouls(float amount, float until);
+import javax.annotation.Nullable;
+
+public interface ICombo {
+    void setSouls(float soul, @Nullable LivingEntity living);
     boolean consumeSouls(float amount);
     float getSouls();
-    float getMaxSouls();
+    float getMaxSouls(@Nullable LivingEntity living);
 
     void setComboTimer(int comboTimer);
     int getComboTimer();
@@ -64,5 +67,24 @@ public interface ICombo {
     float getCachedCooldown();
     void setCachedCooldown(float cooldown);
 
+    BlockPos getLastExplorerCheckpoint();
+    void setLastExplorerCheckpoint(BlockPos blockPos);
 
+    BlockPos getLastLuckyExplorerCheckpoint();
+    void setLastLuckyExplorerCheckpoint(BlockPos blockPos);
+
+    boolean hasArtifactSynergy();
+    void setArtifactSynergy(boolean artifactSynergy);
+
+    int getPainCycleStacks();
+    void setPainCycleStacks(int painCycleStacks);
+
+    int getRollChargeTicks();
+    void setRollChargeTicks(int rollChargeTicks);
+
+    int getJumpCounter();
+    void setJumpCounter(int jumpCounter);
+
+    int getRefreshmentCounter();
+    void setRefreshmentCounter(int refreshmentCounter);
 }

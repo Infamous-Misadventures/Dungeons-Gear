@@ -36,12 +36,9 @@ public class TormentQuiverItem extends ArtifactItem implements ISoulGatherer {
 
             comboCap.setTormentArrowCount(3);
 
-            if(!playerIn.isCreative()){
-                playerIn.giveExperiencePoints(-1 * this.getActivationCost(itemstack));
-            }
             itemstack.damageItem(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemstack)));
 
-            ArtifactItem.setArtifactCooldown(playerIn, itemstack.getItem());
+            ArtifactItem.putArtifactOnCooldown(playerIn, itemstack.getItem());
         }
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }
@@ -69,7 +66,7 @@ public class TormentQuiverItem extends ArtifactItem implements ISoulGatherer {
     }
 
     @Override
-    public int getActivationCost(ItemStack stack) {
+    public float getActivationCost(ItemStack stack) {
         return 10;
     }
 }

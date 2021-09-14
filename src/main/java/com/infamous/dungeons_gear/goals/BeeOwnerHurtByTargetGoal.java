@@ -4,11 +4,10 @@ import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.TargetGoal;
 import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.entity.passive.IronGolemEntity;
 
 import java.util.EnumSet;
 
-import static com.infamous.dungeons_gear.goals.GoalUtils.getOwner;
+import static com.infamous.dungeons_gear.capabilities.summoning.SummoningHelper.getSummoner;
 import static com.infamous.dungeons_gear.goals.GoalUtils.shouldAttackEntity;
 
 public class BeeOwnerHurtByTargetGoal extends TargetGoal {
@@ -23,7 +22,7 @@ public class BeeOwnerHurtByTargetGoal extends TargetGoal {
     }
 
     public boolean shouldExecute() {
-        LivingEntity owner = getOwner(this.beeEntity);
+        LivingEntity owner = getSummoner(this.beeEntity);
         if (owner == null) {
             return false;
         } else {
@@ -35,7 +34,7 @@ public class BeeOwnerHurtByTargetGoal extends TargetGoal {
 
     public void startExecuting() {
         this.goalOwner.setAttackTarget(this.attacker);
-        LivingEntity owner = getOwner(this.beeEntity);
+        LivingEntity owner = getSummoner(this.beeEntity);
         if (owner != null) {
             this.timestamp = owner.getRevengeTimer();
         }

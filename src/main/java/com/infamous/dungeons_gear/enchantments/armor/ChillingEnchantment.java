@@ -59,7 +59,7 @@ public class ChillingEnchantment extends PulseEnchantment {
                 if(freezeNearbyTimer <= 0){
                     int chillingLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.CHILLING, player);
                     if(uniqueArmorFlag) chillingLevel++;
-                    AreaOfEffectHelper.freezeNearbyEnemies(player, chillingLevel - 1, 1.5F);
+                    AreaOfEffectHelper.freezeNearbyEnemies(player, chillingLevel - 1, 1.5F, 1);
                     comboCap.setFreezeNearbyTimer(40);
                 }
                 else{

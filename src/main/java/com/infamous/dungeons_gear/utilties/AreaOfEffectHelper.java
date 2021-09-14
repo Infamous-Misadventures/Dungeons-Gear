@@ -4,7 +4,7 @@ import com.infamous.dungeons_gear.damagesources.ElectricShockDamageSource;
 import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.goals.LoverHurtByTargetGoal;
 import com.infamous.dungeons_gear.goals.LoverHurtTargetGoal;
-import com.infamous.dungeons_gear.init.ParticleInit;
+import com.infamous.dungeons_gear.registry.ParticleInit;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -25,6 +25,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Random;
 
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 import static com.infamous.dungeons_gear.utilties.AbilityHelper.canApplyToEnemy;
@@ -33,6 +34,34 @@ import static com.infamous.dungeons_gear.utilties.AbilityHelper.isPetOfAttacker;
 public class AreaOfEffectHelper {
 
     public static final double PULL_IN_SPEED_FACTOR = 0.15;
+    public static final Random RANDOM = new Random();
+
+
+    public static boolean applyElementalEffectsToNearbyEnemies(PlayerEntity playerIn, int limit, float distance) {
+        World world = playerIn.getEntityWorld();
+
+        List<LivingEntity> nearbyEnemies = getNearbyEnemies(playerIn, distance, world);
+        if (nearbyEnemies.isEmpty()) return false;
+        if (limit > nearbyEnemies.size()) limit = nearbyEnemies.size();
+        for (int i = 0; i < limit; i++) {
+            if (nearbyEnemies.size() >= i + 1) {
+                LivingEntity nearbyEntity = nearbyEnemies.get(i);
+                int randomEffectId = RANDOM.nextInt(4);
+                switch (randomEffectId){
+                    case 1:
+                        electrify(playerIn, nearbyEntity, 5);
+                        break;
+                    case 2:
+                        freezeEnemy(0, nearbyEntity, 8);
+                        break;
+                    case 3:
+                        nearbyEntity.setFire(8);
+                        break;
+                }
+            }
+        }
+        return true;
+    }
 
     public static void pullInNearbyEntities(LivingEntity attacker, LivingEntity target, float distance, BasicParticleType particleType) {
         World world = target.getEntityWorld();
@@ -183,7 +212,7 @@ public class AreaOfEffectHelper {
     public static void burnNearbyEnemies(LivingEntity attacker, float damage, float distance) {
         World world = attacker.getEntityWorld();
 
-        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, attacker.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
+        List<LivingEntity> nearbyEntities = getNearbyEnemies(attacker, distance, world);
         if (nearbyEntities.isEmpty()) return;
         for (LivingEntity nearbyEntity : nearbyEntities) {
             nearbyEntity.attackEntityFrom(DamageSource.ON_FIRE, damage);
@@ -191,18 +220,32 @@ public class AreaOfEffectHelper {
         }
     }
 
-    public static void freezeNearbyEnemies(LivingEntity attacker, int amplifier, float distance) {
+    public static void setNearbyEnemiesOnFire(LivingEntity attacker, float distance, int duration) {
         World world = attacker.getEntityWorld();
 
-        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, attacker.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
+        List<LivingEntity> nearbyEntities = getNearbyEnemies(attacker, distance, world);
         if (nearbyEntities.isEmpty()) return;
         for (LivingEntity nearbyEntity : nearbyEntities) {
-            EffectInstance slowness = new EffectInstance(Effects.SLOWNESS, 20, amplifier);
-            EffectInstance fatigue = new EffectInstance(Effects.MINING_FATIGUE, 20, amplifier * 2 - 1);
-            nearbyEntity.addPotionEffect(slowness);
-            nearbyEntity.addPotionEffect(fatigue);
-            PROXY.spawnParticles(nearbyEntity, ParticleTypes.ITEM_SNOWBALL);
+            nearbyEntity.setFire(duration);
         }
+    }
+
+    public static void freezeNearbyEnemies(LivingEntity attacker, int amplifier, float distance, int durationInSeconds) {
+        World world = attacker.getEntityWorld();
+
+        List<LivingEntity> nearbyEntities = getNearbyEnemies(attacker, distance, world);
+        if (nearbyEntities.isEmpty()) return;
+        for (LivingEntity nearbyEntity : nearbyEntities) {
+            freezeEnemy(amplifier, nearbyEntity, durationInSeconds);
+        }
+    }
+
+    public static void freezeEnemy(int amplifier, LivingEntity nearbyEntity, int durationInSeconds) {
+        EffectInstance slowness = new EffectInstance(Effects.SLOWNESS, durationInSeconds * 20, amplifier);
+        EffectInstance fatigue = new EffectInstance(Effects.MINING_FATIGUE, durationInSeconds * 20, Math.max(0, amplifier * 2 - 1));
+        nearbyEntity.addPotionEffect(slowness);
+        nearbyEntity.addPotionEffect(fatigue);
+        PROXY.spawnParticles(nearbyEntity, ParticleTypes.ITEM_SNOWBALL);
     }
 
     public static void causeExplosionAttackAtPos(LivingEntity attacker, boolean arrow, BlockPos blockPos, float damageAmount, float distance) {
@@ -222,7 +265,7 @@ public class AreaOfEffectHelper {
         World world = target.getEntityWorld();
         DamageSource swirling = DamageSource.causePlayerDamage((PlayerEntity) attacker);
 
-        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, attacker.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, target, nearbyEntity));
+        List<LivingEntity> nearbyEntities = getNearbyEnemies(attacker, target, distance, world);
         if (nearbyEntities.isEmpty()) return;
         for (LivingEntity nearbyEntity : nearbyEntities) {
             nearbyEntity.attackEntityFrom(swirling, damageAmount);
@@ -235,8 +278,7 @@ public class AreaOfEffectHelper {
         if (attacker instanceof PlayerEntity) {
             echo = DamageSource.causePlayerDamage((PlayerEntity) attacker);
         }
-        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(distance),
-                (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, target, nearbyEntity));
+        List<LivingEntity> nearbyEntities = getNearbyEnemies(attacker, target, distance, world);
         if (nearbyEntities.isEmpty()) return;
         for (LivingEntity nearbyEntity : nearbyEntities) {
             if (nearbyEntity == null) return;
@@ -263,10 +305,15 @@ public class AreaOfEffectHelper {
         victim.attackEntityFrom(lightning, damageAmount);
     }
 
+    public static void levitate(int amplifier, LivingEntity nearbyEntity, int durationInSeconds) {
+        EffectInstance levitation = new EffectInstance(Effects.LEVITATION, durationInSeconds * 20, amplifier);
+        nearbyEntity.addPotionEffect(levitation);
+    }
+
     public static void electrifyNearbyEnemies(LivingEntity attacker, float distance, float damageAmount, int limit) {
         World world = attacker.getEntityWorld();
 
-        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, attacker.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
+        List<LivingEntity> nearbyEntities = getNearbyEnemies(attacker, distance, world);
         if (nearbyEntities.isEmpty()) return;
         if (limit > nearbyEntities.size()) limit = nearbyEntities.size();
         for (int i = 0; i < limit; i++) {
@@ -278,12 +325,26 @@ public class AreaOfEffectHelper {
         }
     }
 
+    public static void levitateNearbyEnemies(LivingEntity attacker, float distance, int limit, int amplifier, int durationInSeconds) {
+        World world = attacker.getEntityWorld();
+
+        List<LivingEntity> nearbyEntities = getNearbyEnemies(attacker, distance, world);
+        if (nearbyEntities.isEmpty()) return;
+        if (limit > nearbyEntities.size()) limit = nearbyEntities.size();
+        for (int i = 0; i < limit; i++) {
+            if (nearbyEntities.size() >= i + 1) {
+                LivingEntity nearbyEntity = nearbyEntities.get(i);
+                levitate(amplifier, nearbyEntity, durationInSeconds);
+            }
+        }
+    }
+
     public static void electrifyNearbyEnemies(AbstractArrowEntity arrow, float distance, float damageAmount, int limit) {
         World world = arrow.getEntityWorld();
         Entity shooter = arrow.func_234616_v_();
         if(shooter instanceof LivingEntity){
             LivingEntity livingShooter = (LivingEntity) shooter;
-            List<LivingEntity> nearbyEntities = world.getLoadedEntitiesWithinAABB(LivingEntity.class, arrow.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(livingShooter, nearbyEntity));
+            List<LivingEntity> nearbyEntities = getNearbyEnemies(arrow, distance, world, livingShooter);
             if (nearbyEntities.isEmpty()) return;
             if (limit > nearbyEntities.size()) limit = nearbyEntities.size();
             for (int i = 0; i < limit; i++) {
@@ -297,7 +358,7 @@ public class AreaOfEffectHelper {
     }
 
     public static void poisonAndSlowNearbyEnemies(World worldIn, PlayerEntity playerIn) {
-        List<LivingEntity> nearbyEntities = worldIn.getLoadedEntitiesWithinAABB(LivingEntity.class, playerIn.getBoundingBox().grow(5), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(playerIn, nearbyEntity));
+        List<LivingEntity> nearbyEntities = getNearbyEnemies(playerIn, 5, worldIn);
         for (LivingEntity nearbyEntity : nearbyEntities) {
 
             EffectInstance entangled = new EffectInstance(Effects.SLOWNESS, 140, 4);
@@ -385,5 +446,22 @@ public class AreaOfEffectHelper {
             nearbyEntity.addPotionEffect(stun);
 
         }
+    }
+
+    public static List<LivingEntity> getNearbyEnemies(LivingEntity attacker, float distance, World world) {
+        return world.getLoadedEntitiesWithinAABB(LivingEntity.class, attacker.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
+    }
+
+    public static List<LivingEntity> getNearbyEnemies(PlayerEntity attacker, LivingEntity target, float distance, World world) {
+        return world.getLoadedEntitiesWithinAABB(LivingEntity.class, attacker.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, target, nearbyEntity));
+    }
+
+    public static List<LivingEntity> getNearbyEnemies(LivingEntity attacker, LivingEntity target, float distance, World world) {
+        return world.getLoadedEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(distance),
+                (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, target, nearbyEntity));
+    }
+
+    public static List<LivingEntity> getNearbyEnemies(AbstractArrowEntity arrow, float distance, World world, LivingEntity livingShooter) {
+        return world.getLoadedEntitiesWithinAABB(LivingEntity.class, arrow.getBoundingBox().grow(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(livingShooter, nearbyEntity));
     }
 }

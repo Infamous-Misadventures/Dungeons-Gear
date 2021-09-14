@@ -125,7 +125,8 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
     }
 
     public float getCrossbowCharge(int useTime, ItemStack stack) {
-        float f = (float) useTime / (float) this.getCrossbowChargeTime(stack);
+        float crossbowChargeTime = this.getCrossbowChargeTime(stack);
+        float f = (float) useTime / crossbowChargeTime;
         if (f > 1.0F) {
             f = 1.0F;
         }
@@ -140,14 +141,15 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
         if (this.hasAccelerateBuiltIn(stack)) accelerateLevel++;
 
         IBow weaponCap = CapabilityHelper.getWeaponCapability(stack);
-        if (weaponCap == null) return Math.max(this.getDefaultChargeTime() - 5 * quickChargeLevel, 0);
+        int minTime = 1;
+        if (weaponCap == null) return Math.max(this.getDefaultChargeTime() - 5 * quickChargeLevel, minTime);
         int crossbowChargeTime = weaponCap.getCrossbowChargeTime();
         long lastFiredTime = weaponCap.getLastFiredTime();
 
         if (accelerateLevel > 0 && lastFiredTime > 0) {
-            return Math.max(crossbowChargeTime - 5 * quickChargeLevel, 0);
+            return Math.max(crossbowChargeTime - 5 * quickChargeLevel, minTime);
         } else {
-            return Math.max(this.getDefaultChargeTime() - 5 * quickChargeLevel, 0);
+            return Math.max(this.getDefaultChargeTime() - 5 * quickChargeLevel, minTime);
         }
     }
 

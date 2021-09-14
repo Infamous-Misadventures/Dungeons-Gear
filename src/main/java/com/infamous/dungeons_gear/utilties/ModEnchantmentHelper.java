@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.utilties;
 
+import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -54,28 +55,18 @@ public class ModEnchantmentHelper {
 
     public static void addEnchantmentTagsToArrow(ItemStack rangedWeapon, AbstractArrowEntity arrowEntity){
         for(Enchantment enchantment : rangedEnchantmentToStringMap.keySet()){
-            if(ModEnchantmentHelper.hasEnchantment(rangedWeapon, enchantment)){
-                int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(enchantment, rangedWeapon);
+            int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(enchantment, rangedWeapon);
+            if(enchantmentLevel > 0){
                 String enchantmentTag = rangedEnchantmentToStringMap.get(enchantment) + enchantmentLevel;
                 arrowEntity.addTag(enchantmentTag);
             }
         }
     }
 
-    public static boolean hasEnchantmentTag(AbstractArrowEntity arrowEntity, Enchantment enchantment){
-        String enchantmentAsString = rangedEnchantmentToStringMap.get(enchantment);
-        for(int i = 1; i < 4; i++){
-            String enchantmentTag = enchantmentAsString + i;
-            if(arrowEntity.getTags().contains(enchantmentTag)){
-                return true;
-            }
-        }
-        return false;
-    }
-
     public static int enchantmentTagToLevel(AbstractArrowEntity arrowEntity, Enchantment enchantment){
         String enchantmentAsString = rangedEnchantmentToStringMap.get(enchantment);
-        for(int i = 1; i < 4; i++){
+        int maxLevel = enchantment.getMaxLevel();
+        for(int i = 1; i < maxLevel + 1; i++){
             String enchantmentTag = enchantmentAsString + i;
             if(arrowEntity.getTags().contains(enchantmentTag)){
                 return i;

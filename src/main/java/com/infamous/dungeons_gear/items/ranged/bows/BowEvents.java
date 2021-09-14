@@ -47,7 +47,7 @@ public class BowEvents {
             if(hasAccelerateBuiltIn(stack)) accelerateLevel++;
 
             float defaultChargeTime = 20.0F;
-            float arrowVelocity = RangedAttackHelper.getVanillaArrowVelocity(stack, charge);
+            float arrowVelocity = RangedAttackHelper.getVanillaArrowVelocity(livingEntity, stack, charge);
             if(stack.getItem() instanceof AbstractDungeonsBowItem){
                 defaultChargeTime = ((AbstractDungeonsBowItem)stack.getItem()).getDefaultChargeTime();
                 arrowVelocity = ((AbstractDungeonsBowItem)stack.getItem()).getBowArrowVelocity(stack, charge);

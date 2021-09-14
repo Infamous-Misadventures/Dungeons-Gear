@@ -12,7 +12,6 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
-@Mod.EventBusSubscriber(modid= MODID)
 public class AccelerateEnchantment extends DungeonsEnchantment {
 
     public AccelerateEnchantment() {

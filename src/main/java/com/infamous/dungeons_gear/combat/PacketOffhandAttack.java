@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.combat;
 
-import com.infamous.dungeons_gear.init.AttributeRegistry;
+import com.infamous.dungeons_gear.registry.AttributeRegistry;
 import com.infamous.dungeons_gear.items.interfaces.IDualWieldWeapon;
 import com.infamous.dungeons_gear.utilties.PlayerAttackHelper;
 import net.minecraft.entity.Entity;
@@ -33,6 +33,7 @@ public class PacketOffhandAttack {
 
         public static void handle(PacketOffhandAttack packet, Supplier<NetworkEvent.Context> ctx) {
             if (packet != null) {
+                ctx.get().setPacketHandled(true);
                 ((NetworkEvent.Context)ctx.get()).enqueueWork(new Runnable() {
                     @Override
                     public void run() {

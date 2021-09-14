@@ -1,8 +1,11 @@
 package com.infamous.dungeons_gear.capabilities.combo;
 
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.DoubleNBT;
 import net.minecraft.nbt.INBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 
 import javax.annotation.Nullable;
@@ -33,6 +36,21 @@ public class ComboStorage implements Capability.IStorage<ICombo> {
         tag.putInt("lastShoutTimer", instance.getLastShoutTimer());
         tag.putDouble("dynamoMultiplier", instance.getDynamoMultiplier());
         tag.putFloat("souls", instance.getSouls());
+
+        BlockPos lastExplorerCheckpoint = instance.getLastExplorerCheckpoint();
+        tag.put("lastExplorerCheckpoint", this.newDoubleNBTList(lastExplorerCheckpoint.getX(), lastExplorerCheckpoint.getY(), lastExplorerCheckpoint.getZ()));
+
+        BlockPos lastLuckyExplorerCheckpoint = instance.getLastLuckyExplorerCheckpoint();
+        tag.put("lastLuckyExplorerCheckpoint", this.newDoubleNBTList(lastLuckyExplorerCheckpoint.getX(), lastLuckyExplorerCheckpoint.getY(), lastLuckyExplorerCheckpoint.getZ()));
+
+        tag.putBoolean("artifactSynergy", instance.hasArtifactSynergy());
+
+        tag.putInt("painCycleStacks", instance.getPainCycleStacks());
+
+        tag.putInt("rollChargeTicks", instance.getRollChargeTicks());
+        tag.putInt("jumpCounter", instance.getJumpCounter());
+        tag.putInt("refreshmentCounter", instance.getRefreshmentCounter());
+
         return tag;
     }
 
@@ -58,6 +76,32 @@ public class ComboStorage implements Capability.IStorage<ICombo> {
         instance.setPoisonImmunityTimer(tag.getInt("poisonImmunityTimer"));
         instance.setLastShoutTimer(tag.getInt("lastShoutTimer"));
         instance.setDynamoMultiplier(tag.getInt("dynamoMultiplier"));
-        instance.setSouls(tag.getFloat("souls"));
+        instance.setSouls(tag.getFloat("souls"), null);
+
+        ListNBT listnbt = tag.getList("lastExplorerCheckpoint", 6);
+        BlockPos lastExplorerCheckpoint = new BlockPos(listnbt.getDouble(0), listnbt.getDouble(1), listnbt.getDouble(2));
+        instance.setLastExplorerCheckpoint(lastExplorerCheckpoint);
+
+        ListNBT listnbt1 = tag.getList("lastLuckyExplorerCheckpoint", 6);
+        BlockPos lastLuckyExplorerCheckpoint = new BlockPos(listnbt1.getDouble(0), listnbt1.getDouble(1), listnbt1.getDouble(2));
+        instance.setLastLuckyExplorerCheckpoint(lastLuckyExplorerCheckpoint);
+
+        instance.setArtifactSynergy(tag.getBoolean("artifactSynergy"));
+
+        instance.setPainCycleStacks(tag.getInt("painCycleStacks"));
+
+        instance.setRollChargeTicks(tag.getInt("rollChargeTicks"));
+        instance.setJumpCounter(tag.getInt("jumpCounter"));
+        instance.setRefreshmentCounter(tag.getInt("refreshmentCounter"));
+    }
+
+    private ListNBT newDoubleNBTList(double... numbers){
+        ListNBT listnbt = new ListNBT();
+
+        for(double d0 : numbers) {
+            listnbt.add(DoubleNBT.valueOf(d0));
+        }
+
+        return listnbt;
     }
 }

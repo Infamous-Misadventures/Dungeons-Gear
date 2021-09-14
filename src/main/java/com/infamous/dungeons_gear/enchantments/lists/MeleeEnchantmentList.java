@@ -9,6 +9,7 @@ public class MeleeEnchantmentList {
     public static Enchantment CRITICAL_HIT;
     public static Enchantment ECHO;
     public static Enchantment EXPLODING;
+    public static Enchantment GUARDING_STRIKE;
     public static Enchantment LEECHING;
     public static Enchantment ILLAGERS_BANE;
     public static Enchantment PROSPECTOR;
@@ -21,4 +22,7 @@ public class MeleeEnchantmentList {
     public static Enchantment SWIRLING;
     public static Enchantment THUNDERING;
     public static Enchantment WEAKENING;
+
+    public static Enchantment ARTIFACT_SYNERGY;
+    public static Enchantment PAIN_CYCLE;
 }

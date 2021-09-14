@@ -4,6 +4,7 @@ package com.infamous.dungeons_gear.items.armor;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
+import com.infamous.dungeons_gear.enchantments.armor.ArrowHoarderEnchantment;
 import com.infamous.dungeons_gear.items.interfaces.IArmor;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.ArmorEffectHelper;
@@ -29,6 +30,9 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.StreamSupport;
+
+import static com.infamous.dungeons_gear.registry.ItemRegistry.ARROW_BUNDLE;
 
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class ArmorEvents {
@@ -44,6 +48,17 @@ public class ArmorEvents {
                 }
             }
         }
+    }
+
+    @SubscribeEvent
+    public static void respawnPetBat(TickEvent.PlayerTickEvent event) {
+        if (event.player.ticksExisted % 140 == 0)
+            for (ItemStack i : event.player.getArmorInventoryList()) {
+                if (i.getItem() instanceof IArmor && ((IArmor) i.getItem()).doGivesYouAPetBat()) {
+                    ArmorEffectHelper.summonOrTeleportBat(event.player, event.player.world);
+                    return;
+                }
+            }
     }
 
     @SubscribeEvent
@@ -186,7 +201,7 @@ public class ArmorEvents {
     }
 
     private static double getLifeSteal(ItemStack stack) {
-        if(stack.getItem() instanceof IArmor){
+        if (stack.getItem() instanceof IArmor) {
             return ((IArmor) stack.getItem()).getLifeSteal();
         }
         return 0;
@@ -237,25 +252,19 @@ public class ArmorEvents {
         if (event.getSource().getTrueSource() instanceof LivingEntity) {
             LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
             LivingEntity victim = (LivingEntity) event.getEntityLiving();
-            ItemStack helmet = attacker.getItemStackFromSlot(EquipmentSlotType.HEAD);
-            ItemStack chestplate = attacker.getItemStackFromSlot(EquipmentSlotType.CHEST);
-
-
-            int arrowDrops = helmet.getItem() instanceof IArmor ? ((IArmor) helmet.getItem()).getArrowsPerBundle() : 0;
-            int arrowDrops2 = chestplate.getItem() instanceof IArmor ? ((IArmor) chestplate.getItem()).getArrowsPerBundle() : 0;
-            int totalarrowDrops = arrowDrops + arrowDrops2;
-
-            // TODO: Add Arrow Bundles, rework this to add to Arrow Bundles
-            if (totalarrowDrops > 0) {
-                Collection<ItemEntity> itemEntities = event.getDrops();
-                if (victim instanceof IMob) {
-                    if (attacker.getRNG().nextFloat() <= 0.5F) {
-                        ItemEntity arrowDrop = new ItemEntity(victim.world, victim.getPosX(), victim.getPosY(), victim.getPosZ(), new ItemStack(Items.ARROW, totalarrowDrops));
-                        itemEntities.add(arrowDrop);
-                    }
-                }
+            int maxLevel = StreamSupport.stream(attacker.getArmorInventoryList().spliterator(), false).map(ArrowHoarderEnchantment::arrowHoarderLevel).max(Integer::compare).orElse(0);
+            int drops = (maxLevel / 4);
+            drops += attacker.getRNG().nextFloat() <= (maxLevel % 4) / 4.0F ? 1 : 0;
+            Collection<ItemEntity> itemEntities = event.getDrops();
+            if (drops > 0 && victim instanceof IMob && itemEntities.stream().anyMatch(itemEntity -> itemEntity.getItem().getItem().equals(Items.ARROW))) {
+                ItemEntity arrowDrop = new ItemEntity(victim.world, victim.getPosX(), victim.getPosY(), victim.getPosZ(), new ItemStack(ARROW_BUNDLE.get(), drops));
+                itemEntities.add(arrowDrop);
             }
         }
+    }
+
+    private static int getArrowHoarderBuiltIn(ItemStack helmet) {
+        return helmet.getItem() instanceof IArmor && ((IArmor) helmet.getItem()).hasArrowHoarderBuiltIn(helmet) ? 1 : 0;
     }
 
     @SubscribeEvent
@@ -266,45 +275,26 @@ public class ArmorEvents {
         if (player.isAlive()) {
             ICombo comboCap = CapabilityHelper.getComboCapability(player);
             if (comboCap == null) return;
+
             if (comboCap.getJumpCooldownTimer() > 0) {
                 comboCap.setJumpCooldownTimer(comboCap.getJumpCooldownTimer() - 1);
+            } else if(comboCap.getJumpCooldownTimer() < 0){
+                comboCap.setJumpCooldownTimer(0);
             }
+
             if (comboCap.getLastShoutTimer() > 0) {
                 comboCap.setLastShoutTimer(comboCap.getLastShoutTimer() - 1);
+            } else if(comboCap.getLastShoutTimer() < 0){
+                comboCap.setLastShoutTimer(0);
             }
+
+
             if (comboCap.getComboTimer() > 0) {
                 comboCap.setComboTimer(comboCap.getComboTimer() - 1);
-            } else if (comboCap.getComboCount() != 0)
+            } else if (comboCap.getComboCount() < 0){
                 comboCap.setComboCount(0);
-            comboCap.setOffhandCooldown(comboCap.getOffhandCooldown() + 1);
-        }
-    }
-
-    @SubscribeEvent
-    public static void handleJumpAbilities(LivingEvent.LivingJumpEvent event) {
-        LivingEntity livingEntity = event.getEntityLiving();
-        if (livingEntity instanceof PlayerEntity && !DungeonsGearCompatibility.elenaiDodge) {
-            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
-            ItemStack helmet = playerEntity.getItemStackFromSlot(EquipmentSlotType.HEAD);
-            ItemStack chestplate = playerEntity.getItemStackFromSlot(EquipmentSlotType.CHEST);
-            ICombo comboCap = CapabilityHelper.getComboCapability(playerEntity);
-            if (comboCap == null) return;
-            int jumpCooldownTimer = comboCap.getJumpCooldownTimer();
-
-            if (jumpCooldownTimer <= 0) {
-                ArmorEffectHelper.handleJumpBoost(playerEntity, helmet, chestplate);
-
-                ArmorEffectHelper.handleInvulnerableJump(playerEntity, helmet, chestplate);
-
-                ArmorEffectHelper.handleJumpEnchantments(playerEntity, helmet, chestplate);
             }
-
-            float jumpCooldown = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getLongerRollCooldown() : 0;
-            float jumpCooldown2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getLongerRollCooldown() : 0;
-            float totalJumpCooldown = jumpCooldown * 0.01F + jumpCooldown2 * 0.01F;
-
-            int jumpCooldownTimerLength = totalJumpCooldown > 0 ? 60 + (int) (60 * totalJumpCooldown) : 60;
-            comboCap.setJumpCooldownTimer(jumpCooldownTimerLength);
+            comboCap.setOffhandCooldown(comboCap.getOffhandCooldown() + 1);
         }
     }
 

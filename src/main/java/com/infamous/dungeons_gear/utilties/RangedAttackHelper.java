@@ -1,16 +1,17 @@
 package com.infamous.dungeons_gear.utilties;
 
 import com.infamous.dungeons_gear.capabilities.bow.IBow;
+import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.melee_ranged.GravityEnchantment;
 import com.infamous.dungeons_gear.enchantments.melee_ranged.PoisonCloudEnchantment;
 import com.infamous.dungeons_gear.enchantments.ranged.*;
-import com.infamous.dungeons_gear.items.ItemRegistry;
 import com.infamous.dungeons_gear.items.interfaces.IRangedWeapon;
 import com.infamous.dungeons_gear.items.ranged.bows.AbstractDungeonsBowItem;
 import com.infamous.dungeons_gear.items.ranged.crossbows.AbstractDungeonsCrossbowItem;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -19,7 +20,17 @@ import static net.minecraft.item.CrossbowItem.hasChargedProjectile;
 
 public class RangedAttackHelper {
 
-    public static int getVanillaCrossbowChargeTime(ItemStack stack){
+    public static int getVanillaCrossbowChargeTime(LivingEntity livingEntity, ItemStack stack){
+        int vanillaCrossbowChargeTime = getVanillaCrossbowChargeTime(stack);
+        ICombo comboCap = CapabilityHelper.getComboCapability(livingEntity);
+        if(comboCap == null) {
+            return vanillaCrossbowChargeTime;
+        }
+        int minTime = 1;
+        return RollChargeEnchantment.hasActiveRollCharge(livingEntity) ? minTime : vanillaCrossbowChargeTime;
+    }
+
+    public static int getVanillaCrossbowChargeTime(ItemStack stack) {
         int quickChargeLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.QUICK_CHARGE, stack);
         int accelerateLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.ACCELERATE, stack);
 
@@ -36,34 +47,44 @@ public class RangedAttackHelper {
         }
     }
 
-    public static float getVanillaArrowVelocity(ItemStack stack, int charge) {
-        float bowChargeTime = RangedAttackHelper.getVanillaBowChargeTime(stack);
+    public static float getVanillaArrowVelocity(LivingEntity livingEntity, ItemStack stack, int charge) {
+        float bowChargeTime = RangedAttackHelper.getVanillaBowChargeTime(livingEntity, stack);
         if(bowChargeTime <= 0){
             bowChargeTime = 1;
         }
         float arrowVelocity = (float)charge / bowChargeTime;
         arrowVelocity = (arrowVelocity * arrowVelocity + arrowVelocity * 2.0F) / 3.0F;
-        if (arrowVelocity > 1.0F) {
-            arrowVelocity = 1.0F;
+        float velocityLimit = 1.0F;
+        int overchargeLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.OVERCHARGE, stack);
+        if(overchargeLevel > 0){
+            velocityLimit += overchargeLevel;
+        }
+
+        if (arrowVelocity > velocityLimit) {
+            arrowVelocity = velocityLimit;
         }
 
         return arrowVelocity;
     }
 
-    public static float getVanillaBowChargeTime(ItemStack stack){
+    public static float getVanillaBowChargeTime(LivingEntity livingEntity, ItemStack stack){
+        float minTime = 1.0F;
+        if(RollChargeEnchantment.hasActiveRollCharge(livingEntity)) return minTime;
+
+
         int quickChargeLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.QUICK_CHARGE, stack);
         int accelerateLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.ACCELERATE, stack);
 
         IBow weaponCap = CapabilityHelper.getWeaponCapability(stack);
-        if(weaponCap == null) return Math.max(20.0F - 5 * quickChargeLevel, 0);
+        if(weaponCap == null) return Math.max(20.0F - 5 * quickChargeLevel, minTime);
         float bowChargeTime = weaponCap.getBowChargeTime();
         long lastFiredTime = weaponCap.getLastFiredTime();
 
         if(accelerateLevel > 0 && lastFiredTime > 0){
-            return Math.max(bowChargeTime - 5 * quickChargeLevel, 0);
+            return Math.max(bowChargeTime - 5 * quickChargeLevel, minTime);
         }
         else {
-            return Math.max(20.0F - 5 * quickChargeLevel, 0);
+            return Math.max(20.0F - 5 * quickChargeLevel, minTime);
         }
     }
 
@@ -127,7 +148,7 @@ public class RangedAttackHelper {
         }
     }
 
-    public static int getModdedCrossbowChargeTime(ItemStack stack){
+    public static int getModdedCrossbowChargeTime(LivingEntity livingEntity, ItemStack stack){
         int chargeTime;
         if(stack.getItem() instanceof AbstractDungeonsCrossbowItem){
             chargeTime = ((AbstractDungeonsCrossbowItem)stack.getItem()).getCrossbowChargeTime(stack);
@@ -138,7 +159,7 @@ public class RangedAttackHelper {
         return chargeTime;
     }
 
-    public static float getModdedBowChargeTime(ItemStack stack){
+    public static float getModdedBowChargeTime(LivingEntity livingEntity, ItemStack stack){
         float chargeTime;
         if(stack.getItem() instanceof AbstractDungeonsBowItem){
             chargeTime = ((AbstractDungeonsBowItem)stack.getItem()).getBowChargeTime(stack);
@@ -162,13 +183,13 @@ public class RangedAttackHelper {
 
 
 
-    public static float getVanillaOrModdedBowArrowVelocity(ItemStack stack, int charge) {
+    public static float getVanillaOrModdedBowArrowVelocity(LivingEntity livingEntity, ItemStack stack, int charge) {
         float arrowVelocity;
         if(stack.getItem() instanceof AbstractDungeonsBowItem){
             arrowVelocity = ((AbstractDungeonsBowItem)stack.getItem()).getBowArrowVelocity(stack, charge);
         }
         else{
-            arrowVelocity = getVanillaArrowVelocity(stack,charge);
+            arrowVelocity = getVanillaArrowVelocity(livingEntity, stack,charge);
         }
         return arrowVelocity;
     }

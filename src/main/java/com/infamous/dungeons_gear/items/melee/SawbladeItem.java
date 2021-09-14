@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.items.melee;
 
-import com.infamous.dungeons_gear.items.ItemRegistry;
+import com.infamous.dungeons_gear.registry.ItemRegistry;
 import com.infamous.dungeons_gear.items.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.util.ITooltipFlag;

@@ -2,7 +2,8 @@ package com.infamous.dungeons_gear.items.melee;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import com.infamous.dungeons_gear.items.ItemRegistry;
+import com.infamous.dungeons_gear.registry.ItemRegistry;
+import com.infamous.dungeons_gear.items.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.items.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.block.BlockState;
@@ -23,7 +24,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class BoneClubItem extends TieredItem implements IMeleeWeapon {
+public class BoneClubItem extends TieredItem implements IMeleeWeapon, IComboWeapon {
     private final boolean unique;
     private final float attackDamage;
     private final float attackSpeed;
@@ -90,5 +91,10 @@ public class BoneClubItem extends TieredItem implements IMeleeWeapon {
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
+    }
+
+    @Override
+    public int getComboLength(ItemStack stack, LivingEntity attacker) {
+        return 2;
     }
 }

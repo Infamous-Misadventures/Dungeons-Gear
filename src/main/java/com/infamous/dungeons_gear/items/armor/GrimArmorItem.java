@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.items.armor.models.old_models.GrimArmorModel;
-import com.infamous.dungeons_gear.items.ItemRegistry;
+import com.infamous.dungeons_gear.registry.ItemRegistry;
 import com.infamous.dungeons_gear.items.interfaces.IArmor;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.renderer.entity.model.BipedModel;

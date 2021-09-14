@@ -5,11 +5,16 @@ import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.capabilities.bow.IBow;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketUpdateSouls;
+import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
 import com.infamous.dungeons_gear.effects.CustomEffects;
+import com.infamous.dungeons_gear.enchantments.armor.AcrobatEnchantment;
+import com.infamous.dungeons_gear.enchantments.armor.MultiRollEnchantment;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
+import com.infamous.dungeons_gear.enchantments.ranged.BurstBowstringEnchantment;
 import com.infamous.dungeons_gear.enchantments.ranged.FuseShotEnchantment;
-import com.infamous.dungeons_gear.init.PotionList;
+import com.infamous.dungeons_gear.enchantments.ranged.RollChargeEnchantment;
+import com.infamous.dungeons_gear.registry.PotionList;
 import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_gear.items.interfaces.IArmor;
 import com.infamous.dungeons_gear.items.interfaces.IComboWeapon;
@@ -69,7 +74,7 @@ public class GlobalEvents {
                     handleRangedEnchantments(arrowEntity, shooter, offhandStack);
                 }
             }
-        }else if(event.getEntity() instanceof ServerPlayerEntity){
+        } else if (event.getEntity() instanceof ServerPlayerEntity) {
             NetworkHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getEntity()), new PacketUpdateSouls(CapabilityHelper.getComboCapability(event.getEntity()).getSouls()));
         }
     }
@@ -108,7 +113,7 @@ public class GlobalEvents {
         return stack.getItem() instanceof IRangedWeapon && ((IRangedWeapon) stack.getItem()).hasFuseShotBuiltIn(stack);
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onCancelAttackBecauseStunned(LivingAttackEvent event) {
         if (event.getSource().getTrueSource() instanceof PlayerEntity) {
             PlayerEntity attacker = (PlayerEntity) event.getSource().getTrueSource();
@@ -140,9 +145,12 @@ public class GlobalEvents {
     }
 
     @SubscribeEvent
-    public static void onStunnedMob(LivingEvent.LivingUpdateEvent event) {
-        if (event.getEntityLiving() instanceof MobEntity) {
-            MobEntity mobEntity = (MobEntity) event.getEntityLiving();
+    public static void onLivingTick(LivingEvent.LivingUpdateEvent event) {
+        LivingEntity living = event.getEntityLiving();
+        RollChargeEnchantment.tickRollCharge(living);
+
+        if (living instanceof MobEntity) {
+            MobEntity mobEntity = (MobEntity) living;
             if (mobEntity.getActivePotionEffect(CustomEffects.STUNNED) != null && !mobEntity.getTags().contains(STUNNED_TAG)) {
                 if (!mobEntity.isAIDisabled()) {
                     mobEntity.setNoAI(true);
@@ -202,6 +210,30 @@ public class GlobalEvents {
     }
 
     @SubscribeEvent
+    public static void petDeath(LivingDamageEvent event) {
+        //cancel friendly fire
+        LivingEntity ouch = event.getEntityLiving();
+        if (event.getSource().getTrueSource() instanceof LivingEntity) {
+            LivingEntity bonk = (LivingEntity) event.getSource().getTrueSource();
+            if (AbilityHelper.isPetOrColleagueRelation(ouch, bonk)) {
+                event.setCanceled(true);
+                ouch.setRevengeTarget(null);
+                if (ouch instanceof MobEntity)
+                    ((MobEntity) ouch).setAttackTarget(null);
+                bonk.setRevengeTarget(null);
+                if (bonk instanceof MobEntity)
+                    ((MobEntity) bonk).setAttackTarget(null);
+            }
+        }
+        if (DungeonsGearCompatibility.saveYourPets) {
+            if (CapabilityHelper.getSummonableCapability(event.getEntityLiving()) != null && event.getAmount() > event.getEntityLiving().getMaxHealth()) {
+                event.getEntityLiving().remove();
+                //so summoned wolves and llamas are disposable
+            }
+        }
+    }
+
+    @SubscribeEvent
     public static void onSoulGatheringItemsXPDrop(LivingDeathEvent event) {
         if (event.getSource().getTrueSource() instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) event.getSource().getTrueSource();
@@ -237,7 +269,7 @@ public class GlobalEvents {
             }
 
             if (souls > 0) {
-                SoulHelper.addSoul(player, souls);
+                SoulHelper.addSouls(player, souls);
                 if (event.getSource().getImmediateSource() instanceof AbstractArrowEntity) {
                     AbstractArrowEntity arrowEntity = (AbstractArrowEntity) event.getSource().getImmediateSource();
                     int animaConduitLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrowEntity, MeleeRangedEnchantmentList.ANIMA_CONDUIT);
@@ -280,4 +312,40 @@ public class GlobalEvents {
             }
         }
     }
+
+    @SubscribeEvent
+    public static void handleJumpAbilities(LivingEvent.LivingJumpEvent event) {
+        LivingEntity jumper = event.getEntityLiving();
+        if (jumper instanceof PlayerEntity && !DungeonsGearCompatibility.elenaiDodge) {
+            PlayerEntity playerEntity = (PlayerEntity) jumper;
+            ItemStack helmet = playerEntity.getItemStackFromSlot(EquipmentSlotType.HEAD);
+            ItemStack chestplate = playerEntity.getItemStackFromSlot(EquipmentSlotType.CHEST);
+            ICombo comboCap = CapabilityHelper.getComboCapability(playerEntity);
+            if (comboCap == null) return;
+            int jumpCooldownTimer = comboCap.getJumpCooldownTimer();
+
+            if (jumpCooldownTimer <= 0) {
+                ArmorEffectHelper.handleJumpBoost(playerEntity, helmet, chestplate);
+
+                ArmorEffectHelper.handleInvulnerableJump(playerEntity, helmet, chestplate);
+
+                ArmorEffectHelper.handleJumpEnchantments(playerEntity, helmet, chestplate);
+
+                BurstBowstringEnchantment.activateBurstBowString(jumper);
+
+                RollChargeEnchantment.activateRollCharge(jumper);
+            }
+            MultiRollEnchantment.incrementJumpCounter(playerEntity);
+
+            if(MultiRollEnchantment.hasReachedJumpLimit(playerEntity)){
+                float jumpCooldown = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getLongerRollCooldown() : 0;
+                float jumpCooldown2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getLongerRollCooldown() : 0;
+                float totalJumpCooldown = jumpCooldown * 0.01F + jumpCooldown2 * 0.01F;
+
+                int jumpCooldownTimerLength = totalJumpCooldown > 0 ? 60 + (int) (60 * totalJumpCooldown) : 60;
+                AcrobatEnchantment.setJumpCooldown(comboCap, jumper, jumpCooldownTimerLength);
+            }
+        }
+    }
+
 }

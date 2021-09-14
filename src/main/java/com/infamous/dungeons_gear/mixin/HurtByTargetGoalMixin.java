@@ -26,10 +26,9 @@ public abstract class HurtByTargetGoalMixin extends TargetGoal {
     }
 
     /**
-     * Prevents the NPE caused by !mobentity.isOnSameTeam(this.goalOwner.getRevengeTarget()) when getRevengeTarget() returns null
-     * Also prevents ClassCastException when checking if current iterated mob, as a TameableEntity, has an owner
-     *
      * @author Jackiecrazy
+     * @reason Prevents the NPE caused by !mobentity.isOnSameTeam(this.goalOwner.getRevengeTarget()) when getRevengeTarget() returns null
+     * Also prevents ClassCastException when checking if current iterated mob, as a TameableEntity, has an owner
      */
     @Overwrite
     protected void alertOthers() {

@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.items.ranged.crossbows;
 
-import com.infamous.dungeons_gear.items.ItemRegistry;
+import com.infamous.dungeons_gear.registry.ItemRegistry;
 import com.infamous.dungeons_gear.items.interfaces.ISoulGatherer;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.util.ITooltipFlag;
@@ -38,7 +38,7 @@ public class SoulCrossbowItem extends AbstractDungeonsCrossbowItem implements IS
     }
 
     @Override
-    public int getActivationCost(ItemStack stack) {
+    public float getActivationCost(ItemStack stack) {
         return 0;
     }
 }

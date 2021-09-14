@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.items.ranged.crossbows;
 
 import com.infamous.dungeons_gear.capabilities.offhand.OffhandProvider;
-import com.infamous.dungeons_gear.items.ItemRegistry;
+import com.infamous.dungeons_gear.registry.ItemRegistry;
 import com.infamous.dungeons_gear.items.interfaces.IDualWieldWeapon;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.util.ITooltipFlag;

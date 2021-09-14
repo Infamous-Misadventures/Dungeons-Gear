@@ -5,7 +5,7 @@ import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.items.armor.models.old_models.ArchersArmorModel;
 import com.infamous.dungeons_gear.items.armor.models.old_models.HuntersArmorModel;
-import com.infamous.dungeons_gear.items.ItemRegistry;
+import com.infamous.dungeons_gear.registry.ItemRegistry;
 import com.infamous.dungeons_gear.items.interfaces.IArmor;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.renderer.entity.model.BipedModel;
@@ -100,6 +100,11 @@ public class HuntersArmorItem extends ArmorItem implements IArmor {
     public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(stack, world, list, flag);
         DescriptionHelper.addLoreDescription(list, stack);
+    }
+
+    @Override
+    public boolean hasArrowHoarderBuiltIn(ItemStack stack) {
+        return true;
     }
 
     @Override

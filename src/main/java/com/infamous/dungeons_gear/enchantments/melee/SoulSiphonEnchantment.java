@@ -37,7 +37,7 @@ public class SoulSiphonEnchantment extends DungeonsEnchantment {
         if(!(target instanceof LivingEntity)) return;
         float chance = user.getRNG().nextFloat();
         if(chance <=  0.1F){
-            SoulHelper.addSoul(user, level*3);
+            SoulHelper.addSouls(user, level*3);
             // soul particles
             PROXY.spawnParticles(target, ParticleTypes.SOUL);
         }
@@ -54,7 +54,7 @@ public class SoulSiphonEnchantment extends DungeonsEnchantment {
         if(hasSoulSiphonBuiltIn(mainhand)){
             float chance = attacker.getRNG().nextFloat();
             if(chance <=  0.1F) {
-                SoulHelper.addSoul(attacker, 3);
+                SoulHelper.addSouls(attacker, 3);
                 // soul particles
                 PROXY.spawnParticles(victim, ParticleTypes.SOUL);
             }

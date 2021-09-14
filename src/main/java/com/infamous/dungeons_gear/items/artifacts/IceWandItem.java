@@ -33,8 +33,7 @@ public class IceWandItem extends ArtifactItem {
     @Override
     public ActionResult<ItemStack> procArtifact(ItemUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
-        Hand handIn = c.getHand();
-        ItemStack itemstack = playerIn.getHeldItem(handIn);
+        ItemStack itemstack = c.getItem();
         List<LivingEntity> nearbyEntities = c.getWorld().getLoadedEntitiesWithinAABB(LivingEntity.class, playerIn.getBoundingBox().grow(16), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(playerIn, nearbyEntity));
         LivingEntity target = null;
         double dist = 123456;
@@ -55,7 +54,7 @@ public class IceWandItem extends ArtifactItem {
             IceCloudEntity iceCloudEntity = new IceCloudEntity(world, playerIn, target);
             world.addEntity(iceCloudEntity);
             stack.damageItem(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), stack)));
-            ArtifactItem.setArtifactCooldown(playerIn, stack.getItem());
+            ArtifactItem.putArtifactOnCooldown(playerIn, stack.getItem());
             return ActionResultType.SUCCESS;
         }
         return ActionResultType.PASS;
@@ -79,10 +78,10 @@ public class IceWandItem extends ArtifactItem {
 
     @Override
     public ActionResultType onItemUse(ItemUseContext itemUseContext) {
-        return super.onItemUse(itemUseContext);
+        return ActionResultType.PASS;
     }
 
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        return super.onItemRightClick(worldIn, playerIn, handIn);
+        return new ActionResult<>(ActionResultType.PASS, playerIn.getHeldItem(handIn));
     }
 }

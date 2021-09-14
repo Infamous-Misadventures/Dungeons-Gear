@@ -7,7 +7,7 @@ import net.minecraft.entity.passive.SheepEntity;
 
 import java.util.EnumSet;
 
-import static com.infamous.dungeons_gear.goals.GoalUtils.getOwner;
+import static com.infamous.dungeons_gear.capabilities.summoning.SummoningHelper.getSummoner;
 import static com.infamous.dungeons_gear.goals.GoalUtils.shouldAttackEntity;
 
 public class SheepOwnerHurtTargetGoal extends TargetGoal {
@@ -23,7 +23,7 @@ public class SheepOwnerHurtTargetGoal extends TargetGoal {
 
     public boolean shouldExecute() {
         //if (this.batEntity.isPlayerCreated()) {
-            LivingEntity owner = getOwner(this.sheepEntity);
+            LivingEntity owner = getSummoner(this.sheepEntity);
             if (owner == null) {
                 return false;
             } else {
@@ -38,7 +38,7 @@ public class SheepOwnerHurtTargetGoal extends TargetGoal {
 
     public void startExecuting() {
         this.goalOwner.setAttackTarget(this.attacker);
-        LivingEntity owner = getOwner(this.sheepEntity);
+        LivingEntity owner = getSummoner(this.sheepEntity);
         if (owner != null) {
             this.timestamp = owner.getLastAttackedEntityTime();
         }

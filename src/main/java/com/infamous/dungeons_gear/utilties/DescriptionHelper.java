@@ -1,10 +1,7 @@
 package com.infamous.dungeons_gear.utilties;
 
 import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
-import com.infamous.dungeons_gear.items.interfaces.IArmor;
-import com.infamous.dungeons_gear.items.interfaces.IMeleeWeapon;
-import com.infamous.dungeons_gear.items.interfaces.IRangedWeapon;
-import com.infamous.dungeons_gear.items.interfaces.ISoulGatherer;
+import com.infamous.dungeons_gear.items.interfaces.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -20,6 +17,7 @@ public class DescriptionHelper {
         addAbilityDescription(list, itemStack);
         addPenaltyDescription(list, itemStack);
         addArtifactInfo(list, itemStack);
+        addChargeableDescription(list, itemStack);
         addSoulGatheringDescription(list, itemStack);
     }
 
@@ -42,7 +40,7 @@ public class DescriptionHelper {
         if(itemStack.getItem() instanceof ISoulGatherer){
             ISoulGatherer soulGatherer = (ISoulGatherer) itemStack.getItem();
             int gatherAmount = soulGatherer.getGatherAmount(itemStack);
-            int activationCost = soulGatherer.getActivationCost(itemStack);
+            double activationCost = soulGatherer.getActivationCost(itemStack);
             if(gatherAmount > 0) {
                 list.add(new TranslationTextComponent(
                         "ability.dungeons_gear.soul_gathering", gatherAmount)
@@ -52,6 +50,18 @@ public class DescriptionHelper {
                 list.add(new TranslationTextComponent(
                         "artifact.dungeons_gear.activation", activationCost)
                         .mergeStyle(TextFormatting.LIGHT_PURPLE));
+            }
+        }
+    }
+
+    public static void addChargeableDescription(List<ITextComponent> list, ItemStack itemStack) {
+        if(itemStack.getItem() instanceof IChargeableItem){
+            IChargeableItem chargeableItem = (IChargeableItem) itemStack.getItem();
+            int chargeTimeInSeconds = chargeableItem.getChargeTimeInSeconds();
+            if(chargeTimeInSeconds > 0) {
+                list.add(new TranslationTextComponent(
+                        "artifact.dungeons_gear.charge_time", chargeTimeInSeconds)
+                        .mergeStyle(TextFormatting.BLUE));
             }
         }
     }
@@ -114,6 +124,9 @@ public class DescriptionHelper {
             }
             if(armor.hasChillingBuiltIn(itemStack)){
                 abilities.add("chilling");
+            }
+            if(armor.hasArrowHoarderBuiltIn(itemStack)){
+                abilities.add("arrow_hoarder");
             }
         }
     }

@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.capabilities.offhand.OffhandProvider;
 import com.infamous.dungeons_gear.combat.CombatEventHandler;
-import com.infamous.dungeons_gear.items.ItemRegistry;
+import com.infamous.dungeons_gear.registry.ItemRegistry;
 import com.infamous.dungeons_gear.items.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.items.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.items.interfaces.IDualWieldWeapon;
@@ -173,7 +173,7 @@ public class GauntletItem extends TieredItem implements IDualWieldWeapon, IVanis
     }
 
     @Override
-    public int getActivationCost(ItemStack stack) {
+    public float getActivationCost(ItemStack stack) {
         return 0;
     }
 }

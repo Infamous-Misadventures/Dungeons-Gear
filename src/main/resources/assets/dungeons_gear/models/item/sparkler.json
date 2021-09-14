@@ -1,0 +1,85 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [128, 128],
+	"textures": {
+		"0": "dungeons_gear:item/sparkler",
+		"particle": "dungeons_gear:item/sparkler"
+	},
+	"elements": [
+		{
+			"name": "Torch",
+			"from": [6.25, 0.11625, 13.10539],
+			"to": [9.75, 24.61625, 16.60539],
+			"rotation": {"angle": -45, "axis": "x", "origin": [8, 0.10095, 14.75]},
+			"faces": {
+				"north": {"uv": [2.125, 2.125, 2.625, 5.375], "texture": "#0"},
+				"east": {"uv": [1.625, 2.125, 2.125, 5.375], "texture": "#0"},
+				"south": {"uv": [3.125, 2.125, 3.625, 5.375], "texture": "#0"},
+				"west": {"uv": [2.625, 2.125, 3.125, 5.375], "texture": "#0"},
+				"up": {"uv": [2.625, 2.125, 2.125, 1.625], "texture": "#0"},
+				"down": {"uv": [3.125, 1.625, 2.625, 2.125], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Torch",
+			"from": [8, 5.5, -14.7981],
+			"to": [8, 30.5, 10.2019],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 1.10095, 14]},
+			"faces": {
+				"north": {"uv": [2.125, 2.125, 2.625, 5.375], "texture": "#0"},
+				"east": {"uv": [2.375, 8.5, 7.875, 13.25], "texture": "#0"},
+				"south": {"uv": [3.125, 2.125, 3.625, 5.375], "texture": "#0"},
+				"west": {"uv": [7.875, 8.5, 13.375, 13.25], "texture": "#0"},
+				"up": {"uv": [2.625, 2.125, 2.125, 1.625], "texture": "#0"},
+				"down": {"uv": [3.125, 1.625, 2.625, 2.125], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [45, 0, 0],
+			"translation": [0, 2, 2],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [45, 0, 0],
+			"translation": [0, 2, 2],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_righthand": {
+			"rotation": [45, 0, 0],
+			"translation": [0, 2, 2],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [45, 0, 0],
+			"translation": [0, 2, 2],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"gui": {
+			"rotation": [15.5, 120, -12],
+			"translation": [2.5, -2, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"head": {
+			"rotation": [45, 0, 0],
+			"translation": [0, 10.5, 0.5],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"fixed": {
+			"rotation": [0, -90, 0],
+			"translation": [-2.25, -1.5, -0.25],
+			"scale": [0.4, 0.4, 0.4]
+		}
+	},
+	"groups": [
+		{
+			"name": "Sparkler",
+			"origin": [0, 0, 0],
+			"children": [0, 1]
+		}
+	]
+}

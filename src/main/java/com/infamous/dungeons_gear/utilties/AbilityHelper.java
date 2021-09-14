@@ -1,13 +1,11 @@
 package com.infamous.dungeons_gear.utilties;
 
+import com.infamous.dungeons_gear.capabilities.summoning.SummoningHelper;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.goals.GoalUtils;
 import com.infamous.dungeons_gear.goals.WildRageAttackGoal;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.passive.horse.LlamaEntity;
@@ -15,10 +13,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
@@ -36,10 +32,13 @@ public class AbilityHelper {
     }
 
     public static void makeNearbyPetsAttackTarget(LivingEntity target, LivingEntity owner) {
+        if (isPetOfAttacker(target, owner) || isPetOfAttacker(owner, target))
+            return;//don't kill your pets or master!
         List<LivingEntity> nearbyEntities = owner.getEntityWorld().getLoadedEntitiesWithinAABB(LivingEntity.class, owner.getBoundingBox().grow(12), (nearbyEntity) -> {
             return canPetAttackEntity(owner, nearbyEntity);
         });
         for (LivingEntity nearbyEntity : nearbyEntities) {
+
             if (nearbyEntity instanceof TameableEntity) {
                 TameableEntity tameableEntity = (TameableEntity) nearbyEntity;
                 tameableEntity.setAttackTarget(target);
@@ -63,33 +62,39 @@ public class AbilityHelper {
         if (possiblePet instanceof TameableEntity) {
             TameableEntity pet = (TameableEntity) possiblePet;
             return pet.getOwner() == possibleOwner;
+        } else if(possiblePet instanceof AbstractHorseEntity){
+            AbstractHorseEntity horse = (AbstractHorseEntity) possiblePet;
+            return horse.getOwnerUniqueId() == possibleOwner.getUniqueID();
+        } else if(SummoningHelper.isEntitySummonable(possiblePet)){
+                return SummoningHelper.wasSummonedBy(possiblePet, possibleOwner.getUniqueID());
         }
-        if (possiblePet instanceof AbstractHorseEntity) {
-            AbstractHorseEntity abstractHorse = (AbstractHorseEntity) possiblePet;
-            return GoalUtils.getOwner(abstractHorse) == possibleOwner;
+        else{
+            return false;
         }
-        if (possiblePet instanceof IronGolemEntity) {
-            IronGolemEntity ironGolem = (IronGolemEntity) possiblePet;
-            return GoalUtils.getOwner(ironGolem) == possibleOwner;
-        }
-        if (possiblePet instanceof BatEntity) {
-            BatEntity batEntity = (BatEntity) possiblePet;
-            return GoalUtils.getOwner(batEntity) == possibleOwner;
-        }
-        if (possiblePet instanceof BeeEntity) {
-            BeeEntity beeEntity = (BeeEntity) possiblePet;
-            return GoalUtils.getOwner(beeEntity) == possibleOwner;
-        }
-        if (possiblePet instanceof SheepEntity) {
-            SheepEntity sheepEntity = (SheepEntity) possiblePet;
-            return GoalUtils.getOwner(sheepEntity) == possibleOwner;
-        }
-        return false;
     }
 
+    public static boolean isPetOrColleagueRelation(LivingEntity potentialPet1, LivingEntity potentialPet2) {
+        LivingEntity owner = null;
+        if (potentialPet1 instanceof TameableEntity)
+            owner = ((TameableEntity) potentialPet1).getOwner();
+        else if (potentialPet1 instanceof AbstractHorseEntity)
+            owner = SummoningHelper.getOwnerForHorse((AbstractHorseEntity) potentialPet1);
+        else if (SummoningHelper.isEntitySummonable(potentialPet1))
+            owner = SummoningHelper.getSummoner(potentialPet1);
 
-    private static boolean isAVillagerOrIronGolem(LivingEntity nearbyEntity) {
-        return (nearbyEntity instanceof AbstractVillagerEntity) || (nearbyEntity instanceof IronGolemEntity);
+        LivingEntity otherOwner = null;
+        if (potentialPet2 instanceof TameableEntity)
+            otherOwner = ((TameableEntity) potentialPet2).getOwner();
+        else if (potentialPet2 instanceof AbstractHorseEntity)
+            otherOwner = SummoningHelper.getOwnerForHorse((AbstractHorseEntity) potentialPet2);
+        else if (SummoningHelper.isEntitySummonable(potentialPet2))
+            otherOwner = SummoningHelper.getSummoner(potentialPet2);
+
+        if (owner == null)
+            return potentialPet1 == otherOwner;
+        if (otherOwner == null)
+            return potentialPet2 == owner;
+        return owner == otherOwner;
     }
 
     private static boolean isNotTheTargetOrAttacker(LivingEntity attacker, LivingEntity target, LivingEntity nearbyEntity) {
@@ -113,7 +118,6 @@ public class AbilityHelper {
 
     public static boolean isAlly(LivingEntity healer, LivingEntity nearbyEntity) {
         return isPetOfAttacker(healer, nearbyEntity)
-                || isAVillagerOrIronGolem(nearbyEntity)
                 || healer.isOnSameTeam(nearbyEntity);
     }
 
