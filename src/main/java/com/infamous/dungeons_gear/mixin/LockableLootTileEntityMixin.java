@@ -41,21 +41,21 @@ public abstract class LockableLootTileEntityMixin extends LockableTileEntity {
         super(typeIn);
     }
 
-    @Inject(at = @At("HEAD"), method = "fillWithLoot", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "unpackLootTable", cancellable = true)
     private void fillWithLoot(@Nullable PlayerEntity player, CallbackInfo callbackInfo){
-        if (this.lootTable != null && this.world.getServer() != null) {
-            LootTable lootTable = this.world.getServer().getLootTableManager().getLootTableFromLocation(this.lootTable);
+        if (this.lootTable != null && this.level.getServer() != null) {
+            LootTable lootTable = this.level.getServer().getLootTables().get(this.lootTable);
             if (player instanceof ServerPlayerEntity) {
-                CriteriaTriggers.PLAYER_GENERATES_CONTAINER_LOOT.test((ServerPlayerEntity)player, this.lootTable);
+                CriteriaTriggers.GENERATE_LOOT.trigger((ServerPlayerEntity)player, this.lootTable);
             }
 
-            LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld)this.world)).withParameter(LootParameters.field_237457_g_, Vector3d.copyCentered(this.pos)).withSeed(this.lootTableSeed);
+            LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld)this.level)).withParameter(LootParameters.ORIGIN, Vector3d.atCenterOf(this.worldPosition)).withOptionalRandomSeed(this.lootTableSeed);
             if (player != null) {
                 lootcontext$builder.withLuck(player.getLuck()).withParameter(LootParameters.THIS_ENTITY, player);
             }
 
             this.isApplyingModifier = true;
-            lootTable.fillInventory(this, lootcontext$builder.build(LootParameterSets.CHEST));
+            lootTable.fill(this, lootcontext$builder.create(LootParameterSets.CHEST));
             this.isApplyingModifier = false;
 
             // Moved to the bottom of the method instead of being in the middle, with an if-check to see if it was already set to null during the loot modifier's doApply call
@@ -75,7 +75,7 @@ public abstract class LockableLootTileEntityMixin extends LockableTileEntity {
         }
     }
 
-    @Inject(at = @At("HEAD"), method = "getStackInSlot", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "getItem", cancellable = true)
     private void getStackInSlot(int index, CallbackInfoReturnable<ItemStack> cir){
         if(this.isApplyingModifier){
             cir.setReturnValue(this.getItems().get(index));
@@ -83,15 +83,15 @@ public abstract class LockableLootTileEntityMixin extends LockableTileEntity {
         }
     }
 
-    @Inject(at = @At("HEAD"), method = "setInventorySlotContents", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "setItem", cancellable = true)
     private void setInventorySlotContents(int index, ItemStack stack, CallbackInfo callbackInfo){
         if(this.isApplyingModifier){
             this.getItems().set(index, stack);
-            if (stack.getCount() > this.getInventoryStackLimit()) {
-                stack.setCount(this.getInventoryStackLimit());
+            if (stack.getCount() > this.getMaxStackSize()) {
+                stack.setCount(this.getMaxStackSize());
             }
 
-            this.markDirty();
+            this.setChanged();
             callbackInfo.cancel();
         }
     }

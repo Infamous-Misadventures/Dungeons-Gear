@@ -34,7 +34,7 @@ public abstract class ContainerMinecartEntityMixin extends AbstractMinecartEntit
     private ResourceLocation lootTable;
 
     @Shadow
-    private NonNullList<ItemStack> minecartContainerItems;
+    private NonNullList<ItemStack> itemStacks;
 
     @Shadow
     private long lootTableSeed;
@@ -45,15 +45,15 @@ public abstract class ContainerMinecartEntityMixin extends AbstractMinecartEntit
         super(typeIn, world);
     }
 
-    @Inject(at = @At("HEAD"), method = "addLoot", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "unpackLootTable", cancellable = true)
     private void addLoot(@Nullable PlayerEntity player, CallbackInfo callbackInfo){
-        if (this.lootTable != null && this.world.getServer() != null) {
-            LootTable lootTable = this.world.getServer().getLootTableManager().getLootTableFromLocation(this.lootTable);
+        if (this.lootTable != null && this.level.getServer() != null) {
+            LootTable lootTable = this.level.getServer().getLootTables().get(this.lootTable);
             if (player instanceof ServerPlayerEntity) {
-                CriteriaTriggers.PLAYER_GENERATES_CONTAINER_LOOT.test((ServerPlayerEntity)player, this.lootTable);
+                CriteriaTriggers.GENERATE_LOOT.trigger((ServerPlayerEntity)player, this.lootTable);
             }
 
-            LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld)this.world)).withParameter(LootParameters.field_237457_g_, this.getPositionVec()).withSeed(this.lootTableSeed);
+            LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld)this.level)).withParameter(LootParameters.ORIGIN, this.position()).withOptionalRandomSeed(this.lootTableSeed);
             // Forge: add this entity to loot context, however, currently Vanilla uses 'this' for the player creating the chests. So we take over 'killer_entity' for this.
             lootcontext$builder.withParameter(LootParameters.KILLER_ENTITY, this);
             if (player != null) {
@@ -61,7 +61,7 @@ public abstract class ContainerMinecartEntityMixin extends AbstractMinecartEntit
             }
 
             this.isApplyingModifier = true;
-            lootTable.fillInventory(this, lootcontext$builder.build(LootParameterSets.CHEST));
+            lootTable.fill(this, lootcontext$builder.create(LootParameterSets.CHEST));
             this.isApplyingModifier = false;
 
             // Moved to the bottom of the method instead of being in the middle, with an if-check to see if it was already set to null during the loot modifier's doApply call
@@ -70,20 +70,20 @@ public abstract class ContainerMinecartEntityMixin extends AbstractMinecartEntit
         callbackInfo.cancel();
     }
 
-    @Inject(at = @At("HEAD"), method = "getStackInSlot", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "getItem", cancellable = true)
     private void getStackInSlot(int index, CallbackInfoReturnable<ItemStack> cir){
         if(this.isApplyingModifier){
-            cir.setReturnValue(this.minecartContainerItems.get(index));
+            cir.setReturnValue(this.itemStacks.get(index));
             cir.cancel();
         }
     }
 
-    @Inject(at = @At("HEAD"), method = "setInventorySlotContents", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "setItem", cancellable = true)
     private void setInventorySlotContents(int index, ItemStack stack, CallbackInfo callbackInfo){
         if(this.isApplyingModifier){
-            this.minecartContainerItems.set(index, stack);
-            if (!stack.isEmpty() && stack.getCount() > this.getInventoryStackLimit()) {
-                stack.setCount(this.getInventoryStackLimit());
+            this.itemStacks.set(index, stack);
+            if (!stack.isEmpty() && stack.getCount() > this.getMaxStackSize()) {
+                stack.setCount(this.getMaxStackSize());
             }
             callbackInfo.cancel();
         }

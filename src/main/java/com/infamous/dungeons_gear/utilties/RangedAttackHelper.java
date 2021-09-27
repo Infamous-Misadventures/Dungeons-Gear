@@ -16,7 +16,7 @@ import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
-import static net.minecraft.item.CrossbowItem.hasChargedProjectile;
+import static net.minecraft.item.CrossbowItem.containsChargedProjectile;
 
 public class RangedAttackHelper {
 
@@ -31,8 +31,8 @@ public class RangedAttackHelper {
     }
 
     public static int getVanillaCrossbowChargeTime(ItemStack stack) {
-        int quickChargeLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.QUICK_CHARGE, stack);
-        int accelerateLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.ACCELERATE, stack);
+        int quickChargeLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.QUICK_CHARGE, stack);
+        int accelerateLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.ACCELERATE, stack);
 
         IBow weaponCap = CapabilityHelper.getWeaponCapability(stack);
         if(weaponCap == null) return Math.max(25 - 5 * quickChargeLevel, 0);
@@ -55,7 +55,7 @@ public class RangedAttackHelper {
         float arrowVelocity = (float)charge / bowChargeTime;
         arrowVelocity = (arrowVelocity * arrowVelocity + arrowVelocity * 2.0F) / 3.0F;
         float velocityLimit = 1.0F;
-        int overchargeLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.OVERCHARGE, stack);
+        int overchargeLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.OVERCHARGE, stack);
         if(overchargeLevel > 0){
             velocityLimit += overchargeLevel;
         }
@@ -72,8 +72,8 @@ public class RangedAttackHelper {
         if(RollChargeEnchantment.hasActiveRollCharge(livingEntity)) return minTime;
 
 
-        int quickChargeLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.QUICK_CHARGE, stack);
-        int accelerateLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.ACCELERATE, stack);
+        int quickChargeLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.QUICK_CHARGE, stack);
+        int accelerateLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.ACCELERATE, stack);
 
         IBow weaponCap = CapabilityHelper.getWeaponCapability(stack);
         if(weaponCap == null) return Math.max(20.0F - 5 * quickChargeLevel, minTime);
@@ -176,7 +176,7 @@ public class RangedAttackHelper {
             arrowVelocity = AbstractDungeonsCrossbowItem.getArrowVelocity(stack);
         }
         else{
-            arrowVelocity = hasChargedProjectile(stack, Items.FIREWORK_ROCKET) ? 1.6F : 3.15F;
+            arrowVelocity = containsChargedProjectile(stack, Items.FIREWORK_ROCKET) ? 1.6F : 3.15F;
         }
         return arrowVelocity;
     }

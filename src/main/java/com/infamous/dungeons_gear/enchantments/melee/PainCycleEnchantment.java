@@ -19,6 +19,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = MODID)
 public class PainCycleEnchantment extends DungeonsEnchantment {
 
@@ -35,17 +37,17 @@ public class PainCycleEnchantment extends DungeonsEnchantment {
     public static void onPainfulAttack(LivingDamageEvent event){
         if(PlayerAttackHelper.isProbablyNotMeleeDamage(event.getSource())) return;
         if(event.getSource() instanceof OffhandAttackDamageSource) return;
-        if(event.getEntityLiving().world.isRemote) return;
+        if(event.getEntityLiving().level.isClientSide) return;
 
-        if(event.getSource().getTrueSource() instanceof LivingEntity){
-            LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
-            ItemStack mainhand = attacker.getHeldItemMainhand();
+        if(event.getSource().getEntity() instanceof LivingEntity){
+            LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
+            ItemStack mainhand = attacker.getMainHandItem();
             ICombo comboCap = CapabilityHelper.getComboCapability(attacker);
             if(comboCap != null){
-                int painCycleLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.PAIN_CYCLE, mainhand);
+                int painCycleLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.PAIN_CYCLE, mainhand);
                 int painDamage = 2;
                 if(painCycleLevel > 0 && attacker.getHealth() > painDamage){
-                    attacker.attackEntityFrom(DamageSource.MAGIC, painDamage); // 1 heart of damage
+                    attacker.hurt(DamageSource.MAGIC, painDamage); // 1 heart of damage
                     comboCap.setPainCycleStacks(comboCap.getPainCycleStacks() + 1);
                     if(comboCap.getPainCycleStacks() >= 5){
                         int painCycleMultiplier = 2 + painCycleLevel;

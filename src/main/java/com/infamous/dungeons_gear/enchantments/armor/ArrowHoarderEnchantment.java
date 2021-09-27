@@ -9,6 +9,8 @@ import net.minecraft.item.ItemStack;
 
 import static com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList.ARROW_HOARDER;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 public class ArrowHoarderEnchantment extends JumpingEnchantment {
 
     public ArrowHoarderEnchantment() {
@@ -28,7 +30,7 @@ public class ArrowHoarderEnchantment extends JumpingEnchantment {
     }
 
     public static int arrowHoarderLevel(ItemStack stack) {
-        int level = EnchantmentHelper.getEnchantmentLevel(ARROW_HOARDER, stack);
+        int level = EnchantmentHelper.getItemEnchantmentLevel(ARROW_HOARDER, stack);
         if (level == 0 && stack.getItem() instanceof IArmor && hasArrowHoarderBuiltIn(stack)){
             level = 1;
         }

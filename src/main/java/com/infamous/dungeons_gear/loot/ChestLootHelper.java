@@ -107,7 +107,7 @@ public class ChestLootHelper {
     private static void addCommonOrUnique(double uniqueItemChance, Item commonItem, Item uniqueItem, List<ItemStack> generatedLoot, @Nullable PlayerEntity player) {
         double fortuneAddition = 0;
         if(player != null){
-            int fortuneOfTheSeaLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.FORTUNE_OF_THE_SEA, player);
+            int fortuneOfTheSeaLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.FORTUNE_OF_THE_SEA, player);
             if(fortuneOfTheSeaLevel > 0){
                 fortuneAddition = 0.1 * fortuneOfTheSeaLevel;
             }

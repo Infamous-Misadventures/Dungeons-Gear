@@ -21,6 +21,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class WildRageEnchantment extends DungeonsEnchantment {
 
@@ -45,22 +47,22 @@ public class WildRageEnchantment extends DungeonsEnchantment {
         if(!ModEnchantmentHelper.arrowHitMob(rayTraceResult)) return;
         AbstractArrowEntity arrow = event.getArrow();
         if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
-        LivingEntity shooter = (LivingEntity)arrow.func_234616_v_();
+        LivingEntity shooter = (LivingEntity)arrow.getOwner();
         int wildRageLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.WILD_RAGE);
         boolean uniqueWeaponFlag = arrow.getTags().contains(INTRINSIC_WILD_RAGE);
         MobEntity victim = (MobEntity) ((EntityRayTraceResult)rayTraceResult).getEntity();
-        if(!(victim instanceof IMob) || !(victim.isNonBoss())) return;
+        if(!(victim instanceof IMob) || !(victim.canChangeDimensions())) return;
         if(wildRageLevel > 0){
             float wildRageChance = 0.1F;
             wildRageChance += wildRageLevel * 0.1F;
 
-            float chance = shooter.getRNG().nextFloat();
+            float chance = shooter.getRandom().nextFloat();
             if(chance <=  wildRageChance){
                 AbilityHelper.sendIntoWildRage(victim);
             }
         }
         if(uniqueWeaponFlag){
-            float chance = shooter.getRNG().nextFloat();
+            float chance = shooter.getRandom().nextFloat();
             if(chance <=  0.2F){
                 AbilityHelper.sendIntoWildRage(victim);
             }
@@ -69,17 +71,17 @@ public class WildRageEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onWildRageAttack(LivingAttackEvent event){
-        if(!(event.getSource().getTrueSource() instanceof LivingEntity)) return;
-        LivingEntity attacker = (LivingEntity)event.getSource().getTrueSource();
+        if(!(event.getSource().getEntity() instanceof LivingEntity)) return;
+        LivingEntity attacker = (LivingEntity)event.getSource().getEntity();
         LivingEntity victim = event.getEntityLiving();
-        if(!(victim instanceof IMob) || !(victim.isNonBoss())) return;
+        if(!(victim instanceof IMob) || !(victim.canChangeDimensions())) return;
         MobEntity enemy = (MobEntity) victim;
             if((ModEnchantmentHelper.hasEnchantment(attacker, RangedEnchantmentList.WILD_RAGE))){
-                int wildRageLevel = EnchantmentHelper.getMaxEnchantmentLevel(RangedEnchantmentList.WILD_RAGE, attacker);
+                int wildRageLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.WILD_RAGE, attacker);
                 float wildRageChance = 0.1F;
                 wildRageChance += wildRageLevel * 0.1F;
 
-                float chance = attacker.getRNG().nextFloat();
+                float chance = attacker.getRandom().nextFloat();
                 if(chance <=  wildRageChance){
                     AbilityHelper.sendIntoWildRage(enemy);
                 }

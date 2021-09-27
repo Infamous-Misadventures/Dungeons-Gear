@@ -13,6 +13,8 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class SoulFocusEnchantment extends FocusEnchantment {
 
@@ -32,11 +34,11 @@ public class SoulFocusEnchantment extends FocusEnchantment {
     @SubscribeEvent
     public static void onMagicAttack(LivingDamageEvent event){
         if(!isIndirectMagic(event.getSource())) return; // we don't want this to trigger via generic magic damage
-        if(event.getEntityLiving().world.isRemote) return;
+        if(event.getEntityLiving().level.isClientSide) return;
 
-        if(event.getSource().getTrueSource() instanceof LivingEntity){
-            LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
-            int soulFocusLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.SOUL_FOCUS, attacker);
+        if(event.getSource().getEntity() instanceof LivingEntity){
+            LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
+            int soulFocusLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.SOUL_FOCUS, attacker);
             if(soulFocusLevel > 0){
                 float multiplier = 1 + (0.1F * soulFocusLevel);
                 float currentDamage = event.getAmount();
@@ -46,6 +48,6 @@ public class SoulFocusEnchantment extends FocusEnchantment {
     }
 
     private static boolean isIndirectMagic(DamageSource damageSource) {
-        return damageSource instanceof IndirectEntityDamageSource && damageSource.isMagicDamage();
+        return damageSource instanceof IndirectEntityDamageSource && damageSource.isMagic();
     }
 }

@@ -14,7 +14,7 @@ public class OffhandStorage implements Capability.IStorage<IOffhand> {
     @Override
     public INBT writeNBT(Capability<IOffhand> capability, IOffhand instance, Direction side) {
         CompoundNBT save=new CompoundNBT();
-        save.put("wrapped", instance.getWrappedItemStack().write(new CompoundNBT()));
+        save.put("wrapped", instance.getWrappedItemStack().save(new CompoundNBT()));
         save.putBoolean("fake", instance.isFake());
         return save;
     }
@@ -22,7 +22,7 @@ public class OffhandStorage implements Capability.IStorage<IOffhand> {
     @Override
     public void readNBT(Capability<IOffhand> capability, IOffhand instance, Direction side, INBT nbt) {
         CompoundNBT from=(CompoundNBT)nbt;
-        instance.setWrappedItemStack(ItemStack.read(from.getCompound("wrapped")));
+        instance.setWrappedItemStack(ItemStack.of(from.getCompound("wrapped")));
         instance.setFake(from.getBoolean("fake"));
     }
 }

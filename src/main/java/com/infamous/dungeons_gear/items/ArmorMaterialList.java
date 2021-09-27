@@ -55,13 +55,13 @@ public enum ArmorMaterialList implements IArmorMaterial
      *
      */
 
-    VEST(Constants.VEST_NAME, DungeonsGearConfig.VEST_ARMOR_DURABILITY.get(), new int[] {1, 4, 5, 2}, 16, () -> Ingredient.fromTag(ItemTagWrappers.NON_METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0f, 0.0f),
-    ROBE(Constants.ROBE_NAME, DungeonsGearConfig.ROBE_ARMOR_DURABILITY.get(), new int[] {1, 4, 5, 2}, 16, () -> Ingredient.fromTag(ItemTagWrappers.NON_METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0f, 0.0f),
-    PELT(Constants.PELT_NAME, DungeonsGearConfig.PELT_ARMOR_DURABILITY.get(), new int[] {1, 4, 5, 2}, 9, () -> Ingredient.fromTag(ItemTagWrappers.NON_METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 2.0f, 0.0f),
-    BONE(Constants.BONE_NAME, DungeonsGearConfig.BONE_ARMOR_DURABILITY.get(), new int[] {1, 4, 5, 2}, 9, () -> Ingredient.fromTag(ItemTagWrappers.NON_METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ITEM_ARMOR_EQUIP_TURTLE, 2.0f, 0.0f),
-    LIGHT_PLATE(Constants.LIGHT_PLATE_NAME, DungeonsGearConfig.LIGHT_PLATE_ARMOR_DURABILITY.get(), new int[] {2, 5, 6, 2}, 9, () -> Ingredient.fromTag(ItemTagWrappers.METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0f, 0.0f),
-    MEDIUM_PLATE(Constants.MEDIUM_PLATE_NAME, DungeonsGearConfig.MEDIUM_PLATE_ARMOR_DURABILITY.get(), new int[] {2, 5, 6, 2}, 9, () -> Ingredient.fromTag(ItemTagWrappers.METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.0f, 0.0f),
-    HEAVY_PLATE(Constants.HEAVY_PLATE_NAME, DungeonsGearConfig.HEAVY_PLATE_ARMOR_DURABILITY.get(), new int[] {3, 6, 8, 3}, 9, () -> Ingredient.fromTag(ItemTagWrappers.METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.0f, 0.0f);
+    VEST(Constants.VEST_NAME, DungeonsGearConfig.VEST_ARMOR_DURABILITY.get(), new int[] {1, 4, 5, 2}, 16, () -> Ingredient.of(ItemTagWrappers.NON_METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ARMOR_EQUIP_LEATHER, 0.0f, 0.0f),
+    ROBE(Constants.ROBE_NAME, DungeonsGearConfig.ROBE_ARMOR_DURABILITY.get(), new int[] {1, 4, 5, 2}, 16, () -> Ingredient.of(ItemTagWrappers.NON_METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ARMOR_EQUIP_LEATHER, 0.0f, 0.0f),
+    PELT(Constants.PELT_NAME, DungeonsGearConfig.PELT_ARMOR_DURABILITY.get(), new int[] {1, 4, 5, 2}, 9, () -> Ingredient.of(ItemTagWrappers.NON_METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ARMOR_EQUIP_LEATHER, 2.0f, 0.0f),
+    BONE(Constants.BONE_NAME, DungeonsGearConfig.BONE_ARMOR_DURABILITY.get(), new int[] {1, 4, 5, 2}, 9, () -> Ingredient.of(ItemTagWrappers.NON_METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ARMOR_EQUIP_TURTLE, 2.0f, 0.0f),
+    LIGHT_PLATE(Constants.LIGHT_PLATE_NAME, DungeonsGearConfig.LIGHT_PLATE_ARMOR_DURABILITY.get(), new int[] {2, 5, 6, 2}, 9, () -> Ingredient.of(ItemTagWrappers.METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ARMOR_EQUIP_IRON, 0.0f, 0.0f),
+    MEDIUM_PLATE(Constants.MEDIUM_PLATE_NAME, DungeonsGearConfig.MEDIUM_PLATE_ARMOR_DURABILITY.get(), new int[] {2, 5, 6, 2}, 9, () -> Ingredient.of(ItemTagWrappers.METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ARMOR_EQUIP_IRON, 2.0f, 0.0f),
+    HEAVY_PLATE(Constants.HEAVY_PLATE_NAME, DungeonsGearConfig.HEAVY_PLATE_ARMOR_DURABILITY.get(), new int[] {3, 6, 8, 3}, 9, () -> Ingredient.of(ItemTagWrappers.METAL_ARMOR_REPAIR_ITEMS), SoundEvents.ARMOR_EQUIP_IRON, 2.0f, 0.0f);
 
 
     // Armor order: boots, leggings, chestplate, helmet
@@ -88,19 +88,19 @@ public enum ArmorMaterialList implements IArmorMaterial
     }
 
     @Override
-    public int getDamageReductionAmount(EquipmentSlotType slot)
+    public int getDefenseForSlot(EquipmentSlotType slot)
     {
         return this.damageReductionAmounts[slot.getIndex()];
     }
 
     @Override
-    public int getDurability(EquipmentSlotType slot)
+    public int getDurabilityForSlot(EquipmentSlotType slot)
     {
         return MAX_DAMAGE_ARRAY[slot.getIndex()] * this.durability;
     }
 
     @Override
-    public int getEnchantability()
+    public int getEnchantmentValue()
     {
         return this.enchantability;
     }
@@ -112,13 +112,13 @@ public enum ArmorMaterialList implements IArmorMaterial
     }
 
     @Override
-    public Ingredient getRepairMaterial()
+    public Ingredient getRepairIngredient()
     {
-        return this.repairItem.getValue();
+        return this.repairItem.get();
     }
 
     @Override
-    public SoundEvent getSoundEvent()
+    public SoundEvent getEquipSound()
     {
         return this.equipSound;
     }

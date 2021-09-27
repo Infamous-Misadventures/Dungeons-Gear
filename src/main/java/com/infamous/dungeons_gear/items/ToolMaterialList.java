@@ -45,7 +45,7 @@ public enum ToolMaterialList implements IItemTier {
       return Ingredient.fromTag(ItemTags.PLANKS);
    }),
    STONE(1, 131, 4.0F, 1.0F, 5, () -> {
-      return Ingredient.fromTag(ItemTags.field_232909_aa_);
+      return Ingredient.fromTag(ItemTags.STONE_TOOL_MATERIALS);
    }),
    IRON(2, 250, 6.0F, 2.0F, 14, () -> {
       return Ingredient.fromItems(Items.IRON_INGOT);
@@ -57,14 +57,14 @@ public enum ToolMaterialList implements IItemTier {
       return Ingredient.fromItems(Items.GOLD_INGOT);
    }),
    NETHERITE(4, 2031, 9.0F, 4.0F, 15, () -> {
-      return Ingredient.fromItems(Items.field_234759_km_);
+      return Ingredient.fromItems(Items.NETHERITE_INGOT);
    });
      */
 
-    METAL(0.0F, 6.0f, DungeonsGearConfig.METAL_MELEE_WEAPON_DURABILITY.get(), 2, 14, () -> Ingredient.fromTag(ItemTagWrappers.METAL_MELEE_WEAPON_REPAIR_ITEMS)),
-    STONE(0.0F, 4.0F, 131, 1, 5, () -> Ingredient.fromTag(Tags.Items.COBBLESTONE)),
-    GOLD(0.0F, 12.0F, 32, 0, 22, () -> Ingredient.fromTag(Tags.Items.INGOTS_GOLD)),
-    DIAMOND(0.0F, 8.0f, 1561, 3, 10, () -> Ingredient.fromTag(Tags.Items.GEMS_DIAMOND));
+    METAL(0.0F, 6.0f, DungeonsGearConfig.METAL_MELEE_WEAPON_DURABILITY.get(), 2, 14, () -> Ingredient.of(ItemTagWrappers.METAL_MELEE_WEAPON_REPAIR_ITEMS)),
+    STONE(0.0F, 4.0F, 131, 1, 5, () -> Ingredient.of(Tags.Items.COBBLESTONE)),
+    GOLD(0.0F, 12.0F, 32, 0, 22, () -> Ingredient.of(Tags.Items.INGOTS_GOLD)),
+    DIAMOND(0.0F, 8.0f, 1561, 3, 10, () -> Ingredient.of(Tags.Items.GEMS_DIAMOND));
 
     private float attackDamage, efficiency;
     private int durability;
@@ -83,38 +83,38 @@ public enum ToolMaterialList implements IItemTier {
     }
 
     @Override
-    public float getAttackDamage()
+    public float getAttackDamageBonus()
     {
         return this.attackDamage;
     }
 
     @Override
-    public float getEfficiency()
+    public float getSpeed()
     {
         return this.efficiency;
     }
 
     @Override
-    public int getEnchantability()
+    public int getEnchantmentValue()
     {
         return this.enchantability;
     }
 
     @Override
-    public int getHarvestLevel()
+    public int getLevel()
     {
         return this.harvestLevel;
     }
 
     @Override
-    public int getMaxUses()
+    public int getUses()
     {
         return this.durability;
     }
 
     @Override
-    public Ingredient getRepairMaterial()
+    public Ingredient getRepairIngredient()
     {
-        return this.repairMaterial.getValue();
+        return this.repairMaterial.get();
     }
 }

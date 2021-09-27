@@ -15,6 +15,8 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class LightningFocusEnchantment extends FocusEnchantment {
 
@@ -34,11 +36,11 @@ public class LightningFocusEnchantment extends FocusEnchantment {
     @SubscribeEvent
     public static void onLightningAttack(LivingDamageEvent event){
         if(!(event.getSource() instanceof ElectricShockDamageSource)) return;
-        if(event.getEntityLiving().world.isRemote) return;
+        if(event.getEntityLiving().level.isClientSide) return;
 
-        if(event.getSource().getTrueSource() instanceof LivingEntity){
-            LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
-            int lightningFocusLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.LIGHTNING_FOCUS, attacker);
+        if(event.getSource().getEntity() instanceof LivingEntity){
+            LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
+            int lightningFocusLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.LIGHTNING_FOCUS, attacker);
             if(lightningFocusLevel > 0){
                 float multiplier = 1 + (0.25F * lightningFocusLevel);
                 float currentDamage = event.getAmount();

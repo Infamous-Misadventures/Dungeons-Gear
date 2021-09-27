@@ -34,21 +34,21 @@ public class CriticalHitEnchantment extends DamageBoostEnchantment {
     public static void onVanillaNonCriticalHit(CriticalHitEvent event) {
         if (event.getPlayer() != null && !event.isVanillaCritical()) {
             PlayerEntity attacker = event.getPlayer();
-            ItemStack mainhand = attacker.getHeldItemMainhand();
+            ItemStack mainhand = attacker.getMainHandItem();
             boolean uniqueWeaponFlag = hasCriticalHitBuiltIn(mainhand);
             boolean success = false;
             if (event.getResult() != Event.Result.ALLOW && mainhand.getItem() instanceof IComboWeapon) return;
             if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.CRITICAL_HIT)) {
-                int criticalHitLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.CRITICAL_HIT, mainhand);
+                int criticalHitLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.CRITICAL_HIT, mainhand);
                 float criticalHitChance;
                 criticalHitChance = 0.05F + criticalHitLevel * 0.05F;
-                float criticalHitRand = attacker.getRNG().nextFloat();
+                float criticalHitRand = attacker.getRandom().nextFloat();
                 if (criticalHitRand <= criticalHitChance) {
                     success = true;
                 }
             }
             if (uniqueWeaponFlag) {
-                float criticalHitRand = attacker.getRNG().nextFloat();
+                float criticalHitRand = attacker.getRandom().nextFloat();
                 if (criticalHitRand <= 0.1F) {
                     success = true;
                 }
@@ -71,7 +71,7 @@ public class CriticalHitEnchantment extends DamageBoostEnchantment {
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() ||
                 (!(enchantment instanceof DamageEnchantment) && !(enchantment instanceof DamageBoostEnchantment) && !(enchantment instanceof AOEDamageEnchantment));
     }

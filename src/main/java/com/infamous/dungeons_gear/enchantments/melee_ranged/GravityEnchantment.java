@@ -24,6 +24,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = MODID)
 public class GravityEnchantment extends DungeonsEnchantment {
 
@@ -40,9 +42,9 @@ public class GravityEnchantment extends DungeonsEnchantment {
     }
 
     @Override
-    public void onEntityDamaged(LivingEntity user, Entity target, int level) {
+    public void doPostAttack(LivingEntity user, Entity target, int level) {
         if(!(target instanceof LivingEntity)) return;
-        ItemStack mainhand = user.getHeldItemMainhand();
+        ItemStack mainhand = user.getMainHandItem();
         boolean uniqueWeaponFlag = hasGravityBuiltIn(mainhand);
         if(uniqueWeaponFlag) level++;
         AreaOfEffectHelper.pullInNearbyEntities(user, (LivingEntity)target, level * 3, ParticleTypes.PORTAL);
@@ -54,12 +56,12 @@ public class GravityEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onHammerOfGravityAttack(LivingAttackEvent event){
-        if(event.getSource().getImmediateSource() instanceof AbstractArrowEntity) return;
+        if(event.getSource().getDirectEntity() instanceof AbstractArrowEntity) return;
         if(event.getSource() instanceof OffhandAttackDamageSource) return;
-        if(!(event.getSource().getTrueSource() instanceof LivingEntity)) return;
-        LivingEntity attacker = (LivingEntity)event.getSource().getTrueSource();
+        if(!(event.getSource().getEntity() instanceof LivingEntity)) return;
+        LivingEntity attacker = (LivingEntity)event.getSource().getEntity();
         LivingEntity victim = event.getEntityLiving();
-        ItemStack mainhand = attacker.getHeldItemMainhand();
+        ItemStack mainhand = attacker.getMainHandItem();
         if((hasGravityBuiltIn(mainhand)
                 && !ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.GRAVITY))){
             AreaOfEffectHelper.pullInNearbyEntities(attacker, victim, 3, ParticleTypes.PORTAL);
@@ -72,7 +74,7 @@ public class GravityEnchantment extends DungeonsEnchantment {
         //if(!EnchantUtils.arrowHitLivingEntity(rayTraceResult)) return;
         AbstractArrowEntity arrow = event.getArrow();
         if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
-        LivingEntity shooter = (LivingEntity)arrow.func_234616_v_();
+        LivingEntity shooter = (LivingEntity)arrow.getOwner();
         int gravityLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrow, MeleeRangedEnchantmentList.GRAVITY);
         boolean uniqueWeaponFlag = arrow.getTags().contains(INTRINSIC_GRAVITY_TAG);
         if(uniqueWeaponFlag
@@ -86,14 +88,14 @@ public class GravityEnchantment extends DungeonsEnchantment {
             }
             if(rayTraceResult instanceof BlockRayTraceResult){
                 BlockRayTraceResult blockRayTraceResult = (BlockRayTraceResult)rayTraceResult;
-                BlockPos blockPos = blockRayTraceResult.getPos();
+                BlockPos blockPos = blockRayTraceResult.getBlockPos();
                 AreaOfEffectHelper.pullInNearbyEntitiesAtPos(shooter, blockPos, 3, ParticleTypes.PORTAL);
             }
         }else if(gravityLevel > 0){
             if(uniqueWeaponFlag) gravityLevel++;
             if(rayTraceResult instanceof BlockRayTraceResult){
                 BlockRayTraceResult blockRayTraceResult = (BlockRayTraceResult)rayTraceResult;
-                BlockPos blockPos = blockRayTraceResult.getPos();
+                BlockPos blockPos = blockRayTraceResult.getBlockPos();
                 AreaOfEffectHelper.pullInNearbyEntitiesAtPos(shooter, blockPos, 3 * gravityLevel, ParticleTypes.PORTAL);
             }
         }

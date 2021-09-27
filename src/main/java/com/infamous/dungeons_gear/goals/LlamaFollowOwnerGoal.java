@@ -28,14 +28,14 @@ public class LlamaFollowOwnerGoal extends Goal {
 
     public LlamaFollowOwnerGoal(LlamaEntity llamaEntity, double followSpeed, float minDist, float maxDist, boolean passesThroughLeaves) {
         this.llamaEntity = llamaEntity;
-        this.world = llamaEntity.world;
+        this.world = llamaEntity.level;
         this.followSpeed = followSpeed;
-        this.navigator = llamaEntity.getNavigator();
+        this.navigator = llamaEntity.getNavigation();
         this.minDist = minDist;
         this.maxDist = maxDist;
         this.passesThroughLeaves = passesThroughLeaves;
-        this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
-        if (!(llamaEntity.getNavigator() instanceof GroundPathNavigator) && !(llamaEntity.getNavigator() instanceof FlyingPathNavigator)) {
+        this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+        if (!(llamaEntity.getNavigation() instanceof GroundPathNavigator) && !(llamaEntity.getNavigation() instanceof FlyingPathNavigator)) {
             throw new IllegalArgumentException("Unsupported mob type for FollowOwnerGoal");
         }
     }
@@ -44,15 +44,15 @@ public class LlamaFollowOwnerGoal extends Goal {
      * Returns whether execution should begin. You can also read and cache any state necessary for execution in this
      * method as well.
      */
-    public boolean shouldExecute() {
+    public boolean canUse() {
         LivingEntity livingentity = SummoningHelper.getSummoner(this.llamaEntity);
         if (livingentity == null) {
             return false;
         } else if (livingentity.isSpectator()) {
             return false;
-        } else if (this.llamaEntity.getLeashed()) {
+        } else if (this.llamaEntity.isLeashed()) {
             return false;
-        } else if (this.llamaEntity.getDistanceSq(livingentity) < (double)(this.minDist * this.minDist)) {
+        } else if (this.llamaEntity.distanceToSqr(livingentity) < (double)(this.minDist * this.minDist)) {
             return false;
         } else {
             this.owner = livingentity;
@@ -63,60 +63,60 @@ public class LlamaFollowOwnerGoal extends Goal {
     /**
      * Returns whether an in-progress EntityAIBase should continue executing
      */
-    public boolean shouldContinueExecuting() {
-        if (this.navigator.noPath()) {
+    public boolean canContinueToUse() {
+        if (this.navigator.isDone()) {
             return false;
-        } else if (this.llamaEntity.getLeashed()) {
+        } else if (this.llamaEntity.isLeashed()) {
             return false;
         } else {
-            return !(this.llamaEntity.getDistanceSq(this.owner) <= (double)(this.maxDist * this.maxDist));
+            return !(this.llamaEntity.distanceToSqr(this.owner) <= (double)(this.maxDist * this.maxDist));
         }
     }
 
     /**
      * Execute a one shot task or start executing a continuous task
      */
-    public void startExecuting() {
+    public void start() {
         this.timeToRecalcPath = 0;
-        this.oldWaterCost = this.llamaEntity.getPathPriority(PathNodeType.WATER);
-        this.llamaEntity.setPathPriority(PathNodeType.WATER, 0.0F);
+        this.oldWaterCost = this.llamaEntity.getPathfindingMalus(PathNodeType.WATER);
+        this.llamaEntity.setPathfindingMalus(PathNodeType.WATER, 0.0F);
     }
 
     /**
      * Reset the task's internal state. Called when this task is interrupted by another one
      */
-    public void resetTask() {
+    public void stop() {
         this.owner = null;
-        this.navigator.clearPath();
-        this.llamaEntity.setPathPriority(PathNodeType.WATER, this.oldWaterCost);
+        this.navigator.stop();
+        this.llamaEntity.setPathfindingMalus(PathNodeType.WATER, this.oldWaterCost);
     }
 
     /**
      * Keep ticking a continuous task that has already been started
      */
     public void tick() {
-        this.llamaEntity.getLookController().setLookPositionWithEntity(this.owner, 10.0F, (float)this.llamaEntity.getVerticalFaceSpeed());
+        this.llamaEntity.getLookControl().setLookAt(this.owner, 10.0F, (float)this.llamaEntity.getMaxHeadXRot());
         if (--this.timeToRecalcPath <= 0) {
             this.timeToRecalcPath = 10;
-            if (!this.llamaEntity.getLeashed() && !this.llamaEntity.isPassenger()) {
-                if (this.llamaEntity.getDistanceSq(this.owner) >= 144.0D) {
-                    this.func_226330_g_();
+            if (!this.llamaEntity.isLeashed() && !this.llamaEntity.isPassenger()) {
+                if (this.llamaEntity.distanceToSqr(this.owner) >= 144.0D) {
+                    this.teleportToOwner();
                 } else {
-                    this.navigator.tryMoveToEntityLiving(this.owner, this.followSpeed);
+                    this.navigator.moveTo(this.owner, this.followSpeed);
                 }
 
             }
         }
     }
 
-    private void func_226330_g_() {
-        BlockPos blockpos = this.owner.getPosition();
+    private void teleportToOwner() {
+        BlockPos blockpos = this.owner.blockPosition();
 
         for(int i = 0; i < 10; ++i) {
-            int j = this.func_226327_a_(-3, 3);
-            int k = this.func_226327_a_(-1, 1);
-            int l = this.func_226327_a_(-3, 3);
-            boolean flag = this.func_226328_a_(blockpos.getX() + j, blockpos.getY() + k, blockpos.getZ() + l);
+            int j = this.randomIntInclusive(-3, 3);
+            int k = this.randomIntInclusive(-1, 1);
+            int l = this.randomIntInclusive(-3, 3);
+            boolean flag = this.maybeTeleportTo(blockpos.getX() + j, blockpos.getY() + k, blockpos.getZ() + l);
             if (flag) {
                 return;
             }
@@ -124,34 +124,34 @@ public class LlamaFollowOwnerGoal extends Goal {
 
     }
 
-    private boolean func_226328_a_(int p_226328_1_, int p_226328_2_, int p_226328_3_) {
-        if (Math.abs((double)p_226328_1_ - this.owner.getPosX()) < 2.0D && Math.abs((double)p_226328_3_ - this.owner.getPosZ()) < 2.0D) {
+    private boolean maybeTeleportTo(int p_226328_1_, int p_226328_2_, int p_226328_3_) {
+        if (Math.abs((double)p_226328_1_ - this.owner.getX()) < 2.0D && Math.abs((double)p_226328_3_ - this.owner.getZ()) < 2.0D) {
             return false;
-        } else if (!this.func_226329_a_(new BlockPos(p_226328_1_, p_226328_2_, p_226328_3_))) {
+        } else if (!this.canTeleportTo(new BlockPos(p_226328_1_, p_226328_2_, p_226328_3_))) {
             return false;
         } else {
-            this.llamaEntity.setLocationAndAngles((double)p_226328_1_ + 0.5D, (double)p_226328_2_, (double)p_226328_3_ + 0.5D, this.llamaEntity.rotationYaw, this.llamaEntity.rotationPitch);
-            this.navigator.clearPath();
+            this.llamaEntity.moveTo((double)p_226328_1_ + 0.5D, (double)p_226328_2_, (double)p_226328_3_ + 0.5D, this.llamaEntity.yRot, this.llamaEntity.xRot);
+            this.navigator.stop();
             return true;
         }
     }
 
-    private boolean func_226329_a_(BlockPos p_226329_1_) {
-        PathNodeType pathnodetype = WalkNodeProcessor.func_237231_a_(this.world, p_226329_1_.toMutable());
+    private boolean canTeleportTo(BlockPos p_226329_1_) {
+        PathNodeType pathnodetype = WalkNodeProcessor.getBlockPathTypeStatic(this.world, p_226329_1_.mutable());
         if (pathnodetype != PathNodeType.WALKABLE) {
             return false;
         } else {
-            BlockState blockstate = this.world.getBlockState(p_226329_1_.down());
+            BlockState blockstate = this.world.getBlockState(p_226329_1_.below());
             if (!this.passesThroughLeaves && blockstate.getBlock() instanceof LeavesBlock) {
                 return false;
             } else {
-                BlockPos blockpos = p_226329_1_.subtract(this.llamaEntity.getPosition());
-                return this.world.hasNoCollisions(this.llamaEntity, this.llamaEntity.getBoundingBox().offset(blockpos));
+                BlockPos blockpos = p_226329_1_.subtract(this.llamaEntity.blockPosition());
+                return this.world.noCollision(this.llamaEntity, this.llamaEntity.getBoundingBox().move(blockpos));
             }
         }
     }
 
-    private int func_226327_a_(int p_226327_1_, int p_226327_2_) {
-        return this.llamaEntity.getRNG().nextInt(p_226327_2_ - p_226327_1_ + 1) + p_226327_1_;
+    private int randomIntInclusive(int p_226327_1_, int p_226327_2_) {
+        return this.llamaEntity.getRandom().nextInt(p_226327_2_ - p_226327_1_ + 1) + p_226327_1_;
     }
 }

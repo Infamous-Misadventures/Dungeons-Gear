@@ -16,6 +16,8 @@ import java.util.UUID;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = MODID)
 public class RecklessEnchantment extends DungeonsEnchantment {
     private static final UUID RECKLESS = UUID.fromString("c131aecf-3b88-43c9-9df3-16f791077d41");
@@ -37,10 +39,10 @@ public class RecklessEnchantment extends DungeonsEnchantment {
         if (player.isAlive()) {
             player.getAttribute(Attributes.MAX_HEALTH).removeModifier(RECKLESS);
             player.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(RECKLESS);
-            int recklessLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.RECKLESS, player);
+            int recklessLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.RECKLESS, player);
             if (recklessLevel > 0) {
-                player.getAttribute(Attributes.MAX_HEALTH).applyNonPersistentModifier(new AttributeModifier(RECKLESS, "reckless multiplier", -0.6, AttributeModifier.Operation.MULTIPLY_TOTAL));
-                player.getAttribute(Attributes.ATTACK_DAMAGE).applyNonPersistentModifier(new AttributeModifier(RECKLESS, "reckless multiplier", 0.2 + (0.2 * recklessLevel), AttributeModifier.Operation.MULTIPLY_TOTAL));
+                player.getAttribute(Attributes.MAX_HEALTH).addTransientModifier(new AttributeModifier(RECKLESS, "reckless multiplier", -0.6, AttributeModifier.Operation.MULTIPLY_TOTAL));
+                player.getAttribute(Attributes.ATTACK_DAMAGE).addTransientModifier(new AttributeModifier(RECKLESS, "reckless multiplier", 0.2 + (0.2 * recklessLevel), AttributeModifier.Operation.MULTIPLY_TOTAL));
             }
         }
     }

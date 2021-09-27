@@ -11,6 +11,8 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 public class MultiRollEnchantment extends JumpingEnchantment {
 
     public MultiRollEnchantment() {
@@ -32,7 +34,7 @@ public class MultiRollEnchantment extends JumpingEnchantment {
         ICombo comboCap = CapabilityHelper.getComboCapability(livingEntity);
         if(comboCap == null) return false;
 
-        int multiRollLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.MULTI_ROLL, livingEntity);
+        int multiRollLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.MULTI_ROLL, livingEntity);
         int jumpLimit = multiRollLevel + 1;
         return comboCap.getJumpCounter() >= jumpLimit;
     }
@@ -42,7 +44,7 @@ public class MultiRollEnchantment extends JumpingEnchantment {
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof JumpingEnchantment);
     }
 }

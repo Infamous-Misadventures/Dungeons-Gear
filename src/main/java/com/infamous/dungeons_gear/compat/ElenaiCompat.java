@@ -22,8 +22,8 @@ public class ElenaiCompat {
     public static void dodge(DodgeEvent.ServerDodgeEvent event) {
         PlayerEntity player = event.getPlayer();
         if (DungeonsGearCompatibility.elenaiDodge) {
-            ItemStack helmet = player.getItemStackFromSlot(EquipmentSlotType.HEAD);
-            ItemStack chestplate = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
+            ItemStack helmet = player.getItemBySlot(EquipmentSlotType.HEAD);
+            ItemStack chestplate = player.getItemBySlot(EquipmentSlotType.CHEST);
             ICombo comboCap = CapabilityHelper.getComboCapability(player);
             if (comboCap == null) return;
             int jumpCooldownTimer = comboCap.getJumpCooldownTimer();

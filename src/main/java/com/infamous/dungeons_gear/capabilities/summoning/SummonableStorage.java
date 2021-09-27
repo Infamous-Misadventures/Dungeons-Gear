@@ -14,7 +14,7 @@ public class SummonableStorage implements Capability.IStorage<ISummonable> {
     public INBT writeNBT(Capability<ISummonable> capability, ISummonable instance, Direction side) {
         CompoundNBT tag = new CompoundNBT();
         if(instance.getSummoner() != null){
-            tag.putUniqueId("summoner", instance.getSummoner());
+            tag.putUUID("summoner", instance.getSummoner());
         }
         return tag;
     }
@@ -22,8 +22,8 @@ public class SummonableStorage implements Capability.IStorage<ISummonable> {
     @Override
     public void readNBT(Capability<ISummonable> capability, ISummonable instance, Direction side, INBT nbt) {
         CompoundNBT tag = (CompoundNBT) nbt;
-        if(tag.hasUniqueId("summoner")){
-            instance.setSummoner(tag.getUniqueId("summoner"));
+        if(tag.hasUUID("summoner")){
+            instance.setSummoner(tag.getUUID("summoner"));
         }
     }
 }

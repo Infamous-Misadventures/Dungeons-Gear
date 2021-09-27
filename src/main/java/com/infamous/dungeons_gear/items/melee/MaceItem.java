@@ -23,6 +23,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
+import net.minecraft.item.Item.Properties;
+
 public class MaceItem extends TieredItem implements IMeleeWeapon, IComboWeapon {
     @Override
     public int getComboLength(ItemStack stack, LivingEntity attacker) {
@@ -35,12 +37,12 @@ public class MaceItem extends TieredItem implements IMeleeWeapon, IComboWeapon {
     private Multimap<Attribute, AttributeModifier> attributeModifierMultimap;
     public MaceItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties properties, boolean isUnique) {
         super(tier, properties);
-        this.attackDamage = (float)attackDamageIn + tier.getAttackDamage();
+        this.attackDamage = (float)attackDamageIn + tier.getAttackDamageBonus();
         this.attackSpeed = attackSpeedIn;
 
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double)this.attackDamage, AttributeModifier.Operation.ADDITION));
-        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)this.attackSpeed, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", (double)this.attackDamage, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", (double)this.attackSpeed, AttributeModifier.Operation.ADDITION));
         this.attributeModifierMultimap = builder.build();
         this.unique = isUnique;
     }
@@ -51,9 +53,9 @@ public class MaceItem extends TieredItem implements IMeleeWeapon, IComboWeapon {
     }
 
     @Override
-    public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        stack.damageItem(1, attacker, (p_220039_0_) -> {
-            p_220039_0_.sendBreakAnimation(EquipmentSlotType.MAINHAND);
+    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        stack.hurtAndBreak(1, attacker, (p_220039_0_) -> {
+            p_220039_0_.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
         });
         return true;
     }
@@ -64,7 +66,7 @@ public class MaceItem extends TieredItem implements IMeleeWeapon, IComboWeapon {
         return true;
     }
 
-    public boolean canPlayerBreakBlockWhileHolding(BlockState state, World worldIn, BlockPos pos, PlayerEntity player) {
+    public boolean canAttackBlock(BlockState state, World worldIn, BlockPos pos, PlayerEntity player) {
         return !player.isCreative();
     }
 
@@ -75,10 +77,10 @@ public class MaceItem extends TieredItem implements IMeleeWeapon, IComboWeapon {
     /**
      * Called when a Block is destroyed using this Item. Return true to trigger the "Use Item" statistic.
      */
-    public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-        if (state.getBlockHardness(worldIn, pos) != 0.0F) {
-            stack.damageItem(2, entityLiving, (p_220044_0_) -> {
-                p_220044_0_.sendBreakAnimation(EquipmentSlotType.MAINHAND);
+    public boolean mineBlock(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
+        if (state.getDestroySpeed(worldIn, pos) != 0.0F) {
+            stack.hurtAndBreak(2, entityLiving, (p_220044_0_) -> {
+                p_220044_0_.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
             });
         }
 
@@ -89,13 +91,13 @@ public class MaceItem extends TieredItem implements IMeleeWeapon, IComboWeapon {
      * Check whether this Item can harvest the given Block
      */
 
-    public boolean canHarvestBlock(BlockState blockIn) {
+    public boolean isCorrectToolForDrops(BlockState blockIn) {
         return blockIn.getHarvestLevel() < 3;
     }
 
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return enchantment.type.canEnchantItem(Items.IRON_SWORD) && enchantment != Enchantments.SWEEPING;
+        return enchantment.category.canEnchant(Items.IRON_SWORD) && enchantment != Enchantments.SWEEPING_EDGE;
     }
 
     @Override
@@ -117,9 +119,9 @@ public class MaceItem extends TieredItem implements IMeleeWeapon, IComboWeapon {
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
-        super.addInformation(stack, world, list, flag);
+        super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
 }

@@ -11,6 +11,8 @@ import java.util.EnumSet;
 
 import static com.infamous.dungeons_gear.goals.GoalUtils.*;
 
+import net.minecraft.entity.ai.goal.Goal.Flag;
+
 public class LoverHurtTargetGoal extends TargetGoal {
     private final MobEntity mobEntity;
     private final LivingEntity lover;
@@ -21,25 +23,25 @@ public class LoverHurtTargetGoal extends TargetGoal {
         super(mobEntity, false);
         this.mobEntity = mobEntity;
         this.lover = lover;
-        this.setMutexFlags(EnumSet.of(Flag.TARGET));
+        this.setFlags(EnumSet.of(Flag.TARGET));
     }
 
-    public boolean shouldExecute() {
+    public boolean canUse() {
         if (this.lover != null) {
-            this.attacker = this.lover.getLastAttackedEntity();
-            int lastAttackedEntityTime = this.lover.getLastAttackedEntityTime();
-            return lastAttackedEntityTime != this.timestamp && this.isSuitableTarget(this.attacker, ModdedEntityPredicate.DEFAULT) && shouldAttackEntity(this.attacker, this.lover);
+            this.attacker = this.lover.getLastHurtMob();
+            int lastAttackedEntityTime = this.lover.getLastHurtMobTimestamp();
+            return lastAttackedEntityTime != this.timestamp && this.canAttack(this.attacker, ModdedEntityPredicate.DEFAULT) && shouldAttackEntity(this.attacker, this.lover);
         } else {
             return false;
         }
     }
 
-    public void startExecuting() {
-        this.goalOwner.setAttackTarget(this.attacker);
+    public void start() {
+        this.mob.setTarget(this.attacker);
         if (this.lover != null) {
-            this.timestamp = this.lover.getLastAttackedEntityTime();
+            this.timestamp = this.lover.getLastHurtMobTimestamp();
         }
 
-        super.startExecuting();
+        super.start();
     }
 }

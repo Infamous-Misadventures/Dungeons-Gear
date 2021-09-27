@@ -17,6 +17,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class TempoTheftEnchantment extends DungeonsEnchantment {
 
@@ -37,7 +39,7 @@ public class TempoTheftEnchantment extends DungeonsEnchantment {
         if(!ModEnchantmentHelper.arrowHitLivingEntity(rayTraceResult)) return;
         AbstractArrowEntity arrow = event.getArrow();
         if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
-        LivingEntity shooter = (LivingEntity)arrow.func_234616_v_();
+        LivingEntity shooter = (LivingEntity)arrow.getOwner();
         LivingEntity victim = (LivingEntity) ((EntityRayTraceResult)rayTraceResult).getEntity();
         int tempoTheftLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.TEMPO_THEFT);
         boolean uniqueWeaponFlag = arrow.getTags().contains(INTRINSIC_TEMPO_THEFT_TAG);

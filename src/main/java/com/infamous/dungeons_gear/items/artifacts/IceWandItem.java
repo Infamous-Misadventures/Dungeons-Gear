@@ -20,28 +20,30 @@ import net.minecraftforge.fml.network.PacketDistributor;
 import java.util.List;
 
 
+import net.minecraft.item.Item.Properties;
+
 public class IceWandItem extends ArtifactItem {
     public IceWandItem(Properties properties) {
         super(properties);
     }
 
     @Override
-    public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
+    public ActionResultType interactLivingEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
         return freezeEntity(stack, playerIn, target);
     }
 
     @Override
     public ActionResult<ItemStack> procArtifact(ItemUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
-        ItemStack itemstack = c.getItem();
-        List<LivingEntity> nearbyEntities = c.getWorld().getLoadedEntitiesWithinAABB(LivingEntity.class, playerIn.getBoundingBox().grow(16), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(playerIn, nearbyEntity));
+        ItemStack itemstack = c.getItemInHand();
+        List<LivingEntity> nearbyEntities = c.getLevel().getLoadedEntitiesOfClass(LivingEntity.class, playerIn.getBoundingBox().inflate(16), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(playerIn, nearbyEntity));
         LivingEntity target = null;
         double dist = 123456;
         if (!nearbyEntities.isEmpty()) {
             for (LivingEntity e : nearbyEntities) {
-                if (target == null || e.getDistanceSq(playerIn) < dist) {
+                if (target == null || e.distanceToSqr(playerIn) < dist) {
                     target = e;
-                    dist = e.getDistanceSq(playerIn);
+                    dist = e.distanceToSqr(playerIn);
                 }
             }
         }
@@ -50,10 +52,10 @@ public class IceWandItem extends ArtifactItem {
 
     private ActionResultType freezeEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target) {
         if (target != null) {
-            World world = playerIn.getEntityWorld();
+            World world = playerIn.getCommandSenderWorld();
             IceCloudEntity iceCloudEntity = new IceCloudEntity(world, playerIn, target);
-            world.addEntity(iceCloudEntity);
-            stack.damageItem(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), stack)));
+            world.addFreshEntity(iceCloudEntity);
+            stack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), stack)));
             ArtifactItem.putArtifactOnCooldown(playerIn, stack.getItem());
             return ActionResultType.SUCCESS;
         }
@@ -61,8 +63,8 @@ public class IceWandItem extends ArtifactItem {
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
-        super.addInformation(stack, world, list, flag);
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+        super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
 
@@ -77,11 +79,11 @@ public class IceWandItem extends ArtifactItem {
     }
 
     @Override
-    public ActionResultType onItemUse(ItemUseContext itemUseContext) {
+    public ActionResultType useOn(ItemUseContext itemUseContext) {
         return ActionResultType.PASS;
     }
 
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        return new ActionResult<>(ActionResultType.PASS, playerIn.getHeldItem(handIn));
+    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+        return new ActionResult<>(ActionResultType.PASS, playerIn.getItemInHand(handIn));
     }
 }

@@ -26,6 +26,8 @@ import net.minecraftforge.common.ForgeMod;
 import java.util.List;
 import java.util.UUID;
 
+import net.minecraft.item.Item.Properties;
+
 public class WhipItem extends TieredItem implements IMeleeWeapon, IComboWeapon {
     @Override
     public int getComboLength(ItemStack stack, LivingEntity attacker) {
@@ -41,48 +43,48 @@ public class WhipItem extends TieredItem implements IMeleeWeapon, IComboWeapon {
 
     public WhipItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, float attackReachIn, Properties properties, boolean isUnique) {
         super(tier, properties);
-        this.attackDamage = (float)attackDamageIn + tier.getAttackDamage();
+        this.attackDamage = (float)attackDamageIn + tier.getAttackDamageBonus();
         this.attackSpeed = attackSpeedIn;
         this.attackReach = attackReachIn;
 
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double)this.attackDamage, AttributeModifier.Operation.ADDITION));
-        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)this.attackSpeed, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", (double)this.attackDamage, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", (double)this.attackSpeed, AttributeModifier.Operation.ADDITION));
         this.attributeModifierMultimap = builder.build();
         this.unique = isUnique;
     }
 
     public static void setAttributeModifierMultimap(WhipItem glaiveItem){
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double)glaiveItem.attackDamage, AttributeModifier.Operation.ADDITION));
-        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)glaiveItem.attackSpeed, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", (double)glaiveItem.attackDamage, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", (double)glaiveItem.attackSpeed, AttributeModifier.Operation.ADDITION));
         builder.put(AttributeRegistry.ATTACK_REACH.get(), new AttributeModifier(ATTACK_REACH_MODIFIER, "Weapon modifier", (double)glaiveItem.attackReach, AttributeModifier.Operation.ADDITION));
         builder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(ATTACK_REACH_MODIFIER, "Weapon modifier", (double) glaiveItem.attackReach, AttributeModifier.Operation.ADDITION));
         glaiveItem.attributeModifierMultimap = builder.build();
     }
 
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
-        return equipmentSlot == EquipmentSlotType.MAINHAND ? this.attributeModifierMultimap : super.getAttributeModifiers(equipmentSlot);
+    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlotType equipmentSlot) {
+        return equipmentSlot == EquipmentSlotType.MAINHAND ? this.attributeModifierMultimap : super.getDefaultAttributeModifiers(equipmentSlot);
     }
 
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return enchantment.type.canEnchantItem(Items.IRON_SWORD) && enchantment != Enchantments.SWEEPING;
+        return enchantment.category.canEnchant(Items.IRON_SWORD) && enchantment != Enchantments.SWEEPING_EDGE;
     }
 
     @Override
-    public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        stack.damageItem(1, attacker, (p_220039_0_) -> {
-            p_220039_0_.sendBreakAnimation(EquipmentSlotType.MAINHAND);
+    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        stack.hurtAndBreak(1, attacker, (p_220039_0_) -> {
+            p_220039_0_.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
         });
         return true;
     }
 
-    public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-        if (state.getBlockHardness(worldIn, pos) != 0.0F) {
-            stack.damageItem(2, entityLiving, (p_220044_0_) -> {
-                p_220044_0_.sendBreakAnimation(EquipmentSlotType.MAINHAND);
+    public boolean mineBlock(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
+        if (state.getDestroySpeed(worldIn, pos) != 0.0F) {
+            stack.hurtAndBreak(2, entityLiving, (p_220044_0_) -> {
+                p_220044_0_.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
             });
         }
 
@@ -103,13 +105,13 @@ public class WhipItem extends TieredItem implements IMeleeWeapon, IComboWeapon {
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
-        super.addInformation(stack, world, list, flag);
+        super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
 
-    public boolean canPlayerBreakBlockWhileHolding(BlockState state, World worldIn, BlockPos pos, PlayerEntity player) {
+    public boolean canAttackBlock(BlockState state, World worldIn, BlockPos pos, PlayerEntity player) {
         return !player.isCreative();
     }
 }

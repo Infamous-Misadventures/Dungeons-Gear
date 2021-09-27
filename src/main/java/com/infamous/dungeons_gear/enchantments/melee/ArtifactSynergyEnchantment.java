@@ -22,6 +22,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = MODID)
 public class ArtifactSynergyEnchantment extends DungeonsEnchantment {
 
@@ -38,15 +40,15 @@ public class ArtifactSynergyEnchantment extends DungeonsEnchantment {
     public static void onArtifactSynergyAttack(LivingDamageEvent event){
         if(PlayerAttackHelper.isProbablyNotMeleeDamage(event.getSource())) return;
         if(event.getSource() instanceof OffhandAttackDamageSource) return;
-        if(!(event.getSource().getTrueSource() instanceof LivingEntity)) return;
-        LivingEntity attacker = (LivingEntity)event.getSource().getTrueSource();
-        ItemStack mainhand = attacker.getHeldItemMainhand();
+        if(!(event.getSource().getEntity() instanceof LivingEntity)) return;
+        LivingEntity attacker = (LivingEntity)event.getSource().getEntity();
+        ItemStack mainhand = attacker.getMainHandItem();
         ICombo comboCap = CapabilityHelper.getComboCapability(attacker);
         if(comboCap == null) return;
 
-        if(comboCap.hasArtifactSynergy() && !attacker.world.isRemote){
+        if(comboCap.hasArtifactSynergy() && !attacker.level.isClientSide){
             comboCap.setArtifactSynergy(false);
-            int artifactSynergyLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.ARTIFACT_SYNERGY, mainhand);
+            int artifactSynergyLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.ARTIFACT_SYNERGY, mainhand);
             if(artifactSynergyLevel > 0){
                 float damageMultiplier = 1.2F + artifactSynergyLevel * 0.2F;
                 float currentDamage = event.getAmount();

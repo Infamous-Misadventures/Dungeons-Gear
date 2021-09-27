@@ -25,31 +25,31 @@ public class AbilityHelper {
 
     public static void stealSpeedFromTarget(LivingEntity attacker, LivingEntity target, int amplifer) {
         if (attacker == target) return;
-        EffectInstance speed = new EffectInstance(Effects.SPEED, 80, amplifer);
-        EffectInstance slowness = new EffectInstance(Effects.SLOWNESS, 80, amplifer);
-        attacker.addPotionEffect(speed);
-        target.addPotionEffect(slowness);
+        EffectInstance speed = new EffectInstance(Effects.MOVEMENT_SPEED, 80, amplifer);
+        EffectInstance slowness = new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 80, amplifer);
+        attacker.addEffect(speed);
+        target.addEffect(slowness);
     }
 
     public static void makeNearbyPetsAttackTarget(LivingEntity target, LivingEntity owner) {
         if (isPetOfAttacker(target, owner) || isPetOfAttacker(owner, target))
             return;//don't kill your pets or master!
-        List<LivingEntity> nearbyEntities = owner.getEntityWorld().getLoadedEntitiesWithinAABB(LivingEntity.class, owner.getBoundingBox().grow(12), (nearbyEntity) -> {
+        List<LivingEntity> nearbyEntities = owner.getCommandSenderWorld().getLoadedEntitiesOfClass(LivingEntity.class, owner.getBoundingBox().inflate(12), (nearbyEntity) -> {
             return canPetAttackEntity(owner, nearbyEntity);
         });
         for (LivingEntity nearbyEntity : nearbyEntities) {
 
             if (nearbyEntity instanceof TameableEntity) {
                 TameableEntity tameableEntity = (TameableEntity) nearbyEntity;
-                tameableEntity.setAttackTarget(target);
+                tameableEntity.setTarget(target);
             }
             if (nearbyEntity instanceof LlamaEntity) {
                 LlamaEntity llamaEntity = (LlamaEntity) nearbyEntity;
-                llamaEntity.setAttackTarget(target);
+                llamaEntity.setTarget(target);
             }
             if (nearbyEntity instanceof IronGolemEntity) {
                 IronGolemEntity ironGolemEntity = (IronGolemEntity) nearbyEntity;
-                ironGolemEntity.setAttackTarget(target);
+                ironGolemEntity.setTarget(target);
             }
         }
     }
@@ -64,9 +64,9 @@ public class AbilityHelper {
             return pet.getOwner() == possibleOwner;
         } else if(possiblePet instanceof AbstractHorseEntity){
             AbstractHorseEntity horse = (AbstractHorseEntity) possiblePet;
-            return horse.getOwnerUniqueId() == possibleOwner.getUniqueID();
+            return horse.getOwnerUUID() == possibleOwner.getUUID();
         } else if(SummoningHelper.isEntitySummonable(possiblePet)){
-                return SummoningHelper.wasSummonedBy(possiblePet, possibleOwner.getUniqueID());
+                return SummoningHelper.wasSummonedBy(possiblePet, possibleOwner.getUUID());
         }
         else{
             return false;
@@ -118,16 +118,16 @@ public class AbilityHelper {
 
     public static boolean isAlly(LivingEntity healer, LivingEntity nearbyEntity) {
         return isPetOfAttacker(healer, nearbyEntity)
-                || healer.isOnSameTeam(nearbyEntity);
+                || healer.isAlliedTo(nearbyEntity);
     }
 
     public static boolean isFacingEntity(Entity looker, Entity target, Vector3d look, int angle) {
         if (angle <= 0) return false;
-        Vector3d posVec = target.getPositionVec().add(0, target.getEyeHeight(), 0);
-        Vector3d relativePosVec = posVec.subtractReverse(looker.getPositionVec().add(0, looker.getEyeHeight(), 0)).normalize();
+        Vector3d posVec = target.position().add(0, target.getEyeHeight(), 0);
+        Vector3d relativePosVec = posVec.vectorTo(looker.position().add(0, looker.getEyeHeight(), 0)).normalize();
         //relativePosVec = new Vector3d(relativePosVec.x, 0.0D, relativePosVec.z);
 
-        double dotsq = ((relativePosVec.dotProduct(look) * Math.abs(relativePosVec.dotProduct(look))) / (relativePosVec.lengthSquared() * look.lengthSquared()));
+        double dotsq = ((relativePosVec.dot(look) * Math.abs(relativePosVec.dot(look))) / (relativePosVec.lengthSqr() * look.lengthSqr()));
         double cos = MathHelper.cos((float) ((angle / 360d) * Math.PI));
         return dotsq < -(cos * cos);
     }
@@ -137,7 +137,7 @@ public class AbilityHelper {
     }
 
     private static boolean isAliveAndCanBeSeen(LivingEntity nearbyEntity, LivingEntity attacker) {
-        return nearbyEntity.isAlive() && attacker.canEntityBeSeen(nearbyEntity);
+        return nearbyEntity.isAlive() && attacker.canSee(nearbyEntity);
     }
 
     public static boolean canApplyToEnemy(LivingEntity attacker, LivingEntity target, LivingEntity nearbyEntity) {

@@ -17,6 +17,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class RushEnchantment extends DungeonsEnchantment {
 
@@ -35,10 +37,10 @@ public class RushEnchantment extends DungeonsEnchantment {
     @SubscribeEvent
     public static void onDamage(LivingDamageEvent event) {
         LivingEntity livingEntity = event.getEntityLiving();
-        int rushLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.RUSH, livingEntity);
-        if(rushLevel > 0 && !livingEntity.world.isRemote){
-            EffectInstance speedBoost = new EffectInstance(Effects.SPEED, 20, rushLevel + 1);
-            livingEntity.addPotionEffect(speedBoost);
+        int rushLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.RUSH, livingEntity);
+        if(rushLevel > 0 && !livingEntity.level.isClientSide){
+            EffectInstance speedBoost = new EffectInstance(Effects.MOVEMENT_SPEED, 20, rushLevel + 1);
+            livingEntity.addEffect(speedBoost);
         }
     }
 }

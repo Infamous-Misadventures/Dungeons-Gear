@@ -24,6 +24,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = MODID)
 public class SwirlingEnchantment extends AOEDamageEnchantment {
 
@@ -41,11 +43,11 @@ public class SwirlingEnchantment extends AOEDamageEnchantment {
         ) {
             PlayerEntity attacker = (PlayerEntity) event.getPlayer();
             LivingEntity victim = (LivingEntity) event.getTarget();
-            ItemStack mainhand = attacker.getHeldItemMainhand();
+            ItemStack mainhand = attacker.getMainHandItem();
             if (event.getResult() != Event.Result.ALLOW && mainhand.getItem() instanceof IComboWeapon) return;
             boolean uniqueWeaponFlag = hasSwirlingBuiltIn(mainhand);
             if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.SWIRLING) || uniqueWeaponFlag) {
-                int swirlingLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.SWIRLING, mainhand);
+                int swirlingLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.SWIRLING, mainhand);
                 if (uniqueWeaponFlag) swirlingLevel += 1;
                 // gets the attack damage of the original attack before any enchantment modifiers are added
                 float attackDamage = (float) attacker.getAttributeValue(Attributes.ATTACK_DAMAGE);
@@ -73,7 +75,7 @@ public class SwirlingEnchantment extends AOEDamageEnchantment {
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() ||
                 (!(enchantment instanceof DamageEnchantment) && !(enchantment instanceof DamageBoostEnchantment) && !(enchantment instanceof AOEDamageEnchantment));
     }

@@ -17,6 +17,8 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 
+import net.minecraft.item.Item.Properties;
+
 public class ThunderingQuiverItem extends ArtifactItem {
     public static final String THUNDERING_ARROW = "ThunderingArrow";
 
@@ -26,20 +28,20 @@ public class ThunderingQuiverItem extends ArtifactItem {
 
     public ActionResult<ItemStack> procArtifact(ItemUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
-        ItemStack itemstack = c.getItem();
+        ItemStack itemstack = c.getItemInHand();
 
         ICombo comboCap = CapabilityHelper.getComboCapability(playerIn);
         if (comboCap == null) return new ActionResult<>(ActionResultType.FAIL, itemstack);
         comboCap.setThunderingArrowsCount(5);
 
-        itemstack.damageItem(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemstack)));
+        itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemstack)));
         ArtifactItem.putArtifactOnCooldown(playerIn, itemstack.getItem());
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
-        super.addInformation(stack, world, list, flag);
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+        super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
 

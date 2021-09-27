@@ -42,41 +42,41 @@ public class ItemRegistry {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     
     public static final Item.Properties MELEE_WEAPON_PROPERTIES = DungeonsGearConfig.ENABLE_MELEE_WEAPON_TAB.get() ?
-            new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP) : new Item.Properties().group(ItemGroup.COMBAT);
+            new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP) : new Item.Properties().tab(ItemGroup.TAB_COMBAT);
     public static final Item.Properties ARMOR_PROPERTIES = DungeonsGearConfig.ENABLE_ARMOR_TAB.get() ?
-            new Item.Properties().group(DungeonsGear.ARMOR_GROUP) : new Item.Properties().group(ItemGroup.COMBAT);
+            new Item.Properties().tab(DungeonsGear.ARMOR_GROUP) : new Item.Properties().tab(ItemGroup.TAB_COMBAT);
     public static final Item.Properties RANGED_WEAPON_PROPERTIES = DungeonsGearConfig.ENABLE_RANGED_WEAPON_TAB.get() ?
-            new Item.Properties().group(RANGED_WEAPON_GROUP) : new Item.Properties().group(ItemGroup.COMBAT);
+            new Item.Properties().tab(RANGED_WEAPON_GROUP) : new Item.Properties().tab(ItemGroup.TAB_COMBAT);
     public static final Item.Properties ARTIFACT_PROPERTIES = DungeonsGearConfig.ENABLE_ARTIFACT_TAB.get() ?
-            new Item.Properties().group(DungeonsGear.ARTIFACT_GROUP) : new Item.Properties().group(ItemGroup.COMBAT);
+            new Item.Properties().tab(DungeonsGear.ARTIFACT_GROUP) : new Item.Properties().tab(ItemGroup.TAB_COMBAT);
 
     //DPS 9.6 (19.2), crits once per 2.5 (1.25) seconds
     public static final RegistryObject<Item> DAGGER = ITEMS.register("dagger",
-            () -> new DaggerItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new DaggerItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), false));
     public static final RegistryObject<Item> FANG_OF_FROST = ITEMS.register("fang_of_frost",
-            () -> new DaggerItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DaggerItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> MOON_DAGGER = ITEMS.register("moon_dagger",
-            () -> new DaggerItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DaggerItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> SHEAR_DAGGER = ITEMS.register("shear_dagger",
-            () -> new DaggerItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DaggerItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), true));
   
     //DPS 10 (20), crits once per 3 (1.5) seconds
     public static final RegistryObject<Item> SICKLE = ITEMS.register("sickle",
-            () -> new SickleItem(ToolMaterialList.METAL, 4, (2.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new SickleItem(ToolMaterialList.METAL, 4, (2.0f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), false));
     public static final RegistryObject<Item> NIGHTMARES_BITE = ITEMS.register("nightmares_bite",
-            () -> new SickleItem(ToolMaterialList.METAL, 4, (2.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new SickleItem(ToolMaterialList.METAL, 4, (2.0f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> THE_LAST_LAUGH = ITEMS.register("the_last_laugh",
-            () -> new SickleItem(ToolMaterialList.METAL, 4, (2.0f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new SickleItem(ToolMaterialList.METAL, 4, (2.0f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), true));
   
     //DPS 9.6/8 (19.2/16), crits once per 2.92/1 (1.46/0.5) seconds
     public static final RegistryObject<Item> GAUNTLET = ITEMS.register("gauntlet",
-            () -> new GauntletItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new GauntletItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), false));
     public static final RegistryObject<Item> FIGHTERS_BINDING = ITEMS.register("fighters_binding",
             () -> new GauntletItem(ToolMaterialList.METAL, 1, (4.0f-4.0f), MELEE_WEAPON_PROPERTIES, true));
     public static final RegistryObject<Item> MAULER = ITEMS.register("mauler",
-            () -> new GauntletItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new GauntletItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> SOUL_FIST = ITEMS.register("soul_fist",
-            () -> new GauntletItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().group(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new GauntletItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), true));
 
     //DPS 8, crits once per 3.5 seconds
     public static final RegistryObject<Item> RAPIER = ITEMS.register("rapier",
@@ -619,7 +619,7 @@ public class ItemRegistry {
             () -> new WolfArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
     public static final RegistryObject<Item> ARROW_BUNDLE = ITEMS.register("arrow_bundle",
-            () -> new ArrowBundleItem(new Item.Properties().group(RANGED_WEAPON_GROUP)));
+            () -> new ArrowBundleItem(new Item.Properties().tab(RANGED_WEAPON_GROUP)));
 
     public static void putItemsInMap() {
         putArtifactsInMap();

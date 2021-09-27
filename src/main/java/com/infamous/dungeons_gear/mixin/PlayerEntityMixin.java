@@ -21,11 +21,11 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     }
 
     @Inject(
-            method = "func_234570_el_",
+            method = "createAttributes",
             at = @At("RETURN")
     )
     private static void initAttributes(CallbackInfoReturnable<AttributeModifierMap.MutableAttribute> ci) {
-        ci.getReturnValue().createMutableAttribute(AttributeRegistry.ATTACK_REACH.get());
+        ci.getReturnValue().add(AttributeRegistry.ATTACK_REACH.get());
     }
 
 //    @ModifyConstant(
@@ -38,15 +38,15 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 //    }
 
     //Sometimes my genius... it's almost frightening.
-    @Redirect(method = "attackTargetEntityWithCurrentItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getDistanceSq(Lnet/minecraft/entity/Entity;)D"))
+    @Redirect(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;distanceToSqr(Lnet/minecraft/entity/Entity;)D"))
     private double getModifiedDistance(PlayerEntity playerEntity, Entity entityIn) {
         double reach = playerEntity.getAttributeValue(AttributeRegistry.ATTACK_REACH.get()) - 3;
-        return playerEntity.getDistanceSq(entityIn) - (6 * reach + reach * reach);
+        return playerEntity.distanceToSqr(entityIn) - (6 * reach + reach * reach);
     }
 
     @Inject(
-            method = "attackTargetEntityWithCurrentItem",
-            at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/enchantment/EnchantmentHelper;getFireAspectModifier(Lnet/minecraft/entity/LivingEntity;)I")
+            method = "attack",
+            at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/enchantment/EnchantmentHelper;getFireAspect(Lnet/minecraft/entity/LivingEntity;)I")
     )
     private void kindOfAddCombo(CallbackInfo ci) {
         ICombo ic = CapabilityHelper.getComboCapability(this);
@@ -56,7 +56,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     }
 
     @Inject(
-            method = "resetCooldown",
+            method = "resetAttackStrengthTicker",
             at = @At("HEAD")
     )
     private void addCombo(CallbackInfo ci) {
@@ -64,7 +64,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         if (ic != null) {
             ic.setComboCount(ic.getComboCount() + 1);
             ic.setComboTimer(60);
-            ic.setCachedCooldown(((PlayerEntity) (Object) this).getCooledAttackStrength(0.5f));
+            ic.setCachedCooldown(((PlayerEntity) (Object) this).getAttackStrengthScale(0.5f));
         }
     }
 }

@@ -24,11 +24,11 @@ public class PacketBreakItem {
 
     public static void encode(PacketBreakItem packet, PacketBuffer buf) {
         buf.writeInt(packet.entityID);
-        buf.writeItemStack(packet.stack);
+        buf.writeItem(packet.stack);
     }
 
     public static PacketBreakItem decode(PacketBuffer buf) {
-        return new PacketBreakItem(buf.readInt(), buf.readItemStack());
+        return new PacketBreakItem(buf.readInt(), buf.readItem());
     }
 
     public static class BreakItemHandler {
@@ -40,12 +40,12 @@ public class PacketBreakItem {
 
                     @Override
                     public void run() {
-                        ClientWorld world = Minecraft.getInstance().world;
+                        ClientWorld world = Minecraft.getInstance().level;
                         Entity target = null;
                         if (world != null)
-                            target = world.getEntityByID(packet.entityID);
+                            target = world.getEntity(packet.entityID);
                         if (target instanceof LivingEntity) {
-                            ((LivingEntity) target).renderBrokenItemStack(packet.stack);
+                            ((LivingEntity) target).breakItem(packet.stack);
                         }
                     }
 

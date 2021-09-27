@@ -24,6 +24,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class ShockwaveEnchantment extends AOEDamageEnchantment {
 
@@ -40,7 +42,7 @@ public class ShockwaveEnchantment extends AOEDamageEnchantment {
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() ||
                 (!(enchantment instanceof DamageEnchantment) && !(enchantment instanceof DamageBoostEnchantment) && !(enchantment instanceof AOEDamageEnchantment));
     }
@@ -52,11 +54,11 @@ public class ShockwaveEnchantment extends AOEDamageEnchantment {
         ){
             PlayerEntity attacker = (PlayerEntity) event.getPlayer();
             LivingEntity victim = (LivingEntity) event.getTarget();
-            ItemStack mainhand = attacker.getHeldItemMainhand();
+            ItemStack mainhand = attacker.getMainHandItem();
             if (event.getResult() != Event.Result.ALLOW && mainhand.getItem() instanceof IComboWeapon) return;
             boolean uniqueWeaponFlag = hasShockwaveBuiltIn(mainhand);
             if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.SHOCKWAVE) || uniqueWeaponFlag){
-                int shockwaveLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.SHOCKWAVE, mainhand);
+                int shockwaveLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.SHOCKWAVE, mainhand);
                 if(uniqueWeaponFlag) shockwaveLevel += 1;
                 // gets the attack damage of the original attack before any enchantment modifiers are added
                 float attackDamage = (float)attacker.getAttributeValue(Attributes.ATTACK_DAMAGE);

@@ -21,6 +21,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
+import net.minecraft.item.Item.Properties;
+
 public class SoulScytheItem extends SwordItem implements IMeleeWeapon, ISoulGatherer, IComboWeapon {
     @Override
     public int getComboLength(ItemStack stack, LivingEntity attacker) {
@@ -33,38 +35,38 @@ public class SoulScytheItem extends SwordItem implements IMeleeWeapon, ISoulGath
         this.unique = isUnique;
     }
 
-    public boolean canPlayerBreakBlockWhileHolding(BlockState blockState, World world, BlockPos blockPos, PlayerEntity playerEntity) {
+    public boolean canAttackBlock(BlockState blockState, World world, BlockPos blockPos, PlayerEntity playerEntity) {
         return !playerEntity.isCreative();
     }
 
     public float getDestroySpeed(ItemStack p_150893_1_, BlockState p_150893_2_) {
-        if (p_150893_2_.isIn(Blocks.COBWEB) || p_150893_2_.isIn(BlockTags.LEAVES)) {
+        if (p_150893_2_.is(Blocks.COBWEB) || p_150893_2_.is(BlockTags.LEAVES)) {
             return 15.0F;
         } else {
             Material lvt_3_1_ = p_150893_2_.getMaterial();
-            return lvt_3_1_ != Material.PLANTS && lvt_3_1_ != Material.TALL_PLANTS && lvt_3_1_ != Material.CORAL && !p_150893_2_.isIn(BlockTags.LEAVES) && lvt_3_1_ != Material.GOURD ? 1.0F : 1.5F;
+            return lvt_3_1_ != Material.PLANT && lvt_3_1_ != Material.REPLACEABLE_PLANT && lvt_3_1_ != Material.CORAL && !p_150893_2_.is(BlockTags.LEAVES) && lvt_3_1_ != Material.VEGETABLE ? 1.0F : 1.5F;
         }
     }
 
-    public boolean hitEntity(ItemStack p_77644_1_, LivingEntity p_77644_2_, LivingEntity p_77644_3_) {
-        p_77644_1_.damageItem(1, p_77644_3_, (p_220045_0_) -> {
-            p_220045_0_.sendBreakAnimation(EquipmentSlotType.MAINHAND);
+    public boolean hurtEnemy(ItemStack p_77644_1_, LivingEntity p_77644_2_, LivingEntity p_77644_3_) {
+        p_77644_1_.hurtAndBreak(1, p_77644_3_, (p_220045_0_) -> {
+            p_220045_0_.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
         });
         return true;
     }
 
-    public boolean onBlockDestroyed(ItemStack p_179218_1_, World p_179218_2_, BlockState p_179218_3_, BlockPos p_179218_4_, LivingEntity p_179218_5_) {
-        if (p_179218_3_.getBlockHardness(p_179218_2_, p_179218_4_) != 0.0F) {
-            p_179218_1_.damageItem(2, p_179218_5_, (p_220044_0_) -> {
-                p_220044_0_.sendBreakAnimation(EquipmentSlotType.MAINHAND);
+    public boolean mineBlock(ItemStack p_179218_1_, World p_179218_2_, BlockState p_179218_3_, BlockPos p_179218_4_, LivingEntity p_179218_5_) {
+        if (p_179218_3_.getDestroySpeed(p_179218_2_, p_179218_4_) != 0.0F) {
+            p_179218_1_.hurtAndBreak(2, p_179218_5_, (p_220044_0_) -> {
+                p_220044_0_.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
             });
         }
 
         return true;
     }
 
-    public boolean canHarvestBlock(BlockState p_150897_1_) {
-        return p_150897_1_.isIn(Blocks.COBWEB) || p_150897_1_.isIn(BlockTags.LEAVES);
+    public boolean isCorrectToolForDrops(BlockState p_150897_1_) {
+        return p_150897_1_.is(Blocks.COBWEB) || p_150897_1_.is(BlockTags.LEAVES);
     }
 
     @Override
@@ -86,9 +88,9 @@ public class SoulScytheItem extends SwordItem implements IMeleeWeapon, ISoulGath
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
-        super.addInformation(stack, world, list, flag);
+        super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
 

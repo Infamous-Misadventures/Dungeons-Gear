@@ -16,6 +16,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class CooldownShotEnchantment extends DungeonsEnchantment {
 
@@ -33,11 +35,11 @@ public class CooldownShotEnchantment extends DungeonsEnchantment {
         LivingEntity livingEntity = event.getEntityLiving();
         int charge = event.getCharge();
         ItemStack stack = event.getBow();
-        if(livingEntity instanceof PlayerEntity && !event.getWorld().isRemote){
+        if(livingEntity instanceof PlayerEntity && !event.getWorld().isClientSide){
             PlayerEntity player = (PlayerEntity) livingEntity;
             float arrowVelocity = RangedAttackHelper.getVanillaOrModdedBowArrowVelocity(livingEntity, stack, charge);
             if(arrowVelocity >= 1.0F){
-                int cooldownShotLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.COOLDOWN_SHOT, stack);
+                int cooldownShotLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.COOLDOWN_SHOT, stack);
                 if(cooldownShotLevel > 0){
                     double cooldownReduction = 0.5 * cooldownShotLevel;
                     ArtifactItem.reduceArtifactCooldowns(player, cooldownReduction);

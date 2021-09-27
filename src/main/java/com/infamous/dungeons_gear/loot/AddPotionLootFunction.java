@@ -45,7 +45,7 @@ public class AddPotionLootFunction extends LootFunction
     }
 
     @Override
-    protected ItemStack doApply(ItemStack stack, LootContext context)
+    protected ItemStack run(ItemStack stack, LootContext context)
     {
         if(canAddPotionToItemStack(stack)) {
             Potion potion = weightedPotionOptions.get(0).getFirst();
@@ -60,7 +60,7 @@ public class AddPotionLootFunction extends LootFunction
                     rnd -= pair.getSecond();
                 }
             }
-            return PotionUtils.addPotionToItemStack(stack, potion);
+            return PotionUtils.setPotion(stack, potion);
         }
         return stack;
     }
@@ -71,7 +71,7 @@ public class AddPotionLootFunction extends LootFunction
     }
 
     @Override
-    public LootFunctionType getFunctionType()
+    public LootFunctionType getType()
     {
         return ADD_POTION;
     }
@@ -101,7 +101,7 @@ public class AddPotionLootFunction extends LootFunction
         }
 
         @Override
-        protected AddPotionLootFunction.Builder doCast()
+        protected AddPotionLootFunction.Builder getThis()
         {
             return this;
         }
@@ -122,7 +122,7 @@ public class AddPotionLootFunction extends LootFunction
             boolean hasEntries = false;
             if (object.has("potions"))
             {
-                JsonArray potions = JSONUtils.getJsonArray(object, "potions");
+                JsonArray potions = JSONUtils.getAsJsonArray(object, "potions");
                 for (JsonElement e : potions)
                 {
                     float weight = 1;
@@ -134,8 +134,8 @@ public class AddPotionLootFunction extends LootFunction
                     else
                     {
                         JsonObject obj = e.getAsJsonObject();
-                        p = getPotion(JSONUtils.getString(obj, "potion"));
-                        weight = JSONUtils.getFloat(obj, "weight");
+                        p = getPotion(JSONUtils.getAsString(obj, "potion"));
+                        weight = JSONUtils.getAsFloat(obj, "weight");
                     }
                     b.with(p, weight);
                 }
@@ -148,7 +148,7 @@ public class AddPotionLootFunction extends LootFunction
                 {
                     throw new IllegalStateException("Cannot specify both 'potion' and 'potions' at the same time!");
                 }
-                b.with(getPotion(JSONUtils.getString(object, "potion")));
+                b.with(getPotion(JSONUtils.getAsString(object, "potion")));
             }
             if (!hasEntries)
             {

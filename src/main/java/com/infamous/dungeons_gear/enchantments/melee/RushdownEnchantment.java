@@ -18,6 +18,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class RushdownEnchantment extends DungeonsEnchantment {
 
@@ -32,16 +34,16 @@ public class RushdownEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onRushdownKill(LivingDeathEvent event){
-        if(event.getSource().getImmediateSource() instanceof AbstractArrowEntity) return;
-        if(event.getSource().getTrueSource() instanceof LivingEntity){
-            LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
-            ItemStack mainhand = attacker.getHeldItemMainhand();
+        if(event.getSource().getDirectEntity() instanceof AbstractArrowEntity) return;
+        if(event.getSource().getEntity() instanceof LivingEntity){
+            LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
+            ItemStack mainhand = attacker.getMainHandItem();
             boolean uniqueWeaponFlag = hasRushdownBuiltIn(mainhand);
             if(uniqueWeaponFlag || ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.RUSHDOWN)){
-                int rampagingLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.RUSHDOWN, mainhand);
+                int rampagingLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.RUSHDOWN, mainhand);
                 if(uniqueWeaponFlag) rampagingLevel++;
-                EffectInstance speed = new EffectInstance(Effects.SPEED, rampagingLevel * 20, 4);
-                attacker.addPotionEffect(speed);
+                EffectInstance speed = new EffectInstance(Effects.MOVEMENT_SPEED, rampagingLevel * 20, 4);
+                attacker.addEffect(speed);
             }
         }
     }

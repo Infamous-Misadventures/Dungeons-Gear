@@ -24,6 +24,8 @@ import net.minecraftforge.fml.common.Mod;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = MODID)
 public class FreezingEnchantment extends DungeonsEnchantment {
 
@@ -37,20 +39,20 @@ public class FreezingEnchantment extends DungeonsEnchantment {
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || enchantment != Enchantments.FIRE_ASPECT;
     }
 
     @Override
-    public void onEntityDamaged(LivingEntity user, Entity target, int level) {
+    public void doPostAttack(LivingEntity user, Entity target, int level) {
         if(!(target instanceof LivingEntity)) return;
-        ItemStack mainhand = user.getHeldItemMainhand();
+        ItemStack mainhand = user.getMainHandItem();
         boolean uniqueWeaponFlag = hasFreezingBuiltIn(mainhand);
         if(uniqueWeaponFlag) level++;
-        EffectInstance freezing = new EffectInstance(Effects.SLOWNESS, 60, level-1);
-        EffectInstance miningFatigue = new EffectInstance(Effects.MINING_FATIGUE, 60, level-1);
-        ((LivingEntity) target).addPotionEffect(freezing);
-        ((LivingEntity) target).addPotionEffect(miningFatigue);
+        EffectInstance freezing = new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 60, level-1);
+        EffectInstance miningFatigue = new EffectInstance(Effects.DIG_SLOWDOWN, 60, level-1);
+        ((LivingEntity) target).addEffect(freezing);
+        ((LivingEntity) target).addEffect(miningFatigue);
         PROXY.spawnParticles(target, ParticleTypes.ITEM_SNOWBALL);
     }
 
@@ -60,19 +62,19 @@ public class FreezingEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onFreezingAttack(LivingAttackEvent event){
-        if(event.getSource().getImmediateSource() instanceof AbstractArrowEntity) return;
+        if(event.getSource().getDirectEntity() instanceof AbstractArrowEntity) return;
         if(event.getSource() instanceof OffhandAttackDamageSource) return;
-        if(!(event.getSource().getTrueSource() instanceof LivingEntity)) return;
-        LivingEntity attacker = (LivingEntity)event.getSource().getTrueSource();
+        if(!(event.getSource().getEntity() instanceof LivingEntity)) return;
+        LivingEntity attacker = (LivingEntity)event.getSource().getEntity();
         LivingEntity victim = event.getEntityLiving();
-        ItemStack mainhand = attacker.getHeldItemMainhand();
+        ItemStack mainhand = attacker.getMainHandItem();
         boolean uniqueWeaponFlag = hasFreezingBuiltIn(mainhand);
         if(uniqueWeaponFlag
                 && !ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.FREEZING)){
-            EffectInstance freezing = new EffectInstance(Effects.SLOWNESS, 60);
-            EffectInstance miningFatigue = new EffectInstance(Effects.MINING_FATIGUE, 60);
-            victim.addPotionEffect(freezing);
-            victim.addPotionEffect(miningFatigue);
+            EffectInstance freezing = new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 60);
+            EffectInstance miningFatigue = new EffectInstance(Effects.DIG_SLOWDOWN, 60);
+            victim.addEffect(freezing);
+            victim.addEffect(miningFatigue);
             PROXY.spawnParticles(victim, ParticleTypes.ITEM_SNOWBALL);
         }
     }

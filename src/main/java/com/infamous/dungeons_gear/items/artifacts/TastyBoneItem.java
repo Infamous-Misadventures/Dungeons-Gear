@@ -29,6 +29,8 @@ import net.minecraftforge.fml.network.PacketDistributor;
 import java.util.List;
 
 
+import net.minecraft.item.Item.Properties;
+
 public class TastyBoneItem extends ArtifactItem {
     public TastyBoneItem(Properties p_i48487_1_) {
         super(p_i48487_1_);
@@ -36,21 +38,21 @@ public class TastyBoneItem extends ArtifactItem {
     }
 
     public ActionResult<ItemStack> procArtifact(ItemUseContext itemUseContext) {
-        World world = itemUseContext.getWorld();
-        if (world.isRemote) {
-            return ActionResult.resultSuccess(itemUseContext.getItem());
+        World world = itemUseContext.getLevel();
+        if (world.isClientSide) {
+            return ActionResult.success(itemUseContext.getItemInHand());
         } else {
-            ItemStack itemUseContextItem = itemUseContext.getItem();
+            ItemStack itemUseContextItem = itemUseContext.getItemInHand();
             PlayerEntity itemUseContextPlayer = itemUseContext.getPlayer();
-            BlockPos itemUseContextPos = itemUseContext.getPos();
-            Direction itemUseContextFace = itemUseContext.getFace();
+            BlockPos itemUseContextPos = itemUseContext.getClickedPos();
+            Direction itemUseContextFace = itemUseContext.getClickedFace();
             BlockState blockState = world.getBlockState(itemUseContextPos);
 
             BlockPos blockPos;
             if (blockState.getCollisionShape(world, itemUseContextPos).isEmpty()) {
                 blockPos = itemUseContextPos;
             } else {
-                blockPos = itemUseContextPos.offset(itemUseContextFace);
+                blockPos = itemUseContextPos.relative(itemUseContextFace);
             }
 
             if(itemUseContextPlayer != null){
@@ -62,49 +64,49 @@ public class TastyBoneItem extends ArtifactItem {
                             ISummonable summon = CapabilityHelper.getSummonableCapability(wolfEntity);
                             if(summon != null){
 
-                                summon.setSummoner(itemUseContextPlayer.getUniqueID());
+                                summon.setSummoner(itemUseContextPlayer.getUUID());
 
                                 createWolf(world, itemUseContextPlayer, blockPos, wolfEntity);
 
-                                summonerCap.setSummonedWolf(wolfEntity.getUniqueID());
+                                summonerCap.setSummonedWolf(wolfEntity.getUUID());
 
-                                itemUseContextItem.damageItem(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemUseContextItem)));
+                                itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemUseContextItem)));
 
                             }
                         }
                     } else{
                         if(world instanceof ServerWorld) {
-                            Entity entity = ((ServerWorld) world).getEntityByUuid(summonerCap.getSummonedWolf());
+                            Entity entity = ((ServerWorld) world).getEntity(summonerCap.getSummonedWolf());
                             if (entity instanceof WolfEntity) {
                                 WolfEntity wolfEntity = (WolfEntity) entity;
-                                wolfEntity.teleportKeepLoaded((double) blockPos.getX() + 0.5D, (double) blockPos.getY() + 0.05D, (double) blockPos.getZ() + 0.5D);
+                                wolfEntity.teleportToWithTicket((double) blockPos.getX() + 0.5D, (double) blockPos.getY() + 0.05D, (double) blockPos.getZ() + 0.5D);
                             }
                         }
                     }
                 }
             }
-            return ActionResult.resultConsume(itemUseContextItem);
+            return ActionResult.consume(itemUseContextItem);
         }
     }
 
     private void createWolf(World world, PlayerEntity itemUseContextPlayer, BlockPos blockPos, WolfEntity wolfEntity) {
-        wolfEntity.setTamedBy(itemUseContextPlayer);
-        wolfEntity.setLocationAndAngles((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D, 0.0F, 0.0F);
+        wolfEntity.tame(itemUseContextPlayer);
+        wolfEntity.moveTo((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D, 0.0F, 0.0F);
 
 
         wolfEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(wolfEntity, LivingEntity.class, 5, false, false, (entityIterator) -> {
             return entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity);
         }));
 
-        SoundHelper.playCreatureSound(itemUseContextPlayer, SoundEvents.ENTITY_WOLF_AMBIENT);
+        SoundHelper.playCreatureSound(itemUseContextPlayer, SoundEvents.WOLF_AMBIENT);
 
-        world.addEntity(wolfEntity);
+        world.addFreshEntity(wolfEntity);
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
-        super.addInformation(stack, world, list, flag);
+        super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
 

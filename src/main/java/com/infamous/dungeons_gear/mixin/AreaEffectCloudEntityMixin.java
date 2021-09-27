@@ -20,22 +20,22 @@ public abstract class AreaEffectCloudEntityMixin {
     @Nullable
     public abstract LivingEntity getOwner();
 
-    @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/potion/Effect;affectEntity(Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/LivingEntity;ID)V"), method = "tick", require = 0)
+    @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/potion/Effect;applyInstantenousEffect(Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/LivingEntity;ID)V"), method = "tick", require = 0)
     private void instantHack(Effect effect, Entity source, Entity indirectSource, LivingEntity entityLivingBaseIn, int amplifier, double health) {
         if (indirectSource instanceof LivingEntity) {
             if (effect.isBeneficial() != AbilityHelper.canApplyToEnemy((LivingEntity) indirectSource, entityLivingBaseIn)) {
-                effect.affectEntity(source, indirectSource, entityLivingBaseIn, amplifier, health);
+                effect.applyInstantenousEffect(source, indirectSource, entityLivingBaseIn, amplifier, health);
             }
-        } else effect.affectEntity(source, indirectSource, entityLivingBaseIn, amplifier, health);
+        } else effect.applyInstantenousEffect(source, indirectSource, entityLivingBaseIn, amplifier, health);
     }
 
-    @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;addPotionEffect(Lnet/minecraft/potion/EffectInstance;)Z"), method = "tick", require = 0)
+    @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;addEffect(Lnet/minecraft/potion/EffectInstance;)Z"), method = "tick", require = 0)
     private boolean extendedHack(LivingEntity livingEntity, EffectInstance effectInstanceIn) {
         if (getOwner()!=null) {
-            if (effectInstanceIn.getPotion().isBeneficial() != AbilityHelper.canApplyToEnemy(getOwner(), livingEntity)) {
-                livingEntity.addPotionEffect(effectInstanceIn);
+            if (effectInstanceIn.getEffect().isBeneficial() != AbilityHelper.canApplyToEnemy(getOwner(), livingEntity)) {
+                livingEntity.addEffect(effectInstanceIn);
             }
-        } else livingEntity.addPotionEffect(effectInstanceIn);
+        } else livingEntity.addEffect(effectInstanceIn);
         return false;
     }
 }

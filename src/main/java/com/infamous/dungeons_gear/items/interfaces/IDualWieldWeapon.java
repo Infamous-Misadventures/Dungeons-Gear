@@ -14,7 +14,7 @@ import net.minecraftforge.items.IItemHandler;
 
 public interface IDualWieldWeapon<T extends Item> {
     default boolean canAttack(LivingEntity e, ItemStack is) {
-        return e.getHeldItemMainhand().getItem() instanceof IDualWieldWeapon && e.getHeldItemOffhand().getItem() instanceof IDualWieldWeapon;
+        return e.getMainHandItem().getItem() instanceof IDualWieldWeapon && e.getOffhandItem().getItem() instanceof IDualWieldWeapon;
     }
 
     /*
@@ -49,10 +49,10 @@ public interface IDualWieldWeapon<T extends Item> {
     }
 
     default void update(LivingEntity wielder, ItemStack is, int slot) {
-        if(wielder.isServerWorld())
-        if (wielder.getHeldItemOffhand() == is)
+        if(wielder.isEffectiveAi())
+        if (wielder.getOffhandItem() == is)
             updateOff(wielder, is);
-        else if (wielder.getHeldItemMainhand() == is)
+        else if (wielder.getMainHandItem() == is)
             updateMain(wielder, is);
         else if (wielder instanceof PlayerEntity)
             updateInventory((PlayerEntity) wielder, is, slot);
@@ -60,10 +60,10 @@ public interface IDualWieldWeapon<T extends Item> {
 
     default void updateMain(LivingEntity wielder, ItemStack is) {
         //wraps the offhand into a dummy
-        if (wielder.getHeldItemOffhand().getItem() != is.getItem()) {
-            wielder.setHeldItem(Hand.OFF_HAND, wrapStack(createDummy(is), wielder.getHeldItemOffhand()));
+        if (wielder.getOffhandItem().getItem() != is.getItem()) {
+            wielder.setItemInHand(Hand.OFF_HAND, wrapStack(createDummy(is), wielder.getOffhandItem()));
             if(wielder instanceof PlayerEntity){
-                ((PlayerEntity) wielder).container.detectAndSendChanges();
+                ((PlayerEntity) wielder).inventoryMenu.broadcastChanges();
             }
         }
     }
@@ -72,8 +72,8 @@ public interface IDualWieldWeapon<T extends Item> {
         //unwraps the dummy if the main hand doesn't match
         is.getCapability(OffhandProvider.OFFHAND_CAPABILITY).ifPresent((a) -> {
             if(!a.isFake())return;
-            if (a.getLinkedItemStack().isEmpty() || wielder.getHeldItemMainhand() != a.getLinkedItemStack())
-                wielder.setHeldItem(Hand.OFF_HAND, unwrapStack(is));
+            if (a.getLinkedItemStack().isEmpty() || wielder.getMainHandItem() != a.getLinkedItemStack())
+                wielder.setItemInHand(Hand.OFF_HAND, unwrapStack(is));
             else copyTag(a.getLinkedItemStack(), is);
         });
     }
@@ -89,7 +89,7 @@ public interface IDualWieldWeapon<T extends Item> {
                 if (mainInventory.getStackInSlot(slot) == stack && !mainInventory.extractItem(slot, stack.getCount(), true).isEmpty()) {
                     mainInventory.extractItem(slot, stack.getCount(), false);
                     mainInventory.insertItem(slot, unwrapStack(stack), false);
-                    e.container.detectAndSendChanges();
+                    e.inventoryMenu.broadcastChanges();
                 }
             }
         });

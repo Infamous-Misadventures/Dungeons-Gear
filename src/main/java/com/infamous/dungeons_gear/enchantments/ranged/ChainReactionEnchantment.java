@@ -16,6 +16,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = MODID)
 public class ChainReactionEnchantment extends DungeonsEnchantment {
 
@@ -30,25 +32,25 @@ public class ChainReactionEnchantment extends DungeonsEnchantment {
     public static void onChainReactionDamage(LivingDamageEvent event) {
         if (event.getSource() instanceof IndirectEntityDamageSource) {
             IndirectEntityDamageSource indirectEntityDamageSource = (IndirectEntityDamageSource) event.getSource();
-            if (indirectEntityDamageSource.getImmediateSource() instanceof AbstractArrowEntity) {
-                AbstractArrowEntity arrowEntity = (AbstractArrowEntity) indirectEntityDamageSource.getImmediateSource();
+            if (indirectEntityDamageSource.getDirectEntity() instanceof AbstractArrowEntity) {
+                AbstractArrowEntity arrowEntity = (AbstractArrowEntity) indirectEntityDamageSource.getDirectEntity();
 
                 LivingEntity victim = event.getEntityLiving();
-                if (indirectEntityDamageSource.getTrueSource() instanceof LivingEntity) {
-                    if (!(indirectEntityDamageSource.getTrueSource() instanceof LivingEntity)) return;
-                    LivingEntity attacker = (LivingEntity) indirectEntityDamageSource.getTrueSource();
+                if (indirectEntityDamageSource.getEntity() instanceof LivingEntity) {
+                    if (!(indirectEntityDamageSource.getEntity() instanceof LivingEntity)) return;
+                    LivingEntity attacker = (LivingEntity) indirectEntityDamageSource.getEntity();
                     int chainReactionLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrowEntity, RangedEnchantmentList.CHAIN_REACTION);
                     if (chainReactionLevel > 0) {
                         float chainReactionChance = chainReactionLevel * 0.1f;
-                        float chainReactionRand = attacker.getRNG().nextFloat();
+                        float chainReactionRand = attacker.getRandom().nextFloat();
                         if (chainReactionRand <= chainReactionChance) {
-                            ProjectileEffectHelper.fireChainReactionProjectiles(victim.getEntityWorld(), attacker, victim, 3.15F, 1.0F, arrowEntity);
+                            ProjectileEffectHelper.fireChainReactionProjectiles(victim.getCommandSenderWorld(), attacker, victim, 3.15F, 1.0F, arrowEntity);
                         }
                     }
                     if (arrowEntity.getTags().contains(INTRINSIC_CHAIN_REACTION_TAG)) {
-                        float chainReactionRand = attacker.getRNG().nextFloat();
+                        float chainReactionRand = attacker.getRandom().nextFloat();
                         if (chainReactionRand <= 0.1F) {
-                            ProjectileEffectHelper.fireChainReactionProjectiles(victim.getEntityWorld(), attacker, victim, 3.15F, 1.0F, arrowEntity);
+                            ProjectileEffectHelper.fireChainReactionProjectiles(victim.getCommandSenderWorld(), attacker, victim, 3.15F, 1.0F, arrowEntity);
                         }
                     }
                 }

@@ -27,6 +27,8 @@ import net.minecraftforge.fml.network.PacketDistributor;
 import java.util.List;
 
 
+import net.minecraft.item.Item.Properties;
+
 public class GolemKitItem extends ArtifactItem {
     public GolemKitItem(Properties p_i48487_1_) {
         super(p_i48487_1_);
@@ -34,21 +36,21 @@ public class GolemKitItem extends ArtifactItem {
     }
 
     public ActionResult<ItemStack> procArtifact(ItemUseContext itemUseContext) {
-        World world = itemUseContext.getWorld();
-        if (world.isRemote) {
-            return ActionResult.resultSuccess(itemUseContext.getItem());
+        World world = itemUseContext.getLevel();
+        if (world.isClientSide) {
+            return ActionResult.success(itemUseContext.getItemInHand());
         } else {
-            ItemStack itemUseContextItem = itemUseContext.getItem();
+            ItemStack itemUseContextItem = itemUseContext.getItemInHand();
             PlayerEntity itemUseContextPlayer = itemUseContext.getPlayer();
-            BlockPos itemUseContextPos = itemUseContext.getPos();
-            Direction itemUseContextFace = itemUseContext.getFace();
+            BlockPos itemUseContextPos = itemUseContext.getClickedPos();
+            Direction itemUseContextFace = itemUseContext.getClickedFace();
             BlockState blockState = world.getBlockState(itemUseContextPos);
 
             BlockPos blockPos;
             if (blockState.getCollisionShape(world, itemUseContextPos).isEmpty()) {
                 blockPos = itemUseContextPos;
             } else {
-                blockPos = itemUseContextPos.offset(itemUseContextFace);
+                blockPos = itemUseContextPos.relative(itemUseContextFace);
             }
 
             if(itemUseContextPlayer != null){
@@ -60,47 +62,47 @@ public class GolemKitItem extends ArtifactItem {
                             ISummonable summonable = CapabilityHelper.getSummonableCapability(ironGolemEntity);
                             if(summonable != null){
 
-                                summonable.setSummoner(itemUseContextPlayer.getUniqueID());
-                                summonerCap.setSummonedGolem(ironGolemEntity.getUniqueID());
+                                summonable.setSummoner(itemUseContextPlayer.getUUID());
+                                summonerCap.setSummonedGolem(ironGolemEntity.getUUID());
 
                                 createIronGolem(world, itemUseContextPlayer, blockPos, ironGolemEntity);
 
-                                itemUseContextItem.damageItem(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemUseContextItem)));
+                                itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemUseContextItem)));
 
                             }
                         }
                     } else{
                         if(world instanceof ServerWorld) {
-                            Entity entity = ((ServerWorld) world).getEntityByUuid(summonerCap.getSummonedGolem());
+                            Entity entity = ((ServerWorld) world).getEntity(summonerCap.getSummonedGolem());
                             if (entity instanceof IronGolemEntity) {
                                 IronGolemEntity ironGolemEntity = (IronGolemEntity) entity;
-                                ironGolemEntity.teleportKeepLoaded((double) blockPos.getX() + 0.5D, (double) blockPos.getY() + 0.05D, (double) blockPos.getZ() + 0.5D);
+                                ironGolemEntity.teleportToWithTicket((double) blockPos.getX() + 0.5D, (double) blockPos.getY() + 0.05D, (double) blockPos.getZ() + 0.5D);
                             }
                         }
                     }
                 }
             }
-            return ActionResult.resultConsume(itemUseContextItem);
+            return ActionResult.consume(itemUseContextItem);
         }
     }
 
     private void createIronGolem(World world, PlayerEntity itemUseContextPlayer, BlockPos blockPos, IronGolemEntity ironGolemEntity) {
         ironGolemEntity.setPlayerCreated(true);
-        ironGolemEntity.setLocationAndAngles((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D, 0.0F, 0.0F);
+        ironGolemEntity.moveTo((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D, 0.0F, 0.0F);
 
         ironGolemEntity.goalSelector.addGoal(2, new IronGolemFollowOwnerGoal(ironGolemEntity, 2.1D, 10.0F, 2.0F, false));
 
         ironGolemEntity.targetSelector.addGoal(1, new GolemOwnerHurtByTargetGoal(ironGolemEntity));
         ironGolemEntity.targetSelector.addGoal(2, new GolemOwnerHurtTargetGoal(ironGolemEntity));
 
-        SoundHelper.playCreatureSound(itemUseContextPlayer, SoundEvents.ENTITY_IRON_GOLEM_REPAIR);
-        world.addEntity(ironGolemEntity);
+        SoundHelper.playCreatureSound(itemUseContextPlayer, SoundEvents.IRON_GOLEM_REPAIR);
+        world.addFreshEntity(ironGolemEntity);
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
-        super.addInformation(stack, world, list, flag);
+        super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
 

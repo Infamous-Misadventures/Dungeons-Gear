@@ -18,13 +18,13 @@ public class LootTableHelper {
     {
         LootContext context = new LootContext.Builder(world)
                 .withRandom(random)
-                .withParameter(LootParameters.field_237457_g_, Vector3d.copyCentered(pos)) // positional context
-                .build(LootParameterSets.CHEST);	// chest set requires positional context, has no other mandatory parameters
+                .withParameter(LootParameters.ORIGIN, Vector3d.atCenterOf(pos)) // positional context
+                .create(LootParameterSets.CHEST);	// chest set requires positional context, has no other mandatory parameters
 
         LootTable table = world.getServer()
-                .getLootTableManager()
-                .getLootTableFromLocation(lootTable);
-        List<ItemStack> stacks = table.generate(context);
+                .getLootTables()
+                .get(lootTable);
+        List<ItemStack> stacks = table.getRandomItems(context);
         return !stacks.isEmpty()
                 ? stacks.get(0)
                 : ItemStack.EMPTY;
@@ -33,19 +33,19 @@ public class LootTableHelper {
     {
         LootContext context = new LootContext.Builder(world)
                 .withRandom(random)
-                .withParameter(LootParameters.field_237457_g_, Vector3d.copyCentered(pos)) // positional context
-                .build(LootParameterSets.CHEST);	// chest set requires positional context, has no other mandatory parameters
+                .withParameter(LootParameters.ORIGIN, Vector3d.atCenterOf(pos)) // positional context
+                .create(LootParameterSets.CHEST);	// chest set requires positional context, has no other mandatory parameters
 
         LootTable table = world.getServer()
-                .getLootTableManager()
-                .getLootTableFromLocation(lootTable);
-        return table.generate(context);
+                .getLootTables()
+                .get(lootTable);
+        return table.getRandomItems(context);
     }
 
     public static boolean lootTableExists(ServerWorld world, ResourceLocation lootTable){
         return ! world.getServer()
-                .getLootTableManager()
-                .getLootTableFromLocation(lootTable)
-                .equals(LootTable.EMPTY_LOOT_TABLE);
+                .getLootTables()
+                .get(lootTable)
+                .equals(LootTable.EMPTY);
     }
 }

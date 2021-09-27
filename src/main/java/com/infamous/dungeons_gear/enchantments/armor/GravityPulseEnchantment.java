@@ -19,6 +19,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class GravityPulseEnchantment extends PulseEnchantment {
 
@@ -35,7 +37,7 @@ public class GravityPulseEnchantment extends PulseEnchantment {
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof PulseEnchantment);
     }
 
@@ -44,14 +46,14 @@ public class GravityPulseEnchantment extends PulseEnchantment {
         PlayerEntity player = event.player;
         if(player == null) return;
         if(event.phase == TickEvent.Phase.START) return;
-        if(player.isAlive()&&player.isServerWorld()){
+        if(player.isAlive()&&player.isEffectiveAi()){
             ICombo comboCap = CapabilityHelper.getComboCapability(player);
             if(comboCap == null) return;
             int gravityPulseTimer = comboCap.getGravityPulseTimer();
 
             if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.GRAVITY_PULSE)){
                 if(gravityPulseTimer <= 0){
-                    int gravityPulseLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.GRAVITY_PULSE, player);
+                    int gravityPulseLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.GRAVITY_PULSE, player);
                     AreaOfEffectHelper.pullInNearbyEntities(player, player, 1.5F + 1.5F * gravityPulseLevel, ParticleTypes.PORTAL);
                     comboCap.setGravityPulseTimer(100);
                 }

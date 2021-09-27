@@ -15,6 +15,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class AltruisticEnchantment extends DungeonsEnchantment {
 
@@ -36,7 +38,7 @@ public class AltruisticEnchantment extends DungeonsEnchantment {
         if(livingEntity instanceof PlayerEntity){
             PlayerEntity playerEntity = (PlayerEntity) livingEntity;
             if(ModEnchantmentHelper.hasEnchantment(playerEntity, ArmorEnchantmentList.ALTRUISTIC)){
-                int altruisticLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.ALTRUISTIC, playerEntity);
+                int altruisticLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.ALTRUISTIC, playerEntity);
                 float damage = event.getAmount();
                 float damageToHealingMultiplier = 0.25F * altruisticLevel;
                 AreaOfEffectHelper.healNearbyAllies(playerEntity, damage * damageToHealingMultiplier, 12);

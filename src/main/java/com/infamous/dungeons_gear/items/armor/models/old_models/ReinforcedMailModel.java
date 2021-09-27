@@ -35,11 +35,11 @@ public class ReinforcedMailModel<T extends LivingEntity> extends BipedModel<T> {
 		this.slot = slot;
 		this.entity = entity;
 
-		textureWidth = 64;
-		textureHeight = 64;
+		texWidth = 64;
+		texHeight = 64;
 
 		Everything = new ModelRenderer(this);
-		Everything.setRotationPoint(0.0F, 24.0F, 0.0F);
+		Everything.setPos(0.0F, 24.0F, 0.0F);
 
 		boolean testificate =
 				this.entity instanceof AbstractIllagerEntity ||
@@ -51,35 +51,35 @@ public class ReinforcedMailModel<T extends LivingEntity> extends BipedModel<T> {
 		int testificateHelmetShiftUp = testificate ? 2 : 0;
 
 		Head = new ModelRenderer(this);
-		Head.setRotationPoint(0.0F, 0.0F, 0.0F);
+		Head.setPos(0.0F, 0.0F, 0.0F);
 		Everything.addChild(Head);
-		Head.setTextureOffset(0, 0).addBox(-4.0F, -32.0F + 24.0F - testificateHelmetShiftUp, -4.0F, 8.0F, 8.0F, 8.0F, 1.0F, false);
+		Head.texOffs(0, 0).addBox(-4.0F, -32.0F + 24.0F - testificateHelmetShiftUp, -4.0F, 8.0F, 8.0F, 8.0F, 1.0F, false);
 
 		Body = new ModelRenderer(this);
-		Body.setRotationPoint(0.0F, 0.0F, 0.0F);
+		Body.setPos(0.0F, 0.0F, 0.0F);
 		Everything.addChild(Body);
-		Body.setTextureOffset(40, 0).addBox(-4.0F, -24.0F + 24.0F, -2.0F, 8.0F, 12.0F, 4.0F, 1.0F, false);
+		Body.texOffs(40, 0).addBox(-4.0F, -24.0F + 24.0F, -2.0F, 8.0F, 12.0F, 4.0F, 1.0F, false);
 
 		ChestPlate = new ModelRenderer(this);
-		ChestPlate.setRotationPoint(0.0F, -15.0F, 0.0F);
+		ChestPlate.setPos(0.0F, -15.0F, 0.0F);
 		Body.addChild(ChestPlate);
-		ChestPlate.setTextureOffset(45, 24).addBox(0.7F, -7.7467F + 24.0F, -3.5992F, 5.0F, 4.0F, 2.0F, 0.3F, false);
-		ChestPlate.setTextureOffset(45, 24).addBox(-5.7F, -7.7467F + 24.0F, -3.5992F, 5.0F, 4.0F, 2.0F, 0.3F, true);
+		ChestPlate.texOffs(45, 24).addBox(0.7F, -7.7467F + 24.0F, -3.5992F, 5.0F, 4.0F, 2.0F, 0.3F, false);
+		ChestPlate.texOffs(45, 24).addBox(-5.7F, -7.7467F + 24.0F, -3.5992F, 5.0F, 4.0F, 2.0F, 0.3F, true);
 
 
 		LeftArm = new ModelRenderer(this);
-		LeftArm.setRotationPoint(0.0F, 0.0F, 0.0F);
+		LeftArm.setPos(0.0F, 0.0F, 0.0F);
 		Everything.addChild(LeftArm);
-		LeftArm.setTextureOffset(46, 17).addBox(5.0F-8.0F + 2.0F, -24.0F + 22.0F, -2.0F, 4.0F, 3.0F, 4.0F, 1.0F, false);
+		LeftArm.texOffs(46, 17).addBox(5.0F-8.0F + 2.0F, -24.0F + 22.0F, -2.0F, 4.0F, 3.0F, 4.0F, 1.0F, false);
 
 		RightArm = new ModelRenderer(this);
-		RightArm.setRotationPoint(0.0F, 0.0F, 0.0F);
+		RightArm.setPos(0.0F, 0.0F, 0.0F);
 		Everything.addChild(RightArm);
-		RightArm.setTextureOffset(46, 17).addBox(-9.0F + 8.0F - 2.0F, -24.0F + 22.0F, -2.0F, 4.0F, 3.0F, 4.0F, 1.0F, true);
+		RightArm.texOffs(46, 17).addBox(-9.0F + 8.0F - 2.0F, -24.0F + 22.0F, -2.0F, 4.0F, 3.0F, 4.0F, 1.0F, true);
 	}
 
 	@Override
-	public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha){
+	public void renderToBuffer(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha){
 		boolean testificate =
 				this.entity instanceof AbstractIllagerEntity ||
 						this.entity.getType() == ForgeRegistries.ENTITIES.getValue(new ResourceLocation("savageandravage:skeleton_villager")) ||
@@ -117,28 +117,28 @@ public class ReinforcedMailModel<T extends LivingEntity> extends BipedModel<T> {
 			} else {
 
 		 */
-			matrixStackIn.push();
-			this.Head.copyModelAngles(this.bipedHead);
-			if (this.entity.isChild()) {
+			matrixStackIn.pushPose();
+			this.Head.copyFrom(this.head);
+			if (this.entity.isBaby()) {
 				matrixStackIn.scale(0.8F, 0.8F, 0.8F);
-				this.Head.setRotationPoint(0.0F, 15.0F, 0.0F);
+				this.Head.setPos(0.0F, 15.0F, 0.0F);
 			}
 			this.Head.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-			matrixStackIn.pop();
+			matrixStackIn.popPose();
 			//}
 		}
 
 		if (this.slot == EquipmentSlotType.CHEST) {
-			matrixStackIn.push();
+			matrixStackIn.pushPose();
 
-			this.Body.copyModelAngles(this.bipedBody);
-			this.LeftArm.copyModelAngles(this.bipedLeftArm);
-			this.RightArm.copyModelAngles(this.bipedRightArm);
-			if (this.entity.isChild()) {
+			this.Body.copyFrom(this.body);
+			this.LeftArm.copyFrom(this.leftArm);
+			this.RightArm.copyFrom(this.rightArm);
+			if (this.entity.isBaby()) {
 				matrixStackIn.scale(0.5F, 0.5F, 0.5F);
-				this.Body.setRotationPoint(0.0F, 24.0F, 0.0F);
-				this.LeftArm.setRotationPoint(5.0F, 24.0F, 0.0F);
-				this.RightArm.setRotationPoint(-5.0F, 24.0F, 0.0F);
+				this.Body.setPos(0.0F, 24.0F, 0.0F);
+				this.LeftArm.setPos(5.0F, 24.0F, 0.0F);
+				this.RightArm.setPos(-5.0F, 24.0F, 0.0F);
 			}
 			this.LeftArm.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
 			this.RightArm.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
@@ -146,13 +146,13 @@ public class ReinforcedMailModel<T extends LivingEntity> extends BipedModel<T> {
 				matrixStackIn.scale(1.0F, 1.0F, 1.3F);
 			}
 			this.Body.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-			matrixStackIn.pop();
+			matrixStackIn.popPose();
 		}
 	}
 
 	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.rotateAngleX = x;
-		modelRenderer.rotateAngleY = y;
-		modelRenderer.rotateAngleZ = z;
+		modelRenderer.xRot = x;
+		modelRenderer.yRot = y;
+		modelRenderer.zRot = z;
 	}
 }

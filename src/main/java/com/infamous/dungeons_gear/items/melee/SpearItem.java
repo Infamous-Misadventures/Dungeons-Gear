@@ -45,21 +45,21 @@ public class SpearItem extends TieredItem implements IMeleeWeapon, IComboWeapon 
 
     public SpearItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, float attackReachIn, Item.Properties properties, boolean isUnique) {
         super(tier, properties);
-        this.attackDamage = (float) attackDamageIn + tier.getAttackDamage();
+        this.attackDamage = (float) attackDamageIn + tier.getAttackDamageBonus();
         this.attackSpeed = attackSpeedIn;
         this.attackReach = attackReachIn;
 
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double) this.attackDamage, AttributeModifier.Operation.ADDITION));
-        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double) this.attackSpeed, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", (double) this.attackDamage, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", (double) this.attackSpeed, AttributeModifier.Operation.ADDITION));
         this.attributeModifierMultimap = builder.build();
         this.unique = isUnique;
     }
 
     public static void setAttributeModifierMultimap(SpearItem spearItem) {
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double) spearItem.attackDamage, AttributeModifier.Operation.ADDITION));
-        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double) spearItem.attackSpeed, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", (double) spearItem.attackDamage, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", (double) spearItem.attackSpeed, AttributeModifier.Operation.ADDITION));
         builder.put(AttributeRegistry.ATTACK_REACH.get(), new AttributeModifier(ATTACK_REACH_MODIFIER, "Weapon modifier", (double) spearItem.attackReach, AttributeModifier.Operation.ADDITION));
         builder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(ATTACK_REACH_MODIFIER, "Weapon modifier", (double) spearItem.attackReach, AttributeModifier.Operation.ADDITION));
         spearItem.attributeModifierMultimap = builder.build();
@@ -69,38 +69,38 @@ public class SpearItem extends TieredItem implements IMeleeWeapon, IComboWeapon 
         return this.attackDamage;
     }
 
-    public boolean canPlayerBreakBlockWhileHolding(BlockState blockState, World world, BlockPos blockPos, PlayerEntity playerEntity) {
+    public boolean canAttackBlock(BlockState blockState, World world, BlockPos blockPos, PlayerEntity playerEntity) {
         return !playerEntity.isCreative();
     }
 
     public float getDestroySpeed(ItemStack p_150893_1_, BlockState p_150893_2_) {
-        if (p_150893_2_.isIn(Blocks.COBWEB)) {
+        if (p_150893_2_.is(Blocks.COBWEB)) {
             return 15.0F;
         } else {
             Material lvt_3_1_ = p_150893_2_.getMaterial();
-            return lvt_3_1_ != Material.PLANTS && lvt_3_1_ != Material.TALL_PLANTS && lvt_3_1_ != Material.CORAL && !p_150893_2_.isIn(BlockTags.LEAVES) && lvt_3_1_ != Material.GOURD ? 1.0F : 1.5F;
+            return lvt_3_1_ != Material.PLANT && lvt_3_1_ != Material.REPLACEABLE_PLANT && lvt_3_1_ != Material.CORAL && !p_150893_2_.is(BlockTags.LEAVES) && lvt_3_1_ != Material.VEGETABLE ? 1.0F : 1.5F;
         }
     }
 
-    public boolean hitEntity(ItemStack p_77644_1_, LivingEntity p_77644_2_, LivingEntity p_77644_3_) {
-        p_77644_1_.damageItem(1, p_77644_3_, (p_220045_0_) -> {
-            p_220045_0_.sendBreakAnimation(EquipmentSlotType.MAINHAND);
+    public boolean hurtEnemy(ItemStack p_77644_1_, LivingEntity p_77644_2_, LivingEntity p_77644_3_) {
+        p_77644_1_.hurtAndBreak(1, p_77644_3_, (p_220045_0_) -> {
+            p_220045_0_.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
         });
         return true;
     }
 
-    public boolean onBlockDestroyed(ItemStack p_179218_1_, World p_179218_2_, BlockState p_179218_3_, BlockPos p_179218_4_, LivingEntity p_179218_5_) {
-        if (p_179218_3_.getBlockHardness(p_179218_2_, p_179218_4_) != 0.0F) {
-            p_179218_1_.damageItem(2, p_179218_5_, (p_220044_0_) -> {
-                p_220044_0_.sendBreakAnimation(EquipmentSlotType.MAINHAND);
+    public boolean mineBlock(ItemStack p_179218_1_, World p_179218_2_, BlockState p_179218_3_, BlockPos p_179218_4_, LivingEntity p_179218_5_) {
+        if (p_179218_3_.getDestroySpeed(p_179218_2_, p_179218_4_) != 0.0F) {
+            p_179218_1_.hurtAndBreak(2, p_179218_5_, (p_220044_0_) -> {
+                p_220044_0_.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
             });
         }
 
         return true;
     }
 
-    public boolean canHarvestBlock(BlockState p_150897_1_) {
-        return p_150897_1_.isIn(Blocks.COBWEB);
+    public boolean isCorrectToolForDrops(BlockState p_150897_1_) {
+        return p_150897_1_.is(Blocks.COBWEB);
     }
 
     @Override
@@ -110,7 +110,7 @@ public class SpearItem extends TieredItem implements IMeleeWeapon, IComboWeapon 
 
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return enchantment.type.canEnchantItem(Items.IRON_SWORD) && enchantment != Enchantments.SWEEPING;
+        return enchantment.category.canEnchant(Items.IRON_SWORD) && enchantment != Enchantments.SWEEPING_EDGE;
     }
 
     @Override
@@ -132,8 +132,8 @@ public class SpearItem extends TieredItem implements IMeleeWeapon, IComboWeapon 
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
-        super.addInformation(stack, world, list, flag);
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+        super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
 }

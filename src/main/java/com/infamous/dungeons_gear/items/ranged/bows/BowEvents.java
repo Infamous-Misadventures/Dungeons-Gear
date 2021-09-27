@@ -33,7 +33,7 @@ public class BowEvents {
     @SubscribeEvent
     public static void onAccelerateBowFired(ArrowLooseEvent event){
         LivingEntity livingEntity = event.getEntityLiving();
-        World world = livingEntity.getEntityWorld();
+        World world = livingEntity.getCommandSenderWorld();
         long worldTime = world.getGameTime();
         int charge = event.getCharge();
         ItemStack stack = event.getBow();
@@ -43,7 +43,7 @@ public class BowEvents {
             long lastFiredTime = weaponCap.getLastFiredTime();
             float bowChargeTime = weaponCap.getBowChargeTime();
 
-            int accelerateLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.ACCELERATE, stack);
+            int accelerateLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.ACCELERATE, stack);
             if(hasAccelerateBuiltIn(stack)) accelerateLevel++;
 
             float defaultChargeTime = 20.0F;
@@ -80,8 +80,8 @@ public class BowEvents {
         RayTraceResult rayTraceResult = event.getRayTraceResult();
         if(rayTraceResult instanceof EntityRayTraceResult && ((EntityRayTraceResult) rayTraceResult).getEntity() instanceof LivingEntity){
             AbstractArrowEntity arrowEntity = event.getArrow();
-            if(arrowEntity.func_234616_v_() instanceof LivingEntity){
-                LivingEntity shooter = (LivingEntity)arrowEntity.func_234616_v_();
+            if(arrowEntity.getOwner() instanceof LivingEntity){
+                LivingEntity shooter = (LivingEntity)arrowEntity.getOwner();
                 LivingEntity victim = (LivingEntity) ((EntityRayTraceResult)rayTraceResult).getEntity();
                 boolean huntingBowFlag = arrowEntity.getTags().contains(IRangedWeapon.HUNTING_TAG);
                 boolean snowBowFlag = arrowEntity.getTags().contains(IRangedWeapon.FREEZING_TAG);
@@ -90,8 +90,8 @@ public class BowEvents {
                     AbilityHelper.makeNearbyPetsAttackTarget(victim, shooter);
                 }
                 else if(snowBowFlag){
-                    EffectInstance freezing = new EffectInstance(Effects.SLOWNESS, 60, 0);
-                    victim.addPotionEffect(freezing);
+                    EffectInstance freezing = new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 60, 0);
+                    victim.addEffect(freezing);
                     PROXY.spawnParticles(victim, ParticleTypes.ITEM_SNOWBALL);
                 }
                 else if(trickbowFlag){

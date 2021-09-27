@@ -12,6 +12,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
+import net.minecraft.item.Item.Properties;
+
 public class CorruptedPumpkinItem extends SoulBeaconItem {
 
     public static final BeaconBeamColor CORRUPTED_PUMPKIN_BEAM_COLOR =
@@ -31,9 +33,9 @@ public class CorruptedPumpkinItem extends SoulBeaconItem {
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
-        super.addInformation(stack, world, list, flag);
+        super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
 }

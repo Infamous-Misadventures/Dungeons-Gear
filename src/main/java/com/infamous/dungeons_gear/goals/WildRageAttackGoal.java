@@ -10,12 +10,12 @@ public class WildRageAttackGoal extends NearestAttackableTargetGoal<LivingEntity
         super(mob, LivingEntity.class, 0, true, true, LivingEntity::attackable);
     }
 
-    public boolean shouldExecute() {
-        return (super.shouldExecute());
+    public boolean canUse() {
+        return (super.canUse());
     }
 
-    public void startExecuting() {
-        super.startExecuting();
-        this.goalOwner.setIdleTime(0);
+    public void start() {
+        super.start();
+        this.mob.setNoActionTime(0);
     }
 }

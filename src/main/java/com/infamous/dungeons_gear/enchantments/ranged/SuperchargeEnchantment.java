@@ -16,6 +16,8 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class SuperchargeEnchantment extends DungeonsEnchantment {
 
@@ -31,9 +33,9 @@ public class SuperchargeEnchantment extends DungeonsEnchantment {
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() ||
-                (enchantment != Enchantments.PUNCH || enchantment != Enchantments.POWER);
+                (enchantment != Enchantments.PUNCH_ARROWS || enchantment != Enchantments.POWER_ARROWS);
     }
 
     @SubscribeEvent
@@ -44,15 +46,15 @@ public class SuperchargeEnchantment extends DungeonsEnchantment {
         int superchargeLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.SUPERCHARGE);
         boolean uniqueWeaponFlag = arrow.getTags().contains(INTRINSIC_SUPERCHARGE_TAG);
         if(superchargeLevel > 0 || uniqueWeaponFlag){
-            double originalDamage = arrow.getDamage();
-            int originalKnockback = ObfuscationReflectionHelper.getPrivateValue(AbstractArrowEntity.class, arrow, "field_70256_ap");
+            double originalDamage = arrow.getBaseDamage();
+            int originalKnockback = ObfuscationReflectionHelper.getPrivateValue(AbstractArrowEntity.class, arrow, "knockback");
             double damageModifier = 0;
             if(superchargeLevel == 1) damageModifier = 1.2D;
             if(superchargeLevel == 2) damageModifier = 1.4D;
             if(superchargeLevel == 3) damageModifier = 1.6D;
             if(uniqueWeaponFlag) damageModifier += 1.2D;
-            arrow.setDamage(originalDamage * damageModifier);
-            arrow.setKnockbackStrength(originalKnockback + 1);
+            arrow.setBaseDamage(originalDamage * damageModifier);
+            arrow.setKnockback(originalKnockback + 1);
         }
     }
 }

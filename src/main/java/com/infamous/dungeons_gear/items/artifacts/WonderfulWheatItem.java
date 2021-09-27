@@ -38,6 +38,8 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 
+import net.minecraft.item.Item.Properties;
+
 public class WonderfulWheatItem extends ArtifactItem {
     public WonderfulWheatItem(Properties p_i48487_1_) {
         super(p_i48487_1_);
@@ -45,21 +47,21 @@ public class WonderfulWheatItem extends ArtifactItem {
     }
 
     public ActionResult<ItemStack> procArtifact(ItemUseContext itemUseContext) {
-        World world = itemUseContext.getWorld();
-        if (world.isRemote) {
-            return ActionResult.resultSuccess(itemUseContext.getItem());
+        World world = itemUseContext.getLevel();
+        if (world.isClientSide) {
+            return ActionResult.success(itemUseContext.getItemInHand());
         } else {
-            ItemStack itemUseContextItem = itemUseContext.getItem();
+            ItemStack itemUseContextItem = itemUseContext.getItemInHand();
             PlayerEntity itemUseContextPlayer = itemUseContext.getPlayer();
-            BlockPos itemUseContextPos = itemUseContext.getPos();
-            Direction itemUseContextFace = itemUseContext.getFace();
+            BlockPos itemUseContextPos = itemUseContext.getClickedPos();
+            Direction itemUseContextFace = itemUseContext.getClickedFace();
             BlockState blockState = world.getBlockState(itemUseContextPos);
 
             BlockPos blockPos;
             if (blockState.getCollisionShape(world, itemUseContextPos).isEmpty()) {
                 blockPos = itemUseContextPos;
             } else {
-                blockPos = itemUseContextPos.offset(itemUseContextFace);
+                blockPos = itemUseContextPos.relative(itemUseContextFace);
             }
 
             if(itemUseContextPlayer != null){
@@ -71,36 +73,36 @@ public class WonderfulWheatItem extends ArtifactItem {
                             ISummonable summon = CapabilityHelper.getSummonableCapability(llamaEntity);
                             if(summon != null){
 
-                                summon.setSummoner(itemUseContextPlayer.getUniqueID());
-                                summonerCap.setSummonedLlama(llamaEntity.getUniqueID());
+                                summon.setSummoner(itemUseContextPlayer.getUUID());
+                                summonerCap.setSummonedLlama(llamaEntity.getUUID());
 
                                 createLlama(world, itemUseContextPlayer, blockPos, llamaEntity);
 
-                                itemUseContextItem.damageItem(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemUseContextItem)));
+                                itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemUseContextItem)));
 
                             }
                         }
                     } else{
                         if(world instanceof ServerWorld){
-                            Entity entity = ((ServerWorld)world).getEntityByUuid(summonerCap.getSummonedLlama());
+                            Entity entity = ((ServerWorld)world).getEntity(summonerCap.getSummonedLlama());
                             if(entity instanceof LlamaEntity){
                                 LlamaEntity llamaEntity = (LlamaEntity) entity;
-                                llamaEntity.teleportKeepLoaded((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D);
+                                llamaEntity.teleportToWithTicket((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D);
                             }
                         }
                     }
                 }
             }
 
-            return ActionResult.resultConsume(itemUseContextItem);
+            return ActionResult.consume(itemUseContextItem);
         }
     }
 
     private void createLlama(World world, PlayerEntity itemUseContextPlayer, BlockPos blockPos, LlamaEntity llamaEntity) {
-        llamaEntity.setTamedBy(itemUseContextPlayer);
+        llamaEntity.tameWithName(itemUseContextPlayer);
         llamaEntity.setVariant(2);
 
-        Method setStrength = ObfuscationReflectionHelper.findMethod(LlamaEntity.class, "func_190706_p", Integer.TYPE);
+        Method setStrength = ObfuscationReflectionHelper.findMethod(LlamaEntity.class, "setStrength", Integer.TYPE);
         try {
             setStrength.invoke(llamaEntity, 5);
         } catch (IllegalAccessException | InvocationTargetException e) {
@@ -110,12 +112,12 @@ public class WonderfulWheatItem extends ArtifactItem {
         ModifiableAttributeInstance maxHealth = llamaEntity.getAttribute(Attributes.MAX_HEALTH);
         if(maxHealth != null)
             maxHealth.setBaseValue(30.0D);
-        Inventory horseChest = ObfuscationReflectionHelper.getPrivateValue(AbstractHorseEntity.class, llamaEntity, "field_110296_bG");
+        Inventory horseChest = ObfuscationReflectionHelper.getPrivateValue(AbstractHorseEntity.class, llamaEntity, "inventory");
         if (horseChest != null) {
-            horseChest.setInventorySlotContents(1, new ItemStack(Items.RED_CARPET.asItem()));
+            horseChest.setItem(1, new ItemStack(Items.RED_CARPET.asItem()));
         }
 
-        llamaEntity.setLocationAndAngles((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D, 0.0F, 0.0F);
+        llamaEntity.moveTo((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D, 0.0F, 0.0F);
 
         llamaEntity.targetSelector.addGoal(1, new LlamaOwnerHurtByTargetGoal(llamaEntity));
         llamaEntity.targetSelector.addGoal(2, new LlamaOwnerHurtTargetGoal(llamaEntity));
@@ -124,15 +126,15 @@ public class WonderfulWheatItem extends ArtifactItem {
         }));
         llamaEntity.goalSelector.addGoal(2, new LlamaFollowOwnerGoal(llamaEntity, 2.1D, 10.0F, 2.0F, false));
 
-        SoundHelper.playCreatureSound(itemUseContextPlayer, SoundEvents.ENTITY_LLAMA_AMBIENT);
+        SoundHelper.playCreatureSound(itemUseContextPlayer, SoundEvents.LLAMA_AMBIENT);
 
-        world.addEntity(llamaEntity);
+        world.addFreshEntity(llamaEntity);
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
-        super.addInformation(stack, world, list, flag);
+        super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
 

@@ -20,6 +20,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class BonusShotEnchantment extends DungeonsEnchantment {
 
@@ -40,7 +42,7 @@ public class BonusShotEnchantment extends DungeonsEnchantment {
             if(CrossbowItem.isCharged(stack)){
                 boolean uniqueWeaponFlag = hasBonusShotBuiltIn(stack);
                 if(ModEnchantmentHelper.hasEnchantment(stack, RangedEnchantmentList.BONUS_SHOT) || uniqueWeaponFlag){
-                    int bonusShotLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.BONUS_SHOT, stack);
+                    int bonusShotLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.BONUS_SHOT, stack);
                     float damageMultiplier;
                     damageMultiplier = 0.1F + (bonusShotLevel-1 * 0.07F);
                     if(uniqueWeaponFlag) damageMultiplier += 0.1F;
@@ -63,7 +65,7 @@ public class BonusShotEnchantment extends DungeonsEnchantment {
         int charge = event.getCharge();
         boolean uniqueWeaponFlag = hasBonusShotBuiltIn(stack);
         if(ModEnchantmentHelper.hasEnchantment(stack, RangedEnchantmentList.BONUS_SHOT) || uniqueWeaponFlag){
-            int bonusShotLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.BONUS_SHOT, stack);
+            int bonusShotLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.BONUS_SHOT, stack);
             float damageMultiplier;
             damageMultiplier = 0.1F + (bonusShotLevel-1 * 0.07F);
             if(uniqueWeaponFlag) damageMultiplier += 0.1F;

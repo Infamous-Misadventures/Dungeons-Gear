@@ -19,6 +19,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.UUID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class LifeBoostEnchantment extends DungeonsEnchantment {
     private static final UUID LIFE_BOOST = UUID.fromString("ddea725c-1b2e-432e-b96d-871526e69606");
@@ -36,7 +38,7 @@ public class LifeBoostEnchantment extends DungeonsEnchantment {
         PlayerEntity oldPlayer = event.getOriginal();
         DamageSource lastDamageSource = oldPlayer.getLastDamageSource();
         if(lastDamageSource != null
-                && (lastDamageSource.getTrueSource() == null || lastDamageSource.getTrueSource() == oldPlayer)) return;
+                && (lastDamageSource.getEntity() == null || lastDamageSource.getEntity() == oldPlayer)) return;
         // must have been killed by another entity to receive the life boost
 
         ModifiableAttributeInstance oldMaxHealth = oldPlayer.getAttribute(Attributes.MAX_HEALTH);
@@ -49,11 +51,11 @@ public class LifeBoostEnchantment extends DungeonsEnchantment {
         }
 
         PlayerEntity newPlayer = event.getPlayer();
-        int lifeBoostLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.LIFE_BOOST, oldPlayer);
+        int lifeBoostLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.LIFE_BOOST, oldPlayer);
         if(lifeBoostLevel > 0){
             ModifiableAttributeInstance newMaxHealth = newPlayer.getAttribute(Attributes.MAX_HEALTH);
             if (newMaxHealth != null) {
-                newMaxHealth.applyPersistentModifier(new AttributeModifier(LIFE_BOOST, "life boost addition", (2.0D * lifeBoostLevel) + oldLifeBoostValue, AttributeModifier.Operation.ADDITION));
+                newMaxHealth.addPermanentModifier(new AttributeModifier(LIFE_BOOST, "life boost addition", (2.0D * lifeBoostLevel) + oldLifeBoostValue, AttributeModifier.Operation.ADDITION));
             }
         }
     }

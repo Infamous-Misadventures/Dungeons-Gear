@@ -19,33 +19,33 @@ public class DualWieldItemProperties {
         addDualProperty(ItemRegistry.MAULER.get());
         addDualProperty(ItemRegistry.SICKLE.get());
         addDualProperty(ItemRegistry.NIGHTMARES_BITE.get());
-        ItemModelsProperties.registerProperty(ItemRegistry.THE_LAST_LAUGH.get(), new ResourceLocation("dual"),
+        ItemModelsProperties.register(ItemRegistry.THE_LAST_LAUGH.get(), new ResourceLocation("dual"),
                 (stack, world, entity) -> {
                     if (entity == null) {
                         return 1.0F;
                     } else {
-                        return entity.getHeldItemMainhand() == stack || entity.getHeldItemOffhand() == stack ? 0.0F
+                        return entity.getMainHandItem() == stack || entity.getOffhandItem() == stack ? 0.0F
                                 : 1.0F;
                     }
                 });
-        ItemModelsProperties.registerProperty(ItemRegistry.THE_LAST_LAUGH.get(), new ResourceLocation("offhand"),
+        ItemModelsProperties.register(ItemRegistry.THE_LAST_LAUGH.get(), new ResourceLocation("offhand"),
                 (stack, world, entity) -> {
                     if (entity == null) {
                         return 0.0F;
                     } else {
-                        return entity.getHeldItemOffhand() == stack ? 1.0F
+                        return entity.getOffhandItem() == stack ? 1.0F
                                 : 0.0F;
                     }
                 });
     }
 
     private static void addDualProperty(Item i) {
-        ItemModelsProperties.registerProperty(i, new ResourceLocation("dual"),
+        ItemModelsProperties.register(i, new ResourceLocation("dual"),
                 (stack, world, entity) -> {
                     if (entity == null) {
                         return 1.0F;
                     } else {
-                        return entity.getHeldItemOffhand() == stack || entity.getHeldItemMainhand() == stack ? 0.0F
+                        return entity.getOffhandItem() == stack || entity.getMainHandItem() == stack ? 0.0F
                                 : 1.0F;
                     }
                 });

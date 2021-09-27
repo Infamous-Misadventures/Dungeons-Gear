@@ -8,29 +8,31 @@ import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 public class DungeonsEnchantment extends Enchantment {
     protected DungeonsEnchantment(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType[] slots) {
         super(rarityIn, typeIn, slots);
     }
 
     @Override
-    public boolean canVillagerTrade() {
+    public boolean isTradeable() {
         return ModEnchantmentHelper.isNotBlacklistedEnchant(this)
                 && DungeonsGearConfig.ENABLE_ENCHANTMENT_TRADES.get()
-                && super.canVillagerTrade();
+                && super.isTradeable();
     }
 
     @Override
-    public boolean canGenerateInLoot() {
+    public boolean isDiscoverable() {
         return ModEnchantmentHelper.isNotBlacklistedEnchant(this)
                 && DungeonsGearConfig.ENABLE_ENCHANTMENT_LOOT.get()
-                && super.canGenerateInLoot();
+                && super.isDiscoverable();
     }
 
     @Override
-    public boolean canApply(ItemStack stack) {
+    public boolean canEnchant(ItemStack stack) {
         return ModEnchantmentHelper.isNotBlacklistedEnchant(this)
-                && super.canApply(stack);
+                && super.canEnchant(stack);
     }
 
     @Override
@@ -48,7 +50,7 @@ public class DungeonsEnchantment extends Enchantment {
     }
 
     @Override
-    public boolean isTreasureEnchantment() {
+    public boolean isTreasureOnly() {
         return ModEnchantmentHelper.isTreasureEnchant(this);
     }
 }

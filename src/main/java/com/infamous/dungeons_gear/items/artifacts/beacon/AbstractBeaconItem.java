@@ -18,6 +18,8 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.item.Item.Properties;
+
 public abstract class AbstractBeaconItem extends ArtifactItem{
 
     public static final double RAYTRACE_DISTANCE = 256;
@@ -37,9 +39,9 @@ public abstract class AbstractBeaconItem extends ArtifactItem{
     public abstract boolean canFire(PlayerEntity playerEntity, ItemStack stack);
 
     public static ItemStack getBeacon(PlayerEntity player) {
-        ItemStack heldItem = player.getHeldItemMainhand();
+        ItemStack heldItem = player.getMainHandItem();
         if (!(heldItem.getItem() instanceof AbstractBeaconItem)) {
-            heldItem = player.getHeldItemOffhand();
+            heldItem = player.getOffhandItem();
             if (!(heldItem.getItem() instanceof AbstractBeaconItem)) {
                 return ItemStack.EMPTY;
             }
@@ -50,8 +52,8 @@ public abstract class AbstractBeaconItem extends ArtifactItem{
     public abstract BeaconBeamColor getBeamColor();
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        ItemStack itemstack = playerIn.getHeldItem(handIn);
+    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+        ItemStack itemstack = playerIn.getItemInHand(handIn);
 
         if(canFire(playerIn, itemstack)){
             SoundHelper.playBeaconSound(playerIn, true);
@@ -59,8 +61,8 @@ public abstract class AbstractBeaconItem extends ArtifactItem{
             return new ActionResult<>(ActionResultType.FAIL, itemstack);
         }
 
-        if (!worldIn.isRemote) {
-            playerIn.setActiveHand(handIn);
+        if (!worldIn.isClientSide) {
+            playerIn.startUsingItem(handIn);
             ArtifactItem.triggerSynergy(playerIn, itemstack);
         }
         return new ActionResult<>(ActionResultType.PASS, itemstack);
@@ -68,7 +70,7 @@ public abstract class AbstractBeaconItem extends ArtifactItem{
 
     @Override
     public ActionResult<ItemStack> procArtifact(ItemUseContext iuc) {
-        return new ActionResult<>(ActionResultType.PASS, iuc.getItem());
+        return new ActionResult<>(ActionResultType.PASS, iuc.getItemInHand());
     }
 
     @Override
@@ -77,38 +79,38 @@ public abstract class AbstractBeaconItem extends ArtifactItem{
     }
 
     @Override
-    public UseAction getUseAction(ItemStack stack) {
+    public UseAction getUseAnimation(ItemStack stack) {
         return UseAction.NONE;
     }
 
     @Override
-    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft) {
+    public void releaseUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft) {
         SoundHelper.playBeaconSound(entityLiving, false);
     }
 
     @Override
-    public void onUse(World world, LivingEntity livingEntity, ItemStack stack, int count) {
+    public void onUseTick(World world, LivingEntity livingEntity, ItemStack stack, int count) {
         if (livingEntity instanceof PlayerEntity) {
             PlayerEntity playerEntity = (PlayerEntity) livingEntity;
 
             if (playerEntity.isCreative()|| this.consumeTick(playerEntity)) {
                 RayTraceResult result = playerEntity.pick(RAYTRACE_DISTANCE, 1.0f, false);
                 Vector3d eyeVector = playerEntity.getEyePosition(1.0f);
-                Vector3d lookVector = playerEntity.getLook(1.0F);
+                Vector3d lookVector = playerEntity.getViewVector(1.0F);
                 Vector3d targetVector = eyeVector.add(lookVector.x * RAYTRACE_DISTANCE, lookVector.y * RAYTRACE_DISTANCE, lookVector.z * RAYTRACE_DISTANCE);
-                AxisAlignedBB axisalignedbb = playerEntity.getBoundingBox().expand(lookVector.scale(RAYTRACE_DISTANCE)).grow(1.0D, 1.0D, 1.0D);
+                AxisAlignedBB axisalignedbb = playerEntity.getBoundingBox().expandTowards(lookVector.scale(RAYTRACE_DISTANCE)).inflate(1.0D, 1.0D, 1.0D);
                 EntityRayTraceResult entityraytraceresult =
-                        ProjectileHelper.rayTraceEntities(world, playerEntity, eyeVector, targetVector, axisalignedbb,
-                                entity -> entity instanceof LivingEntity && !entity.isSpectator() && entity.canBeCollidedWith());
-                if (entityraytraceresult != null && result.getHitVec().squareDistanceTo(eyeVector) > entityraytraceresult.getHitVec().squareDistanceTo(eyeVector)) {
-                    if (!world.isRemote()) {
+                        ProjectileHelper.getEntityHitResult(world, playerEntity, eyeVector, targetVector, axisalignedbb,
+                                entity -> entity instanceof LivingEntity && !entity.isSpectator() && entity.isPickable());
+                if (entityraytraceresult != null && result.getLocation().distanceToSqr(eyeVector) > entityraytraceresult.getLocation().distanceToSqr(eyeVector)) {
+                    if (!world.isClientSide()) {
                         Entity entity = entityraytraceresult.getEntity();
-                        entity.hurtResistantTime = 0;
-                        entity.attackEntityFrom(DamageSource.causeIndirectMagicDamage(playerEntity, playerEntity), BEAM_DAMAGE_PER_TICK);
+                        entity.invulnerableTime = 0;
+                        entity.hurt(DamageSource.indirectMagic(playerEntity, playerEntity), BEAM_DAMAGE_PER_TICK);
                     }
                 }
                 if(count % 20 == 0){ // damage the stack every second used, not every tick used
-                    stack.damageItem(1, playerEntity, entity -> entity.sendBreakAnimation(playerEntity.getActiveHand()));
+                    stack.hurtAndBreak(1, playerEntity, entity -> entity.broadcastBreakEvent(playerEntity.getUsedItemHand()));
                 }
             }
         }

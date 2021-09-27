@@ -7,5 +7,5 @@ import net.minecraft.item.ItemStack;
  * This is a modlauncher/FML bug, and this can be removed once it is fixed.
  */
 public interface IRendersAsItem {
-    ItemStack func_184543_l();
+    ItemStack getItem();
 }

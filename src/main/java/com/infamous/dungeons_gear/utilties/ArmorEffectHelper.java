@@ -40,25 +40,25 @@ public class ArmorEffectHelper {
                 ISummonable summonable = CapabilityHelper.getSummonableCapability(batEntity);
                 if(summonable != null){
 
-                    summonable.setSummoner(playerEntity.getUniqueID());
-                    summonerCap.setSummonedBat(batEntity.getUniqueID());
+                    summonable.setSummoner(playerEntity.getUUID());
+                    summonerCap.setSummonedBat(batEntity.getUUID());
 
                     createBat(playerEntity, world, batEntity);
                 }
             }
         } else{
             if(world instanceof ServerWorld){
-                Entity entity = ((ServerWorld)world).getEntityByUuid(summonerCap.getSummonedBat());
+                Entity entity = ((ServerWorld)world).getEntity(summonerCap.getSummonedBat());
                 if(entity instanceof BatEntity){
                     BatEntity batEntity = (BatEntity) entity;
-                    batEntity.teleportKeepLoaded(playerEntity.getPosX() + playerEntity.getEyeHeight(), playerEntity.getPosY() + playerEntity.getEyeHeight(), playerEntity.getPosZ() + playerEntity.getEyeHeight());
+                    batEntity.teleportToWithTicket(playerEntity.getX() + playerEntity.getEyeHeight(), playerEntity.getY() + playerEntity.getEyeHeight(), playerEntity.getZ() + playerEntity.getEyeHeight());
                 }
             }
         }
     }
 
     private static void createBat(PlayerEntity playerEntity, World world, BatEntity batEntity) {
-        batEntity.setLocationAndAngles((double)playerEntity.getPosX() + playerEntity.getEyeHeight(), (double)playerEntity.getPosY() + playerEntity.getEyeHeight(), (double)playerEntity.getPosZ() + playerEntity.getEyeHeight(), 0.0F, 0.0F);
+        batEntity.moveTo((double)playerEntity.getX() + playerEntity.getEyeHeight(), (double)playerEntity.getY() + playerEntity.getEyeHeight(), (double)playerEntity.getZ() + playerEntity.getEyeHeight(), 0.0F, 0.0F);
 
         batEntity.goalSelector.addGoal(1, new BatMeleeAttackGoal(batEntity, 1.0D, true));
         batEntity.goalSelector.addGoal(2, new BatFollowOwnerGoal(batEntity, 2.1D, 10.0F, 2.0F, false));
@@ -69,25 +69,25 @@ public class ArmorEffectHelper {
         batEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(batEntity, LivingEntity.class, 5, false, false,
                 (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
 
-        SoundHelper.playCreatureSound(playerEntity, SoundEvents.ENTITY_BAT_AMBIENT);
-        world.addEntity(batEntity);
+        SoundHelper.playCreatureSound(playerEntity, SoundEvents.BAT_AMBIENT);
+        world.addFreshEntity(batEntity);
     }
 
     public static void teleportOnHit(LivingEntity livingEntity){
-        World world = livingEntity.getEntityWorld();
-        if (!world.isRemote) {
+        World world = livingEntity.getCommandSenderWorld();
+        if (!world.isClientSide) {
 
             for(int i = 0; i < 16; ++i) {
-                double teleportX = livingEntity.getPosX() + (livingEntity.getRNG().nextDouble() - 0.5D) * 16.0D;
-                double teleportY = MathHelper.clamp(livingEntity.getPosY() + (double)(livingEntity.getRNG().nextInt(16) - 8), 0.0D, (double)(world.func_234938_ad_() - 1));
-                double teleportZ = livingEntity.getPosZ() + (livingEntity.getRNG().nextDouble() - 0.5D) * 16.0D;
+                double teleportX = livingEntity.getX() + (livingEntity.getRandom().nextDouble() - 0.5D) * 16.0D;
+                double teleportY = MathHelper.clamp(livingEntity.getY() + (double)(livingEntity.getRandom().nextInt(16) - 8), 0.0D, (double)(world.getHeight() - 1));
+                double teleportZ = livingEntity.getZ() + (livingEntity.getRandom().nextDouble() - 0.5D) * 16.0D;
                 if (livingEntity.isPassenger()) {
                     livingEntity.stopRiding();
                 }
 
-                if (livingEntity.attemptTeleport(teleportX, teleportY, teleportZ, true)) {
-                    SoundEvent soundEvent = livingEntity instanceof FoxEntity ? SoundEvents.ENTITY_FOX_TELEPORT : SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT;
-                    world.playSound((PlayerEntity)null, livingEntity.getPosition(), soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                if (livingEntity.randomTeleport(teleportX, teleportY, teleportZ, true)) {
+                    SoundEvent soundEvent = livingEntity instanceof FoxEntity ? SoundEvents.FOX_TELEPORT : SoundEvents.CHORUS_FRUIT_TELEPORT;
+                    world.playSound((PlayerEntity)null, livingEntity.blockPosition(), soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
                     livingEntity.playSound(soundEvent, 1.0F, 1.0F);
                     break;
                 }
@@ -101,8 +101,8 @@ public class ArmorEffectHelper {
         boolean doInvulnerableJump = invulnerableJump || invulnerableJump2;
 
         if (doInvulnerableJump) {
-            EffectInstance resistance = new EffectInstance(Effects.RESISTANCE, 20, 4);
-            playerEntity.addPotionEffect(resistance);
+            EffectInstance resistance = new EffectInstance(Effects.DAMAGE_RESISTANCE, 20, 4);
+            playerEntity.addEffect(resistance);
         }
     }
 
@@ -112,7 +112,7 @@ public class ArmorEffectHelper {
         float totalJumpBoost = jumpBoost * 0.002F + jumpBoost2 * 0.002F;
 
         if (totalJumpBoost > 0) {
-            playerEntity.setMotion(playerEntity.getMotion().add(0, totalJumpBoost, 0));
+            playerEntity.setDeltaMovement(playerEntity.getDeltaMovement().add(0, totalJumpBoost, 0));
         }
     }
 
@@ -123,15 +123,15 @@ public class ArmorEffectHelper {
         }
 
         if (ModEnchantmentHelper.hasEnchantment(playerEntity, ArmorEnchantmentList.FIRE_TRAIL)) {
-            int fireTrailLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.FIRE_TRAIL, playerEntity);
+            int fireTrailLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.FIRE_TRAIL, playerEntity);
             AreaOfEffectHelper.burnNearbyEnemies(playerEntity, 1.0F * fireTrailLevel, 1.5F);
         }
 
         // TODO: Beenest Armor and Buzzynest Armor
         if (ModEnchantmentHelper.hasEnchantment(playerEntity, ArmorEnchantmentList.TUMBLEBEE)) {
-            int tumblebeeLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.TUMBLEBEE, playerEntity);
+            int tumblebeeLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.TUMBLEBEE, playerEntity);
 
-            float tumblebeeRand = playerEntity.getRNG().nextFloat();
+            float tumblebeeRand = playerEntity.getRandom().nextFloat();
             if (tumblebeeRand <= 0.333F * tumblebeeLevel) {
                 summonTumblebeeBee(playerEntity);
             }
@@ -139,10 +139,10 @@ public class ArmorEffectHelper {
 
         boolean highlandArmorFlag = hasSwiftfootedBuiltIn(chestplate) || hasSwiftfootedBuiltIn(helmet);
         if (ModEnchantmentHelper.hasEnchantment(playerEntity, ArmorEnchantmentList.SWIFTFOOTED) || highlandArmorFlag) {
-            int swiftfootedLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.SWIFTFOOTED, playerEntity);
+            int swiftfootedLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.SWIFTFOOTED, playerEntity);
             if (highlandArmorFlag) swiftfootedLevel++;
-            EffectInstance speedBoost = new EffectInstance(Effects.SPEED, 60, swiftfootedLevel - 1);
-            playerEntity.addPotionEffect(speedBoost);
+            EffectInstance speedBoost = new EffectInstance(Effects.MOVEMENT_SPEED, 60, swiftfootedLevel - 1);
+            playerEntity.addEffect(speedBoost);
         }
 
         handleDynamoEnchantment(playerEntity);
@@ -153,10 +153,10 @@ public class ArmorEffectHelper {
     }
 
     private static void handleDynamoEnchantment(PlayerEntity playerEntity) {
-        ItemStack mainhand = playerEntity.getHeldItemMainhand();
+        ItemStack mainhand = playerEntity.getMainHandItem();
         boolean uniqueWeaponFlag = hasDynamoBuiltIn(mainhand);
         if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.DYNAMO) || uniqueWeaponFlag) {
-            int dynamoLevel = EnchantmentHelper.getEnchantmentLevel(MeleeRangedEnchantmentList.DYNAMO, mainhand);
+            int dynamoLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeRangedEnchantmentList.DYNAMO, mainhand);
             if (uniqueWeaponFlag) dynamoLevel++;
             ICombo comboCap = CapabilityHelper.getComboCapability(playerEntity);
             if (comboCap == null) return;
@@ -174,11 +174,11 @@ public class ArmorEffectHelper {
     private static void summonTumblebeeBee(PlayerEntity playerEntity) {
         ISummoner summonerCap = CapabilityHelper.getSummonerCapability(playerEntity);
         if (summonerCap == null) return;
-        BeeEntity beeEntity = EntityType.BEE.create(playerEntity.world);
+        BeeEntity beeEntity = EntityType.BEE.create(playerEntity.level);
         if (beeEntity != null) {
             ISummonable summonable = CapabilityHelper.getSummonableCapability(beeEntity);
-            if (summonable != null && summonerCap.addTumblebeeBee(beeEntity.getUniqueID())) {
-                summonable.setSummoner(playerEntity.getUniqueID());
+            if (summonable != null && summonerCap.addTumblebeeBee(beeEntity.getUUID())) {
+                summonable.setSummoner(playerEntity.getUUID());
 
                 createBee(playerEntity, beeEntity);
             } else {
@@ -188,7 +188,7 @@ public class ArmorEffectHelper {
     }
 
     private static void createBee(PlayerEntity playerEntity, BeeEntity beeEntity) {
-        beeEntity.setLocationAndAngles((double) playerEntity.getPosX() + 0.5D, (double) playerEntity.getPosY() + 0.05D, (double) playerEntity.getPosZ() + 0.5D, 0.0F, 0.0F);
+        beeEntity.moveTo((double) playerEntity.getX() + 0.5D, (double) playerEntity.getY() + 0.05D, (double) playerEntity.getZ() + 0.5D, 0.0F, 0.0F);
 
         beeEntity.goalSelector.addGoal(2, new BeeFollowOwnerGoal(beeEntity, 2.1D, 10.0F, 2.0F, false));
 
@@ -197,8 +197,8 @@ public class ArmorEffectHelper {
         beeEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(beeEntity, LivingEntity.class, 5, false, false,
                 (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
 
-        SoundHelper.playCreatureSound(playerEntity, SoundEvents.ENTITY_BEE_LOOP);
-        playerEntity.world.addEntity(beeEntity);
+        SoundHelper.playCreatureSound(playerEntity, SoundEvents.BEE_LOOP);
+        playerEntity.level.addFreshEntity(beeEntity);
     }
 
 

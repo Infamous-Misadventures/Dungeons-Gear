@@ -26,6 +26,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = MODID)
 public class EchoEnchantment extends AOEDamageEnchantment {
 
@@ -41,10 +43,10 @@ public class EchoEnchantment extends AOEDamageEnchantment {
         ) {
             PlayerEntity attacker = (PlayerEntity) event.getPlayer();
             LivingEntity victim = (LivingEntity) event.getTarget();
-            ItemStack mainhand = attacker.getHeldItemMainhand();
+            ItemStack mainhand = attacker.getMainHandItem();
             boolean uniqueWeaponFlag = hasEchoBuiltIn(mainhand);
             if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.ECHO) || uniqueWeaponFlag) {
-                int echoLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.ECHO, mainhand);
+                int echoLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.ECHO, mainhand);
                 if (uniqueWeaponFlag) echoLevel++;
                 // gets the attack damage of the original attack before any enchantment modifiers are added
                 float attackDamage = (float) attacker.getAttributeValue(Attributes.ATTACK_DAMAGE);
@@ -67,7 +69,7 @@ public class EchoEnchantment extends AOEDamageEnchantment {
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() ||
                 (!(enchantment instanceof DamageEnchantment) && !(enchantment instanceof DamageBoostEnchantment) && !(enchantment instanceof AOEDamageEnchantment));
     }

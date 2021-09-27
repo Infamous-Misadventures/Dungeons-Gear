@@ -42,11 +42,11 @@ public class GauntletItem extends TieredItem implements IDualWieldWeapon, IVanis
 
     public GauntletItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Item.Properties properties, boolean isUnique) {
         super(tier, properties);
-        this.attackDamage = (float) attackDamageIn + tier.getAttackDamage();
+        this.attackDamage = (float) attackDamageIn + tier.getAttackDamageBonus();
         this.attackSpeed = attackSpeedIn;
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", attackDamageIn, AttributeModifier.Operation.ADDITION));
-        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", attackDamageIn, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", attackSpeedIn, AttributeModifier.Operation.ADDITION));
         this.attributeModifiers = builder.build();
         this.unique = isUnique;
     }
@@ -62,27 +62,27 @@ public class GauntletItem extends TieredItem implements IDualWieldWeapon, IVanis
     }
 
     @Override
-    public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        target.hurtResistantTime = 0;
+    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        target.invulnerableTime = 0;
         if (stack.getCapability(OffhandProvider.OFFHAND_CAPABILITY).isPresent()) {
             if (!stack.getCapability(OffhandProvider.OFFHAND_CAPABILITY).resolve().get().getLinkedItemStack().isEmpty())
                 stack = stack.getCapability(OffhandProvider.OFFHAND_CAPABILITY).resolve().get().getLinkedItemStack();
         }
-        return super.hitEntity(stack, target, attacker);
+        return super.hurtEnemy(stack, target, attacker);
     }
 
     @Override
     public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-        if (entityIn instanceof LivingEntity && !worldIn.isRemote)
+        if (entityIn instanceof LivingEntity && !worldIn.isClientSide)
             update((LivingEntity) entityIn, stack, itemSlot);
     }
 
-    public boolean canPlayerBreakBlockWhileHolding(BlockState state, World worldIn, BlockPos pos, PlayerEntity player) {
+    public boolean canAttackBlock(BlockState state, World worldIn, BlockPos pos, PlayerEntity player) {
         return !player.isCreative();
     }
 
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
-        return equipmentSlot == EquipmentSlotType.MAINHAND ? this.attributeModifiers : super.getAttributeModifiers(equipmentSlot);
+    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlotType equipmentSlot) {
+        return equipmentSlot == EquipmentSlotType.MAINHAND ? this.attributeModifiers : super.getDefaultAttributeModifiers(equipmentSlot);
     }
 
     public float getDestroySpeed(ItemStack stack, BlockState state) {
@@ -92,10 +92,10 @@ public class GauntletItem extends TieredItem implements IDualWieldWeapon, IVanis
     /**
      * Called when a Block is destroyed using this Item. Return true to trigger the "Use Item" statistic.
      */
-    public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-        if (state.getBlockHardness(worldIn, pos) != 0.0F) {
-            stack.damageItem(2, entityLiving, (p_220044_0_) -> {
-                p_220044_0_.sendBreakAnimation(EquipmentSlotType.MAINHAND);
+    public boolean mineBlock(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
+        if (state.getDestroySpeed(worldIn, pos) != 0.0F) {
+            stack.hurtAndBreak(2, entityLiving, (p_220044_0_) -> {
+                p_220044_0_.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
             });
         }
 
@@ -106,13 +106,13 @@ public class GauntletItem extends TieredItem implements IDualWieldWeapon, IVanis
      * Check whether this Item can harvest the given Block
      */
 
-    public boolean canHarvestBlock(BlockState blockIn) {
+    public boolean isCorrectToolForDrops(BlockState blockIn) {
         return blockIn.getHarvestLevel() < 0;
     }
 
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return enchantment.type.canEnchantItem(Items.IRON_SWORD) && enchantment != Enchantments.SWEEPING;
+        return enchantment.category.canEnchant(Items.IRON_SWORD) && enchantment != Enchantments.SWEEPING_EDGE;
     }
 
     @Override
@@ -149,19 +149,19 @@ public class GauntletItem extends TieredItem implements IDualWieldWeapon, IVanis
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
-        super.addInformation(stack, world, list, flag);
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+        super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        if (handIn == Hand.OFF_HAND && worldIn.isRemote) {
+    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+        if (handIn == Hand.OFF_HAND && worldIn.isClientSide) {
             CombatEventHandler.checkForOffhandAttack();
-            ItemStack offhand = playerIn.getHeldItem(handIn);
+            ItemStack offhand = playerIn.getItemInHand(handIn);
             return new ActionResult<>(ActionResultType.SUCCESS, offhand);
         } else {
-            return new ActionResult<>(ActionResultType.PASS, playerIn.getHeldItem(handIn));
+            return new ActionResult<>(ActionResultType.PASS, playerIn.getItemInHand(handIn));
         }
     }
 

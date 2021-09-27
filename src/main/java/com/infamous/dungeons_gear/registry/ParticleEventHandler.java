@@ -16,6 +16,6 @@ public class ParticleEventHandler {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onParticleFactory(ParticleFactoryRegisterEvent event){
-        Minecraft.getInstance().particles.registerFactory(ParticleInit.ELECTRIC_SHOCK.get(), ElectricShockParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(ParticleInit.ELECTRIC_SHOCK.get(), ElectricShockParticle.Factory::new);
     }
 }

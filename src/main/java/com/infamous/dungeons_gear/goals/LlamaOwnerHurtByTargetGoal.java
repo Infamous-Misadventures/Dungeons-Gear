@@ -18,6 +18,8 @@ import java.util.UUID;
 
 import static com.infamous.dungeons_gear.goals.GoalUtils.*;
 
+import net.minecraft.entity.ai.goal.Goal.Flag;
+
 public class LlamaOwnerHurtByTargetGoal extends TargetGoal {
     private final LlamaEntity llamaEntity;
     private LivingEntity attacker;
@@ -26,31 +28,31 @@ public class LlamaOwnerHurtByTargetGoal extends TargetGoal {
     public LlamaOwnerHurtByTargetGoal(LlamaEntity llamaEntity) {
         super(llamaEntity, false);
         this.llamaEntity = llamaEntity;
-        this.setMutexFlags(EnumSet.of(Flag.TARGET));
+        this.setFlags(EnumSet.of(Flag.TARGET));
     }
 
-    public boolean shouldExecute() {
-        if (this.llamaEntity.isTame()) {
+    public boolean canUse() {
+        if (this.llamaEntity.isTamed()) {
             LivingEntity owner = SummoningHelper.getSummoner(this.llamaEntity);
             if (owner == null) {
                 return false;
             } else {
-                this.attacker = owner.getRevengeTarget();
-                int revengeTimer = owner.getRevengeTimer();
-                return revengeTimer != this.timestamp && this.isSuitableTarget(this.attacker, EntityPredicate.DEFAULT) && shouldAttackEntity(this.attacker, owner);
+                this.attacker = owner.getLastHurtByMob();
+                int revengeTimer = owner.getLastHurtByMobTimestamp();
+                return revengeTimer != this.timestamp && this.canAttack(this.attacker, EntityPredicate.DEFAULT) && shouldAttackEntity(this.attacker, owner);
             }
         } else {
             return false;
         }
     }
 
-    public void startExecuting() {
-        this.goalOwner.setAttackTarget(this.attacker);
+    public void start() {
+        this.mob.setTarget(this.attacker);
         LivingEntity owner = SummoningHelper.getSummoner(this.llamaEntity);
         if (owner != null) {
-            this.timestamp = owner.getRevengeTimer();
+            this.timestamp = owner.getLastHurtByMobTimestamp();
         }
 
-        super.startExecuting();
+        super.start();
     }
 }

@@ -28,6 +28,8 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 
+import net.minecraft.item.Item.Properties;
+
 public class EnchantedGrassItem extends ArtifactItem {
 
     public EnchantedGrassItem(Properties properties) {
@@ -36,22 +38,22 @@ public class EnchantedGrassItem extends ArtifactItem {
     }
 
     public ActionResult<ItemStack> procArtifact(ItemUseContext itemUseContext) {
-        World world = itemUseContext.getWorld();
-        if (world.isRemote) {
-            return ActionResult.resultSuccess(itemUseContext.getItem());
+        World world = itemUseContext.getLevel();
+        if (world.isClientSide) {
+            return ActionResult.success(itemUseContext.getItemInHand());
         } else {
-            ItemStack itemUseContextItem = itemUseContext.getItem();
+            ItemStack itemUseContextItem = itemUseContext.getItemInHand();
             PlayerEntity itemUseContextPlayer = itemUseContext.getPlayer();
             Hand itemUseContextHand = itemUseContext.getHand();
-            BlockPos itemUseContextPos = itemUseContext.getPos();
-            Direction itemUseContextFace = itemUseContext.getFace();
+            BlockPos itemUseContextPos = itemUseContext.getClickedPos();
+            Direction itemUseContextFace = itemUseContext.getClickedFace();
             BlockState blockState = world.getBlockState(itemUseContextPos);
 
             BlockPos blockPos;
             if (blockState.getCollisionShape(world, itemUseContextPos).isEmpty()) {
                 blockPos = itemUseContextPos;
             } else {
-                blockPos = itemUseContextPos.offset(itemUseContextFace);
+                blockPos = itemUseContextPos.relative(itemUseContextFace);
             }
 
             if(itemUseContextPlayer != null){
@@ -63,43 +65,43 @@ public class EnchantedGrassItem extends ArtifactItem {
                             ISummonable summon = CapabilityHelper.getSummonableCapability(sheepEntity);
                             if(summon != null){
 
-                                summon.setSummoner(itemUseContextPlayer.getUniqueID());
-                                summonerCap.setSummonedSheep(sheepEntity.getUniqueID());
+                                summon.setSummoner(itemUseContextPlayer.getUUID());
+                                summonerCap.setSummonedSheep(sheepEntity.getUUID());
 
                                 createEnchantedSheep(world, itemUseContextPlayer, blockPos, sheepEntity);
 
-                                itemUseContextItem.damageItem(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemUseContextItem)));
+                                itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemUseContextItem)));
                             }
                         }
                     } else{
                         if(world instanceof ServerWorld){
-                            Entity entity = ((ServerWorld)world).getEntityByUuid(summonerCap.getSummonedSheep());
+                            Entity entity = ((ServerWorld)world).getEntity(summonerCap.getSummonedSheep());
                             if(entity instanceof SheepEntity){
                                 SheepEntity sheepEntity = (SheepEntity) entity;
-                                sheepEntity.teleportKeepLoaded((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D);
+                                sheepEntity.teleportToWithTicket((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D);
                             }
                         }
                     }
                 }
             }
-            return ActionResult.resultConsume(itemUseContextItem);
+            return ActionResult.consume(itemUseContextItem);
         }
     }
 
     private void createEnchantedSheep(World world, PlayerEntity itemUseContextPlayer, BlockPos blockPos, SheepEntity sheepEntity) {
         this.setSheepEnchantmentAndAI(sheepEntity);
-        sheepEntity.setLocationAndAngles((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D, 0.0F, 0.0F);
+        sheepEntity.moveTo((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D, 0.0F, 0.0F);
 
-        SoundHelper.playCreatureSound(itemUseContextPlayer, SoundEvents.ENTITY_SHEEP_AMBIENT);
+        SoundHelper.playCreatureSound(itemUseContextPlayer, SoundEvents.SHEEP_AMBIENT);
 
-        world.addEntity(sheepEntity);
+        world.addFreshEntity(sheepEntity);
     }
 
     private void setSheepEnchantmentAndAI(SheepEntity sheepEntity){
-        int sheepEnchantment = sheepEntity.getRNG().nextInt(3);
+        int sheepEnchantment = sheepEntity.getRandom().nextInt(3);
         sheepEntity.goalSelector.addGoal(2, new SheepFollowOwnerGoal(sheepEntity, 2.1D, 10.0F, 2.0F, false));
         if(sheepEnchantment == 0){
-            sheepEntity.setFleeceColor(DyeColor.RED);
+            sheepEntity.setColor(DyeColor.RED);
             sheepEntity.addTag("Fire");
             sheepEntity.goalSelector.addGoal(1, new SheepMeleeAttackGoal(sheepEntity, 1.0D, true));
             sheepEntity.targetSelector.addGoal(1, new SheepOwnerHurtByTargetGoal(sheepEntity));
@@ -108,7 +110,7 @@ public class EnchantedGrassItem extends ArtifactItem {
                     (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
         }
         else if(sheepEnchantment == 1){
-            sheepEntity.setFleeceColor(DyeColor.GREEN);
+            sheepEntity.setColor(DyeColor.GREEN);
             sheepEntity.addTag("Poison");
             sheepEntity.goalSelector.addGoal(1, new SheepMeleeAttackGoal(sheepEntity, 1.0D, true));
             sheepEntity.targetSelector.addGoal(1, new SheepOwnerHurtByTargetGoal(sheepEntity));
@@ -117,15 +119,15 @@ public class EnchantedGrassItem extends ArtifactItem {
                     (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
         }
         else{
-            sheepEntity.setFleeceColor(DyeColor.BLUE);
+            sheepEntity.setColor(DyeColor.BLUE);
             sheepEntity.addTag("Speed");
         }
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
-        super.addInformation(stack, world, list, flag);
+        super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
 

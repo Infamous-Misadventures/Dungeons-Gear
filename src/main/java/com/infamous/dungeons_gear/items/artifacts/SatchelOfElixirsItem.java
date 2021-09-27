@@ -21,6 +21,8 @@ import java.util.List;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.item.Item.Properties;
+
 public class SatchelOfElixirsItem extends ArtifactItem{
 
     public SatchelOfElixirsItem(Properties properties) {
@@ -30,28 +32,28 @@ public class SatchelOfElixirsItem extends ArtifactItem{
     @Override
     public ActionResult<ItemStack> procArtifact(ItemUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
-        ItemStack itemstack = c.getItem();
+        ItemStack itemstack = c.getItemInHand();
 
         if(playerIn == null) return new ActionResult<>(ActionResultType.FAIL, itemstack);
 
-        if(!c.getWorld().isRemote){
+        if(!c.getLevel().isClientSide){
             for(int i = 0; i < 2; i++){
-                ItemStack elixirToDrop = LootTableHelper.generateItemStack((ServerWorld) playerIn.world, playerIn.getPosition(), new ResourceLocation(MODID, "items/satchel_of_elixirs"), playerIn.getRNG());
-                ItemEntity elixirAsEntity = new ItemEntity(playerIn.world, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), elixirToDrop);
-                playerIn.world.addEntity(elixirAsEntity);
+                ItemStack elixirToDrop = LootTableHelper.generateItemStack((ServerWorld) playerIn.level, playerIn.blockPosition(), new ResourceLocation(MODID, "items/satchel_of_elixirs"), playerIn.getRandom());
+                ItemEntity elixirAsEntity = new ItemEntity(playerIn.level, playerIn.getX(), playerIn.getY(), playerIn.getZ(), elixirToDrop);
+                playerIn.level.addFreshEntity(elixirAsEntity);
             }
         }
 
-        itemstack.damageItem(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemstack)));
+        itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemstack)));
 
         ArtifactItem.putArtifactOnCooldown(playerIn, itemstack.getItem());
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
-        super.addInformation(stack, world, list, flag);
+        super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
 

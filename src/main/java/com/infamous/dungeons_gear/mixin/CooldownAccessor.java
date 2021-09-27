@@ -7,8 +7,8 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface CooldownAccessor {
 
     @Accessor
-    int getCreateTicks();
+    int getStartTime();
 
     @Accessor
-    int getExpireTicks();
+    int getEndTime();
 }

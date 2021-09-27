@@ -18,6 +18,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class LeechingEnchantment extends HealingEnchantment {
 
@@ -31,20 +33,20 @@ public class LeechingEnchantment extends HealingEnchantment {
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof HealingEnchantment);
     }
 
     @SubscribeEvent
     public static void onLeechingKill(LivingDeathEvent event){
-        if(event.getSource().getImmediateSource() instanceof AbstractArrowEntity) return;
-        if(event.getSource().getTrueSource() instanceof LivingEntity){
-            LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
+        if(event.getSource().getDirectEntity() instanceof AbstractArrowEntity) return;
+        if(event.getSource().getEntity() instanceof LivingEntity){
+            LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
             LivingEntity victim = event.getEntityLiving();
-            ItemStack mainhand = attacker.getHeldItemMainhand();
+            ItemStack mainhand = attacker.getMainHandItem();
             boolean uniqueWeaponFlag = hasLeechingBuiltIn(mainhand);
             if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.LEECHING)){
-                int leechingLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.LEECHING, mainhand);
+                int leechingLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.LEECHING, mainhand);
                 float victimMaxHealth = victim.getMaxHealth();
                 float healthRegained;
                 healthRegained = (0.02F + 0.02F * leechingLevel) * victimMaxHealth;

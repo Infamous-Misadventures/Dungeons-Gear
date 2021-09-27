@@ -19,6 +19,8 @@ import java.util.stream.StreamSupport;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList.ARROW_HOARDER;
 
+import net.minecraft.item.Item.Properties;
+
 public class ArrowBundleItem  extends Item {
 
     private static final String NUMBER_OF_ARROWS_FIELD = "NumberOfArrows";
@@ -34,23 +36,23 @@ public class ArrowBundleItem  extends Item {
         return itemIn;
     }
 
-    public ActionResult onItemRightClick(World world, PlayerEntity playerIn, Hand handIn) {
-        ItemStack bundleItemStack = playerIn.getHeldItem(handIn);
-        if (!world.isRemote) {
+    public ActionResult use(World world, PlayerEntity playerIn, Hand handIn) {
+        ItemStack bundleItemStack = playerIn.getItemInHand(handIn);
+        if (!world.isClientSide) {
             PlayerEntity player = playerIn;
             int numberOfArrows = getNumberOfArrows(player, bundleItemStack);
             for (int i = 0; i < numberOfArrows; i++) {
-                ItemStack itemStack = LootTableHelper.generateItemStack((ServerWorld) player.world, player.getPosition(), new ResourceLocation(MODID, "items/arrow_bundle"), player.getRNG());
-                ItemEntity arrow = new ItemEntity(world, player.getPosX(), player.getPosY(), player.getPosZ(), itemStack);
-                world.addEntity(arrow);
+                ItemStack itemStack = LootTableHelper.generateItemStack((ServerWorld) player.level, player.blockPosition(), new ResourceLocation(MODID, "items/arrow_bundle"), player.getRandom());
+                ItemEntity arrow = new ItemEntity(world, player.getX(), player.getY(), player.getZ(), itemStack);
+                world.addFreshEntity(arrow);
             }
-            playerIn.addStat(Stats.ITEM_USED.get(this));
-            if (!playerIn.abilities.isCreativeMode) {
+            playerIn.awardStat(Stats.ITEM_USED.get(this));
+            if (!playerIn.abilities.instabuild) {
                 bundleItemStack.shrink(1);
             }
         }
 
-        return ActionResult.func_233538_a_(bundleItemStack, world.isRemote());
+        return ActionResult.sidedSuccess(bundleItemStack, world.isClientSide());
     }
 
     private int getNumberOfArrows(PlayerEntity player, ItemStack bundleItemStack) {
@@ -58,12 +60,12 @@ public class ArrowBundleItem  extends Item {
         if(bundleItemStack.hasTag() && bundleItemStack.getTag().contains(NUMBER_OF_ARROWS_FIELD)){
             baseArrows = bundleItemStack.getTag().getInt(NUMBER_OF_ARROWS_FIELD);
         }
-        return baseArrows + StreamSupport.stream(player.getArmorInventoryList().spliterator(), false).map(this::arrowAmount).reduce(0, (a, b) -> a + b, Integer::sum);
+        return baseArrows + StreamSupport.stream(player.getArmorSlots().spliterator(), false).map(this::arrowAmount).reduce(0, (a, b) -> a + b, Integer::sum);
     }
 
     private int arrowAmount(ItemStack stack) {
         int extraArrows = 0;
-        extraArrows += EnchantmentHelper.getEnchantmentLevel(ARROW_HOARDER, stack);
+        extraArrows += EnchantmentHelper.getItemEnchantmentLevel(ARROW_HOARDER, stack);
         if (stack.getItem() instanceof IArmor && ((IArmor) stack.getItem()).hasArrowHoarderBuiltIn(stack)){
             extraArrows += 1;
         }

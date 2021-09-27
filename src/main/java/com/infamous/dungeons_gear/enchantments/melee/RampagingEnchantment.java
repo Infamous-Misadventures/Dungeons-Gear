@@ -18,6 +18,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class RampagingEnchantment extends DungeonsEnchantment {
 
@@ -32,24 +34,24 @@ public class RampagingEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onRampagingKill(LivingDeathEvent event){
-        if(event.getSource().getImmediateSource() instanceof AbstractArrowEntity) return;
-        if(event.getSource().getTrueSource() instanceof LivingEntity){
-            LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
-            ItemStack mainhand = attacker.getHeldItemMainhand();
+        if(event.getSource().getDirectEntity() instanceof AbstractArrowEntity) return;
+        if(event.getSource().getEntity() instanceof LivingEntity){
+            LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
+            ItemStack mainhand = attacker.getMainHandItem();
             boolean uniqueWeaponFlag = hasRampagingBuiltIn(mainhand);
             if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.RAMPAGING)){
-                int rampagingLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.RAMPAGING, mainhand);
-                float rampagingRand = attacker.getRNG().nextFloat();
+                int rampagingLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.RAMPAGING, mainhand);
+                float rampagingRand = attacker.getRandom().nextFloat();
                 if(rampagingRand <= 0.1F) {
-                    EffectInstance rampage = new EffectInstance(Effects.HASTE, rampagingLevel * 100, 4);
-                    attacker.addPotionEffect(rampage);
+                    EffectInstance rampage = new EffectInstance(Effects.DIG_SPEED, rampagingLevel * 100, 4);
+                    attacker.addEffect(rampage);
                 }
             }
             if(uniqueWeaponFlag){
-                float rampagingRand = attacker.getRNG().nextFloat();
+                float rampagingRand = attacker.getRandom().nextFloat();
                 if(rampagingRand <= 0.1F) {
-                    EffectInstance rampage = new EffectInstance(Effects.HASTE, 100, 4);
-                    attacker.addPotionEffect(rampage);
+                    EffectInstance rampage = new EffectInstance(Effects.DIG_SPEED, 100, 4);
+                    attacker.addEffect(rampage);
                 }
             }
         }

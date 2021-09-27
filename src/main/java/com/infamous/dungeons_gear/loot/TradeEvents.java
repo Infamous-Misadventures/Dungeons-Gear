@@ -115,15 +115,15 @@ public class TradeEvents {
     }
 
     private static Predicate<VillagerTrades.ITrade> emeraldForItemFilter(Item item){
-        return (iTrade) -> (iTrade instanceof VillagerTrades.EmeraldForItemsTrade && ((VillagerTrades.EmeraldForItemsTrade) iTrade).tradeItem.equals(item));
+        return (iTrade) -> (iTrade instanceof VillagerTrades.EmeraldForItemsTrade && ((VillagerTrades.EmeraldForItemsTrade) iTrade).item.equals(item));
     }
 
     private static Predicate<VillagerTrades.ITrade> itemsForEmeraldsFilter(Item item){
-        return (iTrade) -> (iTrade instanceof VillagerTrades.ItemsForEmeraldsTrade && ((VillagerTrades.ItemsForEmeraldsTrade) iTrade).sellingItem.getItem().equals(item));
+        return (iTrade) -> (iTrade instanceof VillagerTrades.ItemsForEmeraldsTrade && ((VillagerTrades.ItemsForEmeraldsTrade) iTrade).itemStack.getItem().equals(item));
     }
 
     private static Predicate<VillagerTrades.ITrade> itemWithPotionForEmeraldsAndItemsFilter(Item item){
-        return (iTrade) -> (iTrade instanceof VillagerTrades.ItemWithPotionForEmeraldsAndItemsTrade && ((VillagerTrades.ItemWithPotionForEmeraldsAndItemsTrade) iTrade).potionStack.getItem().equals(item));
+        return (iTrade) -> (iTrade instanceof VillagerTrades.ItemWithPotionForEmeraldsAndItemsTrade && ((VillagerTrades.ItemWithPotionForEmeraldsAndItemsTrade) iTrade).toItem.getItem().equals(item));
     }
 
     private static void addCommonAndUniqueTrades(Int2ObjectMap<List<VillagerTrades.ITrade>> villagerTrades, Map<Item, ResourceLocation> commonMap, Map<Item, ResourceLocation> uniqueMap) {
@@ -164,8 +164,8 @@ public class TradeEvents {
         if(entity instanceof VillagerEntity){
             VillagerEntity villagerEntity = (VillagerEntity) entity;
             if(villagerEntity.getVillagerData().getProfession() == VillagerProfession.WEAPONSMITH){
-                if(playerEntity.isSneaking()){
-                    ItemStack interactStack = playerEntity.getHeldItem(event.getHand());
+                if(playerEntity.isShiftKeyDown()){
+                    ItemStack interactStack = playerEntity.getItemInHand(event.getHand());
                     if(ItemRegistry.commonWeaponMap.containsKey(interactStack.getItem())){
                         handleSalvageTrade(playerEntity, villagerEntity, interactStack, "COMMON");
                     }
@@ -175,8 +175,8 @@ public class TradeEvents {
                 }
             }
             if(villagerEntity.getVillagerData().getProfession() == VillagerProfession.FLETCHER){
-                if(playerEntity.isSneaking()){
-                    ItemStack interactStack = playerEntity.getHeldItem(event.getHand());
+                if(playerEntity.isShiftKeyDown()){
+                    ItemStack interactStack = playerEntity.getItemInHand(event.getHand());
                     if(ItemRegistry.commonRangedWeaponMap.containsKey(interactStack.getItem())){
                         handleSalvageTrade(playerEntity, villagerEntity, interactStack, "COMMON");
                     }
@@ -186,8 +186,8 @@ public class TradeEvents {
                 }
             }
             if(villagerEntity.getVillagerData().getProfession() == VillagerProfession.ARMORER){
-                if(playerEntity.isSneaking()){
-                    ItemStack interactStack = playerEntity.getHeldItem(event.getHand());
+                if(playerEntity.isShiftKeyDown()){
+                    ItemStack interactStack = playerEntity.getItemInHand(event.getHand());
                     if(ItemRegistry.commonMetalArmorMap.containsKey(interactStack.getItem())){
                         handleSalvageTrade(playerEntity, villagerEntity, interactStack, "COMMON");
                     }
@@ -197,8 +197,8 @@ public class TradeEvents {
                 }
             }
             if(villagerEntity.getVillagerData().getProfession() == VillagerProfession.LEATHERWORKER){
-                if(playerEntity.isSneaking()){
-                    ItemStack interactStack = playerEntity.getHeldItem(event.getHand());
+                if(playerEntity.isShiftKeyDown()){
+                    ItemStack interactStack = playerEntity.getItemInHand(event.getHand());
                     if(ItemRegistry.commonLeatherArmorMap.containsKey(interactStack.getItem())){
                         handleSalvageTrade(playerEntity, villagerEntity, interactStack, "COMMON");
                     }
@@ -210,8 +210,8 @@ public class TradeEvents {
         }
         if(entity instanceof WanderingTraderEntity){
             WanderingTraderEntity wanderingTraderEntity = (WanderingTraderEntity) entity;
-            if(playerEntity.isSneaking()){
-                ItemStack interactStack = playerEntity.getHeldItem(event.getHand());
+            if(playerEntity.isShiftKeyDown()){
+                ItemStack interactStack = playerEntity.getItemInHand(event.getHand());
                 if(ItemRegistry.artifactMap.containsKey(interactStack.getItem())){
                     handleSalvageTrade(playerEntity, wanderingTraderEntity, interactStack, "ARTIFACT");
                 }
@@ -222,7 +222,7 @@ public class TradeEvents {
     private static void handleSalvageTrade(PlayerEntity playerEntity, AbstractVillagerEntity abstractVillagerEntity, ItemStack interactStack, String itemType) {
         float maxDamage = interactStack.getMaxDamage();
         DungeonsGear.LOGGER.info("Max damage: " + maxDamage);
-        float currentDamage = maxDamage - interactStack.getDamage();
+        float currentDamage = maxDamage - interactStack.getDamageValue();
         DungeonsGear.LOGGER.info("Current damage: " + currentDamage);
 
         int itemValue;
@@ -249,18 +249,18 @@ public class TradeEvents {
 
             if(abstractVillagerEntity instanceof VillagerEntity){
                 VillagerEntity villagerEntity = (VillagerEntity)abstractVillagerEntity;
-                SoundHelper.playCreatureSound(villagerEntity, SoundEvents.ENTITY_VILLAGER_YES);
-                villagerEntity.updateReputation(IReputationType.TRADE, playerEntity);
+                SoundHelper.playCreatureSound(villagerEntity, SoundEvents.VILLAGER_YES);
+                villagerEntity.onReputationEventFrom(IReputationType.TRADE, playerEntity);
             }
             else if(abstractVillagerEntity instanceof WanderingTraderEntity){
                 WanderingTraderEntity wanderingTraderEntity = (WanderingTraderEntity)abstractVillagerEntity;
-                SoundHelper.playCreatureSound(wanderingTraderEntity, SoundEvents.ENTITY_WANDERING_TRADER_YES);
+                SoundHelper.playCreatureSound(wanderingTraderEntity, SoundEvents.WANDERING_TRADER_YES);
             }
             ItemStack emeraldStack = new ItemStack(Items.EMERALD, emeraldReward);
-            if(!playerEntity.addItemStackToInventory(emeraldStack)){
-                World world = playerEntity.getEntityWorld();
-                ItemEntity emeraldStackEntity = new ItemEntity(world, playerEntity.getPosX(), playerEntity.getPosY(), playerEntity.getPosZ(), emeraldStack);
-                world.addEntity(emeraldStackEntity);
+            if(!playerEntity.addItem(emeraldStack)){
+                World world = playerEntity.getCommandSenderWorld();
+                ItemEntity emeraldStackEntity = new ItemEntity(world, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), emeraldStack);
+                world.addFreshEntity(emeraldStackEntity);
             }
             playerEntity.giveExperiencePoints(emeraldReward);
         }

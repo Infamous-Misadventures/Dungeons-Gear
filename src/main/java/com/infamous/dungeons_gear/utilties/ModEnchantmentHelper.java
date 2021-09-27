@@ -16,15 +16,15 @@ import static com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentLis
 public class ModEnchantmentHelper {
 
     public static boolean hasEnchantment(ItemStack stack, Enchantment enchantment){
-        return enchantment != null && EnchantmentHelper.getEnchantmentLevel(enchantment, stack) > 0;
+        return enchantment != null && EnchantmentHelper.getItemEnchantmentLevel(enchantment, stack) > 0;
     }
 
     public static boolean hasEnchantment(LivingEntity entity, Enchantment enchantment) {
-        return enchantment != null && EnchantmentHelper.getMaxEnchantmentLevel(enchantment, entity) > 0;
+        return enchantment != null && EnchantmentHelper.getEnchantmentLevel(enchantment, entity) > 0;
     }
 
     public static boolean shooterIsLiving(AbstractArrowEntity arrowEntity) {
-        return arrowEntity.func_234616_v_() != null && arrowEntity.func_234616_v_() instanceof LivingEntity;
+        return arrowEntity.getOwner() != null && arrowEntity.getOwner() instanceof LivingEntity;
     }
 
     public static boolean arrowHitLivingEntity(RayTraceResult rayTraceResult) {
@@ -55,7 +55,7 @@ public class ModEnchantmentHelper {
 
     public static void addEnchantmentTagsToArrow(ItemStack rangedWeapon, AbstractArrowEntity arrowEntity){
         for(Enchantment enchantment : rangedEnchantmentToStringMap.keySet()){
-            int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(enchantment, rangedWeapon);
+            int enchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(enchantment, rangedWeapon);
             if(enchantmentLevel > 0){
                 String enchantmentTag = rangedEnchantmentToStringMap.get(enchantment) + enchantmentLevel;
                 arrowEntity.addTag(enchantmentTag);

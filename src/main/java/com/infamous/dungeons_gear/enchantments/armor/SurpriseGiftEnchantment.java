@@ -28,6 +28,8 @@ import java.util.List;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.registry.ItemRegistry.ARROW_BUNDLE;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class SurpriseGiftEnchantment extends DropsEnchantment {
 
@@ -44,7 +46,7 @@ public class SurpriseGiftEnchantment extends DropsEnchantment {
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof DropsEnchantment);
     }
 
@@ -52,23 +54,23 @@ public class SurpriseGiftEnchantment extends DropsEnchantment {
     public static void onPotionConsumed(LivingEntityUseItemEvent.Finish event){
         if(!(event.getEntityLiving() instanceof PlayerEntity)) return;
         PlayerEntity player = (PlayerEntity) event.getEntityLiving();
-        if(player.isAlive() && player.isServerWorld()){
-            List<EffectInstance> potionEffects = PotionUtils.getEffectsFromStack(event.getItem());
+        if(player.isAlive() && player.isEffectiveAi()){
+            List<EffectInstance> potionEffects = PotionUtils.getMobEffects(event.getItem());
             if(potionEffects.isEmpty()) return;
-            if(potionEffects.get(0).getPotion() == Effects.INSTANT_HEALTH){
+            if(potionEffects.get(0).getEffect() == Effects.HEAL){
                 if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.SURPRISE_GIFT)){
-                    int surpriseGiftLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.SURPRISE_GIFT, player);
+                    int surpriseGiftLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.SURPRISE_GIFT, player);
                     float surpriseGiftChance = 0.5F * surpriseGiftLevel;
 
                     while(surpriseGiftChance > 0){
-                        float surpriseGiftRand = player.getRNG().nextFloat();
+                        float surpriseGiftRand = player.getRandom().nextFloat();
                         if(surpriseGiftRand <= surpriseGiftChance){
-                            ItemStack itemStack = LootTableHelper.generateItemStack((ServerWorld) player.world, player.getPosition(), new ResourceLocation(MODID, "enchantments/surprise_gift"), player.getRNG());
+                            ItemStack itemStack = LootTableHelper.generateItemStack((ServerWorld) player.level, player.blockPosition(), new ResourceLocation(MODID, "enchantments/surprise_gift"), player.getRandom());
                             if(itemStack.getItem().equals(ARROW_BUNDLE.get())){
                                 ArrowBundleItem.changeNumberOfArrows(itemStack, 3);
                             }
-                            ItemEntity surpriseGift = new ItemEntity(player.world, player.getPosX(), player.getPosY(), player.getPosZ(), itemStack);
-                            player.world.addEntity(surpriseGift);
+                            ItemEntity surpriseGift = new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), itemStack);
+                            player.level.addFreshEntity(surpriseGift);
                         }
                         surpriseGiftChance -= 1.0F;
                     }

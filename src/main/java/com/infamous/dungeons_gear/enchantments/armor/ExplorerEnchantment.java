@@ -23,6 +23,8 @@ import java.util.UUID;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = MODID)
 public class ExplorerEnchantment extends HealthAbilityEnchantment {
 
@@ -37,10 +39,10 @@ public class ExplorerEnchantment extends HealthAbilityEnchantment {
     @SubscribeEvent
     public static void onPlayerSpawn(PlayerEvent.PlayerRespawnEvent event){
         PlayerEntity player = event.getPlayer();
-        if(!player.world.isRemote){
+        if(!player.level.isClientSide){
             ICombo comboCap = CapabilityHelper.getComboCapability(player);
             if (comboCap != null) {
-                comboCap.setLastExplorerCheckpoint(player.getPosition());
+                comboCap.setLastExplorerCheckpoint(player.blockPosition());
             }
         }
     }
@@ -50,14 +52,14 @@ public class ExplorerEnchantment extends HealthAbilityEnchantment {
         PlayerEntity player = event.player;
         if (player == null) return;
         if (event.phase == TickEvent.Phase.START) return;
-        if (player.isAlive() && !player.world.isRemote) {
+        if (player.isAlive() && !player.level.isClientSide) {
             ICombo comboCap = CapabilityHelper.getComboCapability(player);
             if (comboCap != null) {
                 BlockPos lastExplorerCheckpoint = comboCap.getLastExplorerCheckpoint();
-                BlockPos currentPos = player.getPosition();
-                if(currentPos.distanceSq(lastExplorerCheckpoint.getX(), lastExplorerCheckpoint.getY(), lastExplorerCheckpoint.getZ(), true) >= 10000){
+                BlockPos currentPos = player.blockPosition();
+                if(currentPos.distSqr(lastExplorerCheckpoint.getX(), lastExplorerCheckpoint.getY(), lastExplorerCheckpoint.getZ(), true) >= 10000){
                     comboCap.setLastExplorerCheckpoint(currentPos);
-                    int explorerLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.EXPLORER, player);
+                    int explorerLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.EXPLORER, player);
                     if(explorerLevel > 0){
                         float maxHealth = player.getMaxHealth();
                         float multiplier = explorerLevel / 3.0F;
@@ -74,7 +76,7 @@ public class ExplorerEnchantment extends HealthAbilityEnchantment {
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof HealthAbilityEnchantment);
     }
 }

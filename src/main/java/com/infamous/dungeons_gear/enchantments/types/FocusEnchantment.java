@@ -4,6 +4,8 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 public class FocusEnchantment extends DungeonsEnchantment{
 
     protected FocusEnchantment(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType[] slots) {

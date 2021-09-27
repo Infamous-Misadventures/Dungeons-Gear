@@ -30,6 +30,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class BusyBeeEnchantment extends DungeonsEnchantment {
 
@@ -44,23 +46,23 @@ public class BusyBeeEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onBusyBeeKill(LivingDeathEvent event){
-        if(event.getSource().getImmediateSource() instanceof AbstractArrowEntity) return;
-        if(event.getSource().getTrueSource() instanceof LivingEntity){
-            LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
+        if(event.getSource().getDirectEntity() instanceof AbstractArrowEntity) return;
+        if(event.getSource().getEntity() instanceof LivingEntity){
+            LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
             LivingEntity victim = event.getEntityLiving();
             if(attacker instanceof PlayerEntity){
                 PlayerEntity playerEntity = (PlayerEntity)attacker;
-                ItemStack mainhand = playerEntity.getHeldItemMainhand();
+                ItemStack mainhand = playerEntity.getMainHandItem();
                 boolean uniqueWeaponFlag = hasBusyBeeBuiltIn(mainhand);
                 if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.BUSY_BEE)){
-                    int busyBeeLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.RAMPAGING, mainhand);
-                    float busyBeeRand = playerEntity.getRNG().nextFloat();
+                    int busyBeeLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.RAMPAGING, mainhand);
+                    float busyBeeRand = playerEntity.getRandom().nextFloat();
                     float busyBeeChance = 0.1F + busyBeeLevel * 0.01F;
                     if(busyBeeRand <= busyBeeChance) {
                         createBusyBee(victim, playerEntity);
                     }
                 if(uniqueWeaponFlag){
-                    float rampagingRand = playerEntity.getRNG().nextFloat();
+                    float rampagingRand = playerEntity.getRandom().nextFloat();
                     if(rampagingRand <= 0.2F) {
                         createBusyBee(victim, playerEntity);
                     }
@@ -77,12 +79,12 @@ public class BusyBeeEnchantment extends DungeonsEnchantment {
 
     private static void createBusyBee(LivingEntity victim, PlayerEntity playerEntity) {
         ISummoner summonerCap = CapabilityHelper.getSummonerCapability(playerEntity);
-        BeeEntity beeEntity = EntityType.BEE.create(playerEntity.world);
+        BeeEntity beeEntity = EntityType.BEE.create(playerEntity.level);
         if (beeEntity!= null && summonerCap != null) {
             ISummonable summonable = CapabilityHelper.getSummonableCapability(beeEntity);
-            if(summonable != null && summonerCap.addBusyBeeBee(beeEntity.getUniqueID())){
+            if(summonable != null && summonerCap.addBusyBeeBee(beeEntity.getUUID())){
 
-                summonable.setSummoner(playerEntity.getUniqueID());
+                summonable.setSummoner(playerEntity.getUUID());
 
                 createBee(victim, playerEntity, beeEntity);
             }
@@ -93,7 +95,7 @@ public class BusyBeeEnchantment extends DungeonsEnchantment {
     }
 
     private static void createBee(LivingEntity victim, PlayerEntity playerEntity, BeeEntity beeEntity) {
-        beeEntity.setLocationAndAngles((double)victim.getPosX() + 0.5D, (double)victim.getPosY() + 0.05D, (double)victim.getPosZ() + 0.5D, 0.0F, 0.0F);
+        beeEntity.moveTo((double)victim.getX() + 0.5D, (double)victim.getY() + 0.05D, (double)victim.getZ() + 0.5D, 0.0F, 0.0F);
 
         beeEntity.goalSelector.addGoal(2, new BeeFollowOwnerGoal(beeEntity, 2.1D, 10.0F, 2.0F, false));
 
@@ -102,7 +104,7 @@ public class BusyBeeEnchantment extends DungeonsEnchantment {
         beeEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(beeEntity, LivingEntity.class, 5, false, false,
                 (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
 
-        SoundHelper.playCreatureSound(playerEntity, SoundEvents.ENTITY_BEE_LOOP);
-        playerEntity.world.addEntity(beeEntity);
+        SoundHelper.playCreatureSound(playerEntity, SoundEvents.BEE_LOOP);
+        playerEntity.level.addFreshEntity(beeEntity);
     }
 }

@@ -7,6 +7,8 @@ import net.minecraft.enchantment.DamageEnchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.CreatureAttribute;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 public class IllagersBaneEnchantment extends DungeonsEnchantment {
 
     public IllagersBaneEnchantment() {
@@ -17,20 +19,20 @@ public class IllagersBaneEnchantment extends DungeonsEnchantment {
      * Returns the minimal value of enchantability needed on the enchantment level passed.
      */
     @Override
-    public int getMinEnchantability(int enchantmentLevel) {
+    public int getMinCost(int enchantmentLevel) {
         return 5 + (enchantmentLevel - 1) * 8;
     }
 
     @Override
-    public int getMaxEnchantability(int enchantmentLevel) {
-        return this.getMinEnchantability(enchantmentLevel) + 20;
+    public int getMaxCost(int enchantmentLevel) {
+        return this.getMinCost(enchantmentLevel) + 20;
     }
     /**
      * Calculates the additional damage that will be dealt by an item with this enchantment. This alternative to
      * calcModifierDamage is sensitive to the targets EnumCreatureAttribute.
      */
     @Override
-    public float calcDamageByCreature(int level, CreatureAttribute creatureType) {
+    public float getDamageBonus(int level, CreatureAttribute creatureType) {
         if(creatureType == CreatureAttribute.ILLAGER){
             return (float)level * 2.5F;
         } else {
@@ -39,7 +41,7 @@ public class IllagersBaneEnchantment extends DungeonsEnchantment {
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment ench) {
+    public boolean checkCompatibility(Enchantment ench) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get()
                 || (!(ench instanceof DamageEnchantment) && !(ench instanceof IllagersBaneEnchantment));
     }}

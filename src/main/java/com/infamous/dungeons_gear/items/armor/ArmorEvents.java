@@ -41,7 +41,7 @@ public class ArmorEvents {
     public static void onSpelunkerArmorEquipped(LivingEquipmentChangeEvent event) {
         if (event.getEntityLiving() instanceof PlayerEntity && event.getSlot() != EquipmentSlotType.OFFHAND && event.getSlot() != EquipmentSlotType.MAINHAND) {
             PlayerEntity playerEntity = (PlayerEntity) event.getEntityLiving();
-            World world = playerEntity.getEntityWorld();
+            World world = playerEntity.getCommandSenderWorld();
             if (event.getTo().getItem() instanceof IArmor) {
                 if (((IArmor) event.getTo().getItem()).doGivesYouAPetBat()) {
                     ArmorEffectHelper.summonOrTeleportBat(playerEntity, world);
@@ -52,10 +52,10 @@ public class ArmorEvents {
 
     @SubscribeEvent
     public static void respawnPetBat(TickEvent.PlayerTickEvent event) {
-        if (event.player.ticksExisted % 140 == 0)
-            for (ItemStack i : event.player.getArmorInventoryList()) {
+        if (event.player.tickCount % 140 == 0)
+            for (ItemStack i : event.player.getArmorSlots()) {
                 if (i.getItem() instanceof IArmor && ((IArmor) i.getItem()).doGivesYouAPetBat()) {
-                    ArmorEffectHelper.summonOrTeleportBat(event.player, event.player.world);
+                    ArmorEffectHelper.summonOrTeleportBat(event.player, event.player.level);
                     return;
                 }
             }
@@ -66,17 +66,17 @@ public class ArmorEvents {
 
         // Handling armors that boost ranged or magic damage - Attacker POV
         if (event.getSource() instanceof IndirectEntityDamageSource) {
-            if (event.getSource().getTrueSource() instanceof LivingEntity) {
+            if (event.getSource().getEntity() instanceof LivingEntity) {
 
                 float originalDamage = event.getAmount();
 
-                LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
-                ItemStack helmet = attacker.getItemStackFromSlot(EquipmentSlotType.HEAD);
-                ItemStack chestplate = attacker.getItemStackFromSlot(EquipmentSlotType.CHEST);
+                LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
+                ItemStack helmet = attacker.getItemBySlot(EquipmentSlotType.HEAD);
+                ItemStack chestplate = attacker.getItemBySlot(EquipmentSlotType.CHEST);
 
-                if (event.getSource().getImmediateSource() instanceof AbstractArrowEntity) {
+                if (event.getSource().getDirectEntity() instanceof AbstractArrowEntity) {
                     increaseEventRangedDamage(event, originalDamage, helmet, chestplate);
-                } else if (event.getSource().isMagicDamage()) {
+                } else if (event.getSource().isMagic()) {
                     increaseEventMagicDamage(event, originalDamage, helmet, chestplate);
 
                 }
@@ -84,18 +84,18 @@ public class ArmorEvents {
         }
 
 
-        if (event.getSource().getTrueSource() instanceof LivingEntity) {
-            LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
-            ItemStack helmet = attacker.getItemStackFromSlot(EquipmentSlotType.HEAD);
-            ItemStack chestplate = attacker.getItemStackFromSlot(EquipmentSlotType.CHEST);
+        if (event.getSource().getEntity() instanceof LivingEntity) {
+            LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
+            ItemStack helmet = attacker.getItemBySlot(EquipmentSlotType.HEAD);
+            ItemStack chestplate = attacker.getItemBySlot(EquipmentSlotType.CHEST);
             float damageAmount = event.getAmount();
             handleLifeSteal(damageAmount, attacker, helmet, chestplate);
         }
 
         // Handling armors that either negate hits or teleport the victim away when hit - Victim POV
         LivingEntity victim = event.getEntityLiving();
-        ItemStack helmet = victim.getItemStackFromSlot(EquipmentSlotType.HEAD);
-        ItemStack chestplate = victim.getItemStackFromSlot(EquipmentSlotType.CHEST);
+        ItemStack helmet = victim.getItemBySlot(EquipmentSlotType.HEAD);
+        ItemStack chestplate = victim.getItemBySlot(EquipmentSlotType.CHEST);
 
         handleNegateHit(event, victim, helmet, chestplate);
         handleTeleportOnHit(victim, helmet, chestplate);
@@ -113,7 +113,7 @@ public class ArmorEvents {
         float teleportChance2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getChanceToTeleportAwayWhenHit() : 0;
         float totalTeleportChance = teleportChance * 0.01F + teleportChance2 * 0.01F;
 
-        float teleportRand = victim.getRNG().nextFloat();
+        float teleportRand = victim.getRandom().nextFloat();
         if (teleportRand <= totalTeleportChance) {
             ArmorEffectHelper.teleportOnHit(victim);
         }
@@ -124,7 +124,7 @@ public class ArmorEvents {
         float negateHitChance2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getChanceToNegateHits() : 0;
         float totalNegateHitChance = negateHitChance * 0.01F + negateHitChance2 * 0.01F;
 
-        float negateHitRand = victim.getRNG().nextFloat();
+        float negateHitRand = victim.getRandom().nextFloat();
         if (negateHitRand <= totalNegateHitChance) {
             event.setCanceled(true);
         }
@@ -158,8 +158,8 @@ public class ArmorEvents {
     public static void onFreezingApplied(PotionEvent.PotionAddedEvent event) {
         EffectInstance effectInstance = event.getPotionEffect();
         LivingEntity livingEntity = event.getEntityLiving();
-        ItemStack helmet = livingEntity.getItemStackFromSlot(EquipmentSlotType.HEAD);
-        ItemStack chestplate = livingEntity.getItemStackFromSlot(EquipmentSlotType.CHEST);
+        ItemStack helmet = livingEntity.getItemBySlot(EquipmentSlotType.HEAD);
+        ItemStack chestplate = livingEntity.getItemBySlot(EquipmentSlotType.CHEST);
         reduceFreezingEffect(event, effectInstance, helmet, chestplate);
     }
 
@@ -170,19 +170,19 @@ public class ArmorEvents {
         float freezingMultiplier = freezingResistance * 0.01F + freezingResistance2 * 0.01F;
 
         if (freezingMultiplier > 0) {
-            if (event.getPotionEffect().getPotion() == Effects.SLOWNESS || event.getPotionEffect().getPotion() == Effects.MINING_FATIGUE) {
+            if (event.getPotionEffect().getEffect() == Effects.MOVEMENT_SLOWDOWN || event.getPotionEffect().getEffect() == Effects.DIG_SLOWDOWN) {
                 int oldDuration = effectInstance.getDuration();
-                ObfuscationReflectionHelper.setPrivateValue(EffectInstance.class, effectInstance, (int) (oldDuration * freezingMultiplier), "field_76460_b");
+                ObfuscationReflectionHelper.setPrivateValue(EffectInstance.class, effectInstance, (int) (oldDuration * freezingMultiplier), "duration");
             }
         }
     }
 
     @SubscribeEvent
     public static void onEntityKilled(LivingDeathEvent event) {
-        if (event.getSource().getTrueSource() instanceof LivingEntity) {
-            LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
-            ItemStack helmet = attacker.getItemStackFromSlot(EquipmentSlotType.HEAD);
-            ItemStack chestplate = attacker.getItemStackFromSlot(EquipmentSlotType.CHEST);
+        if (event.getSource().getEntity() instanceof LivingEntity) {
+            LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
+            ItemStack helmet = attacker.getItemBySlot(EquipmentSlotType.HEAD);
+            ItemStack chestplate = attacker.getItemBySlot(EquipmentSlotType.CHEST);
             boolean lifeStealHelmetFlag = hasLifeSteal(chestplate);
             boolean lifeStealChestplateFlag = hasLifeSteal(chestplate);
             if (lifeStealHelmetFlag || lifeStealChestplateFlag) {
@@ -212,12 +212,12 @@ public class ArmorEvents {
         if (!(event.getEntityLiving() instanceof PlayerEntity)) return;
         PlayerEntity player = (PlayerEntity) event.getEntityLiving();
         if (player.isAlive()) {
-            List<EffectInstance> potionEffects = PotionUtils.getEffectsFromStack(event.getItem());
+            List<EffectInstance> potionEffects = PotionUtils.getMobEffects(event.getItem());
             if (potionEffects.isEmpty()) return;
-            ItemStack helmet = player.getItemStackFromSlot(EquipmentSlotType.HEAD);
-            ItemStack chestplate = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
+            ItemStack helmet = player.getItemBySlot(EquipmentSlotType.HEAD);
+            ItemStack chestplate = player.getItemBySlot(EquipmentSlotType.CHEST);
 
-            if (potionEffects.get(0).getPotion() == Effects.INSTANT_HEALTH) {
+            if (potionEffects.get(0).getEffect() == Effects.HEAL) {
                 EffectInstance instantHealth = potionEffects.get(0);
                 handleHealthPotionBoost(player, helmet, chestplate);
                 handleHealNearbyAllies(player, instantHealth, helmet, chestplate);
@@ -249,15 +249,15 @@ public class ArmorEvents {
 
     @SubscribeEvent
     public static void onArrowDrop(LivingDropsEvent event) {
-        if (event.getSource().getTrueSource() instanceof LivingEntity) {
-            LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
+        if (event.getSource().getEntity() instanceof LivingEntity) {
+            LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
             LivingEntity victim = (LivingEntity) event.getEntityLiving();
-            int maxLevel = StreamSupport.stream(attacker.getArmorInventoryList().spliterator(), false).map(ArrowHoarderEnchantment::arrowHoarderLevel).max(Integer::compare).orElse(0);
+            int maxLevel = StreamSupport.stream(attacker.getArmorSlots().spliterator(), false).map(ArrowHoarderEnchantment::arrowHoarderLevel).max(Integer::compare).orElse(0);
             int drops = (maxLevel / 4);
-            drops += attacker.getRNG().nextFloat() <= (maxLevel % 4) / 4.0F ? 1 : 0;
+            drops += attacker.getRandom().nextFloat() <= (maxLevel % 4) / 4.0F ? 1 : 0;
             Collection<ItemEntity> itemEntities = event.getDrops();
             if (drops > 0 && victim instanceof IMob && itemEntities.stream().anyMatch(itemEntity -> itemEntity.getItem().getItem().equals(Items.ARROW))) {
-                ItemEntity arrowDrop = new ItemEntity(victim.world, victim.getPosX(), victim.getPosY(), victim.getPosZ(), new ItemStack(ARROW_BUNDLE.get(), drops));
+                ItemEntity arrowDrop = new ItemEntity(victim.level, victim.getX(), victim.getY(), victim.getZ(), new ItemStack(ARROW_BUNDLE.get(), drops));
                 itemEntities.add(arrowDrop);
             }
         }

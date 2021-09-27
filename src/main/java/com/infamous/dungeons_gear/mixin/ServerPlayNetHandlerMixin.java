@@ -17,7 +17,7 @@ public abstract class ServerPlayNetHandlerMixin {
     public ServerPlayerEntity player;
 
     @ModifyConstant(
-        method = "processUseEntity",
+        method = "handleInteract",
         constant = {
             @Constant(doubleValue = 36.0D)
         }

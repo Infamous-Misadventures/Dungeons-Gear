@@ -19,6 +19,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class DeflectEnchantment extends DungeonsEnchantment {
 
@@ -35,7 +37,7 @@ public class DeflectEnchantment extends DungeonsEnchantment {
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof ProtectionEnchantment);
     }
 
@@ -50,16 +52,16 @@ public class DeflectEnchantment extends DungeonsEnchantment {
         if(arrow.getPierceLevel()>0) return;
         LivingEntity victim = (LivingEntity) ((EntityRayTraceResult)rayTraceResult).getEntity();
         if(ModEnchantmentHelper.hasEnchantment(victim, ArmorEnchantmentList.DEFLECT)){
-            int deflectLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.DEFLECT, victim);
-            double originalDamage = arrow.getDamage();
+            int deflectLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.DEFLECT, victim);
+            double originalDamage = arrow.getBaseDamage();
             double deflectChance;
             deflectChance = deflectLevel * 0.2F;
-            float deflectRand = victim.getRNG().nextFloat();
+            float deflectRand = victim.getRandom().nextFloat();
             if(deflectRand <= deflectChance){
                 event.setCanceled(true);
-                arrow.setDamage(originalDamage * 0.5D);
-                arrow.rotationYaw += 180.0F;
-                arrow.prevRotationYaw += 180.0F;
+                arrow.setBaseDamage(originalDamage * 0.5D);
+                arrow.yRot += 180.0F;
+                arrow.yRotO += 180.0F;
             }
         }
     }

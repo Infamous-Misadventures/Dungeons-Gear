@@ -15,9 +15,9 @@ public class SummoningHelper {
     @Nullable
     public static LivingEntity getOwnerForHorse(AbstractHorseEntity horseEntity){
         try {
-            if(horseEntity.getOwnerUniqueId() != null){
-                UUID ownerUniqueId = horseEntity.getOwnerUniqueId();
-                return ownerUniqueId == null ? null : horseEntity.world.getPlayerByUuid(ownerUniqueId);
+            if(horseEntity.getOwnerUUID() != null){
+                UUID ownerUniqueId = horseEntity.getOwnerUUID();
+                return ownerUniqueId == null ? null : horseEntity.level.getPlayerByUUID(ownerUniqueId);
             }
             else return null;
         } catch (IllegalArgumentException var2) {
@@ -56,7 +56,7 @@ public class SummoningHelper {
             if(summonable == null) return null;
             if(summonable.getSummoner() != null){
                 UUID ownerUniqueId = summonable.getSummoner();
-                return ownerUniqueId == null ? null : summonableMob.world.getPlayerByUuid(ownerUniqueId);
+                return ownerUniqueId == null ? null : summonableMob.level.getPlayerByUUID(ownerUniqueId);
             }
             else return null;
         } catch (IllegalArgumentException var2) {

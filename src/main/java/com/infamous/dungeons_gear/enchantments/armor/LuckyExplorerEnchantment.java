@@ -25,6 +25,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = MODID)
 public class LuckyExplorerEnchantment extends DropsEnchantment implements IEmeraldsEnchantment {
 
@@ -39,10 +41,10 @@ public class LuckyExplorerEnchantment extends DropsEnchantment implements IEmera
     @SubscribeEvent
     public static void onPlayerSpawn(PlayerEvent.PlayerRespawnEvent event){
         PlayerEntity player = event.getPlayer();
-        if(!player.world.isRemote){
+        if(!player.level.isClientSide){
             ICombo comboCap = CapabilityHelper.getComboCapability(player);
             if (comboCap != null) {
-                comboCap.setLastLuckyExplorerCheckpoint(player.getPosition());
+                comboCap.setLastLuckyExplorerCheckpoint(player.blockPosition());
             }
         }
     }
@@ -52,20 +54,20 @@ public class LuckyExplorerEnchantment extends DropsEnchantment implements IEmera
         PlayerEntity player = event.player;
         if (player == null) return;
         if (event.phase == TickEvent.Phase.START) return;
-        if (player.isAlive() && !player.world.isRemote) {
+        if (player.isAlive() && !player.level.isClientSide) {
             ICombo comboCap = CapabilityHelper.getComboCapability(player);
             if (comboCap != null) {
                 BlockPos lastLuckyExplorerCheckpoint = comboCap.getLastLuckyExplorerCheckpoint();
-                BlockPos currentPos = player.getPosition();
-                if(currentPos.distanceSq(lastLuckyExplorerCheckpoint.getX(), lastLuckyExplorerCheckpoint.getY(), lastLuckyExplorerCheckpoint.getZ(), true) >= 36){
+                BlockPos currentPos = player.blockPosition();
+                if(currentPos.distSqr(lastLuckyExplorerCheckpoint.getX(), lastLuckyExplorerCheckpoint.getY(), lastLuckyExplorerCheckpoint.getZ(), true) >= 36){
                     comboCap.setLastLuckyExplorerCheckpoint(currentPos);
-                    int luckyExplorerLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.LUCKY_EXPLORER, player);
+                    int luckyExplorerLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.LUCKY_EXPLORER, player);
                     if(luckyExplorerLevel > 0){
                         int rollCount = 1 + (luckyExplorerLevel - 1) * 2;
                         for (int i = 0; i < rollCount; i++) {
-                            ItemStack itemStack = LootTableHelper.generateItemStack((ServerWorld) player.world, player.getPosition(), new ResourceLocation(MODID, "enchantments/lucky_explorer"), player.getRNG());
-                            ItemEntity emeraldDrop = new ItemEntity(player.world, player.getPosX(), player.getPosY(), player.getPosZ(), itemStack);
-                            player.world.addEntity(emeraldDrop);
+                            ItemStack itemStack = LootTableHelper.generateItemStack((ServerWorld) player.level, player.blockPosition(), new ResourceLocation(MODID, "enchantments/lucky_explorer"), player.getRandom());
+                            ItemEntity emeraldDrop = new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), itemStack);
+                            player.level.addFreshEntity(emeraldDrop);
                         }
                     }
                 }
@@ -78,7 +80,7 @@ public class LuckyExplorerEnchantment extends DropsEnchantment implements IEmera
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get()
                 || (!(enchantment instanceof DropsEnchantment) && !(enchantment instanceof IEmeraldsEnchantment));
     }

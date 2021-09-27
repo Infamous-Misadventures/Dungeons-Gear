@@ -26,6 +26,8 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.List;
 import java.util.UUID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class BeastSurgeEnchantment extends BeastEnchantment {
     public BeastSurgeEnchantment() {
@@ -45,22 +47,22 @@ public class BeastSurgeEnchantment extends BeastEnchantment {
     public static void onPlayerUsedHealthPotion(LivingEntityUseItemEvent.Finish event){
         if(!(event.getEntityLiving() instanceof PlayerEntity)) return;
         PlayerEntity player = (PlayerEntity) event.getEntityLiving();
-        if(player.isAlive() && player.world instanceof ServerWorld){
-            ServerWorld serverWorld = (ServerWorld) player.world;
-            List<EffectInstance> potionEffects = PotionUtils.getEffectsFromStack(event.getItem());
+        if(player.isAlive() && player.level instanceof ServerWorld){
+            ServerWorld serverWorld = (ServerWorld) player.level;
+            List<EffectInstance> potionEffects = PotionUtils.getMobEffects(event.getItem());
             if(potionEffects.isEmpty()) return;
-            if(potionEffects.get(0).getPotion() == Effects.INSTANT_HEALTH){
-                int beastSurgeLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.BEAST_SURGE, player);
+            if(potionEffects.get(0).getEffect() == Effects.HEAL){
+                int beastSurgeLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.BEAST_SURGE, player);
                 if(beastSurgeLevel > 0){
                     ISummoner summonerCap = CapabilityHelper.getSummonerCapability(player);
                     if(summonerCap == null) return;
 
                     for(UUID summonedMobUUID : summonerCap.getSummonedMobs()){
-                        Entity summonedMob = serverWorld.getEntityByUuid(summonedMobUUID);
+                        Entity summonedMob = serverWorld.getEntity(summonedMobUUID);
                         if(summonedMob instanceof LivingEntity){
                             LivingEntity summonedMobAsLiving = (LivingEntity) summonedMob;
-                            EffectInstance surgeSpeed = new EffectInstance(Effects.SPEED, 10 * 20, (beastSurgeLevel * 3) - 1);
-                            summonedMobAsLiving.addPotionEffect(surgeSpeed);
+                            EffectInstance surgeSpeed = new EffectInstance(Effects.MOVEMENT_SPEED, 10 * 20, (beastSurgeLevel * 3) - 1);
+                            summonedMobAsLiving.addEffect(surgeSpeed);
                         }
                     }
                 }

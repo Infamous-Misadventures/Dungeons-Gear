@@ -18,6 +18,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = MODID)
 public class StunningEnchantment extends DungeonsEnchantment {
 
@@ -31,36 +33,36 @@ public class StunningEnchantment extends DungeonsEnchantment {
     }
 
     @Override
-    public void onEntityDamaged(LivingEntity user, Entity target, int level) {
+    public void doPostAttack(LivingEntity user, Entity target, int level) {
         if(!(target instanceof LivingEntity)) return;
-        float chance = user.getRNG().nextFloat();
+        float chance = user.getRandom().nextFloat();
         if(chance <=  level * 0.05){
             EffectInstance stunned = new EffectInstance(CustomEffects.STUNNED, 60);
-            EffectInstance nausea = new EffectInstance(Effects.NAUSEA, 60);
-            EffectInstance slowness = new EffectInstance(Effects.SLOWNESS, 60, 5);
-            ((LivingEntity)target).addPotionEffect(stunned);
-            ((LivingEntity)target).addPotionEffect(nausea);
-            ((LivingEntity)target).addPotionEffect(slowness);
+            EffectInstance nausea = new EffectInstance(Effects.CONFUSION, 60);
+            EffectInstance slowness = new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 60, 5);
+            ((LivingEntity)target).addEffect(stunned);
+            ((LivingEntity)target).addEffect(nausea);
+            ((LivingEntity)target).addEffect(slowness);
         }
     }
 
     @SubscribeEvent
     public static void onHighlandAxeAttack(LivingAttackEvent event){
-        if(event.getSource().getImmediateSource() instanceof AbstractArrowEntity) return;
+        if(event.getSource().getDirectEntity() instanceof AbstractArrowEntity) return;
         if(event.getSource() instanceof OffhandAttackDamageSource) return;
-        if(!(event.getSource().getTrueSource() instanceof LivingEntity)) return;
-        LivingEntity attacker = (LivingEntity)event.getSource().getTrueSource();
+        if(!(event.getSource().getEntity() instanceof LivingEntity)) return;
+        LivingEntity attacker = (LivingEntity)event.getSource().getEntity();
         LivingEntity victim = event.getEntityLiving();
-        ItemStack mainhand = attacker.getHeldItemMainhand();
+        ItemStack mainhand = attacker.getMainHandItem();
         if(hasStunningBuiltIn(mainhand)){
-            float chance = attacker.getRNG().nextFloat();
+            float chance = attacker.getRandom().nextFloat();
             if(chance <= 0.05) {
                 EffectInstance stunned = new EffectInstance(CustomEffects.STUNNED, 60);
-                EffectInstance nausea = new EffectInstance(Effects.NAUSEA, 60);
-                EffectInstance slowness = new EffectInstance(Effects.SLOWNESS, 60, 5);
-                victim.addPotionEffect(stunned);
-                victim.addPotionEffect(nausea);
-                victim.addPotionEffect(slowness);
+                EffectInstance nausea = new EffectInstance(Effects.CONFUSION, 60);
+                EffectInstance slowness = new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 60, 5);
+                victim.addEffect(stunned);
+                victim.addEffect(nausea);
+                victim.addEffect(slowness);
             }
         }
     }

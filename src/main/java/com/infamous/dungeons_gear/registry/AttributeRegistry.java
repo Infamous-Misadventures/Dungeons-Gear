@@ -17,5 +17,5 @@ public class AttributeRegistry {
             3.0D,
             0.0D,
             1024.0D)
-            .setShouldWatch(true));
+            .setSyncable(true));
 }

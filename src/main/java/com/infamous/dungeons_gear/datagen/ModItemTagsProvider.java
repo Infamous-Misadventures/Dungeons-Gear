@@ -18,7 +18,7 @@ public class ModItemTagsProvider extends net.minecraft.data.ItemTagsProvider {
     }
 
     @Override
-    protected void registerTags() {
+    protected void addTags() {
         foodTags();
     }
 
@@ -65,12 +65,12 @@ public class ModItemTagsProvider extends net.minecraft.data.ItemTagsProvider {
     }
 
     private void processedFoodTag(Item foodItem) {
-        this.getOrCreateBuilder(ItemTagWrappers.FOOD).add(foodItem);
-        this.getOrCreateBuilder(ItemTagWrappers.FOOD_PROCESSED).add(foodItem);
+        this.tag(ItemTagWrappers.FOOD).add(foodItem);
+        this.tag(ItemTagWrappers.FOOD_PROCESSED).add(foodItem);
     }
 
     private void rawFoodTag(Item foodItem) {
-        this.getOrCreateBuilder(ItemTagWrappers.FOOD).add(foodItem);
-        this.getOrCreateBuilder(ItemTagWrappers.FOOD_RAW).add(foodItem);
+        this.tag(ItemTagWrappers.FOOD).add(foodItem);
+        this.tag(ItemTagWrappers.FOOD_RAW).add(foodItem);
     }
 }

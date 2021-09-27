@@ -34,11 +34,11 @@ public class DarkArmorModel<T extends LivingEntity> extends BipedModel<T> {
 		super(modelSize, 0.0F, 64, 64);
 		this.slot = slot;
 		this.entity = entity;
-		textureWidth = 64;
-		textureHeight = 64;
+		texWidth = 64;
+		texHeight = 64;
 
 		Everything = new ModelRenderer(this);
-		Everything.setRotationPoint(0.0F, 24.0F, 0.0F);
+		Everything.setPos(0.0F, 24.0F, 0.0F);
 
 
 
@@ -53,46 +53,46 @@ public class DarkArmorModel<T extends LivingEntity> extends BipedModel<T> {
 		
 
 		Head = new ModelRenderer(this);
-		Head.setRotationPoint(0.0F, 0.0F, 0.0F);
+		Head.setPos(0.0F, 0.0F, 0.0F);
 		Everything.addChild(Head);
-		Head.setTextureOffset(0, 0).addBox(-4.0F, -32.0F + 24.0F - testificateHelmetShiftUp, -4.0F, 8.0F, 8.0F, 8.0F, 1.0F, false);
-		Head.setTextureOffset(53, 16).addBox(-2.0F, -35.0F + 24.0F - testificateHelmetShiftUp, -6.0F, 4.0F, 4.0F, 1.0F, 0.0F, false);
-		Head.setTextureOffset(39, 18).addBox(4.0F, -32.0F + 24.0F - testificateHelmetShiftUp, -1.0F, 2.0F, 2.0F, 2.0F, 0.0F, false);
-		Head.setTextureOffset(39, 18).addBox(-6.0F, -32.0F + 24.0F - testificateHelmetShiftUp, -1.0F, 2.0F, 2.0F, 2.0F, 0.0F, true);
-		Head.setTextureOffset(47, 16).addBox(6.0F, -34.0F + 24.0F - testificateHelmetShiftUp, -1.0F, 1.0F, 4.0F, 2.0F, 0.0F, false);
-		Head.setTextureOffset(47, 16).addBox(-7.0F, -34.0F + 24.0F - testificateHelmetShiftUp, -1.0F, 1.0F, 4.0F, 2.0F, 0.0F, true);
+		Head.texOffs(0, 0).addBox(-4.0F, -32.0F + 24.0F - testificateHelmetShiftUp, -4.0F, 8.0F, 8.0F, 8.0F, 1.0F, false);
+		Head.texOffs(53, 16).addBox(-2.0F, -35.0F + 24.0F - testificateHelmetShiftUp, -6.0F, 4.0F, 4.0F, 1.0F, 0.0F, false);
+		Head.texOffs(39, 18).addBox(4.0F, -32.0F + 24.0F - testificateHelmetShiftUp, -1.0F, 2.0F, 2.0F, 2.0F, 0.0F, false);
+		Head.texOffs(39, 18).addBox(-6.0F, -32.0F + 24.0F - testificateHelmetShiftUp, -1.0F, 2.0F, 2.0F, 2.0F, 0.0F, true);
+		Head.texOffs(47, 16).addBox(6.0F, -34.0F + 24.0F - testificateHelmetShiftUp, -1.0F, 1.0F, 4.0F, 2.0F, 0.0F, false);
+		Head.texOffs(47, 16).addBox(-7.0F, -34.0F + 24.0F - testificateHelmetShiftUp, -1.0F, 1.0F, 4.0F, 2.0F, 0.0F, true);
 
 		Body = new ModelRenderer(this);
-		Body.setRotationPoint(0.0F, 0.0F, 0.0F);
+		Body.setPos(0.0F, 0.0F, 0.0F);
 		Everything.addChild(Body);
-		Body.setTextureOffset(40, 0).addBox(-4.0F, -24.0F + 24.0F, -2.0F, 8.0F, 12.0F, 4.0F, 1.0F, false);
+		Body.texOffs(40, 0).addBox(-4.0F, -24.0F + 24.0F, -2.0F, 8.0F, 12.0F, 4.0F, 1.0F, false);
 
 		Chestplate = new ModelRenderer(this);
-		Chestplate.setRotationPoint(0.0F, -15.0F, -2.0F);
+		Chestplate.setPos(0.0F, -15.0F, -2.0F);
 		Body.addChild(Chestplate);
 		setRotationAngle(Chestplate, -0.2967F, 0.0F, 0.0F);
-		Chestplate.setTextureOffset(50, 51).addBox(1.0F, -7.7467F + 24.0F, -3.5992F + 7.0F, 4.0F, 4.0F, 3.0F, 0.5F, false);
-		Chestplate.setTextureOffset(50, 51).addBox(-5.0F, -7.7467F + 24.0F, -3.5992F + 7.0F, 4.0F, 4.0F, 3.0F, 0.5F, true);
+		Chestplate.texOffs(50, 51).addBox(1.0F, -7.7467F + 24.0F, -3.5992F + 7.0F, 4.0F, 4.0F, 3.0F, 0.5F, false);
+		Chestplate.texOffs(50, 51).addBox(-5.0F, -7.7467F + 24.0F, -3.5992F + 7.0F, 4.0F, 4.0F, 3.0F, 0.5F, true);
 
 		LeftArm = new ModelRenderer(this);
-		LeftArm.setRotationPoint(0.0F, 0.0F, 0.0F);
+		LeftArm.setPos(0.0F, 0.0F, 0.0F);
 		Everything.addChild(LeftArm);
-		LeftArm.setTextureOffset(48, 22).addBox(5.0F-5.0F, -24.0F + 22.0F, -2.0F, 4.0F, 3.0F, 4.0F, 1.0F, false);
-		LeftArm.setTextureOffset(48, 29).addBox(4.0F-5.0F, -22.0F + 22.0F, -2.0F, 4.0F, 4.0F, 4.0F, 0.6F, false);
-		LeftArm.setTextureOffset(52, 44).addBox(8.0F-5.0F, -15.0F + 22.0F, -2.0F, 1.0F, 3.0F, 4.0F, 0.5F, true);
-		LeftArm.setTextureOffset(50, 38).addBox(7.0F-5.0F, -12.0F + 22.0F, -2.0F, 2.0F, 1.0F, 4.0F, 0.4F, true);
+		LeftArm.texOffs(48, 22).addBox(5.0F-5.0F, -24.0F + 22.0F, -2.0F, 4.0F, 3.0F, 4.0F, 1.0F, false);
+		LeftArm.texOffs(48, 29).addBox(4.0F-5.0F, -22.0F + 22.0F, -2.0F, 4.0F, 4.0F, 4.0F, 0.6F, false);
+		LeftArm.texOffs(52, 44).addBox(8.0F-5.0F, -15.0F + 22.0F, -2.0F, 1.0F, 3.0F, 4.0F, 0.5F, true);
+		LeftArm.texOffs(50, 38).addBox(7.0F-5.0F, -12.0F + 22.0F, -2.0F, 2.0F, 1.0F, 4.0F, 0.4F, true);
 
 		RightArm = new ModelRenderer(this);
-		RightArm.setRotationPoint(0.0F, 0.0F, 0.0F);
+		RightArm.setPos(0.0F, 0.0F, 0.0F);
 		Everything.addChild(RightArm);
-		RightArm.setTextureOffset(48, 22).addBox(-9.0F+5.0F, -24.0F + 22.0F, -2.0F, 4.0F, 3.0F, 4.0F, 1.0F, true);
-		RightArm.setTextureOffset(48, 29).addBox(-8.0F+5.0F, -22.0F + 22.0F, -2.0F, 4.0F, 4.0F, 4.0F, 0.6F, true);
-		RightArm.setTextureOffset(52, 44).addBox(-9.0F+5.0F, -15.0F + 22.0F, -2.0F, 1.0F, 3.0F, 4.0F, 0.5F, false);
-		RightArm.setTextureOffset(50, 38).addBox(-9.0F+5.0F, -12.0F + 22.0F, -2.0F, 2.0F, 1.0F, 4.0F, 0.4F, false);
+		RightArm.texOffs(48, 22).addBox(-9.0F+5.0F, -24.0F + 22.0F, -2.0F, 4.0F, 3.0F, 4.0F, 1.0F, true);
+		RightArm.texOffs(48, 29).addBox(-8.0F+5.0F, -22.0F + 22.0F, -2.0F, 4.0F, 4.0F, 4.0F, 0.6F, true);
+		RightArm.texOffs(52, 44).addBox(-9.0F+5.0F, -15.0F + 22.0F, -2.0F, 1.0F, 3.0F, 4.0F, 0.5F, false);
+		RightArm.texOffs(50, 38).addBox(-9.0F+5.0F, -12.0F + 22.0F, -2.0F, 2.0F, 1.0F, 4.0F, 0.4F, false);
 	}
 
 	@Override
-	public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
+	public void renderToBuffer(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
 		//ImmutableList.of(this.Neck, this.Torso, this.RightShoulderPad, this.LeftShoulderPad).forEach((modelRenderer) -> {
 		//modelRenderer.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
 		//});
@@ -133,28 +133,28 @@ public class DarkArmorModel<T extends LivingEntity> extends BipedModel<T> {
 			} else {
 
 		 */
-			matrixStackIn.push();
-			this.Head.copyModelAngles(this.bipedHead);
-			if (this.entity.isChild()) {
+			matrixStackIn.pushPose();
+			this.Head.copyFrom(this.head);
+			if (this.entity.isBaby()) {
 				matrixStackIn.scale(0.8F, 0.8F, 0.8F);
-				this.Head.setRotationPoint(0.0F, 15.0F, 0.0F);
+				this.Head.setPos(0.0F, 15.0F, 0.0F);
 			}
 			this.Head.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-			matrixStackIn.pop();
+			matrixStackIn.popPose();
 			//}
 		}
 
 		if (this.slot == EquipmentSlotType.CHEST) {
-			matrixStackIn.push();
+			matrixStackIn.pushPose();
 
-			this.Body.copyModelAngles(this.bipedBody);
-			this.LeftArm.copyModelAngles(this.bipedLeftArm);
-			this.RightArm.copyModelAngles(this.bipedRightArm);
-			if (this.entity.isChild()) {
+			this.Body.copyFrom(this.body);
+			this.LeftArm.copyFrom(this.leftArm);
+			this.RightArm.copyFrom(this.rightArm);
+			if (this.entity.isBaby()) {
 				matrixStackIn.scale(0.5F, 0.5F, 0.5F);
-				this.Body.setRotationPoint(0.0F, 24.0F, 0.0F);
-				this.LeftArm.setRotationPoint(5.0F, 24.0F, 0.0F);
-				this.RightArm.setRotationPoint(-5.0F, 24.0F, 0.0F);
+				this.Body.setPos(0.0F, 24.0F, 0.0F);
+				this.LeftArm.setPos(5.0F, 24.0F, 0.0F);
+				this.RightArm.setPos(-5.0F, 24.0F, 0.0F);
 			}
 			this.LeftArm.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
 			this.RightArm.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
@@ -162,13 +162,13 @@ public class DarkArmorModel<T extends LivingEntity> extends BipedModel<T> {
 				matrixStackIn.scale(1.0F, 1.0F, 1.3F);
 			}
 			this.Body.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-			matrixStackIn.pop();
+			matrixStackIn.popPose();
 		}
 	}
 
 	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.rotateAngleX = x;
-		modelRenderer.rotateAngleY = y;
-		modelRenderer.rotateAngleZ = z;
+		modelRenderer.xRot = x;
+		modelRenderer.yRot = y;
+		modelRenderer.zRot = z;
 	}
 }

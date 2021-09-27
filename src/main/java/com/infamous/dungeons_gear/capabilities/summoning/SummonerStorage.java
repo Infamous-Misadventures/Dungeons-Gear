@@ -13,32 +13,32 @@ public class SummonerStorage implements Capability.IStorage<ISummoner> {
     public INBT writeNBT(Capability<ISummoner> capability, ISummoner instance, Direction side) {
         CompoundNBT tag = new CompoundNBT();
         if(instance.getSummonedGolem() != null){
-            tag.putUniqueId("golem", instance.getSummonedGolem());
+            tag.putUUID("golem", instance.getSummonedGolem());
         }
         if(instance.getSummonedWolf() != null){
-            tag.putUniqueId("wolf", instance.getSummonedWolf());
+            tag.putUUID("wolf", instance.getSummonedWolf());
         }
         if(instance.getSummonedLlama() != null){
-            tag.putUniqueId("llama", instance.getSummonedLlama());
+            tag.putUUID("llama", instance.getSummonedLlama());
         }
         if(instance.getSummonedBat() != null){
-            tag.putUniqueId("bat", instance.getSummonedBat());
+            tag.putUUID("bat", instance.getSummonedBat());
         }
         if(instance.getSummonedSheep() != null){
-            tag.putUniqueId("sheep", instance.getSummonedSheep());
+            tag.putUUID("sheep", instance.getSummonedSheep());
         }
         for(int i = 0; i < 3; i++){
             UUID buzzyNestBee = instance.getBuzzyNestBees()[i];
             UUID tumblebeeBee = instance.getTumblebeeBees()[i];
             UUID busyBeeBee = instance.getBusyBeeBees()[i];
             if(buzzyNestBee != null){
-                tag.putUniqueId("buzzyNestBee" + i, buzzyNestBee);
+                tag.putUUID("buzzyNestBee" + i, buzzyNestBee);
             }
             if(tumblebeeBee != null){
-                tag.putUniqueId("tumblebeeBee" + i, tumblebeeBee);
+                tag.putUUID("tumblebeeBee" + i, tumblebeeBee);
             }
             if(busyBeeBee != null){
-                tag.putUniqueId("busyBeeBee" + i, busyBeeBee);
+                tag.putUUID("busyBeeBee" + i, busyBeeBee);
             }
         }
         return tag;
@@ -47,33 +47,33 @@ public class SummonerStorage implements Capability.IStorage<ISummoner> {
     @Override
     public void readNBT(Capability<ISummoner> capability, ISummoner instance, Direction side, INBT nbt) {
         CompoundNBT tag = (CompoundNBT) nbt;
-        if(tag.hasUniqueId("golem")){
-            instance.setSummonedGolem(tag.getUniqueId("golem"));
+        if(tag.hasUUID("golem")){
+            instance.setSummonedGolem(tag.getUUID("golem"));
         }
-        if(tag.hasUniqueId("wolf")){
-            instance.setSummonedWolf(tag.getUniqueId("wolf"));
+        if(tag.hasUUID("wolf")){
+            instance.setSummonedWolf(tag.getUUID("wolf"));
         }
-        if(tag.hasUniqueId("llama")){
-            instance.setSummonedLlama(tag.getUniqueId("llama"));
+        if(tag.hasUUID("llama")){
+            instance.setSummonedLlama(tag.getUUID("llama"));
         }
-        if(tag.hasUniqueId("bat")){
-            instance.setSummonedBat(tag.getUniqueId("bat"));
+        if(tag.hasUUID("bat")){
+            instance.setSummonedBat(tag.getUUID("bat"));
         }
-        if(tag.hasUniqueId("sheep")){
-            instance.setSummonedSheep(tag.getUniqueId("sheep"));
+        if(tag.hasUUID("sheep")){
+            instance.setSummonedSheep(tag.getUUID("sheep"));
         }
         for(int i = 0; i < 3; i++){
             String currentBuzzyNestBee = "buzzyNestBee" + i;
-            if(tag.hasUniqueId(currentBuzzyNestBee)){
-                instance.addBuzzyNestBee(tag.getUniqueId(currentBuzzyNestBee));
+            if(tag.hasUUID(currentBuzzyNestBee)){
+                instance.addBuzzyNestBee(tag.getUUID(currentBuzzyNestBee));
             }
             String currentTumblebeeBee = "tumblebeeBee" + i;
-            if(tag.hasUniqueId(currentTumblebeeBee)){
-                instance.addTumblebeeBee(tag.getUniqueId(currentTumblebeeBee));
+            if(tag.hasUUID(currentTumblebeeBee)){
+                instance.addTumblebeeBee(tag.getUUID(currentTumblebeeBee));
             }
             String currentBusyBeeBee = "busyBeeBee" + i;
-            if(tag.hasUniqueId(currentBusyBeeBee)){
-                instance.addBusyBeeBee(tag.getUniqueId(currentBusyBeeBee));
+            if(tag.hasUUID(currentBusyBeeBee)){
+                instance.addBusyBeeBee(tag.getUUID(currentBusyBeeBee));
             }
         }
     }

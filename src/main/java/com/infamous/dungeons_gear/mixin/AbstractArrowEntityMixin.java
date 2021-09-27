@@ -22,7 +22,7 @@ public abstract class AbstractArrowEntityMixin extends Entity {
         super(entityTypeIn, worldIn);
     }
 
-    @Inject(at = @At("RETURN"), method = "getWaterDrag", cancellable = true)
+    @Inject(at = @At("RETURN"), method = "getWaterInertia", cancellable = true)
     private void checkForHarpoon(CallbackInfoReturnable<Float> cir){
         if(this.getTags().contains(HarpoonQuiverItem.HARPOON_QUIVER)
                 || this.getTags().contains(IRangedWeapon.HARPOON_TAG)){
