@@ -184,42 +184,14 @@ public class GlobalLootModifier{
         Entity thisEntity = context.getParamOrNull(LootParameters.THIS_ENTITY);
         final PlayerEntity player = thisEntity instanceof PlayerEntity ? (PlayerEntity) thisEntity : null;
 
-        Entity contextEntity = context.getParamOrNull(LootParameters.KILLER_ENTITY);
-        if(contextEntity instanceof ContainerMinecartEntity){
-            ContainerMinecartEntity containerMinecartEntity = (ContainerMinecartEntity)contextEntity;
-            ResourceLocation lootTable = getLootTable(containerMinecartEntity);
-            if (lootTable != null) {
-                String lootTablePath = lootTable.toString();
-                lootTables.forEach((path) ->{
-                    if(lootTablePath.contains(path) && !lootTableBlacklist.contains(lootTablePath)){
-                        generatedLoot.addAll(ChestLootHelper.generateLootFromValues(uniqueItemChance, artifactChance, player));
-                    }
-                });
-            }
-        }
-        else
-        {
-            Vector3d vector3d = context.getParamOrNull(LootParameters.ORIGIN);
-            if(vector3d != null){
-                BlockPos pos = new BlockPos(vector3d);
-                // fix chunk lag issue
-                if(!context.getLevel().hasChunkAt(pos)){
-                    return;
+        ResourceLocation lootTable = context.getQueriedLootTableId();
+        if (lootTable != null) {
+            String lootTablePath = lootTable.toString();
+            lootTables.forEach((path) ->{
+                if(lootTablePath.contains(path) && !lootTableBlacklist.contains(lootTablePath)){
+                    generatedLoot.addAll(ChestLootHelper.generateLootFromValues(uniqueItemChance, artifactChance, player));
                 }
-                TileEntity contextTileEntity = context.getLevel().getBlockEntity(pos);
-                if(contextTileEntity instanceof LockableLootTileEntity){
-                    LockableLootTileEntity lockableLootTileEntity = (LockableLootTileEntity)contextTileEntity;
-                    ResourceLocation lootTable = getLootTable(lockableLootTileEntity);
-                    if (lootTable != null) {
-                        String lootTablePath = lootTable.toString();
-                        lootTables.forEach((path) ->{
-                            if(lootTablePath.contains(path) && !lootTableBlacklist.contains(lootTablePath)){
-                                generatedLoot.addAll(ChestLootHelper.generateLootFromValues(uniqueItemChance, artifactChance, player));
-                            }
-                        });
-                    }
-                }
-            }
+            });
         }
     }
 }
