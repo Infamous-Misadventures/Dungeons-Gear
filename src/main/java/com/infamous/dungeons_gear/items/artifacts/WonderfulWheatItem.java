@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
-import com.infamous.dungeons_gear.capabilities.summoning.ISummonable;
-import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
+import com.infamous.dungeons_libraries.capabilities.summoning.ISummonable;
+import com.infamous.dungeons_libraries.capabilities.summoning.ISummoner;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.goals.LlamaFollowOwnerGoal;
@@ -40,6 +40,9 @@ import java.util.List;
 
 import net.minecraft.item.Item.Properties;
 
+import static com.infamous.dungeons_libraries.utils.CapabilityHelper.getSummonableCapability;
+import static com.infamous.dungeons_libraries.utils.CapabilityHelper.getSummonerCapability;
+
 public class WonderfulWheatItem extends ArtifactItem {
     public WonderfulWheatItem(Properties p_i48487_1_) {
         super(p_i48487_1_);
@@ -65,12 +68,12 @@ public class WonderfulWheatItem extends ArtifactItem {
             }
 
             if(itemUseContextPlayer != null){
-                ISummoner summonerCap = CapabilityHelper.getSummonerCapability(itemUseContextPlayer);
+                ISummoner summonerCap = getSummonerCapability(itemUseContextPlayer);
                 if (summonerCap != null) {
                     if(summonerCap.getSummonedLlama() == null){
                         LlamaEntity llamaEntity = EntityType.LLAMA.create(world);
                         if (llamaEntity!= null) {
-                            ISummonable summon = CapabilityHelper.getSummonableCapability(llamaEntity);
+                            ISummonable summon = getSummonableCapability(llamaEntity);
                             if(summon != null){
 
                                 summon.setSummoner(itemUseContextPlayer.getUUID());

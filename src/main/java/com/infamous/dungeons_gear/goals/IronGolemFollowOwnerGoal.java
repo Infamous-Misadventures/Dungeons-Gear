@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.goals;
 
-import com.infamous.dungeons_gear.capabilities.summoning.SummoningHelper;
+import com.infamous.dungeons_libraries.capabilities.summoning.SummoningHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.entity.LivingEntity;

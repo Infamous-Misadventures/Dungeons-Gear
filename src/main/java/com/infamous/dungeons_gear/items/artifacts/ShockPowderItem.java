@@ -16,8 +16,6 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 
-import net.minecraft.item.Item.Properties;
-
 public class ShockPowderItem extends ArtifactItem {
     public ShockPowderItem(Properties properties) {
         super(properties);
@@ -27,7 +25,7 @@ public class ShockPowderItem extends ArtifactItem {
         PlayerEntity playerIn = c.getPlayer();
         ItemStack itemstack = c.getItemInHand();
 
-        AreaOfEffectHelper.stunNearbyEnemies(c.getLevel(), playerIn);
+        AreaOfEffectHelper.stunNearbyEnemies(c.getLevel(), playerIn, 5);
         itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemstack)));
 
         ArtifactItem.putArtifactOnCooldown(playerIn, itemstack.getItem());

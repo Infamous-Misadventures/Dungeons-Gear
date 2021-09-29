@@ -1,12 +1,12 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_gear.capabilities.summoning.ISummonable;
-import com.infamous.dungeons_gear.capabilities.summoning.SummoningHelper;
+import com.infamous.dungeons_libraries.capabilities.summoning.ISummonable;
+import com.infamous.dungeons_libraries.capabilities.summoning.SummoningHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.BeastEnchantment;
-import com.infamous.dungeons_gear.utilties.CapabilityHelper;
+import com.infamous.dungeons_libraries.utils.CapabilityHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.Entity;

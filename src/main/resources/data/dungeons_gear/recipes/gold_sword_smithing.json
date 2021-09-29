@@ -1,7 +1,7 @@
 {
   "type": "minecraft:smithing",
   "base": {
-    "item": "minecraft:golden__sword"
+    "item": "minecraft:golden_sword"
   },
   "addition": {
     "tag": "dungeons_gear:metal_weapon_repair_items"

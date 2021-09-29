@@ -3,8 +3,8 @@ package com.infamous.dungeons_gear.items.artifacts;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.entities.IceCloudEntity;
-import com.infamous.dungeons_gear.utilties.AbilityHelper;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
+import javafx.util.Pair;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,11 +16,12 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.PacketDistributor;
+import org.apache.commons.lang3.tuple.MutablePair;
 
 import java.util.List;
 
-
-import net.minecraft.item.Item.Properties;
+import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.applyToNearbyEntities;
+import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.getCanApplyToEnemyPredicate;
 
 public class IceWandItem extends ArtifactItem {
     public IceWandItem(Properties properties) {
@@ -36,18 +37,17 @@ public class IceWandItem extends ArtifactItem {
     public ActionResult<ItemStack> procArtifact(ItemUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
         ItemStack itemstack = c.getItemInHand();
-        List<LivingEntity> nearbyEntities = c.getLevel().getLoadedEntitiesOfClass(LivingEntity.class, playerIn.getBoundingBox().inflate(16), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(playerIn, nearbyEntity));
-        LivingEntity target = null;
-        double dist = 123456;
-        if (!nearbyEntities.isEmpty()) {
-            for (LivingEntity e : nearbyEntities) {
-                if (target == null || e.distanceToSqr(playerIn) < dist) {
-                    target = e;
-                    dist = e.distanceToSqr(playerIn);
+        final MutablePair<LivingEntity, Double> targetDistance = new MutablePair(null, 123456);
+        applyToNearbyEntities(playerIn, 16,
+                getCanApplyToEnemyPredicate(playerIn),
+                (LivingEntity nearbyEntity) -> {
+                    if (targetDistance.getLeft() == null || nearbyEntity.distanceToSqr(playerIn) < targetDistance.getRight()) {
+                        targetDistance.setLeft(nearbyEntity);
+                        targetDistance.setRight(nearbyEntity.distanceToSqr(playerIn));
+                    }
                 }
-            }
-        }
-        return new ActionResult<>(freezeEntity(itemstack, playerIn, target), itemstack);
+        );
+        return new ActionResult<>(freezeEntity(itemstack, playerIn, targetDistance.getLeft()), itemstack);
     }
 
     private ActionResultType freezeEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target) {

@@ -29,7 +29,9 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 import static com.infamous.dungeons_gear.registry.ItemRegistry.ARROW_BUNDLE;
@@ -296,6 +298,22 @@ public class ArmorEvents {
             }
             comboCap.setOffhandCooldown(comboCap.getOffhandCooldown() + 1);
         }
+    }
+
+    @SubscribeEvent
+    public static void onLivingKnockbackEvent(LivingKnockBackEvent event){
+        LivingEntity defender = (LivingEntity) event.getEntityLiving();
+        Optional<Float> max = StreamSupport.stream(defender.getArmorSlots().spliterator(), false).map(ArmorEvents::getKnockbackResistance).max(Comparator.naturalOrder());
+        max.ifPresent(knockbackResistance -> {
+                event.setStrength(event.getStrength() * (1-knockbackResistance));
+        });
+    }
+
+    private static float getKnockbackResistance(ItemStack stack) {
+        if (stack.getItem() instanceof IArmor) {
+            return ((IArmor) stack.getItem()).getKnockbackResistance();
+        }
+        return 0;
     }
 
 

@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
-import com.infamous.dungeons_gear.capabilities.summoning.ISummonable;
-import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
+import com.infamous.dungeons_libraries.capabilities.summoning.ISummonable;
+import com.infamous.dungeons_libraries.capabilities.summoning.ISummoner;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.goals.BeeFollowOwnerGoal;
@@ -34,6 +34,9 @@ import java.util.UUID;
 
 import net.minecraft.item.Item.Properties;
 
+import static com.infamous.dungeons_libraries.utils.CapabilityHelper.getSummonableCapability;
+import static com.infamous.dungeons_libraries.utils.CapabilityHelper.getSummonerCapability;
+
 public class BuzzyNestItem extends ArtifactItem {
 
     public BuzzyNestItem(Properties properties) {
@@ -60,13 +63,13 @@ public class BuzzyNestItem extends ArtifactItem {
             }
 
             if (itemUseContextPlayer != null) {
-                ISummoner summonerCap = CapabilityHelper.getSummonerCapability(itemUseContextPlayer);
+                ISummoner summonerCap = getSummonerCapability(itemUseContextPlayer);
                 if (summonerCap != null) {
                     if (summonerCap.hasNoBuzzyNestBees()) {
                         for (int i = 0; i < 3; i++) {
                             BeeEntity beeEntity = EntityType.BEE.create(world);
                             if (beeEntity != null) {
-                                ISummonable summonable = CapabilityHelper.getSummonableCapability(beeEntity);
+                                ISummonable summonable = getSummonableCapability(beeEntity);
                                 if (summonable != null) {
 
                                     summonable.setSummoner(itemUseContextPlayer.getUUID());

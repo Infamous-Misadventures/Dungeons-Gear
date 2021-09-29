@@ -1,8 +1,8 @@
 package com.infamous.dungeons_gear.utilties;
 
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
-import com.infamous.dungeons_gear.capabilities.summoning.ISummonable;
-import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
+import com.infamous.dungeons_libraries.capabilities.summoning.ISummonable;
+import com.infamous.dungeons_libraries.capabilities.summoning.ISummoner;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.goals.*;
@@ -30,14 +30,17 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
+import static com.infamous.dungeons_libraries.utils.CapabilityHelper.getSummonableCapability;
+import static com.infamous.dungeons_libraries.utils.CapabilityHelper.getSummonerCapability;
+
 public class ArmorEffectHelper {
     public static void summonOrTeleportBat(PlayerEntity playerEntity, World world) {
-        ISummoner summonerCap = CapabilityHelper.getSummonerCapability(playerEntity);
+        ISummoner summonerCap = getSummonerCapability(playerEntity);
         if(summonerCap == null) return;
         if(summonerCap.getSummonedBat() == null){
             BatEntity batEntity = EntityType.BAT.create(world);
             if (batEntity!= null) {
-                ISummonable summonable = CapabilityHelper.getSummonableCapability(batEntity);
+                ISummonable summonable = getSummonableCapability(batEntity);
                 if(summonable != null){
 
                     summonable.setSummoner(playerEntity.getUUID());
@@ -172,11 +175,11 @@ public class ArmorEffectHelper {
     }
 
     private static void summonTumblebeeBee(PlayerEntity playerEntity) {
-        ISummoner summonerCap = CapabilityHelper.getSummonerCapability(playerEntity);
+        ISummoner summonerCap = getSummonerCapability(playerEntity);
         if (summonerCap == null) return;
         BeeEntity beeEntity = EntityType.BEE.create(playerEntity.level);
         if (beeEntity != null) {
-            ISummonable summonable = CapabilityHelper.getSummonableCapability(beeEntity);
+            ISummonable summonable = getSummonableCapability(beeEntity);
             if (summonable != null && summonerCap.addTumblebeeBee(beeEntity.getUUID())) {
                 summonable.setSummoner(playerEntity.getUUID());
 

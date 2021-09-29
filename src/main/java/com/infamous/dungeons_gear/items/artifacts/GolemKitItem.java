@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
-import com.infamous.dungeons_gear.capabilities.summoning.ISummonable;
-import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
+import com.infamous.dungeons_libraries.capabilities.summoning.ISummonable;
+import com.infamous.dungeons_libraries.capabilities.summoning.ISummoner;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.goals.GolemOwnerHurtByTargetGoal;
@@ -29,6 +29,9 @@ import java.util.List;
 
 import net.minecraft.item.Item.Properties;
 
+import static com.infamous.dungeons_libraries.utils.CapabilityHelper.getSummonableCapability;
+import static com.infamous.dungeons_libraries.utils.CapabilityHelper.getSummonerCapability;
+
 public class GolemKitItem extends ArtifactItem {
     public GolemKitItem(Properties p_i48487_1_) {
         super(p_i48487_1_);
@@ -54,12 +57,12 @@ public class GolemKitItem extends ArtifactItem {
             }
 
             if(itemUseContextPlayer != null){
-                ISummoner summonerCap = CapabilityHelper.getSummonerCapability(itemUseContextPlayer);
+                ISummoner summonerCap = getSummonerCapability(itemUseContextPlayer);
                 if (summonerCap != null) {
                     if(summonerCap.getSummonedGolem() == null){
                         IronGolemEntity ironGolemEntity = EntityType.IRON_GOLEM.create(world);
                         if (ironGolemEntity!= null) {
-                            ISummonable summonable = CapabilityHelper.getSummonableCapability(ironGolemEntity);
+                            ISummonable summonable = getSummonableCapability(ironGolemEntity);
                             if(summonable != null){
 
                                 summonable.setSummoner(itemUseContextPlayer.getUUID());

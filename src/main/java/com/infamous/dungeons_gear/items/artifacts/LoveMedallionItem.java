@@ -15,8 +15,6 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 
-import net.minecraft.item.Item.Properties;
-
 public class LoveMedallionItem extends ArtifactItem {
     public LoveMedallionItem(Properties properties) {
         super(properties);
@@ -27,7 +25,7 @@ public class LoveMedallionItem extends ArtifactItem {
         ItemStack itemstack = c.getItemInHand();
         World world = c.getLevel();
 
-        AreaOfEffectHelper.makeLoversOutOfNearbyEnemies(playerIn, world);
+        AreaOfEffectHelper.makeLoversOutOfNearbyEnemies(playerIn, world, 5, 3);
 
         itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemstack)));
 

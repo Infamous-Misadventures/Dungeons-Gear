@@ -4,10 +4,10 @@ import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.capabilities.bow.IBow;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.items.interfaces.IRangedWeapon;
-import com.infamous.dungeons_gear.utilties.AbilityHelper;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
 import com.infamous.dungeons_gear.utilties.RangedAttackHelper;
+import com.infamous.dungeons_libraries.utils.PetHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
@@ -87,7 +87,7 @@ public class BowEvents {
                 boolean snowBowFlag = arrowEntity.getTags().contains(IRangedWeapon.FREEZING_TAG);
                 boolean trickbowFlag = arrowEntity.getTags().contains(IRangedWeapon.RELIABLE_RICOCHET_TAG);
                 if(huntingBowFlag){
-                    AbilityHelper.makeNearbyPetsAttackTarget(victim, shooter);
+                    PetHelper.makeNearbyPetsAttackTarget(victim, shooter);
                 }
                 else if(snowBowFlag){
                     EffectInstance freezing = new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 60, 0);

@@ -11,7 +11,7 @@ import net.minecraft.world.IWorldReader;
 
 import java.util.EnumSet;
 
-import static com.infamous.dungeons_gear.capabilities.summoning.SummoningHelper.getSummoner;
+import static com.infamous.dungeons_libraries.capabilities.summoning.SummoningHelper.getSummoner;
 
 import net.minecraft.entity.ai.goal.Goal.Flag;
 

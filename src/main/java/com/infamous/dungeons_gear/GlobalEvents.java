@@ -21,6 +21,7 @@ import com.infamous.dungeons_gear.items.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.items.interfaces.IRangedWeapon;
 import com.infamous.dungeons_gear.items.interfaces.ISoulGatherer;
 import com.infamous.dungeons_gear.utilties.*;
+import com.infamous.dungeons_libraries.utils.PetHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -50,6 +51,7 @@ import net.minecraftforge.fml.network.PacketDistributor;
 import java.util.Optional;
 
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
+import static com.infamous.dungeons_libraries.utils.CapabilityHelper.getSummonableCapability;
 
 
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
@@ -215,7 +217,7 @@ public class GlobalEvents {
         LivingEntity ouch = event.getEntityLiving();
         if (event.getSource().getEntity() instanceof LivingEntity) {
             LivingEntity bonk = (LivingEntity) event.getSource().getEntity();
-            if (AbilityHelper.isPetOrColleagueRelation(ouch, bonk)) {
+            if (PetHelper.isPetOrColleagueRelation(ouch, bonk)) {
                 event.setCanceled(true);
                 ouch.setLastHurtByMob(null);
                 if (ouch instanceof MobEntity)
@@ -226,7 +228,7 @@ public class GlobalEvents {
             }
         }
         if (DungeonsGearCompatibility.saveYourPets) {
-            if (CapabilityHelper.getSummonableCapability(event.getEntityLiving()) != null && event.getAmount() > event.getEntityLiving().getMaxHealth()) {
+            if (getSummonableCapability(event.getEntityLiving()) != null && event.getAmount() > event.getEntityLiving().getMaxHealth()) {
                 event.getEntityLiving().remove();
                 //so summoned wolves and llamas are disposable
             }
@@ -307,7 +309,7 @@ public class GlobalEvents {
                 EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult) rayTraceResult;
                 if (entityRayTraceResult.getEntity() instanceof LivingEntity) {
                     LivingEntity victim = (LivingEntity) ((EntityRayTraceResult) rayTraceResult).getEntity();
-                    AreaOfEffectHelper.pullVicitimTowardsTarget(shooter, victim, ParticleTypes.ENTITY_EFFECT);
+                    AreaOfEffectHelper.pullVictimTowardsTarget(shooter, victim, ParticleTypes.ENTITY_EFFECT);
                 }
             }
         }

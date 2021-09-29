@@ -24,6 +24,8 @@ import net.minecraft.world.World;
 import java.util.*;
 import java.util.function.Predicate;
 
+import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.getCanApplyToEnemyPredicate;
+import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.getCanApplyToSecondEnemyPredicate;
 import static net.minecraft.entity.Entity.getHorizontalDistanceSqr;
 
 public class ProjectileEffectHelper {
@@ -33,7 +35,7 @@ public class ProjectileEffectHelper {
     public static void ricochetArrowTowardsOtherEntity(LivingEntity attacker, LivingEntity victim, AbstractArrowEntity arrowEntity, int distance) {
         World world = attacker.getCommandSenderWorld();
         //boolean nullListFlag = arrowEntity.hitEntities == null;
-        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesOfClass(LivingEntity.class, victim.getBoundingBox().inflate(distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, victim, nearbyEntity));
+        List<LivingEntity> nearbyEntities = world.getLoadedEntitiesOfClass(LivingEntity.class, victim.getBoundingBox().inflate(distance), getCanApplyToSecondEnemyPredicate(attacker, victim));
         if (nearbyEntities.isEmpty()) return;
         LivingEntity target = null;
         double dist = 26052020;
@@ -59,7 +61,7 @@ public class ProjectileEffectHelper {
         World world = attacker.getCommandSenderWorld();
         //boolean nullListFlag = arrowEntity.hitEntities == null;
         List<LivingEntity> nearbyEntities = world.getLoadedEntitiesOfClass(LivingEntity.class, new AxisAlignedBB(attacker.getX() - distance, attacker.getY() - distance, attacker.getZ() - distance,
-                attacker.getX() + distance, attacker.getY() + distance, attacker.getZ() + distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
+                attacker.getX() + distance, attacker.getY() + distance, attacker.getZ() + distance), getCanApplyToEnemyPredicate(attacker));
         if (nearbyEntities.size() < 2) return;
         nearbyEntities.sort(Comparator.comparingDouble(livingEntity -> livingEntity.distanceToSqr(attacker)));
         LivingEntity target = nearbyEntities.get(0);
@@ -84,7 +86,7 @@ public class ProjectileEffectHelper {
         World world = attacker.getCommandSenderWorld();
         //boolean nullListFlag = arrowEntity.hitEntities == null;
         List<LivingEntity> nearbyEntities = world.getLoadedEntitiesOfClass(LivingEntity.class, new AxisAlignedBB(attacker.getX() - distance, attacker.getY() - distance, attacker.getZ() - distance,
-                attacker.getX() + distance, attacker.getY() + distance, attacker.getZ() + distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
+                attacker.getX() + distance, attacker.getY() + distance, attacker.getZ() + distance), getCanApplyToEnemyPredicate(attacker));
         if (nearbyEntities.isEmpty()) return;
 
         nearbyEntities.sort(Comparator.comparingDouble(livingEntity -> livingEntity.distanceToSqr(attacker)));
@@ -111,7 +113,7 @@ public class ProjectileEffectHelper {
         World world = attacker.getCommandSenderWorld();
         //boolean nullListFlag = arrowEntity.hitEntities == null;
         List<LivingEntity> nearbyEntities = world.getLoadedEntitiesOfClass(LivingEntity.class, new AxisAlignedBB(attacker.getX() - distance, attacker.getY() - distance, attacker.getZ() - distance,
-                attacker.getX() + distance, attacker.getY() + distance, attacker.getZ() + distance), (nearbyEntity) -> AbilityHelper.canApplyToEnemy(attacker, nearbyEntity));
+                attacker.getX() + distance, attacker.getY() + distance, attacker.getZ() + distance), getCanApplyToEnemyPredicate(attacker));
         if (nearbyEntities.size() < 2) return;
         nearbyEntities.sort(Comparator.comparingDouble(livingEntity -> livingEntity.distanceToSqr(attacker)));
         LivingEntity target = nearbyEntities.get(0);

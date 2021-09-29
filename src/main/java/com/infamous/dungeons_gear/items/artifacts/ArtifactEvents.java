@@ -2,9 +2,9 @@ package com.infamous.dungeons_gear.items.artifacts;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
-import com.infamous.dungeons_gear.capabilities.summoning.ISummonable;
-import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
-import com.infamous.dungeons_gear.capabilities.summoning.SummoningHelper;
+import com.infamous.dungeons_libraries.capabilities.summoning.ISummonable;
+import com.infamous.dungeons_libraries.capabilities.summoning.ISummoner;
+import com.infamous.dungeons_libraries.capabilities.summoning.SummoningHelper;
 import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.goals.*;
 import com.infamous.dungeons_gear.registry.ItemRegistry;
@@ -36,6 +36,9 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import java.util.UUID;
 
+import static com.infamous.dungeons_libraries.utils.CapabilityHelper.getSummonableCapability;
+import static com.infamous.dungeons_libraries.utils.CapabilityHelper.getSummonerCapability;
+
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class ArtifactEvents {
 
@@ -46,7 +49,7 @@ public class ArtifactEvents {
     @SubscribeEvent
     public static void reAddSummonableGoals(EntityJoinWorldEvent event){
         if(SummoningHelper.isEntitySummonable(event.getEntity())){
-            ISummonable summonableCap = CapabilityHelper.getSummonableCapability(event.getEntity());
+            ISummonable summonableCap = getSummonableCapability(event.getEntity());
             if(summonableCap == null) return;
             if(event.getEntity() instanceof LlamaEntity){
                 LlamaEntity llamaEntity = (LlamaEntity) event.getEntity();
@@ -119,7 +122,7 @@ public class ArtifactEvents {
     public static void onEnchantedSheepAttack(LivingDamageEvent event){
         if(event.getSource().getEntity() instanceof SheepEntity){
             SheepEntity sheepEntity = (SheepEntity)event.getSource().getEntity();
-            ISummonable summonableCap = CapabilityHelper.getSummonableCapability(sheepEntity);
+            ISummonable summonableCap = getSummonableCapability(sheepEntity);
             if(summonableCap == null) return;
             if(summonableCap.getSummoner() != null){
                 if(sheepEntity.getTags().contains(FIRE_SHEEP_TAG)){
@@ -137,7 +140,7 @@ public class ArtifactEvents {
     public static void updateBlueEnchantedSheep(LivingEvent.LivingUpdateEvent event){
         if(event.getEntityLiving() instanceof SheepEntity){
             SheepEntity sheepEntity = (SheepEntity)event.getEntityLiving();
-            ISummonable summonableCap = CapabilityHelper.getSummonableCapability(sheepEntity);
+            ISummonable summonableCap = getSummonableCapability(sheepEntity);
             if(summonableCap == null) return;
             if(summonableCap.getSummoner() != null){
                 if(sheepEntity.level instanceof ServerWorld){
@@ -158,13 +161,13 @@ public class ArtifactEvents {
     public static void onSummonedMobAttemptsToAttack(LivingSetAttackTargetEvent event){
         if(SummoningHelper.isEntitySummonable(event.getEntityLiving())){
             LivingEntity summonableAttacker = event.getEntityLiving();
-            ISummonable attackerSummonableCap = CapabilityHelper.getSummonableCapability(summonableAttacker);
+            ISummonable attackerSummonableCap = getSummonableCapability(summonableAttacker);
             if(attackerSummonableCap == null) return;
             if(attackerSummonableCap.getSummoner() != null){
                 UUID attackersOwner = attackerSummonableCap.getSummoner();
                 if(SummoningHelper.isEntitySummonable(event.getTarget())){
                     LivingEntity summonableTarget = event.getTarget();
-                    ISummonable targetSummonableCap = CapabilityHelper.getSummonableCapability(summonableTarget);
+                    ISummonable targetSummonableCap = getSummonableCapability(summonableTarget);
                     if(targetSummonableCap == null) return;
                     if(targetSummonableCap.getSummoner() != null){
                         UUID targetsOwner = targetSummonableCap.getSummoner();
@@ -177,7 +180,7 @@ public class ArtifactEvents {
         }
         if(event.getTarget() instanceof PlayerEntity && SummoningHelper.isEntitySummonable(event.getEntityLiving())){
             LivingEntity summonableAttacker = event.getEntityLiving();
-            ISummonable attackerSummonableCap = CapabilityHelper.getSummonableCapability(summonableAttacker);
+            ISummonable attackerSummonableCap = getSummonableCapability(summonableAttacker);
             if(attackerSummonableCap == null) return;
             if(attackerSummonableCap.getSummoner() == event.getTarget().getUUID()){
                 preventAttackForSummonableMob(summonableAttacker);
@@ -371,7 +374,7 @@ public class ArtifactEvents {
         if(event.phase == TickEvent.Phase.START) return;
         if(!summoner.isAlive()) return;
 
-        ISummoner summonerCap = CapabilityHelper.getSummonerCapability(event.player);
+        ISummoner summonerCap = getSummonerCapability(event.player);
         if(summonerCap == null) return;
         if(summonerCap.getSummonedGolem() != null && event.player.level instanceof ServerWorld){
             UUID summonedGolem = summonerCap.getSummonedGolem();
@@ -449,12 +452,12 @@ public class ArtifactEvents {
         if(SummoningHelper.isEntitySummonable(event.getEntityLiving())){
             LivingEntity livingEntity = event.getEntityLiving();
             World world = livingEntity.getCommandSenderWorld();
-            ISummonable summonableCap = CapabilityHelper.getSummonableCapability(livingEntity);
+            ISummonable summonableCap = getSummonableCapability(livingEntity);
             if(summonableCap == null) return;
             if(summonableCap.getSummoner() != null){
                 PlayerEntity summoner = world.getPlayerByUUID(summonableCap.getSummoner());
                 if(summoner != null){
-                    ISummoner summonerCap = CapabilityHelper.getSummonerCapability(summoner);
+                    ISummoner summonerCap = getSummonerCapability(summoner);
                     if(summonerCap == null) return;
                     UUID summonableUUID = livingEntity.getUUID();
 
@@ -504,8 +507,8 @@ public class ArtifactEvents {
     // as one you already have after you respawn
     @SubscribeEvent
     public static void cloneSummonerCaps(PlayerEvent.Clone event){
-        ISummoner oldSummonerCap = CapabilityHelper.getSummonerCapability(event.getOriginal());
-        ISummoner newSummonerCap = CapabilityHelper.getSummonerCapability(event.getPlayer());
+        ISummoner oldSummonerCap = getSummonerCapability(event.getOriginal());
+        ISummoner newSummonerCap = getSummonerCapability(event.getPlayer());
         if (oldSummonerCap != null && newSummonerCap != null) {
             newSummonerCap.copyFrom(oldSummonerCap);
         }

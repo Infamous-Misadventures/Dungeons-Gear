@@ -16,8 +16,6 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 
-import net.minecraft.item.Item.Properties;
-
 public class WindHornItem extends ArtifactItem {
     public WindHornItem(Properties properties) {
         super(properties);
@@ -32,7 +30,7 @@ public class WindHornItem extends ArtifactItem {
         //((ServerPlayerEntity)playerIn).connection.sendPacket(new SPlaySoundEffectPacket(SoundEvents.EVENT_RAID_HORN, SoundCategory.NEUTRAL, d0, playerIn.posY, d1, 64.0F, 1.0F));
 
 
-        AreaOfEffectHelper.knockbackNearbyEnemies(worldIn, playerIn);
+        AreaOfEffectHelper.knockbackNearbyEnemies(worldIn, playerIn, 5);
         itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemstack)));
 
         ArtifactItem.putArtifactOnCooldown(playerIn, itemstack.getItem());

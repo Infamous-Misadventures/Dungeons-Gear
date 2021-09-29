@@ -50,6 +50,9 @@ public interface IArmor<T extends Item> {
     default double getFreezingResistance(){
         return 0;
     }
+    default float getKnockbackResistance(){
+        return 0;
+    }
 
     // Enchantment abilities
     default boolean hasBurningBuiltIn(ItemStack stack){ return false;}
@@ -58,4 +61,6 @@ public interface IArmor<T extends Item> {
     default boolean hasSwiftfootedBuiltIn(ItemStack stack){return false;}
     default boolean hasChillingBuiltIn(ItemStack stack){return false;}
     default boolean hasArrowHoarderBuiltIn(ItemStack stack){return false;}
+    default boolean hasMultiRollBuiltIn(ItemStack stack){return false;}
+    default boolean hasEnvironmentalProtectionBuiltIn(ItemStack stack){return false;}
 }

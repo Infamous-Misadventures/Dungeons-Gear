@@ -618,6 +618,19 @@ public class ItemRegistry {
     public static final RegistryObject<Item> FOX_ARMOR_HOOD = ITEMS.register("fox_hood",
             () -> new WolfArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
+    public static final RegistryObject<Item> CLIMBING_GEAR = ITEMS.register("climbing_gear",
+            () -> new ClimbingGearArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
+    public static final RegistryObject<Item> CLIMBING_GEAR_HOOD = ITEMS.register("climbing_gear_hood",
+            () -> new ClimbingGearArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
+    public static final RegistryObject<Item> RUGGED_CLIMBING_GEAR = ITEMS.register("rugged_climbing_gear",
+            () -> new ClimbingGearArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
+    public static final RegistryObject<Item> RUGGED_CLIMBING_GEAR_HOOD = ITEMS.register("rugged_climbing_gear_hood",
+            () -> new ClimbingGearArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
+    public static final RegistryObject<Item> GOAT_GEAR = ITEMS.register("goat_gear",
+            () -> new ClimbingGearArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
+    public static final RegistryObject<Item> GOAT_GEAR_HOOD = ITEMS.register("goat_gear_hood",
+            () -> new ClimbingGearArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
+
     public static final RegistryObject<Item> ARROW_BUNDLE = ITEMS.register("arrow_bundle",
             () -> new ArrowBundleItem(new Item.Properties().tab(RANGED_WEAPON_GROUP)));
 
@@ -713,6 +726,7 @@ public class ItemRegistry {
         commonLeatherArmorMap.put(EVOCATION_ROBE_HAT.get(), EVOCATION_ROBE_HAT.get().getRegistryName());
         commonLeatherArmorMap.put(SOUL_ROBE.get(), SOUL_ROBE.get().getRegistryName());
         commonLeatherArmorMap.put(SOUL_ROBE_HOOD.get(), SOUL_ROBE_HOOD.get().getRegistryName());
+        commonLeatherArmorMap.put(CLIMBING_GEAR.get(), CLIMBING_GEAR_HOOD.get().getRegistryName());
     }
 
     private static void putCommonBowsInMap() {

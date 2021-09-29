@@ -16,8 +16,6 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 
-import net.minecraft.item.Item.Properties;
-
 public class CorruptedSeedsItem extends ArtifactItem {
     public CorruptedSeedsItem(Properties properties) {
         super(properties);
@@ -27,7 +25,7 @@ public class CorruptedSeedsItem extends ArtifactItem {
         PlayerEntity playerIn=c.getPlayer();
         ItemStack itemstack = c.getItemInHand();
 
-        AreaOfEffectHelper.poisonAndSlowNearbyEnemies(c.getLevel(), playerIn);
+        AreaOfEffectHelper.poisonAndSlowNearbyEnemies(c.getLevel(), playerIn, 5);
 
         itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemstack)));
 

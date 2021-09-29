@@ -16,8 +16,6 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 
-import net.minecraft.item.Item.Properties;
-
 public class GongOfWeakeningItem extends ArtifactItem {
     public GongOfWeakeningItem(Properties properties) {
         super(properties);
@@ -29,7 +27,7 @@ public class GongOfWeakeningItem extends ArtifactItem {
         World world = c.getLevel();
 
         SoundHelper.playBellSound(playerIn);
-        AreaOfEffectHelper.weakenAndMakeNearbyEnemiesVulnerable(playerIn, world);
+        AreaOfEffectHelper.weakenAndMakeNearbyEnemiesVulnerable(playerIn, world, 5);
 
         itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemstack)));
 

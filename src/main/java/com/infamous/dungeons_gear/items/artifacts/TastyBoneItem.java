@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
-import com.infamous.dungeons_gear.capabilities.summoning.ISummonable;
-import com.infamous.dungeons_gear.capabilities.summoning.ISummoner;
+import com.infamous.dungeons_libraries.capabilities.summoning.ISummonable;
+import com.infamous.dungeons_libraries.capabilities.summoning.ISummoner;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
@@ -31,6 +31,9 @@ import java.util.List;
 
 import net.minecraft.item.Item.Properties;
 
+import static com.infamous.dungeons_libraries.utils.CapabilityHelper.getSummonableCapability;
+import static com.infamous.dungeons_libraries.utils.CapabilityHelper.getSummonerCapability;
+
 public class TastyBoneItem extends ArtifactItem {
     public TastyBoneItem(Properties p_i48487_1_) {
         super(p_i48487_1_);
@@ -56,12 +59,12 @@ public class TastyBoneItem extends ArtifactItem {
             }
 
             if(itemUseContextPlayer != null){
-                ISummoner summonerCap = CapabilityHelper.getSummonerCapability(itemUseContextPlayer);
+                ISummoner summonerCap = getSummonerCapability(itemUseContextPlayer);
                 if (summonerCap != null) {
                     if(summonerCap.getSummonedWolf() == null){
                         WolfEntity wolfEntity = EntityType.WOLF.create(world);
                         if (wolfEntity!= null) {
-                            ISummonable summon = CapabilityHelper.getSummonableCapability(wolfEntity);
+                            ISummonable summon = getSummonableCapability(wolfEntity);
                             if(summon != null){
 
                                 summon.setSummoner(itemUseContextPlayer.getUUID());

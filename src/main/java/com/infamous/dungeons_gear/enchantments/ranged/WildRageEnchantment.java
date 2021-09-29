@@ -1,17 +1,17 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
+import com.infamous.dungeons_gear.goals.WildRageAttackGoal;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
-import com.infamous.dungeons_gear.utilties.AbilityHelper;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
@@ -20,8 +20,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-
-import net.minecraft.enchantment.Enchantment.Rarity;
+import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class WildRageEnchantment extends DungeonsEnchantment {
@@ -58,13 +57,13 @@ public class WildRageEnchantment extends DungeonsEnchantment {
 
             float chance = shooter.getRandom().nextFloat();
             if(chance <=  wildRageChance){
-                AbilityHelper.sendIntoWildRage(victim);
+                sendIntoWildRage(victim);
             }
         }
         if(uniqueWeaponFlag){
             float chance = shooter.getRandom().nextFloat();
             if(chance <=  0.2F){
-                AbilityHelper.sendIntoWildRage(victim);
+                sendIntoWildRage(victim);
             }
         }
     }
@@ -83,8 +82,13 @@ public class WildRageEnchantment extends DungeonsEnchantment {
 
                 float chance = attacker.getRandom().nextFloat();
                 if(chance <=  wildRageChance){
-                    AbilityHelper.sendIntoWildRage(enemy);
+                    sendIntoWildRage(enemy);
                 }
             }
+    }
+
+    public static void sendIntoWildRage(MobEntity mobEntity) {
+        mobEntity.targetSelector.addGoal(0, new WildRageAttackGoal(mobEntity));
+        PROXY.spawnParticles(mobEntity, ParticleTypes.ANGRY_VILLAGER);
     }
 }

@@ -6,7 +6,6 @@ import com.infamous.dungeons_gear.damagesources.ElectricShockDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
-import com.infamous.dungeons_gear.utilties.AbilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
 import net.minecraft.enchantment.Enchantment;
@@ -17,8 +16,6 @@ import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
@@ -28,8 +25,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.List;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-
-import net.minecraft.enchantment.Enchantment.Rarity;
+import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.getCanApplyToEnemyPredicate;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class ShockWebEnchantment extends DungeonsEnchantment {
@@ -105,7 +101,7 @@ public class ShockWebEnchantment extends DungeonsEnchantment {
                 }
                  */
                 List<LivingEntity> entitiesToShock = ProjectileEffectHelper.rayTraceEntities(world, from, to, boundingBox,
-                        (nearbyEntity) -> AbilityHelper.canApplyToEnemy((LivingEntity)shooter, nearbyEntity));
+                        getCanApplyToEnemyPredicate((LivingEntity) shooter));
                 if(entitiesToShock.isEmpty()) continue;
                 DungeonsGear.LOGGER.info("Found {} targets!", entitiesToShock.size());
 
