@@ -63,4 +63,7 @@ public interface IArmor<T extends Item> {
     default boolean hasArrowHoarderBuiltIn(ItemStack stack){return false;}
     default boolean hasMultiRollBuiltIn(ItemStack stack){return false;}
     default boolean hasEnvironmentalProtectionBuiltIn(ItemStack stack){return false;}
+    default boolean hasLuckyExplorerBuiltIn(ItemStack stack){return false;}
+    default boolean hasDeathBarterBuiltIn(ItemStack stack){return false;}
+    default boolean hasEmeraldShieldBuiltIn(ItemStack stack){return false;}
 }

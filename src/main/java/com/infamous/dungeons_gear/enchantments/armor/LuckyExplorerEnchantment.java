@@ -6,6 +6,7 @@ import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DropsEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.IEmeraldsEnchantment;
+import com.infamous.dungeons_gear.items.interfaces.IArmor;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.LootTableHelper;
 import net.minecraft.enchantment.Enchantment;
@@ -26,6 +27,8 @@ import net.minecraftforge.fml.common.Mod;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
 import net.minecraft.enchantment.Enchantment.Rarity;
+
+import java.util.stream.StreamSupport;
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class LuckyExplorerEnchantment extends DropsEnchantment implements IEmeraldsEnchantment {
@@ -55,14 +58,15 @@ public class LuckyExplorerEnchantment extends DropsEnchantment implements IEmera
         if (player == null) return;
         if (event.phase == TickEvent.Phase.START) return;
         if (player.isAlive() && !player.level.isClientSide) {
-            ICombo comboCap = CapabilityHelper.getComboCapability(player);
-            if (comboCap != null) {
-                BlockPos lastLuckyExplorerCheckpoint = comboCap.getLastLuckyExplorerCheckpoint();
-                BlockPos currentPos = player.blockPosition();
-                if(currentPos.distSqr(lastLuckyExplorerCheckpoint.getX(), lastLuckyExplorerCheckpoint.getY(), lastLuckyExplorerCheckpoint.getZ(), true) >= 36){
-                    comboCap.setLastLuckyExplorerCheckpoint(currentPos);
-                    int luckyExplorerLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.LUCKY_EXPLORER, player);
-                    if(luckyExplorerLevel > 0){
+            boolean armorFlag = StreamSupport.stream(player.getArmorSlots().spliterator(), false).anyMatch(LuckyExplorerEnchantment::hasLuckExplorerBuiltIn);
+            int luckyExplorerLevel = Math.max(EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.LUCKY_EXPLORER, player), armorFlag ? 1 : 0);
+            if (luckyExplorerLevel > 0) {
+                ICombo comboCap = CapabilityHelper.getComboCapability(player);
+                if (comboCap != null) {
+                    BlockPos lastLuckyExplorerCheckpoint = comboCap.getLastLuckyExplorerCheckpoint();
+                    BlockPos currentPos = player.blockPosition();
+                    if (currentPos.distSqr(lastLuckyExplorerCheckpoint.getX(), lastLuckyExplorerCheckpoint.getY(), lastLuckyExplorerCheckpoint.getZ(), true) >= 36) {
+                        comboCap.setLastLuckyExplorerCheckpoint(currentPos);
                         int rollCount = 1 + (luckyExplorerLevel - 1) * 2;
                         for (int i = 0; i < rollCount; i++) {
                             ItemStack itemStack = LootTableHelper.generateItemStack((ServerWorld) player.level, player.blockPosition(), new ResourceLocation(MODID, "enchantments/lucky_explorer"), player.getRandom());
@@ -83,5 +87,9 @@ public class LuckyExplorerEnchantment extends DropsEnchantment implements IEmera
     public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get()
                 || (!(enchantment instanceof DropsEnchantment) && !(enchantment instanceof IEmeraldsEnchantment));
+    }
+
+    private static boolean hasLuckExplorerBuiltIn(ItemStack stack) {
+        return stack.getItem() instanceof IArmor && ((IArmor) stack.getItem()).hasLuckyExplorerBuiltIn(stack);
     }
 }

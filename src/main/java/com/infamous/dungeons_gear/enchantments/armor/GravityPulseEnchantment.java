@@ -63,7 +63,7 @@ public class GravityPulseEnchantment extends PulseEnchantment {
             }
             else{
                 if(gravityPulseTimer != 100){
-                    comboCap.setFreezeNearbyTimer(100);
+                    comboCap.setGravityPulseTimer(100);
                 }
             }
         }

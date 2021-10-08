@@ -618,18 +618,31 @@ public class ItemRegistry {
     public static final RegistryObject<Item> FOX_ARMOR_HOOD = ITEMS.register("fox_hood",
             () -> new WolfArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
-    public static final RegistryObject<Item> CLIMBING_GEAR = ITEMS.register("climbing_gear",
-            () -> new ClimbingGearArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
-    public static final RegistryObject<Item> CLIMBING_GEAR_HOOD = ITEMS.register("climbing_gear_hood",
-            () -> new ClimbingGearArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
-    public static final RegistryObject<Item> RUGGED_CLIMBING_GEAR = ITEMS.register("rugged_climbing_gear",
+    public static final RegistryObject<Item> CLIMBING_GEAR = ITEMS.register("climbing_vest",
+            () -> new ClimbingGearArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
+    public static final RegistryObject<Item> CLIMBING_GEAR_HOOD = ITEMS.register("climbing_hood",
+            () -> new ClimbingGearArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
+    public static final RegistryObject<Item> RUGGED_CLIMBING_GEAR = ITEMS.register("rugged_climbing_vest",
             () -> new ClimbingGearArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
-    public static final RegistryObject<Item> RUGGED_CLIMBING_GEAR_HOOD = ITEMS.register("rugged_climbing_gear_hood",
+    public static final RegistryObject<Item> RUGGED_CLIMBING_GEAR_HOOD = ITEMS.register("rugged_climbing_hood",
             () -> new ClimbingGearArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
-    public static final RegistryObject<Item> GOAT_GEAR = ITEMS.register("goat_gear",
+    public static final RegistryObject<Item> GOAT_GEAR = ITEMS.register("goat_vest",
             () -> new ClimbingGearArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
-    public static final RegistryObject<Item> GOAT_GEAR_HOOD = ITEMS.register("goat_gear_hood",
+    public static final RegistryObject<Item> GOAT_GEAR_HOOD = ITEMS.register("goat_hood",
             () -> new ClimbingGearArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
+
+    public static final RegistryObject<Item> EMERALD_GEAR = ITEMS.register("emerald_chestplate",
+            () -> new EmeraldGearArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
+    public static final RegistryObject<Item> EMERALD_GEAR_HELMET = ITEMS.register("emerald_helmet",
+            () -> new EmeraldGearArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
+    public static final RegistryObject<Item> GILDED_GLORY = ITEMS.register("gilded_glory_chestplate",
+            () -> new EmeraldGearArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
+    public static final RegistryObject<Item> GILDED_GLORY_HELMET = ITEMS.register("gilded_glory_helmet",
+            () -> new EmeraldGearArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
+    public static final RegistryObject<Item> OPULENT_ARMOR = ITEMS.register("opulent_chestplate",
+            () -> new EmeraldGearArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
+    public static final RegistryObject<Item> OPULENT_ARMOR_HELMET = ITEMS.register("opulent_helmet",
+            () -> new EmeraldGearArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
     public static final RegistryObject<Item> ARROW_BUNDLE = ITEMS.register("arrow_bundle",
             () -> new ArrowBundleItem(new Item.Properties().tab(RANGED_WEAPON_GROUP)));
@@ -667,6 +680,10 @@ public class ItemRegistry {
         uniqueMetalArmorMap.put(FULL_METAL_ARMOR_HELMET.get(), FULL_METAL_ARMOR_HELMET.get().getRegistryName());
         uniqueMetalArmorMap.put(RENEGADE_ARMOR.get(), RENEGADE_ARMOR.get().getRegistryName());
         uniqueMetalArmorMap.put(RENEGADE_ARMOR_HELMET.get(), RENEGADE_ARMOR_HELMET.get().getRegistryName());
+        commonLeatherArmorMap.put(GILDED_GLORY.get(), GILDED_GLORY.get().getRegistryName());
+        commonLeatherArmorMap.put(GILDED_GLORY_HELMET.get(), GILDED_GLORY_HELMET.get().getRegistryName());
+        commonLeatherArmorMap.put(OPULENT_ARMOR.get(), OPULENT_ARMOR.get().getRegistryName());
+        commonLeatherArmorMap.put(OPULENT_ARMOR_HELMET.get(), OPULENT_ARMOR_HELMET.get().getRegistryName());
     }
 
     private static void putCommonMetalArmorsInMap() {
@@ -687,6 +704,8 @@ public class ItemRegistry {
         commonMetalArmorMap.put(PLATE_ARMOR_HELMET.get(), PLATE_ARMOR_HELMET.get().getRegistryName());
         commonMetalArmorMap.put(MERCENARY_ARMOR.get(), MERCENARY_ARMOR.get().getRegistryName());
         commonMetalArmorMap.put(MERCENARY_ARMOR_HELMET.get(), MERCENARY_ARMOR_HELMET.get().getRegistryName());
+        commonLeatherArmorMap.put(EMERALD_GEAR.get(), EMERALD_GEAR.get().getRegistryName());
+        commonLeatherArmorMap.put(EMERALD_GEAR_HELMET.get(), EMERALD_GEAR_HELMET.get().getRegistryName());
     }
 
     private static void putUniqueLeatherArmorsInMap() {
@@ -707,6 +726,10 @@ public class ItemRegistry {
         uniqueLeatherArmorMap.put(EMBER_ROBE_HAT.get(), EMBER_ROBE_HAT.get().getRegistryName());
         uniqueLeatherArmorMap.put(SOULDANCER_ROBE.get(), SOULDANCER_ROBE.get().getRegistryName());
         uniqueLeatherArmorMap.put(SOULDANCER_ROBE_HOOD.get(), SOULDANCER_ROBE_HOOD.get().getRegistryName());
+        commonLeatherArmorMap.put(RUGGED_CLIMBING_GEAR.get(), RUGGED_CLIMBING_GEAR.get().getRegistryName());
+        commonLeatherArmorMap.put(RUGGED_CLIMBING_GEAR_HOOD.get(), RUGGED_CLIMBING_GEAR_HOOD.get().getRegistryName());
+        commonLeatherArmorMap.put(GOAT_GEAR.get(), GOAT_GEAR.get().getRegistryName());
+        commonLeatherArmorMap.put(GOAT_GEAR_HOOD.get(), GOAT_GEAR_HOOD.get().getRegistryName());
     }
 
     private static void putCommonLeatherArmorsInMap() {
@@ -726,7 +749,8 @@ public class ItemRegistry {
         commonLeatherArmorMap.put(EVOCATION_ROBE_HAT.get(), EVOCATION_ROBE_HAT.get().getRegistryName());
         commonLeatherArmorMap.put(SOUL_ROBE.get(), SOUL_ROBE.get().getRegistryName());
         commonLeatherArmorMap.put(SOUL_ROBE_HOOD.get(), SOUL_ROBE_HOOD.get().getRegistryName());
-        commonLeatherArmorMap.put(CLIMBING_GEAR.get(), CLIMBING_GEAR_HOOD.get().getRegistryName());
+        commonLeatherArmorMap.put(CLIMBING_GEAR.get(), CLIMBING_GEAR.get().getRegistryName());
+        commonLeatherArmorMap.put(CLIMBING_GEAR_HOOD.get(), CLIMBING_GEAR_HOOD.get().getRegistryName());
     }
 
     private static void putCommonBowsInMap() {

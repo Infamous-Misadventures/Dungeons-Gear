@@ -7,6 +7,7 @@ import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DropsEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.IEmeraldsEnchantment;
+import com.infamous.dungeons_gear.items.interfaces.IArmor;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
@@ -26,6 +27,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
@@ -67,7 +69,8 @@ public class DeathBarterEnchantment extends DungeonsEnchantment implements IEmer
             }
         }
 
-        int deathBarterLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.DEATH_BARTER, player);
+        boolean armorFlag = StreamSupport.stream(player.getArmorSlots().spliterator(), false).anyMatch(DeathBarterEnchantment::hasDeathBarterBuiltIn);
+        int deathBarterLevel = Math.max(EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.DEATH_BARTER, player), armorFlag ? 1 : 0);
         int emeraldRequirement = 150 - Math.max(100, 50 * (deathBarterLevel - 1)); // will always need at least 50 emeralds even if the level exceeds 3
         if(deathBarterLevel > 0 && totalEmeraldCount >= emeraldRequirement){
 
@@ -100,5 +103,9 @@ public class DeathBarterEnchantment extends DungeonsEnchantment implements IEmer
     public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get()
                 || !(enchantment instanceof IEmeraldsEnchantment);
+    }
+
+    private static boolean hasDeathBarterBuiltIn(ItemStack stack) {
+        return stack.getItem() instanceof IArmor && ((IArmor) stack.getItem()).hasDeathBarterBuiltIn(stack);
     }
 }
