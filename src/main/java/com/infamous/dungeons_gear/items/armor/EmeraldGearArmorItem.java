@@ -83,7 +83,7 @@ public class EmeraldGearArmorItem extends ArmorItem implements IArmor {
         return stack.getItem() == ItemRegistry.GILDED_GLORY.get() || stack.getItem() == ItemRegistry.GILDED_GLORY_HELMET.get();
     }
     @Override
-    public boolean hasEmeraldShieldBuiltIn(ItemStack stack) {
+    public boolean hasOpulentShieldBuiltIn(ItemStack stack) {
         return stack.getItem() == ItemRegistry.OPULENT_ARMOR.get() || stack.getItem() == ItemRegistry.OPULENT_ARMOR_HELMET.get();
     }
 }

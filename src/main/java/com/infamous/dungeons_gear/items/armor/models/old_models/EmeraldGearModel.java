@@ -50,44 +50,7 @@ public class EmeraldGearModel<T extends LivingEntity> extends BipedModel<T> {
 
 		int testificateHelmetShiftUp = testificate ? 2 : 0;
 
-
 		Head = new ModelRenderer(this);
-		Head.setPos(0.0F, 0.0F, 0.0F);
-		Head.texOffs(0, 0).addBox(-5.0F, -8.0F - testificateHelmetShiftUp, -4.5F, 10.0F, 7.0F, 9.0F, 0.0F, false);
-
-		Helmet_r1 = new ModelRenderer(this);
-		Helmet_r1.setPos(0.0F, -5.25F, -4.5F);
-		Head.addChild(Helmet_r1);
-		setRotationAngle(Helmet_r1, 0.0F, 0.0F, -1.5708F);
-		Helmet_r1.texOffs(4, 20).addBox(-4.0F, -1.0F, -0.5F, 8.0F, 2.0F, 1.0F, 0.0F, false);
-
-		Body = new ModelRenderer(this);
-		Body.setPos(0.0F, 0.0F, 0.0F);
-		Body.texOffs(28, 36).addBox(-5.0F, 4.0F, -3.5F, 10.0F, 8.0F, 7.0F, -0.24F, false);
-		Body.texOffs(28, 21).addBox(-5.0F, 0.0F, -3.5F, 10.0F, 5.0F, 7.0F, 0.1F, false);
-
-		RightArm = new ModelRenderer(this);
-		RightArm.setPos(-5.0F, 2.0F, 0.0F);
-		setRotationAngle(RightArm, 0.0F, 1.5708F, 0.0F);
-
-
-		RightArmArmor_r1 = new ModelRenderer(this);
-		RightArmArmor_r1.setPos(0.0F, 0.0F, 0.0F);
-		RightArm.addChild(RightArmArmor_r1);
-		setRotationAngle(RightArmArmor_r1, -3.1416F, 0.0F, 3.1416F);
-		RightArmArmor_r1.texOffs(43, 2).addBox(-2.5F, -2.0F, -0.75F, 5.0F, 5.0F, 4.0F, 0.5F, false);
-
-		LeftArm = new ModelRenderer(this);
-		LeftArm.setPos(5.0F, 2.0F, 0.0F);
-		setRotationAngle(LeftArm, 0.0F, -1.5708F, 0.0F);
-
-
-		LeftArmArmor_r1 = new ModelRenderer(this);
-		LeftArmArmor_r1.setPos(0.0F, 0.0F, 0.0F);
-		LeftArm.addChild(LeftArmArmor_r1);
-		setRotationAngle(LeftArmArmor_r1, -3.1416F, 0.0F, 3.1416F);
-		LeftArmArmor_r1.texOffs(43, 2).addBox(-2.5F, -2.0F, -0.75F, 5.0F, 5.0F, 4.0F, 0.5F, true);
-/*		Head = new ModelRenderer(this);
 		Head.setPos(0.0F, 0.0F, 0.0F);
 		Head.texOffs(0, 0).addBox(-5.0F, -8.0F - testificateHelmetShiftUp, -4.5F, 10.0F, 7.0F, 9.0F, 0.0F, false);
 
@@ -95,7 +58,7 @@ public class EmeraldGearModel<T extends LivingEntity> extends BipedModel<T> {
 		Helmet_r1.setPos(0.0F, -1.0F, -4.25F);
 		Head.addChild(Helmet_r1);
 		setRotationAngle(Helmet_r1, 0.0F, 0.0F, -1.5708F);
-		Helmet_r1.texOffs(4, 20).addBox(0.25F, -1.0F - testificateHelmetShiftUp, -0.75F, 8.0F, 2.0F, 1.0F, 0.0F, false);
+		Helmet_r1.texOffs(4, 20).addBox(0.25F, -1.0F, -0.75F, 8.0F, 2.0F, 1.0F, 0.0F, false);
 
 		Body = new ModelRenderer(this);
 		Body.setPos(0.0F, 0.0F, 0.0F);
@@ -103,25 +66,24 @@ public class EmeraldGearModel<T extends LivingEntity> extends BipedModel<T> {
 		Body.texOffs(28, 21).addBox(-5.0F, 0.0F, -3.5F, 10.0F, 5.0F, 7.0F, 0.1F, false);
 
 		RightArm = new ModelRenderer(this);
-		RightArm.setPos(-4.5F, 1.5F, 0.0F);
-		setRotationAngle(RightArm, 0.0F, 1.5708F, 0.0F);
+		RightArm.setPos(-5F, 2F, 0.0F);
+		setRotationAngle(RightArm, 0.0F, 0F, 0.0F);
 
 		RightArmArmor_r1 = new ModelRenderer(this);
-		RightArmArmor_r1.setPos(-1.75F, 1.0F, -2.0F);
+		RightArmArmor_r1.setPos(0.0F, 0F, 0F);
 		RightArm.addChild(RightArmArmor_r1);
-		setRotationAngle(RightArmArmor_r1, -3.1416F, 0.0F, 3.1416F);
-		RightArmArmor_r1.texOffs(43, 2).addBox(-2.5F, -2.5F, -2.25F, 5.0F, 5.0F, 4.0F, 0.5F, false);
+		setRotationAngle(RightArmArmor_r1, 0.0F, -1.5708F, 0.0F);
+		RightArmArmor_r1.texOffs(43, 2).addBox(-2F, -2.5F, -0.5F, 5.0F, 5.0F, 4.0F, 0.5F, false);
 
 		LeftArm = new ModelRenderer(this);
-		LeftArm.setPos(4.5F, 1.5F, 0.0F);
-		setRotationAngle(LeftArm, 0.0F, -1.5708F, 0.0F);
-
+		LeftArm.setPos(5F, 2F, 0.0F);
+		setRotationAngle(LeftArm, 0.0F, 0F, 0.0F);
 
 		LeftArmArmor_r1 = new ModelRenderer(this);
-		LeftArmArmor_r1.setPos(-1.75F, 1.0F, -1.75F);
+		LeftArmArmor_r1.setPos(0.0F, 0F, 0F);
 		LeftArm.addChild(LeftArmArmor_r1);
-		setRotationAngle(LeftArmArmor_r1, -3.1416F, 0.0F, 3.1416F);
-		LeftArmArmor_r1.texOffs(43, 2).addBox(-2.5F, -2.5F, -2.0F, 5.0F, 5.0F, 4.0F, 0.5F, true);*/
+		setRotationAngle(LeftArmArmor_r1, 0.0F, 1.5708F, 0.0F);
+		LeftArmArmor_r1.texOffs(43, 2).addBox(-2F, -2.5F, -0.5F, 5.0F, 5.0F, 4.0F, 0.5F, true);
 	}
 
 	@Override

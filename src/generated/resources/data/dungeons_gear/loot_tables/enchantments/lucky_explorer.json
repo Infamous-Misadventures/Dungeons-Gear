@@ -6,7 +6,8 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:emerald"
+          "name": "minecraft:emerald",
+          "weight": 1
         }
       ]
     }

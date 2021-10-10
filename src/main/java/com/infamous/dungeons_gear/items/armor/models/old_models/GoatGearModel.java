@@ -28,9 +28,11 @@ public class GoatGearModel<T extends LivingEntity> extends BipedModel<T> {
 	private final ModelRenderer LeftArm;
 	private final ModelRenderer LeftArmArmor_r1;
 	private final ModelRenderer LeftArmArmor_r2;
+	private final ModelRenderer LeftArmArmor_r3;
 	private final ModelRenderer RightArm;
 	private final ModelRenderer RightArmArmor_r1;
 	private final ModelRenderer RightArmArmor_r2;
+	private final ModelRenderer RightArmArmor_r3;
 	private final ModelRenderer Head;
 	private final ModelRenderer horn1;
 	private final ModelRenderer Helmet_r1;
@@ -56,12 +58,12 @@ public class GoatGearModel<T extends LivingEntity> extends BipedModel<T> {
 		int testificateHelmetShiftUp = testificate ? 2 : 0;
 
 		Head = new ModelRenderer(this);
-		Head.setPos(0.5F, 0.0F, 0.0F);
-		Head.texOffs(0, 0).addBox(-5.5F, -8.5F - testificateHelmetShiftUp, -5.0F, 10.0F, 9.0F, 10.0F, -0.25F, false);
-		Head.texOffs(0, 19).addBox(-3.5F, -10.5F - testificateHelmetShiftUp, -7.75F, 6.0F, 6.0F, 10.0F, 0.0F, false);
+		Head.setPos(0.0F, 0.0F, 0.0F);
+		Head.texOffs(0, 0).addBox(-5.0F, -8.5F - testificateHelmetShiftUp, -5.0F, 10.0F, 9.0F, 10.0F, -0.25F, false);
+		Head.texOffs(0, 19).addBox(-3.0F, -10.5F - testificateHelmetShiftUp, -7.75F, 6.0F, 6.0F, 10.0F, 0.0F, false);
 
 		horn1 = new ModelRenderer(this);
-		horn1.setPos(1.5F, -9.5F, 2.25F);
+		horn1.setPos(2.0F, -9.5F, 2.25F);
 		Head.addChild(horn1);
 
 
@@ -72,7 +74,7 @@ public class GoatGearModel<T extends LivingEntity> extends BipedModel<T> {
 		Helmet_r1.texOffs(22, 3).addBox(-8.0F, -0.25F, -1.75F, 8.0F, 2.0F, 2.0F, 0.0F, false);
 
 		horn2 = new ModelRenderer(this);
-		horn2.setPos(-2.5F, -9.5F, 2.25F);
+		horn2.setPos(-2.0F, -9.5F, 2.25F);
 		Head.addChild(horn2);
 
 
@@ -83,43 +85,51 @@ public class GoatGearModel<T extends LivingEntity> extends BipedModel<T> {
 		Helmet_r2.texOffs(22, 3).addBox(-8.0F, -0.25F, -5.25F, 8.0F, 2.0F, 2.0F, 0.0F, false);
 
 		Body = new ModelRenderer(this);
-		Body.setPos(0.0F, -0.5F, 0.0F);
-		Body.texOffs(32, 24).addBox(-5.0F, 0.0F, -3.0F, 10.0F, 11.0F, 6.0F, 0.24F, false);
-		Body.texOffs(29, 42).addBox(-5.0F, -0.25F, -3.5F, 10.0F, 5.0F, 7.0F, 0.0F, false);
+		Body.setPos(0.0F, 0.0F, 0.0F);
+		Body.texOffs(32, 24).addBox(-5.0F, 0.25F, -3.0F, 10.0F, 11.0F, 6.0F, 0.24F, false);
+		Body.texOffs(29, 42).addBox(-5.0F, 0.0F, -3.5F, 10.0F, 5.0F, 7.0F, 0.0F, false);
 
 		RightArm = new ModelRenderer(this);
-		RightArm.setPos(-4.25F, 1.0F, 0.0F);
-
+		RightArm.setPos(-5.0F, 2.0F, 0.0F);
 
 		RightArmArmor_r1 = new ModelRenderer(this);
-		RightArmArmor_r1.setPos(-1.75F, 8.75F, 0.0F);
+		RightArmArmor_r1.setPos(0.0F, 0.0F, 0.0F);
 		RightArm.addChild(RightArmArmor_r1);
 		setRotationAngle(RightArmArmor_r1, 0.0F, 1.5708F, 0.0F);
-		RightArmArmor_r1.texOffs(45, 11).addBox(-1.75F, -2.25F, -2.25F, 4.0F, 2.0F, 4.0F, 0.25F, false);
-		RightArmArmor_r1.texOffs(45, 17).addBox(-1.75F, -0.25F, -2.25F, 4.0F, 3.0F, 4.0F, 0.0F, false);
+		RightArmArmor_r1.texOffs(45, 11).addBox(-2.0F, 6.25F, -3.0F, 4.0F, 2.0F, 4.0F, 0.25F, false);
 
 		RightArmArmor_r2 = new ModelRenderer(this);
-		RightArmArmor_r2.setPos(-2.0F, 0.75F, 0.0F);
+		RightArmArmor_r2.setPos(0.0F, 0.0F, 0.0F);
 		RightArm.addChild(RightArmArmor_r2);
 		setRotationAngle(RightArmArmor_r2, 0.0F, 1.5708F, 0.0F);
-		RightArmArmor_r2.texOffs(45, 0).addBox(-1.75F, -2.75F, -2.25F, 4.0F, 6.0F, 4.0F, 0.5F, true);
+		RightArmArmor_r2.texOffs(45, 17).addBox(-2.0F, 8.25F, -3.0F, 4.0F, 3.0F, 4.0F, 0.0F, false);
+
+		RightArmArmor_r3 = new ModelRenderer(this);
+		RightArmArmor_r3.setPos(0.0F, 0.0F, 0.0F);
+		RightArm.addChild(RightArmArmor_r3);
+		setRotationAngle(RightArmArmor_r3, 0.0F, 1.5708F, 0.0F);
+		RightArmArmor_r3.texOffs(45, 0).addBox(-2.0F, -2.25F, -3.5F, 4.0F, 6.0F, 4.0F, 0.5F, true);
 
 		LeftArm = new ModelRenderer(this);
-		LeftArm.setPos(4.25F, 1.0F, 0.0F);
-
+		LeftArm.setPos(5.0F, 2.0F, 0.0F);
 
 		LeftArmArmor_r1 = new ModelRenderer(this);
-		LeftArmArmor_r1.setPos(1.75F, 8.75F, 0.0F);
+		LeftArmArmor_r1.setPos(0.0F, 0.0F, 0.0F);
 		LeftArm.addChild(LeftArmArmor_r1);
 		setRotationAngle(LeftArmArmor_r1, 0.0F, -1.5708F, 0.0F);
-		LeftArmArmor_r1.texOffs(45, 11).addBox(-2.25F, -2.25F, -2.25F, 4.0F, 2.0F, 4.0F, 0.25F, true);
-		LeftArmArmor_r1.texOffs(45, 17).addBox(-2.25F, -0.25F, -2.25F, 4.0F, 3.0F, 4.0F, 0.0F, true);
+		LeftArmArmor_r1.texOffs(45, 11).addBox(-2.0F, 6.25F, -3.0F, 4.0F, 2.0F, 4.0F, 0.25F, true);
 
 		LeftArmArmor_r2 = new ModelRenderer(this);
-		LeftArmArmor_r2.setPos(1.75F, 1.0F, 0.0F);
+		LeftArmArmor_r2.setPos(0F, 0F, 0.0F);
 		LeftArm.addChild(LeftArmArmor_r2);
 		setRotationAngle(LeftArmArmor_r2, 0.0F, -1.5708F, 0.0F);
-		LeftArmArmor_r2.texOffs(45, 0).addBox(-2.25F, -3.0F, -2.25F, 4.0F, 6.0F, 4.0F, 0.5F, false);
+		LeftArmArmor_r2.texOffs(45, 17).addBox(-2.0F, 8.25F, -3.0F, 4.0F, 3.0F, 4.0F, 0.0F, true);
+
+		LeftArmArmor_r3 = new ModelRenderer(this);
+		LeftArmArmor_r3.setPos(0.0F, 0.0F, 0.0F);
+		LeftArm.addChild(LeftArmArmor_r3);
+		setRotationAngle(LeftArmArmor_r3, 0.0F, -1.5708F, 0.0F);
+		LeftArmArmor_r3.texOffs(45, 0).addBox(-2.0F, -2.25F, -3.0F, 4.0F, 6.0F, 4.0F, 0.5F, false);
 	}
 
 	@Override

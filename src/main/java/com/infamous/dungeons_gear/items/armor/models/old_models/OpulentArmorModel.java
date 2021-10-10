@@ -26,7 +26,9 @@ public class OpulentArmorModel<T extends LivingEntity> extends BipedModel<T> {
 	private final ModelRenderer Everything;
 	private final ModelRenderer Body;
 	private final ModelRenderer LeftArm;
+	private final ModelRenderer LeftArmArmor_r1;
 	private final ModelRenderer RightArm;
+	private final ModelRenderer RightArmArmor_r1;
 	private final ModelRenderer Head;
 	private final ModelRenderer Helmet_r1;
 	private final ModelRenderer Helmet_r2;
@@ -50,28 +52,27 @@ public class OpulentArmorModel<T extends LivingEntity> extends BipedModel<T> {
 
 		int testificateHelmetShiftUp = testificate ? 2 : 0;
 
-
 		Head = new ModelRenderer(this);
 		Head.setPos(0.0F, 0.0F, 0.0F);
-		Head.texOffs(0, 0).addBox(-5.0F, -8.25F- testificateHelmetShiftUp, -4.5F, 10.0F, 8.0F, 9.0F, -0.15F, false);
+		Head.texOffs(0, 0).addBox(-5.0F, -8.25F, -4.5F, 10.0F, 8.0F, 9.0F, -0.15F, false);
 
 		Helmet_r1 = new ModelRenderer(this);
-		Helmet_r1.setPos(0.0F, -5.25F, 4.5F);
+		Helmet_r1.setPos(0.0F, -4.75F, 4.5F);
 		Head.addChild(Helmet_r1);
 		setRotationAngle(Helmet_r1, 3.1416F, 0.0F, 1.5708F);
-		Helmet_r1.texOffs(3, 23).addBox(-3.5F, -1.0F - testificateHelmetShiftUp, -0.5F, 8.0F, 2.0F, 1.0F, 0.0F, true);
+		Helmet_r1.texOffs(3, 23).addBox(-4.0F, -1.0F, -0.5F, 8.0F, 2.0F, 1.0F, 0.0F, true);
 
 		Helmet_r2 = new ModelRenderer(this);
-		Helmet_r2.setPos(0.5F, -8.75F, -1.25F);
+		Helmet_r2.setPos(0.0F, -8.25F, 0.0F);
 		Head.addChild(Helmet_r2);
 		setRotationAngle(Helmet_r2, 0.0F, -1.5708F, -1.5708F);
-		Helmet_r2.texOffs(3, 23).addBox(-2.75F, -1.5F - testificateHelmetShiftUp, 0.0F, 8.0F, 2.0F, 1.0F, 0.0F, false);
+		Helmet_r2.texOffs(3, 23).addBox(-4.0F, -1.0F, -0.5F, 8.0F, 2.0F, 1.0F, 0.0F, false);
 
 		Helmet_r3 = new ModelRenderer(this);
-		Helmet_r3.setPos(0.5F, -1.75F, -4.75F);
+		Helmet_r3.setPos(0.0F, -5.25F, -4.5F);
 		Head.addChild(Helmet_r3);
 		setRotationAngle(Helmet_r3, 0.0F, 0.0F, -1.5708F);
-		Helmet_r3.texOffs(3, 20).addBox(0.0F, -1.5F - testificateHelmetShiftUp, -0.25F, 7.0F, 2.0F, 1.0F, 0.0F, false);
+		Helmet_r3.texOffs(3, 20).addBox(-3.5F, -1.0F, -0.5F, 7.0F, 2.0F, 1.0F, 0.0F, false);
 
 		Body = new ModelRenderer(this);
 		Body.setPos(0.0F, 0.0F, 0.0F);
@@ -79,16 +80,29 @@ public class OpulentArmorModel<T extends LivingEntity> extends BipedModel<T> {
 		Body.texOffs(27, 28).addBox(-5.0F, 0.0F, -3.5F, 10.0F, 6.0F, 7.0F, 0.01F, false);
 
 		RightArm = new ModelRenderer(this);
-		RightArm.setPos(-4.25F, 1.0F, 0.0F);
-		setRotationAngle(RightArm, 0.0F, 1.5708F, 0.0F);
-		RightArm.texOffs(44, 12).addBox(-2.0F, 2.75F, -3.75F, 4.0F, 9.0F, 4.0F, 0.25F, false);
-		RightArm.texOffs(44, 2).addBox(-2.0F, -1.25F, -3.75F, 4.0F, 5.0F, 4.0F, 0.5F, false);
+		RightArm.setPos(-5.0F, 2.0F, 0.0F);
+		setRotationAngle(RightArm, 0.0F, 0, 0.0F);
+
+		RightArmArmor_r1 = new ModelRenderer(this);
+		RightArmArmor_r1.setPos(0F, 0F, 0.0F);
+		RightArm.addChild(RightArmArmor_r1);
+		setRotationAngle(RightArmArmor_r1, 0.0F, 1.5708F, 0.0F);
+		RightArmArmor_r1.texOffs(44, 12).addBox(-2.0F, 1.75F, -3.0F, 4.0F, 9.0F, 4.0F, 0.25F, false);
+		RightArmArmor_r1.texOffs(44, 2).addBox(-2.0F, -2.25F, -3.0F, 4.0F, 5.0F, 4.0F, 0.5F, false);
 
 		LeftArm = new ModelRenderer(this);
-		LeftArm.setPos(4.25F, 1.0F, 0.0F);
-		setRotationAngle(LeftArm, 0.0F, -1.5708F, 0.0F);
-		LeftArm.texOffs(44, 2).addBox(-2.0F, -1.25F, -3.75F, 4.0F, 5.0F, 4.0F, 0.5F, true);
-		LeftArm.texOffs(44, 12).addBox(-2.0F, 2.75F, -3.75F, 4.0F, 9.0F, 4.0F, 0.25F, true);
+		LeftArm.setPos(5.0F, 2.0F, 0.0F);
+		setRotationAngle(LeftArm, 0.0F, 0, 0.0F);
+//		LeftArm.texOffs(44, 2).addBox(-2.0F, -2.25F, -3.0F, 4.0F, 5.0F, 4.0F, 0.5F, true);
+//		LeftArm.texOffs(44, 12).addBox(-2.0F, 1.75F, -3.0F, 4.0F, 9.0F, 4.0F, 0.25F, true);
+
+		LeftArmArmor_r1 = new ModelRenderer(this);
+		LeftArmArmor_r1.setPos(0F, 0F, 0.0F);
+		LeftArm.addChild(LeftArmArmor_r1);
+		setRotationAngle(LeftArmArmor_r1, 0.0F, -1.5708F, 0.0F);
+		LeftArmArmor_r1.texOffs(44, 2).addBox(-2.0F, -2.25F, -3.0F, 4.0F, 5.0F, 4.0F, 0.5F, true);
+		LeftArmArmor_r1.texOffs(44, 12).addBox(-2.0F, 1.75F, -3.0F, 4.0F, 9.0F, 4.0F, 0.25F, true);
+
 	}
 
 	@Override
@@ -103,8 +117,6 @@ public class OpulentArmorModel<T extends LivingEntity> extends BipedModel<T> {
 		boolean piglin =
 				this.entity instanceof PiglinEntity ||
 						this.entity instanceof ZombifiedPiglinEntity;
-
-
 
 		if (this.slot == EquipmentSlotType.HEAD) {
 				matrixStackIn.pushPose();
