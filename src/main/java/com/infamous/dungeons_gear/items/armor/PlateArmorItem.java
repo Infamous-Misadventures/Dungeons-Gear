@@ -104,6 +104,11 @@ public class PlateArmorItem extends ArmorItem implements IArmor {
     }
 
     @Override
+    public boolean isUnique() {
+        return unique;
+    }
+
+    @Override
     public double getLongerRollCooldown() {
         return 50;
     }

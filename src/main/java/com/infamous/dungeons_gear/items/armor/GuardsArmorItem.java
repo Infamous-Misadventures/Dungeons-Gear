@@ -71,6 +71,11 @@ public class GuardsArmorItem extends ArmorItem implements IArmor {
     }
 
     @Override
+    public boolean isUnique() {
+        return unique;
+    }
+
+    @Override
     public double getChanceToTeleportAwayWhenHit() {
         if(this.unique) return 2.5D;
         else return 0;

@@ -75,6 +75,11 @@ public class ChampionsArmorItem extends ArmorItem implements IArmor {
     }
 
     @Override
+    public boolean isUnique() {
+        return unique;
+    }
+
+    @Override
     public boolean doHealthPotionsHealNearbyAllies() {
         return this.unique;
     }

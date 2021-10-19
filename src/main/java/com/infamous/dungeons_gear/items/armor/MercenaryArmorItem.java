@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.items.armor;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.DungeonsGear;
+import com.infamous.dungeons_gear.items.armor.models.new_models.HungryHorrorArmorModel;
 import com.infamous.dungeons_gear.items.armor.models.old_models.MercenaryArmorModel;
 import com.infamous.dungeons_gear.items.armor.models.old_models.RenegadeArmorModel;
 import com.infamous.dungeons_gear.registry.ItemRegistry;
@@ -73,6 +74,9 @@ public class MercenaryArmorItem extends ArmorItem implements IArmor {
         else if(stack.getItem() == ItemRegistry.RENEGADE_ARMOR.get() || stack.getItem() == ItemRegistry.RENEGADE_ARMOR_HELMET.get()){
             return DungeonsGear.MODID + ":textures/models/armor/renegade_armor.png";
         }
+        else if(stack.getItem() == ItemRegistry.HUNGRY_HORROR_CHESTPLATE.get() || stack.getItem() == ItemRegistry.HUNGRY_HORROR_HELMET.get()){
+            return DungeonsGear.MODID + ":textures/models/armor/hungry_horror_armor.png";
+        }
         else return "";
     }
 
@@ -85,6 +89,9 @@ public class MercenaryArmorItem extends ArmorItem implements IArmor {
         }
         else if(stack.getItem() == ItemRegistry.RENEGADE_ARMOR.get() || stack.getItem() == ItemRegistry.RENEGADE_ARMOR_HELMET.get()){
             return (A) new RenegadeArmorModel<>(1.0F, slot, entityLiving);
+        }
+        else if(stack.getItem() == ItemRegistry.HUNGRY_HORROR_CHESTPLATE.get() || stack.getItem() == ItemRegistry.HUNGRY_HORROR_HELMET.get()){
+            return (A) new HungryHorrorArmorModel<>(1.0F, slot, entityLiving);
         }
         return null;
     }
@@ -105,6 +112,11 @@ public class MercenaryArmorItem extends ArmorItem implements IArmor {
     public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addLoreDescription(list, stack);
+    }
+
+    @Override
+    public boolean isUnique() {
+        return unique;
     }
 
     @Override

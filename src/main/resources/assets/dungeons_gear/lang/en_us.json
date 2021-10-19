@@ -933,5 +933,7 @@
   "ability.dungeons_gear.wind_up_attack": "Wind-Up Attack",
 
   "item.dungeons_gear.arrow_bundle": "Arrow Bundle",
-  "ability.dungeons_gear.arrow_hoarder": "+1 arrow per bundle (Arrow Hoarder I)"
+  "ability.dungeons_gear.arrow_hoarder": "+1 arrow per bundle (Arrow Hoarder I)",
+
+  "dungeons_gear.gilded": "Gilded"
 }

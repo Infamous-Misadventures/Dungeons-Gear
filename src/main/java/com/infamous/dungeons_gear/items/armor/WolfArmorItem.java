@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.items.armor;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.DungeonsGear;
+import com.infamous.dungeons_gear.items.armor.models.new_models.ArcticFoxArmorModel;
 import com.infamous.dungeons_gear.items.armor.models.old_models.WolfArmorModel;
 import com.infamous.dungeons_gear.registry.ItemRegistry;
 import com.infamous.dungeons_gear.items.interfaces.IArmor;
@@ -28,8 +29,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
 import java.util.UUID;
-
-import net.minecraft.item.Item.Properties;
 
 public class WolfArmorItem extends ArmorItem implements IArmor {
 
@@ -71,6 +70,9 @@ public class WolfArmorItem extends ArmorItem implements IArmor {
         else if(stack.getItem() == ItemRegistry.FOX_ARMOR.get() || stack.getItem() == ItemRegistry.FOX_ARMOR_HOOD.get()){
             return DungeonsGear.MODID + ":textures/models/armor/fox_armor.png";
         }
+        else if(stack.getItem() == ItemRegistry.ARCTIC_FOX_VEST.get() || stack.getItem() == ItemRegistry.ARCTIC_FOX_HOOD.get()){
+            return DungeonsGear.MODID + ":textures/models/armor/arctic_fox_armor.png";
+        }
         else return "";
     }
 
@@ -78,7 +80,11 @@ public class WolfArmorItem extends ArmorItem implements IArmor {
     @Override
     @OnlyIn(Dist.CLIENT)
     public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack stack, EquipmentSlotType armorSlot, A _default) {
-        return (A) new WolfArmorModel<>(1.0F, slot, entityLiving);
+        if(stack.getItem() == ItemRegistry.ARCTIC_FOX_VEST.get() || stack.getItem() == ItemRegistry.ARCTIC_FOX_HOOD.get()) {
+            return (A) new ArcticFoxArmorModel<>(1.0F, slot, entityLiving);
+        }else{
+            return (A) new WolfArmorModel<>(1.0F, slot, entityLiving);
+        }
     }
 
     @Override
@@ -105,6 +111,11 @@ public class WolfArmorItem extends ArmorItem implements IArmor {
     public double getChanceToNegateHits() {
         if(this.unique) return 15;
         else return 0;
+    }
+
+    @Override
+    public boolean isUnique() {
+        return unique;
     }
 
     @Override

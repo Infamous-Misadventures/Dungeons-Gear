@@ -4,6 +4,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public interface IArmor<T extends Item> {
+
+    boolean isUnique();
+
     default boolean doHealthPotionsHealNearbyAllies(){
         return false;
     }

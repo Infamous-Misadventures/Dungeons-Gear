@@ -103,6 +103,11 @@ public class OcelotArmorItem extends ArmorItem implements IArmor {
     }
 
     @Override
+    public boolean isUnique() {
+        return unique;
+    }
+
+    @Override
     public boolean doBriefInvulnerabilityWhenJumping() {
         return this.unique;
     }

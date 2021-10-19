@@ -102,6 +102,11 @@ public class SpelunkerArmorItem extends ArmorItem implements IArmor {
     }
 
     @Override
+    public boolean isUnique() {
+        return unique;
+    }
+
+    @Override
     public double getMagicDamage() {
         if(this.unique) return 25;
         else return 0;

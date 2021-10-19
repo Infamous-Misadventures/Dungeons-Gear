@@ -14,6 +14,7 @@ import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.ranged.BurstBowstringEnchantment;
 import com.infamous.dungeons_gear.enchantments.ranged.FuseShotEnchantment;
 import com.infamous.dungeons_gear.enchantments.ranged.RollChargeEnchantment;
+import com.infamous.dungeons_gear.items.GildedItemHelper;
 import com.infamous.dungeons_gear.registry.PotionList;
 import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_gear.items.interfaces.IArmor;
@@ -26,6 +27,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
@@ -52,6 +54,7 @@ import java.util.Optional;
 
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 import static com.infamous.dungeons_libraries.utils.CapabilityHelper.getSummonableCapability;
+import static net.minecraft.item.Items.IRON_SWORD;
 
 
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
@@ -77,8 +80,16 @@ public class GlobalEvents {
                 }
             }
         } else if (event.getEntity() instanceof ServerPlayerEntity) {
+            gildedWeaponTest((ServerPlayerEntity) event.getEntity());
             NetworkHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getEntity()), new PacketUpdateSouls(CapabilityHelper.getComboCapability(event.getEntity()).getSouls()));
         }
+    }
+
+    private static void gildedWeaponTest(ServerPlayerEntity entity) {
+        ItemStack sword = new ItemStack(IRON_SWORD);
+        ItemStack gildedItem = GildedItemHelper.getGildedItem(entity.getRandom(), sword);
+        ItemEntity emeraldDrop = new ItemEntity(entity.level, entity.getX(), entity.getY(), entity.getZ(), gildedItem);
+        entity.level.addFreshEntity(emeraldDrop);
     }
 
     private static void handleRangedEnchantments(AbstractArrowEntity arrowEntity, LivingEntity shooter, ItemStack stack) {

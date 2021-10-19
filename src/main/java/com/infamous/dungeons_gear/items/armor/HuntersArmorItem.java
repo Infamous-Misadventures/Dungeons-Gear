@@ -105,6 +105,11 @@ public class HuntersArmorItem extends ArmorItem implements IArmor {
     }
 
     @Override
+    public boolean isUnique() {
+        return unique;
+    }
+
+    @Override
     public boolean hasArrowHoarderBuiltIn(ItemStack stack) {
         return true;
     }

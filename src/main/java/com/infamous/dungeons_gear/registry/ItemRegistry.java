@@ -23,24 +23,23 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.DungeonsGear.RANGED_WEAPON_GROUP;
 
 public class ItemRegistry {
 
-    public static Map<Item, ResourceLocation> commonLeatherArmorMap = new HashMap<Item, ResourceLocation>();
-    public static Map<Item, ResourceLocation> commonMetalArmorMap = new HashMap<Item, ResourceLocation>();
-    public static Map<Item, ResourceLocation> uniqueLeatherArmorMap = new HashMap<Item, ResourceLocation>();
-    public static Map<Item, ResourceLocation> uniqueMetalArmorMap = new HashMap<Item, ResourceLocation>();
     public static Map<Item, ResourceLocation> artifactMap = new HashMap<Item, ResourceLocation>();
     public static Map<Item, ResourceLocation> uniqueRangedWeaponMap = new HashMap<Item, ResourceLocation>();
     public static Map<Item, ResourceLocation> commonRangedWeaponMap = new HashMap<Item, ResourceLocation>();
     public static Map<Item, ResourceLocation> uniqueWeaponMap = new HashMap<Item, ResourceLocation>();
     public static Map<Item, ResourceLocation> commonWeaponMap = new HashMap<Item, ResourceLocation>();
 
+    public static final Map<ResourceLocation, RegistryObject<Item>> ARMORS = new HashMap<>();
+
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
-    
+
     public static final Item.Properties MELEE_WEAPON_PROPERTIES = DungeonsGearConfig.ENABLE_MELEE_WEAPON_TAB.get() ?
             new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP) : new Item.Properties().tab(ItemGroup.TAB_COMBAT);
     public static final Item.Properties ARMOR_PROPERTIES = DungeonsGearConfig.ENABLE_ARMOR_TAB.get() ?
@@ -59,7 +58,7 @@ public class ItemRegistry {
             () -> new DaggerItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> SHEAR_DAGGER = ITEMS.register("shear_dagger",
             () -> new DaggerItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), true));
-  
+
     //DPS 10 (20), crits once per 3 (1.5) seconds
     public static final RegistryObject<Item> SICKLE = ITEMS.register("sickle",
             () -> new SickleItem(ToolMaterialList.METAL, 4, (2.0f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), false));
@@ -67,7 +66,7 @@ public class ItemRegistry {
             () -> new SickleItem(ToolMaterialList.METAL, 4, (2.0f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> THE_LAST_LAUGH = ITEMS.register("the_last_laugh",
             () -> new SickleItem(ToolMaterialList.METAL, 4, (2.0f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), true));
-  
+
     //DPS 9.6/8 (19.2/16), crits once per 2.92/1 (1.46/0.5) seconds
     public static final RegistryObject<Item> GAUNTLET = ITEMS.register("gauntlet",
             () -> new GauntletItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), false));
@@ -460,192 +459,210 @@ public class ItemRegistry {
     public static final RegistryObject<Item> EYE_OF_THE_GUARDIAN = ITEMS.register("eye_of_the_guardian",
             () -> new EyeOfTheGuardianItem(ARTIFACT_PROPERTIES));
 
-    public static final RegistryObject<Item> HUNTERS_ARMOR = ITEMS.register("hunters_vest",
+    public static final RegistryObject<Item> HUNTERS_ARMOR = registerArmor("hunters_vest",
             () -> new HuntersArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> ARCHERS_ARMOR = ITEMS.register("archers_vest",
+    public static final RegistryObject<Item> ARCHERS_ARMOR = registerArmor("archers_vest",
             () -> new HuntersArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
-    public static final RegistryObject<Item> ARCHERS_ARMOR_HOOD = ITEMS.register("archers_hood",
+    public static final RegistryObject<Item> ARCHERS_ARMOR_HOOD = registerArmor("archers_hood",
             () ->  new HuntersArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
-    public static final RegistryObject<Item> BATTLE_ROBE = ITEMS.register("battle_robe",
+    public static final RegistryObject<Item> BATTLE_ROBE = registerArmor("battle_robe",
             () -> new BattleRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> SPLENDID_ROBE = ITEMS.register("splendid_robe",
+    public static final RegistryObject<Item> SPLENDID_ROBE = registerArmor("splendid_robe",
             () -> new BattleRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
 
-    public static final RegistryObject<Item> CHAMPIONS_ARMOR = ITEMS.register("champions_chestplate",
+    public static final RegistryObject<Item> CHAMPIONS_ARMOR = registerArmor("champions_chestplate",
             () -> new ChampionsArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> CHAMPIONS_ARMOR_HELMET = ITEMS.register("champions_helmet",
+    public static final RegistryObject<Item> CHAMPIONS_ARMOR_HELMET = registerArmor("champions_helmet",
             () -> new ChampionsArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> HEROS_ARMOR = ITEMS.register("heros_chestplate",
+    public static final RegistryObject<Item> HEROS_ARMOR = registerArmor("heros_chestplate",
             () -> new ChampionsArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
-    public static final RegistryObject<Item> HEROS_ARMOR_HELMET = ITEMS.register("heros_helmet",
+    public static final RegistryObject<Item> HEROS_ARMOR_HELMET = registerArmor("heros_helmet",
             () -> new ChampionsArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
-    public static final RegistryObject<Item> DARK_ARMOR = ITEMS.register("dark_chestplate",
+    public static final RegistryObject<Item> DARK_ARMOR = registerArmor("dark_chestplate",
             () -> new DarkArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> DARK_ARMOR_HELMET = ITEMS.register("dark_helmet",
+    public static final RegistryObject<Item> DARK_ARMOR_HELMET = registerArmor("dark_helmet",
             () -> new DarkArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> ROYAL_GUARD_ARMOR = ITEMS.register("royal_guard_chestplate",
+    public static final RegistryObject<Item> ROYAL_GUARD_ARMOR = registerArmor("royal_guard_chestplate",
             () -> new RoyalGuardArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> ROYAL_GUARD_ARMOR_HELMET = ITEMS.register("royal_guard_helmet",
+    public static final RegistryObject<Item> ROYAL_GUARD_ARMOR_HELMET = registerArmor("royal_guard_helmet",
             () -> new RoyalGuardArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> TITANS_SHROUD = ITEMS.register("titans_shroud_chestplate",
+    public static final RegistryObject<Item> TITANS_SHROUD = registerArmor("titans_shroud_chestplate",
             () -> new DarkArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
-    public static final RegistryObject<Item> TITANS_SHROUD_HELMET = ITEMS.register("titans_shroud_helmet",
+    public static final RegistryObject<Item> TITANS_SHROUD_HELMET = registerArmor("titans_shroud_helmet",
             () -> new DarkArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
-    public static final RegistryObject<Item> EVOCATION_ROBE = ITEMS.register("evocation_robe",
+    public static final RegistryObject<Item> EVOCATION_ROBE = registerArmor("evocation_robe",
             () -> new EvocationRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> EVOCATION_ROBE_HAT = ITEMS.register("evocation_hat",
+    public static final RegistryObject<Item> EVOCATION_ROBE_HAT = registerArmor("evocation_hat",
             () -> new EvocationRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> EMBER_ROBE = ITEMS.register("ember_robe",
+    public static final RegistryObject<Item> EMBER_ROBE = registerArmor("ember_robe",
             () -> new EvocationRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
-    public static final RegistryObject<Item> EMBER_ROBE_HAT = ITEMS.register("ember_hat",
+    public static final RegistryObject<Item> EMBER_ROBE_HAT = registerArmor("ember_hat",
             () -> new EvocationRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
-    public static final RegistryObject<Item> GRIM_ARMOR = ITEMS.register("grim_chestplate",
+    public static final RegistryObject<Item> GRIM_ARMOR = registerArmor("grim_chestplate",
             () -> new GrimArmorItem(ArmorMaterialList.BONE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> GRIM_ARMOR_HELMET = ITEMS.register("grim_helmet",
+    public static final RegistryObject<Item> GRIM_ARMOR_HELMET = registerArmor("grim_helmet",
             () -> new GrimArmorItem(ArmorMaterialList.BONE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> WITHER_ARMOR = ITEMS.register("wither_chestplate",
+    public static final RegistryObject<Item> WITHER_ARMOR = registerArmor("wither_chestplate",
             () -> new GrimArmorItem(ArmorMaterialList.BONE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
-    public static final RegistryObject<Item> WITHER_ARMOR_HELMET = ITEMS.register("wither_helmet",
+    public static final RegistryObject<Item> WITHER_ARMOR_HELMET = registerArmor("wither_helmet",
             () -> new GrimArmorItem(ArmorMaterialList.BONE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
-    public static final RegistryObject<Item> GUARDS_ARMOR = ITEMS.register("guards_chestplate",
+    public static final RegistryObject<Item> GUARDS_ARMOR = registerArmor("guards_chestplate",
             () -> new GuardsArmorItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> GUARDS_ARMOR_HELMET = ITEMS.register("guards_helmet",
+    public static final RegistryObject<Item> GUARDS_ARMOR_HELMET = registerArmor("guards_helmet",
             () -> new GuardsArmorItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> CURIOUS_ARMOR = ITEMS.register("curious_chestplate",
+    public static final RegistryObject<Item> CURIOUS_ARMOR = registerArmor("curious_chestplate",
             () -> new GuardsArmorItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
-    public static final RegistryObject<Item> CURIOUS_ARMOR_HELMET = ITEMS.register("curious_helmet",
+    public static final RegistryObject<Item> CURIOUS_ARMOR_HELMET = registerArmor("curious_helmet",
             () -> new GuardsArmorItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
-    public static final RegistryObject<Item> MERCENARY_ARMOR = ITEMS.register("mercenary_chestplate",
+    public static final RegistryObject<Item> MERCENARY_ARMOR = registerArmor("mercenary_chestplate",
             () -> new MercenaryArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> MERCENARY_ARMOR_HELMET = ITEMS.register("mercenary_helmet",
+    public static final RegistryObject<Item> MERCENARY_ARMOR_HELMET = registerArmor("mercenary_helmet",
             () -> new MercenaryArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> RENEGADE_ARMOR = ITEMS.register("renegade_chestplate",
+    public static final RegistryObject<Item> RENEGADE_ARMOR = registerArmor("renegade_chestplate",
             () -> new MercenaryArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
-    public static final RegistryObject<Item> RENEGADE_ARMOR_HELMET = ITEMS.register("renegade_helmet",
+    public static final RegistryObject<Item> RENEGADE_ARMOR_HELMET = registerArmor("renegade_helmet",
+            () -> new MercenaryArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
+    public static final RegistryObject<Item> HUNGRY_HORROR_CHESTPLATE = registerArmor("hungry_horror_chestplate",
+            () -> new MercenaryArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
+    public static final RegistryObject<Item> HUNGRY_HORROR_HELMET = registerArmor("hungry_horror_helmet",
             () -> new MercenaryArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
-    public static final RegistryObject<Item> OCELOT_ARMOR = ITEMS.register("ocelot_vest",
+    public static final RegistryObject<Item> OCELOT_ARMOR = registerArmor("ocelot_vest",
             () -> new OcelotArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> OCELOT_ARMOR_HOOD = ITEMS.register("ocelot_hood",
+    public static final RegistryObject<Item> OCELOT_ARMOR_HOOD = registerArmor("ocelot_hood",
             () -> new OcelotArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> SHADOW_WALKER = ITEMS.register("shadow_walker_vest",
+    public static final RegistryObject<Item> SHADOW_WALKER = registerArmor("shadow_walker_vest",
             () -> new OcelotArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
-    public static final RegistryObject<Item> SHADOW_WALKER_HOOD = ITEMS.register("shadow_walker_hood",
+    public static final RegistryObject<Item> SHADOW_WALKER_HOOD = registerArmor("shadow_walker_hood",
             () -> new OcelotArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
-    public static final RegistryObject<Item> PHANTOM_ARMOR = ITEMS.register("phantom_chestplate",
+    public static final RegistryObject<Item> PHANTOM_ARMOR = registerArmor("phantom_chestplate",
             () -> new PhantomArmorItem(ArmorMaterialList.BONE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> PHANTOM_ARMOR_HELMET = ITEMS.register("phantom_helmet",
+    public static final RegistryObject<Item> PHANTOM_ARMOR_HELMET = registerArmor("phantom_helmet",
             () -> new PhantomArmorItem(ArmorMaterialList.BONE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> FROST_BITE = ITEMS.register("frost_bite_chestplate",
+    public static final RegistryObject<Item> FROST_BITE = registerArmor("frost_bite_chestplate",
             () -> new PhantomArmorItem(ArmorMaterialList.BONE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
-    public static final RegistryObject<Item> FROST_BITE_HELMET = ITEMS.register("frost_bite_helmet",
+    public static final RegistryObject<Item> FROST_BITE_HELMET = registerArmor("frost_bite_helmet",
             () -> new PhantomArmorItem(ArmorMaterialList.BONE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
-    public static final RegistryObject<Item> PLATE_ARMOR = ITEMS.register("plate_chestplate",
+    public static final RegistryObject<Item> PLATE_ARMOR = registerArmor("plate_chestplate",
             () -> new PlateArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> PLATE_ARMOR_HELMET = ITEMS.register("plate_helmet",
+    public static final RegistryObject<Item> PLATE_ARMOR_HELMET = registerArmor("plate_helmet",
             () -> new PlateArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> FULL_METAL_ARMOR = ITEMS.register("full_metal_chestplate",
+    public static final RegistryObject<Item> FULL_METAL_ARMOR = registerArmor("full_metal_chestplate",
             () -> new PlateArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
-    public static final RegistryObject<Item> FULL_METAL_ARMOR_HELMET = ITEMS.register("full_metal_helmet",
+    public static final RegistryObject<Item> FULL_METAL_ARMOR_HELMET = registerArmor("full_metal_helmet",
             () -> new PlateArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
-    public static final RegistryObject<Item> REINFORCED_MAIL = ITEMS.register("reinforced_mail_chestplate",
+    public static final RegistryObject<Item> REINFORCED_MAIL = registerArmor("reinforced_mail_chestplate",
             () -> new ReinforcedMailItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> REINFORCED_MAIL_HELMET = ITEMS.register("reinforced_mail_helmet",
+    public static final RegistryObject<Item> REINFORCED_MAIL_HELMET = registerArmor("reinforced_mail_helmet",
             () -> new ReinforcedMailItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> STALWART_ARMOR = ITEMS.register("stalwart_chestplate",
+    public static final RegistryObject<Item> STALWART_ARMOR = registerArmor("stalwart_chestplate",
             () -> new ReinforcedMailItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
-    public static final RegistryObject<Item> STALWART_ARMOR_HELMET = ITEMS.register("stalwart_helmet",
+    public static final RegistryObject<Item> STALWART_ARMOR_HELMET = registerArmor("stalwart_helmet",
             () -> new ReinforcedMailItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
-    public static final RegistryObject<Item> SCALE_MAIL = ITEMS.register("scale_mail_chestplate",
+    public static final RegistryObject<Item> SCALE_MAIL = registerArmor("scale_mail_chestplate",
             () -> new ScaleMailItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> HIGHLAND_ARMOR = ITEMS.register("highland_chestplate",
+    public static final RegistryObject<Item> HIGHLAND_ARMOR = registerArmor("highland_chestplate",
             () -> new ScaleMailItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
-    public static final RegistryObject<Item> HIGHLAND_ARMOR_HELMET = ITEMS.register("highland_helmet",
+    public static final RegistryObject<Item> HIGHLAND_ARMOR_HELMET = registerArmor("highland_helmet",
             () -> new ScaleMailItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
-    public static final RegistryObject<Item> SNOW_ARMOR = ITEMS.register("snow_chestplate",
+    public static final RegistryObject<Item> SNOW_ARMOR = registerArmor("snow_chestplate",
             () -> new SnowArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> SNOW_ARMOR_HELMET = ITEMS.register("snow_helmet",
+    public static final RegistryObject<Item> SNOW_ARMOR_HELMET = registerArmor("snow_helmet",
             () -> new SnowArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> FROST_ARMOR = ITEMS.register("frost_chestplate",
+    public static final RegistryObject<Item> FROST_ARMOR = registerArmor("frost_chestplate",
             () -> new SnowArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
-    public static final RegistryObject<Item> FROST_ARMOR_HELMET = ITEMS.register("frost_helmet",
+    public static final RegistryObject<Item> FROST_ARMOR_HELMET = registerArmor("frost_helmet",
             () -> new SnowArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
-    public static final RegistryObject<Item> SOUL_ROBE = ITEMS.register("soul_robe",
+    public static final RegistryObject<Item> SOUL_ROBE = registerArmor("soul_robe",
             () -> new SoulRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> SOUL_ROBE_HOOD = ITEMS.register("soul_hood",
+    public static final RegistryObject<Item> SOUL_ROBE_HOOD = registerArmor("soul_hood",
             () -> new SoulRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> SOULDANCER_ROBE = ITEMS.register("souldancer_robe",
+    public static final RegistryObject<Item> SOULDANCER_ROBE = registerArmor("souldancer_robe",
             () -> new SoulRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
-    public static final RegistryObject<Item> SOULDANCER_ROBE_HOOD = ITEMS.register("souldancer_hood",
+    public static final RegistryObject<Item> SOULDANCER_ROBE_HOOD = registerArmor("souldancer_hood",
             () -> new SoulRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
-    public static final RegistryObject<Item> SPELUNKER_ARMOR = ITEMS.register("spelunker_chestplate",
+    public static final RegistryObject<Item> SPELUNKER_ARMOR = registerArmor("spelunker_chestplate",
             () -> new SpelunkerArmorItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> SPELUNKER_ARMOR_HELMET = ITEMS.register("spelunker_helmet",
+    public static final RegistryObject<Item> SPELUNKER_ARMOR_HELMET = registerArmor("spelunker_helmet",
             () -> new SpelunkerArmorItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> CAVE_CRAWLER = ITEMS.register("cave_crawler_chestplate",
+    public static final RegistryObject<Item> CAVE_CRAWLER = registerArmor("cave_crawler_chestplate",
             () -> new SpelunkerArmorItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
-    public static final RegistryObject<Item> CAVE_CRAWLER_HELMET = ITEMS.register("cave_crawler_helmet",
+    public static final RegistryObject<Item> CAVE_CRAWLER_HELMET = registerArmor("cave_crawler_helmet",
             () -> new SpelunkerArmorItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
-    public static final RegistryObject<Item> THIEF_ARMOR = ITEMS.register("thief_vest",
+    public static final RegistryObject<Item> THIEF_ARMOR = registerArmor("thief_vest",
             () -> new ThiefArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> THIEF_ARMOR_HOOD = ITEMS.register("thief_hood",
+    public static final RegistryObject<Item> THIEF_ARMOR_HOOD = registerArmor("thief_hood",
             () -> new ThiefArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> SPIDER_ARMOR = ITEMS.register("spider_vest",
+    public static final RegistryObject<Item> SPIDER_ARMOR = registerArmor("spider_vest",
             () -> new ThiefArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
-    public static final RegistryObject<Item> SPIDER_ARMOR_HOOD = ITEMS.register("spider_hood",
+    public static final RegistryObject<Item> SPIDER_ARMOR_HOOD = registerArmor("spider_hood",
             () -> new ThiefArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
-    public static final RegistryObject<Item> WOLF_ARMOR = ITEMS.register("wolf_vest",
+    public static final RegistryObject<Item> WOLF_ARMOR = registerArmor("wolf_vest",
             () -> new WolfArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> WOLF_ARMOR_HOOD = ITEMS.register("wolf_hood",
+    public static final RegistryObject<Item> WOLF_ARMOR_HOOD = registerArmor("wolf_hood",
             () -> new WolfArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> FOX_ARMOR = ITEMS.register("fox_vest",
+    public static final RegistryObject<Item> FOX_ARMOR = registerArmor("fox_vest",
             () -> new WolfArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
-    public static final RegistryObject<Item> FOX_ARMOR_HOOD = ITEMS.register("fox_hood",
+    public static final RegistryObject<Item> FOX_ARMOR_HOOD = registerArmor("fox_hood",
+            () -> new WolfArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
+    public static final RegistryObject<Item> ARCTIC_FOX_VEST = registerArmor("arctic_fox_vest",
+            () -> new WolfArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
+    public static final RegistryObject<Item> ARCTIC_FOX_HOOD = registerArmor("arctic_fox_hood",
             () -> new WolfArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
-    public static final RegistryObject<Item> CLIMBING_GEAR = ITEMS.register("climbing_vest",
+    public static final RegistryObject<Item> CLIMBING_GEAR = registerArmor("climbing_vest",
             () -> new ClimbingGearArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> CLIMBING_GEAR_HOOD = ITEMS.register("climbing_hood",
+    public static final RegistryObject<Item> CLIMBING_GEAR_HOOD = registerArmor("climbing_hood",
             () -> new ClimbingGearArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> RUGGED_CLIMBING_GEAR = ITEMS.register("rugged_climbing_vest",
+    public static final RegistryObject<Item> RUGGED_CLIMBING_GEAR = registerArmor("rugged_climbing_vest",
             () -> new ClimbingGearArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
-    public static final RegistryObject<Item> RUGGED_CLIMBING_GEAR_HOOD = ITEMS.register("rugged_climbing_hood",
+    public static final RegistryObject<Item> RUGGED_CLIMBING_GEAR_HOOD = registerArmor("rugged_climbing_hood",
             () -> new ClimbingGearArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
-    public static final RegistryObject<Item> GOAT_GEAR = ITEMS.register("goat_vest",
+    public static final RegistryObject<Item> GOAT_GEAR = registerArmor("goat_vest",
             () -> new ClimbingGearArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
-    public static final RegistryObject<Item> GOAT_GEAR_HOOD = ITEMS.register("goat_hood",
+    public static final RegistryObject<Item> GOAT_GEAR_HOOD = registerArmor("goat_hood",
             () -> new ClimbingGearArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
-    public static final RegistryObject<Item> EMERALD_GEAR = ITEMS.register("emerald_chestplate",
+    public static final RegistryObject<Item> EMERALD_GEAR = registerArmor("emerald_chestplate",
             () -> new EmeraldGearArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> EMERALD_GEAR_HELMET = ITEMS.register("emerald_helmet",
+    public static final RegistryObject<Item> EMERALD_GEAR_HELMET = registerArmor("emerald_helmet",
             () -> new EmeraldGearArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
-    public static final RegistryObject<Item> GILDED_GLORY = ITEMS.register("gilded_glory_chestplate",
+    public static final RegistryObject<Item> GILDED_GLORY = registerArmor("gilded_glory_chestplate",
             () -> new EmeraldGearArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
-    public static final RegistryObject<Item> GILDED_GLORY_HELMET = ITEMS.register("gilded_glory_helmet",
+    public static final RegistryObject<Item> GILDED_GLORY_HELMET = registerArmor("gilded_glory_helmet",
             () -> new EmeraldGearArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
-    public static final RegistryObject<Item> OPULENT_ARMOR = ITEMS.register("opulent_chestplate",
+    public static final RegistryObject<Item> OPULENT_ARMOR = registerArmor("opulent_chestplate",
             () -> new EmeraldGearArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
-    public static final RegistryObject<Item> OPULENT_ARMOR_HELMET = ITEMS.register("opulent_helmet",
+    public static final RegistryObject<Item> OPULENT_ARMOR_HELMET = registerArmor("opulent_helmet",
             () -> new EmeraldGearArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
     public static final RegistryObject<Item> ARROW_BUNDLE = ITEMS.register("arrow_bundle",
             () -> new ArrowBundleItem(new Item.Properties().tab(RANGED_WEAPON_GROUP)));
+
+    private static RegistryObject<Item> registerArmor(String armorId, Supplier<Item> itemSupplier) {
+        RegistryObject<Item> register = ITEMS.register(armorId, itemSupplier);
+        ARMORS.put(modLoc(armorId), register);
+        return register;
+    }
+
+    private static ResourceLocation modLoc(String armorId) {
+        return new ResourceLocation(MODID, armorId);
+    }
 
     public static void putItemsInMap() {
         putArtifactsInMap();
@@ -655,102 +672,6 @@ public class ItemRegistry {
         putUniqueCrossbowsInMap();
         putCommonBowsInMap();
         putCommonCrossbowsInMap();
-        putCommonLeatherArmorsInMap();
-        putUniqueLeatherArmorsInMap();
-        putCommonMetalArmorsInMap();
-        putUniqueMetalArmorsInMap();
-    }
-
-    private static void putUniqueMetalArmorsInMap() {
-        uniqueMetalArmorMap.put(CAVE_CRAWLER.get(), CAVE_CRAWLER.get().getRegistryName());
-        uniqueMetalArmorMap.put(CAVE_CRAWLER_HELMET.get(), CAVE_CRAWLER_HELMET.get().getRegistryName());
-        uniqueMetalArmorMap.put(HIGHLAND_ARMOR.get(), HIGHLAND_ARMOR.get().getRegistryName());
-        uniqueMetalArmorMap.put(HIGHLAND_ARMOR_HELMET.get(), HIGHLAND_ARMOR_HELMET.get().getRegistryName());
-        uniqueMetalArmorMap.put(CURIOUS_ARMOR.get(), CURIOUS_ARMOR.get().getRegistryName());
-        uniqueMetalArmorMap.put(CURIOUS_ARMOR_HELMET.get(), CURIOUS_ARMOR_HELMET.get().getRegistryName());
-        uniqueMetalArmorMap.put(STALWART_ARMOR.get(), STALWART_ARMOR.get().getRegistryName());
-        uniqueMetalArmorMap.put(STALWART_ARMOR_HELMET.get(), STALWART_ARMOR_HELMET.get().getRegistryName());
-        uniqueMetalArmorMap.put(FROST_ARMOR.get(), FROST_ARMOR.get().getRegistryName());
-        uniqueMetalArmorMap.put(FROST_ARMOR_HELMET.get(), FROST_ARMOR_HELMET.get().getRegistryName());
-        uniqueMetalArmorMap.put(HEROS_ARMOR.get(), HEROS_ARMOR.get().getRegistryName());
-        uniqueMetalArmorMap.put(HEROS_ARMOR_HELMET.get(), HEROS_ARMOR_HELMET.get().getRegistryName());
-        uniqueMetalArmorMap.put(TITANS_SHROUD.get(), TITANS_SHROUD.get().getRegistryName());
-        uniqueMetalArmorMap.put(TITANS_SHROUD_HELMET.get(), TITANS_SHROUD_HELMET.get().getRegistryName());
-        uniqueMetalArmorMap.put(FULL_METAL_ARMOR.get(), FULL_METAL_ARMOR.get().getRegistryName());
-        uniqueMetalArmorMap.put(FULL_METAL_ARMOR_HELMET.get(), FULL_METAL_ARMOR_HELMET.get().getRegistryName());
-        uniqueMetalArmorMap.put(RENEGADE_ARMOR.get(), RENEGADE_ARMOR.get().getRegistryName());
-        uniqueMetalArmorMap.put(RENEGADE_ARMOR_HELMET.get(), RENEGADE_ARMOR_HELMET.get().getRegistryName());
-        commonLeatherArmorMap.put(GILDED_GLORY.get(), GILDED_GLORY.get().getRegistryName());
-        commonLeatherArmorMap.put(GILDED_GLORY_HELMET.get(), GILDED_GLORY_HELMET.get().getRegistryName());
-        commonLeatherArmorMap.put(OPULENT_ARMOR.get(), OPULENT_ARMOR.get().getRegistryName());
-        commonLeatherArmorMap.put(OPULENT_ARMOR_HELMET.get(), OPULENT_ARMOR_HELMET.get().getRegistryName());
-    }
-
-    private static void putCommonMetalArmorsInMap() {
-        commonMetalArmorMap.put(SPELUNKER_ARMOR.get(), SPELUNKER_ARMOR.get().getRegistryName());
-        commonMetalArmorMap.put(SPELUNKER_ARMOR_HELMET.get(), SPELUNKER_ARMOR_HELMET.get().getRegistryName());
-        commonMetalArmorMap.put(SCALE_MAIL.get(), SCALE_MAIL.get().getRegistryName());
-        commonMetalArmorMap.put(GUARDS_ARMOR.get(), GUARDS_ARMOR.get().getRegistryName());
-        commonMetalArmorMap.put(GUARDS_ARMOR_HELMET.get(), GUARDS_ARMOR_HELMET.get().getRegistryName());
-        commonMetalArmorMap.put(REINFORCED_MAIL.get(), REINFORCED_MAIL.get().getRegistryName());
-        commonMetalArmorMap.put(REINFORCED_MAIL_HELMET.get(), REINFORCED_MAIL_HELMET.get().getRegistryName());
-        commonMetalArmorMap.put(SNOW_ARMOR.get(), SNOW_ARMOR.get().getRegistryName());
-        commonMetalArmorMap.put(SNOW_ARMOR_HELMET.get(), SNOW_ARMOR_HELMET.get().getRegistryName());
-        commonMetalArmorMap.put(CHAMPIONS_ARMOR.get(), CHAMPIONS_ARMOR.get().getRegistryName());
-        commonMetalArmorMap.put(CHAMPIONS_ARMOR_HELMET.get(), CHAMPIONS_ARMOR_HELMET.get().getRegistryName());
-        commonMetalArmorMap.put(DARK_ARMOR.get(), DARK_ARMOR.get().getRegistryName());
-        commonMetalArmorMap.put(DARK_ARMOR_HELMET.get(), DARK_ARMOR_HELMET.get().getRegistryName());
-        commonMetalArmorMap.put(PLATE_ARMOR.get(), PLATE_ARMOR.get().getRegistryName());
-        commonMetalArmorMap.put(PLATE_ARMOR_HELMET.get(), PLATE_ARMOR_HELMET.get().getRegistryName());
-        commonMetalArmorMap.put(MERCENARY_ARMOR.get(), MERCENARY_ARMOR.get().getRegistryName());
-        commonMetalArmorMap.put(MERCENARY_ARMOR_HELMET.get(), MERCENARY_ARMOR_HELMET.get().getRegistryName());
-        commonLeatherArmorMap.put(EMERALD_GEAR.get(), EMERALD_GEAR.get().getRegistryName());
-        commonLeatherArmorMap.put(EMERALD_GEAR_HELMET.get(), EMERALD_GEAR_HELMET.get().getRegistryName());
-    }
-
-    private static void putUniqueLeatherArmorsInMap() {
-        uniqueLeatherArmorMap.put(ARCHERS_ARMOR.get(), ARCHERS_ARMOR.get().getRegistryName());
-        uniqueLeatherArmorMap.put(ARCHERS_ARMOR_HOOD.get(), ARCHERS_ARMOR_HOOD.get().getRegistryName());
-        uniqueLeatherArmorMap.put(FROST_BITE.get(), FROST_BITE.get().getRegistryName());
-        uniqueLeatherArmorMap.put(FROST_BITE_HELMET.get(), FROST_BITE_HELMET.get().getRegistryName());
-        uniqueLeatherArmorMap.put(SPIDER_ARMOR.get(), SPIDER_ARMOR.get().getRegistryName());
-        uniqueLeatherArmorMap.put(SPIDER_ARMOR_HOOD.get(), SPIDER_ARMOR_HOOD.get().getRegistryName());
-        uniqueLeatherArmorMap.put(WITHER_ARMOR.get(), WITHER_ARMOR.get().getRegistryName());
-        uniqueLeatherArmorMap.put(WITHER_ARMOR_HELMET.get(), WITHER_ARMOR_HELMET.get().getRegistryName());
-        uniqueLeatherArmorMap.put(FOX_ARMOR.get(), FOX_ARMOR.get().getRegistryName());
-        uniqueLeatherArmorMap.put(FOX_ARMOR_HOOD.get(), FOX_ARMOR_HOOD.get().getRegistryName());
-        uniqueLeatherArmorMap.put(SHADOW_WALKER.get(), SHADOW_WALKER.get().getRegistryName());
-        uniqueLeatherArmorMap.put(SHADOW_WALKER_HOOD.get(), SHADOW_WALKER_HOOD.get().getRegistryName());
-        uniqueLeatherArmorMap.put(SPLENDID_ROBE.get(), SPLENDID_ROBE.get().getRegistryName());
-        uniqueLeatherArmorMap.put(EMBER_ROBE.get(), EMBER_ROBE.get().getRegistryName());
-        uniqueLeatherArmorMap.put(EMBER_ROBE_HAT.get(), EMBER_ROBE_HAT.get().getRegistryName());
-        uniqueLeatherArmorMap.put(SOULDANCER_ROBE.get(), SOULDANCER_ROBE.get().getRegistryName());
-        uniqueLeatherArmorMap.put(SOULDANCER_ROBE_HOOD.get(), SOULDANCER_ROBE_HOOD.get().getRegistryName());
-        commonLeatherArmorMap.put(RUGGED_CLIMBING_GEAR.get(), RUGGED_CLIMBING_GEAR.get().getRegistryName());
-        commonLeatherArmorMap.put(RUGGED_CLIMBING_GEAR_HOOD.get(), RUGGED_CLIMBING_GEAR_HOOD.get().getRegistryName());
-        commonLeatherArmorMap.put(GOAT_GEAR.get(), GOAT_GEAR.get().getRegistryName());
-        commonLeatherArmorMap.put(GOAT_GEAR_HOOD.get(), GOAT_GEAR_HOOD.get().getRegistryName());
-    }
-
-    private static void putCommonLeatherArmorsInMap() {
-        commonLeatherArmorMap.put(HUNTERS_ARMOR.get(), HUNTERS_ARMOR.get().getRegistryName());
-        commonLeatherArmorMap.put(PHANTOM_ARMOR.get(), PHANTOM_ARMOR.get().getRegistryName());
-        commonLeatherArmorMap.put(PHANTOM_ARMOR_HELMET.get(), PHANTOM_ARMOR_HELMET.get().getRegistryName());
-        commonLeatherArmorMap.put(THIEF_ARMOR.get(), THIEF_ARMOR.get().getRegistryName());
-        commonLeatherArmorMap.put(THIEF_ARMOR_HOOD.get(), THIEF_ARMOR_HOOD.get().getRegistryName());
-        commonLeatherArmorMap.put(GRIM_ARMOR.get(), GRIM_ARMOR.get().getRegistryName());
-        commonLeatherArmorMap.put(GRIM_ARMOR_HELMET.get(), GRIM_ARMOR_HELMET.get().getRegistryName());
-        commonLeatherArmorMap.put(WOLF_ARMOR.get(), WOLF_ARMOR.get().getRegistryName());
-        commonLeatherArmorMap.put(WOLF_ARMOR_HOOD.get(), WOLF_ARMOR_HOOD.get().getRegistryName());
-        commonLeatherArmorMap.put(OCELOT_ARMOR.get(), OCELOT_ARMOR.get().getRegistryName());
-        commonLeatherArmorMap.put(OCELOT_ARMOR_HOOD.get(), OCELOT_ARMOR_HOOD.get().getRegistryName());
-        commonLeatherArmorMap.put(BATTLE_ROBE.get(), BATTLE_ROBE.get().getRegistryName());
-        commonLeatherArmorMap.put(EVOCATION_ROBE.get(), EVOCATION_ROBE.get().getRegistryName());
-        commonLeatherArmorMap.put(EVOCATION_ROBE_HAT.get(), EVOCATION_ROBE_HAT.get().getRegistryName());
-        commonLeatherArmorMap.put(SOUL_ROBE.get(), SOUL_ROBE.get().getRegistryName());
-        commonLeatherArmorMap.put(SOUL_ROBE_HOOD.get(), SOUL_ROBE_HOOD.get().getRegistryName());
-        commonLeatherArmorMap.put(CLIMBING_GEAR.get(), CLIMBING_GEAR.get().getRegistryName());
-        commonLeatherArmorMap.put(CLIMBING_GEAR_HOOD.get(), CLIMBING_GEAR_HOOD.get().getRegistryName());
     }
 
     private static void putCommonBowsInMap() {

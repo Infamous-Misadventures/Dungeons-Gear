@@ -21,8 +21,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
 
-import static com.infamous.dungeons_gear.registry.ItemRegistry.RUGGED_CLIMBING_GEAR;
-
 public class EmeraldGearArmorItem extends ArmorItem implements IArmor {
     private final boolean unique;
 
@@ -51,7 +49,7 @@ public class EmeraldGearArmorItem extends ArmorItem implements IArmor {
     @OnlyIn(Dist.CLIENT)
     public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack stack, EquipmentSlotType armorSlot, A _default) {
         if(stack.getItem() == ItemRegistry.EMERALD_GEAR.get() || stack.getItem() == ItemRegistry.EMERALD_GEAR_HELMET.get()){
-            return (A) new EmeraldGearModel<>(1.0F, slot, entityLiving);
+            return (A) new EmeraldArmorModel<>(1.0F, slot, entityLiving);
         }
         else if(stack.getItem() == ItemRegistry.GILDED_GLORY.get() || stack.getItem() == ItemRegistry.GILDED_GLORY_HELMET.get()){
             return (A) new GildedGloryModel<>(1.0F, slot, entityLiving);
@@ -73,6 +71,11 @@ public class EmeraldGearArmorItem extends ArmorItem implements IArmor {
     public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addLoreDescription(list, stack);
+    }
+
+    @Override
+    public boolean isUnique() {
+        return unique;
     }
 
     @Override

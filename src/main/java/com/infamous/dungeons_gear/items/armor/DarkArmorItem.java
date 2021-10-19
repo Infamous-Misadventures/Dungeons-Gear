@@ -98,6 +98,11 @@ public class DarkArmorItem extends ArmorItem implements IArmor {
     }
 
     @Override
+    public boolean isUnique() {
+        return unique;
+    }
+
+    @Override
     public double getSoulsGathered() {
         return 50;
     }

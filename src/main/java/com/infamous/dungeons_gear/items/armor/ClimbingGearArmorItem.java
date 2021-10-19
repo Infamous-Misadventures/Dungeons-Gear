@@ -78,6 +78,11 @@ public class ClimbingGearArmorItem extends ArmorItem implements IArmor {
     }
 
     @Override
+    public boolean isUnique() {
+        return unique;
+    }
+
+    @Override
     public double getArtifactCooldown() {
         return 12.5D;
     }

@@ -100,4 +100,9 @@ public class ScaleMailItem extends ArmorItem implements IArmor {
         super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
+
+    @Override
+    public boolean isUnique() {
+        return unique;
+    }
 }

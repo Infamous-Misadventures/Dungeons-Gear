@@ -10,15 +10,8 @@ import net.minecraft.item.Items;
 import javax.annotation.Nullable;
 import java.util.*;
 
-import static com.infamous.dungeons_gear.registry.ItemRegistry.commonMetalArmorMap;
-import static com.infamous.dungeons_gear.registry.ItemRegistry.commonLeatherArmorMap;
-import static com.infamous.dungeons_gear.registry.ItemRegistry.uniqueMetalArmorMap;
-import static com.infamous.dungeons_gear.registry.ItemRegistry.uniqueLeatherArmorMap;
-import static com.infamous.dungeons_gear.registry.ItemRegistry.commonRangedWeaponMap;
-import static com.infamous.dungeons_gear.registry.ItemRegistry.uniqueRangedWeaponMap;
-import static com.infamous.dungeons_gear.registry.ItemRegistry.commonWeaponMap;
-import static com.infamous.dungeons_gear.registry.ItemRegistry.uniqueWeaponMap;
-import static com.infamous.dungeons_gear.registry.ItemRegistry.artifactMap;
+import static com.infamous.dungeons_gear.items.ArmorHelper.*;
+import static com.infamous.dungeons_gear.registry.ItemRegistry.*;
 
 public class ChestLootHelper {
 
@@ -53,11 +46,11 @@ public class ChestLootHelper {
         Item uniqueMetalArmor = Items.AIR;
 
         if(ConfigurableLootHelper.isArmorLootEnabled()){
-            commonLeatherArmor = getRandomSetElement(commonLeatherArmorMap.keySet());
-            uniqueLeatherArmor = getRandomSetElement(uniqueLeatherArmorMap.keySet());
+            commonLeatherArmor = getRandomSetElement(new HashSet<>(getArmorList(LEATHER_MATERIALS, false)));
+            uniqueLeatherArmor = getRandomSetElement(new HashSet<>(getArmorList(LEATHER_MATERIALS, true)));
 
-            commonMetalArmor = getRandomSetElement(commonMetalArmorMap.keySet());
-            uniqueMetalArmor = getRandomSetElement(uniqueMetalArmorMap.keySet());
+            commonMetalArmor = getRandomSetElement(new HashSet<>(getArmorList(METAL_MATERIALS, false)));
+            uniqueMetalArmor = getRandomSetElement(new HashSet<>(getArmorList(METAL_MATERIALS, true)));
             selectedArmor = true;
         }
 

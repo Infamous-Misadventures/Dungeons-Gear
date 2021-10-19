@@ -1,6 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "dungeons_gear:item/plate_helmet"
-  }
-}
