@@ -13,6 +13,7 @@ import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -33,7 +34,7 @@ public class GildedItemHelper {
             EnchantmentData randomEnchantment = WeightedRandom.getRandomItem(random, list1);
             cap.addBuiltInEnchantment(GILDED_ITEM_RESOURCELOCATION, randomEnchantment);
 
-            itemStack.setHoverName(new TranslationTextComponent("dungeons_gear.gilded").append(" ").append(itemStack.getHoverName()).withStyle(TextFormatting.GOLD));
+            itemStack.setHoverName(new TranslationTextComponent("dungeons_gear.gilded").append(" ").append(itemStack.getHoverName()));
 
         });
         return itemStack;
@@ -62,6 +63,19 @@ public class GildedItemHelper {
             builtInEnchantments.forEach(enchantmentData -> {
                 event.getToolTip().add(enchantmentData.enchantment.getFullname(enchantmentData.level).copy().withStyle(TextFormatting.GOLD));
             });
+        });
+    }
+
+    @SubscribeEvent
+    public static void onRenderTooltip(RenderTooltipEvent.Color event){
+        LazyOptional<IBuiltInEnchantments> lazyCap = BuiltInEnchantmentsHelper.getBuiltInEnchantmentsCapabilityLazy(event.getStack());
+        lazyCap.ifPresent(cap -> {
+            List<EnchantmentData> builtInEnchantments = cap.getBuiltInEnchantments(GILDED_ITEM_RESOURCELOCATION);
+            if(!builtInEnchantments.isEmpty()){
+                event.setBorderStart(0xF0FFD700);
+                event.setBorderEnd(0x50F5CC27);
+                event.setBackground(0xF0AF7923);
+            }
         });
     }
 
