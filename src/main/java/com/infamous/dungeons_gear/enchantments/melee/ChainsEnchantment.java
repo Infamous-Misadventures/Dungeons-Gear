@@ -31,6 +31,7 @@ public class ChainsEnchantment extends DungeonsEnchantment {
     @Override
     public void onEntityDamaged(LivingEntity user, Entity target, int level) {
         if(!(target instanceof LivingEntity)) return;
+        if( user.getLastAttackedEntityTime()==user.ticksExisted)return;
         float chance = user.getRNG().nextFloat();
         if(chance <=  0.3F){
             AreaOfEffectHelper.chainNearbyEntities(user, (LivingEntity)target, 1.5F, level);
@@ -43,6 +44,7 @@ public class ChainsEnchantment extends DungeonsEnchantment {
         if(event.getSource() instanceof OffhandAttackDamageSource) return;
         if(!(event.getSource().getTrueSource() instanceof LivingEntity)) return;
         LivingEntity attacker = (LivingEntity)event.getSource().getTrueSource();
+        if(attacker.getLastAttackedEntityTime()==attacker.ticksExisted)return;
         LivingEntity victim = event.getEntityLiving();
         ItemStack mainhand = attacker.getHeldItemMainhand();
         if(hasChainsBuiltIn(mainhand)){

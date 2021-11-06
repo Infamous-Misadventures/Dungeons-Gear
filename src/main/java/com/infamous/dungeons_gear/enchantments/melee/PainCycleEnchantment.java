@@ -26,37 +26,38 @@ public class PainCycleEnchantment extends DungeonsEnchantment {
         super(Rarity.COMMON, ModEnchantmentTypes.MELEE, ModEnchantmentTypes.WEAPON_SLOT);
     }
 
-    @Override
-    public int getMaxLevel() {
-        return 3;
-    }
-
     @SubscribeEvent
-    public static void onPainfulAttack(LivingDamageEvent event){
-        if(PlayerAttackHelper.isProbablyNotMeleeDamage(event.getSource())) return;
-        if(event.getSource() instanceof OffhandAttackDamageSource) return;
-        if(event.getEntityLiving().world.isRemote) return;
+    public static void onPainfulAttack(LivingDamageEvent event) {
+        if (PlayerAttackHelper.isProbablyNotMeleeDamage(event.getSource())) return;
+        if (event.getSource() instanceof OffhandAttackDamageSource) return;
+        if (event.getEntityLiving().world.isRemote) return;
 
-        if(event.getSource().getTrueSource() instanceof LivingEntity){
+        if (event.getSource().getTrueSource() instanceof LivingEntity) {
             LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
             ItemStack mainhand = attacker.getHeldItemMainhand();
+            if (attacker.getLastAttackedEntityTime() == attacker.ticksExisted) return;
             ICombo comboCap = CapabilityHelper.getComboCapability(attacker);
-            if(comboCap != null){
+            if (comboCap != null) {
                 int painCycleLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.PAIN_CYCLE, mainhand);
                 int painDamage = 2;
-                if(painCycleLevel > 0 && attacker.getHealth() > painDamage){
+                if (painCycleLevel > 0 && attacker.getHealth() > painDamage) {
                     attacker.attackEntityFrom(DamageSource.MAGIC, painDamage); // 1 heart of damage
                     comboCap.setPainCycleStacks(comboCap.getPainCycleStacks() + 1);
-                    if(comboCap.getPainCycleStacks() >= 5){
+                    if (comboCap.getPainCycleStacks() >= 5) {
                         int painCycleMultiplier = 2 + painCycleLevel;
                         comboCap.setPainCycleStacks(0);
                         float currentDamage = event.getAmount();
                         event.setAmount(currentDamage * painCycleMultiplier);
                     }
-                } else{
+                } else {
                     comboCap.setPainCycleStacks(0);
                 }
             }
         }
+    }
+
+    @Override
+    public int getMaxLevel() {
+        return 3;
     }
 }

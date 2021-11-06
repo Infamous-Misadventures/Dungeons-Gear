@@ -54,6 +54,7 @@ public class ShockwaveEnchantment extends AOEDamageEnchantment {
             LivingEntity victim = (LivingEntity) event.getTarget();
             ItemStack mainhand = attacker.getHeldItemMainhand();
             if (event.getResult() != Event.Result.ALLOW && mainhand.getItem() instanceof IComboWeapon) return;
+            if(attacker.getLastAttackedEntityTime()==attacker.ticksExisted)return;
             boolean uniqueWeaponFlag = hasShockwaveBuiltIn(mainhand);
             if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.SHOCKWAVE) || uniqueWeaponFlag){
                 int shockwaveLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.SHOCKWAVE, mainhand);

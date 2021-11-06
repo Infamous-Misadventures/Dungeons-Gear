@@ -44,6 +44,7 @@ public class GravityEnchantment extends DungeonsEnchantment {
         if(!(target instanceof LivingEntity)) return;
         ItemStack mainhand = user.getHeldItemMainhand();
         boolean uniqueWeaponFlag = hasGravityBuiltIn(mainhand);
+        if( user.getLastAttackedEntityTime()==user.ticksExisted)return;
         if(uniqueWeaponFlag) level++;
         AreaOfEffectHelper.pullInNearbyEntities(user, (LivingEntity)target, level * 3, ParticleTypes.PORTAL);
     }
