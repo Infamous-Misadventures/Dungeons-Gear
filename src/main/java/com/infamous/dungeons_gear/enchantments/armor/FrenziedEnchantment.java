@@ -21,6 +21,8 @@ import java.util.UUID;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = MODID)
 public class FrenziedEnchantment extends HealthAbilityEnchantment {
     private static final UUID FRENZY = UUID.fromString("86ded262-f5b3-41f0-a1ca-b881f6abfcff");
@@ -44,8 +46,8 @@ public class FrenziedEnchantment extends HealthAbilityEnchantment {
             player.getAttribute(Attributes.ATTACK_SPEED).removeModifier(FRENZY);
             if (currentHealth <= maxHealth / 2) {
                 if (ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.FRENZIED)) {
-                    int frenziedLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.FRENZIED, player);
-                    player.getAttribute(Attributes.ATTACK_SPEED).applyNonPersistentModifier(new AttributeModifier(FRENZY, "frenzy multiplier", 0.1 * frenziedLevel, AttributeModifier.Operation.MULTIPLY_TOTAL));
+                    int frenziedLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.FRENZIED, player);
+                    player.getAttribute(Attributes.ATTACK_SPEED).addTransientModifier(new AttributeModifier(FRENZY, "frenzy multiplier", 0.1 * frenziedLevel, AttributeModifier.Operation.MULTIPLY_TOTAL));
                 }
             }
         }
@@ -56,7 +58,7 @@ public class FrenziedEnchantment extends HealthAbilityEnchantment {
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof HealthAbilityEnchantment);
     }
 }

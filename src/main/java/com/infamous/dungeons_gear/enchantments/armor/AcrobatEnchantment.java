@@ -10,6 +10,8 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 public class AcrobatEnchantment extends JumpingEnchantment {
 
     public AcrobatEnchantment() {
@@ -21,7 +23,7 @@ public class AcrobatEnchantment extends JumpingEnchantment {
     }
 
     public static void setJumpCooldown(ICombo comboCap, LivingEntity jumper, int timeIn){
-        int acrobatLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.ACROBAT, jumper);
+        int acrobatLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.ACROBAT, jumper);
         if(acrobatLevel > 0){
             double reductionFactor = Math.max(100 - 0.15D * acrobatLevel, 0); // zeroes out at level 7+
             comboCap.setJumpCooldownTimer((int) (timeIn * reductionFactor));
@@ -35,7 +37,7 @@ public class AcrobatEnchantment extends JumpingEnchantment {
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof JumpingEnchantment);
     }
 }

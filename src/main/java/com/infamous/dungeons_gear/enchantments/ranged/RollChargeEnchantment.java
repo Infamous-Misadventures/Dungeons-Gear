@@ -15,6 +15,8 @@ import net.minecraft.item.BowItem;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 public class RollChargeEnchantment extends DungeonsEnchantment {
 
     public RollChargeEnchantment() {
@@ -30,16 +32,16 @@ public class RollChargeEnchantment extends DungeonsEnchantment {
         ICombo comboCap = CapabilityHelper.getComboCapability(living);
         if(comboCap == null) return;
 
-        ItemStack mainHandWeapon = living.getHeldItemMainhand();
-        ItemStack offHandWeapon = living.getHeldItemOffhand();
+        ItemStack mainHandWeapon = living.getMainHandItem();
+        ItemStack offHandWeapon = living.getOffhandItem();
 
         int rollChargeLevel = 0;
         boolean uniqueWeaponFlag = false;
         if(mainHandWeapon.getItem() instanceof BowItem || mainHandWeapon.getItem() instanceof CrossbowItem){
-            rollChargeLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.ROLL_CHARGE, mainHandWeapon);
+            rollChargeLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.ROLL_CHARGE, mainHandWeapon);
             uniqueWeaponFlag = hasRollChargeBuiltIn(mainHandWeapon);
         } else if(offHandWeapon.getItem() instanceof BowItem || offHandWeapon.getItem() instanceof CrossbowItem){
-            rollChargeLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.ROLL_CHARGE, offHandWeapon);
+            rollChargeLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.ROLL_CHARGE, offHandWeapon);
             uniqueWeaponFlag = hasRollChargeBuiltIn(offHandWeapon);
         }
 

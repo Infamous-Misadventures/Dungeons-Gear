@@ -62,11 +62,11 @@ public class GlobalEvents {
         if (event.getEntity() instanceof AbstractArrowEntity) {
             AbstractArrowEntity arrowEntity = (AbstractArrowEntity) event.getEntity();
             //if(arrowEntity.getTags().contains("BonusProjectile") || arrowEntity.getTags().contains("ChainReactionProjectile")) return;
-            Entity shooterEntity = arrowEntity.func_234616_v_();
+            Entity shooterEntity = arrowEntity.getOwner();
             if (shooterEntity instanceof LivingEntity) {
                 LivingEntity shooter = (LivingEntity) shooterEntity;
-                ItemStack mainhandStack = shooter.getHeldItemMainhand();
-                ItemStack offhandStack = shooter.getHeldItemOffhand();
+                ItemStack mainhandStack = shooter.getMainHandItem();
+                ItemStack offhandStack = shooter.getOffhandItem();
                 // This should guarantee the arrow came from the correct itemstack
                 if (mainhandStack.getItem() instanceof BowItem || mainhandStack.getItem() instanceof CrossbowItem) {
                     handleRangedEnchantments(arrowEntity, shooter, mainhandStack);
@@ -82,7 +82,7 @@ public class GlobalEvents {
     private static void handleRangedEnchantments(AbstractArrowEntity arrowEntity, LivingEntity shooter, ItemStack stack) {
         ModEnchantmentHelper.addEnchantmentTagsToArrow(stack, arrowEntity);
 
-        int fuseShotLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.FUSE_SHOT, stack);
+        int fuseShotLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.FUSE_SHOT, stack);
         if (hasFuseShotBuiltIn(stack)) fuseShotLevel++;
         if (fuseShotLevel > 0) {
             IBow weaponCap = CapabilityHelper.getWeaponCapability(stack);
@@ -103,8 +103,8 @@ public class GlobalEvents {
             boolean soulsCriticalBoost = ProjectileEffectHelper.soulsCriticalBoost(playerEntity, stack);
             if (soulsCriticalBoost) {
                 PROXY.spawnParticles(playerEntity, ParticleTypes.SOUL);
-                arrowEntity.setIsCritical(true);
-                arrowEntity.setDamage(arrowEntity.getDamage() * 2);
+                arrowEntity.setCritArrow(true);
+                arrowEntity.setBaseDamage(arrowEntity.getBaseDamage() * 2);
             }
         }
     }
@@ -115,18 +115,18 @@ public class GlobalEvents {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onCancelAttackBecauseStunned(LivingAttackEvent event) {
-        if (event.getSource().getTrueSource() instanceof PlayerEntity) {
-            PlayerEntity attacker = (PlayerEntity) event.getSource().getTrueSource();
-            if (attacker.getActivePotionEffect(CustomEffects.STUNNED) != null)
+        if (event.getSource().getEntity() instanceof PlayerEntity) {
+            PlayerEntity attacker = (PlayerEntity) event.getSource().getEntity();
+            if (attacker.getEffect(CustomEffects.STUNNED) != null)
                 event.setCanceled(true);
         }
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void comboForceCrit(CriticalHitEvent event) {
-        if (event.getPlayer().getHeldItemMainhand().getItem() instanceof IComboWeapon) {
+        if (event.getPlayer().getMainHandItem().getItem() instanceof IComboWeapon) {
             PlayerEntity p = event.getPlayer();
-            ItemStack is = p.getHeldItemMainhand();
+            ItemStack is = p.getMainHandItem();
             IComboWeapon ic = (IComboWeapon) is.getItem();
             ICombo cap = CapabilityHelper.getComboCapability(p);
             if (cap != null && ic.shouldProcSpecialEffects(is, p, cap.getComboCount())) {
@@ -151,13 +151,13 @@ public class GlobalEvents {
 
         if (living instanceof MobEntity) {
             MobEntity mobEntity = (MobEntity) living;
-            if (mobEntity.getActivePotionEffect(CustomEffects.STUNNED) != null && !mobEntity.getTags().contains(STUNNED_TAG)) {
-                if (!mobEntity.isAIDisabled()) {
-                    mobEntity.setNoAI(true);
+            if (mobEntity.getEffect(CustomEffects.STUNNED) != null && !mobEntity.getTags().contains(STUNNED_TAG)) {
+                if (!mobEntity.isNoAi()) {
+                    mobEntity.setNoAi(true);
                     mobEntity.addTag(STUNNED_TAG);
                 }
-            } else if (mobEntity.isAIDisabled() && mobEntity.getTags().contains(STUNNED_TAG)) {
-                mobEntity.setNoAI(false);
+            } else if (mobEntity.isNoAi() && mobEntity.getTags().contains(STUNNED_TAG)) {
+                mobEntity.setNoAi(false);
                 mobEntity.removeTag(STUNNED_TAG);
             }
         }
@@ -165,8 +165,8 @@ public class GlobalEvents {
 
     @SubscribeEvent
     public static void onCapabilityAttack(LivingDamageEvent event) {
-        if (event.getSource().getTrueSource() instanceof PlayerEntity) {
-            PlayerEntity playerEntity = (PlayerEntity) event.getSource().getTrueSource();
+        if (event.getSource().getEntity() instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) event.getSource().getEntity();
 
             ICombo comboCap = CapabilityHelper.getComboCapability(playerEntity);
             if (comboCap == null) return;
@@ -174,7 +174,7 @@ public class GlobalEvents {
                 float originalDamage = event.getAmount();
                 event.setAmount(originalDamage * 2.0F);
                 comboCap.setShadowForm(false);
-                playerEntity.removePotionEffect(Effects.INVISIBILITY);
+                playerEntity.removeEffect(Effects.INVISIBILITY);
             }
             if (comboCap.getDynamoMultiplier() > 1.0D) {
                 double dynamoMultiplier = comboCap.getDynamoMultiplier();
@@ -187,7 +187,7 @@ public class GlobalEvents {
 
     @SubscribeEvent
     public static void onShadowFormAdded(LivingEntityUseItemEvent.Finish event) {
-        if (PotionUtils.getPotionFromItem(event.getItem()) == PotionList.SHADOW_BREW) {
+        if (PotionUtils.getPotion(event.getItem()) == PotionList.SHADOW_BREW) {
             if (event.getEntityLiving() instanceof PlayerEntity) {
                 PlayerEntity playerEntity = (PlayerEntity) event.getEntityLiving();
                 ICombo comboCap = CapabilityHelper.getComboCapability(playerEntity);
@@ -213,16 +213,16 @@ public class GlobalEvents {
     public static void petDeath(LivingDamageEvent event) {
         //cancel friendly fire
         LivingEntity ouch = event.getEntityLiving();
-        if (event.getSource().getTrueSource() instanceof LivingEntity) {
-            LivingEntity bonk = (LivingEntity) event.getSource().getTrueSource();
+        if (event.getSource().getEntity() instanceof LivingEntity) {
+            LivingEntity bonk = (LivingEntity) event.getSource().getEntity();
             if (AbilityHelper.isPetOrColleagueRelation(ouch, bonk)) {
                 event.setCanceled(true);
-                ouch.setRevengeTarget(null);
+                ouch.setLastHurtByMob(null);
                 if (ouch instanceof MobEntity)
-                    ((MobEntity) ouch).setAttackTarget(null);
-                bonk.setRevengeTarget(null);
+                    ((MobEntity) ouch).setTarget(null);
+                bonk.setLastHurtByMob(null);
                 if (bonk instanceof MobEntity)
-                    ((MobEntity) bonk).setAttackTarget(null);
+                    ((MobEntity) bonk).setTarget(null);
             }
         }
         if (DungeonsGearCompatibility.saveYourPets) {
@@ -235,11 +235,11 @@ public class GlobalEvents {
 
     @SubscribeEvent
     public static void onSoulGatheringItemsXPDrop(LivingDeathEvent event) {
-        if (event.getSource().getTrueSource() instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) event.getSource().getTrueSource();
+        if (event.getSource().getEntity() instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) event.getSource().getEntity();
             int souls = 0;
-            ItemStack mainhand = player.getHeldItemMainhand();
-            ItemStack offhand = player.getHeldItemOffhand();
+            ItemStack mainhand = player.getMainHandItem();
+            ItemStack offhand = player.getOffhandItem();
             if (mainhand.getItem() instanceof ISoulGatherer && !(mainhand.getItem() instanceof ArtifactItem)) {
                 souls += ((ISoulGatherer) mainhand.getItem()).getGatherAmount(mainhand);
             }
@@ -247,18 +247,18 @@ public class GlobalEvents {
                 souls += ((ISoulGatherer) offhand.getItem()).getGatherAmount(offhand);
             }
             int counter = 0;
-            for (ItemStack is : player.inventory.offHandInventory)
+            for (ItemStack is : player.inventory.offhand)
                 if (is.getItem() instanceof ArtifactItem && is.getItem() instanceof ISoulGatherer) {
                     souls += ((ISoulGatherer) is.getItem()).getGatherAmount(is);
                     counter++;
                 }
-            for (ItemStack is : player.inventory.mainInventory)
+            for (ItemStack is : player.inventory.items)
                 if (is.getItem() instanceof ArtifactItem && is.getItem() instanceof ISoulGatherer) {
                     souls += ((ISoulGatherer) is.getItem()).getGatherAmount(is);
                     if (++counter == 3) break;
                 }
-            ItemStack helmet = player.getItemStackFromSlot(EquipmentSlotType.HEAD);
-            ItemStack chestplate = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
+            ItemStack helmet = player.getItemBySlot(EquipmentSlotType.HEAD);
+            ItemStack chestplate = player.getItemBySlot(EquipmentSlotType.CHEST);
 
             float soulsGathered = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getSoulsGathered() : 0;
             float soulsGathered2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getSoulsGathered() : 0;
@@ -270,12 +270,12 @@ public class GlobalEvents {
 
             if (souls > 0) {
                 SoulHelper.addSouls(player, souls);
-                if (event.getSource().getImmediateSource() instanceof AbstractArrowEntity) {
-                    AbstractArrowEntity arrowEntity = (AbstractArrowEntity) event.getSource().getImmediateSource();
+                if (event.getSource().getDirectEntity() instanceof AbstractArrowEntity) {
+                    AbstractArrowEntity arrowEntity = (AbstractArrowEntity) event.getSource().getDirectEntity();
                     int animaConduitLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrowEntity, MeleeRangedEnchantmentList.ANIMA_CONDUIT);
                     if (animaConduitLevel > 0) {
-                        if (event.getSource().getTrueSource() instanceof LivingEntity) {
-                            LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
+                        if (event.getSource().getEntity() instanceof LivingEntity) {
+                            LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
                             if (attacker instanceof PlayerEntity) {
                                 double soulsToHealth = player.getMaxHealth() * souls * (0.02 * animaConduitLevel);
                                 PROXY.spawnParticles(player, ParticleTypes.SOUL);
@@ -284,7 +284,7 @@ public class GlobalEvents {
                         }
                     }
                 } else if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.ANIMA_CONDUIT)) {
-                    int animaConduitLevel = EnchantmentHelper.getEnchantmentLevel(MeleeRangedEnchantmentList.ANIMA_CONDUIT, mainhand);
+                    int animaConduitLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeRangedEnchantmentList.ANIMA_CONDUIT, mainhand);
                     double soulsToHealth = player.getMaxHealth() * souls * (0.02 * animaConduitLevel);
                     PROXY.spawnParticles(player, ParticleTypes.SOUL);
                     player.heal((float) soulsToHealth);
@@ -300,7 +300,7 @@ public class GlobalEvents {
         if (!ModEnchantmentHelper.arrowHitLivingEntity(rayTraceResult)) return;
         AbstractArrowEntity arrow = event.getArrow();
         if (!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
-        LivingEntity shooter = (LivingEntity) arrow.func_234616_v_();
+        LivingEntity shooter = (LivingEntity) arrow.getOwner();
         boolean isGaleArrow = arrow.getTags().contains(IRangedWeapon.GALE_ARROW_TAG);
         if (isGaleArrow) {
             if (rayTraceResult instanceof EntityRayTraceResult) {
@@ -318,8 +318,8 @@ public class GlobalEvents {
         LivingEntity jumper = event.getEntityLiving();
         if (jumper instanceof PlayerEntity && !DungeonsGearCompatibility.elenaiDodge) {
             PlayerEntity playerEntity = (PlayerEntity) jumper;
-            ItemStack helmet = playerEntity.getItemStackFromSlot(EquipmentSlotType.HEAD);
-            ItemStack chestplate = playerEntity.getItemStackFromSlot(EquipmentSlotType.CHEST);
+            ItemStack helmet = playerEntity.getItemBySlot(EquipmentSlotType.HEAD);
+            ItemStack chestplate = playerEntity.getItemBySlot(EquipmentSlotType.CHEST);
             ICombo comboCap = CapabilityHelper.getComboCapability(playerEntity);
             if (comboCap == null) return;
             int jumpCooldownTimer = comboCap.getJumpCooldownTimer();

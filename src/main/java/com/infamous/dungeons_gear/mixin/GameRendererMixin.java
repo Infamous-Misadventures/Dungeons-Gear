@@ -13,19 +13,19 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(GameRenderer.class)
 public abstract class GameRendererMixin {
     @Shadow
-    private Minecraft mc;
+    private Minecraft minecraft;
 
-    @Redirect(method = "getMouseOver", at = @At(value = "INVOKE", ordinal = 0, target = "Lnet/minecraft/util/math/vector/Vector3d;squareDistanceTo(Lnet/minecraft/util/math/vector/Vector3d;)D"))
+    @Redirect(method = "pick", at = @At(value = "INVOKE", ordinal = 0, target = "Lnet/minecraft/util/math/vector/Vector3d;distanceToSqr(Lnet/minecraft/util/math/vector/Vector3d;)D"))
     private double getModifiedDistance1(Vector3d vector3d, Vector3d vec) {
         PlayerEntity playerEntity=Minecraft.getInstance().player;
         double reach = playerEntity.getAttributeValue(AttributeRegistry.ATTACK_REACH.get()) - 3;
-        return vector3d.squareDistanceTo(vec) + (6 * reach + reach * reach);
+        return vector3d.distanceToSqr(vec) + (6 * reach + reach * reach);
     }
-@Redirect(method = "getMouseOver", require = 0, at = @At(value = "INVOKE", ordinal = 1, target = "Lnet/minecraft/util/math/vector/Vector3d;squareDistanceTo(Lnet/minecraft/util/math/vector/Vector3d;)D"))
+@Redirect(method = "pick", require = 0, at = @At(value = "INVOKE", ordinal = 1, target = "Lnet/minecraft/util/math/vector/Vector3d;distanceToSqr(Lnet/minecraft/util/math/vector/Vector3d;)D"))
     private double getModifiedDistance2(Vector3d vector3d, Vector3d vec) {
         PlayerEntity playerEntity=Minecraft.getInstance().player;
         double reach = playerEntity.getAttributeValue(AttributeRegistry.ATTACK_REACH.get()) - 3;
-        return vector3d.squareDistanceTo(vec) - (6 * reach + reach * reach);
+        return vector3d.distanceToSqr(vec) - (6 * reach + reach * reach);
     }
 
 //    @ModifyConstant(

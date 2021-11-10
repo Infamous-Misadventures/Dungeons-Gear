@@ -33,7 +33,7 @@ public class TradeHelper {
 
         public MerchantOffer getOffer(Entity entity, Random random) {
             int lvt_3_1_ = 5 + random.nextInt(15);
-            ItemStack lvt_4_1_ = EnchantmentHelper.addRandomEnchantment(random, new ItemStack(this.sellingStack.getItem()), lvt_3_1_, false);
+            ItemStack lvt_4_1_ = EnchantmentHelper.enchantItem(random, new ItemStack(this.sellingStack.getItem()), lvt_3_1_, false);
             int lvt_5_1_ = Math.min(this.emeraldCount + lvt_3_1_, 64);
             ItemStack lvt_6_1_ = new ItemStack(Items.EMERALD, lvt_5_1_);
             return new MerchantOffer(lvt_6_1_, lvt_4_1_, this.maxUses, this.xpValue, this.priceMultiplier);

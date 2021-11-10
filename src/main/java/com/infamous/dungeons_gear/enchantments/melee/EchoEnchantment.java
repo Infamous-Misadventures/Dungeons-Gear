@@ -29,6 +29,8 @@ import java.util.List;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = MODID)
 public class EchoEnchantment extends AOEDamageEnchantment {
 
@@ -44,10 +46,10 @@ public class EchoEnchantment extends AOEDamageEnchantment {
         if(event.getTarget() instanceof LivingEntity) {
             PlayerEntity attacker = (PlayerEntity) event.getPlayer();
             LivingEntity victim = (LivingEntity) event.getTarget();
-            ItemStack mainhand = attacker.getHeldItemMainhand();
+            ItemStack mainhand = attacker.getMainHandItem();
             boolean uniqueWeaponFlag = hasEchoBuiltIn(mainhand);
             if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.ECHO) || uniqueWeaponFlag) {
-                int echoLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.ECHO, mainhand);
+                int echoLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.ECHO, mainhand);
                 if (uniqueWeaponFlag) echoLevel++;
                 float cooldown = Math.max(3, 6 - echoLevel);
                 if (echoLevel > 3) {
@@ -70,15 +72,15 @@ public class EchoEnchantment extends AOEDamageEnchantment {
 
     private static void echo(PlayerEntity user, LivingEntity target, int cooldown) {
         final ICombo comboCap = CapabilityHelper.getComboCapability(user);
-        if (user.world.isRemote) return;
+        if (user.level.isClientSide) return;
         if (echoing) return;
         if (comboCap.getEchoCooldown() == 0 || comboCap.getEchoCooldown() == cooldown) {
-            user.ticksSinceLastSwing = (int) (user.getAttributeValue(Attributes.ATTACK_SPEED) * comboCap.getCachedCooldown() * 20);
-            target.hurtResistantTime = 0;
+            user.attackStrengthTicker = (int) (user.getAttributeValue(Attributes.ATTACK_SPEED) * comboCap.getCachedCooldown() * 20);
+            target.invulnerableTime = 0;
             echoing = true;
-            user.attackTargetEntityWithCurrentItem(target);
+            user.attack(target);
             comboCap.setEchoCooldown(cooldown);
-            target.hurtResistantTime = 0;
+            target.invulnerableTime = 0;
             echoing = false;
         }
     }
@@ -100,7 +102,7 @@ public class EchoEnchantment extends AOEDamageEnchantment {
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() ||
                 (!(enchantment instanceof DamageEnchantment) && !(enchantment instanceof DamageBoostEnchantment) && !(enchantment instanceof AOEDamageEnchantment));
     }

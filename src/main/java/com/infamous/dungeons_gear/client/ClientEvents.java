@@ -43,77 +43,77 @@ public class ClientEvents {
                         "-" + armor.getArtifactCooldown() + "% ")
                         .append(new TranslationTextComponent(
                                 "attribute.name.artifactCooldown"))
-                        .mergeStyle(TextFormatting.GREEN));
+                        .withStyle(TextFormatting.GREEN));
             }
             if(armor.getChanceToNegateHits() > 0){
                 tooltip.add(index + 1, new TranslationTextComponent(
                         "+" + armor.getChanceToNegateHits() + "% ")
                         .append(new TranslationTextComponent(
                                 "attribute.name.chanceToNegateHits"))
-                        .mergeStyle(TextFormatting.GREEN));
+                        .withStyle(TextFormatting.GREEN));
             }
             if(armor.getChanceToTeleportAwayWhenHit() > 0){
                 tooltip.add(index + 1, new TranslationTextComponent(
                         "+" + armor.getChanceToTeleportAwayWhenHit() + "% ")
                         .append(new TranslationTextComponent(
                                 "attribute.name.chanceToTeleportAwayWhenHit"))
-                        .mergeStyle(TextFormatting.GREEN));
+                        .withStyle(TextFormatting.GREEN));
             }
             if(armor.getFreezingResistance() > 0){
                 tooltip.add(index + 1, new TranslationTextComponent(
                         "+" + armor.getFreezingResistance() + "% ")
                         .append(new TranslationTextComponent(
                                 "attribute.name.freezingResistance"))
-                        .mergeStyle(TextFormatting.GREEN));
+                        .withStyle(TextFormatting.GREEN));
             }
             if(armor.getHealthPotionBoost() > 0){
                 tooltip.add(index + 1, new TranslationTextComponent(
                         "+" + armor.getHealthPotionBoost() + " ")
                         .append(new TranslationTextComponent(
                                 "attribute.name.healthPotionBoost"))
-                        .mergeStyle(TextFormatting.GREEN));
+                        .withStyle(TextFormatting.GREEN));
             }
             if(armor.getLongerRolls() > 0){
                 tooltip.add(index + 1, new TranslationTextComponent(
                         "+" + armor.getLongerRolls() + "% ")
                         .append(new TranslationTextComponent(
                                 "attribute.name.longerRolls"))
-                        .mergeStyle(TextFormatting.GREEN));
+                        .withStyle(TextFormatting.GREEN));
             }
             if(armor.getLongerRollCooldown() > 0){
                 tooltip.add(index + 1, new TranslationTextComponent(
                         "+" + armor.getLongerRollCooldown() + "% ")
                         .append(new TranslationTextComponent(
                                 "attribute.name.longerRollCooldown"))
-                        .mergeStyle(TextFormatting.RED));
+                        .withStyle(TextFormatting.RED));
             }
             if(armor.getLifeSteal() > 0){
                 tooltip.add(index + 1, new TranslationTextComponent(
                         "+" + armor.getLifeSteal() + "% ")
                         .append(new TranslationTextComponent(
                                 "attribute.name.lifeSteal"))
-                        .mergeStyle(TextFormatting.GREEN));
+                        .withStyle(TextFormatting.GREEN));
             }
             if(armor.getMagicDamage() > 0){
                 tooltip.add(index + 1, new TranslationTextComponent(
                         "+" + armor.getMagicDamage() + "% ")
                         .append(new TranslationTextComponent(
                                 "attribute.name.magicDamage"))
-                        .mergeStyle(TextFormatting.GREEN));
+                        .withStyle(TextFormatting.GREEN));
             }
             if(armor.getRangedDamage() > 0){
                 tooltip.add(index + 1, new TranslationTextComponent(
                         "+" + armor.getRangedDamage() + "% ")
                         .append(new TranslationTextComponent(
                                 "attribute.name.rangedDamage"))
-                        .mergeStyle(TextFormatting.GREEN));
+                        .withStyle(TextFormatting.GREEN));
             }
             if(armor.getSoulsGathered() > 0){
                 tooltip.add(index + 1, new TranslationTextComponent(
                         "+" + armor.getSoulsGathered() + "% ")
                         .append(new TranslationTextComponent(
                                 "attribute.name.soulsGathered"))
-                        .mergeStyle(TextFormatting.LIGHT_PURPLE));
+                        .withStyle(TextFormatting.LIGHT_PURPLE));
             }
         }
     }
@@ -122,21 +122,21 @@ public class ClientEvents {
     @SubscribeEvent
     public static void renderWorldLastEvent(RenderWorldLastEvent event) {
         List<AbstractClientPlayerEntity> players = null;
-        if (Minecraft.getInstance().world != null) {
-            players = Minecraft.getInstance().world.getPlayers();
+        if (Minecraft.getInstance().level != null) {
+            players = Minecraft.getInstance().level.players();
 
             PlayerEntity myplayer = Minecraft.getInstance().player;
             if(myplayer != null){
                 for (PlayerEntity player : players) {
-                    if (player.getDistanceSq(myplayer) > 500)
+                    if (player.distanceToSqr(myplayer) > 500)
                         continue;
 
 
                     ItemStack heldItem = AbstractBeaconItem.getBeacon(player);
-                    if (player.isHandActive()
+                    if (player.isUsingItem()
                             && heldItem.getItem() instanceof AbstractBeaconItem
                             && ((AbstractBeaconItem)heldItem.getItem()).canFire(player, heldItem)) {
-                            BeaconBeamRenderer.renderBeam(event, player, Minecraft.getInstance().getRenderPartialTicks());
+                            BeaconBeamRenderer.renderBeam(event, player, Minecraft.getInstance().getFrameTime());
                     }
                 }
             }

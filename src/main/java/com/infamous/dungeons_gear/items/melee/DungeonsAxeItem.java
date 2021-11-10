@@ -15,6 +15,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
+import net.minecraft.item.Item.Properties;
+
 public class DungeonsAxeItem extends AxeItem implements IMeleeWeapon, IComboWeapon {
     @Override
     public int getComboLength(ItemStack stack, LivingEntity attacker) {
@@ -29,16 +31,16 @@ public class DungeonsAxeItem extends AxeItem implements IMeleeWeapon, IComboWeap
 
     // This is a designated weapon, so it will not be penalized for attacking as a normal axe would
     @Override
-    public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        stack.damageItem(1, attacker, (p_220039_0_) -> {
-            p_220039_0_.sendBreakAnimation(EquipmentSlotType.MAINHAND);
+    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        stack.hurtAndBreak(1, attacker, (p_220039_0_) -> {
+            p_220039_0_.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
         });
         return true;
     }
 
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return (enchantment.type.canEnchantItem(Items.IRON_SWORD) && enchantment != Enchantments.SWEEPING)||enchantment.type.canEnchantItem(Items.IRON_AXE);
+        return (enchantment.category.canEnchant(Items.IRON_SWORD) && enchantment != Enchantments.SWEEPING_EDGE)||enchantment.category.canEnchant(Items.IRON_AXE);
     }
 
     @Override
@@ -65,9 +67,9 @@ public class DungeonsAxeItem extends AxeItem implements IMeleeWeapon, IComboWeap
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
-        super.addInformation(stack, world, list, flag);
+        super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
 }

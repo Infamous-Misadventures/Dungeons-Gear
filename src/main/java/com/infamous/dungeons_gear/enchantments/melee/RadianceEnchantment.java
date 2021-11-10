@@ -20,6 +20,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = MODID)
 public class RadianceEnchantment extends DungeonsEnchantment {
 
@@ -30,22 +32,22 @@ public class RadianceEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onRadianceAttack(LivingAttackEvent event) {
-        if (event.getSource().getImmediateSource() != event.getSource().getTrueSource()) return;
+        if (event.getSource().getDirectEntity() != event.getSource().getEntity()) return;
         if (event.getSource() instanceof OffhandAttackDamageSource) return;
-        if (!(event.getSource().getTrueSource() instanceof LivingEntity)) return;
-        LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
-        if (attacker.getLastAttackedEntityTime() == attacker.ticksExisted) return;
+        if (!(event.getSource().getEntity() instanceof LivingEntity)) return;
+        LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
+        if (attacker.getLastHurtMobTimestamp() == attacker.tickCount) return;
         LivingEntity victim = event.getEntityLiving();
-        ItemStack mainhand = attacker.getHeldItemMainhand();
+        ItemStack mainhand = attacker.getMainHandItem();
         if (hasRadianceBuiltIn(mainhand)) {
-            float chance = attacker.getRNG().nextFloat();
+            float chance = attacker.getRandom().nextFloat();
             if (chance <= 0.2F) {
                 AOECloudHelper.spawnRegenCloud(attacker, 0);
             }
         }
         if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.RADIANCE)) {
-            float chance = attacker.getRNG().nextFloat();
-            int level = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.RADIANCE, mainhand);
+            float chance = attacker.getRandom().nextFloat();
+            int level = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.RADIANCE, mainhand);
             if (chance <= 0.2F && !PlayerAttackHelper.isProbablyNotMeleeDamage(event.getSource())) {
                 AOECloudHelper.spawnRegenCloud(attacker, level - 1);
             }
@@ -61,7 +63,7 @@ public class RadianceEnchantment extends DungeonsEnchantment {
     }
 
     @Override
-    public void onEntityDamaged(LivingEntity user, Entity target, int level) {
+    public void doPostAttack(LivingEntity user, Entity target, int level) {
 
     }
 }

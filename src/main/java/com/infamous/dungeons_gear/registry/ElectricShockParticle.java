@@ -16,42 +16,42 @@ public class ElectricShockParticle extends SpriteTexturedParticle {
 
     private ElectricShockParticle(ClientWorld clientWorld, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeed, double ySpeed, double zSpeed) {
         super(clientWorld, xCoordIn, yCoordIn, zCoordIn, 0, 0, 0);
-        this.motionX *= 0.009999999776482582D;
-        this.motionY *= 0.009999999776482582D;
-        this.motionZ *= 0.009999999776482582D;
-        this.motionY += 0.1D;
-        this.particleScale *= 1.5F;
-        this.maxAge = 16;
-        this.canCollide = false;
+        this.xd *= 0.009999999776482582D;
+        this.yd *= 0.009999999776482582D;
+        this.zd *= 0.009999999776482582D;
+        this.yd += 0.1D;
+        this.quadSize *= 1.5F;
+        this.lifetime = 16;
+        this.hasPhysics = false;
     }
 
     public IParticleRenderType getRenderType() {
         return IParticleRenderType.PARTICLE_SHEET_OPAQUE;
     }
 
-    public float getScale(float scaleFactor) {
-        return this.particleScale * MathHelper.clamp(((float)this.age + scaleFactor) / (float)this.maxAge * 32.0F, 0.0F, 1.0F);
+    public float getQuadSize(float scaleFactor) {
+        return this.quadSize * MathHelper.clamp(((float)this.age + scaleFactor) / (float)this.lifetime * 32.0F, 0.0F, 1.0F);
     }
 
     public void tick() {
-        this.prevPosX = this.posX;
-        this.prevPosY = this.posY;
-        this.prevPosZ = this.posZ;
-        if (this.age++ >= this.maxAge) {
-            this.setExpired();
+        this.xo = this.x;
+        this.yo = this.y;
+        this.zo = this.z;
+        if (this.age++ >= this.lifetime) {
+            this.remove();
         } else {
-            this.move(this.motionX, this.motionY, this.motionZ);
-            if (this.posY == this.prevPosY) {
-                this.motionX *= 1.1D;
-                this.motionZ *= 1.1D;
+            this.move(this.xd, this.yd, this.zd);
+            if (this.y == this.yo) {
+                this.xd *= 1.1D;
+                this.zd *= 1.1D;
             }
 
-            this.motionX *= 0.8600000143051147D;
-            this.motionY *= 0.8600000143051147D;
-            this.motionZ *= 0.8600000143051147D;
+            this.xd *= 0.8600000143051147D;
+            this.yd *= 0.8600000143051147D;
+            this.zd *= 0.8600000143051147D;
             if (this.onGround) {
-                this.motionX *= 0.699999988079071D;
-                this.motionZ *= 0.699999988079071D;
+                this.xd *= 0.699999988079071D;
+                this.zd *= 0.699999988079071D;
             }
         }
 
@@ -67,10 +67,10 @@ public class ElectricShockParticle extends SpriteTexturedParticle {
 
         @Nullable
         @Override
-        public Particle makeParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             ElectricShockParticle shockParticle = new ElectricShockParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed);
             shockParticle.setColor(1.0f, 1.0f, 1.0f);
-            shockParticle.selectSpriteRandomly(this.spriteSet);
+            shockParticle.pickSprite(this.spriteSet);
             return shockParticle;
         }
     }

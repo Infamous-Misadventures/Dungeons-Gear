@@ -18,6 +18,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class GrowingEnchantment extends DungeonsEnchantment {
 
@@ -33,8 +35,8 @@ public class GrowingEnchantment extends DungeonsEnchantment {
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
-        return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || enchantment != Enchantments.POWER;
+    public boolean checkCompatibility(Enchantment enchantment) {
+        return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || enchantment != Enchantments.POWER_ARROWS;
     }
 
     @SubscribeEvent
@@ -43,21 +45,21 @@ public class GrowingEnchantment extends DungeonsEnchantment {
         if(!ModEnchantmentHelper.arrowHitLivingEntity(rayTraceResult)) return;
         AbstractArrowEntity arrow = event.getArrow();
         if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
-        LivingEntity shooter = (LivingEntity)arrow.func_234616_v_();
+        LivingEntity shooter = (LivingEntity)arrow.getOwner();
         LivingEntity victim = (LivingEntity) ((EntityRayTraceResult)rayTraceResult).getEntity();
         int growingLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.GROWING);
         boolean uniqueWeaponFlag = arrow.getTags().contains(INTRINSIC_GROWING_TAG);
         if(growingLevel > 0 || uniqueWeaponFlag){
-            double originalDamage = arrow.getDamage();
+            double originalDamage = arrow.getBaseDamage();
             double damageModifierCap = 0;
             if(growingLevel == 1) damageModifierCap = 1.25D;
             if(growingLevel == 2) damageModifierCap = 1.5D;
             if(growingLevel == 3) damageModifierCap = 1.75D;
             if(uniqueWeaponFlag) damageModifierCap += 1.25D;
-            double squareDistanceTo = shooter.getDistanceSq(victim);
+            double squareDistanceTo = shooter.distanceToSqr(victim);
             double distance = Math.sqrt(squareDistanceTo);
             double distanceTraveledModifier = distance * 0.1;
-            arrow.setDamage(originalDamage * Math.min(distanceTraveledModifier, damageModifierCap));
+            arrow.setBaseDamage(originalDamage * Math.min(distanceTraveledModifier, damageModifierCap));
         }
     }
 }

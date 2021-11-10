@@ -24,7 +24,7 @@ public class DescriptionHelper {
     public static void addLoreDescription(List<ITextComponent> list, ItemStack itemStack){
         list.add(new TranslationTextComponent(
                 "lore.dungeons_gear." + itemStack.getItem().getRegistryName().getPath())
-                .mergeStyle(TextFormatting.WHITE, TextFormatting.ITALIC));
+                .withStyle(TextFormatting.WHITE, TextFormatting.ITALIC));
     }
 
     public static void addAbilityDescription(List<ITextComponent> list, ItemStack itemStack){
@@ -32,7 +32,7 @@ public class DescriptionHelper {
         for(String ability : abilities){
             list.add(new TranslationTextComponent(
                     "ability.dungeons_gear." + ability)
-                    .mergeStyle(TextFormatting.GREEN));
+                    .withStyle(TextFormatting.GREEN));
         }
     }
 
@@ -44,12 +44,12 @@ public class DescriptionHelper {
             if(gatherAmount > 0) {
                 list.add(new TranslationTextComponent(
                         "ability.dungeons_gear.soul_gathering", gatherAmount)
-                        .mergeStyle(TextFormatting.LIGHT_PURPLE));
+                        .withStyle(TextFormatting.LIGHT_PURPLE));
             }
             if(activationCost > 0) {
                 list.add(new TranslationTextComponent(
                         "artifact.dungeons_gear.activation", activationCost)
-                        .mergeStyle(TextFormatting.LIGHT_PURPLE));
+                        .withStyle(TextFormatting.LIGHT_PURPLE));
             }
         }
     }
@@ -61,7 +61,7 @@ public class DescriptionHelper {
             if(chargeTimeInSeconds > 0) {
                 list.add(new TranslationTextComponent(
                         "artifact.dungeons_gear.charge_time", chargeTimeInSeconds)
-                        .mergeStyle(TextFormatting.BLUE));
+                        .withStyle(TextFormatting.BLUE));
             }
         }
     }
@@ -71,7 +71,7 @@ public class DescriptionHelper {
         for (String penalty : penalties) {
             list.add(new TranslationTextComponent(
                     "penalty.dungeons_gear." + penalty)
-                    .mergeStyle(TextFormatting.RED));
+                    .withStyle(TextFormatting.RED));
         }
     }
 
@@ -80,7 +80,7 @@ public class DescriptionHelper {
 
             list.add(new TranslationTextComponent(
                     "ability.dungeons_gear." + itemStack.getItem().getRegistryName().getPath())
-                    .mergeStyle(TextFormatting.GREEN));
+                    .withStyle(TextFormatting.GREEN));
 
             ArtifactItem artifactItem = (ArtifactItem) itemStack.getItem();
             int durationInSeconds = artifactItem.getDurationInSeconds();
@@ -89,12 +89,12 @@ public class DescriptionHelper {
             if(durationInSeconds > 0) {
                 list.add(new TranslationTextComponent(
                         "artifact.dungeons_gear.duration", durationInSeconds)
-                        .mergeStyle(TextFormatting.BLUE));
+                        .withStyle(TextFormatting.BLUE));
             }
             if(cooldownInSeconds > 0) {
                 list.add(new TranslationTextComponent(
                         "artifact.dungeons_gear.cooldown", cooldownInSeconds)
-                        .mergeStyle(TextFormatting.BLUE));
+                        .withStyle(TextFormatting.BLUE));
             }
         }
     }

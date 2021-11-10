@@ -20,6 +20,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.UUID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class BeastBossEnchantment extends BeastEnchantment {
     public BeastBossEnchantment() {
@@ -39,22 +41,22 @@ public class BeastBossEnchantment extends BeastEnchantment {
     public static void onBeastDamage(LivingDamageEvent event){
         LivingEntity target = event.getEntityLiving();
         DamageSource source = event.getSource();
-        Entity trueSource = source.getTrueSource();
+        Entity trueSource = source.getEntity();
         if(trueSource == null) return;
 
-        if(trueSource.world instanceof ServerWorld
+        if(trueSource.level instanceof ServerWorld
                 && SummoningHelper.isEntitySummonable(trueSource)){
-            ServerWorld serverWorld = (ServerWorld) trueSource.world;
+            ServerWorld serverWorld = (ServerWorld) trueSource.level;
             ISummonable attackerSummonableCap = CapabilityHelper.getSummonableCapability(trueSource);
             if(attackerSummonableCap == null) return;
 
             UUID summonerUUID = attackerSummonableCap.getSummoner();
             if(summonerUUID != null){
                 if(!SummoningHelper.wasSummonedBy(target, summonerUUID)){
-                    Entity beastOwner = serverWorld.getEntityByUuid(summonerUUID);
+                    Entity beastOwner = serverWorld.getEntity(summonerUUID);
                     if(beastOwner instanceof LivingEntity){
                         LivingEntity beastOwnerAsLiving = ((LivingEntity) beastOwner);
-                        int beastBossLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.BEAST_BOSS, beastOwnerAsLiving);
+                        int beastBossLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.BEAST_BOSS, beastOwnerAsLiving);
                         if(beastBossLevel > 0){
                             float beastBossFactor = 0.1F + (0.1F * beastBossLevel);
                             float currentDamage = event.getAmount();

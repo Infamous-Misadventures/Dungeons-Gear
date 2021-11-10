@@ -16,6 +16,8 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class PoisonFocusEnchantment extends FocusEnchantment {
 
@@ -35,13 +37,13 @@ public class PoisonFocusEnchantment extends FocusEnchantment {
     @SubscribeEvent
     public static void onPoisonAttack(LivingDamageEvent event){
         if(event.getSource() != DamageSource.MAGIC) return; // Poison effect applies this specific damage source
-        if(event.getEntityLiving().world.isRemote) return;
+        if(event.getEntityLiving().level.isClientSide) return;
 
         LivingEntity victim = event.getEntityLiving();
-        if(victim.getActivePotionEffect(Effects.POISON) != null){
-            LivingEntity attacker = victim.getAttackingEntity();
+        if(victim.getEffect(Effects.POISON) != null){
+            LivingEntity attacker = victim.getKillCredit();
             if(attacker != null){
-                int poisonFocusLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.POISON_FOCUS, attacker);
+                int poisonFocusLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.POISON_FOCUS, attacker);
                 if(poisonFocusLevel > 0){
                     float multiplier = 1 + (0.25F * poisonFocusLevel);
                     float currentDamage = event.getAmount();

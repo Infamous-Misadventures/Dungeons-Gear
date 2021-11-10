@@ -23,6 +23,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
 
+import net.minecraft.item.Item.Properties;
+
 public class ChampionsArmorItem extends ArmorItem implements IArmor {
     private final boolean unique;
 
@@ -62,13 +64,13 @@ public class ChampionsArmorItem extends ArmorItem implements IArmor {
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
-        super.addInformation(stack, world, list, flag);
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+        super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addLoreDescription(list, stack);
         if (this.unique) {
             list.add(new TranslationTextComponent(
                     "attribute.name.healthPotionsHealNearbyAllies")
-                    .mergeStyle(TextFormatting.GREEN));
+                    .withStyle(TextFormatting.GREEN));
         }
     }
 

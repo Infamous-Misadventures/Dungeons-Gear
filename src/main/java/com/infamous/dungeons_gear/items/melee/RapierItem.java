@@ -15,6 +15,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
+import net.minecraft.item.Item.Properties;
+
 public class RapierItem extends SwordItem implements IMeleeWeapon, IComboWeapon {
     private final boolean unique;
 
@@ -52,14 +54,14 @@ public class RapierItem extends SwordItem implements IMeleeWeapon, IComboWeapon 
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
-        super.addInformation(stack, world, list, flag);
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+        super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
 
     @Override
-    public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        target.hurtResistantTime = 0;
-        return super.hitEntity(stack, target, attacker);
+    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        target.invulnerableTime = 0;
+        return super.hurtEnemy(stack, target, attacker);
     }
 }

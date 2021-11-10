@@ -18,6 +18,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class RadianceShotEnchantment extends DungeonsEnchantment {
 
@@ -37,24 +39,24 @@ public class RadianceShotEnchantment extends DungeonsEnchantment {
         RayTraceResult rayTraceResult = event.getRayTraceResult();
         AbstractArrowEntity arrow = event.getArrow();
         if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
-        LivingEntity shooter = (LivingEntity)arrow.func_234616_v_();
+        LivingEntity shooter = (LivingEntity)arrow.getOwner();
         int radianceShotLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.RADIANCE_SHOT);
         boolean uniqueWeaponFlag = arrow.getTags().contains(INTRINSIC_RADIANCE_SHOT_TAG);
         if(radianceShotLevel > 0){
-            float radianceShotRand = shooter.getRNG().nextFloat();
+            float radianceShotRand = shooter.getRandom().nextFloat();
             if(radianceShotRand <=  0.2F){
                 if(uniqueWeaponFlag) radianceShotLevel++;
                 if(rayTraceResult instanceof BlockRayTraceResult){
-                    BlockPos blockPos = ((BlockRayTraceResult) rayTraceResult).getPos();
+                    BlockPos blockPos = ((BlockRayTraceResult) rayTraceResult).getBlockPos();
                     AOECloudHelper.spawnRegenCloudAtPos(shooter, true, blockPos, radianceShotLevel - 1);
                 }
             }
         }
         if(uniqueWeaponFlag){
-            float radianceShotRand = shooter.getRNG().nextFloat();
+            float radianceShotRand = shooter.getRandom().nextFloat();
             if(radianceShotRand <=  0.2F){
                 if(rayTraceResult instanceof BlockRayTraceResult){
-                    BlockPos blockPos = ((BlockRayTraceResult) rayTraceResult).getPos();
+                    BlockPos blockPos = ((BlockRayTraceResult) rayTraceResult).getBlockPos();
                     AOECloudHelper.spawnRegenCloudAtPos(shooter, true, blockPos, 0);
                 }
             }

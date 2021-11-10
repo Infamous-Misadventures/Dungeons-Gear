@@ -27,16 +27,16 @@ public class SoulRender {
     public static void displaySoul(RenderGameOverlayEvent.Post event) {
         MatrixStack matrixStack = event.getMatrixStack();
         MainWindow sr = event.getWindow();
-        int scaledWidth = sr.getScaledWidth();
-        int scaledHeight = sr.getScaledHeight();
+        int scaledWidth = sr.getGuiScaledWidth();
+        int scaledHeight = sr.getGuiScaledHeight();
         final Minecraft mc = Minecraft.getInstance();
 
-        if (event.getType().equals(RenderGameOverlayEvent.ElementType.HOTBAR) && mc.getRenderViewEntity() instanceof PlayerEntity) {
+        if (event.getType().equals(RenderGameOverlayEvent.ElementType.HOTBAR) && mc.getCameraEntity() instanceof PlayerEntity) {
             //draw souls
-            mc.getTextureManager().bindTexture(SOUL_BAR_RESOURCE);
+            mc.getTextureManager().bind(SOUL_BAR_RESOURCE);
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-            PlayerEntity renderPlayer = (PlayerEntity) mc.getRenderViewEntity();
+            PlayerEntity renderPlayer = (PlayerEntity) mc.getCameraEntity();
             if(renderPlayer == null) return;
             ICombo comboCapability = CapabilityHelper.getComboCapability(renderPlayer);
             if(comboCapability == null) return;
@@ -44,12 +44,12 @@ public class SoulRender {
             float souls = comboCapability.getSouls();
             float maxSouls = comboCapability.getMaxSouls(renderPlayer);
 
-            GlStateManager.enableRescaleNormal();
+            GlStateManager._enableRescaleNormal();
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
-            RenderHelper.enableStandardItemLighting();
+            RenderHelper.turnBackOn();
 
-            mc.getProfiler().startSection("soulBar");
+            mc.getProfiler().push("soulBar");
 
             adjustRenderSouls(souls);
 
@@ -61,23 +61,23 @@ public class SoulRender {
                 AbstractGui.blit(matrixStack, xPos, yPos, 0, 0, backgroundBarWidth, 5, 121, 10);
                 AbstractGui.blit(matrixStack, xPos, yPos, 0, 5, foregroundBarWidth, 5, 121, 10);
             }
-            mc.getProfiler().endSection();
+            mc.getProfiler().pop();
 
             if (RENDER_SOULS > 0) {
-                mc.getProfiler().startSection("soulLevel");
+                mc.getProfiler().push("soulLevel");
                 String soulLevel = "" + RENDER_SOULS;
-                int baseXPos = scaledWidth - mc.fontRenderer.getStringWidth(soulLevel) - (123 / 2) + 11;
+                int baseXPos = scaledWidth - mc.font.width(soulLevel) - (123 / 2) + 11;
                 int baseYPos = scaledHeight - 7 - 6;
-                mc.fontRenderer.drawString(matrixStack, soulLevel, (float)(baseXPos + 1), (float)baseYPos, 0);
-                mc.fontRenderer.drawString(matrixStack, soulLevel, (float)(baseXPos - 1), (float)baseYPos, 0);
-                mc.fontRenderer.drawString(matrixStack, soulLevel, (float)baseXPos, (float)(baseYPos + 1), 0);
-                mc.fontRenderer.drawString(matrixStack, soulLevel, (float)baseXPos, (float)(baseYPos - 1), 0);
-                mc.fontRenderer.drawString(matrixStack, soulLevel, (float)baseXPos, (float)baseYPos, SOUL_LEVEL_COLOR);
-                mc.getProfiler().endSection();
+                mc.font.draw(matrixStack, soulLevel, (float)(baseXPos + 1), (float)baseYPos, 0);
+                mc.font.draw(matrixStack, soulLevel, (float)(baseXPos - 1), (float)baseYPos, 0);
+                mc.font.draw(matrixStack, soulLevel, (float)baseXPos, (float)(baseYPos + 1), 0);
+                mc.font.draw(matrixStack, soulLevel, (float)baseXPos, (float)(baseYPos - 1), 0);
+                mc.font.draw(matrixStack, soulLevel, (float)baseXPos, (float)baseYPos, SOUL_LEVEL_COLOR);
+                mc.getProfiler().pop();
             }
 
-            mc.getTextureManager().bindTexture(AbstractGui.GUI_ICONS_LOCATION);
-            RenderHelper.disableStandardItemLighting();
+            mc.getTextureManager().bind(AbstractGui.GUI_ICONS_LOCATION);
+            RenderHelper.turnOff();
             RenderSystem.disableBlend();
         }
 

@@ -20,6 +20,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class BurningEnchantment extends PulseEnchantment {
 
@@ -36,7 +38,7 @@ public class BurningEnchantment extends PulseEnchantment {
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof PulseEnchantment);
     }
 
@@ -45,18 +47,18 @@ public class BurningEnchantment extends PulseEnchantment {
         PlayerEntity player = event.player;
         if(player == null) return;
         if(event.phase == TickEvent.Phase.START) return;
-        if(player.isAlive()&&player.isServerWorld()){
+        if(player.isAlive()&&player.isEffectiveAi()){
             ICombo comboCap = CapabilityHelper.getComboCapability(player);
             if(comboCap == null) return;
             int burnNearbyTimer = comboCap.getBurnNearbyTimer();
 
-            ItemStack chestplate = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
-            ItemStack helmet = player.getItemStackFromSlot(EquipmentSlotType.HEAD);
+            ItemStack chestplate = player.getItemBySlot(EquipmentSlotType.CHEST);
+            ItemStack helmet = player.getItemBySlot(EquipmentSlotType.HEAD);
             boolean uniqueArmorFlag =
                     hasBurningBuiltIn(chestplate) || hasBurningBuiltIn(helmet);
             if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.BURNING) || uniqueArmorFlag){
                 if(burnNearbyTimer <= 0){
-                    int burningLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.BURNING, player);
+                    int burningLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.BURNING, player);
                     if(uniqueArmorFlag) burningLevel++;
                     AreaOfEffectHelper.burnNearbyEnemies(player, 1.0F * burningLevel, 1.5F);
                     comboCap.setBurnNearbyTimer(10);

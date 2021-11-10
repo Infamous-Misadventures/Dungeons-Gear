@@ -12,7 +12,7 @@ public class ArmorGroup extends ItemGroup
     }
 
     @Override
-    public ItemStack createIcon()
+    public ItemStack makeIcon()
     {
         return new ItemStack(ItemRegistry.FULL_METAL_ARMOR.get());
     }

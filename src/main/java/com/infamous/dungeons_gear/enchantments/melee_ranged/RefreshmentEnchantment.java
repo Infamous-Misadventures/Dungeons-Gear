@@ -29,6 +29,8 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class RefreshmentEnchantment extends DropsEnchantment {
 
@@ -44,7 +46,7 @@ public class RefreshmentEnchantment extends DropsEnchantment {
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() ||
                 !(enchantment instanceof DropsEnchantment);
     }
@@ -52,18 +54,18 @@ public class RefreshmentEnchantment extends DropsEnchantment {
     @SubscribeEvent
     public static void onRefreshmentKill(LivingDeathEvent event){
         DamageSource damageSource = event.getSource();
-        if(damageSource.getTrueSource() instanceof PlayerEntity){
-            PlayerEntity killerPlayer = (PlayerEntity) damageSource.getTrueSource();
+        if(damageSource.getEntity() instanceof PlayerEntity){
+            PlayerEntity killerPlayer = (PlayerEntity) damageSource.getEntity();
             if(!PlayerAttackHelper.isProbablyNotMeleeDamage(damageSource)){
-                ItemStack mainhand = killerPlayer.getHeldItemMainhand();
+                ItemStack mainhand = killerPlayer.getMainHandItem();
                 boolean uniqueWeaponFlag = hasRefreshmentBuiltIn(mainhand);
-                int refreshmentLevel = EnchantmentHelper.getEnchantmentLevel(MeleeRangedEnchantmentList.REFRESHMENT, mainhand);
+                int refreshmentLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeRangedEnchantmentList.REFRESHMENT, mainhand);
                 if(uniqueWeaponFlag) refreshmentLevel++;
                 if(refreshmentLevel > 0){
                     updateRefreshment(killerPlayer, refreshmentLevel);
                 }
             } else if(damageSource.isProjectile()){
-                Entity immediateSource = damageSource.getImmediateSource();
+                Entity immediateSource = damageSource.getDirectEntity();
                 if(immediateSource instanceof AbstractArrowEntity){
                     AbstractArrowEntity arrowEntity = (AbstractArrowEntity) immediateSource;
                     int refreshmentLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrowEntity, MeleeRangedEnchantmentList.REFRESHMENT);
@@ -82,11 +84,11 @@ public class RefreshmentEnchantment extends DropsEnchantment {
 
         if(comboCap.getRefreshmentCounter() >= REFRESHMENT_GOAL){
             PlayerInventory playerInventory = player.inventory;
-            for(int slotId = 0; slotId < playerInventory.getSizeInventory(); slotId++){
-                ItemStack currentStack = playerInventory.getStackInSlot(slotId);
+            for(int slotId = 0; slotId < playerInventory.getContainerSize(); slotId++){
+                ItemStack currentStack = playerInventory.getItem(slotId);
                 if(currentStack.getItem() instanceof GlassBottleItem){
-                    ItemStack healthPotion = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.HEALING);
-                    playerInventory.setInventorySlotContents(slotId, healthPotion);
+                    ItemStack healthPotion = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.HEALING);
+                    playerInventory.setItem(slotId, healthPotion);
                     comboCap.setRefreshmentCounter(comboCap.getRefreshmentCounter() - REFRESHMENT_GOAL);
                     return;
                 }

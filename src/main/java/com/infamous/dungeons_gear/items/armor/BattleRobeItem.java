@@ -28,6 +28,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.List;
 import java.util.UUID;
 
+import net.minecraft.item.Item.Properties;
+
 public class BattleRobeItem extends ArmorItem implements IArmor {
 
     private static final UUID[] ARMOR_MODIFIERS = new UUID[]{
@@ -45,7 +47,7 @@ public class BattleRobeItem extends ArmorItem implements IArmor {
         super(armorMaterial, slotType, properties);
         this.unique = unique;
 
-        this.damageReduceAmount = armorMaterial.getDamageReductionAmount(slot);
+        this.damageReduceAmount = armorMaterial.getDefenseForSlot(slot);
         this.toughness = armorMaterial.getToughness();
 
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
@@ -84,8 +86,8 @@ public class BattleRobeItem extends ArmorItem implements IArmor {
     }
 
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
-        return equipmentSlot == this.slot ? this.attributeModifiers : super.getAttributeModifiers(equipmentSlot);
+    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlotType equipmentSlot) {
+        return equipmentSlot == this.slot ? this.attributeModifiers : super.getDefaultAttributeModifiers(equipmentSlot);
     }
 
     @Override
@@ -95,8 +97,8 @@ public class BattleRobeItem extends ArmorItem implements IArmor {
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
-        super.addInformation(stack, world, list, flag);
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+        super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addLoreDescription(list, stack);
     }
 

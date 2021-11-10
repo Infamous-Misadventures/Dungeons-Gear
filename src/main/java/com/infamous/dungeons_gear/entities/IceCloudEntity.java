@@ -35,7 +35,7 @@ public class IceCloudEntity extends Entity {
     private LivingEntity target;
     private UUID targetUUID;
     private double heightAboveTarget = 2.0D;
-    private double heightAdjustment = (1.0F - this.getHeight()) / 2.0F;
+    private double heightAdjustment = (1.0F - this.getBbHeight()) / 2.0F;
 
     public IceCloudEntity(World worldIn) {
         super(ModEntityTypes.ICE_CLOUD.get(), worldIn);
@@ -49,44 +49,44 @@ public class IceCloudEntity extends Entity {
         this(ModEntityTypes.ICE_CLOUD.get(), worldIn);
         this.setCaster(casterIn);
         this.setTarget(targetIn);
-        this.setPosition(casterIn.getPosX(),
-                casterIn.getPosYHeight(1.0D) + this.heightAboveTarget + heightAdjustment,
-                casterIn.getPosZ());
+        this.setPos(casterIn.getX(),
+                casterIn.getY(1.0D) + this.heightAboveTarget + heightAdjustment,
+                casterIn.getZ());
 
-        this.preventEntitySpawning = true;
-        this.setMotion(Vector3d.ZERO);
-        this.prevPosX = targetIn.getPosX();
-        this.prevPosY = targetIn.getPosYHeight(1.0D) + heightAboveTarget + heightAdjustment;
-        this.prevPosZ = targetIn.getPosZ();
+        this.blocksBuilding = true;
+        this.setDeltaMovement(Vector3d.ZERO);
+        this.xo = targetIn.getX();
+        this.yo = targetIn.getY(1.0D) + heightAboveTarget + heightAdjustment;
+        this.zo = targetIn.getZ();
 
     }
 
 
-    protected void registerData() {
+    protected void defineSynchedData() {
     }
 
     private void tryToFloatAboveTarget(LivingEntity targetIn) {
-        List<IceCloudEntity> nearbyIceClouds = this.world.getEntitiesWithinAABB(
+        List<IceCloudEntity> nearbyIceClouds = this.level.getEntities(
                 ModEntityTypes.ICE_CLOUD.get(),
-                this.getBoundingBox().grow(0.2, 0, 0.2),
+                this.getBoundingBox().inflate(0.2, 0, 0.2),
                 (nearbyEntity) -> nearbyEntity != this);
 
         if(nearbyIceClouds.isEmpty()){
-            this.setPosition(targetIn.getPosX(),
-                    targetIn.getPosYHeight(1.0D) + this.heightAboveTarget + heightAdjustment,
-                    targetIn.getPosZ());
+            this.setPos(targetIn.getX(),
+                    targetIn.getY(1.0D) + this.heightAboveTarget + heightAdjustment,
+                    targetIn.getZ());
         }
     }
 
     public void setCaster(@Nullable LivingEntity caster) {
         this.caster = caster;
-        this.casterUuid = caster == null ? null : caster.getUniqueID();
+        this.casterUuid = caster == null ? null : caster.getUUID();
     }
 
     @Nullable
     public LivingEntity getCaster() {
-        if (this.caster == null && this.casterUuid != null && this.world instanceof ServerWorld) {
-            Entity entity = ((ServerWorld)this.world).getEntityByUuid(this.casterUuid);
+        if (this.caster == null && this.casterUuid != null && this.level instanceof ServerWorld) {
+            Entity entity = ((ServerWorld)this.level).getEntity(this.casterUuid);
             if (entity instanceof LivingEntity) {
                 this.caster = (LivingEntity)entity;
             }
@@ -97,13 +97,13 @@ public class IceCloudEntity extends Entity {
 
     public void setTarget(@Nullable LivingEntity target) {
         this.target = target;
-        this.targetUUID = target == null ? null : target.getUniqueID();
+        this.targetUUID = target == null ? null : target.getUUID();
     }
 
     @Nullable
     public LivingEntity getTarget() {
-        if (this.target == null && this.targetUUID != null && this.world instanceof ServerWorld) {
-            Entity entity = ((ServerWorld)this.world).getEntityByUuid(this.targetUUID);
+        if (this.target == null && this.targetUUID != null && this.level instanceof ServerWorld) {
+            Entity entity = ((ServerWorld)this.level).getEntity(this.targetUUID);
             if (entity instanceof LivingEntity) {
                 this.target = (LivingEntity)entity;
             }
@@ -116,29 +116,29 @@ public class IceCloudEntity extends Entity {
     public void tick() {
         if(this.floatTicks > 0){
             this.floatTicks--;
-            if(this.target != null && !this.world.isRemote){
+            if(this.target != null && !this.level.isClientSide){
                 this.tryToFloatAboveTarget(this.target);
             }
         }
         else{
             if (this.fallTime < 0) {
-                if (!this.world.isRemote) {
+                if (!this.level.isClientSide) {
                     this.remove();
                     return;
                 }
             }
             this.fallTime++;
 
-            if (!this.hasNoGravity()) {
-                this.setMotion(this.getMotion().add(0.0D, -0.04D * 4.0D, 0.0D));
+            if (!this.isNoGravity()) {
+                this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.04D * 4.0D, 0.0D));
             }
 
-            this.move(MoverType.SELF, this.getMotion());
-            if (!this.world.isRemote) {
-                BlockPos iceCloudPosition = this.getPosition();
+            this.move(MoverType.SELF, this.getDeltaMovement());
+            if (!this.level.isClientSide) {
+                BlockPos iceCloudPosition = this.blockPosition();
 
                 if (!this.onGround) {
-                    if (!this.world.isRemote
+                    if (!this.level.isClientSide
                             && (this.fallTime > 100
                             && (iceCloudPosition.getY() < 1
                             || iceCloudPosition.getY() > 256)
@@ -146,33 +146,33 @@ public class IceCloudEntity extends Entity {
                         this.remove();
                     }
                 } else {
-                    BlockState blockstate = this.world.getBlockState(iceCloudPosition);
-                    this.setMotion(this.getMotion().mul(0.7D, -0.5D, 0.7D));
-                    if (!blockstate.isIn(Blocks.MOVING_PISTON)) {
+                    BlockState blockstate = this.level.getBlockState(iceCloudPosition);
+                    this.setDeltaMovement(this.getDeltaMovement().multiply(0.7D, -0.5D, 0.7D));
+                    if (!blockstate.is(Blocks.MOVING_PISTON)) {
                         this.spawnIceExplosionCloud();
                         this.remove();
                     }
                 }
             }
 
-            this.setMotion(this.getMotion().scale(0.98D));
+            this.setDeltaMovement(this.getDeltaMovement().scale(0.98D));
         }
     }
 
     public void spawnIceExplosionCloud(){
-        AreaEffectCloudEntity areaeffectcloudentity = new AreaEffectCloudEntity(this.world, this.getPosX(), this.getPosY(), this.getPosZ());
-        areaeffectcloudentity.setParticleData(ParticleTypes.EXPLOSION);
+        AreaEffectCloudEntity areaeffectcloudentity = new AreaEffectCloudEntity(this.level, this.getX(), this.getY(), this.getZ());
+        areaeffectcloudentity.setParticle(ParticleTypes.EXPLOSION);
         areaeffectcloudentity.setRadius(3.0F);
         areaeffectcloudentity.setDuration(0);
-        this.world.addEntity(areaeffectcloudentity);
+        this.level.addFreshEntity(areaeffectcloudentity);
     }
 
 
     @Override
-    public boolean onLivingFall(float distance, float damageMultiplier) {
+    public boolean causeFallDamage(float distance, float damageMultiplier) {
     int distanceFallen = MathHelper.ceil(distance - 1.0F);
     if (distanceFallen > 0) {
-        List<Entity> list = Lists.newArrayList(this.world.getEntitiesWithinAABBExcludingEntity(this, this.getBoundingBox()));
+        List<Entity> list = Lists.newArrayList(this.level.getEntities(this, this.getBoundingBox()));
         for(Entity entity : list) {
             if(entity instanceof LivingEntity){
                 LivingEntity livingEntity = (LivingEntity)entity;
@@ -188,18 +188,18 @@ public class IceCloudEntity extends Entity {
         float damageAmount = (float) MathHelper.floor((float)distanceFallen * this.fallHurtAmount);
         if (targetEntity.isAlive() && !targetEntity.isInvulnerable() && targetEntity != caster) {
             if (caster == null) {
-                targetEntity.attackEntityFrom(DamageSource.MAGIC, damageAmount);
-                targetEntity.addPotionEffect(new EffectInstance(CustomEffects.STUNNED, 100));
-                targetEntity.addPotionEffect(new EffectInstance(Effects.NAUSEA, 100, 4));
-                targetEntity.addPotionEffect(new EffectInstance(Effects.SLOWNESS, 100, 4));
+                targetEntity.hurt(DamageSource.MAGIC, damageAmount);
+                targetEntity.addEffect(new EffectInstance(CustomEffects.STUNNED, 100));
+                targetEntity.addEffect(new EffectInstance(Effects.CONFUSION, 100, 4));
+                targetEntity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 100, 4));
             } else {
-                if (caster.isOnSameTeam(targetEntity)) {
+                if (caster.isAlliedTo(targetEntity)) {
                     return;
                 }
-                targetEntity.attackEntityFrom(DamageSource.causeIndirectMagicDamage(this, this.caster), damageAmount);
-                targetEntity.addPotionEffect(new EffectInstance(CustomEffects.STUNNED, 100));
-                targetEntity.addPotionEffect(new EffectInstance(Effects.NAUSEA, 100, 4));
-                targetEntity.addPotionEffect(new EffectInstance(Effects.SLOWNESS, 100, 4));
+                targetEntity.hurt(DamageSource.indirectMagic(this, this.caster), damageAmount);
+                targetEntity.addEffect(new EffectInstance(CustomEffects.STUNNED, 100));
+                targetEntity.addEffect(new EffectInstance(Effects.CONFUSION, 100, 4));
+                targetEntity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 100, 4));
             }
 
         }
@@ -208,44 +208,44 @@ public class IceCloudEntity extends Entity {
     /**
      * Returns true if it's possible to attack this entity with an item.
      */
-    public boolean canBeAttackedWithItem() {
+    public boolean isAttackable() {
         return false;
     }
 
     @Override
-    protected boolean canTriggerWalking() {
+    protected boolean isMovementNoisy() {
         return false;
     }
 
     @Override
-    public boolean canBeCollidedWith() {
+    public boolean isPickable() {
         return !this.removed;
     }
 
     @Override
-    protected void readAdditional(CompoundNBT compound) {
+    protected void readAdditionalSaveData(CompoundNBT compound) {
         this.fallTime = compound.getInt("Time");
         this.fallHurtAmount = compound.getFloat("FallHurtAmount");
         this.setFloatTicks(compound.getInt("FloatTicks"));
-        if (compound.hasUniqueId("Owner")) {
-            this.casterUuid = compound.getUniqueId("Owner");
+        if (compound.hasUUID("Owner")) {
+            this.casterUuid = compound.getUUID("Owner");
         }
-        if (compound.hasUniqueId("Target")) {
-            this.casterUuid = compound.getUniqueId("Target");
+        if (compound.hasUUID("Target")) {
+            this.casterUuid = compound.getUUID("Target");
         }
 
     }
 
     @Override
-    protected void writeAdditional(CompoundNBT compound) {
+    protected void addAdditionalSaveData(CompoundNBT compound) {
         compound.putInt("Time", this.fallTime);
         compound.putFloat("FallHurtAmount", this.fallHurtAmount);
         compound.putInt("FloatTicks", this.getFloatTicks());
         if (this.casterUuid != null) {
-            compound.putUniqueId("Owner", this.casterUuid);
+            compound.putUUID("Owner", this.casterUuid);
         }
         if (this.targetUUID != null) {
-            compound.putUniqueId("Target", this.targetUUID);
+            compound.putUUID("Target", this.targetUUID);
         }
     }
 
@@ -258,14 +258,14 @@ public class IceCloudEntity extends Entity {
     }
 
     @Override
-    public IPacket<?> createSpawnPacket() {
+    public IPacket<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
     /**
      * Return whether this entity should be rendered as on fire.
      */
     @OnlyIn(Dist.CLIENT)
-    public boolean canRenderOnFire() {
+    public boolean displayFireAnimation() {
         return false;
     }
 }

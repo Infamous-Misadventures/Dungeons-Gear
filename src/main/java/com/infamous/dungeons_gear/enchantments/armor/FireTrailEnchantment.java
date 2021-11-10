@@ -6,6 +6,8 @@ import com.infamous.dungeons_gear.enchantments.types.JumpingEnchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.inventory.EquipmentSlotType;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 public class FireTrailEnchantment extends JumpingEnchantment {
 
     public FireTrailEnchantment() {
@@ -21,7 +23,7 @@ public class FireTrailEnchantment extends JumpingEnchantment {
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof JumpingEnchantment);
     }
 }

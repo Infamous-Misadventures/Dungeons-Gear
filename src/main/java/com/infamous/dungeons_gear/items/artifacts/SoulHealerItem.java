@@ -18,6 +18,8 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 
+import net.minecraft.item.Item.Properties;
+
 public class SoulHealerItem extends ArtifactItem implements ISoulGatherer {
     public SoulHealerItem(Properties properties) {
         super(properties);
@@ -26,7 +28,7 @@ public class SoulHealerItem extends ArtifactItem implements ISoulGatherer {
 
     public ActionResult<ItemStack> procArtifact(ItemUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
-        ItemStack itemstack = c.getItem();
+        ItemStack itemstack = c.getItemInHand();
 
         if (playerIn.isCreative() || CapabilityHelper.getComboCapability(playerIn).consumeSouls(getActivationCost(itemstack))) {
             if ((playerIn.getHealth() < playerIn.getMaxHealth())) {
@@ -36,13 +38,13 @@ public class SoulHealerItem extends ArtifactItem implements ISoulGatherer {
                 float toHeal = Math.min(lostHealth, Math.min(maxHealth / 5, CapabilityHelper.getComboCapability(playerIn).getSouls() * 0.01f));
                 if (playerIn.isCreative() || CapabilityHelper.getComboCapability(playerIn).consumeSouls(toHeal * 100)) {
                     playerIn.heal(toHeal);
-                    itemstack.damageItem(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemstack)));
+                    itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemstack)));
                 }
                 ArtifactItem.putArtifactOnCooldown(playerIn, itemstack.getItem());
             } else {
                 float healedAmount = AreaOfEffectHelper.healMostInjuredAlly(playerIn, 12);
                 if (healedAmount > 0) {
-                    itemstack.damageItem(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemstack)));
+                    itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemstack)));
                     ArtifactItem.putArtifactOnCooldown(playerIn, itemstack.getItem());
                 }
             }
@@ -52,8 +54,8 @@ public class SoulHealerItem extends ArtifactItem implements ISoulGatherer {
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
-        super.addInformation(stack, world, list, flag);
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+        super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
 

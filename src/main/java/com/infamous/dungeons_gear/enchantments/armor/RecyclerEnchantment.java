@@ -21,6 +21,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class RecyclerEnchantment extends DropsEnchantment {
 
@@ -37,7 +39,7 @@ public class RecyclerEnchantment extends DropsEnchantment {
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof DropsEnchantment);
     }
 
@@ -47,7 +49,7 @@ public class RecyclerEnchantment extends DropsEnchantment {
         if(!(event.getEntityLiving() instanceof PlayerEntity)) return;
         PlayerEntity player = (PlayerEntity) event.getEntityLiving();
         if(player.isAlive()){
-            if(event.getSource().getImmediateSource() instanceof AbstractArrowEntity){
+            if(event.getSource().getDirectEntity() instanceof AbstractArrowEntity){
                 ICombo comboCap = CapabilityHelper.getComboCapability(player);
                 if(comboCap == null) return;
                 if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.RECYCLER)){
@@ -55,10 +57,10 @@ public class RecyclerEnchantment extends DropsEnchantment {
                     arrowsInCounter++;
                     comboCap.setArrowsInCounter(arrowsInCounter);
 
-                    int recyclerLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.RECYCLER, player);
+                    int recyclerLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.RECYCLER, player);
                     if(comboCap.getArrowsInCounter() >= 40 - 10*recyclerLevel){
-                        ItemEntity arrowDrop = new ItemEntity(player.world, player.getPosX(), player.getPosY(), player.getPosZ(), new ItemStack(Items.ARROW, 10));
-                        player.world.addEntity(arrowDrop);
+                        ItemEntity arrowDrop = new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), new ItemStack(Items.ARROW, 10));
+                        player.level.addFreshEntity(arrowDrop);
                         comboCap.setArrowsInCounter(0);
                     }
                 }

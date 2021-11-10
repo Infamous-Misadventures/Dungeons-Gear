@@ -20,6 +20,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class CommittedEnchantment extends DamageBoostEnchantment {
 
@@ -34,22 +36,22 @@ public class CommittedEnchantment extends DamageBoostEnchantment {
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() ||
                 (!(enchantment instanceof DamageEnchantment) && !(enchantment instanceof DamageBoostEnchantment) && !(enchantment instanceof AOEDamageEnchantment));
     }
 
     @SubscribeEvent
     public static void onCommittedDamage(LivingDamageEvent event){
-        if(event.getSource().getImmediateSource() instanceof AbstractArrowEntity) return;
-        if(event.getSource().getTrueSource() instanceof LivingEntity){
-            LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
-            LivingEntity victim = (LivingEntity) event.getSource().getTrueSource();
+        if(event.getSource().getDirectEntity() instanceof AbstractArrowEntity) return;
+        if(event.getSource().getEntity() instanceof LivingEntity){
+            LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
+            LivingEntity victim = (LivingEntity) event.getSource().getEntity();
             if(!(victim.getHealth() < victim.getMaxHealth())) return;
-            ItemStack mainhand = attacker.getHeldItemMainhand();
+            ItemStack mainhand = attacker.getMainHandItem();
             boolean uniqueWeaponFlag = hasCommittedBuiltIn(mainhand);
             if((ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.COMMITTED)) || uniqueWeaponFlag){
-                int committedLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.COMMITTED, mainhand);
+                int committedLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.COMMITTED, mainhand);
                 float victimRemainingHealth = victim.getHealth() / victim.getMaxHealth();
                 float originalDamage = event.getAmount();
                 float extraDamageMultiplier;

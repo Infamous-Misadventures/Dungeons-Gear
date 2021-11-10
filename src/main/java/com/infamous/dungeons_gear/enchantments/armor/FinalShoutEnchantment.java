@@ -26,6 +26,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = MODID)
 public class FinalShoutEnchantment extends HealthAbilityEnchantment {
 
@@ -50,21 +52,21 @@ public class FinalShoutEnchantment extends HealthAbilityEnchantment {
                 if (currentHealth - damageDealt <= (0.25F * maxHealth)) {
                     if (comboCap != null && comboCap.getLastShoutTimer() == 0 && ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.FINAL_SHOUT)) {
                         int proc = 0;
-                        for (ItemStack is : player.inventory.offHandInventory)
+                        for (ItemStack is : player.inventory.offhand)
                             if (is.getItem() instanceof ArtifactItem && !(is.getItem() instanceof AbstractBeaconItem)) {
-                                ActionResult<ItemStack> procResult = ((ArtifactItem) is.getItem()).procArtifact(new ItemUseContext(player, Hand.OFF_HAND, new BlockRayTraceResult(player.getPositionVec(), Direction.UP, player.getPosition(), false)));
-                                if(procResult.getType().isSuccessOrConsume() && !player.world.isRemote) ArtifactItem.triggerSynergy(player, is);
+                                ActionResult<ItemStack> procResult = ((ArtifactItem) is.getItem()).procArtifact(new ItemUseContext(player, Hand.OFF_HAND, new BlockRayTraceResult(player.position(), Direction.UP, player.blockPosition(), false)));
+                                if(procResult.getResult().consumesAction() && !player.level.isClientSide) ArtifactItem.triggerSynergy(player, is);
                                 proc++;
                             }
-                        for (ItemStack is : player.inventory.mainInventory)
+                        for (ItemStack is : player.inventory.items)
                             if (is.getItem() instanceof ArtifactItem && !(is.getItem() instanceof AbstractBeaconItem)) {
-                                ActionResult<ItemStack> procResult = ((ArtifactItem) is.getItem()).procArtifact(new ItemUseContext(player.world, player, Hand.MAIN_HAND, is, new BlockRayTraceResult(player.getPositionVec(), Direction.UP, player.getPosition(), false)));
-                                if(procResult.getType().isSuccessOrConsume() && !player.world.isRemote) ArtifactItem.triggerSynergy(player, is);
+                                ActionResult<ItemStack> procResult = ((ArtifactItem) is.getItem()).procArtifact(new ItemUseContext(player.level, player, Hand.MAIN_HAND, is, new BlockRayTraceResult(player.position(), Direction.UP, player.blockPosition(), false)));
+                                if(procResult.getResult().consumesAction() && !player.level.isClientSide) ArtifactItem.triggerSynergy(player, is);
 
                                 if (++proc == 3) break;
                             }
                         if (proc > 0) {
-                            comboCap.setLastShoutTimer(240 - 40 * Math.min(EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.FINAL_SHOUT, player), 6));
+                            comboCap.setLastShoutTimer(240 - 40 * Math.min(EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.FINAL_SHOUT, player), 6));
                         }
 
                     }
@@ -78,7 +80,7 @@ public class FinalShoutEnchantment extends HealthAbilityEnchantment {
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof HealthAbilityEnchantment);
     }
 }

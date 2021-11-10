@@ -8,6 +8,8 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 // borrowed from direwolf20's MiningGadget mod
+import net.minecraft.client.renderer.RenderState.TextureState;
+
 public class MyRenderType extends RenderType {
     private final static ResourceLocation beaconBeamCore = new ResourceLocation(DungeonsGear.MODID + ":textures/misc/beacon_beam_core.png");
     private final static ResourceLocation beaconBeamMain = new ResourceLocation(DungeonsGear.MODID + ":textures/misc/beacon_beam_main.png");
@@ -17,36 +19,36 @@ public class MyRenderType extends RenderType {
         super(name, format, p_i225992_3_, p_i225992_4_, p_i225992_5_, p_i225992_6_, runnablePre, runnablePost);
     }
 
-    public static final RenderType BEACON_BEAM_MAIN = makeType("BeaconBeamMain",
+    public static final RenderType BEACON_BEAM_MAIN = create("BeaconBeamMain",
             DefaultVertexFormats.POSITION_COLOR_TEX, GL11.GL_QUADS, 256,
-            RenderType.State.getBuilder().texture(new TextureState(beaconBeamMain, false, false))
-                    .layer(field_239235_M_)
-                    .transparency(TRANSLUCENT_TRANSPARENCY)
-                    .depthTest(DEPTH_ALWAYS)
-                    .cull(CULL_DISABLED)
-                    .lightmap(LIGHTMAP_DISABLED)
-                    .writeMask(COLOR_WRITE)
-                    .build(false));
+            RenderType.State.builder().setTextureState(new TextureState(beaconBeamMain, false, false))
+                    .setLayeringState(VIEW_OFFSET_Z_LAYERING)
+                    .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+                    .setDepthTestState(NO_DEPTH_TEST)
+                    .setCullState(NO_CULL)
+                    .setLightmapState(NO_LIGHTMAP)
+                    .setWriteMaskState(COLOR_WRITE)
+                    .createCompositeState(false));
 
-    public static final RenderType BEACON_BEAM_GLOW = makeType("BeaconBeamGlow",
+    public static final RenderType BEACON_BEAM_GLOW = create("BeaconBeamGlow",
             DefaultVertexFormats.POSITION_COLOR_TEX, GL11.GL_QUADS, 256,
-            RenderType.State.getBuilder().texture(new TextureState(beaconBeamGlow, false, false))
-                    .layer(field_239235_M_)
-                    .transparency(TRANSLUCENT_TRANSPARENCY)
-                    .depthTest(DEPTH_ALWAYS)
-                    .cull(CULL_DISABLED)
-                    .lightmap(LIGHTMAP_DISABLED)
-                    .writeMask(COLOR_WRITE)
-                    .build(false));
+            RenderType.State.builder().setTextureState(new TextureState(beaconBeamGlow, false, false))
+                    .setLayeringState(VIEW_OFFSET_Z_LAYERING)
+                    .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+                    .setDepthTestState(NO_DEPTH_TEST)
+                    .setCullState(NO_CULL)
+                    .setLightmapState(NO_LIGHTMAP)
+                    .setWriteMaskState(COLOR_WRITE)
+                    .createCompositeState(false));
 
-    public static final RenderType BEACON_BEAM_CORE = makeType("BeaconBeamCore",
+    public static final RenderType BEACON_BEAM_CORE = create("BeaconBeamCore",
             DefaultVertexFormats.POSITION_COLOR_TEX, GL11.GL_QUADS, 256,
-            RenderType.State.getBuilder().texture(new TextureState(beaconBeamCore, false, false))
-                    .layer(field_239235_M_)
-                    .transparency(TRANSLUCENT_TRANSPARENCY)
-                    .depthTest(DEPTH_ALWAYS)
-                    .cull(CULL_DISABLED)
-                    .lightmap(LIGHTMAP_DISABLED)
-                    .writeMask(COLOR_WRITE)
-                    .build(false));
+            RenderType.State.builder().setTextureState(new TextureState(beaconBeamCore, false, false))
+                    .setLayeringState(VIEW_OFFSET_Z_LAYERING)
+                    .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+                    .setDepthTestState(NO_DEPTH_TEST)
+                    .setCullState(NO_CULL)
+                    .setLightmapState(NO_LIGHTMAP)
+                    .setWriteMaskState(COLOR_WRITE)
+                    .createCompositeState(false));
 }

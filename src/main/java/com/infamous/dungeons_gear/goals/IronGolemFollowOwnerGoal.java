@@ -28,14 +28,14 @@ public class IronGolemFollowOwnerGoal extends Goal {
 
     public IronGolemFollowOwnerGoal(IronGolemEntity ironGolemEntity, double followSpeed, float minDist, float maxDist, boolean passesThroughLeaves) {
         this.ironGolemEntity = ironGolemEntity;
-        this.world = ironGolemEntity.world;
+        this.world = ironGolemEntity.level;
         this.followSpeed = followSpeed;
-        this.navigator = ironGolemEntity.getNavigator();
+        this.navigator = ironGolemEntity.getNavigation();
         this.minDist = minDist;
         this.maxDist = maxDist;
         this.passesThroughLeaves = passesThroughLeaves;
-        this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
-        if (!(ironGolemEntity.getNavigator() instanceof GroundPathNavigator) && !(ironGolemEntity.getNavigator() instanceof FlyingPathNavigator)) {
+        this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+        if (!(ironGolemEntity.getNavigation() instanceof GroundPathNavigator) && !(ironGolemEntity.getNavigation() instanceof FlyingPathNavigator)) {
             throw new IllegalArgumentException("Unsupported mob type for FollowOwnerGoal");
         }
     }
@@ -44,15 +44,15 @@ public class IronGolemFollowOwnerGoal extends Goal {
      * Returns whether execution should begin. You can also read and cache any state necessary for execution in this
      * method as well.
      */
-    public boolean shouldExecute() {
+    public boolean canUse() {
         LivingEntity livingentity = SummoningHelper.getSummoner(this.ironGolemEntity);
         if (livingentity == null) {
             return false;
         } else if (livingentity.isSpectator()) {
             return false;
-        } else if (this.ironGolemEntity.getLeashed()) {
+        } else if (this.ironGolemEntity.isLeashed()) {
             return false;
-        } else if (this.ironGolemEntity.getDistanceSq(livingentity) < (double)(this.minDist * this.minDist)) {
+        } else if (this.ironGolemEntity.distanceToSqr(livingentity) < (double)(this.minDist * this.minDist)) {
             return false;
         } else {
             this.owner = livingentity;
@@ -63,60 +63,60 @@ public class IronGolemFollowOwnerGoal extends Goal {
     /**
      * Returns whether an in-progress EntityAIBase should continue executing
      */
-    public boolean shouldContinueExecuting() {
-        if (this.navigator.noPath()) {
+    public boolean canContinueToUse() {
+        if (this.navigator.isDone()) {
             return false;
-        } else if (this.ironGolemEntity.getLeashed()) {
+        } else if (this.ironGolemEntity.isLeashed()) {
             return false;
         } else {
-            return !(this.ironGolemEntity.getDistanceSq(this.owner) <= (double)(this.maxDist * this.maxDist));
+            return !(this.ironGolemEntity.distanceToSqr(this.owner) <= (double)(this.maxDist * this.maxDist));
         }
     }
 
     /**
      * Execute a one shot task or start executing a continuous task
      */
-    public void startExecuting() {
+    public void start() {
         this.timeToRecalcPath = 0;
-        this.oldWaterCost = this.ironGolemEntity.getPathPriority(PathNodeType.WATER);
-        this.ironGolemEntity.setPathPriority(PathNodeType.WATER, 0.0F);
+        this.oldWaterCost = this.ironGolemEntity.getPathfindingMalus(PathNodeType.WATER);
+        this.ironGolemEntity.setPathfindingMalus(PathNodeType.WATER, 0.0F);
     }
 
     /**
      * Reset the task's internal state. Called when this task is interrupted by another one
      */
-    public void resetTask() {
+    public void stop() {
         this.owner = null;
-        this.navigator.clearPath();
-        this.ironGolemEntity.setPathPriority(PathNodeType.WATER, this.oldWaterCost);
+        this.navigator.stop();
+        this.ironGolemEntity.setPathfindingMalus(PathNodeType.WATER, this.oldWaterCost);
     }
 
     /**
      * Keep ticking a continuous task that has already been started
      */
     public void tick() {
-        this.ironGolemEntity.getLookController().setLookPositionWithEntity(this.owner, 10.0F, (float)this.ironGolemEntity.getVerticalFaceSpeed());
+        this.ironGolemEntity.getLookControl().setLookAt(this.owner, 10.0F, (float)this.ironGolemEntity.getMaxHeadXRot());
         if (--this.timeToRecalcPath <= 0) {
             this.timeToRecalcPath = 10;
-            if (!this.ironGolemEntity.getLeashed() && !this.ironGolemEntity.isPassenger()) {
-                if (this.ironGolemEntity.getDistanceSq(this.owner) >= 144.0D) {
-                    this.func_226330_g_();
+            if (!this.ironGolemEntity.isLeashed() && !this.ironGolemEntity.isPassenger()) {
+                if (this.ironGolemEntity.distanceToSqr(this.owner) >= 144.0D) {
+                    this.teleportToOwner();
                 } else {
-                    this.navigator.tryMoveToEntityLiving(this.owner, this.followSpeed);
+                    this.navigator.moveTo(this.owner, this.followSpeed);
                 }
 
             }
         }
     }
 
-    private void func_226330_g_() {
-        BlockPos blockpos = this.owner.getPosition();
+    private void teleportToOwner() {
+        BlockPos blockpos = this.owner.blockPosition();
 
         for(int i = 0; i < 10; ++i) {
-            int j = this.func_226327_a_(-3, 3);
-            int k = this.func_226327_a_(-1, 1);
-            int l = this.func_226327_a_(-3, 3);
-            boolean flag = this.func_226328_a_(blockpos.getX() + j, blockpos.getY() + k, blockpos.getZ() + l);
+            int j = this.randomIntInclusive(-3, 3);
+            int k = this.randomIntInclusive(-1, 1);
+            int l = this.randomIntInclusive(-3, 3);
+            boolean flag = this.maybeTeleportTo(blockpos.getX() + j, blockpos.getY() + k, blockpos.getZ() + l);
             if (flag) {
                 return;
             }
@@ -124,34 +124,34 @@ public class IronGolemFollowOwnerGoal extends Goal {
 
     }
 
-    private boolean func_226328_a_(int p_226328_1_, int p_226328_2_, int p_226328_3_) {
-        if (Math.abs((double)p_226328_1_ - this.owner.getPosX()) < 2.0D && Math.abs((double)p_226328_3_ - this.owner.getPosZ()) < 2.0D) {
+    private boolean maybeTeleportTo(int p_226328_1_, int p_226328_2_, int p_226328_3_) {
+        if (Math.abs((double)p_226328_1_ - this.owner.getX()) < 2.0D && Math.abs((double)p_226328_3_ - this.owner.getZ()) < 2.0D) {
             return false;
-        } else if (!this.func_226329_a_(new BlockPos(p_226328_1_, p_226328_2_, p_226328_3_))) {
+        } else if (!this.canTeleportTo(new BlockPos(p_226328_1_, p_226328_2_, p_226328_3_))) {
             return false;
         } else {
-            this.ironGolemEntity.setLocationAndAngles((double)p_226328_1_ + 0.5D, (double)p_226328_2_, (double)p_226328_3_ + 0.5D, this.ironGolemEntity.rotationYaw, this.ironGolemEntity.rotationPitch);
-            this.navigator.clearPath();
+            this.ironGolemEntity.moveTo((double)p_226328_1_ + 0.5D, (double)p_226328_2_, (double)p_226328_3_ + 0.5D, this.ironGolemEntity.yRot, this.ironGolemEntity.xRot);
+            this.navigator.stop();
             return true;
         }
     }
 
-    private boolean func_226329_a_(BlockPos p_226329_1_) {
-        PathNodeType pathnodetype = WalkNodeProcessor.func_237231_a_(this.world, p_226329_1_.toMutable());
+    private boolean canTeleportTo(BlockPos p_226329_1_) {
+        PathNodeType pathnodetype = WalkNodeProcessor.getBlockPathTypeStatic(this.world, p_226329_1_.mutable());
         if (pathnodetype != PathNodeType.WALKABLE) {
             return false;
         } else {
-            BlockState blockstate = this.world.getBlockState(p_226329_1_.down());
+            BlockState blockstate = this.world.getBlockState(p_226329_1_.below());
             if (!this.passesThroughLeaves && blockstate.getBlock() instanceof LeavesBlock) {
                 return false;
             } else {
-                BlockPos blockpos = p_226329_1_.subtract(this.ironGolemEntity.getPosition());
-                return this.world.hasNoCollisions(this.ironGolemEntity, this.ironGolemEntity.getBoundingBox().offset(blockpos));
+                BlockPos blockpos = p_226329_1_.subtract(this.ironGolemEntity.blockPosition());
+                return this.world.noCollision(this.ironGolemEntity, this.ironGolemEntity.getBoundingBox().move(blockpos));
             }
         }
     }
 
-    private int func_226327_a_(int p_226327_1_, int p_226327_2_) {
-        return this.ironGolemEntity.getRNG().nextInt(p_226327_2_ - p_226327_1_ + 1) + p_226327_1_;
+    private int randomIntInclusive(int p_226327_1_, int p_226327_2_) {
+        return this.ironGolemEntity.getRandom().nextInt(p_226327_2_ - p_226327_1_ + 1) + p_226327_1_;
     }
 }

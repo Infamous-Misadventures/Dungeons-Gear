@@ -158,8 +158,8 @@ public class GlobalLootModifier{
         }
     }
 
-    private static final String LOCKABLE_LOOT_TILE_ENTITY_LOOT_TABLE = "field_184284_m";
-    private static final String CONTAINER_MINECART_ENTITY_LOOT_TABLE = "field_184290_c";
+    private static final String LOCKABLE_LOOT_TILE_ENTITY_LOOT_TABLE = "lootTable";
+    private static final String CONTAINER_MINECART_ENTITY_LOOT_TABLE = "lootTable";
 
     private static ResourceLocation getLootTable(LockableLootTileEntity lockableLootTileEntity) {
         return ObfuscationReflectionHelper.getPrivateValue(
@@ -181,10 +181,10 @@ public class GlobalLootModifier{
             return;
         }
 
-        Entity thisEntity = context.get(LootParameters.THIS_ENTITY);
+        Entity thisEntity = context.getParamOrNull(LootParameters.THIS_ENTITY);
         final PlayerEntity player = thisEntity instanceof PlayerEntity ? (PlayerEntity) thisEntity : null;
 
-        Entity contextEntity = context.get(LootParameters.KILLER_ENTITY);
+        Entity contextEntity = context.getParamOrNull(LootParameters.KILLER_ENTITY);
         if(contextEntity instanceof ContainerMinecartEntity){
             ContainerMinecartEntity containerMinecartEntity = (ContainerMinecartEntity)contextEntity;
             ResourceLocation lootTable = getLootTable(containerMinecartEntity);
@@ -199,14 +199,14 @@ public class GlobalLootModifier{
         }
         else
         {
-            Vector3d vector3d = context.get(LootParameters.field_237457_g_);
+            Vector3d vector3d = context.getParamOrNull(LootParameters.ORIGIN);
             if(vector3d != null){
                 BlockPos pos = new BlockPos(vector3d);
                 // fix chunk lag issue
-                if(!context.getWorld().isBlockLoaded(pos)){
+                if(!context.getLevel().hasChunkAt(pos)){
                     return;
                 }
-                TileEntity contextTileEntity = context.getWorld().getTileEntity(pos);
+                TileEntity contextTileEntity = context.getLevel().getBlockEntity(pos);
                 if(contextTileEntity instanceof LockableLootTileEntity){
                     LockableLootTileEntity lockableLootTileEntity = (LockableLootTileEntity)contextTileEntity;
                     ResourceLocation lootTable = getLootTable(lockableLootTileEntity);

@@ -19,7 +19,7 @@ import java.util.List;
 public abstract class HurtByTargetGoalMixin extends TargetGoal {
 
     @Shadow
-    private Class<?>[] reinforcementTypes;
+    private Class<?>[] toIgnoreAlert;
 
     public HurtByTargetGoalMixin(MobEntity mobIn, boolean checkSight) {
         super(mobIn, checkSight);
@@ -32,31 +32,31 @@ public abstract class HurtByTargetGoalMixin extends TargetGoal {
      */
     @Overwrite
     protected void alertOthers() {
-        double d0 = this.getTargetDistance();
-        AxisAlignedBB axisalignedbb = AxisAlignedBB.fromVector(this.goalOwner.getPositionVec()).grow(d0, 10.0D, d0);
+        double d0 = this.getFollowDistance();
+        AxisAlignedBB axisalignedbb = AxisAlignedBB.unitCubeFromLowerCorner(this.mob.position()).inflate(d0, 10.0D, d0);
         List<Class<?>> reinforcement = null;
-        if (reinforcementTypes != null)
-            reinforcement = Lists.newArrayList(reinforcementTypes);
-        List<MobEntity> list = this.goalOwner.world.getLoadedEntitiesWithinAABB(this.goalOwner.getClass(), axisalignedbb);
+        if (toIgnoreAlert != null)
+            reinforcement = Lists.newArrayList(toIgnoreAlert);
+        List<MobEntity> list = this.mob.level.getLoadedEntitiesOfClass(this.mob.getClass(), axisalignedbb);
         Iterator<MobEntity> iterator = list.iterator();
 
         while (reinforcement != null && iterator.hasNext()) {
             MobEntity mobentity = iterator.next();
-            if (this.goalOwner != mobentity
-                    && mobentity.getAttackTarget() == null
-                    && (!(this.goalOwner instanceof TameableEntity) ||
-                    (mobentity instanceof TameableEntity && ((TameableEntity) this.goalOwner).getOwner() == ((TameableEntity) mobentity).getOwner()))
-                    && (this.goalOwner.getRevengeTarget() != null && !mobentity.isOnSameTeam(this.goalOwner.getRevengeTarget()))
+            if (this.mob != mobentity
+                    && mobentity.getTarget() == null
+                    && (!(this.mob instanceof TameableEntity) ||
+                    (mobentity instanceof TameableEntity && ((TameableEntity) this.mob).getOwner() == ((TameableEntity) mobentity).getOwner()))
+                    && (this.mob.getLastHurtByMob() != null && !mobentity.isAlliedTo(this.mob.getLastHurtByMob()))
                     && reinforcement.contains(mobentity.getClass())) {
                 //if you're not me and have no target and I'm either not tamed or you're tamed to the same master and I have a revenge target and you're not on the same team as my revenge target and you're one of the reinforcement types, set attack target to the same person
                 //I don't know what Mojang or Infamous is doing, but it's now O(n).
-                this.setAttackTarget(mobentity, this.goalOwner.getRevengeTarget());
+                this.setAttackTarget(mobentity, this.mob.getLastHurtByMob());
             }
         }
     }
 
     protected void setAttackTarget(MobEntity mobIn, LivingEntity targetIn) {
-        mobIn.setAttackTarget(targetIn);
+        mobIn.setTarget(targetIn);
     }
 
 

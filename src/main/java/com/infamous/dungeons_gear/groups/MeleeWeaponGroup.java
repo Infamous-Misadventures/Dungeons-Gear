@@ -12,7 +12,7 @@ public class MeleeWeaponGroup extends ItemGroup
     }
 
     @Override
-    public ItemStack createIcon()
+    public ItemStack makeIcon()
     {
         return new ItemStack(ItemRegistry.BROADSWORD.get());
     }

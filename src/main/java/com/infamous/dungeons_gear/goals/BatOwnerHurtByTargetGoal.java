@@ -10,6 +10,8 @@ import java.util.EnumSet;
 import static com.infamous.dungeons_gear.capabilities.summoning.SummoningHelper.getSummoner;
 import static com.infamous.dungeons_gear.goals.GoalUtils.shouldAttackEntity;
 
+import net.minecraft.entity.ai.goal.Goal.Flag;
+
 public class BatOwnerHurtByTargetGoal extends TargetGoal {
     private final BatEntity batEntity;
     private LivingEntity attacker;
@@ -18,31 +20,31 @@ public class BatOwnerHurtByTargetGoal extends TargetGoal {
     public BatOwnerHurtByTargetGoal(BatEntity batEntity) {
         super(batEntity, false);
         this.batEntity = batEntity;
-        this.setMutexFlags(EnumSet.of(Flag.TARGET));
+        this.setFlags(EnumSet.of(Flag.TARGET));
     }
 
-    public boolean shouldExecute() {
+    public boolean canUse() {
         //if (this.batEntity.isTame()) {
             LivingEntity owner = getSummoner(this.batEntity);
             if (owner == null) {
                 return false;
             } else {
-                this.attacker = owner.getRevengeTarget();
-                int revengeTimer = owner.getRevengeTimer();
-                return revengeTimer != this.timestamp && this.isSuitableTarget(this.attacker, EntityPredicate.DEFAULT) && shouldAttackEntity(this.attacker, owner);
+                this.attacker = owner.getLastHurtByMob();
+                int revengeTimer = owner.getLastHurtByMobTimestamp();
+                return revengeTimer != this.timestamp && this.canAttack(this.attacker, EntityPredicate.DEFAULT) && shouldAttackEntity(this.attacker, owner);
             }
         //} else {
         //    return false;
         //}
     }
 
-    public void startExecuting() {
-        this.goalOwner.setAttackTarget(this.attacker);
+    public void start() {
+        this.mob.setTarget(this.attacker);
         LivingEntity owner = getSummoner(this.batEntity);
         if (owner != null) {
-            this.timestamp = owner.getRevengeTimer();
+            this.timestamp = owner.getLastHurtByMobTimestamp();
         }
 
-        super.startExecuting();
+        super.start();
     }
 }

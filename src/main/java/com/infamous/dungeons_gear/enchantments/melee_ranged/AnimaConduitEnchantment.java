@@ -26,6 +26,8 @@ import java.lang.reflect.Method;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 public class AnimaConduitEnchantment extends HealingEnchantment {
     public AnimaConduitEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.MELEE_RANGED, new EquipmentSlotType[]{
@@ -37,7 +39,7 @@ public class AnimaConduitEnchantment extends HealingEnchantment {
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof HealingEnchantment);
     }
 

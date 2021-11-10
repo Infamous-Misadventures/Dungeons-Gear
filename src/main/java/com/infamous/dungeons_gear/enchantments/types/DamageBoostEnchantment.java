@@ -12,6 +12,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 public class DamageBoostEnchantment extends DungeonsEnchantment{
 
     protected DamageBoostEnchantment(Rarity rarity, EnchantmentType enchantmentType, EquipmentSlotType[] equipmentSlotTypes) {

@@ -29,22 +29,22 @@ public class MeleeEvents {
 
     @SubscribeEvent
     public static void onMeleeDamage(LivingDamageEvent event) {
-        if (event.getSource().getImmediateSource() instanceof AbstractArrowEntity) return;
+        if (event.getSource().getDirectEntity() instanceof AbstractArrowEntity) return;
         if (event.getSource() instanceof OffhandAttackDamageSource) return;
-        if (event.getSource().getTrueSource() instanceof LivingEntity) {
-            LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
+        if (event.getSource().getEntity() instanceof LivingEntity) {
+            LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
             LivingEntity victim = event.getEntityLiving();
-            ItemStack mainhand = attacker.getHeldItemMainhand();
+            ItemStack mainhand = attacker.getMainHandItem();
             if (hasFireAspectBuiltIn(mainhand)) {
-                int fireAspectLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FIRE_ASPECT, mainhand);
-                victim.setFire(4 + fireAspectLevel * 4);
+                int fireAspectLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FIRE_ASPECT, mainhand);
+                victim.setSecondsOnFire(4 + fireAspectLevel * 4);
             } else if (hasSmiteBuiltIn(mainhand)) {
-                if (victim.isEntityUndead()) {
+                if (victim.isInvertedHealAndHarm()) {
                     float currentDamage = event.getAmount();
                     event.setAmount(currentDamage + 2.5f);
                 }
             } else if (hasIllagersBaneBuiltIn(mainhand)) {
-                if (victim.getCreatureAttribute() == CreatureAttribute.ILLAGER) {
+                if (victim.getMobType() == CreatureAttribute.ILLAGER) {
                     float currentDamage = event.getAmount();
                     event.setAmount(currentDamage + 2.5f);
                 }
@@ -68,8 +68,8 @@ public class MeleeEvents {
     public static void dualWield(LivingEquipmentChangeEvent event) {
         if (event.getSlot() == EquipmentSlotType.OFFHAND) {
             final ItemStack outgoing = event.getTo();
-            if (outgoing.getItem() instanceof IDualWieldWeapon && event.getEntityLiving().getHeldItemOffhand().getItem() instanceof IDualWieldWeapon) {
-                ((IDualWieldWeapon) event.getEntityLiving().getHeldItemOffhand().getItem()).updateOff(event.getEntityLiving(), event.getEntityLiving().getHeldItemOffhand());
+            if (outgoing.getItem() instanceof IDualWieldWeapon && event.getEntityLiving().getOffhandItem().getItem() instanceof IDualWieldWeapon) {
+                ((IDualWieldWeapon) event.getEntityLiving().getOffhandItem().getItem()).updateOff(event.getEntityLiving(), event.getEntityLiving().getOffhandItem());
             }
         }else if (event.getSlot() == EquipmentSlotType.MAINHAND) {
             final ItemStack incoming = event.getTo();
@@ -81,33 +81,33 @@ public class MeleeEvents {
 
     @SubscribeEvent
     public static void onClaymoreAttack(LivingAttackEvent event) {
-        if (event.getSource().getImmediateSource() instanceof AbstractArrowEntity) return;
+        if (event.getSource().getDirectEntity() instanceof AbstractArrowEntity) return;
         if (event.getSource() instanceof OffhandAttackDamageSource) return;
-        if (event.getSource().getTrueSource() instanceof LivingEntity) {
-            LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
+        if (event.getSource().getEntity() instanceof LivingEntity) {
+            LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
             if (event.getEntityLiving() == null) return;
             LivingEntity victim = (LivingEntity) event.getEntityLiving();
-            if ((attacker.getHeldItemMainhand().getItem() instanceof ClaymoreItem)
-                    && !ModEnchantmentHelper.hasEnchantment(attacker.getHeldItemMainhand(), Enchantments.KNOCKBACK)) {
+            if ((attacker.getMainHandItem().getItem() instanceof ClaymoreItem)
+                    && !ModEnchantmentHelper.hasEnchantment(attacker.getMainHandItem(), Enchantments.KNOCKBACK)) {
                 if (attacker instanceof PlayerEntity) {
                     PlayerEntity playerEntity = (PlayerEntity) attacker;
-                    float cooledAttackStrength = playerEntity.getCooledAttackStrength(0.5F);
+                    float cooledAttackStrength = playerEntity.getAttackStrengthScale(0.5F);
                     boolean atFullAttackStrength = cooledAttackStrength > 0.9F;
                     float attackKnockbackStrength = 1;
                     if (playerEntity.isSprinting() && atFullAttackStrength) {
                         SoundHelper.playKnockbackSound(playerEntity);
                         ++attackKnockbackStrength;
                     }
-                    victim.applyKnockback(attackKnockbackStrength * 0.5F, (double) MathHelper.sin(playerEntity.rotationYaw * ((float) Math.PI / 180F)), (double) (-MathHelper.cos(playerEntity.rotationYaw * ((float) Math.PI / 180F))));
-                    playerEntity.setMotion(playerEntity.getMotion().mul(0.6D, 1.0D, 0.6D));
+                    victim.knockback(attackKnockbackStrength * 0.5F, (double) MathHelper.sin(playerEntity.yRot * ((float) Math.PI / 180F)), (double) (-MathHelper.cos(playerEntity.yRot * ((float) Math.PI / 180F))));
+                    playerEntity.setDeltaMovement(playerEntity.getDeltaMovement().multiply(0.6D, 1.0D, 0.6D));
 
                 } else if (attacker instanceof MobEntity) {
                     MobEntity mobEntity = (MobEntity) attacker;
                     float attackKnockbackStrength = (float) mobEntity.getAttributeValue(Attributes.ATTACK_KNOCKBACK);
                     attackKnockbackStrength += 1;
                     if (attackKnockbackStrength > 0.0F) {
-                        victim.applyKnockback(attackKnockbackStrength * 0.5F, (double) MathHelper.sin(mobEntity.rotationYaw * ((float) Math.PI / 180F)), (double) (-MathHelper.cos(mobEntity.rotationYaw * ((float) Math.PI / 180F))));
-                        mobEntity.setMotion(mobEntity.getMotion().mul(0.6D, 1.0D, 0.6D));
+                        victim.knockback(attackKnockbackStrength * 0.5F, (double) MathHelper.sin(mobEntity.yRot * ((float) Math.PI / 180F)), (double) (-MathHelper.cos(mobEntity.yRot * ((float) Math.PI / 180F))));
+                        mobEntity.setDeltaMovement(mobEntity.getDeltaMovement().multiply(0.6D, 1.0D, 0.6D));
                     }
                 }
             }
@@ -133,11 +133,11 @@ public class MeleeEvents {
     @SubscribeEvent
     public static void onFortuneSpearLooting(LootingLevelEvent event) {
         if (event.getDamageSource() == null) return; // should fix Scaling Health bug
-        if (event.getDamageSource().getImmediateSource() instanceof AbstractArrowEntity) return;
-        if (event.getDamageSource().getTrueSource() instanceof LivingEntity) {
-            LivingEntity attacker = (LivingEntity) event.getDamageSource().getTrueSource();
+        if (event.getDamageSource().getDirectEntity() instanceof AbstractArrowEntity) return;
+        if (event.getDamageSource().getEntity() instanceof LivingEntity) {
+            LivingEntity attacker = (LivingEntity) event.getDamageSource().getEntity();
             int lootingLevel = event.getLootingLevel();
-            if (hasFortuneBuiltIn(attacker.getHeldItemMainhand())) {
+            if (hasFortuneBuiltIn(attacker.getMainHandItem())) {
                 event.setLootingLevel(lootingLevel + 1);
             }
         }

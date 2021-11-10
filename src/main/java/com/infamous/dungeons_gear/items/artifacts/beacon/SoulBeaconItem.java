@@ -6,6 +6,8 @@ import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
+import net.minecraft.item.Item.Properties;
+
 public abstract class SoulBeaconItem extends AbstractBeaconItem implements ISoulGatherer {
 
     public SoulBeaconItem(Properties properties) {

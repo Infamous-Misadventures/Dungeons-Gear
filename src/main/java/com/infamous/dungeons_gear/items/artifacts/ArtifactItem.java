@@ -24,20 +24,22 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 
+import net.minecraft.item.Item.Properties;
+
 public abstract class ArtifactItem extends Item {
     protected boolean procOnItemUse = false;
 
     public ArtifactItem(Properties properties) {
         super(properties
-                .maxDamage(DungeonsGearConfig.ARTIFACT_DURABILITY.get())
+                .durability(DungeonsGearConfig.ARTIFACT_DURABILITY.get())
         );
     }
 
     public static void putArtifactOnCooldown(PlayerEntity playerIn, Item item) {
         int cooldownInTicks = item instanceof ArtifactItem ?
                 ((ArtifactItem)item).getCooldownInSeconds() * 20 : 0;
-        ItemStack helmet = playerIn.getItemStackFromSlot(EquipmentSlotType.HEAD);
-        ItemStack chestplate = playerIn.getItemStackFromSlot(EquipmentSlotType.CHEST);
+        ItemStack helmet = playerIn.getItemBySlot(EquipmentSlotType.HEAD);
+        ItemStack chestplate = playerIn.getItemBySlot(EquipmentSlotType.CHEST);
 
 
         float armorCooldownModifier = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getArtifactCooldown() : 0;
@@ -46,11 +48,11 @@ public abstract class ArtifactItem extends Item {
         float totalArmorCooldownModifier = 1.0F - armorCooldownModifier * 0.01F - armorCooldownModifier2 * 0.01F;
         float cooldownEnchantmentReduction = 0;
         if (ModEnchantmentHelper.hasEnchantment(playerIn, ArmorEnchantmentList.COOLDOWN)) {
-            int cooldownEnchantmentLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.COOLDOWN, playerIn);
+            int cooldownEnchantmentLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.COOLDOWN, playerIn);
             cooldownEnchantmentReduction = (int) (cooldownEnchantmentLevel * 0.1F * cooldownInTicks);
 
         }
-        playerIn.getCooldownTracker().setCooldown(item, Math.max(0, (int) (cooldownInTicks * totalArmorCooldownModifier - cooldownEnchantmentReduction)));
+        playerIn.getCooldowns().addCooldown(item, Math.max(0, (int) (cooldownInTicks * totalArmorCooldownModifier - cooldownEnchantmentReduction)));
     }
 
     public static void triggerSynergy(PlayerEntity player, ItemStack stack){
@@ -62,12 +64,12 @@ public abstract class ArtifactItem extends Item {
         }
         if(stack.getItem() instanceof ArtifactItem){
             if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.SPEED_SYNERGY)){
-                int speedSynergyLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.SPEED_SYNERGY, player);
-                EffectInstance speedBoost = new EffectInstance(Effects.SPEED, 20 * speedSynergyLevel);
-                player.addPotionEffect(speedBoost);
+                int speedSynergyLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.SPEED_SYNERGY, player);
+                EffectInstance speedBoost = new EffectInstance(Effects.MOVEMENT_SPEED, 20 * speedSynergyLevel);
+                player.addEffect(speedBoost);
             }
             if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.HEALTH_SYNERGY)){
-                int healthSynergyLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.HEALTH_SYNERGY, player);
+                int healthSynergyLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.HEALTH_SYNERGY, player);
                 player.heal(0.2F + (0.1F * healthSynergyLevel));
             }
         }
@@ -75,22 +77,22 @@ public abstract class ArtifactItem extends Item {
     }
 
     public static void reduceArtifactCooldowns(PlayerEntity playerEntity, double reductionInSeconds){
-        for(Item item : playerEntity.getCooldownTracker().cooldowns.keySet()){
+        for(Item item : playerEntity.getCooldowns().cooldowns.keySet()){
             if(item instanceof ArtifactItem){
-                int createTicks = ((CooldownAccessor)playerEntity.getCooldownTracker().cooldowns.get(item)).getCreateTicks();
-                int expireTicks = ((CooldownAccessor)playerEntity.getCooldownTracker().cooldowns.get(item)).getExpireTicks();
+                int createTicks = ((CooldownAccessor)playerEntity.getCooldowns().cooldowns.get(item)).getStartTime();
+                int expireTicks = ((CooldownAccessor)playerEntity.getCooldowns().cooldowns.get(item)).getEndTime();
                 int duration = expireTicks - createTicks;
-                playerEntity.getCooldownTracker().setCooldown(item, Math.max(0, duration - (int)(reductionInSeconds * 20)));
+                playerEntity.getCooldowns().addCooldown(item, Math.max(0, duration - (int)(reductionInSeconds * 20)));
             }
         }
     }
 
     @Override
-    public ActionResultType onItemUse(ItemUseContext itemUseContext) {
-        if (!procOnItemUse) return super.onItemUse(itemUseContext);
-        ActionResultType procResultType = procArtifact(itemUseContext).getType();
-        if(procResultType.isSuccessOrConsume() && itemUseContext.getPlayer() != null && !itemUseContext.getWorld().isRemote){
-            triggerSynergy(itemUseContext.getPlayer(), itemUseContext.getItem());
+    public ActionResultType useOn(ItemUseContext itemUseContext) {
+        if (!procOnItemUse) return super.useOn(itemUseContext);
+        ActionResultType procResultType = procArtifact(itemUseContext).getResult();
+        if(procResultType.consumesAction() && itemUseContext.getPlayer() != null && !itemUseContext.getLevel().isClientSide){
+            triggerSynergy(itemUseContext.getPlayer(), itemUseContext.getItemInHand());
         }
         return procResultType;
     }
@@ -100,16 +102,16 @@ public abstract class ArtifactItem extends Item {
     }
 
     @Override
-    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-        return ItemTagWrappers.ARTIFACT_REPAIR_ITEMS.contains(repair.getItem()) || super.getIsRepairable(toRepair, repair);
+    public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
+        return ItemTagWrappers.ARTIFACT_REPAIR_ITEMS.contains(repair.getItem()) || super.isValidRepairItem(toRepair, repair);
     }
 
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        if (procOnItemUse) return super.onItemRightClick(worldIn, playerIn, handIn);
-        ItemUseContext iuc = new ItemUseContext(playerIn, handIn, new BlockRayTraceResult(playerIn.getPositionVec(), Direction.UP, playerIn.getPosition(), false));
+    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+        if (procOnItemUse) return super.use(worldIn, playerIn, handIn);
+        ItemUseContext iuc = new ItemUseContext(playerIn, handIn, new BlockRayTraceResult(playerIn.position(), Direction.UP, playerIn.blockPosition(), false));
         ActionResult<ItemStack> procResult = procArtifact(iuc);
-        if(procResult.getType().isSuccessOrConsume() && !worldIn.isRemote){
-            triggerSynergy(playerIn, iuc.getItem());
+        if(procResult.getResult().consumesAction() && !worldIn.isClientSide){
+            triggerSynergy(playerIn, iuc.getItemInHand());
         }
         return procResult;
     }

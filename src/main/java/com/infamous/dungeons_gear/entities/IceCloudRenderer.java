@@ -26,19 +26,19 @@ public class IceCloudRenderer<T extends IceCloudEntity> extends EntityRenderer<T
 
    @Override
    public void render(T entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
-      matrixStackIn.push();
-      matrixStackIn.rotate(Vector3f.ZP.rotationDegrees(180));
+      matrixStackIn.pushPose();
+      matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(180));
       matrixStackIn.translate(0.0D, -1.5D, 0.0D);
-      ResourceLocation resourceLocation = this.getEntityTexture(entityIn);
-      RenderType renderType = this.iceCloudModel.getRenderType(resourceLocation);
+      ResourceLocation resourceLocation = this.getTextureLocation(entityIn);
+      RenderType renderType = this.iceCloudModel.renderType(resourceLocation);
       IVertexBuilder ivertexbuilder = bufferIn.getBuffer(renderType);
-      this.iceCloudModel.render(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-      matrixStackIn.pop();
+      this.iceCloudModel.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+      matrixStackIn.popPose();
       super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
    }
 
    @Override
-   public ResourceLocation getEntityTexture(T entity) {
+   public ResourceLocation getTextureLocation(T entity) {
       return ICE_CLOUD_TEXTURE;
    }
 }

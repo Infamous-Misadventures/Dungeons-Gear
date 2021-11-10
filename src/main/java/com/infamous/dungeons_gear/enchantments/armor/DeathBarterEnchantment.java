@@ -29,6 +29,8 @@ import java.util.List;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class DeathBarterEnchantment extends DungeonsEnchantment implements IEmeraldsEnchantment {
 
@@ -57,21 +59,21 @@ public class DeathBarterEnchantment extends DungeonsEnchantment implements IEmer
         PlayerInventory playerInventory = player.inventory;
         int totalEmeraldCount = 0;
         List<Integer> emeraldSlotIndices = new ArrayList<>();
-        for(int slotIndex = 0; slotIndex < playerInventory.getSizeInventory(); slotIndex++){
-            ItemStack currentStack = playerInventory.getStackInSlot(slotIndex);
+        for(int slotIndex = 0; slotIndex < playerInventory.getContainerSize(); slotIndex++){
+            ItemStack currentStack = playerInventory.getItem(slotIndex);
             if(currentStack.getItem() == Items.EMERALD){
                 totalEmeraldCount += currentStack.getCount();
                 emeraldSlotIndices.add(slotIndex);
             }
         }
 
-        int deathBarterLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.DEATH_BARTER, player);
+        int deathBarterLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.DEATH_BARTER, player);
         int emeraldRequirement = 150 - Math.min(100, 50 * (deathBarterLevel - 1)); // will always need at least 50 emeralds even if the level exceeds 3
         if(deathBarterLevel > 0 && totalEmeraldCount >= emeraldRequirement){
 
             for(Integer slotIndex : emeraldSlotIndices){
                 if(emeraldRequirement > 0){
-                    ItemStack currentEmeraldStack = playerInventory.getStackInSlot(slotIndex);
+                    ItemStack currentEmeraldStack = playerInventory.getItem(slotIndex);
                     int currentEmeraldCount = currentEmeraldStack.getCount();
                     if(currentEmeraldCount >= emeraldRequirement){
                         currentEmeraldStack.setCount(currentEmeraldCount - emeraldRequirement);
@@ -87,15 +89,15 @@ public class DeathBarterEnchantment extends DungeonsEnchantment implements IEmer
 
             event.setCanceled(true);
             event.getEntityLiving().setHealth(1.0F);
-            event.getEntityLiving().clearActivePotions();
-            event.getEntityLiving().addPotionEffect(new EffectInstance(Effects.REGENERATION, 900, 1));
-            event.getEntityLiving().addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 900, 1));
-            event.getEntityLiving().addPotionEffect(new EffectInstance(Effects.ABSORPTION, 100, 1));
+            event.getEntityLiving().removeAllEffects();
+            event.getEntityLiving().addEffect(new EffectInstance(Effects.REGENERATION, 900, 1));
+            event.getEntityLiving().addEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 900, 1));
+            event.getEntityLiving().addEffect(new EffectInstance(Effects.ABSORPTION, 100, 1));
         }
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get()
                 || !(enchantment instanceof IEmeraldsEnchantment);
     }

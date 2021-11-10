@@ -22,7 +22,7 @@ public class ModdedEntityPredicate extends net.minecraft.entity.EntityPredicate 
     public ModdedEntityPredicate() {
     }
 
-    public net.minecraft.entity.EntityPredicate setDistance(double p_221013_1_) {
+    public net.minecraft.entity.EntityPredicate range(double p_221013_1_) {
         this.distance = p_221013_1_;
         return this;
     }
@@ -32,33 +32,33 @@ public class ModdedEntityPredicate extends net.minecraft.entity.EntityPredicate 
         return this;
     }
 
-    public net.minecraft.entity.EntityPredicate allowFriendlyFire() {
+    public net.minecraft.entity.EntityPredicate allowSameTeam() {
         // changed to allow friendly fire
         this.friendlyFire = true;
         return this;
     }
 
-    public net.minecraft.entity.EntityPredicate setLineOfSiteRequired() {
+    public net.minecraft.entity.EntityPredicate allowUnseeable() {
         this.requireLineOfSight = true;
         return this;
     }
 
-    public net.minecraft.entity.EntityPredicate setSkipAttackChecks() {
+    public net.minecraft.entity.EntityPredicate allowNonAttackable() {
         this.skipAttackChecks = true;
         return this;
     }
 
-    public net.minecraft.entity.EntityPredicate setUseInvisibilityCheck() {
+    public net.minecraft.entity.EntityPredicate ignoreInvisibilityTesting() {
         this.useVisibilityModifier = false;
         return this;
     }
 
-    public net.minecraft.entity.EntityPredicate setCustomPredicate(@Nullable Predicate<LivingEntity> p_221012_1_) {
+    public net.minecraft.entity.EntityPredicate selector(@Nullable Predicate<LivingEntity> p_221012_1_) {
         this.customPredicate = p_221012_1_;
         return this;
     }
 
-    public boolean canTarget(@Nullable LivingEntity goalOwner, LivingEntity targetEntity) {
+    public boolean test(@Nullable LivingEntity goalOwner, LivingEntity targetEntity) {
         if (goalOwner == targetEntity) {
             return false;
         } else if (targetEntity.isSpectator()) {
@@ -76,25 +76,25 @@ public class ModdedEntityPredicate extends net.minecraft.entity.EntityPredicate 
                         return false;
                     }
 
-                    if (!goalOwner.canAttack(targetEntity.getType())) {
+                    if (!goalOwner.canAttackType(targetEntity.getType())) {
                         return false;
                     }
                 }
 
-                if (!this.friendlyFire && goalOwner.isOnSameTeam(targetEntity)) {
+                if (!this.friendlyFire && goalOwner.isAlliedTo(targetEntity)) {
                     return false;
                 }
 
                 if (this.distance > 0.0D) {
-                    double visibilityModifier = this.useVisibilityModifier ? targetEntity.getVisibilityMultiplier(goalOwner) : 1.0D;
+                    double visibilityModifier = this.useVisibilityModifier ? targetEntity.getVisibilityPercent(goalOwner) : 1.0D;
                     double distanceModified = this.distance * visibilityModifier;
-                    double squareDistanceTo = goalOwner.getDistanceSq(targetEntity.getPosX(), targetEntity.getPosY(), targetEntity.getPosZ());
+                    double squareDistanceTo = goalOwner.distanceToSqr(targetEntity.getX(), targetEntity.getY(), targetEntity.getZ());
                     if (squareDistanceTo > distanceModified * distanceModified) {
                         return false;
                     }
                 }
 
-                if (!this.requireLineOfSight && goalOwner instanceof MobEntity && !((MobEntity)goalOwner).getEntitySenses().canSee(targetEntity)) {
+                if (!this.requireLineOfSight && goalOwner instanceof MobEntity && !((MobEntity)goalOwner).getSensing().canSee(targetEntity)) {
                     return false;
                 }
             }

@@ -3,6 +3,8 @@ package com.infamous.dungeons_gear.enchantments.armor;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 public class FortuneOfTheSeaEnchantment extends DungeonsEnchantment {
 
     public FortuneOfTheSeaEnchantment() {

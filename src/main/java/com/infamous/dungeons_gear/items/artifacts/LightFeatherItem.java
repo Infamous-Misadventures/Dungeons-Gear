@@ -24,6 +24,8 @@ import java.util.List;
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 import static com.infamous.dungeons_gear.utilties.AbilityHelper.isPetOfAttacker;
 
+import net.minecraft.item.Item.Properties;
+
 public class LightFeatherItem extends ArtifactItem {
     public LightFeatherItem(Properties properties) {
         super(properties);
@@ -31,14 +33,14 @@ public class LightFeatherItem extends ArtifactItem {
 
     public ActionResult<ItemStack> procArtifact(ItemUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
-        ItemStack itemstack = c.getItem();
-        World worldIn = c.getWorld();
+        ItemStack itemstack = c.getItemInHand();
+        World worldIn = c.getLevel();
 
         // Jump instead of roll
-        playerIn.jump();
+        playerIn.jumpFromGround();
 
-        List<LivingEntity> nearbyEntities = worldIn.getLoadedEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(playerIn.getPosX() - 5, playerIn.getPosY() - 5, playerIn.getPosZ() - 5,
-                playerIn.getPosX() + 5, playerIn.getPosY() + 5, playerIn.getPosZ() + 5), (nearbyEntity) -> {
+        List<LivingEntity> nearbyEntities = worldIn.getLoadedEntitiesOfClass(LivingEntity.class, new AxisAlignedBB(playerIn.getX() - 5, playerIn.getY() - 5, playerIn.getZ() - 5,
+                playerIn.getX() + 5, playerIn.getY() + 5, playerIn.getZ() + 5), (nearbyEntity) -> {
             return nearbyEntity != playerIn && !isPetOfAttacker(playerIn, nearbyEntity) && nearbyEntity.isAlive();
         });
 
@@ -47,35 +49,35 @@ public class LightFeatherItem extends ArtifactItem {
 
             // KNOCKBACK
             float knockbackMultiplier = 1.0F;
-            double xRatio = playerIn.getPosX() - nearbyEntity.getPosX();
+            double xRatio = playerIn.getX() - nearbyEntity.getX();
             double zRatio;
-            for (zRatio = playerIn.getPosZ() - nearbyEntity.getPosZ(); xRatio * xRatio + zRatio * zRatio < 1.0E-4D; zRatio = (Math.random() - Math.random()) * 0.01D) {
+            for (zRatio = playerIn.getZ() - nearbyEntity.getZ(); xRatio * xRatio + zRatio * zRatio < 1.0E-4D; zRatio = (Math.random() - Math.random()) * 0.01D) {
                 xRatio = (Math.random() - Math.random()) * 0.01D;
             }
-            nearbyEntity.attackedAtYaw = (float) (MathHelper.atan2(zRatio, xRatio) * 57.2957763671875D - (double) nearbyEntity.rotationYaw);
-            nearbyEntity.applyKnockback(0.4F * knockbackMultiplier, xRatio, zRatio);
+            nearbyEntity.hurtDir = (float) (MathHelper.atan2(zRatio, xRatio) * 57.2957763671875D - (double) nearbyEntity.yRot);
+            nearbyEntity.knockback(0.4F * knockbackMultiplier, xRatio, zRatio);
             // END OF KNOCKBACK
 
             PROXY.spawnParticles(nearbyEntity, ParticleTypes.CLOUD);
 
 
             EffectInstance stunned = new EffectInstance(CustomEffects.STUNNED, this.getDurationInSeconds() * 20);
-            EffectInstance nausea = new EffectInstance(Effects.NAUSEA, this.getDurationInSeconds() * 20);
-            EffectInstance slowness = new EffectInstance(Effects.SLOWNESS, this.getDurationInSeconds() * 20, 4);
-            nearbyEntity.addPotionEffect(slowness);
-            nearbyEntity.addPotionEffect(nausea);
-            nearbyEntity.addPotionEffect(stunned);
+            EffectInstance nausea = new EffectInstance(Effects.CONFUSION, this.getDurationInSeconds() * 20);
+            EffectInstance slowness = new EffectInstance(Effects.MOVEMENT_SLOWDOWN, this.getDurationInSeconds() * 20, 4);
+            nearbyEntity.addEffect(slowness);
+            nearbyEntity.addEffect(nausea);
+            nearbyEntity.addEffect(stunned);
 
         }
 
-        itemstack.damageItem(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemstack)));
+        itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemstack)));
         ArtifactItem.putArtifactOnCooldown(playerIn, itemstack.getItem());
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
-        super.addInformation(stack, world, list, flag);
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+        super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
 

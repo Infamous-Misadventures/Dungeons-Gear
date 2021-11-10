@@ -24,6 +24,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class FuseShotEnchantment extends DungeonsEnchantment {
 
@@ -43,15 +45,15 @@ public class FuseShotEnchantment extends DungeonsEnchantment {
     public static void onFuseShotImpact(ProjectileImpactEvent.Arrow event){
         AbstractArrowEntity arrowEntity = event.getArrow();
         if(ModEnchantmentHelper.shooterIsLiving(arrowEntity)){
-            LivingEntity shooter =(LivingEntity) arrowEntity.func_234616_v_();
+            LivingEntity shooter =(LivingEntity) arrowEntity.getOwner();
             if(arrowEntity.getTags().contains(FUSE_SHOT_TAG)){
                 if(event.getRayTraceResult() instanceof BlockRayTraceResult){
                     BlockRayTraceResult blockRayTraceResult = (BlockRayTraceResult)event.getRayTraceResult();
-                    BlockPos blockPos = blockRayTraceResult.getPos();
-                    float f = (float)arrowEntity.getMotion().length();
-                    int damage = MathHelper.ceil(MathHelper.clamp((double)f * arrowEntity.getDamage(), 0.0D, 2.147483647E9D));
-                    if (arrowEntity.getIsCritical()) {
-                        long criticalDamageBonus = (long)shooter.getRNG().nextInt(damage / 2 + 2);
+                    BlockPos blockPos = blockRayTraceResult.getBlockPos();
+                    float f = (float)arrowEntity.getDeltaMovement().length();
+                    int damage = MathHelper.ceil(MathHelper.clamp((double)f * arrowEntity.getBaseDamage(), 0.0D, 2.147483647E9D));
+                    if (arrowEntity.isCritArrow()) {
+                        long criticalDamageBonus = (long)shooter.getRandom().nextInt(damage / 2 + 2);
                         damage = (int)Math.min(criticalDamageBonus + (long)damage, 2147483647L);
                     }
                     SoundHelper.playGenericExplodeSound(arrowEntity);
@@ -66,12 +68,12 @@ public class FuseShotEnchantment extends DungeonsEnchantment {
     public static void onFuseShotDamage(LivingDamageEvent event){
         if(event.getSource() instanceof IndirectEntityDamageSource){
             IndirectEntityDamageSource indirectEntityDamageSource = (IndirectEntityDamageSource) event.getSource();
-            if(indirectEntityDamageSource.getImmediateSource() instanceof AbstractArrowEntity) {
-                AbstractArrowEntity arrowEntity = (AbstractArrowEntity) indirectEntityDamageSource.getImmediateSource();
+            if(indirectEntityDamageSource.getDirectEntity() instanceof AbstractArrowEntity) {
+                AbstractArrowEntity arrowEntity = (AbstractArrowEntity) indirectEntityDamageSource.getDirectEntity();
 
                 LivingEntity victim = event.getEntityLiving();
-                if (indirectEntityDamageSource.getTrueSource() instanceof LivingEntity) {
-                    LivingEntity archer = (LivingEntity) indirectEntityDamageSource.getTrueSource();
+                if (indirectEntityDamageSource.getEntity() instanceof LivingEntity) {
+                    LivingEntity archer = (LivingEntity) indirectEntityDamageSource.getEntity();
                     if(arrowEntity.getTags().contains(FUSE_SHOT_TAG)) {
                         SoundHelper.playGenericExplodeSound(arrowEntity);
                         AOECloudHelper.spawnExplosionCloud(archer, victim, 3.0f);

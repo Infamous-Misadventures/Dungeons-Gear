@@ -99,7 +99,7 @@ public class Combo implements ICombo {
     public float getMaxSouls(@Nullable LivingEntity living) {
         if (living == null) return 300;
 
-        int bagOfSoulsLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.BAG_OF_SOULS, living);
+        int bagOfSoulsLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.BAG_OF_SOULS, living);
         if (bagOfSoulsLevel > 0) {
             return 300 + (100 * bagOfSoulsLevel);
         } else {

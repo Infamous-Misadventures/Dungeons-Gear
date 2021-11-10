@@ -12,7 +12,7 @@ public class ArtifactGroup extends ItemGroup
     }
 
     @Override
-    public ItemStack createIcon()
+    public ItemStack makeIcon()
     {
         return new ItemStack(ItemRegistry.TOTEM_OF_REGENERATION.get());
     }

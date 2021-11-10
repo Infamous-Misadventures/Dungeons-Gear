@@ -33,7 +33,7 @@ public class CrossbowEvents {
     @SubscribeEvent
     public static void onAccelerateCrossbowFired(PlayerInteractEvent.RightClickItem event) {
         PlayerEntity playerEntity = event.getPlayer();
-        World world = playerEntity.getEntityWorld();
+        World world = playerEntity.getCommandSenderWorld();
         long worldTime = world.getGameTime();
         ItemStack stack = event.getItemStack();
         if (stack.getItem() instanceof CrossbowItem & CrossbowItem.isCharged(stack)) {
@@ -42,7 +42,7 @@ public class CrossbowEvents {
             long lastFiredTime = weaponCap.getLastFiredTime();
             int crossbowChargeTime = weaponCap.getCrossbowChargeTime();
 
-            int accelerateLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.ACCELERATE, stack);
+            int accelerateLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.ACCELERATE, stack);
             if (hasAccelerateBuiltIn(stack)) accelerateLevel++;
 
             int defaultChargeTime = 25;
@@ -73,19 +73,19 @@ public class CrossbowEvents {
     @SubscribeEvent
     public static void onExplodingCrossbowImpact(ProjectileImpactEvent.Arrow event) {
         AbstractArrowEntity arrowEntity = event.getArrow();
-        if (arrowEntity.func_234616_v_() instanceof LivingEntity) {
-            LivingEntity shooter = (LivingEntity) arrowEntity.func_234616_v_();
+        if (arrowEntity.getOwner() instanceof LivingEntity) {
+            LivingEntity shooter = (LivingEntity) arrowEntity.getOwner();
             boolean explodingCrossbowFlag = arrowEntity.getTags().contains(IRangedWeapon.EXPLOSIVE_TAG);
             if (explodingCrossbowFlag) {
                 if (event.getRayTraceResult() instanceof BlockRayTraceResult) {
                     BlockRayTraceResult blockRayTraceResult = (BlockRayTraceResult) event.getRayTraceResult();
-                    BlockPos blockPos = blockRayTraceResult.getPos();
+                    BlockPos blockPos = blockRayTraceResult.getBlockPos();
 
                     // weird arrow damage calculation from AbstractArrowEntity
-                    float f = (float) arrowEntity.getMotion().length();
-                    int damage = MathHelper.ceil(MathHelper.clamp((double) f * arrowEntity.getDamage(), 0.0D, 2.147483647E9D));
-                    if (arrowEntity.getIsCritical()) {
-                        long criticalDamageBonus = (long) shooter.getRNG().nextInt(damage / 2 + 2);
+                    float f = (float) arrowEntity.getDeltaMovement().length();
+                    int damage = MathHelper.ceil(MathHelper.clamp((double) f * arrowEntity.getBaseDamage(), 0.0D, 2.147483647E9D));
+                    if (arrowEntity.isCritArrow()) {
+                        long criticalDamageBonus = (long) shooter.getRandom().nextInt(damage / 2 + 2);
                         damage = (int) Math.min(criticalDamageBonus + (long) damage, 2147483647L);
                     }
 
@@ -100,10 +100,10 @@ public class CrossbowEvents {
     @SubscribeEvent
     public static void onCrossbowDamage(LivingDamageEvent event) {
         if (event.getSource() instanceof IndirectEntityDamageSource) {
-            if (event.getSource().getImmediateSource() instanceof AbstractArrowEntity) {
-                AbstractArrowEntity arrowEntity = (AbstractArrowEntity) event.getSource().getImmediateSource();
-                if (arrowEntity.func_234616_v_() instanceof LivingEntity) {
-                    LivingEntity shooter = (LivingEntity) arrowEntity.func_234616_v_();
+            if (event.getSource().getDirectEntity() instanceof AbstractArrowEntity) {
+                AbstractArrowEntity arrowEntity = (AbstractArrowEntity) event.getSource().getDirectEntity();
+                if (arrowEntity.getOwner() instanceof LivingEntity) {
+                    LivingEntity shooter = (LivingEntity) arrowEntity.getOwner();
                     boolean explodingCrossbowFlag = arrowEntity.getTags().contains(IRangedWeapon.EXPLOSIVE_TAG);
                     if (explodingCrossbowFlag) {
                         LivingEntity victim = event.getEntityLiving();
@@ -114,7 +114,7 @@ public class CrossbowEvents {
                     boolean canLandMultipleHits = arrowEntity.getTags().contains(IRangedWeapon.DUAL_WIELD_TAG)
                             || arrowEntity.getTags().contains(IRangedWeapon.MULTISHOT_TAG);
                     if (canLandMultipleHits) {
-                        event.getEntityLiving().hurtResistantTime = 0;
+                        event.getEntityLiving().invulnerableTime = 0;
                     }
                 }
             }

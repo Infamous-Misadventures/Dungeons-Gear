@@ -16,6 +16,8 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 
+import net.minecraft.item.Item.Properties;
+
 public class SatchelOfElementsItem extends ArtifactItem{
 
     public SatchelOfElementsItem(Properties properties) {
@@ -25,27 +27,27 @@ public class SatchelOfElementsItem extends ArtifactItem{
     @Override
     public ActionResult<ItemStack> procArtifact(ItemUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
-        ItemStack itemstack = c.getItem();
+        ItemStack itemstack = c.getItemInHand();
 
         if(playerIn == null) return new ActionResult<>(ActionResultType.FAIL, itemstack);
 
-        if(!c.getWorld().isRemote){
+        if(!c.getLevel().isClientSide){
             int limit = 7;
             if(!AreaOfEffectHelper.applyElementalEffectsToNearbyEnemies(playerIn, limit, 8)){
                 new ActionResult<>(ActionResultType.FAIL, itemstack);
             }
         }
 
-        itemstack.damageItem(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemstack)));
+        itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemstack)));
 
         ArtifactItem.putArtifactOnCooldown(playerIn, itemstack.getItem());
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
-        super.addInformation(stack, world, list, flag);
+        super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
 

@@ -12,7 +12,7 @@ public class RangedWeaponGroup extends ItemGroup
     }
 
     @Override
-    public ItemStack createIcon()
+    public ItemStack makeIcon()
     {
         return new ItemStack(ItemRegistry.AUTO_CROSSBOW.get());
     }

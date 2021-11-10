@@ -11,7 +11,7 @@ import java.util.Map;
 public class VanillaItemModelProperties {
     public VanillaItemModelProperties(){
         Map<Item, Map<ResourceLocation, IItemPropertyGetter>> itemModelsProperties =
-                ObfuscationReflectionHelper.getPrivateValue(ItemModelsProperties.class, null, "field_239415_f_");
+                ObfuscationReflectionHelper.getPrivateValue(ItemModelsProperties.class, null, "PROPERTIES");
         if(itemModelsProperties != null){
             Map<ResourceLocation, IItemPropertyGetter> bowModelProperties = itemModelsProperties.get(Items.BOW);
             Map<ResourceLocation, IItemPropertyGetter> crossbowModelProperties = itemModelsProperties.get(Items.CROSSBOW);
@@ -21,15 +21,15 @@ public class VanillaItemModelProperties {
                         if (livingEntity == null) {
                             return 0.0F;
                         } else {
-                            return livingEntity.getActiveItemStack() != stack ? 0.0F
-                                    : (float) (stack.getUseDuration() - livingEntity.getItemInUseCount())
-                                    / RangedAttackHelper.getVanillaBowChargeTime(livingEntity, livingEntity.getActiveItemStack());
+                            return livingEntity.getUseItem() != stack ? 0.0F
+                                    : (float) (stack.getUseDuration() - livingEntity.getUseItemRemainingTicks())
+                                    / RangedAttackHelper.getVanillaBowChargeTime(livingEntity, livingEntity.getUseItem());
                         }
                     });
             bowModelProperties.put(new ResourceLocation("pulling"),
                     (stack, clientWorld, livingEntity) -> {
-                        return livingEntity != null && livingEntity.isHandActive()
-                                && livingEntity.getActiveItemStack() == stack
+                        return livingEntity != null && livingEntity.isUsingItem()
+                                && livingEntity.getUseItem() == stack
                                 ? 1.0F
                                 : 0.0F;
                     });
@@ -40,14 +40,14 @@ public class VanillaItemModelProperties {
                             return 0.0F;
                         } else {
                             return CrossbowItem.isCharged(stack) ? 0.0F
-                                    : (float) (stack.getUseDuration() - livingEntity.getItemInUseCount())
+                                    : (float) (stack.getUseDuration() - livingEntity.getUseItemRemainingTicks())
                                     / (float) RangedAttackHelper.getVanillaCrossbowChargeTime(livingEntity, stack);
                         }
                     });
             crossbowModelProperties.put(new ResourceLocation("pulling"),
                     (stack, clientWorld, livingEntity) -> {
-                        return livingEntity != null && livingEntity.isHandActive()
-                                && livingEntity.getActiveItemStack() == stack && !CrossbowItem.isCharged(stack)
+                        return livingEntity != null && livingEntity.isUsingItem()
+                                && livingEntity.getUseItem() == stack && !CrossbowItem.isCharged(stack)
                                 ? 1.0F
                                 : 0.0F;
                     });

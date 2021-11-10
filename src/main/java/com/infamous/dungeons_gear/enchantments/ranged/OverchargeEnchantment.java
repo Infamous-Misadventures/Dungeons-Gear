@@ -7,6 +7,8 @@ import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 public class OverchargeEnchantment extends DungeonsEnchantment {
 
     public OverchargeEnchantment() {
@@ -18,7 +20,7 @@ public class OverchargeEnchantment extends DungeonsEnchantment {
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get()
                 || (enchantment != Enchantments.QUICK_CHARGE && enchantment != RangedEnchantmentList.ACCELERATE);
     }

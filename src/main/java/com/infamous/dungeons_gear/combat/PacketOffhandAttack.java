@@ -40,13 +40,13 @@ public class PacketOffhandAttack {
                             ServerPlayerEntity player = ((NetworkEvent.Context)ctx.get()).getSender();
                         Entity target = null;
                         if (player != null) {
-                            target = player.world.getEntityByID(packet.entityID);
+                            target = player.level.getEntity(packet.entityID);
                         }
                         if (target != null) {
-                                ItemStack offhand = player.getHeldItemOffhand();
+                                ItemStack offhand = player.getOffhandItem();
                                 if (!offhand.isEmpty()) {
                                     if (offhand.getItem() instanceof IDualWieldWeapon) {
-                                        float reach = (float) player.getBaseAttributeValue(AttributeRegistry.ATTACK_REACH.get());
+                                        float reach = (float) player.getAttributeBaseValue(AttributeRegistry.ATTACK_REACH.get());
                                         if(player.isCreative()) reach *= 2.0D;
 
                                         // This is done to mitigate the difference between the render view entity's position
@@ -54,7 +54,7 @@ public class PacketOffhandAttack {
                                         float renderViewEntityOffsetFromPlayerMitigator = 0.2F;
                                         reach += renderViewEntityOffsetFromPlayerMitigator;
 
-                                        double distanceSquared = player.getDistanceSq(target);
+                                        double distanceSquared = player.distanceToSqr(target);
                                         double reachSquared = (double)(reach * reach);
 
                                         if (reachSquared >= distanceSquared) {

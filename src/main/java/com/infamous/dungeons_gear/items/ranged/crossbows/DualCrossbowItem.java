@@ -15,6 +15,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
+import net.minecraft.item.Item.Properties;
+
 public class DualCrossbowItem extends AbstractDungeonsCrossbowItem implements IDualWieldWeapon {
 
     public DualCrossbowItem(Properties builder, int defaultChargeTimeIn, boolean isUniqueIn) {
@@ -27,20 +29,20 @@ public class DualCrossbowItem extends AbstractDungeonsCrossbowItem implements ID
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity playerEntity, Hand handIn) {
-        if (isCharged(playerEntity.getHeldItemMainhand()) && playerEntity.getHeldItemOffhand().getItem() instanceof DualCrossbowItem && isCharged(playerEntity.getHeldItemOffhand()) && handIn == Hand.MAIN_HAND)
-            super.onItemRightClick(world, playerEntity, Hand.OFF_HAND);
-        return super.onItemRightClick(world, playerEntity, handIn);
+    public ActionResult<ItemStack> use(World world, PlayerEntity playerEntity, Hand handIn) {
+        if (isCharged(playerEntity.getMainHandItem()) && playerEntity.getOffhandItem().getItem() instanceof DualCrossbowItem && isCharged(playerEntity.getOffhandItem()) && handIn == Hand.MAIN_HAND)
+            super.use(world, playerEntity, Hand.OFF_HAND);
+        return super.use(world, playerEntity, handIn);
     }
 
 
     @Override
-    public void onPlayerStoppedUsing(ItemStack stack, World world, LivingEntity livingEntity, int timeLeft) {
+    public void releaseUsing(ItemStack stack, World world, LivingEntity livingEntity, int timeLeft) {
         int chargeIn = this.getUseDuration(stack) - timeLeft;
         float charge = getCrossbowCharge(chargeIn, stack);
 
-        ItemStack offhandHeldItem = livingEntity.getHeldItemOffhand();
-        boolean offhandCrossbowFlag = offhandHeldItem.getItem() instanceof DualCrossbowItem && livingEntity.getHeldItemMainhand() == stack;
+        ItemStack offhandHeldItem = livingEntity.getOffhandItem();
+        boolean offhandCrossbowFlag = offhandHeldItem.getItem() instanceof DualCrossbowItem && livingEntity.getMainHandItem() == stack;
 
         if (charge >= 1.0F
                 && !isCharged(stack)
@@ -50,7 +52,7 @@ public class DualCrossbowItem extends AbstractDungeonsCrossbowItem implements ID
                 setCharged(offhandHeldItem, true);
             }
             SoundCategory lvt_7_1_ = livingEntity instanceof PlayerEntity ? SoundCategory.PLAYERS : SoundCategory.HOSTILE;
-            world.playSound((PlayerEntity) null, livingEntity.getPosX(), livingEntity.getPosY(), livingEntity.getPosZ(), SoundEvents.ITEM_CROSSBOW_LOADING_END, lvt_7_1_, 1.0F, 1.0F / (random.nextFloat() * 0.5F + 1.0F) + 0.2F);
+            world.playSound((PlayerEntity) null, livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), SoundEvents.CROSSBOW_LOADING_END, lvt_7_1_, 1.0F, 1.0F / (random.nextFloat() * 0.5F + 1.0F) + 0.2F);
         }
 
     }
@@ -61,8 +63,8 @@ public class DualCrossbowItem extends AbstractDungeonsCrossbowItem implements ID
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
-        super.addInformation(stack, world, list, flag);
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+        super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
 
@@ -82,7 +84,7 @@ public class DualCrossbowItem extends AbstractDungeonsCrossbowItem implements ID
 
     @Override
     public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-        if (entityIn instanceof LivingEntity && !worldIn.isRemote)
+        if (entityIn instanceof LivingEntity && !worldIn.isClientSide)
             update((LivingEntity) entityIn, stack, itemSlot);
     }
 }

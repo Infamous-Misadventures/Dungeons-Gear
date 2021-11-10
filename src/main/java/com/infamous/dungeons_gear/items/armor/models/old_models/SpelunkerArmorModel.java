@@ -34,11 +34,11 @@ public class SpelunkerArmorModel<T extends LivingEntity> extends BipedModel<T> {
 		this.slot = slot;
 		this.entity = entity;
 		this.unique = unique;
-		textureWidth = 64;
-		textureHeight = 64;
+		texWidth = 64;
+		texHeight = 64;
 
 		Everything = new ModelRenderer(this);
-		Everything.setRotationPoint(0.0F, 24.0F, 0.0F);
+		Everything.setPos(0.0F, 24.0F, 0.0F);
 
 
 		boolean testificate =
@@ -52,51 +52,51 @@ public class SpelunkerArmorModel<T extends LivingEntity> extends BipedModel<T> {
 
 		// Cave Crawler Head
 		CaveCrawlerHead = new ModelRenderer(this);
-		CaveCrawlerHead.setRotationPoint(0.0F, -24.0F, 0.0F);
+		CaveCrawlerHead.setPos(0.0F, -24.0F, 0.0F);
 		Everything.addChild(CaveCrawlerHead);
-		CaveCrawlerHead.setTextureOffset(32, 0).addBox(-4.0F, -10.0F - testificateHelmetShiftUp, -4.0F, 8.0F, 4.0F, 8.0F, 1.0F, false);
-		CaveCrawlerHead.setTextureOffset(40, 12).addBox(-1.0F, -14.0F - testificateHelmetShiftUp, -7.0F, 2.0F, 8.0F, 2.0F, 0.0F, false);
-		CaveCrawlerHead.setTextureOffset(48, 18).addBox(-0.5F, -16.0F - testificateHelmetShiftUp, -6.5F, 1.0F, 2.0F, 1.0F, 0.0F, false);
+		CaveCrawlerHead.texOffs(32, 0).addBox(-4.0F, -10.0F - testificateHelmetShiftUp, -4.0F, 8.0F, 4.0F, 8.0F, 1.0F, false);
+		CaveCrawlerHead.texOffs(40, 12).addBox(-1.0F, -14.0F - testificateHelmetShiftUp, -7.0F, 2.0F, 8.0F, 2.0F, 0.0F, false);
+		CaveCrawlerHead.texOffs(48, 18).addBox(-0.5F, -16.0F - testificateHelmetShiftUp, -6.5F, 1.0F, 2.0F, 1.0F, 0.0F, false);
 
 		CaveCrawlerTrim = new ModelRenderer(this);
-		CaveCrawlerTrim.setRotationPoint(0.0F, -1.0F, 0.0F);
+		CaveCrawlerTrim.setPos(0.0F, -1.0F, 0.0F);
 		CaveCrawlerHead.addChild(CaveCrawlerTrim);
-		CaveCrawlerTrim.setTextureOffset(42, 12).addBox(4.0F, -5.0F - testificateHelmetShiftUp, -5.0F, 1.0F, 1.0F, 10.0F, 0.5F, false);
-		CaveCrawlerTrim.setTextureOffset(42, 12).addBox(-5.0F, -5.0F - testificateHelmetShiftUp, -5.0F, 1.0F, 1.0F, 10.0F, 0.5F, false);
-		CaveCrawlerTrim.setTextureOffset(46, 21).addBox(-4.0F, -5.0F - testificateHelmetShiftUp, -5.0F, 8.0F, 1.0F, 1.0F, 0.5F, false);
-		CaveCrawlerTrim.setTextureOffset(46, 21).addBox(-4.0F, -5.0F - testificateHelmetShiftUp, 4.0F, 8.0F, 1.0F, 1.0F, 0.5F, false);
+		CaveCrawlerTrim.texOffs(42, 12).addBox(4.0F, -5.0F - testificateHelmetShiftUp, -5.0F, 1.0F, 1.0F, 10.0F, 0.5F, false);
+		CaveCrawlerTrim.texOffs(42, 12).addBox(-5.0F, -5.0F - testificateHelmetShiftUp, -5.0F, 1.0F, 1.0F, 10.0F, 0.5F, false);
+		CaveCrawlerTrim.texOffs(46, 21).addBox(-4.0F, -5.0F - testificateHelmetShiftUp, -5.0F, 8.0F, 1.0F, 1.0F, 0.5F, false);
+		CaveCrawlerTrim.texOffs(46, 21).addBox(-4.0F, -5.0F - testificateHelmetShiftUp, 4.0F, 8.0F, 1.0F, 1.0F, 0.5F, false);
 
 		// Spelunker Armor head
 		SpelunkerArmorHead = new ModelRenderer(this);
-		SpelunkerArmorHead.setRotationPoint(0.0F, -25.0F, 0.0F);
+		SpelunkerArmorHead.setPos(0.0F, -25.0F, 0.0F);
 		Everything.addChild(SpelunkerArmorHead);
-		SpelunkerArmorHead.setTextureOffset(0, 52).addBox(4.0F, -8.0F - testificateHelmetShiftUp, -5.0F, 1.0F, 2.0F, 10.0F, 0.0F, false);
-		SpelunkerArmorHead.setTextureOffset(0, 52).addBox(-5.0F, -8.0F - testificateHelmetShiftUp, -5.0F, 1.0F, 2.0F, 10.0F, 0.0F, false);
-		SpelunkerArmorHead.setTextureOffset(0, 52).addBox(-1.0F, -10.0F - testificateHelmetShiftUp, -5.0F, 2.0F, 2.0F, 10.0F, 0.0F, false);
-		SpelunkerArmorHead.setTextureOffset(0, 61).addBox(-4.0F, -8.0F - testificateHelmetShiftUp, -5.0F, 8.0F, 2.0F, 1.0F, 0.0F, false);
-		SpelunkerArmorHead.setTextureOffset(0, 61).addBox(-4.0F, -8.0F - testificateHelmetShiftUp, 4.0F, 8.0F, 2.0F, 1.0F, 0.0F, false);
-		SpelunkerArmorHead.setTextureOffset(24, 54).addBox(-1.0F, -15.0F - testificateHelmetShiftUp, -7.0F, 2.0F, 8.0F, 2.0F, 0.0F, false);
-		SpelunkerArmorHead.setTextureOffset(10, 47).addBox(-0.5F, -17.0F - testificateHelmetShiftUp, -6.5F, 1.0F, 2.0F, 1.0F, 0.0F, false);
+		SpelunkerArmorHead.texOffs(0, 52).addBox(4.0F, -8.0F - testificateHelmetShiftUp, -5.0F, 1.0F, 2.0F, 10.0F, 0.0F, false);
+		SpelunkerArmorHead.texOffs(0, 52).addBox(-5.0F, -8.0F - testificateHelmetShiftUp, -5.0F, 1.0F, 2.0F, 10.0F, 0.0F, false);
+		SpelunkerArmorHead.texOffs(0, 52).addBox(-1.0F, -10.0F - testificateHelmetShiftUp, -5.0F, 2.0F, 2.0F, 10.0F, 0.0F, false);
+		SpelunkerArmorHead.texOffs(0, 61).addBox(-4.0F, -8.0F - testificateHelmetShiftUp, -5.0F, 8.0F, 2.0F, 1.0F, 0.0F, false);
+		SpelunkerArmorHead.texOffs(0, 61).addBox(-4.0F, -8.0F - testificateHelmetShiftUp, 4.0F, 8.0F, 2.0F, 1.0F, 0.0F, false);
+		SpelunkerArmorHead.texOffs(24, 54).addBox(-1.0F, -15.0F - testificateHelmetShiftUp, -7.0F, 2.0F, 8.0F, 2.0F, 0.0F, false);
+		SpelunkerArmorHead.texOffs(10, 47).addBox(-0.5F, -17.0F - testificateHelmetShiftUp, -6.5F, 1.0F, 2.0F, 1.0F, 0.0F, false);
 
 		Body = new ModelRenderer(this);
-		Body.setRotationPoint(0.0F, -24.0F, 0.0F);
+		Body.setPos(0.0F, -24.0F, 0.0F);
 		Everything.addChild(Body);
-		Body.setTextureOffset(0, 0).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, 1.0F, false);
-		Body.setTextureOffset(0, 16).addBox(-4.0F, 8.0F, -2.0F, 8.0F, 4.0F, 4.0F, 1.2F, false);
+		Body.texOffs(0, 0).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, 1.0F, false);
+		Body.texOffs(0, 16).addBox(-4.0F, 8.0F, -2.0F, 8.0F, 4.0F, 4.0F, 1.2F, false);
 
 		RightArm = new ModelRenderer(this);
-		RightArm.setRotationPoint(5.0F, -22.0F, 0.0F);
+		RightArm.setPos(5.0F, -22.0F, 0.0F);
 		Everything.addChild(RightArm);
-		RightArm.setTextureOffset(24, 12).addBox(-1.0F - 2.0F, -2.0F, -2.0F, 4.0F, 3.0F, 4.0F, 1.0F, false);
+		RightArm.texOffs(24, 12).addBox(-1.0F - 2.0F, -2.0F, -2.0F, 4.0F, 3.0F, 4.0F, 1.0F, false);
 
 		LeftArm = new ModelRenderer(this);
-		LeftArm.setRotationPoint(-5.0F, -22.0F, 0.0F);
+		LeftArm.setPos(-5.0F, -22.0F, 0.0F);
 		Everything.addChild(LeftArm);
-		LeftArm.setTextureOffset(24, 12).addBox(-3.0F + 2.0F, -2.0F, -2.0F, 4.0F, 3.0F, 4.0F, 1.0F, true);
+		LeftArm.texOffs(24, 12).addBox(-3.0F + 2.0F, -2.0F, -2.0F, 4.0F, 3.0F, 4.0F, 1.0F, true);
 	}
 
 	@Override
-	public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha){
+	public void renderToBuffer(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha){
 		boolean testificate =
 				this.entity instanceof AbstractIllagerEntity ||
 						this.entity.getType() == ForgeRegistries.ENTITIES.getValue(new ResourceLocation("savageandravage:skeleton_villager")) ||
@@ -134,39 +134,39 @@ public class SpelunkerArmorModel<T extends LivingEntity> extends BipedModel<T> {
 			} else {
 
 		 */
-			matrixStackIn.push();
+			matrixStackIn.pushPose();
 			if(this.unique){
-				this.CaveCrawlerHead.copyModelAngles(this.bipedHead);
-				if (this.entity.isChild()) {
+				this.CaveCrawlerHead.copyFrom(this.head);
+				if (this.entity.isBaby()) {
 					matrixStackIn.scale(0.8F, 0.8F, 0.8F);
-					this.CaveCrawlerHead.setRotationPoint(0.0F, 15.0F, 0.0F);
+					this.CaveCrawlerHead.setPos(0.0F, 15.0F, 0.0F);
 				}
 				this.CaveCrawlerHead.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-				matrixStackIn.pop();
+				matrixStackIn.popPose();
 			}
 			else{
-				this.SpelunkerArmorHead.copyModelAngles(this.bipedHead);
-				if (this.entity.isChild()) {
+				this.SpelunkerArmorHead.copyFrom(this.head);
+				if (this.entity.isBaby()) {
 					matrixStackIn.scale(0.8F, 0.8F, 0.8F);
-					this.SpelunkerArmorHead.setRotationPoint(0.0F, 15.0F, 0.0F);
+					this.SpelunkerArmorHead.setPos(0.0F, 15.0F, 0.0F);
 				}
 				this.SpelunkerArmorHead.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-				matrixStackIn.pop();
+				matrixStackIn.popPose();
 			}
 			//}
 		}
 
 		if (this.slot == EquipmentSlotType.CHEST) {
-			matrixStackIn.push();
+			matrixStackIn.pushPose();
 
-			this.Body.copyModelAngles(this.bipedBody);
-			this.LeftArm.copyModelAngles(this.bipedLeftArm);
-			this.RightArm.copyModelAngles(this.bipedRightArm);
-			if (this.entity.isChild()) {
+			this.Body.copyFrom(this.body);
+			this.LeftArm.copyFrom(this.leftArm);
+			this.RightArm.copyFrom(this.rightArm);
+			if (this.entity.isBaby()) {
 				matrixStackIn.scale(0.5F, 0.5F, 0.5F);
-				this.Body.setRotationPoint(0.0F, 24.0F, 0.0F);
-				this.LeftArm.setRotationPoint(5.0F, 24.0F, 0.0F);
-				this.RightArm.setRotationPoint(-5.0F, 24.0F, 0.0F);
+				this.Body.setPos(0.0F, 24.0F, 0.0F);
+				this.LeftArm.setPos(5.0F, 24.0F, 0.0F);
+				this.RightArm.setPos(-5.0F, 24.0F, 0.0F);
 			}
 			this.LeftArm.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
 			this.RightArm.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
@@ -174,13 +174,13 @@ public class SpelunkerArmorModel<T extends LivingEntity> extends BipedModel<T> {
 				matrixStackIn.scale(1.0F, 1.0F, 1.3F);
 			}
 			this.Body.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-			matrixStackIn.pop();
+			matrixStackIn.popPose();
 		}
 	}
 
 	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.rotateAngleX = x;
-		modelRenderer.rotateAngleY = y;
-		modelRenderer.rotateAngleZ = z;
+		modelRenderer.xRot = x;
+		modelRenderer.yRot = y;
+		modelRenderer.zRot = z;
 	}
 }

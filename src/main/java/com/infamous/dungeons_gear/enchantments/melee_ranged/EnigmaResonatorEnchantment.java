@@ -26,6 +26,8 @@ import net.minecraftforge.fml.common.Mod;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = MODID)
 public class EnigmaResonatorEnchantment extends DamageBoostEnchantment {
 
@@ -39,23 +41,23 @@ public class EnigmaResonatorEnchantment extends DamageBoostEnchantment {
         if (event.getPlayer() == null) return;
         PlayerEntity attacker = event.getPlayer();
         LivingEntity victim = event.getEntityLiving();
-        ItemStack mainhand = attacker.getHeldItemMainhand();
+        ItemStack mainhand = attacker.getMainHandItem();
         boolean uniqueWeaponFlag = hasEnigmaResonatorBuiltIn(mainhand);
 
         int numSouls = (int) CapabilityHelper.getComboCapability(attacker).getSouls();
         if (!event.isVanillaCritical()) {
             boolean success = false;
             if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.ENIGMA_RESONATOR)) {
-                int enigmaResonatorLevel = EnchantmentHelper.getEnchantmentLevel(MeleeRangedEnchantmentList.ENIGMA_RESONATOR, mainhand);
+                int enigmaResonatorLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeRangedEnchantmentList.ENIGMA_RESONATOR, mainhand);
                 float soulsCriticalBoostChanceCap;
                 soulsCriticalBoostChanceCap = 0.1F + 0.05F * enigmaResonatorLevel;
-                float soulsCriticalBoostRand = attacker.getRNG().nextFloat();
+                float soulsCriticalBoostRand = attacker.getRandom().nextFloat();
                 if (soulsCriticalBoostRand <= Math.min(numSouls / 300.0, soulsCriticalBoostChanceCap)) {
                     success = true;
                 }
             }
             if (uniqueWeaponFlag) {
-                float soulsCriticalBoostRand = attacker.getRNG().nextFloat();
+                float soulsCriticalBoostRand = attacker.getRandom().nextFloat();
                 if (soulsCriticalBoostRand <= Math.min(numSouls / 300.0, 0.15F)) {
                     success = true;
                 }
@@ -80,7 +82,7 @@ public class EnigmaResonatorEnchantment extends DamageBoostEnchantment {
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() ||
                 (!(enchantment instanceof DamageEnchantment) && !(enchantment instanceof DamageBoostEnchantment) && !(enchantment instanceof AOEDamageEnchantment));
     }

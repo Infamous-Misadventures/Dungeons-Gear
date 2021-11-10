@@ -32,6 +32,8 @@ import net.minecraftforge.fml.network.PacketDistributor;
 import java.util.List;
 import java.util.UUID;
 
+import net.minecraft.item.Item.Properties;
+
 public class BuzzyNestItem extends ArtifactItem {
 
     public BuzzyNestItem(Properties properties) {
@@ -40,21 +42,21 @@ public class BuzzyNestItem extends ArtifactItem {
     }
 
     public ActionResult<ItemStack> procArtifact(ItemUseContext itemUseContext) {
-        World world = itemUseContext.getWorld();
-        if (world.isRemote) {
-            return ActionResult.resultSuccess(itemUseContext.getItem());
+        World world = itemUseContext.getLevel();
+        if (world.isClientSide) {
+            return ActionResult.success(itemUseContext.getItemInHand());
         } else {
-            ItemStack itemUseContextItem = itemUseContext.getItem();
+            ItemStack itemUseContextItem = itemUseContext.getItemInHand();
             PlayerEntity itemUseContextPlayer = itemUseContext.getPlayer();
-            BlockPos itemUseContextPos = itemUseContext.getPos();
-            Direction itemUseContextFace = itemUseContext.getFace();
+            BlockPos itemUseContextPos = itemUseContext.getClickedPos();
+            Direction itemUseContextFace = itemUseContext.getClickedFace();
             BlockState blockState = world.getBlockState(itemUseContextPos);
 
             BlockPos blockPos;
             if (blockState.getCollisionShape(world, itemUseContextPos).isEmpty()) {
                 blockPos = itemUseContextPos;
             } else {
-                blockPos = itemUseContextPos.offset(itemUseContextFace);
+                blockPos = itemUseContextPos.relative(itemUseContextFace);
             }
 
             if (itemUseContextPlayer != null) {
@@ -67,13 +69,13 @@ public class BuzzyNestItem extends ArtifactItem {
                                 ISummonable summonable = CapabilityHelper.getSummonableCapability(beeEntity);
                                 if (summonable != null) {
 
-                                    summonable.setSummoner(itemUseContextPlayer.getUniqueID());
-                                    summonerCap.addBuzzyNestBee(beeEntity.getUniqueID());
+                                    summonable.setSummoner(itemUseContextPlayer.getUUID());
+                                    summonerCap.addBuzzyNestBee(beeEntity.getUUID());
 
                                     createBuzzyNestBee(world, itemUseContextPlayer, blockPos, beeEntity);
 
 
-                                    itemUseContextItem.damageItem(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemUseContextItem)));
+                                    itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemUseContextItem)));
 
                                 }
                             }
@@ -83,22 +85,22 @@ public class BuzzyNestItem extends ArtifactItem {
                             for (int i = 0; i < 3; i++) {
                                 UUID beeUUID = summonerCap.getBuzzyNestBees()[i];
                                 if (beeUUID == null) continue;
-                                Entity entity = ((ServerWorld) world).getEntityByUuid(beeUUID);
+                                Entity entity = ((ServerWorld) world).getEntity(beeUUID);
                                 if (entity instanceof BeeEntity) {
                                     BeeEntity summonedBeeEntity = (BeeEntity) entity;
-                                    summonedBeeEntity.teleportKeepLoaded((double) blockPos.getX() + 0.5D, (double) blockPos.getY() + 0.05D, (double) blockPos.getZ() + 0.5D);
+                                    summonedBeeEntity.teleportToWithTicket((double) blockPos.getX() + 0.5D, (double) blockPos.getY() + 0.05D, (double) blockPos.getZ() + 0.5D);
                                 }
                             }
                         }
                     }
                 }
             }
-            return ActionResult.resultConsume(itemUseContext.getItem());
+            return ActionResult.consume(itemUseContext.getItemInHand());
         }
     }
 
     private void createBuzzyNestBee(World world, PlayerEntity itemUseContextPlayer, BlockPos blockPos, BeeEntity beeEntity) {
-        beeEntity.setLocationAndAngles((double) blockPos.getX() + 0.5D, (double) blockPos.getY() + 0.05D, (double) blockPos.getZ() + 0.5D, 0.0F, 0.0F);
+        beeEntity.moveTo((double) blockPos.getX() + 0.5D, (double) blockPos.getY() + 0.05D, (double) blockPos.getZ() + 0.5D, 0.0F, 0.0F);
 
         beeEntity.goalSelector.addGoal(2, new BeeFollowOwnerGoal(beeEntity, 2.1D, 10.0F, 2.0F, false));
 
@@ -107,13 +109,13 @@ public class BuzzyNestItem extends ArtifactItem {
         beeEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(beeEntity, LivingEntity.class, 5, false, false,
                 (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
 
-        SoundHelper.playCreatureSound(itemUseContextPlayer, SoundEvents.ENTITY_BEE_LOOP);
-        world.addEntity(beeEntity);
+        SoundHelper.playCreatureSound(itemUseContextPlayer, SoundEvents.BEE_LOOP);
+        world.addFreshEntity(beeEntity);
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
-        super.addInformation(stack, world, list, flag);
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+        super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
 

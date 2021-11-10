@@ -46,46 +46,46 @@ public class DungeonsArmorModel<T extends LivingEntity> extends BipedModel<T> {
         this.entity = entity;
         this.armorHeadTestificate = new ModelRenderer(this, 0, 0);
         this.armorHeadTestificate.addBox(-4.0F, -8.0F - TESTIFICATE_HELMET_SHIFT, -4.0F, 8.0F, 8.0F, 8.0F, modelSize);
-        this.armorHeadTestificate.copyModelAngles(this.bipedHead);
+        this.armorHeadTestificate.copyFrom(this.head);
 
         this.armorHead = new ModelRenderer(this, 0, 0);
         this.armorHead.addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, modelSize);
-        this.armorHead.setRotationPoint(0.0F, 0.0F + yOffsetIn, 0.0F);
+        this.armorHead.setPos(0.0F, 0.0F + yOffsetIn, 0.0F);
 
         this.armorBody = new ModelRenderer(this, 16, 16);
         this.armorBody.addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, modelSize);
-        this.armorBody.setRotationPoint(0.0F, 0.0F + yOffsetIn, 0.0F);
+        this.armorBody.setPos(0.0F, 0.0F + yOffsetIn, 0.0F);
 
         this.armorRightArm = new ModelRenderer(this, 40, 16);
         this.armorRightArm.addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, modelSize);
-        this.armorRightArm.setRotationPoint(-5.0F, 2.0F + yOffsetIn, 0.0F);
+        this.armorRightArm.setPos(-5.0F, 2.0F + yOffsetIn, 0.0F);
 
         this.armorLeftArm = new ModelRenderer(this, 40, 16);
         this.armorLeftArm.mirror = true;
         this.armorLeftArm.addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, modelSize);
-        this.armorLeftArm.setRotationPoint(5.0F, 2.0F + yOffsetIn, 0.0F);
+        this.armorLeftArm.setPos(5.0F, 2.0F + yOffsetIn, 0.0F);
 
         this.armorRightLeg = new ModelRenderer(this, 0, 16);
         this.armorRightLeg.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, modelSize);
-        this.armorRightLeg.setRotationPoint(-1.9F, 12.0F + yOffsetIn, 0.0F);
+        this.armorRightLeg.setPos(-1.9F, 12.0F + yOffsetIn, 0.0F);
 
         this.armorLeftLeg = new ModelRenderer(this, 0, 16);
         this.armorLeftLeg.mirror = true;
         this.armorLeftLeg.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, modelSize);
-        this.armorLeftLeg.setRotationPoint(1.9F, 12.0F + yOffsetIn, 0.0F);
+        this.armorLeftLeg.setPos(1.9F, 12.0F + yOffsetIn, 0.0F);
 
         this.armorRightFoot = new ModelRenderer(this, 0, 16);
         this.armorRightFoot.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, modelSize);
-        this.armorRightFoot.setRotationPoint(-1.9F, 12.0F + yOffsetIn, 0.0F);
+        this.armorRightFoot.setPos(-1.9F, 12.0F + yOffsetIn, 0.0F);
 
         this.armorLeftFoot = new ModelRenderer(this, 0, 16);
         this.armorLeftFoot.mirror = true;
         this.armorLeftFoot.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, modelSize);
-        this.armorLeftFoot.setRotationPoint(1.9F, 12.0F + yOffsetIn, 0.0F);
+        this.armorLeftFoot.setPos(1.9F, 12.0F + yOffsetIn, 0.0F);
     }
 
     @Override
-    public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
         if(this.slot == EquipmentSlotType.HEAD){
             handleHelmet(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
         }
@@ -101,11 +101,11 @@ public class DungeonsArmorModel<T extends LivingEntity> extends BipedModel<T> {
     }
 
     public void handleHelmet(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha){
-        matrixStackIn.push();
-        this.armorHead.copyModelAngles(this.bipedHead);
-        if (this.entity.isChild()) {
+        matrixStackIn.pushPose();
+        this.armorHead.copyFrom(this.head);
+        if (this.entity.isBaby()) {
             matrixStackIn.scale(0.8F, 0.8F, 0.8F);
-            this.armorHead.setRotationPoint(0.0F, 15.0F, 0.0F);
+            this.armorHead.setPos(0.0F, 15.0F, 0.0F);
         }
         if(this.isWornByTestificate()){
             this.armorHeadTestificate.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
@@ -113,19 +113,19 @@ public class DungeonsArmorModel<T extends LivingEntity> extends BipedModel<T> {
         else{
             this.armorHead.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
         }
-        matrixStackIn.pop();
+        matrixStackIn.popPose();
     }
 
     public void handleChestplate(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha){
-        matrixStackIn.push();
-        this.armorBody.copyModelAngles(this.bipedBody);
-        this.armorLeftArm.copyModelAngles(this.bipedLeftArm);
-        this.armorRightArm.copyModelAngles(this.bipedRightArm);
-        if (this.entity.isChild()) {
+        matrixStackIn.pushPose();
+        this.armorBody.copyFrom(this.body);
+        this.armorLeftArm.copyFrom(this.leftArm);
+        this.armorRightArm.copyFrom(this.rightArm);
+        if (this.entity.isBaby()) {
             matrixStackIn.scale(0.5F, 0.5F, 0.5F);
-            this.armorBody.setRotationPoint(0.0F, 24.0F, 0.0F);
-            this.armorLeftArm.setRotationPoint(5.0F, 24.0F, 0.0F);
-            this.armorRightArm.setRotationPoint(-5.0F, 24.0F, 0.0F);
+            this.armorBody.setPos(0.0F, 24.0F, 0.0F);
+            this.armorLeftArm.setPos(5.0F, 24.0F, 0.0F);
+            this.armorRightArm.setPos(-5.0F, 24.0F, 0.0F);
         }
         this.armorLeftArm.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
         this.armorRightArm.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
@@ -133,41 +133,41 @@ public class DungeonsArmorModel<T extends LivingEntity> extends BipedModel<T> {
             matrixStackIn.scale(1.0F, 1.0F, 1.3F);
         }
         this.armorBody.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-        matrixStackIn.pop();
+        matrixStackIn.popPose();
     }
 
     public void handleLeggings(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha){
-        matrixStackIn.push();
+        matrixStackIn.pushPose();
         matrixStackIn.scale(1.01F, 1.0F, 1.01F);
-        this.armorLeftLeg.copyModelAngles(this.bipedLeftLeg);
-        this.armorRightLeg.copyModelAngles(this.bipedRightLeg);
-        if (this.entity.isChild()) {
+        this.armorLeftLeg.copyFrom(this.leftLeg);
+        this.armorRightLeg.copyFrom(this.rightLeg);
+        if (this.entity.isBaby()) {
             matrixStackIn.scale(0.5F, 0.5F, 0.5F);
-            this.armorLeftLeg.setRotationPoint(2.0F, 36.0F, 0.0F);
-            this.armorRightLeg.setRotationPoint(-2.0F, 36.0F, 0.0F);
+            this.armorLeftLeg.setPos(2.0F, 36.0F, 0.0F);
+            this.armorRightLeg.setPos(-2.0F, 36.0F, 0.0F);
         }
         this.armorLeftLeg.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
         this.armorRightLeg.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
         if (this.isWornByTestificate()) {
             matrixStackIn.scale(1.0F, 1.0F, 1.32F);
         }
-        matrixStackIn.pop();
+        matrixStackIn.popPose();
     }
 
     public void handleBoots(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha){
-        matrixStackIn.push();
+        matrixStackIn.pushPose();
         matrixStackIn.scale(1.05F, 1.0F, 1.05F);
 
-        this.armorLeftFoot.copyModelAngles(this.bipedLeftLeg);
-        this.armorRightFoot.copyModelAngles(this.bipedRightLeg);
-        if (this.entity.isChild()) {
+        this.armorLeftFoot.copyFrom(this.leftLeg);
+        this.armorRightFoot.copyFrom(this.rightLeg);
+        if (this.entity.isBaby()) {
             matrixStackIn.scale(0.5F, 0.5F, 0.5F);
-            this.armorLeftFoot.setRotationPoint(2.0F, 37.0F, 0.0F);
-            this.armorRightFoot.setRotationPoint(-2.0F, 37.0F, 0.0F);
+            this.armorLeftFoot.setPos(2.0F, 37.0F, 0.0F);
+            this.armorRightFoot.setPos(-2.0F, 37.0F, 0.0F);
         }
         this.armorLeftFoot.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
         this.armorRightFoot.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-        matrixStackIn.pop();
+        matrixStackIn.popPose();
     }
 
     public ModelRenderer getTestificateHelmetModel(){

@@ -23,6 +23,8 @@ import java.util.List;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.item.Item.Properties;
+
 public class SatchelOfSnacksItem extends ArtifactItem{
 
     public SatchelOfSnacksItem(Properties properties) {
@@ -32,26 +34,26 @@ public class SatchelOfSnacksItem extends ArtifactItem{
     @Override
     public ActionResult<ItemStack> procArtifact(ItemUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
-        ItemStack itemstack = c.getItem();
+        ItemStack itemstack = c.getItemInHand();
 
         if(playerIn == null) return new ActionResult<>(ActionResultType.FAIL, itemstack);
 
-        if(!c.getWorld().isRemote){
-            ItemStack foodItemStack = LootTableHelper.generateItemStack((ServerWorld) playerIn.world, playerIn.getPosition(), new ResourceLocation(MODID, "items/satchel_of_snacks"), playerIn.getRNG());
-            ItemEntity foodDrop = new ItemEntity(playerIn.world, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), foodItemStack);
-            playerIn.world.addEntity(foodDrop);
+        if(!c.getLevel().isClientSide){
+            ItemStack foodItemStack = LootTableHelper.generateItemStack((ServerWorld) playerIn.level, playerIn.blockPosition(), new ResourceLocation(MODID, "items/satchel_of_snacks"), playerIn.getRandom());
+            ItemEntity foodDrop = new ItemEntity(playerIn.level, playerIn.getX(), playerIn.getY(), playerIn.getZ(), foodItemStack);
+            playerIn.level.addFreshEntity(foodDrop);
         }
 
-        itemstack.damageItem(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemstack)));
+        itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemstack)));
 
         ArtifactItem.putArtifactOnCooldown(playerIn, itemstack.getItem());
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
-        super.addInformation(stack, world, list, flag);
+        super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
 

@@ -19,19 +19,19 @@ public class GoalUtils {
         if (!(target instanceof CreeperEntity) && !(target instanceof GhastEntity)) {
             if (target instanceof WolfEntity) {
                 WolfEntity wolfentity = (WolfEntity)target;
-                if (wolfentity.isTamed() && wolfentity.getOwner() == owner) {
+                if (wolfentity.isTame() && wolfentity.getOwner() == owner) {
                     return false;
                 }
             } else if(SummoningHelper.isEntitySummonable(target)){
-                return !SummoningHelper.wasSummonedBy(target, owner.getUniqueID());
+                return !SummoningHelper.wasSummonedBy(target, owner.getUUID());
             }
 
-            if (target instanceof PlayerEntity && owner instanceof PlayerEntity && !((PlayerEntity)owner).canAttackPlayer((PlayerEntity)target)) {
+            if (target instanceof PlayerEntity && owner instanceof PlayerEntity && !((PlayerEntity)owner).canHarmPlayer((PlayerEntity)target)) {
                 return false;
-            } else if (target instanceof AbstractHorseEntity && ((AbstractHorseEntity)target).isTame()) {
+            } else if (target instanceof AbstractHorseEntity && ((AbstractHorseEntity)target).isTamed()) {
                 return false;
             } else {
-                return !(target instanceof CatEntity) || !((CatEntity)target).isTamed();
+                return !(target instanceof CatEntity) || !((CatEntity)target).isTame();
             }
         } else {
             return false;

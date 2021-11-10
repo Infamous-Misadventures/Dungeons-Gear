@@ -18,6 +18,8 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 
+import net.minecraft.item.Item.Properties;
+
 public class TormentQuiverItem extends ArtifactItem implements ISoulGatherer {
     public static final String TORMENT_ARROW = "TormentArrow";
 
@@ -27,7 +29,7 @@ public class TormentQuiverItem extends ArtifactItem implements ISoulGatherer {
 
     public ActionResult<ItemStack> procArtifact(ItemUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
-        ItemStack itemstack = c.getItem();
+        ItemStack itemstack = c.getItemInHand();
 
         if(playerIn.isCreative() || CapabilityHelper.getComboCapability(playerIn).consumeSouls(getActivationCost(itemstack))){
 
@@ -36,7 +38,7 @@ public class TormentQuiverItem extends ArtifactItem implements ISoulGatherer {
 
             comboCap.setTormentArrowCount(3);
 
-            itemstack.damageItem(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getEntityId(), itemstack)));
+            itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemstack)));
 
             ArtifactItem.putArtifactOnCooldown(playerIn, itemstack.getItem());
         }
@@ -44,9 +46,9 @@ public class TormentQuiverItem extends ArtifactItem implements ISoulGatherer {
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
-        super.addInformation(stack, world, list, flag);
+        super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
 

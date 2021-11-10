@@ -39,17 +39,17 @@ public class ProspectorEnchantment extends DropsEnchantment {
 
     @SubscribeEvent
     public static void onProspectiveKill(LivingDropsEvent event){
-        if(event.getSource().getImmediateSource() instanceof AbstractArrowEntity) return;
-        if(event.getSource().getTrueSource() instanceof LivingEntity){
-            LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
-            ItemStack mainhand = attacker.getHeldItemMainhand();
+        if(event.getSource().getDirectEntity() instanceof AbstractArrowEntity) return;
+        if(event.getSource().getEntity() instanceof LivingEntity){
+            LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
+            ItemStack mainhand = attacker.getMainHandItem();
             LivingEntity victim = event.getEntityLiving();
             boolean uniqueWeaponFlag = hasProspectorBuiltIn(mainhand);
             if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.PROSPECTOR)){
-                int prospectorLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.PROSPECTOR, mainhand);
+                int prospectorLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.PROSPECTOR, mainhand);
                 float prospectorChance;
                 prospectorChance = 0.25F * prospectorLevel;
-                float prospectorRand = attacker.getRNG().nextFloat();
+                float prospectorRand = attacker.getRandom().nextFloat();
                 if(prospectorRand <= prospectorChance){
                     if(victim instanceof MonsterEntity){
                         ItemEntity drop = getProspectorDrop(attacker, victim);
@@ -58,7 +58,7 @@ public class ProspectorEnchantment extends DropsEnchantment {
                 }
             }
             if(uniqueWeaponFlag){
-                float prospectorRand = attacker.getRNG().nextFloat();
+                float prospectorRand = attacker.getRandom().nextFloat();
                 if(prospectorRand <= 0.25F) {
                     if (victim instanceof MonsterEntity) {
                         ItemEntity drop = getProspectorDrop(attacker, victim);
@@ -70,13 +70,13 @@ public class ProspectorEnchantment extends DropsEnchantment {
     }
 
     private static ItemEntity getProspectorDrop(LivingEntity attacker, LivingEntity victim) {
-        ResourceLocation prospectorLootTable = getProspectorLootTable(victim.getEntityWorld());
-        ItemStack itemStack = LootTableHelper.generateItemStack((ServerWorld) victim.world, victim.getPosition(), prospectorLootTable, attacker.getRNG());
-        return new ItemEntity(victim.world, victim.getPosX(), victim.getPosY(), victim.getPosZ(), itemStack);
+        ResourceLocation prospectorLootTable = getProspectorLootTable(victim.getCommandSenderWorld());
+        ItemStack itemStack = LootTableHelper.generateItemStack((ServerWorld) victim.level, victim.blockPosition(), prospectorLootTable, attacker.getRandom());
+        return new ItemEntity(victim.level, victim.getX(), victim.getY(), victim.getZ(), itemStack);
     }
 
     private static ResourceLocation getProspectorLootTable(World world) {
-        ResourceLocation resourceLocation = new ResourceLocation(MODID, "enchantments/prospector/" + world.getDimensionKey().getLocation().getPath());
+        ResourceLocation resourceLocation = new ResourceLocation(MODID, "enchantments/prospector/" + world.dimension().location().getPath());
         if(LootTableHelper.lootTableExists((ServerWorld) world, resourceLocation)){
             return resourceLocation;
         }else{

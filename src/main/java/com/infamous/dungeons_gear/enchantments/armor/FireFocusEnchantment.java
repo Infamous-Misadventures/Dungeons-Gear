@@ -20,6 +20,8 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class FireFocusEnchantment extends FocusEnchantment {
 
@@ -39,11 +41,11 @@ public class FireFocusEnchantment extends FocusEnchantment {
     @SubscribeEvent
     public static void onFireAttack(LivingDamageEvent event){
         if(event.getSource() == DamageSource.ON_FIRE) return; // ON_FIRE is applied when you set something on fire
-        if(event.getEntityLiving().world.isRemote) return;
+        if(event.getEntityLiving().level.isClientSide) return;
 
-        LivingEntity attacker = event.getEntityLiving().getAttackingEntity();
+        LivingEntity attacker = event.getEntityLiving().getKillCredit();
         if(attacker != null){
-            int fireFocusLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.FIRE_FOCUS, attacker);
+            int fireFocusLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.FIRE_FOCUS, attacker);
             if(fireFocusLevel > 0){
                 float multiplier = 1 + (0.25F * fireFocusLevel);
                 float currentDamage = event.getAmount();

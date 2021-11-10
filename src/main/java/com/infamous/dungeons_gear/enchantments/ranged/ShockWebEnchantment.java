@@ -29,6 +29,8 @@ import java.util.List;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class ShockWebEnchantment extends DungeonsEnchantment {
     // I can't get the clipping logic to work, so I am disabling the functionality of the enchantment for now
@@ -43,8 +45,8 @@ public class ShockWebEnchantment extends DungeonsEnchantment {
     }
 
     @Override
-    public boolean canApply(ItemStack stack) {
-        return ENABLED && super.canApply(stack);
+    public boolean canEnchant(ItemStack stack) {
+        return ENABLED && super.canEnchant(stack);
     }
 
     @Override
@@ -53,19 +55,19 @@ public class ShockWebEnchantment extends DungeonsEnchantment {
     }
 
     @Override
-    public boolean canGenerateInLoot() {
-        return ENABLED && super.canGenerateInLoot();
+    public boolean isDiscoverable() {
+        return ENABLED && super.isDiscoverable();
     }
 
     @Override
-    public boolean canVillagerTrade() {
-        return ENABLED && super.canVillagerTrade();
+    public boolean isTradeable() {
+        return ENABLED && super.isTradeable();
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return ENABLED && DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() ||
-                (enchantment != Enchantments.PUNCH || enchantment != Enchantments.POWER);
+                (enchantment != Enchantments.PUNCH_ARROWS || enchantment != Enchantments.POWER_ARROWS);
     }
 
     @SubscribeEvent
@@ -75,13 +77,13 @@ public class ShockWebEnchantment extends DungeonsEnchantment {
         AbstractArrowEntity eventArrow = event.getArrow();
         int shockWebLevel = ModEnchantmentHelper.enchantmentTagToLevel(eventArrow, RangedEnchantmentList.SHOCK_WEB);
         DungeonsGear.LOGGER.info("Shock web level is {}!", shockWebLevel);
-        Entity shooter = eventArrow.func_234616_v_();
+        Entity shooter = eventArrow.getOwner();
         DungeonsGear.LOGGER.info("Shooter is {}!", shooter);
-        World world = eventArrow.world;
+        World world = eventArrow.level;
         if(shockWebLevel > 0 && shooter instanceof LivingEntity){
             double searchRadius = 16.0D;
-            AxisAlignedBB boundingBox = eventArrow.getBoundingBox().grow(searchRadius, searchRadius, searchRadius);
-            List<AbstractArrowEntity> nearbyArrows = world.getEntitiesWithinAABB(AbstractArrowEntity.class, boundingBox,
+            AxisAlignedBB boundingBox = eventArrow.getBoundingBox().inflate(searchRadius, searchRadius, searchRadius);
+            List<AbstractArrowEntity> nearbyArrows = world.getEntitiesOfClass(AbstractArrowEntity.class, boundingBox,
                     nearbyArrow -> nearbyArrow != eventArrow);
             if(nearbyArrows.isEmpty()) return;
             DungeonsGear.LOGGER.info("Found {} arrows!", nearbyArrows.size());
@@ -90,12 +92,12 @@ public class ShockWebEnchantment extends DungeonsEnchantment {
             for(AbstractArrowEntity nearbyArrow : nearbyArrows){
                 if(shockWebsCreated >= shockWebLevel) break;
 
-                BlockPos fromPos = eventArrow.getPosition();
+                BlockPos fromPos = eventArrow.blockPosition();
                 DungeonsGear.LOGGER.info("From Block: {}", world.getBlockState(fromPos));
-                Vector3d from = eventArrow.getPositionVec().add(0, eventArrow.getHeight() * 0.5D, 0);
-                BlockPos toPos = nearbyArrow.getPosition();
+                Vector3d from = eventArrow.position().add(0, eventArrow.getBbHeight() * 0.5D, 0);
+                BlockPos toPos = nearbyArrow.blockPosition();
                 DungeonsGear.LOGGER.info("To Block: {}", world.getBlockState(toPos));
-                Vector3d to = nearbyArrow.getPositionVec().add(0, nearbyArrow.getHeight() * 0.5D, 0);
+                Vector3d to = nearbyArrow.position().add(0, nearbyArrow.getBbHeight() * 0.5D, 0);
                 /*
                 RayTraceResult traceBetweenArrows = world.rayTraceBlocks(new RayTraceContext(from, to, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, eventArrow));
                 if (traceBetweenArrows.getType() != RayTraceResult.Type.MISS) {
@@ -109,7 +111,7 @@ public class ShockWebEnchantment extends DungeonsEnchantment {
 
                 for(LivingEntity target : entitiesToShock){
                     ElectricShockDamageSource shockDamageSource = new ElectricShockDamageSource(shooter);
-                    target.attackEntityFrom(shockDamageSource, 5.0F);
+                    target.hurt(shockDamageSource, 5.0F);
                 }
                 shockWebsCreated++;
             }

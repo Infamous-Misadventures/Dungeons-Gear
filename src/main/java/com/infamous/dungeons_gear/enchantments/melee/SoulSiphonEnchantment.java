@@ -19,6 +19,8 @@ import net.minecraftforge.fml.common.Mod;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = MODID)
 public class SoulSiphonEnchantment extends DungeonsEnchantment {
 
@@ -32,11 +34,11 @@ public class SoulSiphonEnchantment extends DungeonsEnchantment {
     }
 
     @Override
-    public void onEntityDamaged(LivingEntity user, Entity target, int level) {
+    public void doPostAttack(LivingEntity user, Entity target, int level) {
         if(!(user instanceof PlayerEntity)) return;
         if(!(target instanceof LivingEntity)) return;
-        if( user.getLastAttackedEntityTime()==user.ticksExisted)return;
-        float chance = user.getRNG().nextFloat();
+        if( user.getLastHurtMobTimestamp()==user.tickCount)return;
+        float chance = user.getRandom().nextFloat();
         if(chance <=  0.1F){
             SoulHelper.addSouls(user, level*3);
             // soul particles
@@ -46,15 +48,15 @@ public class SoulSiphonEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onEternalKnifeAttack(LivingAttackEvent event){
-        if(event.getSource().getImmediateSource() instanceof AbstractArrowEntity) return;
+        if(event.getSource().getDirectEntity() instanceof AbstractArrowEntity) return;
         if(event.getSource() instanceof OffhandAttackDamageSource) return;
-        if(!(event.getSource().getTrueSource() instanceof PlayerEntity)) return;
-        PlayerEntity attacker = (PlayerEntity)event.getSource().getTrueSource();
-        if( attacker.getLastAttackedEntityTime()==attacker.ticksExisted)return;
+        if(!(event.getSource().getEntity() instanceof PlayerEntity)) return;
+        PlayerEntity attacker = (PlayerEntity)event.getSource().getEntity();
+        if( attacker.getLastHurtMobTimestamp()==attacker.tickCount)return;
         LivingEntity victim = event.getEntityLiving();
-        ItemStack mainhand = attacker.getHeldItemMainhand();
+        ItemStack mainhand = attacker.getMainHandItem();
         if(hasSoulSiphonBuiltIn(mainhand)){
-            float chance = attacker.getRNG().nextFloat();
+            float chance = attacker.getRandom().nextFloat();
             if(chance <=  0.1F) {
                 SoulHelper.addSouls(attacker, 3);
                 // soul particles

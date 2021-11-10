@@ -15,12 +15,12 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 @Mixin(BowItem.class)
 public class BowItemMixin {
 
-    @ModifyVariable(at = @At("STORE"), method = "onPlayerStoppedUsing(Lnet/minecraft/item/ItemStack;Lnet/minecraft/world/World;Lnet/minecraft/entity/LivingEntity;I)V")
+    @ModifyVariable(at = @At("STORE"), method = "releaseUsing(Lnet/minecraft/item/ItemStack;Lnet/minecraft/world/World;Lnet/minecraft/entity/LivingEntity;I)V")
     private float setArrowVelocity(float arrowVelocity, ItemStack stack, World worldIn, LivingEntity livingEntity, int timeLeft) {
         PlayerEntity playerentity = (PlayerEntity)livingEntity;
 
-        boolean flag = playerentity.abilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
-        ItemStack itemstack = playerentity.findAmmo(stack);
+        boolean flag = playerentity.abilities.instabuild || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, stack) > 0;
+        ItemStack itemstack = playerentity.getProjectile(stack);
 
         int i = 72000 - timeLeft;
         i = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(stack, worldIn, playerentity, i, !itemstack.isEmpty() || flag);

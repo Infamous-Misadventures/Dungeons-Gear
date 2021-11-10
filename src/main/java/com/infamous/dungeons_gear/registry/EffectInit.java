@@ -25,10 +25,10 @@ public class EffectInit {
         @SubscribeEvent
         public static void onPotionsRegistry(final RegistryEvent.Register<Potion> potionRegistryEvent){
             potionRegistryEvent.getRegistry().registerAll(
-                    PotionList.SHORT_STRENGTH = new Potion("strength", new EffectInstance(Effects.STRENGTH, 600)).setRegistryName(makeResourceName("short_strength")),
-                    PotionList.SHORT_SWIFTNESS = new Potion("swiftness", new EffectInstance(Effects.SPEED, 400)).setRegistryName(makeResourceName("short_speed")),
+                    PotionList.SHORT_STRENGTH = new Potion("strength", new EffectInstance(Effects.DAMAGE_BOOST, 600)).setRegistryName(makeResourceName("short_strength")),
+                    PotionList.SHORT_SWIFTNESS = new Potion("swiftness", new EffectInstance(Effects.MOVEMENT_SPEED, 400)).setRegistryName(makeResourceName("short_speed")),
                     PotionList.SHADOW_BREW = new Potion("shadow_brew", new EffectInstance(Effects.INVISIBILITY, 200)).setRegistryName(makeResourceName("shadow_brew")),
-                    PotionList.OAKWOOD_BREW = new Potion("oakwood_brew", new EffectInstance(Effects.RESISTANCE, 300)).setRegistryName(makeResourceName("oakwood_brew"))
+                    PotionList.OAKWOOD_BREW = new Potion("oakwood_brew", new EffectInstance(Effects.DAMAGE_RESISTANCE, 300)).setRegistryName(makeResourceName("oakwood_brew"))
 
             );
         }

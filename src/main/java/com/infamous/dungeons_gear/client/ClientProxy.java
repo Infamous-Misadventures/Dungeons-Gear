@@ -16,10 +16,10 @@ public class ClientProxy extends CommonProxy {
             double d2 = rand.nextGaussian() * 0.02D;
             double d0 = rand.nextGaussian() * 0.02D;
             double d1 = rand.nextGaussian() * 0.02D;
-            entity.getEntityWorld().addParticle(particleType,
-                    entity.getPosX() + (double)(rand.nextFloat() * entity.getWidth() * 2.0F) - (double)entity.getWidth(),
-                    entity.getPosY() + (double)(rand.nextFloat() * entity.getHeight()),
-                    entity.getPosZ() + (double)(rand.nextFloat() * entity.getWidth() * 2.0F) - (double)entity.getWidth(), d2, d0, d1);
+            entity.getCommandSenderWorld().addParticle(particleType,
+                    entity.getX() + (double)(rand.nextFloat() * entity.getBbWidth() * 2.0F) - (double)entity.getBbWidth(),
+                    entity.getY() + (double)(rand.nextFloat() * entity.getBbHeight()),
+                    entity.getZ() + (double)(rand.nextFloat() * entity.getBbWidth() * 2.0F) - (double)entity.getBbWidth(), d2, d0, d1);
         }
     }
 }

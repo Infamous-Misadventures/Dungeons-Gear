@@ -13,6 +13,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
+import net.minecraft.item.Item.Properties;
+
 public class BurstCrossbowItem extends AbstractDungeonsCrossbowItem implements ISoulGatherer {
 
     public BurstCrossbowItem(Properties builder, int defaultChargeTimeIn, boolean isUniqueIn) {
@@ -42,11 +44,11 @@ public class BurstCrossbowItem extends AbstractDungeonsCrossbowItem implements I
     @Override
     public void fireCrossbowProjectiles(World world, LivingEntity livingEntity, Hand hand, ItemStack stack, float velocityIn, float inaccuracyIn) {
         List<ItemStack> list = AbstractDungeonsCrossbowItem.getChargedProjectiles(stack);
-        float[] randomSoundPitches = AbstractDungeonsCrossbowItem.getRandomSoundPitches(livingEntity.getRNG());
+        float[] randomSoundPitches = AbstractDungeonsCrossbowItem.getRandomSoundPitches(livingEntity.getRandom());
 
         for(int i = 0; i < list.size(); ++i) {
             ItemStack currentProjectile = list.get(i);
-            boolean playerInCreativeMode = livingEntity instanceof PlayerEntity && ((PlayerEntity)livingEntity).abilities.isCreativeMode;
+            boolean playerInCreativeMode = livingEntity instanceof PlayerEntity && ((PlayerEntity)livingEntity).abilities.instabuild;
             if (!currentProjectile.isEmpty()) {
                 // first 3 are always burst projectiles
                 if (i == 0) {
@@ -67,12 +69,12 @@ public class BurstCrossbowItem extends AbstractDungeonsCrossbowItem implements I
             }
         }
 
-        AbstractDungeonsCrossbowItem.fireProjectilesAfter(world, livingEntity, stack);
+        AbstractDungeonsCrossbowItem.onCrossbowShot(world, livingEntity, stack);
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
-        super.addInformation(stack, world, list, flag);
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+        super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
 

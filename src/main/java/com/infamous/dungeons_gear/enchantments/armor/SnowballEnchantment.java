@@ -20,6 +20,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = MODID)
 public class SnowballEnchantment extends PulseEnchantment {
 
@@ -36,15 +38,15 @@ public class SnowballEnchantment extends PulseEnchantment {
         PlayerEntity player = event.player;
         if (player == null) return;
         if (event.phase == TickEvent.Phase.START) return;
-        if (player.isAlive()&&player.isServerWorld()) {
+        if (player.isAlive()&&player.isEffectiveAi()) {
             ICombo comboCap = CapabilityHelper.getComboCapability(player);
             if (comboCap == null) return;
             int snowballNearbyTimer = comboCap.getSnowballNearbyTimer();
-            ItemStack helmet = player.getItemStackFromSlot(EquipmentSlotType.HEAD);
-            ItemStack chestplate = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
+            ItemStack helmet = player.getItemBySlot(EquipmentSlotType.HEAD);
+            ItemStack chestplate = player.getItemBySlot(EquipmentSlotType.CHEST);
             boolean uniqueArmorFlag = hasSnowballBuiltIn(helmet) || hasSnowballBuiltIn(chestplate);
             if (uniqueArmorFlag || ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.SNOWBALL)) {
-                int snowballLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.SNOWBALL, player);
+                int snowballLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.SNOWBALL, player);
                 if(uniqueArmorFlag) snowballLevel++;
                 if (snowballNearbyTimer <= 0) {
                     ProjectileEffectHelper.fireSnowballAtNearbyEnemy(player, 10);
@@ -70,7 +72,7 @@ public class SnowballEnchantment extends PulseEnchantment {
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof PulseEnchantment);
     }
 }

@@ -14,11 +14,11 @@ public final class ModEntityTypes {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, MODID);
 
     public static final RegistryObject<EntityType<IceCloudEntity>> ICE_CLOUD = ENTITY_TYPES.register("ice_cloud", () ->
-            EntityType.Builder.<IceCloudEntity>create(IceCloudEntity::new, EntityClassification.MISC)
-                    .immuneToFire()
-                    .size(2.0F, 1.0F)
-                    .trackingRange(6)
-                    .func_233608_b_(2)
+            EntityType.Builder.<IceCloudEntity>of(IceCloudEntity::new, EntityClassification.MISC)
+                    .fireImmune()
+                    .sized(2.0F, 1.0F)
+                    .clientTrackingRange(6)
+                    .updateInterval(2)
                     .setCustomClientFactory((spawnEntity,world) -> new IceCloudEntity(world))
                     .build(new ResourceLocation(MODID, "ice_cloud").toString())
     );

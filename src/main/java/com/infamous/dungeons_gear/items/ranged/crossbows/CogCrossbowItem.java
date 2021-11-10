@@ -9,6 +9,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
+import net.minecraft.item.Item.Properties;
+
 public class CogCrossbowItem extends AbstractDungeonsCrossbowItem {
 
     public CogCrossbowItem(Properties builder, int defaultChargeTimeIn, boolean isUniqueIn) {
@@ -26,8 +28,8 @@ public class CogCrossbowItem extends AbstractDungeonsCrossbowItem {
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
-        super.addInformation(stack, world, list, flag);
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+        super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
 }

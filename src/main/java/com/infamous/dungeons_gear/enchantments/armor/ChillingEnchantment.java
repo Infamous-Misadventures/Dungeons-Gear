@@ -20,6 +20,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class ChillingEnchantment extends PulseEnchantment {
 
@@ -36,7 +38,7 @@ public class ChillingEnchantment extends PulseEnchantment {
     }
 
     @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
+    public boolean checkCompatibility(Enchantment enchantment) {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof PulseEnchantment);
     }
 
@@ -45,19 +47,19 @@ public class ChillingEnchantment extends PulseEnchantment {
         PlayerEntity player = event.player;
         if(player == null) return;
         if(event.phase == TickEvent.Phase.START) return;
-        if(player.isAlive()&&player.isServerWorld()){
+        if(player.isAlive()&&player.isEffectiveAi()){
             ICombo comboCap = CapabilityHelper.getComboCapability(player);
             if(comboCap == null) return;
             int freezeNearbyTimer = comboCap.getFreezeNearbyTimer();
 
-            ItemStack chestplate = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
-            ItemStack helmet = player.getItemStackFromSlot(EquipmentSlotType.HEAD);
+            ItemStack chestplate = player.getItemBySlot(EquipmentSlotType.CHEST);
+            ItemStack helmet = player.getItemBySlot(EquipmentSlotType.HEAD);
             boolean uniqueArmorFlag =
                     hasChillingBuiltIn(chestplate) || hasChillingBuiltIn(helmet);
 
             if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.CHILLING) || uniqueArmorFlag){
                 if(freezeNearbyTimer <= 0){
-                    int chillingLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.CHILLING, player);
+                    int chillingLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.CHILLING, player);
                     if(uniqueArmorFlag) chillingLevel++;
                     AreaOfEffectHelper.freezeNearbyEnemies(player, chillingLevel - 1, 1.5F, 1);
                     comboCap.setFreezeNearbyTimer(40);

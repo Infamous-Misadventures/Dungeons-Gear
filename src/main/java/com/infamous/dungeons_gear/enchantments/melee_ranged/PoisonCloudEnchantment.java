@@ -33,6 +33,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = MODID)
 public class PoisonCloudEnchantment extends DungeonsEnchantment {
 
@@ -45,23 +47,23 @@ public class PoisonCloudEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onPoisonousWeaponAttack(LivingAttackEvent event) {
-        if (event.getSource().getImmediateSource() != event.getSource().getTrueSource()) return;
+        if (event.getSource().getDirectEntity() != event.getSource().getEntity()) return;
         if (event.getSource() instanceof OffhandAttackDamageSource) return;
-        if (!(event.getSource().getTrueSource() instanceof LivingEntity)) return;
-        LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
-        if (attacker.getLastAttackedEntityTime() == attacker.ticksExisted) return;
+        if (!(event.getSource().getEntity() instanceof LivingEntity)) return;
+        LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
+        if (attacker.getLastHurtMobTimestamp() == attacker.tickCount) return;
         LivingEntity victim = event.getEntityLiving();
-        ItemStack mainhand = attacker.getHeldItemMainhand();
+        ItemStack mainhand = attacker.getMainHandItem();
         if (hasPoisonCloudBuiltIn(mainhand)) {
-            float chance = attacker.getRNG().nextFloat();
+            float chance = attacker.getRandom().nextFloat();
             if (chance <= 0.3F) {
                 checkForPlayer(attacker);
                 AOECloudHelper.spawnPoisonCloud(attacker, victim, 0);
             }
         }
         if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.POISON_CLOUD)) {
-            float chance = attacker.getRNG().nextFloat();
-            int level = EnchantmentHelper.getEnchantmentLevel(MeleeRangedEnchantmentList.POISON_CLOUD, mainhand);
+            float chance = attacker.getRandom().nextFloat();
+            int level = EnchantmentHelper.getItemEnchantmentLevel(MeleeRangedEnchantmentList.POISON_CLOUD, mainhand);
             if (chance <= 0.3F && !PlayerAttackHelper.isProbablyNotMeleeDamage(event.getSource())) {
                 checkForPlayer(attacker);
                 AOECloudHelper.spawnPoisonCloud(attacker, victim, level - 1);
@@ -79,7 +81,7 @@ public class PoisonCloudEnchantment extends DungeonsEnchantment {
         //if(!EnchantUtils.arrowHitLivingEntity(rayTraceResult)) return;
         AbstractArrowEntity arrow = event.getArrow();
         if (!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
-        LivingEntity shooter = (LivingEntity) arrow.func_234616_v_();
+        LivingEntity shooter = (LivingEntity) arrow.getOwner();
 
         int poisonLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrow, MeleeRangedEnchantmentList.POISON_CLOUD);
         boolean uniqueWeaponFlag = arrow.getTags().contains(INTRINSIC_POISON_CLOUD_TAG);
@@ -89,7 +91,7 @@ public class PoisonCloudEnchantment extends DungeonsEnchantment {
                 EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult) rayTraceResult;
                 if (entityRayTraceResult.getEntity() instanceof LivingEntity) {
                     LivingEntity victim = (LivingEntity) ((EntityRayTraceResult) rayTraceResult).getEntity();
-                    float poisonRand = shooter.getRNG().nextFloat();
+                    float poisonRand = shooter.getRandom().nextFloat();
                     if (poisonRand <= 0.3F) {
                         checkForPlayer(shooter);
                         AOECloudHelper.spawnPoisonCloud(shooter, victim, poisonLevel - 1);
@@ -98,8 +100,8 @@ public class PoisonCloudEnchantment extends DungeonsEnchantment {
             }
             if (rayTraceResult instanceof BlockRayTraceResult) {
                 BlockRayTraceResult blockRayTraceResult = (BlockRayTraceResult) rayTraceResult;
-                BlockPos blockPos = blockRayTraceResult.getPos();
-                float poisonRand = shooter.getRNG().nextFloat();
+                BlockPos blockPos = blockRayTraceResult.getBlockPos();
+                float poisonRand = shooter.getRandom().nextFloat();
                 if (poisonRand <= 0.3F) {
                     checkForPlayer(shooter);
                     AOECloudHelper.spawnPoisonCloudAtPos(shooter, true, blockPos, poisonLevel - 1);
@@ -111,7 +113,7 @@ public class PoisonCloudEnchantment extends DungeonsEnchantment {
                 EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult) rayTraceResult;
                 if (entityRayTraceResult.getEntity() instanceof LivingEntity) {
                     LivingEntity victim = (LivingEntity) ((EntityRayTraceResult) rayTraceResult).getEntity();
-                    float poisonRand = shooter.getRNG().nextFloat();
+                    float poisonRand = shooter.getRandom().nextFloat();
                     if (poisonRand <= 0.3F) {
                         checkForPlayer(shooter);
                         AOECloudHelper.spawnPoisonCloud(shooter, victim, 0);
@@ -120,8 +122,8 @@ public class PoisonCloudEnchantment extends DungeonsEnchantment {
             }
             if (rayTraceResult instanceof BlockRayTraceResult) {
                 BlockRayTraceResult blockRayTraceResult = (BlockRayTraceResult) rayTraceResult;
-                BlockPos blockPos = blockRayTraceResult.getPos();
-                float poisonRand = shooter.getRNG().nextFloat();
+                BlockPos blockPos = blockRayTraceResult.getBlockPos();
+                float poisonRand = shooter.getRandom().nextFloat();
                 if (poisonRand <= 0.3F) {
                     checkForPlayer(shooter);
                     AOECloudHelper.spawnPoisonCloudAtPos(shooter, true, blockPos, 0);
@@ -147,7 +149,7 @@ public class PoisonCloudEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onPoisonEvent(PotionEvent.PotionApplicableEvent event) {
-        if (event.getPotionEffect().getPotion() == Effects.POISON) {
+        if (event.getPotionEffect().getEffect() == Effects.POISON) {
             if (event.getEntityLiving() instanceof PlayerEntity) {
                 PlayerEntity playerEntity = (PlayerEntity) event.getEntityLiving();
                 ICombo comboCap = CapabilityHelper.getComboCapability(playerEntity);

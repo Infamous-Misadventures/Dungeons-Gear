@@ -12,6 +12,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
+import net.minecraft.item.Item.Properties;
+
 public class EyeOfTheGuardianItem extends AbstractBeaconItem implements IChargeableItem {
 
     public static final BeaconBeamColor EYE_OF_THE_GUARDIAN_BEACON_BEAM_COLOR =
@@ -22,9 +24,9 @@ public class EyeOfTheGuardianItem extends AbstractBeaconItem implements IChargea
     }
 
     @Override
-    public void onUse(World world, LivingEntity livingEntity, ItemStack stack, int count) {
+    public void onUseTick(World world, LivingEntity livingEntity, ItemStack stack, int count) {
         if(IChargeableItem.isCharged(stack)){
-            super.onUse(world, livingEntity, stack, count);
+            super.onUseTick(world, livingEntity, stack, count);
         } else{
             float charge = (float)(stack.getUseDuration() - count) / (float) this.getChargeTime();
             if(charge >= 1.0F){
@@ -34,14 +36,14 @@ public class EyeOfTheGuardianItem extends AbstractBeaconItem implements IChargea
     }
 
     @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-        entityLiving.stopActiveHand();
-        return super.onItemUseFinish(stack, worldIn, entityLiving);
+    public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityLiving) {
+        entityLiving.releaseUsingItem();
+        return super.finishUsingItem(stack, worldIn, entityLiving);
     }
 
     @Override
-    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft) {
-        super.onPlayerStoppedUsing(stack, worldIn, entityLiving, timeLeft);
+    public void releaseUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft) {
+        super.releaseUsing(stack, worldIn, entityLiving, timeLeft);
         IChargeableItem.setCharged(stack, false);
         if (entityLiving instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity)entityLiving;
@@ -60,9 +62,9 @@ public class EyeOfTheGuardianItem extends AbstractBeaconItem implements IChargea
     }
 
     @Override
-    public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {
-        super.addInformation(stack, world, list, flag);
+        super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
 

@@ -20,6 +20,8 @@ import java.util.List;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class PotionBarrierEnchantment extends DungeonsEnchantment {
 
@@ -40,19 +42,19 @@ public class PotionBarrierEnchantment extends DungeonsEnchantment {
         if(!(event.getEntityLiving() instanceof PlayerEntity)) return;
         PlayerEntity player = (PlayerEntity) event.getEntityLiving();
         if(player.isAlive()){
-            List<EffectInstance> potionEffects = PotionUtils.getEffectsFromStack(event.getItem());
+            List<EffectInstance> potionEffects = PotionUtils.getMobEffects(event.getItem());
             if(potionEffects.isEmpty()) return;
-            if(potionEffects.get(0).getPotion() == Effects.INSTANT_HEALTH){
-                ItemStack chestplate = player.getItemStackFromSlot(EquipmentSlotType.CHEST);
-                ItemStack helmet = player.getItemStackFromSlot(EquipmentSlotType.HEAD);
+            if(potionEffects.get(0).getEffect() == Effects.HEAL){
+                ItemStack chestplate = player.getItemBySlot(EquipmentSlotType.CHEST);
+                ItemStack helmet = player.getItemBySlot(EquipmentSlotType.HEAD);
                 boolean uniqueArmorFlag =
                         hasPotionBarrierBuiltIn(chestplate) || hasPotionBarrierBuiltIn(helmet);
                 if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.POTION_BARRIER) || uniqueArmorFlag){
-                    int potionBarrierLevel = EnchantmentHelper.getMaxEnchantmentLevel(ArmorEnchantmentList.POTION_BARRIER, player);
+                    int potionBarrierLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.POTION_BARRIER, player);
                     if(uniqueArmorFlag) potionBarrierLevel++;
                     int duration = 60 + 20*potionBarrierLevel;
-                    EffectInstance resistance = new EffectInstance(Effects.RESISTANCE, duration, 3);
-                    player.addPotionEffect(resistance);
+                    EffectInstance resistance = new EffectInstance(Effects.DAMAGE_RESISTANCE, duration, 3);
+                    player.addEffect(resistance);
                 }
             }
         }
