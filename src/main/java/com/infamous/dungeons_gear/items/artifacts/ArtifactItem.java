@@ -24,6 +24,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 
+import net.minecraft.item.Item.Properties;
+
 public abstract class ArtifactItem extends Item {
     protected boolean procOnItemUse = false;
 

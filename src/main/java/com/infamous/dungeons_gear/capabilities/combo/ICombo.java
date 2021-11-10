@@ -87,4 +87,7 @@ public interface ICombo {
 
     int getRefreshmentCounter();
     void setRefreshmentCounter(int refreshmentCounter);
+
+    int getEchoCooldown();
+    void setEchoCooldown(int echoCooldown);
 }

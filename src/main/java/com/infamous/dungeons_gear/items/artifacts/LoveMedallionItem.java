@@ -15,6 +15,8 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 
+import net.minecraft.item.Item.Properties;
+
 public class LoveMedallionItem extends ArtifactItem {
     public LoveMedallionItem(Properties properties) {
         super(properties);

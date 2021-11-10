@@ -37,6 +37,7 @@ public class SoulSiphonEnchantment extends DungeonsEnchantment {
     public void doPostAttack(LivingEntity user, Entity target, int level) {
         if(!(user instanceof PlayerEntity)) return;
         if(!(target instanceof LivingEntity)) return;
+        if( user.getLastHurtMobTimestamp()==user.tickCount)return;
         float chance = user.getRandom().nextFloat();
         if(chance <=  0.1F){
             SoulHelper.addSouls(user, level*3);
@@ -51,6 +52,7 @@ public class SoulSiphonEnchantment extends DungeonsEnchantment {
         if(event.getSource() instanceof OffhandAttackDamageSource) return;
         if(!(event.getSource().getEntity() instanceof PlayerEntity)) return;
         PlayerEntity attacker = (PlayerEntity)event.getSource().getEntity();
+        if( attacker.getLastHurtMobTimestamp()==attacker.tickCount)return;
         LivingEntity victim = event.getEntityLiving();
         ItemStack mainhand = attacker.getMainHandItem();
         if(hasSoulSiphonBuiltIn(mainhand)){

@@ -30,6 +30,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.List;
 import java.util.UUID;
 
+import net.minecraft.item.Item.Properties;
+
 public class WolfArmorItem extends ArmorItem implements IArmor {
 
     private static final UUID[] ARMOR_MODIFIERS = new UUID[]{

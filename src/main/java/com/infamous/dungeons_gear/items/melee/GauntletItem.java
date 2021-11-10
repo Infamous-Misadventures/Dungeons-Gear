@@ -64,10 +64,17 @@ public class GauntletItem extends TieredItem implements IDualWieldWeapon, IVanis
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         target.invulnerableTime = 0;
+        Hand hand=Hand.MAIN_HAND;
         if (stack.getCapability(OffhandProvider.OFFHAND_CAPABILITY).isPresent()) {
-            if (!stack.getCapability(OffhandProvider.OFFHAND_CAPABILITY).resolve().get().getLinkedItemStack().isEmpty())
+            if (!stack.getCapability(OffhandProvider.OFFHAND_CAPABILITY).resolve().get().getLinkedItemStack().isEmpty()) {
                 stack = stack.getCapability(OffhandProvider.OFFHAND_CAPABILITY).resolve().get().getLinkedItemStack();
+                hand=Hand.OFF_HAND;
+            }
         }
+        final Hand copy = hand;
+        stack.hurtAndBreak(1, attacker, (p_220039_0_) -> {
+            p_220039_0_.broadcastBreakEvent(copy);
+        });
         return super.hurtEnemy(stack, target, attacker);
     }
 

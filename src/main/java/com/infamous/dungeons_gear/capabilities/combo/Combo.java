@@ -40,6 +40,7 @@ public class Combo implements ICombo {
     private int rollChargeTicks;
     private int jumpCounter;
     private int refreshmentCounter;
+    private int echoCooldown;
 
     public Combo() {
         this.souls = 0;
@@ -69,6 +70,7 @@ public class Combo implements ICombo {
         this.rollChargeTicks = 0;
         this.jumpCounter = 0;
         this.refreshmentCounter = 0;
+        this.echoCooldown = 0;
     }
 
     @Override
@@ -95,21 +97,21 @@ public class Combo implements ICombo {
 
     @Override
     public float getMaxSouls(@Nullable LivingEntity living) {
-        if(living == null) return 300;
+        if (living == null) return 300;
 
         int bagOfSoulsLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.BAG_OF_SOULS, living);
-        if(bagOfSoulsLevel > 0){
+        if (bagOfSoulsLevel > 0) {
             return 300 + (100 * bagOfSoulsLevel);
-        } else{
+        } else {
             return 300;
         }
     }
 
     @Override
     public void setSouls(float soul, @Nullable LivingEntity living) {
-        if(living != null){
+        if (living != null) {
             this.souls = MathHelper.clamp(soul, 0, this.getMaxSouls(living));
-        } else{
+        } else {
             this.souls = Math.max(soul, 0);
         }
     }
@@ -157,23 +159,23 @@ public class Combo implements ICombo {
     }
 
     @Override
-    public int getHarpoonCount() {
-        return this.harpoonCount;
-    }
-
-    @Override
-    public void setTormentArrowCount(int tormentsArrowsCount) {
-        this.tormentArrowCount = tormentsArrowsCount;
-    }
-
-    @Override
     public void setThunderingArrowsCount(int thunderingArrowsCount) {
         this.thunderingArrowCount = thunderingArrowsCount;
     }
 
     @Override
+    public int getHarpoonCount() {
+        return this.harpoonCount;
+    }
+
+    @Override
     public void setHarpoonCount(int harpoonCount) {
         this.harpoonCount = harpoonCount;
+    }
+
+    @Override
+    public void setTormentArrowCount(int tormentsArrowsCount) {
+        this.tormentArrowCount = tormentsArrowsCount;
     }
 
     @Override
@@ -364,5 +366,15 @@ public class Combo implements ICombo {
     @Override
     public void setRefreshmentCounter(int refreshmentCounter) {
         this.refreshmentCounter = refreshmentCounter;
+    }
+
+    @Override
+    public int getEchoCooldown() {
+        return echoCooldown;
+    }
+
+    @Override
+    public void setEchoCooldown(int echoCooldown) {
+        this.echoCooldown=echoCooldown;
     }
 }

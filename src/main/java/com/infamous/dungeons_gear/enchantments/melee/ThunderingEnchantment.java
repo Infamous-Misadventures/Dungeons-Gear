@@ -35,6 +35,7 @@ public class ThunderingEnchantment extends AOEDamageEnchantment {
     @Override
     public void doPostAttack(LivingEntity user, Entity target, int level) {
         if(!(target instanceof LivingEntity)) return;
+        if( user.getLastHurtMobTimestamp()==user.tickCount)return;
         float chance = user.getRandom().nextFloat();
         if(chance <=  0.3F){
             SoundHelper.playLightningStrikeSounds(user);
@@ -50,6 +51,7 @@ public class ThunderingEnchantment extends AOEDamageEnchantment {
         if(event.getSource() instanceof ElectricShockDamageSource) return;
         if(!(event.getSource().getEntity() instanceof LivingEntity)) return;
         LivingEntity attacker = (LivingEntity)event.getSource().getEntity();
+        if(attacker.getLastHurtMobTimestamp()==attacker.tickCount)return;
         LivingEntity victim = event.getEntityLiving();
         ItemStack mainhand = attacker.getMainHandItem();
         if(hasThunderingBuiltIn(mainhand)){

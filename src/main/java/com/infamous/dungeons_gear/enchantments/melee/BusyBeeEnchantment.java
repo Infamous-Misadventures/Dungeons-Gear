@@ -55,7 +55,7 @@ public class BusyBeeEnchantment extends DungeonsEnchantment {
                 ItemStack mainhand = playerEntity.getMainHandItem();
                 boolean uniqueWeaponFlag = hasBusyBeeBuiltIn(mainhand);
                 if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.BUSY_BEE)){
-                    int busyBeeLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.RAMPAGING, mainhand);
+                    int busyBeeLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.BUSY_BEE, mainhand);
                     float busyBeeRand = playerEntity.getRandom().nextFloat();
                     float busyBeeChance = 0.1F + busyBeeLevel * 0.01F;
                     if(busyBeeRand <= busyBeeChance) {

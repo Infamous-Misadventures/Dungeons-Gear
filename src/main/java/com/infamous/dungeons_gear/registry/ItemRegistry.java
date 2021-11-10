@@ -58,7 +58,6 @@ public class ItemRegistry {
             () -> new DaggerItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> SHEAR_DAGGER = ITEMS.register("shear_dagger",
             () -> new DaggerItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), true));
-
     //DPS 10 (20), crits once per 3 (1.5) seconds
     public static final RegistryObject<Item> SICKLE = ITEMS.register("sickle",
             () -> new SickleItem(ToolMaterialList.METAL, 4, (2.0f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), false));
@@ -66,7 +65,6 @@ public class ItemRegistry {
             () -> new SickleItem(ToolMaterialList.METAL, 4, (2.0f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), true));
     public static final RegistryObject<Item> THE_LAST_LAUGH = ITEMS.register("the_last_laugh",
             () -> new SickleItem(ToolMaterialList.METAL, 4, (2.0f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), true));
-
     //DPS 9.6/8 (19.2/16), crits once per 2.92/1 (1.46/0.5) seconds
     public static final RegistryObject<Item> GAUNTLET = ITEMS.register("gauntlet",
             () -> new GauntletItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), false));

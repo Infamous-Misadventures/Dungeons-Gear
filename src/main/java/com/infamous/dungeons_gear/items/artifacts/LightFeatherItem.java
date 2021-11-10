@@ -24,6 +24,8 @@ import java.util.List;
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 import static com.infamous.dungeons_libraries.utils.PetHelper.isPetOfAttacker;
 
+import net.minecraft.item.Item.Properties;
+
 public class LightFeatherItem extends ArtifactItem {
     public LightFeatherItem(Properties properties) {
         super(properties);

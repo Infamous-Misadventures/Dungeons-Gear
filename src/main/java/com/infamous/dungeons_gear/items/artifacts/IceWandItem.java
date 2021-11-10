@@ -23,6 +23,8 @@ import java.util.List;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.applyToNearbyEntities;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.getCanApplyToEnemyPredicate;
 
+import net.minecraft.item.Item.Properties;
+
 public class IceWandItem extends ArtifactItem {
     public IceWandItem(Properties properties) {
         super(properties);

@@ -45,7 +45,7 @@ public class TotemOfRegenerationItem extends ArtifactItem {
             }
             if(itemUseContextPlayer != null) {
 
-                spawnRegenCloudAtPos(itemUseContextPlayer, false, blockPos, 100);
+                spawnRegenCloudAtPos(itemUseContextPlayer, false, blockPos, 1);
                 itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemUseContextItem)));
 
                 ArtifactItem.putArtifactOnCooldown(itemUseContextPlayer, itemUseContextItem.getItem());

@@ -27,6 +27,8 @@ import java.util.List;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.getCanApplyToEnemyPredicate;
 
+import net.minecraft.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class ShockWebEnchantment extends DungeonsEnchantment {
     // I can't get the clipping logic to work, so I am disabling the functionality of the enchantment for now

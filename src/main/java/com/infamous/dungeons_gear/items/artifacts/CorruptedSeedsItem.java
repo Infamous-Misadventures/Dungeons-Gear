@@ -16,6 +16,8 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 
+import net.minecraft.item.Item.Properties;
+
 public class CorruptedSeedsItem extends ArtifactItem {
     public CorruptedSeedsItem(Properties properties) {
         super(properties);

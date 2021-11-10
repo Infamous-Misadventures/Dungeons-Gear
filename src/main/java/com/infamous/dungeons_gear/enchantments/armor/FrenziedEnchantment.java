@@ -25,7 +25,7 @@ import net.minecraft.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class FrenziedEnchantment extends HealthAbilityEnchantment {
-    private static final UUID FRENZY = UUID.fromString("86ded262-f5b3-41f9-a1ca-b881f6abfcff");
+    private static final UUID FRENZY = UUID.fromString("86ded262-f5b3-41f0-a1ca-b881f6abfcff");
 
     public FrenziedEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlotType[]{

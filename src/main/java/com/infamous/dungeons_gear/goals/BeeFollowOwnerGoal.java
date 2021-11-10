@@ -15,6 +15,8 @@ import static com.infamous.dungeons_libraries.capabilities.summoning.SummoningHe
 
 import net.minecraft.entity.ai.goal.Goal.Flag;
 
+import net.minecraft.entity.ai.goal.Goal.Flag;
+
 public class BeeFollowOwnerGoal extends Goal {
     private final BeeEntity beeEntity;
     private LivingEntity owner;

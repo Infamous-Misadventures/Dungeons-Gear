@@ -24,7 +24,9 @@ public abstract class AreaEffectCloudEntityMixin {
     @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/potion/Effect;applyInstantenousEffect(Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/LivingEntity;ID)V"), method = "tick", require = 0)
     private void instantHack(Effect effect, Entity source, Entity indirectSource, LivingEntity entityLivingBaseIn, int amplifier, double health) {
         if (indirectSource instanceof LivingEntity) {
-            if (effect.isBeneficial() != canApplyToEnemy((LivingEntity) indirectSource, entityLivingBaseIn)) {
+            final boolean isEnemy = effect.isBeneficial() == AbilityHelper.isAlly((LivingEntity) indirectSource, entityLivingBaseIn);
+            final boolean isSelf = effect.isBeneficial() && (indirectSource == entityLivingBaseIn);
+            if (isEnemy || isSelf) {
                 effect.applyInstantenousEffect(source, indirectSource, entityLivingBaseIn, amplifier, health);
             }
         } else effect.applyInstantenousEffect(source, indirectSource, entityLivingBaseIn, amplifier, health);
@@ -32,11 +34,13 @@ public abstract class AreaEffectCloudEntityMixin {
 
     @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;addEffect(Lnet/minecraft/potion/EffectInstance;)Z"), method = "tick", require = 0)
     private boolean extendedHack(LivingEntity livingEntity, EffectInstance effectInstanceIn) {
-        if (getOwner()!=null) {
-            if (effectInstanceIn.getEffect().isBeneficial() != canApplyToEnemy(getOwner(), livingEntity)) {
+        if (getOwner() != null) {
+            final boolean isEnemy = effectInstanceIn.getEffect().isBeneficial() == AbilityHelper.isAlly(getOwner(), livingEntity);
+            final boolean isSelf = effectInstanceIn.getEffect().isBeneficial() && (getOwner() == livingEntity);
+            if (isEnemy || isSelf) {
                 livingEntity.addEffect(effectInstanceIn);
             }
         } else livingEntity.addEffect(effectInstanceIn);
-        return false;
+        return true;
     }
 }
