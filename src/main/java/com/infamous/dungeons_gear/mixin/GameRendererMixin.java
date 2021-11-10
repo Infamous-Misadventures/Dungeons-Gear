@@ -21,7 +21,7 @@ public abstract class GameRendererMixin {
         double reach = playerEntity.getAttributeValue(AttributeRegistry.ATTACK_REACH.get()) - 3;
         return vector3d.squareDistanceTo(vec) + (6 * reach + reach * reach);
     }
-@Redirect(method = "getMouseOver", at = @At(value = "INVOKE", ordinal = 1, target = "Lnet/minecraft/util/math/vector/Vector3d;squareDistanceTo(Lnet/minecraft/util/math/vector/Vector3d;)D"))
+@Redirect(method = "getMouseOver", require = 0, at = @At(value = "INVOKE", ordinal = 1, target = "Lnet/minecraft/util/math/vector/Vector3d;squareDistanceTo(Lnet/minecraft/util/math/vector/Vector3d;)D"))
     private double getModifiedDistance2(Vector3d vector3d, Vector3d vec) {
         PlayerEntity playerEntity=Minecraft.getInstance().player;
         double reach = playerEntity.getAttributeValue(AttributeRegistry.ATTACK_REACH.get()) - 3;

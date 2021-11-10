@@ -34,7 +34,7 @@ public class DoubleAxeItem extends AxeItem implements IMeleeWeapon, IComboWeapon
 
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return enchantment.type.canEnchantItem(Items.IRON_SWORD) && enchantment != Enchantments.SWEEPING;
+        return (enchantment.type.canEnchantItem(Items.IRON_SWORD) && enchantment != Enchantments.SWEEPING)||enchantment.type.canEnchantItem(Items.IRON_AXE);
     }
 
     @Override

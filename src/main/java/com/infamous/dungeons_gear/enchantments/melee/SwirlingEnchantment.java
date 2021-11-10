@@ -41,6 +41,7 @@ public class SwirlingEnchantment extends AOEDamageEnchantment {
         ) {
             PlayerEntity attacker = (PlayerEntity) event.getPlayer();
             LivingEntity victim = (LivingEntity) event.getTarget();
+            if (attacker.getLastAttackedEntityTime() == attacker.ticksExisted) return;
             ItemStack mainhand = attacker.getHeldItemMainhand();
             if (event.getResult() != Event.Result.ALLOW && mainhand.getItem() instanceof IComboWeapon) return;
             boolean uniqueWeaponFlag = hasSwirlingBuiltIn(mainhand);

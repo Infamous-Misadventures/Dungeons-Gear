@@ -38,7 +38,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 //    }
 
     //Sometimes my genius... it's almost frightening.
-    @Redirect(method = "attackTargetEntityWithCurrentItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getDistanceSq(Lnet/minecraft/entity/Entity;)D"))
+    @Redirect(method = "attackTargetEntityWithCurrentItem", require = 0, at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getDistanceSq(Lnet/minecraft/entity/Entity;)D"))
     private double getModifiedDistance(PlayerEntity playerEntity, Entity entityIn) {
         double reach = playerEntity.getAttributeValue(AttributeRegistry.ATTACK_REACH.get()) - 3;
         return playerEntity.getDistanceSq(entityIn) - (6 * reach + reach * reach);

@@ -51,6 +51,8 @@ public class ComboStorage implements Capability.IStorage<ICombo> {
         tag.putInt("jumpCounter", instance.getJumpCounter());
         tag.putInt("refreshmentCounter", instance.getRefreshmentCounter());
 
+        tag.putInt("echoCooldown", instance.getEchoCooldown());
+
         return tag;
     }
 
@@ -93,6 +95,8 @@ public class ComboStorage implements Capability.IStorage<ICombo> {
         instance.setRollChargeTicks(tag.getInt("rollChargeTicks"));
         instance.setJumpCounter(tag.getInt("jumpCounter"));
         instance.setRefreshmentCounter(tag.getInt("refreshmentCounter"));
+
+        instance.setEchoCooldown(tag.getInt("echoCooldown"));
     }
 
     private ListNBT newDoubleNBTList(double... numbers){

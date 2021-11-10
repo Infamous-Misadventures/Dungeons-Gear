@@ -2,9 +2,13 @@ package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
+import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.items.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
+import com.infamous.dungeons_gear.utilties.PlayerAttackHelper;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
@@ -24,36 +28,40 @@ public class RadianceEnchantment extends DungeonsEnchantment {
                 EquipmentSlotType.MAINHAND});
     }
 
-    public int getMaxLevel() {
-        return 3;
-    }
-
-    @Override
-    public void onEntityDamaged(LivingEntity user, Entity target, int level) {
-        if(!(target instanceof LivingEntity)) return;
-        float chance = user.getRNG().nextFloat();
-        if(chance <=  0.2F){
-            AOECloudHelper.spawnRegenCloud(user, level - 1);
-        }
-    }
-
     @SubscribeEvent
-    public static void onRadianceAttack(LivingAttackEvent event){
-        if(event.getSource().getImmediateSource() instanceof AbstractArrowEntity) return;
-        if(event.getSource() instanceof OffhandAttackDamageSource) return;
-        if(!(event.getSource().getTrueSource() instanceof LivingEntity)) return;
-        LivingEntity attacker = (LivingEntity)event.getSource().getTrueSource();
+    public static void onRadianceAttack(LivingAttackEvent event) {
+        if (event.getSource().getImmediateSource() != event.getSource().getTrueSource()) return;
+        if (event.getSource() instanceof OffhandAttackDamageSource) return;
+        if (!(event.getSource().getTrueSource() instanceof LivingEntity)) return;
+        LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
+        if (attacker.getLastAttackedEntityTime() == attacker.ticksExisted) return;
         LivingEntity victim = event.getEntityLiving();
         ItemStack mainhand = attacker.getHeldItemMainhand();
-        if(hasRadianceBuiltIn(mainhand)){
+        if (hasRadianceBuiltIn(mainhand)) {
             float chance = attacker.getRNG().nextFloat();
-            if(chance <=  0.2F) {
+            if (chance <= 0.2F) {
                 AOECloudHelper.spawnRegenCloud(attacker, 0);
+            }
+        }
+        if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.RADIANCE)) {
+            float chance = attacker.getRNG().nextFloat();
+            int level = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.RADIANCE, mainhand);
+            if (chance <= 0.2F && !PlayerAttackHelper.isProbablyNotMeleeDamage(event.getSource())) {
+                AOECloudHelper.spawnRegenCloud(attacker, level - 1);
             }
         }
     }
 
     private static boolean hasRadianceBuiltIn(ItemStack mainhand) {
         return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasRadianceBuiltIn(mainhand);
+    }
+
+    public int getMaxLevel() {
+        return 3;
+    }
+
+    @Override
+    public void onEntityDamaged(LivingEntity user, Entity target, int level) {
+
     }
 }

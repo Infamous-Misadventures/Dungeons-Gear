@@ -37,7 +37,7 @@ public class DungeonsPickaxeItem extends PickaxeItem implements IMeleeWeapon, IC
 
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return enchantment.type.canEnchantItem(Items.IRON_SWORD) && enchantment != Enchantments.SWEEPING;
+        return (enchantment.type.canEnchantItem(Items.IRON_SWORD) && enchantment != Enchantments.SWEEPING)||enchantment.type.canEnchantItem(Items.IRON_PICKAXE);
     }
 
     @Override
