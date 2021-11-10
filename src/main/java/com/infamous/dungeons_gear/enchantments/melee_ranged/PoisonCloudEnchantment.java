@@ -45,7 +45,7 @@ public class PoisonCloudEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onPoisonousWeaponAttack(LivingAttackEvent event) {
-        if (event.getSource().getImmediateSource() instanceof AbstractArrowEntity) return;
+        if (event.getSource().getImmediateSource() != event.getSource().getTrueSource()) return;
         if (event.getSource() instanceof OffhandAttackDamageSource) return;
         if (!(event.getSource().getTrueSource() instanceof LivingEntity)) return;
         LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();

@@ -41,24 +41,26 @@ public class EchoEnchantment extends AOEDamageEnchantment {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onVanillaCriticalHit(CriticalHitEvent event) {
-        PlayerEntity attacker = (PlayerEntity) event.getPlayer();
-        LivingEntity victim = (LivingEntity) event.getTarget();
-        ItemStack mainhand = attacker.getHeldItemMainhand();
-        boolean uniqueWeaponFlag = hasEchoBuiltIn(mainhand);
-        if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.ECHO) || uniqueWeaponFlag) {
-            int echoLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.ECHO, mainhand);
-            if (uniqueWeaponFlag) echoLevel++;
-            float cooldown = Math.max(3, 6 - echoLevel);
-            if (echoLevel > 3) {
-                echoLevel -= 3;
-                while (echoLevel > 0) {
-                    cooldown /= 2;
-                    echoLevel--;
+        if(event.getTarget() instanceof LivingEntity) {
+            PlayerEntity attacker = (PlayerEntity) event.getPlayer();
+            LivingEntity victim = (LivingEntity) event.getTarget();
+            ItemStack mainhand = attacker.getHeldItemMainhand();
+            boolean uniqueWeaponFlag = hasEchoBuiltIn(mainhand);
+            if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.ECHO) || uniqueWeaponFlag) {
+                int echoLevel = EnchantmentHelper.getEnchantmentLevel(MeleeEnchantmentList.ECHO, mainhand);
+                if (uniqueWeaponFlag) echoLevel++;
+                float cooldown = Math.max(3, 6 - echoLevel);
+                if (echoLevel > 3) {
+                    echoLevel -= 3;
+                    while (echoLevel > 0) {
+                        cooldown /= 2;
+                        echoLevel--;
+                    }
                 }
+                echo(attacker, victim, (int) (cooldown * 20));
+                // play echo sound, if there was one
+                //AreaOfEffectHelper.causeEchoAttack(attacker, victim, attackDamage, 3.0f, echoLevel);
             }
-            echo(attacker, victim, (int) (cooldown * 20));
-            // play echo sound, if there was one
-            //AreaOfEffectHelper.causeEchoAttack(attacker, victim, attackDamage, 3.0f, echoLevel);
         }
     }
 
