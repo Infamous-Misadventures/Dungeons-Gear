@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.mixin;
 
+import com.infamous.dungeons_libraries.utils.AbilityHelper;
 import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
