@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.config;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.google.common.collect.Lists;
 import com.infamous.dungeons_gear.DungeonsGear;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
@@ -27,10 +28,12 @@ public class DungeonsGearConfig {
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_DUNGEONS_GEAR_LOOT;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_SALVAGING;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_VILLAGER_TRADES;
+    public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_FRIENDLY_PET_FIRE;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_ELENAI_DODGE_COMPAT;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_WAR_DANCE_COMPAT;
+
     public static ForgeConfigSpec.ConfigValue<Integer> COMMON_ITEM_VALUE;
     public static ForgeConfigSpec.ConfigValue<Integer> UNIQUE_ITEM_VALUE;
     public static ForgeConfigSpec.ConfigValue<Integer> ARTIFACT_VALUE;
@@ -95,6 +98,10 @@ public class DungeonsGearConfig {
                 .comment("Enable Weaponsmith, Fletcher, Armorer and Leatherworker Villagers trading Dungeons Gear items. \n" +
                         "If you have other mods messing with the trades of those professions or simply don't want it, disable this feature. [true / false]")
                 .define("enableVillagerTrades", true);
+        ENABLE_FRIENDLY_PET_FIRE = builder
+                .comment("Enable Friendly Fire on Pets \n" +
+                        "If you dislike (or outright hate) your pets and would like to kill them, enable this feature. [true / false]")
+                .define("enableFriendlyPetFire", false);
         ENABLE_ENCHANTMENT_TRADES = builder
                 .comment("Enable Librarian Villagers trading books enchanted with this mod's enchantments. \n" +
                         "Disable this feature if you want to prevent this. [true / false]")
