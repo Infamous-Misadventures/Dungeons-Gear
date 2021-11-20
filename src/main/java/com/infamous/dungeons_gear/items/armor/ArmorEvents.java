@@ -3,7 +3,6 @@ package com.infamous.dungeons_gear.items.armor;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
-import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
 import com.infamous.dungeons_gear.enchantments.armor.ArrowHoarderEnchantment;
 import com.infamous.dungeons_gear.items.interfaces.IArmor;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
@@ -26,7 +25,6 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -174,7 +172,7 @@ public class ArmorEvents {
         if (freezingMultiplier > 0) {
             if (event.getPotionEffect().getEffect() == Effects.MOVEMENT_SLOWDOWN || event.getPotionEffect().getEffect() == Effects.DIG_SLOWDOWN) {
                 int oldDuration = effectInstance.getDuration();
-                ObfuscationReflectionHelper.setPrivateValue(EffectInstance.class, effectInstance, (int) (oldDuration * freezingMultiplier), "duration");
+                effectInstance.duration = (int) (oldDuration * freezingMultiplier);
             }
         }
     }

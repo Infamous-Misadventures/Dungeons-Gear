@@ -1,10 +1,10 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
-import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
+import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
@@ -12,11 +12,8 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-
-import net.minecraft.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class SuperchargeEnchantment extends DungeonsEnchantment {
@@ -47,7 +44,7 @@ public class SuperchargeEnchantment extends DungeonsEnchantment {
         boolean uniqueWeaponFlag = arrow.getTags().contains(INTRINSIC_SUPERCHARGE_TAG);
         if(superchargeLevel > 0 || uniqueWeaponFlag){
             double originalDamage = arrow.getBaseDamage();
-            int originalKnockback = ObfuscationReflectionHelper.getPrivateValue(AbstractArrowEntity.class, arrow, "knockback");
+            int originalKnockback = arrow.knockback;
             double damageModifier = 0;
             if(superchargeLevel == 1) damageModifier = 1.2D;
             if(superchargeLevel == 2) damageModifier = 1.4D;

@@ -53,6 +53,7 @@ import net.minecraftforge.fml.network.PacketDistributor;
 import java.util.Optional;
 
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
+import static com.infamous.dungeons_gear.config.DungeonsGearConfig.ENABLE_FRIENDLY_PET_FIRE;
 import static com.infamous.dungeons_libraries.utils.CapabilityHelper.getSummonableCapability;
 import static net.minecraft.item.Items.IRON_SWORD;
 
@@ -226,7 +227,7 @@ public class GlobalEvents {
     public static void petDeath(LivingDamageEvent event) {
         //cancel friendly fire
         LivingEntity ouch = event.getEntityLiving();
-        if (event.getSource().getEntity() instanceof LivingEntity) {
+        if (!ENABLE_FRIENDLY_PET_FIRE.get() && event.getSource().getEntity() instanceof LivingEntity) {
             LivingEntity bonk = (LivingEntity) event.getSource().getEntity();
             if (PetHelper.isPetOrColleagueRelation(ouch, bonk)) {
                 event.setCanceled(true);

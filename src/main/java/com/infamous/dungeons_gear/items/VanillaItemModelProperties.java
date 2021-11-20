@@ -4,7 +4,6 @@ import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.utilties.RangedAttackHelper;
 import net.minecraft.item.*;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import java.util.Map;
 

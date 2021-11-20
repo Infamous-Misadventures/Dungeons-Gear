@@ -32,7 +32,6 @@ import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import java.util.UUID;
 
@@ -277,7 +276,7 @@ public class ArtifactEvents {
                 if(partyStarterLevel <= 0){
                     attacker.removeEffect(CustomEffects.PARTY_STARTER);
                 } else{
-                    ObfuscationReflectionHelper.setPrivateValue(EffectInstance.class, partyStarter, partyStarterLevel - 1, "amplifier");
+                    partyStarter.amplifier = partyStarterLevel - 1;
                 }
             }
         }
@@ -347,7 +346,7 @@ public class ArtifactEvents {
                     event.setCanceled(true);
                 }
 
-                int currentKnockbackStrength = ObfuscationReflectionHelper.getPrivateValue(AbstractArrowEntity.class, arrowEntity, "knockback");
+                int currentKnockbackStrength = arrowEntity.knockback;
                 (arrowEntity).setKnockback(currentKnockbackStrength + 1);
             }
 

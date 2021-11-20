@@ -30,7 +30,7 @@ public class GlobalLootModifier{
         public static void registerModifierSerializers(@Nonnull final RegistryEvent.Register<GlobalLootModifierSerializer<?>> event) {
             event.getRegistry().register(
                     new CommonLootAdditions.Serializer().setRegistryName(new ResourceLocation(MODID,"common_loot_additions"))
-                );
+            );
             event.getRegistry().register(
                     new UncommonLootAdditions.Serializer().setRegistryName(new ResourceLocation(MODID,"uncommon_loot_additions"))
             );
