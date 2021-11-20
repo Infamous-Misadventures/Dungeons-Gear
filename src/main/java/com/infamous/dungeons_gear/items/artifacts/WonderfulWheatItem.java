@@ -20,25 +20,21 @@ import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.passive.horse.LlamaEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
+import net.minecraft.item.Items;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Direction;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.network.PacketDistributor;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.List;
-
-
-import net.minecraft.item.Item.Properties;
 
 public class WonderfulWheatItem extends ArtifactItem {
     public WonderfulWheatItem(Properties p_i48487_1_) {
@@ -101,22 +97,11 @@ public class WonderfulWheatItem extends ArtifactItem {
     private void createLlama(World world, PlayerEntity itemUseContextPlayer, BlockPos blockPos, LlamaEntity llamaEntity) {
         llamaEntity.tameWithName(itemUseContextPlayer);
         llamaEntity.setVariant(2);
-
-        Method setStrength = ObfuscationReflectionHelper.findMethod(LlamaEntity.class, "setStrength", Integer.TYPE);
-        try {
-            setStrength.invoke(llamaEntity, 5);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
-        //llamaEntity.setStrength(5);
+        llamaEntity.setStrength(5);
         ModifiableAttributeInstance maxHealth = llamaEntity.getAttribute(Attributes.MAX_HEALTH);
         if(maxHealth != null)
             maxHealth.setBaseValue(30.0D);
-        Inventory horseChest = ObfuscationReflectionHelper.getPrivateValue(AbstractHorseEntity.class, llamaEntity, "inventory");
-        if (horseChest != null) {
-            horseChest.setItem(1, new ItemStack(Items.RED_CARPET.asItem()));
-        }
-
+        llamaEntity.inventory.setItem(1, new ItemStack(Items.RED_CARPET.asItem()));
         llamaEntity.moveTo((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D, 0.0F, 0.0F);
 
         llamaEntity.targetSelector.addGoal(1, new LlamaOwnerHurtByTargetGoal(llamaEntity));

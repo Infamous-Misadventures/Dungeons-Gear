@@ -3,26 +3,19 @@ package com.infamous.dungeons_gear.loot;
 import com.google.gson.JsonObject;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.minecart.ContainerMinecartEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
 import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.tileentity.LockableLootTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.List;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
@@ -37,7 +30,7 @@ public class GlobalLootModifier{
         public static void registerModifierSerializers(@Nonnull final RegistryEvent.Register<GlobalLootModifierSerializer<?>> event) {
             event.getRegistry().register(
                     new CommonLootAdditions.Serializer().setRegistryName(new ResourceLocation(MODID,"common_loot_additions"))
-                );
+            );
             event.getRegistry().register(
                     new UncommonLootAdditions.Serializer().setRegistryName(new ResourceLocation(MODID,"uncommon_loot_additions"))
             );
@@ -158,23 +151,6 @@ public class GlobalLootModifier{
         }
     }
 
-    private static final String LOCKABLE_LOOT_TILE_ENTITY_LOOT_TABLE = "lootTable";
-    private static final String CONTAINER_MINECART_ENTITY_LOOT_TABLE = "lootTable";
-
-    private static ResourceLocation getLootTable(LockableLootTileEntity lockableLootTileEntity) {
-        return ObfuscationReflectionHelper.getPrivateValue(
-                LockableLootTileEntity.class,
-                lockableLootTileEntity,
-                LOCKABLE_LOOT_TILE_ENTITY_LOOT_TABLE);
-    }
-
-    private static ResourceLocation getLootTable(ContainerMinecartEntity containerMinecartEntity) {
-        return ObfuscationReflectionHelper.getPrivateValue(
-                ContainerMinecartEntity.class,
-                containerMinecartEntity,
-                CONTAINER_MINECART_ENTITY_LOOT_TABLE);
-    }
-
     private static void injectLoot(List<ItemStack> generatedLoot, LootContext context, List<? extends String> lootTables, List<? extends String> lootTableBlacklist, Double uniqueItemChance, Double artifactChance) {
         // return early if the user has disabled this feature
         if(!DungeonsGearConfig.ENABLE_DUNGEONS_GEAR_LOOT.get()){
@@ -184,42 +160,14 @@ public class GlobalLootModifier{
         Entity thisEntity = context.getParamOrNull(LootParameters.THIS_ENTITY);
         final PlayerEntity player = thisEntity instanceof PlayerEntity ? (PlayerEntity) thisEntity : null;
 
-        Entity contextEntity = context.getParamOrNull(LootParameters.KILLER_ENTITY);
-        if(contextEntity instanceof ContainerMinecartEntity){
-            ContainerMinecartEntity containerMinecartEntity = (ContainerMinecartEntity)contextEntity;
-            ResourceLocation lootTable = getLootTable(containerMinecartEntity);
-            if (lootTable != null) {
-                String lootTablePath = lootTable.toString();
-                lootTables.forEach((path) ->{
-                    if(lootTablePath.contains(path) && !lootTableBlacklist.contains(lootTablePath)){
-                        generatedLoot.addAll(ChestLootHelper.generateLootFromValues(uniqueItemChance, artifactChance, player));
-                    }
-                });
-            }
-        }
-        else
-        {
-            Vector3d vector3d = context.getParamOrNull(LootParameters.ORIGIN);
-            if(vector3d != null){
-                BlockPos pos = new BlockPos(vector3d);
-                // fix chunk lag issue
-                if(!context.getLevel().hasChunkAt(pos)){
-                    return;
+        ResourceLocation lootTable = context.getQueriedLootTableId();
+        if (lootTable != null) {
+            String lootTablePath = lootTable.toString();
+            lootTables.forEach((path) ->{
+                if(lootTablePath.contains(path) && !lootTableBlacklist.contains(lootTablePath)){
+                    generatedLoot.addAll(ChestLootHelper.generateLootFromValues(uniqueItemChance, artifactChance, player));
                 }
-                TileEntity contextTileEntity = context.getLevel().getBlockEntity(pos);
-                if(contextTileEntity instanceof LockableLootTileEntity){
-                    LockableLootTileEntity lockableLootTileEntity = (LockableLootTileEntity)contextTileEntity;
-                    ResourceLocation lootTable = getLootTable(lockableLootTileEntity);
-                    if (lootTable != null) {
-                        String lootTablePath = lootTable.toString();
-                        lootTables.forEach((path) ->{
-                            if(lootTablePath.contains(path) && !lootTableBlacklist.contains(lootTablePath)){
-                                generatedLoot.addAll(ChestLootHelper.generateLootFromValues(uniqueItemChance, artifactChance, player));
-                            }
-                        });
-                    }
-                }
-            }
+            });
         }
     }
 }

@@ -4,14 +4,12 @@ import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.utilties.RangedAttackHelper;
 import net.minecraft.item.*;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import java.util.Map;
 
 public class VanillaItemModelProperties {
     public VanillaItemModelProperties(){
-        Map<Item, Map<ResourceLocation, IItemPropertyGetter>> itemModelsProperties =
-                ObfuscationReflectionHelper.getPrivateValue(ItemModelsProperties.class, null, "PROPERTIES");
+        Map<Item, Map<ResourceLocation, IItemPropertyGetter>> itemModelsProperties = ItemModelsProperties.PROPERTIES;
         if(itemModelsProperties != null){
             Map<ResourceLocation, IItemPropertyGetter> bowModelProperties = itemModelsProperties.get(Items.BOW);
             Map<ResourceLocation, IItemPropertyGetter> crossbowModelProperties = itemModelsProperties.get(Items.CROSSBOW);
