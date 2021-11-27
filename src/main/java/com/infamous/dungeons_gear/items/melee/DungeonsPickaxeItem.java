@@ -4,6 +4,7 @@ import com.infamous.dungeons_gear.registry.ItemRegistry;
 import com.infamous.dungeons_gear.items.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.items.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
+import com.infamous.dungeons_gear.utilties.MojankHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
@@ -31,9 +32,7 @@ public class DungeonsPickaxeItem extends PickaxeItem implements IMeleeWeapon, IC
     // This is a designated weapon, so it will not be penalized for attacking as a normal axe would
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        stack.hurtAndBreak(1, attacker, (p_220039_0_) -> {
-            p_220039_0_.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
-        });
+        stack.hurtAndBreak(1, attacker, MojankHelper::hurtEnemyBroadcastBreakEvent);
         return true;
     }
 
