@@ -1,11 +1,13 @@
 package com.infamous.dungeons_gear.items.melee;
 
 
+import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.registry.ItemRegistry;
 import com.infamous.dungeons_gear.items.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.items.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.items.interfaces.ISoulGatherer;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
+import com.infamous.dungeons_gear.utilties.MojankHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
@@ -20,8 +22,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 
 import java.util.List;
-
-import net.minecraft.item.Item.Properties;
 
 public class SoulScytheItem extends SwordItem implements IMeleeWeapon, ISoulGatherer, IComboWeapon {
     @Override
@@ -48,18 +48,15 @@ public class SoulScytheItem extends SwordItem implements IMeleeWeapon, ISoulGath
         }
     }
 
-    public boolean hurtEnemy(ItemStack p_77644_1_, LivingEntity p_77644_2_, LivingEntity p_77644_3_) {
-        p_77644_1_.hurtAndBreak(1, p_77644_3_, (p_220045_0_) -> {
-            p_220045_0_.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
-        });
+    @Override
+    public boolean hurtEnemy(ItemStack itemStack, LivingEntity origin, LivingEntity target) {
+        itemStack.hurtAndBreak(1, target, MojankHelper::hurtEnemyBroadcastBreakEvent);
         return true;
     }
 
     public boolean mineBlock(ItemStack p_179218_1_, World p_179218_2_, BlockState p_179218_3_, BlockPos p_179218_4_, LivingEntity p_179218_5_) {
         if (p_179218_3_.getDestroySpeed(p_179218_2_, p_179218_4_) != 0.0F) {
-            p_179218_1_.hurtAndBreak(2, p_179218_5_, (p_220044_0_) -> {
-                p_220044_0_.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
-            });
+            p_179218_1_.hurtAndBreak(2, p_179218_5_, MojankHelper::hurtEnemyBroadcastBreakEvent);
         }
 
         return true;
