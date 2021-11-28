@@ -118,8 +118,7 @@ dependencies {
     compile fg.deobf("curse.maven:elenaidodge2-442962:3221492")
 
     //Library
-    implementation fg.deobf("dungeons_libraries:dungeons_libraries:1.16.5-0.0.1")
-    //runtimeOnly fg.deobf("dungeons_libraries:dungeons_libraries:1.16.5-0.0.1")
+    implementation fg.deobf("dungeons_libraries:dungeons_libraries:1.16.5-0.0.1-alpha")
 
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
