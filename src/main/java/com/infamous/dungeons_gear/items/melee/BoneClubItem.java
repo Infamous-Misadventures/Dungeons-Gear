@@ -99,4 +99,9 @@ public class BoneClubItem extends TieredItem implements IMeleeWeapon, IComboWeap
     public int getComboLength(ItemStack stack, LivingEntity attacker) {
         return 2;
     }
+
+    @Override
+    public boolean isUnique() {
+        return unique;
+    }
 }

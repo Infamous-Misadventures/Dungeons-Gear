@@ -100,4 +100,9 @@ public class SoulScytheItem extends SwordItem implements IMeleeWeapon, ISoulGath
     public float getActivationCost(ItemStack stack) {
         return 0;
     }
+
+    @Override
+    public boolean isUnique() {
+        return unique;
+    }
 }

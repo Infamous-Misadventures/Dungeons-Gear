@@ -54,4 +54,9 @@ public class CoralBladeItem extends SwordItem implements IMeleeWeapon, IComboWea
         super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
+
+    @Override
+    public boolean isUnique() {
+        return unique;
+    }
 }

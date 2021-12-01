@@ -70,4 +70,9 @@ public class SoulKnifeItem extends SwordItem implements IMeleeWeapon, ISoulGathe
     public float getActivationCost(ItemStack stack) {
         return 0;
     }
+
+    @Override
+    public boolean isUnique() {
+        return unique;
+    }
 }

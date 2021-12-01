@@ -54,4 +54,9 @@ public class DungeonsSwordItem extends net.minecraft.item.SwordItem implements I
         super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
+
+    @Override
+    public boolean isUnique() {
+        return unique;
+    }
 }

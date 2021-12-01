@@ -5,6 +5,8 @@ import net.minecraft.item.ItemStack;
 
 public interface IRangedWeapon<T extends Item> {
 
+    boolean isUnique();
+
     String HARPOON_TAG = "Harpoon";
     String HUNTING_TAG = "Hunting";
     String RELIABLE_RICOCHET_TAG = "ReliableRicochet";

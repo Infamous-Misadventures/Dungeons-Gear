@@ -1,4 +1,4 @@
-package com.infamous.dungeons_gear.items;
+package com.infamous.dungeons_gear.items.armor;
 
 import com.infamous.dungeons_gear.items.interfaces.IArmor;
 import com.infamous.dungeons_gear.registry.ItemRegistry;

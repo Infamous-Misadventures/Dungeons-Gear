@@ -10,7 +10,10 @@ import net.minecraft.item.Items;
 import javax.annotation.Nullable;
 import java.util.*;
 
-import static com.infamous.dungeons_gear.items.ArmorHelper.*;
+import static com.infamous.dungeons_gear.items.armor.ArmorHelper.*;
+import static com.infamous.dungeons_gear.items.artifacts.ArtifactHelper.getArtifactList;
+import static com.infamous.dungeons_gear.items.melee.MeleeWeaponHelper.getMeleeWeaponList;
+import static com.infamous.dungeons_gear.items.ranged.RangedWeaponHelper.getRangedWeaponList;
 import static com.infamous.dungeons_gear.registry.ItemRegistry.*;
 
 public class ChestLootHelper {
@@ -27,16 +30,16 @@ public class ChestLootHelper {
         Item uniqueMeleeWeapon = Items.AIR;
 
         if(ConfigurableLootHelper.isMeleeWeaponLootEnabled()){
-            commonMeleeWeapon = getRandomSetElement(commonWeaponMap.keySet());
-            uniqueMeleeWeapon = getRandomSetElement(uniqueWeaponMap.keySet());
+            commonMeleeWeapon = getRandomCollectionElement(getMeleeWeaponList(false));
+            uniqueMeleeWeapon = getRandomCollectionElement(getMeleeWeaponList(true));
             selectedMeleeWeapon = true;
         }
         Item commonRangedWeapon = Items.AIR;
         Item uniqueRangedWeapon = Items.AIR;
 
         if(ConfigurableLootHelper.isMeleeWeaponLootEnabled()){
-            commonRangedWeapon = getRandomSetElement(commonRangedWeaponMap.keySet());
-            uniqueRangedWeapon = getRandomSetElement(uniqueRangedWeaponMap.keySet());
+            commonRangedWeapon = getRandomCollectionElement(getRangedWeaponList(false));
+            uniqueRangedWeapon = getRandomCollectionElement(getRangedWeaponList(true));
             selectedRangedWeapon = true;
         }
 
@@ -46,18 +49,18 @@ public class ChestLootHelper {
         Item uniqueMetalArmor = Items.AIR;
 
         if(ConfigurableLootHelper.isArmorLootEnabled()){
-            commonLeatherArmor = getRandomSetElement(new HashSet<>(getArmorList(LEATHER_MATERIALS, false)));
-            uniqueLeatherArmor = getRandomSetElement(new HashSet<>(getArmorList(LEATHER_MATERIALS, true)));
+            commonLeatherArmor = getRandomCollectionElement(getArmorList(LEATHER_MATERIALS, false));
+            uniqueLeatherArmor = getRandomCollectionElement(getArmorList(LEATHER_MATERIALS, true));
 
-            commonMetalArmor = getRandomSetElement(new HashSet<>(getArmorList(METAL_MATERIALS, false)));
-            uniqueMetalArmor = getRandomSetElement(new HashSet<>(getArmorList(METAL_MATERIALS, true)));
+            commonMetalArmor = getRandomCollectionElement(getArmorList(METAL_MATERIALS, false));
+            uniqueMetalArmor = getRandomCollectionElement(getArmorList(METAL_MATERIALS, true));
             selectedArmor = true;
         }
 
         Item artifact = Items.AIR;
 
         if(ConfigurableLootHelper.isArtifactLootEnabled()){
-            artifact = getRandomSetElement(artifactMap.keySet());
+            artifact = getRandomCollectionElement(getArtifactList());
             selectedArtifact = true;
         }
 
@@ -114,7 +117,7 @@ public class ChestLootHelper {
         }
     }
 
-    public static Item getRandomSetElement(Set<Item> set) {
+    public static Item getRandomCollectionElement(Collection<Item> set) {
         int index = RANDOM.nextInt(set.size());
         Iterator<Item> iter = set.iterator();
         for (int i = 0; i < index; i++) {

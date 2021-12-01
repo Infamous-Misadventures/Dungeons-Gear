@@ -311,4 +311,9 @@ public abstract class AbstractDungeonsCrossbowItem extends CrossbowItem implemen
 
         return true;
     }
+
+    @Override
+    public boolean isUnique() {
+        return isUnique;
+    }
 }

@@ -54,4 +54,9 @@ public class KatanaItem extends SwordItem implements IMeleeWeapon, IComboWeapon 
         super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
+
+    @Override
+    public boolean isUnique() {
+        return unique;
+    }
 }

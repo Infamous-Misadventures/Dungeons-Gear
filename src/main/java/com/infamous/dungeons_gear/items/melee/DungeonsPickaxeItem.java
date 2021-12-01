@@ -60,4 +60,9 @@ public class DungeonsPickaxeItem extends PickaxeItem implements IMeleeWeapon, IC
         super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
+
+    @Override
+    public boolean isUnique() {
+        return unique;
+    }
 }

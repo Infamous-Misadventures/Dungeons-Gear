@@ -48,4 +48,9 @@ public class SawbladeItem extends SwordItem implements IMeleeWeapon {
         super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
+
+    @Override
+    public boolean isUnique() {
+        return unique;
+    }
 }

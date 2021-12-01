@@ -60,4 +60,9 @@ public class CutlassItem extends SwordItem implements IMeleeWeapon, IComboWeapon
     public int getComboLength(ItemStack stack, LivingEntity attacker) {
         return 2;
     }
+
+    @Override
+    public boolean isUnique() {
+        return unique;
+    }
 }

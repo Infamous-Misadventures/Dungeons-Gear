@@ -64,4 +64,9 @@ public class RapierItem extends SwordItem implements IMeleeWeapon, IComboWeapon 
         target.invulnerableTime = 0;
         return super.hurtEnemy(stack, target, attacker);
     }
+
+    @Override
+    public boolean isUnique() {
+        return unique;
+    }
 }

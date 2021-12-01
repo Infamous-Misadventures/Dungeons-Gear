@@ -114,4 +114,9 @@ public class WhipItem extends TieredItem implements IMeleeWeapon, IComboWeapon {
     public boolean canAttackBlock(BlockState state, World worldIn, BlockPos pos, PlayerEntity player) {
         return !player.isCreative();
     }
+
+    @Override
+    public boolean isUnique() {
+        return unique;
+    }
 }

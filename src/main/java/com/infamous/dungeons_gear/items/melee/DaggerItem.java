@@ -145,5 +145,8 @@ public class DaggerItem extends SwordItem implements IDualWieldWeapon, IMeleeWea
             update((LivingEntity) entityIn, stack, itemSlot);
     }
 
-
+    @Override
+    public boolean isUnique() {
+        return unique;
+    }
 }

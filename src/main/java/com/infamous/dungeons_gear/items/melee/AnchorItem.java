@@ -135,4 +135,9 @@ public class AnchorItem extends TieredItem implements IMeleeWeapon, IComboWeapon
         super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
+
+    @Override
+    public boolean isUnique() {
+        return unique;
+    }
 }

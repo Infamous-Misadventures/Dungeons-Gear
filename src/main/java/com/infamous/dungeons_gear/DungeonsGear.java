@@ -89,7 +89,6 @@ public class DungeonsGear
     private void setup(final FMLCommonSetupEvent event)
     {
         NetworkHandler.init();
-        ItemRegistry.putItemsInMap();
         WeaponAttributeHandler.setWeaponAttributeModifiers();
         CapabilityManager.INSTANCE.register(ICombo.class, new ComboStorage(), Combo::new);
         CapabilityManager.INSTANCE.register(IBow.class, new BowStorage(), Bow::new);

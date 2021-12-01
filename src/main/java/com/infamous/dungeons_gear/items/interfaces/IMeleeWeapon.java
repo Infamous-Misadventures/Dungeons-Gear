@@ -5,6 +5,8 @@ import net.minecraft.item.ItemStack;
 
 public interface IMeleeWeapon<T extends Item> {
 
+    boolean isUnique();
+
     // Non-enchantment abilities
     default boolean canDualWield(ItemStack stack){
         return false;

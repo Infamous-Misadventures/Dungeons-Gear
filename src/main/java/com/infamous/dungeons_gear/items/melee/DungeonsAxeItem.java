@@ -71,4 +71,9 @@ public class DungeonsAxeItem extends AxeItem implements IMeleeWeapon, IComboWeap
         super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
+
+    @Override
+    public boolean isUnique() {
+        return unique;
+    }
 }

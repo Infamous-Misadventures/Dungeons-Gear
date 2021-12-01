@@ -63,4 +63,9 @@ public class ClaymoreItem extends SwordItem implements IMeleeWeapon, IComboWeapo
     public int getComboLength(ItemStack stack, LivingEntity attacker) {
         return 3;
     }
+
+    @Override
+    public boolean isUnique() {
+        return unique;
+    }
 }

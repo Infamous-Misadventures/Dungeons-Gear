@@ -154,4 +154,9 @@ public class SickleItem extends SwordItem implements IDualWieldWeapon, IMeleeWea
             return new ActionResult<>(ActionResultType.PASS, playerIn.getItemInHand(handIn));
         }
     }
+
+    @Override
+    public boolean isUnique() {
+        return unique;
+    }
 }

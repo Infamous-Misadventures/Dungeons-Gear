@@ -183,4 +183,9 @@ public class GauntletItem extends TieredItem implements IDualWieldWeapon, IVanis
     public float getActivationCost(ItemStack stack) {
         return 0;
     }
+
+    @Override
+    public boolean isUnique() {
+        return unique;
+    }
 }
