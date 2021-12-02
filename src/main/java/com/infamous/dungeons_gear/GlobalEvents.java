@@ -81,7 +81,7 @@ public class GlobalEvents {
                 }
             }
         } else if (event.getEntity() instanceof ServerPlayerEntity) {
-            gildedWeaponTest((ServerPlayerEntity) event.getEntity());
+//            gildedWeaponTest((ServerPlayerEntity) event.getEntity());
             NetworkHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getEntity()), new PacketUpdateSouls(CapabilityHelper.getComboCapability(event.getEntity()).getSouls()));
         }
     }

@@ -96,7 +96,6 @@ public class MercenaryArmorItem extends ArmorItem implements IArmor {
         return null;
     }
 
-
     @Override
     public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlotType equipmentSlot) {
         return equipmentSlot == this.slot ? this.attributeModifiers : super.getDefaultAttributeModifiers(equipmentSlot);
@@ -117,10 +116,5 @@ public class MercenaryArmorItem extends ArmorItem implements IArmor {
     @Override
     public boolean isUnique() {
         return unique;
-    }
-
-    @Override
-    public double getRangedDamage() {
-        return 10;
     }
 }
