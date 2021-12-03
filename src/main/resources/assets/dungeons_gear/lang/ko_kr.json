@@ -165,7 +165,7 @@
   "enchantment.dungeons_gear.health_synergy": "체력 시너지",
   "enchantment.dungeons_gear.health_synergy.desc": "유물을 사용할 때 마다 소량의 체력을 회복합니다.",
   "enchantment.dungeons_gear.life_boost": "생명 증폭",
-  "enchantment.dungeons_gear.life_boost.desc": "Each time you expend a life, your maximum health increases.",
+  "enchantment.dungeons_gear.life_boost.desc": "생명이 소모될 때마다, 최대 체력이 증가합니다.",
   "enchantment.dungeons_gear.lightning_focus": "번개 집중",
   "enchantment.dungeons_gear.lightning_focus.desc": "가하는 번개 피해량이 증가합니다.",
   "enchantment.dungeons_gear.lucky_explorer": "운 좋은 모험가",
