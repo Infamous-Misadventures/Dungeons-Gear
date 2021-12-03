@@ -34,6 +34,7 @@ import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.CrossbowItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effects;
@@ -55,7 +56,7 @@ import java.util.Optional;
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 import static com.infamous.dungeons_gear.config.DungeonsGearConfig.ENABLE_FRIENDLY_PET_FIRE;
 import static com.infamous.dungeons_libraries.utils.CapabilityHelper.getSummonableCapability;
-import static net.minecraft.item.Items.IRON_SWORD;
+import static net.minecraft.item.Items.*;
 
 
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
@@ -81,13 +82,21 @@ public class GlobalEvents {
                 }
             }
         } else if (event.getEntity() instanceof ServerPlayerEntity) {
-//            gildedWeaponTest((ServerPlayerEntity) event.getEntity());
+            gildedGearTest((ServerPlayerEntity) event.getEntity());
             NetworkHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getEntity()), new PacketUpdateSouls(CapabilityHelper.getComboCapability(event.getEntity()).getSouls()));
         }
     }
 
-    private static void gildedWeaponTest(ServerPlayerEntity entity) {
-        ItemStack sword = new ItemStack(IRON_SWORD);
+    private static void gildedGearTest(ServerPlayerEntity entity) {
+        dropGildedItem(entity, DIAMOND_SWORD);
+        dropGildedItem(entity, DIAMOND_HELMET);
+        dropGildedItem(entity, DIAMOND_CHESTPLATE);
+        dropGildedItem(entity, DIAMOND_LEGGINGS);
+        dropGildedItem(entity, DIAMOND_BOOTS);
+    }
+
+    private static void dropGildedItem(ServerPlayerEntity entity, Item item) {
+        ItemStack sword = new ItemStack(item);
         ItemStack gildedItem = GildedItemHelper.getGildedItem(entity.getRandom(), sword);
         ItemEntity gildedItemDrop = new ItemEntity(entity.level, entity.getX(), entity.getY(), entity.getZ(), gildedItem);
         entity.level.addFreshEntity(gildedItemDrop);
