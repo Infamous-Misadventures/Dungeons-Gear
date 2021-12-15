@@ -1,13 +1,9 @@
 package com.infamous.dungeons_gear.utilties;
 
+import com.infamous.dungeons_gear.capabilities.bow.BowProvider;
+import com.infamous.dungeons_gear.capabilities.bow.IBow;
 import com.infamous.dungeons_gear.capabilities.combo.ComboProvider;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
-import com.infamous.dungeons_libraries.capabilities.summoning.ISummonable;
-import com.infamous.dungeons_libraries.capabilities.summoning.ISummoner;
-import com.infamous.dungeons_libraries.capabilities.summoning.SummonableProvider;
-import com.infamous.dungeons_libraries.capabilities.summoning.SummonerProvider;
-import com.infamous.dungeons_gear.capabilities.bow.IBow;
-import com.infamous.dungeons_gear.capabilities.bow.BowProvider;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;

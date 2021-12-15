@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.melee;
 
-import com.infamous.dungeons_libraries.capabilities.summoning.ISummonable;
-import com.infamous.dungeons_libraries.capabilities.summoning.ISummoner;
+import com.infamous.dungeons_libraries.capabilities.summoning.IMinion;
+import com.infamous.dungeons_libraries.capabilities.summoning.IMaster;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
@@ -9,7 +9,7 @@ import com.infamous.dungeons_gear.goals.BeeFollowOwnerGoal;
 import com.infamous.dungeons_gear.goals.BeeOwnerHurtByTargetGoal;
 import com.infamous.dungeons_gear.goals.BeeOwnerHurtTargetGoal;
 import com.infamous.dungeons_gear.items.interfaces.IMeleeWeapon;
-import com.infamous.dungeons_libraries.utils.CapabilityHelper;
+import com.infamous.dungeons_libraries.capabilities.summoning.MinionMasterHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -78,13 +78,13 @@ public class BusyBeeEnchantment extends DungeonsEnchantment {
 
 
     private static void createBusyBee(LivingEntity victim, PlayerEntity playerEntity) {
-        ISummoner summonerCap = CapabilityHelper.getSummonerCapability(playerEntity);
+        IMaster summonerCap = MinionMasterHelper.getMasterCapability(playerEntity);
         BeeEntity beeEntity = EntityType.BEE.create(playerEntity.level);
         if (beeEntity!= null && summonerCap != null) {
-            ISummonable summonable = CapabilityHelper.getSummonableCapability(beeEntity);
+            IMinion summonable = MinionMasterHelper.getMinionCapability(beeEntity);
             if(summonable != null && summonerCap.addBusyBeeBee(beeEntity.getUUID())){
 
-                summonable.setSummoner(playerEntity.getUUID());
+                summonable.setMaster(playerEntity.getUUID());
 
                 createBee(victim, playerEntity, beeEntity);
             }

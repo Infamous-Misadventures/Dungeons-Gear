@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.goals;
 
-import com.infamous.dungeons_libraries.capabilities.summoning.SummoningHelper;
+import com.infamous.dungeons_libraries.capabilities.summoning.MinionMasterHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.monster.GhastEntity;
@@ -22,8 +22,8 @@ public class GoalUtils {
                 if (wolfentity.isTame() && wolfentity.getOwner() == owner) {
                     return false;
                 }
-            } else if(SummoningHelper.isEntitySummonable(target)){
-                return !SummoningHelper.wasSummonedBy(target, owner.getUUID());
+            } else if(MinionMasterHelper.isMinionEntity(target)){
+                return !MinionMasterHelper.isMinionOf(target, owner.getUUID());
             }
 
             if (target instanceof PlayerEntity && owner instanceof PlayerEntity && !((PlayerEntity)owner).canHarmPlayer((PlayerEntity)target)) {

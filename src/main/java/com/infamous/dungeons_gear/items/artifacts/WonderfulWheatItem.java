@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
-import com.infamous.dungeons_libraries.capabilities.summoning.ISummonable;
-import com.infamous.dungeons_libraries.capabilities.summoning.ISummoner;
+import com.infamous.dungeons_libraries.capabilities.summoning.IMinion;
+import com.infamous.dungeons_libraries.capabilities.summoning.IMaster;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.goals.LlamaFollowOwnerGoal;
@@ -39,8 +39,8 @@ import java.util.List;
 
 import net.minecraft.item.Item.Properties;
 
-import static com.infamous.dungeons_libraries.utils.CapabilityHelper.getSummonableCapability;
-import static com.infamous.dungeons_libraries.utils.CapabilityHelper.getSummonerCapability;
+import static com.infamous.dungeons_libraries.capabilities.summoning.MinionMasterHelper.getMinionCapability;
+import static com.infamous.dungeons_libraries.capabilities.summoning.MinionMasterHelper.getMasterCapability;
 
 public class WonderfulWheatItem extends ArtifactItem {
     public WonderfulWheatItem(Properties p_i48487_1_) {
@@ -67,15 +67,15 @@ public class WonderfulWheatItem extends ArtifactItem {
             }
 
             if(itemUseContextPlayer != null){
-                ISummoner summonerCap = getSummonerCapability(itemUseContextPlayer);
+                IMaster summonerCap = getMasterCapability(itemUseContextPlayer);
                 if (summonerCap != null) {
                     if(summonerCap.getSummonedLlama() == null){
                         LlamaEntity llamaEntity = EntityType.LLAMA.create(world);
                         if (llamaEntity!= null) {
-                            ISummonable summon = getSummonableCapability(llamaEntity);
+                            IMinion summon = getMinionCapability(llamaEntity);
                             if(summon != null){
 
-                                summon.setSummoner(itemUseContextPlayer.getUUID());
+                                summon.setMaster(itemUseContextPlayer.getUUID());
                                 summonerCap.setSummonedLlama(llamaEntity.getUUID());
 
                                 createLlama(world, itemUseContextPlayer, blockPos, llamaEntity);

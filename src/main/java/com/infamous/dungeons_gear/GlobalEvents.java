@@ -55,7 +55,7 @@ import java.util.Optional;
 
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 import static com.infamous.dungeons_gear.config.DungeonsGearConfig.ENABLE_FRIENDLY_PET_FIRE;
-import static com.infamous.dungeons_libraries.utils.CapabilityHelper.getSummonableCapability;
+import static com.infamous.dungeons_libraries.capabilities.summoning.MinionMasterHelper.getMinionCapability;
 import static net.minecraft.item.Items.*;
 
 
@@ -249,7 +249,7 @@ public class GlobalEvents {
             }
         }
         if (DungeonsGearCompatibility.saveYourPets) {
-            if (getSummonableCapability(event.getEntityLiving()) != null && event.getAmount() > event.getEntityLiving().getMaxHealth()) {
+            if (getMinionCapability(event.getEntityLiving()) != null && event.getAmount() > event.getEntityLiving().getMaxHealth()) {
                 event.getEntityLiving().remove();
                 //so summoned wolves and llamas are disposable
             }

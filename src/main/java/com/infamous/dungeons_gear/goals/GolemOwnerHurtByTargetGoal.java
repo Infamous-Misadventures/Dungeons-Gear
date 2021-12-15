@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.goals;
 
-import com.infamous.dungeons_libraries.capabilities.summoning.SummoningHelper;
+import com.infamous.dungeons_libraries.capabilities.summoning.MinionMasterHelper;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.TargetGoal;
@@ -25,7 +25,7 @@ public class GolemOwnerHurtByTargetGoal extends TargetGoal {
 
     public boolean canUse() {
         if (this.ironGolemEntity.isPlayerCreated()) {
-            LivingEntity owner = SummoningHelper.getSummoner(this.ironGolemEntity);
+            LivingEntity owner = MinionMasterHelper.getMaster(this.ironGolemEntity);
             if (owner == null) {
                 return false;
             } else {
@@ -40,7 +40,7 @@ public class GolemOwnerHurtByTargetGoal extends TargetGoal {
 
     public void start() {
         this.mob.setTarget(this.attacker);
-        LivingEntity owner = SummoningHelper.getSummoner(this.ironGolemEntity);
+        LivingEntity owner = MinionMasterHelper.getMaster(this.ironGolemEntity);
         if (owner != null) {
             this.timestamp = owner.getLastHurtByMobTimestamp();
         }

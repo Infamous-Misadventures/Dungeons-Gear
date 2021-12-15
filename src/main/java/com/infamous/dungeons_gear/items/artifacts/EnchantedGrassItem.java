@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
-import com.infamous.dungeons_libraries.capabilities.summoning.ISummonable;
-import com.infamous.dungeons_libraries.capabilities.summoning.ISummoner;
+import com.infamous.dungeons_libraries.capabilities.summoning.IMinion;
+import com.infamous.dungeons_libraries.capabilities.summoning.IMaster;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.goals.*;
@@ -30,8 +30,8 @@ import java.util.List;
 
 import net.minecraft.item.Item.Properties;
 
-import static com.infamous.dungeons_libraries.utils.CapabilityHelper.getSummonableCapability;
-import static com.infamous.dungeons_libraries.utils.CapabilityHelper.getSummonerCapability;
+import static com.infamous.dungeons_libraries.capabilities.summoning.MinionMasterHelper.getMinionCapability;
+import static com.infamous.dungeons_libraries.capabilities.summoning.MinionMasterHelper.getMasterCapability;
 
 public class EnchantedGrassItem extends ArtifactItem {
 
@@ -60,15 +60,15 @@ public class EnchantedGrassItem extends ArtifactItem {
             }
 
             if(itemUseContextPlayer != null){
-                ISummoner summonerCap = getSummonerCapability(itemUseContextPlayer);
+                IMaster summonerCap = getMasterCapability(itemUseContextPlayer);
                 if (summonerCap != null) {
                     if(summonerCap.getSummonedSheep() == null){
                         SheepEntity sheepEntity = EntityType.SHEEP.create(world);
                         if (sheepEntity!= null) {
-                            ISummonable summon = getSummonableCapability(sheepEntity);
+                            IMinion summon = getMinionCapability(sheepEntity);
                             if(summon != null){
 
-                                summon.setSummoner(itemUseContextPlayer.getUUID());
+                                summon.setMaster(itemUseContextPlayer.getUUID());
                                 summonerCap.setSummonedSheep(sheepEntity.getUUID());
 
                                 createEnchantedSheep(world, itemUseContextPlayer, blockPos, sheepEntity);

@@ -7,7 +7,7 @@ import net.minecraft.entity.passive.BeeEntity;
 
 import java.util.EnumSet;
 
-import static com.infamous.dungeons_libraries.capabilities.summoning.SummoningHelper.getSummoner;
+import static com.infamous.dungeons_libraries.capabilities.summoning.MinionMasterHelper.getMaster;
 import static com.infamous.dungeons_gear.goals.GoalUtils.shouldAttackEntity;
 
 import net.minecraft.entity.ai.goal.Goal.Flag;
@@ -24,7 +24,7 @@ public class BeeOwnerHurtByTargetGoal extends TargetGoal {
     }
 
     public boolean canUse() {
-        LivingEntity owner = getSummoner(this.beeEntity);
+        LivingEntity owner = getMaster(this.beeEntity);
         if (owner == null) {
             return false;
         } else {
@@ -36,7 +36,7 @@ public class BeeOwnerHurtByTargetGoal extends TargetGoal {
 
     public void start() {
         this.mob.setTarget(this.attacker);
-        LivingEntity owner = getSummoner(this.beeEntity);
+        LivingEntity owner = getMaster(this.beeEntity);
         if (owner != null) {
             this.timestamp = owner.getLastHurtByMobTimestamp();
         }

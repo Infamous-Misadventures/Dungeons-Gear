@@ -1,8 +1,8 @@
 package com.infamous.dungeons_gear.utilties;
 
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
-import com.infamous.dungeons_libraries.capabilities.summoning.ISummonable;
-import com.infamous.dungeons_libraries.capabilities.summoning.ISummoner;
+import com.infamous.dungeons_libraries.capabilities.summoning.IMinion;
+import com.infamous.dungeons_libraries.capabilities.summoning.IMaster;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.goals.*;
@@ -30,20 +30,20 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-import static com.infamous.dungeons_libraries.utils.CapabilityHelper.getSummonableCapability;
-import static com.infamous.dungeons_libraries.utils.CapabilityHelper.getSummonerCapability;
+import static com.infamous.dungeons_libraries.capabilities.summoning.MinionMasterHelper.getMinionCapability;
+import static com.infamous.dungeons_libraries.capabilities.summoning.MinionMasterHelper.getMasterCapability;
 
 public class ArmorEffectHelper {
     public static void summonOrTeleportBat(PlayerEntity playerEntity, World world) {
-        ISummoner summonerCap = getSummonerCapability(playerEntity);
+        IMaster summonerCap = getMasterCapability(playerEntity);
         if(summonerCap == null) return;
         if(summonerCap.getSummonedBat() == null){
             BatEntity batEntity = EntityType.BAT.create(world);
             if (batEntity!= null) {
-                ISummonable summonable = getSummonableCapability(batEntity);
+                IMinion summonable = getMinionCapability(batEntity);
                 if(summonable != null){
 
-                    summonable.setSummoner(playerEntity.getUUID());
+                    summonable.setMaster(playerEntity.getUUID());
                     summonerCap.setSummonedBat(batEntity.getUUID());
 
                     createBat(playerEntity, world, batEntity);
@@ -175,13 +175,13 @@ public class ArmorEffectHelper {
     }
 
     private static void summonTumblebeeBee(PlayerEntity playerEntity) {
-        ISummoner summonerCap = getSummonerCapability(playerEntity);
+        IMaster summonerCap = getMasterCapability(playerEntity);
         if (summonerCap == null) return;
         BeeEntity beeEntity = EntityType.BEE.create(playerEntity.level);
         if (beeEntity != null) {
-            ISummonable summonable = getSummonableCapability(beeEntity);
+            IMinion summonable = getMinionCapability(beeEntity);
             if (summonable != null && summonerCap.addTumblebeeBee(beeEntity.getUUID())) {
-                summonable.setSummoner(playerEntity.getUUID());
+                summonable.setMaster(playerEntity.getUUID());
 
                 createBee(playerEntity, beeEntity);
             } else {
