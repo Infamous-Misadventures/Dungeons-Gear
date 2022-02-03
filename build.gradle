@@ -121,8 +121,10 @@ dependencies {
     implementation fg.deobf("dungeons_libraries:dungeons_libraries:1.16.5-0.0.4-alpha")
 
     //compat tests
-    runtimeOnly fg.deobf("curse.maven:cofhcore-69162:3407019")
-    runtimeOnly fg.deobf("curse.maven:thermalfoundation-222880:3412300")
+//    runtimeOnly fg.deobf("curse.maven:cofhcore-69162:3407019")
+//    runtimeOnly fg.deobf("curse.maven:thermalfoundation-222880:3412300")
+
+    implementation fg.deobf("curse.maven:customraid-532546:3511267")
 
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"

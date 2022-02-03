@@ -67,15 +67,6 @@ public class ArtifactEvents {
                             (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
                 }
             }
-            if(event.getEntity() instanceof IronGolemEntity){
-                IronGolemEntity ironGolemEntity = (IronGolemEntity) event.getEntity();
-                if(summonableCap.getMaster() != null){
-                    ironGolemEntity.goalSelector.addGoal(2, new IronGolemFollowOwnerGoal(ironGolemEntity, 2.1D, 10.0F, 2.0F, false));
-
-                    ironGolemEntity.targetSelector.addGoal(1, new GolemOwnerHurtByTargetGoal(ironGolemEntity));
-                    ironGolemEntity.targetSelector.addGoal(2, new GolemOwnerHurtTargetGoal(ironGolemEntity));
-                }
-            }
             if(event.getEntity() instanceof BatEntity){
                 BatEntity batEntity = (BatEntity) event.getEntity();
                 if(summonableCap.getMaster() != null){

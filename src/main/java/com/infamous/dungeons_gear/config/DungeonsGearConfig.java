@@ -135,7 +135,7 @@ public class DungeonsGearConfig {
                         (itemRaw) -> itemRaw instanceof String);
         ENABLE_MELEE_WEAPON_LOOT = builder
                 .comment("Enable melee weapons appearing in chest loot and trades. \n" +
-                        "If you want to disable obtaining this mod's melee weapons, disable this feature. [true / false]")
+                        "If you Ewant to disable obtaining this mod's melee weapons, disable this feature. [true / false]")
                 .define("enableMeleeWeaponLoot", true);
         ENABLE_RANGED_WEAPON_LOOT = builder
                 .comment("Enable ranged weapons appearing in chest loot and trades. \n" +
