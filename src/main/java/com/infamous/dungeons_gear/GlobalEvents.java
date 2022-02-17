@@ -55,7 +55,7 @@ import java.util.Optional;
 
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 import static com.infamous.dungeons_gear.config.DungeonsGearConfig.ENABLE_FRIENDLY_PET_FIRE;
-import static com.infamous.dungeons_libraries.capabilities.summoning.MinionMasterHelper.getMinionCapability;
+import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMinionCapability;
 import static net.minecraft.item.Items.*;
 
 

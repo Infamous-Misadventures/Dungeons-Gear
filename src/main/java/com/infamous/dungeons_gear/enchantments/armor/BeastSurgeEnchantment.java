@@ -1,13 +1,13 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_libraries.capabilities.summoning.IMaster;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.IMaster;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.BeastEnchantment;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
-import com.infamous.dungeons_libraries.capabilities.summoning.MinionMasterHelper;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;

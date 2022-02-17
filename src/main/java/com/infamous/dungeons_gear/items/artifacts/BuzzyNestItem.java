@@ -1,41 +1,24 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
-import com.infamous.dungeons_libraries.capabilities.summoning.IMinion;
-import com.infamous.dungeons_libraries.capabilities.summoning.IMaster;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
-import com.infamous.dungeons_gear.goals.BeeFollowOwnerGoal;
-import com.infamous.dungeons_gear.goals.BeeOwnerHurtByTargetGoal;
-import com.infamous.dungeons_gear.goals.BeeOwnerHurtTargetGoal;
-import com.infamous.dungeons_gear.utilties.CapabilityHelper;
+import com.infamous.dungeons_gear.entities.BuzzyNestEntity;
+import com.infamous.dungeons_gear.entities.ModEntityTypes;
+import com.infamous.dungeons_gear.registry.ItemRegistry;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
-import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.monster.CreeperEntity;
-import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
-import java.util.UUID;
-
-import net.minecraft.item.Item.Properties;
-
-import static com.infamous.dungeons_libraries.capabilities.summoning.MinionMasterHelper.getMinionCapability;
-import static com.infamous.dungeons_libraries.capabilities.summoning.MinionMasterHelper.getMasterCapability;
 
 public class BuzzyNestItem extends ArtifactItem {
 
@@ -63,57 +46,17 @@ public class BuzzyNestItem extends ArtifactItem {
             }
 
             if (itemUseContextPlayer != null) {
-                IMaster summonerCap = getMasterCapability(itemUseContextPlayer);
-                if (summonerCap != null) {
-                    if (summonerCap.hasNoBuzzyNestBees()) {
-                        for (int i = 0; i < 3; i++) {
-                            BeeEntity beeEntity = EntityType.BEE.create(world);
-                            if (beeEntity != null) {
-                                IMinion summonable = getMinionCapability(beeEntity);
-                                if (summonable != null) {
-
-                                    summonable.setMaster(itemUseContextPlayer.getUUID());
-                                    summonerCap.addBuzzyNestBee(beeEntity.getUUID());
-
-                                    createBuzzyNestBee(world, itemUseContextPlayer, blockPos, beeEntity);
-
-
-                                    itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemUseContextItem)));
-
-                                }
-                            }
-                        }
-                    } else {
-                        if (world instanceof ServerWorld) {
-                            for (int i = 0; i < 3; i++) {
-                                UUID beeUUID = summonerCap.getBuzzyNestBees()[i];
-                                if (beeUUID == null) continue;
-                                Entity entity = ((ServerWorld) world).getEntity(beeUUID);
-                                if (entity instanceof BeeEntity) {
-                                    BeeEntity summonedBeeEntity = (BeeEntity) entity;
-                                    summonedBeeEntity.teleportToWithTicket((double) blockPos.getX() + 0.5D, (double) blockPos.getY() + 0.05D, (double) blockPos.getZ() + 0.5D);
-                                }
-                            }
-                        }
-                    }
+                BuzzyNestEntity buzzyNestEntity = ModEntityTypes.BUZZY_NEST.get().create(itemUseContextPlayer.level);
+                if(buzzyNestEntity != null) {
+                    buzzyNestEntity.moveTo(blockPos, 0, 0);
+                    buzzyNestEntity.setOwner(itemUseContextPlayer);
+                    itemUseContextPlayer.level.addFreshEntity(buzzyNestEntity);
+                    itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemUseContextItem)));
+                    ArtifactItem.putArtifactOnCooldown(itemUseContextPlayer, ItemRegistry.BUZZY_NEST.get());
                 }
             }
             return ActionResult.consume(itemUseContext.getItemInHand());
         }
-    }
-
-    private void createBuzzyNestBee(World world, PlayerEntity itemUseContextPlayer, BlockPos blockPos, BeeEntity beeEntity) {
-        beeEntity.moveTo((double) blockPos.getX() + 0.5D, (double) blockPos.getY() + 0.05D, (double) blockPos.getZ() + 0.5D, 0.0F, 0.0F);
-
-        beeEntity.goalSelector.addGoal(2, new BeeFollowOwnerGoal(beeEntity, 2.1D, 10.0F, 2.0F, false));
-
-        beeEntity.targetSelector.addGoal(1, new BeeOwnerHurtByTargetGoal(beeEntity));
-        beeEntity.targetSelector.addGoal(2, new BeeOwnerHurtTargetGoal(beeEntity));
-        beeEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(beeEntity, LivingEntity.class, 5, false, false,
-                (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
-
-        SoundHelper.playCreatureSound(itemUseContextPlayer, SoundEvents.BEE_LOOP);
-        world.addFreshEntity(beeEntity);
     }
 
     @Override

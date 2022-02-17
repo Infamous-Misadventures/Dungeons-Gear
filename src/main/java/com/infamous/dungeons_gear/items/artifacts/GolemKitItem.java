@@ -4,11 +4,11 @@ import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
-import com.infamous.dungeons_libraries.capabilities.summoning.IMaster;
-import com.infamous.dungeons_libraries.capabilities.summoning.IMinion;
-import com.infamous.dungeons_libraries.capabilities.summoning.goals.MasterHurtByTargetGoal;
-import com.infamous.dungeons_libraries.capabilities.summoning.goals.MasterHurtTargetGoal;
-import com.infamous.dungeons_libraries.capabilities.summoning.goals.MinionFollowOwnerGoal;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.IMaster;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.IMinion;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.goals.MasterHurtByTargetGoal;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.goals.MasterHurtTargetGoal;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.goals.MinionFollowOwnerGoal;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -28,8 +28,8 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 
-import static com.infamous.dungeons_libraries.capabilities.summoning.MinionMasterHelper.getMasterCapability;
-import static com.infamous.dungeons_libraries.capabilities.summoning.MinionMasterHelper.getMinionCapability;
+import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMasterCapability;
+import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMinionCapability;
 
 public class GolemKitItem extends ArtifactItem {
     public GolemKitItem(Properties p_i48487_1_) {

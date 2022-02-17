@@ -11,7 +11,7 @@ import net.minecraft.world.IWorldReader;
 
 import java.util.EnumSet;
 
-import static com.infamous.dungeons_libraries.capabilities.summoning.MinionMasterHelper.getMaster;
+import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMaster;
 
 import net.minecraft.entity.ai.goal.Goal.Flag;
 

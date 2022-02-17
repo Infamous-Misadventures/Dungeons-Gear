@@ -2,13 +2,11 @@ package com.infamous.dungeons_gear.items.artifacts;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
-import com.infamous.dungeons_libraries.capabilities.summoning.IMinion;
-import com.infamous.dungeons_libraries.capabilities.summoning.IMaster;
-import com.infamous.dungeons_libraries.capabilities.summoning.MinionMasterHelper;
 import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.goals.*;
-import com.infamous.dungeons_gear.registry.ItemRegistry;
 import com.infamous.dungeons_gear.utilties.*;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.IMinion;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
@@ -23,20 +21,16 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.*;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.UUID;
 
-import static com.infamous.dungeons_libraries.capabilities.summoning.MinionMasterHelper.getMinionCapability;
-import static com.infamous.dungeons_libraries.capabilities.summoning.MinionMasterHelper.getMasterCapability;
+import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMinionCapability;
 
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class ArtifactEvents {
@@ -77,18 +71,6 @@ public class ArtifactEvents {
                     batEntity.targetSelector.addGoal(2, new BatOwnerHurtTargetGoal(batEntity));
                     batEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(batEntity, LivingEntity.class, 5, false, false,
                             (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
-                }
-            }
-            if(event.getEntity() instanceof BeeEntity){
-                BeeEntity beeEntity = (BeeEntity) event.getEntity();
-                if(summonableCap.getMaster() != null){
-                    beeEntity.goalSelector.addGoal(2, new BeeFollowOwnerGoal(beeEntity, 2.1D, 10.0F, 2.0F, false));
-
-                    beeEntity.targetSelector.addGoal(1, new BeeOwnerHurtByTargetGoal(beeEntity));
-                    beeEntity.targetSelector.addGoal(2, new BeeOwnerHurtTargetGoal(beeEntity));
-                    beeEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(beeEntity, LivingEntity.class, 5, false, false,
-                            (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
-
                 }
             }
             if(event.getEntity() instanceof SheepEntity){
@@ -352,155 +334,6 @@ public class ArtifactEvents {
                     AreaOfEffectHelper.electrifyNearbyEnemies(arrowEntity, 5, 5, Integer.MAX_VALUE);
                 }
             }
-        }
-    }
-
-    // Avoids a situation where your summoned mob died but onSummonableDeath didn't fire in time,
-    // making you unable to summon any more of that entity
-    @SubscribeEvent
-    public static void checkSummonedMobIsDead(TickEvent.PlayerTickEvent event){
-        PlayerEntity summoner = event.player;
-
-        if(event.phase == TickEvent.Phase.START) return;
-        if(!summoner.isAlive()) return;
-
-        IMaster summonerCap = getMasterCapability(event.player);
-        if(summonerCap == null) return;
-        if(summonerCap.getSummonedGolem() != null && event.player.level instanceof ServerWorld){
-            UUID summonedGolem = summonerCap.getSummonedGolem();
-            Entity entity = ((ServerWorld) event.player.level).getEntity(summonedGolem);
-            if(!(entity instanceof IronGolemEntity)) {
-                summonerCap.setSummonedGolem(null);
-                ArtifactItem.putArtifactOnCooldown(summoner, ItemRegistry.GOLEM_KIT.get());
-            }
-        }
-        if(summonerCap.getSummonedWolf() != null && event.player.level instanceof ServerWorld){
-            UUID summonedWolf = summonerCap.getSummonedWolf();
-            Entity entity = ((ServerWorld) event.player.level).getEntity(summonedWolf);
-            if(!(entity instanceof WolfEntity)) {
-                summonerCap.setSummonedWolf(null);
-                ArtifactItem.putArtifactOnCooldown(summoner, ItemRegistry.TASTY_BONE.get());
-            }
-        }
-        if(summonerCap.getSummonedLlama() != null && event.player.level instanceof ServerWorld){
-            UUID summonedLlama = summonerCap.getSummonedLlama();
-            Entity entity = ((ServerWorld) event.player.level).getEntity(summonedLlama);
-            if(!(entity instanceof LlamaEntity)) {
-                summonerCap.setSummonedLlama(null);
-                ArtifactItem.putArtifactOnCooldown(summoner, ItemRegistry.WONDERFUL_WHEAT.get());
-            }
-        }
-        if(summonerCap.getSummonedBat() != null && event.player.level instanceof ServerWorld){
-            UUID summonedBat = summonerCap.getSummonedBat();
-            Entity entity = ((ServerWorld) event.player.level).getEntity(summonedBat);
-            if(!(entity instanceof BatEntity)) {
-                summonerCap.setSummonedBat(null);
-            }
-        }
-        if(summonerCap.getSummonedSheep() != null && event.player.level instanceof ServerWorld){
-            UUID summonedSheep = summonerCap.getSummonedSheep();
-            Entity entity = ((ServerWorld) event.player.level).getEntity(summonedSheep);
-            if(!(entity instanceof SheepEntity)) {
-                summonerCap.setSummonedSheep(null);
-                ArtifactItem.putArtifactOnCooldown(summoner, ItemRegistry.ENCHANTED_GRASS.get());
-            }
-        }
-        handleSummonableBeesAlreadyDead(event, summonerCap);
-    }
-
-    private static void handleSummonableBeesAlreadyDead(TickEvent.PlayerTickEvent event, IMaster summonerCap) {
-        for(int i = 0; i < 3; i++){
-            UUID summonedBuzzyNestBee = summonerCap.getBuzzyNestBees()[i];
-            UUID summonedTumblebeeBee = summonerCap.getTumblebeeBees()[i];
-            UUID summonedBusyBeeBee = summonerCap.getBusyBeeBees()[i];
-            if(summonedBuzzyNestBee != null && event.player.level instanceof ServerWorld){
-                Entity entity = ((ServerWorld) event.player.level).getEntity(summonedBuzzyNestBee);
-                if(!(entity instanceof BeeEntity)) {
-                    summonerCap.getBuzzyNestBees()[i] = null;
-                    if(summonerCap.hasNoBuzzyNestBees()){
-                        ArtifactItem.putArtifactOnCooldown(event.player, ItemRegistry.BUZZY_NEST.get());
-                    }
-                }
-            }
-            if(summonedTumblebeeBee != null && event.player.level instanceof ServerWorld){
-                Entity entity = ((ServerWorld) event.player.level).getEntity(summonedTumblebeeBee);
-                if(!(entity instanceof BeeEntity)) {
-                    summonerCap.getTumblebeeBees()[i] = null;
-                }
-            }
-            if(summonedBusyBeeBee != null && event.player.level instanceof ServerWorld){
-                Entity entity = ((ServerWorld) event.player.level).getEntity(summonedBusyBeeBee);
-                if(!(entity instanceof BeeEntity)) {
-                    summonerCap.getBusyBeeBees()[i] = null;
-                }
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public static void onSummonableDeath(LivingDeathEvent event){
-        if(MinionMasterHelper.isMinionEntity(event.getEntityLiving())){
-            LivingEntity livingEntity = event.getEntityLiving();
-            World world = livingEntity.getCommandSenderWorld();
-            IMinion summonableCap = getMinionCapability(livingEntity);
-            if(summonableCap == null) return;
-            if(summonableCap.getMaster() != null){
-                PlayerEntity summoner = world.getPlayerByUUID(summonableCap.getMaster());
-                if(summoner != null){
-                    IMaster summonerCap = getMasterCapability(summoner);
-                    if(summonerCap == null) return;
-                    UUID summonableUUID = livingEntity.getUUID();
-
-                    if(summonerCap.getSummonedGolem() == summonableUUID){
-                        summonerCap.setSummonedGolem(null);
-                        ArtifactItem.putArtifactOnCooldown(summoner, ItemRegistry.GOLEM_KIT.get());
-                    }
-                    if(summonerCap.getSummonedWolf() == summonableUUID){
-                        summonerCap.setSummonedWolf(null);
-                        ArtifactItem.putArtifactOnCooldown(summoner, ItemRegistry.TASTY_BONE.get());
-                    }
-                    if(summonerCap.getSummonedLlama() == summonableUUID){
-                        summonerCap.setSummonedLlama(null);
-                        ArtifactItem.putArtifactOnCooldown(summoner, ItemRegistry.WONDERFUL_WHEAT.get());
-                    }
-                    if(summonerCap.getSummonedBat() == summonableUUID){
-                        summonerCap.setSummonedBat(null);
-                    }
-                    if(summonerCap.getSummonedSheep() == summonableUUID){
-                        ArtifactItem.putArtifactOnCooldown(summoner, ItemRegistry.ENCHANTED_GRASS.get());
-                        summonerCap.setSummonedSheep(null);
-                    }
-                    for(int i = 0; i < 3; i++){
-                        UUID buzzyNestBee = summonerCap.getBuzzyNestBees()[i];
-                        UUID tumblebeeBee = summonerCap.getTumblebeeBees()[i];
-                        UUID busyBeeBee = summonerCap.getBusyBeeBees()[i];
-                        if(buzzyNestBee == summonableUUID){
-                            summonerCap.getBuzzyNestBees()[i] = null;
-                            if(!summoner.getCooldowns().isOnCooldown(ItemRegistry.BUZZY_NEST.get())){
-                                ArtifactItem.putArtifactOnCooldown(summoner, ItemRegistry.BUZZY_NEST.get());
-                            }
-                        }
-                        if(tumblebeeBee == summonableUUID){
-                            summonerCap.getTumblebeeBees()[i] = null;
-                        }
-                        if(busyBeeBee == summonableUUID){
-                            summonerCap.getBusyBeeBees()[i] = null;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    // Preserves ownership of summoned mobs on respawn
-    // Prevents problems like summoning an entirely new summon of the same type
-    // as one you already have after you respawn
-    @SubscribeEvent
-    public static void cloneSummonerCaps(PlayerEvent.Clone event){
-        IMaster oldSummonerCap = getMasterCapability(event.getOriginal());
-        IMaster newSummonerCap = getMasterCapability(event.getPlayer());
-        if (oldSummonerCap != null && newSummonerCap != null) {
-            newSummonerCap.copyFrom(oldSummonerCap);
         }
     }
 }

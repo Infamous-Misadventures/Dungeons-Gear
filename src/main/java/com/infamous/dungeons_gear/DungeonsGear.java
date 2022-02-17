@@ -9,7 +9,8 @@ import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.capabilities.offhand.IOffhand;
 import com.infamous.dungeons_gear.capabilities.offhand.Offhand;
 import com.infamous.dungeons_gear.capabilities.offhand.OffhandStorage;
-import com.infamous.dungeons_libraries.capabilities.summoning.*;
+import com.infamous.dungeons_gear.client.renderer.totem.BuzzyNestRenderer;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.*;
 import com.infamous.dungeons_gear.client.ClientProxy;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
@@ -104,5 +105,6 @@ public class DungeonsGear
         MinecraftForge.EVENT_BUS.register(new VanillaItemModelProperties());
 
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ICE_CLOUD.get(), IceCloudRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BUZZY_NEST.get(), BuzzyNestRenderer::new);
     }
 }

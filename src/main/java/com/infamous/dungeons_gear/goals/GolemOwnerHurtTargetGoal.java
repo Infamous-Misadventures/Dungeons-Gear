@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.goals;
 
-import com.infamous.dungeons_libraries.capabilities.summoning.MinionMasterHelper;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.TargetGoal;

@@ -108,7 +108,7 @@ public class EnchantmentInit {
                     SURPRISE_GIFT = new SurpriseGiftEnchantment().setRegistryName(location("surprise_gift")),
                     SWIFTFOOTED = new SwiftfootedEnchantment().setRegistryName(location("swiftfooted")),
                     TUMBLEBEE = new TumblebeeEnchantment().setRegistryName(location("tumblebee")),
-                    OPULENT_SHIELD = new TumblebeeEnchantment().setRegistryName(location("opulent_shield")),
+                    OPULENT_SHIELD = new OpulentShieldEnchantment().setRegistryName(location("opulent_shield")),
                     ARROW_HOARDER = new ArrowHoarderEnchantment().setRegistryName(location("arrow_hoarder"))
                     );
 

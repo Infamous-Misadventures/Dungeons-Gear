@@ -1,36 +1,23 @@
 package com.infamous.dungeons_gear.enchantments.melee;
 
-import com.infamous.dungeons_libraries.capabilities.summoning.IMinion;
-import com.infamous.dungeons_libraries.capabilities.summoning.IMaster;
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
-import com.infamous.dungeons_gear.goals.BeeFollowOwnerGoal;
-import com.infamous.dungeons_gear.goals.BeeOwnerHurtByTargetGoal;
-import com.infamous.dungeons_gear.goals.BeeOwnerHurtTargetGoal;
-import com.infamous.dungeons_gear.items.interfaces.IMeleeWeapon;
-import com.infamous.dungeons_libraries.capabilities.summoning.MinionMasterHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
-import com.infamous.dungeons_gear.utilties.SoundHelper;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.summon.SummonHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.monster.CreeperEntity;
-import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.passive.BeeEntity;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundEvents;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-
-import net.minecraft.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class BusyBeeEnchantment extends DungeonsEnchantment {
@@ -50,61 +37,17 @@ public class BusyBeeEnchantment extends DungeonsEnchantment {
         if(event.getSource().getEntity() instanceof LivingEntity){
             LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
             LivingEntity victim = event.getEntityLiving();
-            if(attacker instanceof PlayerEntity){
-                PlayerEntity playerEntity = (PlayerEntity)attacker;
-                ItemStack mainhand = playerEntity.getMainHandItem();
-                boolean uniqueWeaponFlag = hasBusyBeeBuiltIn(mainhand);
+            if(attacker != null){
+                ItemStack mainhand = attacker.getMainHandItem();
                 if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.BUSY_BEE)){
                     int busyBeeLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.BUSY_BEE, mainhand);
-                    float busyBeeRand = playerEntity.getRandom().nextFloat();
-                    float busyBeeChance = 0.1F + busyBeeLevel * 0.01F;
+                    float busyBeeRand = attacker.getRandom().nextFloat();
+                    float busyBeeChance = (float) (DungeonsGearConfig.BUSY_BEE_BASE_CHANCE.get() + busyBeeLevel * DungeonsGearConfig.BUSY_BEE_CHANCE_PER_LEVEL.get());
                     if(busyBeeRand <= busyBeeChance) {
-                        createBusyBee(victim, playerEntity);
-                    }
-                if(uniqueWeaponFlag){
-                    float rampagingRand = playerEntity.getRandom().nextFloat();
-                    if(rampagingRand <= 0.2F) {
-                        createBusyBee(victim, playerEntity);
-                    }
+                        SummonHelper.summonBee(attacker, victim.blockPosition());
                     }
                 }
             }
         }
-    }
-
-    private static boolean hasBusyBeeBuiltIn(ItemStack mainhand) {
-        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasBusyBeeBuiltIn(mainhand);
-    }
-
-
-    private static void createBusyBee(LivingEntity victim, PlayerEntity playerEntity) {
-        IMaster summonerCap = MinionMasterHelper.getMasterCapability(playerEntity);
-        BeeEntity beeEntity = EntityType.BEE.create(playerEntity.level);
-        if (beeEntity!= null && summonerCap != null) {
-            IMinion summonable = MinionMasterHelper.getMinionCapability(beeEntity);
-            if(summonable != null && summonerCap.addBusyBeeBee(beeEntity.getUUID())){
-
-                summonable.setMaster(playerEntity.getUUID());
-
-                createBee(victim, playerEntity, beeEntity);
-            }
-            else {
-                beeEntity.remove();
-            }
-        }
-    }
-
-    private static void createBee(LivingEntity victim, PlayerEntity playerEntity, BeeEntity beeEntity) {
-        beeEntity.moveTo((double)victim.getX() + 0.5D, (double)victim.getY() + 0.05D, (double)victim.getZ() + 0.5D, 0.0F, 0.0F);
-
-        beeEntity.goalSelector.addGoal(2, new BeeFollowOwnerGoal(beeEntity, 2.1D, 10.0F, 2.0F, false));
-
-        beeEntity.targetSelector.addGoal(1, new BeeOwnerHurtByTargetGoal(beeEntity));
-        beeEntity.targetSelector.addGoal(2, new BeeOwnerHurtTargetGoal(beeEntity));
-        beeEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(beeEntity, LivingEntity.class, 5, false, false,
-                (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
-
-        SoundHelper.playCreatureSound(playerEntity, SoundEvents.BEE_LOOP);
-        playerEntity.level.addFreshEntity(beeEntity);
     }
 }

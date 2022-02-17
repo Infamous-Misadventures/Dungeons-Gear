@@ -71,6 +71,12 @@ public class DungeonsGearConfig {
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_ARMOR_TAB;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_ARTIFACT_TAB;
 
+    // Enchanting specific values
+    public static ForgeConfigSpec.ConfigValue<Double> BUSY_BEE_BASE_CHANCE;
+    public static ForgeConfigSpec.ConfigValue<Double> BUSY_BEE_CHANCE_PER_LEVEL;
+    public static ForgeConfigSpec.ConfigValue<Double> TUMBLE_BEE_CHANCE_PER_LEVEL;
+
+
     private static CommentedFileConfig cfg;
 
     public DungeonsGearConfig() {
@@ -379,5 +385,17 @@ public class DungeonsGearConfig {
                 .comment("The decimal chance for an artifact to appear in super rare loot tables [0.0-1.0, default: 1.0]")
                 .defineInRange("artifactSuperRareLoot", 1.0, 0, 1.0);
         builder.pop();
+
+
+        builder.comment("Enchantment Specific Configuration").push("enchantment_specific_configuration");
+        BUSY_BEE_BASE_CHANCE = builder
+                .comment("The decimal base chance for a busy bee to spawn [0.0-1.0, default: 0.1]")
+                .defineInRange("busyBeeBaseChance", 1.0, 0, 1.0);
+        BUSY_BEE_CHANCE_PER_LEVEL = builder
+                .comment("The decimal chance per level added for a busy bee to spawn [0.0-1.0, default: 0.1]")
+                .defineInRange("busyBeeChancePerLevel", 0.1, 0, 1.0);
+        TUMBLE_BEE_CHANCE_PER_LEVEL = builder
+                .comment("The decimal chance per level added for a tumble bee to spawn [0.0-1.0, default: 0.1]")
+                .defineInRange("tumbleBeeChancePerLevel", 0.1, 0, 1.0);
     }
 }

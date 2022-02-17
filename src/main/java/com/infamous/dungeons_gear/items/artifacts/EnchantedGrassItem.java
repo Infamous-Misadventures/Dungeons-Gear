@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
-import com.infamous.dungeons_libraries.capabilities.summoning.IMinion;
-import com.infamous.dungeons_libraries.capabilities.summoning.IMaster;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.IMinion;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.IMaster;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.goals.*;
@@ -30,8 +30,8 @@ import java.util.List;
 
 import net.minecraft.item.Item.Properties;
 
-import static com.infamous.dungeons_libraries.capabilities.summoning.MinionMasterHelper.getMinionCapability;
-import static com.infamous.dungeons_libraries.capabilities.summoning.MinionMasterHelper.getMasterCapability;
+import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMinionCapability;
+import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMasterCapability;
 
 public class EnchantedGrassItem extends ArtifactItem {
 

@@ -23,4 +23,13 @@ public final class ModEntityTypes {
                     .build(new ResourceLocation(MODID, "ice_cloud").toString())
     );
 
+    public static final RegistryObject<EntityType<BuzzyNestEntity>> BUZZY_NEST = ENTITY_TYPES.register("buzzy_nest", () ->
+            EntityType.Builder.of(BuzzyNestEntity::new, EntityClassification.MISC)
+                    .fireImmune()
+                    .sized(2.0F, 1.0F)
+                    .clientTrackingRange(6)
+                    .updateInterval(2)
+                    .build(new ResourceLocation(MODID, "buzzy_nest").toString())
+    );
+
 }
