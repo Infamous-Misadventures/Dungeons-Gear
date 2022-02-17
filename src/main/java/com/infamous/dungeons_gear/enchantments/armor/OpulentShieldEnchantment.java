@@ -40,7 +40,9 @@ public class OpulentShieldEnchantment extends FocusEnchantment {
         if(player.level.isClientSide) return;
         boolean armorFlag = StreamSupport.stream(player.getArmorSlots().spliterator(), false).anyMatch(OpulentShieldEnchantment::hasOpulentShieldBuiltIn);
         int opulentShieldLevel = Math.max(EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.OPULENT_SHIELD, player), armorFlag ? 1 : 0);
-        player.invulnerableTime = player.invulnerableTime + 20*opulentShieldLevel;
+        int invulnerableTime = 20 * opulentShieldLevel;
+        if(player.invulnerableTime >= invulnerableTime) return;
+        player.invulnerableTime = invulnerableTime;
     }
 
     private static boolean hasOpulentShieldBuiltIn(ItemStack stack) {
