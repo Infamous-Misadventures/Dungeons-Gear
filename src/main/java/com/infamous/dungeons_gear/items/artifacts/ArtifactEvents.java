@@ -130,67 +130,6 @@ public class ArtifactEvents {
     }
 
     @SubscribeEvent
-    public static void onSummonedMobAttemptsToAttack(LivingSetAttackTargetEvent event){
-        if(MinionMasterHelper.isMinionEntity(event.getEntityLiving())){
-            LivingEntity summonableAttacker = event.getEntityLiving();
-            IMinion attackerSummonableCap = getMinionCapability(summonableAttacker);
-            if(attackerSummonableCap == null) return;
-            if(attackerSummonableCap.getMaster() != null){
-                UUID attackersOwner = attackerSummonableCap.getMaster();
-                if(MinionMasterHelper.isMinionEntity(event.getTarget())){
-                    LivingEntity summonableTarget = event.getTarget();
-                    IMinion targetSummonableCap = getMinionCapability(summonableTarget);
-                    if(targetSummonableCap == null) return;
-                    if(targetSummonableCap.getMaster() != null){
-                        UUID targetsOwner = targetSummonableCap.getMaster();
-                        if(targetsOwner.equals(attackersOwner)){
-                            preventAttackForSummonableMob(summonableAttacker);
-                        }
-                    }
-                }
-            }
-        }
-        if(event.getTarget() instanceof PlayerEntity && MinionMasterHelper.isMinionEntity(event.getEntityLiving())){
-            LivingEntity summonableAttacker = event.getEntityLiving();
-            IMinion attackerSummonableCap = getMinionCapability(summonableAttacker);
-            if(attackerSummonableCap == null) return;
-            if(attackerSummonableCap.getMaster() == event.getTarget().getUUID()){
-                preventAttackForSummonableMob(summonableAttacker);
-            }
-        }
-    }
-
-    private static void preventAttackForSummonableMob(LivingEntity summonableAttacker) {
-        if (summonableAttacker instanceof IronGolemEntity) {
-            IronGolemEntity ironGolemEntity = (IronGolemEntity) summonableAttacker;
-            ironGolemEntity.stopBeingAngry();
-        }
-        if (summonableAttacker instanceof WolfEntity) {
-            WolfEntity wolfEntity = (WolfEntity) summonableAttacker;
-            wolfEntity.stopBeingAngry();
-        }
-        if (summonableAttacker instanceof LlamaEntity) {
-            LlamaEntity llamaEntity = (LlamaEntity) summonableAttacker;
-            llamaEntity.setTarget(null);
-            llamaEntity.setLastHurtByMob(null);
-        }
-        if (summonableAttacker instanceof BatEntity) {
-            BatEntity batEntity = (BatEntity) summonableAttacker;
-            batEntity.setTarget(null);
-            batEntity.setLastHurtByMob(null);
-        }
-        if (summonableAttacker instanceof BeeEntity) {
-            BeeEntity beeEntity = (BeeEntity) summonableAttacker;
-            beeEntity.stopBeingAngry();
-        }
-        if (summonableAttacker instanceof SheepEntity) {
-            SheepEntity llamaEntity = (SheepEntity) summonableAttacker;
-            llamaEntity.setTarget(null);
-            llamaEntity.setLastHurtByMob(null);
-        }
-    }
-
-    @SubscribeEvent
     public static void onShielding(ProjectileImpactEvent event){
         if(event.getRayTraceResult() instanceof EntityRayTraceResult){
             EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult) event.getRayTraceResult();

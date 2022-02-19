@@ -5,9 +5,6 @@ import com.infamous.dungeons_libraries.capabilities.minionmaster.summon.SummonHe
 import com.infamous.dungeons_libraries.entities.TotemBaseEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.IPacket;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;

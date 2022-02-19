@@ -27,9 +27,9 @@ import java.util.List;
 import java.util.Random;
 
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
-import static com.infamous.dungeons_libraries.utils.PetHelper.isPetOfAttacker;
 import static com.infamous.dungeons_libraries.utils.AbilityHelper.isFacingEntity;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.*;
+import static com.infamous.dungeons_libraries.utils.PetHelper.isPetOf;
 
 public class AreaOfEffectHelper {
 
@@ -345,7 +345,7 @@ public class AreaOfEffectHelper {
     public static void makeLoversOutOfNearbyEnemies(PlayerEntity playerIn, World world, int distance, int limit) {
         applyToNearbyEntities(playerIn, distance, limit,
                 (nearbyEntity) -> nearbyEntity instanceof IMob
-                        && !isPetOfAttacker(playerIn, nearbyEntity)
+                        && !isPetOf(playerIn, nearbyEntity)
                         && nearbyEntity.isAlive()
                         && nearbyEntity.canChangeDimensions(),
                 (LivingEntity nearbyEntity) -> {

@@ -91,13 +91,13 @@ public class ItemRegistry {
 
     //DPS 7.2, crits once per 1.11 seconds
     public static final RegistryObject<Item> CUTLASS = registerMeleeWeapon("cutlass",
-            () -> new CutlassItem(ToolMaterialList.METAL, 3, (1.8f-4.0f), MELEE_WEAPON_PROPERTIES, false));
+            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> DANCERS_SWORD = registerMeleeWeapon("dancers_sword",
-            () -> new CutlassItem(ToolMaterialList.METAL, 3, (1.8f-4.0f), MELEE_WEAPON_PROPERTIES, true));
+            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> NAMELESS_BLADE = registerMeleeWeapon("nameless_blade",
-            () -> new CutlassItem(ToolMaterialList.METAL, 3, (1.8f-4.0f), MELEE_WEAPON_PROPERTIES, true));
+            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> SPARKLER = registerMeleeWeapon("sparkler",
-            () -> new CutlassItem(ToolMaterialList.METAL, 3, (1.8f-4.0f), MELEE_WEAPON_PROPERTIES, true));
+            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
 
     //DPS 9.6, crits once per 1.875 seconds
     public static final RegistryObject<Item> SWORD = registerMeleeWeapon("sword",
