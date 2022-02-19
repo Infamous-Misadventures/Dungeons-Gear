@@ -1,16 +1,13 @@
 package com.infamous.dungeons_gear.utilties;
 
-import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
-import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
+import com.infamous.dungeons_gear.enchantments.melee_ranged.DynamoEnchantment;
 import com.infamous.dungeons_gear.goals.BatFollowOwnerGoal;
 import com.infamous.dungeons_gear.goals.BatMeleeAttackGoal;
 import com.infamous.dungeons_gear.goals.BatOwnerHurtByTargetGoal;
 import com.infamous.dungeons_gear.goals.BatOwnerHurtTargetGoal;
 import com.infamous.dungeons_gear.items.interfaces.IArmor;
-import com.infamous.dungeons_gear.items.interfaces.IMeleeWeapon;
-import com.infamous.dungeons_gear.items.interfaces.IRangedWeapon;
 import com.infamous.dungeons_libraries.capabilities.minionmaster.IMaster;
 import com.infamous.dungeons_libraries.capabilities.minionmaster.IMinion;
 import com.infamous.dungeons_libraries.capabilities.minionmaster.summon.SummonHelper;
@@ -18,7 +15,6 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.monster.IMob;
@@ -153,30 +149,11 @@ public class ArmorEffectHelper {
             playerEntity.addEffect(speedBoost);
         }
 
-        handleDynamoEnchantment(playerEntity);
+        DynamoEnchantment.handleAddDynamoEnchantment(playerEntity);
     }
 
     private static boolean hasSwiftfootedBuiltIn(ItemStack stack) {
         return stack.getItem() instanceof IArmor && ((IArmor) stack.getItem()).hasSwiftfootedBuiltIn(stack);
-    }
-
-    private static void handleDynamoEnchantment(PlayerEntity playerEntity) {
-        ItemStack mainhand = playerEntity.getMainHandItem();
-        boolean uniqueWeaponFlag = hasDynamoBuiltIn(mainhand);
-        if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.DYNAMO) || uniqueWeaponFlag) {
-            int dynamoLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeRangedEnchantmentList.DYNAMO, mainhand);
-            if (uniqueWeaponFlag) dynamoLevel++;
-            ICombo comboCap = CapabilityHelper.getComboCapability(playerEntity);
-            if (comboCap == null) return;
-            double originalDynamoMultiplier = comboCap.getDynamoMultiplier();
-            double dynamoModifier = 1.0D + (0.5D * Math.max((dynamoLevel - 1), 0));
-            comboCap.setDynamoMultiplier(originalDynamoMultiplier + dynamoModifier);
-        }
-    }
-
-    private static boolean hasDynamoBuiltIn(ItemStack mainhand) {
-        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasDynamoBuiltIn(mainhand) ||
-                mainhand.getItem() instanceof IRangedWeapon && ((IRangedWeapon) mainhand.getItem()).hasDynamoBuiltIn(mainhand);
     }
 
 

@@ -199,12 +199,6 @@ public class GlobalEvents {
                 comboCap.setShadowForm(false);
                 playerEntity.removeEffect(Effects.INVISIBILITY);
             }
-            if (comboCap.getDynamoMultiplier() > 1.0D) {
-                double dynamoMultiplier = comboCap.getDynamoMultiplier();
-                float originalDamage = event.getAmount();
-                event.setAmount((float) (originalDamage * dynamoMultiplier));
-                comboCap.setDynamoMultiplier(1.0);
-            }
         }
     }
 

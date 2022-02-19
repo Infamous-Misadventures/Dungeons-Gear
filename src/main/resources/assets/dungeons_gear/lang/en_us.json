@@ -19,6 +19,9 @@
   "effect.dungeons_gear.soul_protection": "Soul Protection",
   "effect.dungeons_gear.stunned": "Stunned",
   "effect.dungeons_gear.party_starter": "Party Starter",
+  "effect.dungeons_gear.dynamo": "Dynamo",
+
+  "curios.identifier.artifact": "Artifact",
 
   "item.minecraft.potion.effect.shadow_brew": "Potion of Shadow Form",
   "item.minecraft.potion.effect.oakwood_brew": "Potion of Oakwood Armor",

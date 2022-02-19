@@ -55,9 +55,6 @@ public interface ICombo {
     int getLastShoutTimer();
     void setLastShoutTimer(int lastShoutTimer);
 
-    double getDynamoMultiplier();
-    void setDynamoMultiplier(double dynamoMultiplier);
-
     int getComboCount();
     void setComboCount(int comboCount);
 

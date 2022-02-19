@@ -13,10 +13,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
+import static com.infamous.dungeons_gear.config.DungeonsGearConfig.RAMPAGING_CHANCE;
+import static com.infamous.dungeons_gear.config.DungeonsGearConfig.RAMPAGING_DURATION;
 
 import net.minecraft.enchantment.Enchantment.Rarity;
 
@@ -37,23 +40,30 @@ public class RampagingEnchantment extends DungeonsEnchantment {
         if(event.getSource().getDirectEntity() instanceof AbstractArrowEntity) return;
         if(event.getSource().getEntity() instanceof LivingEntity){
             LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
-            ItemStack mainhand = attacker.getMainHandItem();
-            boolean uniqueWeaponFlag = hasRampagingBuiltIn(mainhand);
-            if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.RAMPAGING)){
-                int rampagingLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.RAMPAGING, mainhand);
-                float rampagingRand = attacker.getRandom().nextFloat();
-                if(rampagingRand <= 0.1F) {
-                    EffectInstance rampage = new EffectInstance(Effects.DIG_SPEED, rampagingLevel * 100, 4);
-                    attacker.addEffect(rampage);
-                }
-            }
-            if(uniqueWeaponFlag){
-                float rampagingRand = attacker.getRandom().nextFloat();
-                if(rampagingRand <= 0.1F) {
-                    EffectInstance rampage = new EffectInstance(Effects.DIG_SPEED, 100, 4);
-                    attacker.addEffect(rampage);
-                }
-            }
+            applyEnchantment(attacker);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onRampagingBreak(BlockEvent.BreakEvent event){
+        applyEnchantment(event.getPlayer());
+    }
+
+    private static void applyEnchantment(LivingEntity attacker) {
+        ItemStack mainhand = attacker.getMainHandItem();
+        boolean uniqueWeaponFlag = hasRampagingBuiltIn(mainhand);
+        if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.RAMPAGING)){
+            int rampagingLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.RAMPAGING, mainhand);
+            applyEffect(attacker, rampagingLevel);
+        } else if(uniqueWeaponFlag){
+            applyEffect(attacker, 1);
+        }
+    }
+
+    private static void applyEffect(LivingEntity entity, int rampagingLevel) {
+        float rampagingRand = entity.getRandom().nextFloat();
+        if(rampagingRand <= RAMPAGING_CHANCE.get()) {
+            entity.addEffect(new EffectInstance(Effects.DIG_SPEED, rampagingLevel * RAMPAGING_DURATION.get(), 4));
         }
     }
 

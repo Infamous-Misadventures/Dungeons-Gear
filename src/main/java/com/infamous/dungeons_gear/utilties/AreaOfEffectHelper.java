@@ -160,15 +160,6 @@ public class AreaOfEffectHelper {
         } else return 0;
     }
 
-    public static void weakenNearbyEntities(LivingEntity attacker, LivingEntity target, int distance, int amplifier) {
-        applyToNearbyEntities(target, distance,
-                getCanApplyToSecondEnemyPredicate(attacker, target), (LivingEntity nearbyEntity) -> {
-                    EffectInstance weakness = new EffectInstance(Effects.WEAKNESS, 100, amplifier);
-                    nearbyEntity.addEffect(weakness);
-                }
-        );
-    }
-
     public static void causeShockwave(LivingEntity attacker, LivingEntity target, float damageAmount, float distance) {
         DamageSource shockwave = DamageSource.explosion(attacker);
         Vector3d vec1 = target.position();

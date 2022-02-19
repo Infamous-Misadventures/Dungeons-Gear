@@ -31,18 +31,11 @@ public interface IMeleeWeapon<T extends Item> {
     default boolean hasSharpnessBuiltIn(ItemStack stack){
         return false;
     }
-    default boolean hasLeechingBuiltIn(ItemStack stack){
-        return false;
-    }
-    default boolean hasDynamoBuiltIn(ItemStack stack){
-        return false;
-    }
+
     default boolean hasRampagingBuiltIn(ItemStack stack){
         return false;
     }
-    default boolean hasWeakeningBuiltIn(ItemStack stack){
-        return false;
-    }
+
     default boolean hasFreezingBuiltIn(ItemStack stack){
         return false;
     }

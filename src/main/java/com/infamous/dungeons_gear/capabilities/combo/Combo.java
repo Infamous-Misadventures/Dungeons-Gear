@@ -259,16 +259,6 @@ public class Combo implements ICombo {
     }
 
     @Override
-    public double getDynamoMultiplier() {
-        return this.dynamoMultiplier;
-    }
-
-    @Override
-    public void setDynamoMultiplier(double dynamoMultiplier) {
-        this.dynamoMultiplier = dynamoMultiplier;
-    }
-
-    @Override
     public int getComboCount() {
         return comboCount;
     }

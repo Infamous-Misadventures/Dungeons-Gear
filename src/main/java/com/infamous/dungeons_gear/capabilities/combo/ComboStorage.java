@@ -34,7 +34,6 @@ public class ComboStorage implements Capability.IStorage<ICombo> {
         tag.putInt("jumpCooldownTimer", instance.getJumpCooldownTimer());
         tag.putInt("poisonImmunityTimer", instance.getPoisonImmunityTimer());
         tag.putInt("lastShoutTimer", instance.getLastShoutTimer());
-        tag.putDouble("dynamoMultiplier", instance.getDynamoMultiplier());
         tag.putFloat("souls", instance.getSouls());
 
         BlockPos lastExplorerCheckpoint = instance.getLastExplorerCheckpoint();
@@ -77,7 +76,6 @@ public class ComboStorage implements Capability.IStorage<ICombo> {
         instance.setJumpCooldownTimer(tag.getInt("jumpCooldownTimer"));
         instance.setPoisonImmunityTimer(tag.getInt("poisonImmunityTimer"));
         instance.setLastShoutTimer(tag.getInt("lastShoutTimer"));
-        instance.setDynamoMultiplier(tag.getInt("dynamoMultiplier"));
         instance.setSouls(tag.getFloat("souls"), null);
 
         ListNBT listnbt = tag.getList("lastExplorerCheckpoint", 6);

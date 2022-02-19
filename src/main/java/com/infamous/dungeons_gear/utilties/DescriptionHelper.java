@@ -158,9 +158,6 @@ public class DescriptionHelper {
             if (meleeWeapon.canDualWield(itemStack)) {
                 abilities.add("dual_wield");
             }
-            if (meleeWeapon.hasDynamoBuiltIn(itemStack)) {
-                abilities.add("dynamo");
-            }
             if (meleeWeapon.hasEchoBuiltIn(itemStack)) {
                 abilities.add("echo");
             }
@@ -193,9 +190,6 @@ public class DescriptionHelper {
             }
             if (meleeWeapon.hasKnockbackBuiltIn(itemStack)) {
                 abilities.add("knockback");
-            }
-            if (meleeWeapon.hasLeechingBuiltIn(itemStack)) {
-                abilities.add("leeching");
             }
             if (meleeWeapon.hasPoisonCloudBuiltIn(itemStack)) {
                 abilities.add("poison_cloud");
@@ -250,9 +244,6 @@ public class DescriptionHelper {
             }
             if (meleeWeapon.hasThunderingBuiltIn(itemStack)) {
                 abilities.add("thundering");
-            }
-            if (meleeWeapon.hasWeakeningBuiltIn(itemStack)) {
-                abilities.add("weakening");
             }
         }
     }

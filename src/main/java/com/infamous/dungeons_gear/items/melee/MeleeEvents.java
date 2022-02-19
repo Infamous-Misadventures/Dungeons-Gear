@@ -79,40 +79,40 @@ public class MeleeEvents {
         }
     }
 
-    @SubscribeEvent
-    public static void onClaymoreAttack(LivingAttackEvent event) {
-        if (event.getSource().getDirectEntity() instanceof AbstractArrowEntity) return;
-        if (event.getSource() instanceof OffhandAttackDamageSource) return;
-        if (event.getSource().getEntity() instanceof LivingEntity) {
-            LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
-            if (event.getEntityLiving() == null) return;
-            LivingEntity victim = (LivingEntity) event.getEntityLiving();
-            if ((attacker.getMainHandItem().getItem() instanceof ClaymoreItem)
-                    && !ModEnchantmentHelper.hasEnchantment(attacker.getMainHandItem(), Enchantments.KNOCKBACK)) {
-                if (attacker instanceof PlayerEntity) {
-                    PlayerEntity playerEntity = (PlayerEntity) attacker;
-                    float cooledAttackStrength = playerEntity.getAttackStrengthScale(0.5F);
-                    boolean atFullAttackStrength = cooledAttackStrength > 0.9F;
-                    float attackKnockbackStrength = 1;
-                    if (playerEntity.isSprinting() && atFullAttackStrength) {
-                        SoundHelper.playKnockbackSound(playerEntity);
-                        ++attackKnockbackStrength;
-                    }
-                    victim.knockback(attackKnockbackStrength * 0.5F, (double) MathHelper.sin(playerEntity.yRot * ((float) Math.PI / 180F)), (double) (-MathHelper.cos(playerEntity.yRot * ((float) Math.PI / 180F))));
-                    playerEntity.setDeltaMovement(playerEntity.getDeltaMovement().multiply(0.6D, 1.0D, 0.6D));
-
-                } else if (attacker instanceof MobEntity) {
-                    MobEntity mobEntity = (MobEntity) attacker;
-                    float attackKnockbackStrength = (float) mobEntity.getAttributeValue(Attributes.ATTACK_KNOCKBACK);
-                    attackKnockbackStrength += 1;
-                    if (attackKnockbackStrength > 0.0F) {
-                        victim.knockback(attackKnockbackStrength * 0.5F, (double) MathHelper.sin(mobEntity.yRot * ((float) Math.PI / 180F)), (double) (-MathHelper.cos(mobEntity.yRot * ((float) Math.PI / 180F))));
-                        mobEntity.setDeltaMovement(mobEntity.getDeltaMovement().multiply(0.6D, 1.0D, 0.6D));
-                    }
-                }
-            }
-        }
-    }
+//    @SubscribeEvent
+//    public static void onClaymoreAttack(LivingAttackEvent event) {
+//        if (event.getSource().getDirectEntity() instanceof AbstractArrowEntity) return;
+//        if (event.getSource() instanceof OffhandAttackDamageSource) return;
+//        if (event.getSource().getEntity() instanceof LivingEntity) {
+//            LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
+//            if (event.getEntityLiving() == null) return;
+//            LivingEntity victim = (LivingEntity) event.getEntityLiving();
+//            if ((attacker.getMainHandItem().getItem() instanceof ClaymoreItem)
+//                    && !ModEnchantmentHelper.hasEnchantment(attacker.getMainHandItem(), Enchantments.KNOCKBACK)) {
+//                if (attacker instanceof PlayerEntity) {
+//                    PlayerEntity playerEntity = (PlayerEntity) attacker;
+//                    float cooledAttackStrength = playerEntity.getAttackStrengthScale(0.5F);
+//                    boolean atFullAttackStrength = cooledAttackStrength > 0.9F;
+//                    float attackKnockbackStrength = 1;
+//                    if (playerEntity.isSprinting() && atFullAttackStrength) {
+//                        SoundHelper.playKnockbackSound(playerEntity);
+//                        ++attackKnockbackStrength;
+//                    }
+//                    victim.knockback(attackKnockbackStrength * 0.5F, (double) MathHelper.sin(playerEntity.yRot * ((float) Math.PI / 180F)), (double) (-MathHelper.cos(playerEntity.yRot * ((float) Math.PI / 180F))));
+//                    playerEntity.setDeltaMovement(playerEntity.getDeltaMovement().multiply(0.6D, 1.0D, 0.6D));
+//
+//                } else if (attacker instanceof MobEntity) {
+//                    MobEntity mobEntity = (MobEntity) attacker;
+//                    float attackKnockbackStrength = (float) mobEntity.getAttributeValue(Attributes.ATTACK_KNOCKBACK);
+//                    attackKnockbackStrength += 1;
+//                    if (attackKnockbackStrength > 0.0F) {
+//                        victim.knockback(attackKnockbackStrength * 0.5F, (double) MathHelper.sin(mobEntity.yRot * ((float) Math.PI / 180F)), (double) (-MathHelper.cos(mobEntity.yRot * ((float) Math.PI / 180F))));
+//                        mobEntity.setDeltaMovement(mobEntity.getDeltaMovement().multiply(0.6D, 1.0D, 0.6D));
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     // TODO: There is no longer an attacker passed into applyKnockback
     /*

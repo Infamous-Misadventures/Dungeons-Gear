@@ -9,4 +9,5 @@ public class CustomEffects {
     public static Effect SOUL_PROTECTION;
     public static Effect STUNNED;
     public static Effect SHADOW_FORM;
+    public static Effect DYNAMO;
 }
