@@ -425,11 +425,11 @@ public class DungeonsGearConfig {
                 .comment("The application distance in blocks for weakening. [0-10000, default: 5]")
                 .defineInRange("weakeningDistance", 5, 0, 10000);
         LEECHING_BASE_MULTIPLIER = builder
-                .comment("The decimal base multiplier on the victim's max health for leeching [0.0-1.0, default: 0.2]")
-                .defineInRange("leechingBaseMultiplier", 0.2, 0, 1.0);
+                .comment("The decimal base multiplier on the victim's max health for leeching [0.0-5.0, default: 0.2]")
+                .defineInRange("leechingBaseMultiplier", 0.2, 0, 5.0);
         LEECHING_MULTIPLIER_PER_LEVEL = builder
-                .comment("The multiplier increase per level for leeching [0.0-1.0, default: 0.2]")
-                .defineInRange("leechingMultiplierPerLevel", 0.2, 0, 1.0);
+                .comment("The multiplier increase per level for leeching [0.0-5.0, default: 0.2]")
+                .defineInRange("leechingMultiplierPerLevel", 0.2, 0, 5.0);
         DYNAMO_MAX_STACKS = builder
                 .comment("The max stacks for dynamo. [0-10000, default: 20]")
                 .defineInRange("dynamoMaxStacks", 20, 0, 10000);
@@ -438,11 +438,11 @@ public class DungeonsGearConfig {
                         "damage * (1 + (configValue*Stacks)) [0.0-5.0, default: 0.1]")
                 .defineInRange("dynamoDamageMultiplierPerStack", 0.1, 0, 5.0);
         COMMITTED_BASE_MULTIPLIER = builder
-                .comment("The decimal base multiplier on the damage for max damage committed.  [0.0-1.0, default: 1.25]")
-                .defineInRange("committedBaseMultiplier", 1.25, 0, 1.0);
+                .comment("The decimal base multiplier on the damage for max damage committed.  [0.0-5.0, default: 1.25]")
+                .defineInRange("committedBaseMultiplier", 1.25, 0, 5.0);
         COMMITTED_MULTIPLIER_PER_LEVEL = builder
-                .comment("The multiplier increase per level for max damage committed [0.0-1.0, default: 0.25]")
-                .defineInRange("committedMultiplierPerLevel", 0.25, 0, 1.0);
+                .comment("The multiplier increase per level for max damage committed [0.0-5.0, default: 0.25]")
+                .defineInRange("committedMultiplierPerLevel", 0.25, 0, 5.0);
         FREEZING_DURATION = builder
                 .comment("The duration in ticks (20ticks = 1 second) for freezing. [0-10000, default: 60]")
                 .defineInRange("freezingDuration", 60, 0, 10000);
