@@ -21,6 +21,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
+import static com.infamous.dungeons_gear.config.DungeonsGearConfig.DYNAMO_DAMAGE_MULTIPLIER_PER_STACK;
 import static com.infamous.dungeons_gear.config.DungeonsGearConfig.DYNAMO_MAX_STACKS;
 
 @Mod.EventBusSubscriber(modid= MODID)
@@ -69,12 +70,10 @@ public class DynamoEnchantment extends DamageBoostEnchantment {
             boolean uniqueWeaponFlag = hasDynamoBuiltIn(mainhand);
             if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.DYNAMO) || uniqueWeaponFlag) {
                 EffectInstance effectinstance = playerEntity.getEffect(CustomEffects.DYNAMO);
-                double dynamoMultiplier = 0;
                 if (effectinstance != null) {
-                    dynamoMultiplier += effectinstance.getAmplifier();
+                    int dynamoAmplifier = effectinstance.getAmplifier() + 1;
+                    event.setAmount((float) (event.getAmount() * (1 + dynamoAmplifier * DYNAMO_DAMAGE_MULTIPLIER_PER_STACK.get())));
                     playerEntity.removeEffectNoUpdate(CustomEffects.DYNAMO);
-                    float originalDamage = event.getAmount();
-                    event.setAmount((float) (originalDamage * dynamoMultiplier));
                 }
             }
         }

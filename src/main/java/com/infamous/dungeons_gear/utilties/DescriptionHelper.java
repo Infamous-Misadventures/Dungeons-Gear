@@ -212,9 +212,6 @@ public class DescriptionHelper {
             if (meleeWeapon.hasRelentlessCombo(itemStack)) {
                 abilities.add("relentless_combo");
             }
-            if (meleeWeapon.hasRushdownBuiltIn(itemStack)) {
-                abilities.add("rushdown");
-            }
             if (meleeWeapon.hasSharpnessBuiltIn(itemStack)) {
                 abilities.add("sharpness");
             }

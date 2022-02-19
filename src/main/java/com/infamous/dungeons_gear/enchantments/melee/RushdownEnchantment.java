@@ -38,18 +38,12 @@ public class RushdownEnchantment extends DungeonsEnchantment {
         if(event.getSource().getEntity() instanceof LivingEntity){
             LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
             ItemStack mainhand = attacker.getMainHandItem();
-            boolean uniqueWeaponFlag = hasRushdownBuiltIn(mainhand);
-            if(uniqueWeaponFlag || ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.RUSHDOWN)){
-                int rampagingLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.RUSHDOWN, mainhand);
-                if(uniqueWeaponFlag) rampagingLevel++;
-                EffectInstance speed = new EffectInstance(Effects.MOVEMENT_SPEED, rampagingLevel * 20, 4);
+            if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.RUSHDOWN)){
+                int rushdownLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.RUSHDOWN, mainhand);
+                EffectInstance speed = new EffectInstance(Effects.MOVEMENT_SPEED, rushdownLevel * 20, 4);
                 attacker.addEffect(speed);
             }
         }
-    }
-
-    private static boolean hasRushdownBuiltIn(ItemStack mainhand) {
-        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasRushdownBuiltIn(mainhand);
     }
 
 }

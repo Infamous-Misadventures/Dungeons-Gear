@@ -213,11 +213,11 @@ public class ItemRegistry {
 
     //DPS 7.2, crits once per 1.25 seconds
     public static final RegistryObject<Item> TEMPEST_KNIFE = registerMeleeWeapon("tempest_knife",
-            () -> new TempestKnifeItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), MELEE_WEAPON_PROPERTIES, false));
+            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> RESOLUTE_TEMPEST_KNIFE = registerMeleeWeapon("resolute_tempest_knife",
-            () -> new TempestKnifeItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), MELEE_WEAPON_PROPERTIES, true));
+            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> CHILL_GALE_KNIFE = registerMeleeWeapon("chill_gale_knife",
-            () -> new TempestKnifeItem(ToolMaterialList.METAL, 2, (2.4f-4.0f), MELEE_WEAPON_PROPERTIES, true));
+            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
 
     //DPS 10.4, crits once per 2.5 seconds
     public static final RegistryObject<Item> BONECLUB = registerMeleeWeapon("boneclub",

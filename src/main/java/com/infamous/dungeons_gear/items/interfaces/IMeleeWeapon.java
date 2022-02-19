@@ -96,7 +96,6 @@ public interface IMeleeWeapon<T extends Item> {
     default boolean hasFortuneBuiltIn(ItemStack stack){
         return false;
     }
-    default boolean hasRushdownBuiltIn(ItemStack stack){return false;}
     default boolean hasIllagersBaneBuiltIn(ItemStack stack){return false;}
     default boolean hasRefreshmentBuiltIn(ItemStack stack){
         return false;

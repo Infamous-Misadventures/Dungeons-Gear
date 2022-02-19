@@ -77,12 +77,16 @@ public class DungeonsGearConfig {
     public static ForgeConfigSpec.ConfigValue<Double> TUMBLE_BEE_CHANCE_PER_LEVEL;
     public static ForgeConfigSpec.ConfigValue<Double> RAMPAGING_CHANCE;
     public static ForgeConfigSpec.ConfigValue<Integer> RAMPAGING_DURATION;
+    public static ForgeConfigSpec.ConfigValue<Integer> RUSHDOWN_DURATION;
     public static ForgeConfigSpec.ConfigValue<Integer> WEAKENING_DURATION;
     public static ForgeConfigSpec.ConfigValue<Integer> WEAKENING_DISTANCE;
     public static ForgeConfigSpec.ConfigValue<Double> LEECHING_BASE_MULTIPLIER;
     public static ForgeConfigSpec.ConfigValue<Double> LEECHING_MULTIPLIER_PER_LEVEL;
+    public static ForgeConfigSpec.ConfigValue<Double> COMMITTED_BASE_MULTIPLIER;
+    public static ForgeConfigSpec.ConfigValue<Double> COMMITTED_MULTIPLIER_PER_LEVEL;
     public static ForgeConfigSpec.ConfigValue<Integer> DYNAMO_MAX_STACKS;
     public static ForgeConfigSpec.ConfigValue<Double> DYNAMO_DAMAGE_MULTIPLIER_PER_STACK;
+    public static ForgeConfigSpec.ConfigValue<Integer> FREEZING_DURATION;
 
 
     private static CommentedFileConfig cfg;
@@ -409,8 +413,11 @@ public class DungeonsGearConfig {
                 .comment("The decimal chance for ramapging to trigger [0.0-1.0, default: 0.1]")
                 .defineInRange("rampagingChance", 0.1, 0, 1.0);
         RAMPAGING_DURATION = builder
-                .comment("The duration in ticks (20ticks = 1 second) per level added for ramapging. [0-10000, default: 100]")
+                .comment("The duration in ticks (20ticks = 1 second) per level added for rampaging. [0-10000, default: 100]")
                 .defineInRange("rampagingDuration", 100, 0, 10000);
+        RUSHDOWN_DURATION = builder
+                .comment("The duration in ticks (20ticks = 1 second) per level added for rushdown. [0-10000, default: 20]")
+                .defineInRange("rushdownDuration", 20, 0, 10000);
         WEAKENING_DURATION = builder
                 .comment("The duration in ticks (20ticks = 1 second) for weakening. [0-10000, default: 100]")
                 .defineInRange("weakeningDuration", 100, 0, 10000);
@@ -421,13 +428,23 @@ public class DungeonsGearConfig {
                 .comment("The decimal base multiplier on the victim's max health for leeching [0.0-1.0, default: 0.2]")
                 .defineInRange("leechingBaseMultiplier", 0.2, 0, 1.0);
         LEECHING_MULTIPLIER_PER_LEVEL = builder
-                .comment("The decimal base multiplier on the victim's max health for leeching [0.0-1.0, default: 0.2]")
+                .comment("The multiplier increase per level for leeching [0.0-1.0, default: 0.2]")
                 .defineInRange("leechingMultiplierPerLevel", 0.2, 0, 1.0);
         DYNAMO_MAX_STACKS = builder
                 .comment("The max stacks for dynamo. [0-10000, default: 20]")
                 .defineInRange("dynamoMaxStacks", 20, 0, 10000);
         DYNAMO_DAMAGE_MULTIPLIER_PER_STACK = builder
-                .comment("The decimal chance for ramapging to trigger [0.0-1.0, default: 0.1]")
-                .defineInRange("dynamoDamageMultiplierPerStack", 0.1, 0, 1.0);
+                .comment("Multiplier per level applied to the damage. " +
+                        "damage * (1 + (configValue*Stacks)) [0.0-5.0, default: 0.1]")
+                .defineInRange("dynamoDamageMultiplierPerStack", 0.1, 0, 5.0);
+        COMMITTED_BASE_MULTIPLIER = builder
+                .comment("The decimal base multiplier on the damage for max damage committed.  [0.0-1.0, default: 1.25]")
+                .defineInRange("committedBaseMultiplier", 1.25, 0, 1.0);
+        COMMITTED_MULTIPLIER_PER_LEVEL = builder
+                .comment("The multiplier increase per level for max damage committed [0.0-1.0, default: 0.25]")
+                .defineInRange("committedMultiplierPerLevel", 0.25, 0, 1.0);
+        FREEZING_DURATION = builder
+                .comment("The duration in ticks (20ticks = 1 second) for freezing. [0-10000, default: 60]")
+                .defineInRange("freezingDuration", 60, 0, 10000);
     }
 }

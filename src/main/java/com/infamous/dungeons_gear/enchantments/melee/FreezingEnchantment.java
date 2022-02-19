@@ -23,6 +23,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
+import static com.infamous.dungeons_gear.config.DungeonsGearConfig.FREEZING_DURATION;
 
 import net.minecraft.enchantment.Enchantment.Rarity;
 
@@ -49,8 +50,8 @@ public class FreezingEnchantment extends DungeonsEnchantment {
         ItemStack mainhand = user.getMainHandItem();
         boolean uniqueWeaponFlag = hasFreezingBuiltIn(mainhand);
         if(uniqueWeaponFlag) level++;
-        EffectInstance freezing = new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 60, level-1);
-        EffectInstance miningFatigue = new EffectInstance(Effects.DIG_SLOWDOWN, 60, level-1);
+        EffectInstance freezing = new EffectInstance(Effects.MOVEMENT_SLOWDOWN, FREEZING_DURATION.get(), level-1);
+        EffectInstance miningFatigue = new EffectInstance(Effects.DIG_SLOWDOWN, FREEZING_DURATION.get(), level-1);
         ((LivingEntity) target).addEffect(freezing);
         ((LivingEntity) target).addEffect(miningFatigue);
         PROXY.spawnParticles(target, ParticleTypes.ITEM_SNOWBALL);
