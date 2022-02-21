@@ -45,6 +45,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static com.infamous.dungeons_gear.integration.curios.client.CuriosKeyBindings.setupCuriosKeybindings;
+
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(DungeonsGear.MODID)
 public class DungeonsGear
@@ -106,5 +108,7 @@ public class DungeonsGear
 
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ICE_CLOUD.get(), IceCloudRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BUZZY_NEST.get(), BuzzyNestRenderer::new);
+
+        setupCuriosKeybindings();
     }
 }

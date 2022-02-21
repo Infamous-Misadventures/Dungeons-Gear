@@ -1,11 +1,10 @@
 package com.infamous.dungeons_gear.items.melee;
 
 
-import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_gear.registry.ItemRegistry;
 import com.infamous.dungeons_gear.items.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.items.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.items.interfaces.ISoulGatherer;
+import com.infamous.dungeons_gear.registry.ItemRegistry;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import com.infamous.dungeons_gear.utilties.MojankHelper;
 import net.minecraft.block.BlockState;
@@ -14,8 +13,10 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.*;
+import net.minecraft.item.IItemTier;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Rarity;
+import net.minecraft.item.SwordItem;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -35,10 +36,12 @@ public class SoulScytheItem extends SwordItem implements IMeleeWeapon, ISoulGath
         this.unique = isUnique;
     }
 
+    @Override
     public boolean canAttackBlock(BlockState blockState, World world, BlockPos blockPos, PlayerEntity playerEntity) {
         return !playerEntity.isCreative();
     }
 
+    @Override
     public float getDestroySpeed(ItemStack p_150893_1_, BlockState p_150893_2_) {
         if (p_150893_2_.is(Blocks.COBWEB) || p_150893_2_.is(BlockTags.LEAVES)) {
             return 15.0F;
@@ -54,6 +57,7 @@ public class SoulScytheItem extends SwordItem implements IMeleeWeapon, ISoulGath
         return true;
     }
 
+    @Override
     public boolean mineBlock(ItemStack p_179218_1_, World p_179218_2_, BlockState p_179218_3_, BlockPos p_179218_4_, LivingEntity p_179218_5_) {
         if (p_179218_3_.getDestroySpeed(p_179218_2_, p_179218_4_) != 0.0F) {
             p_179218_1_.hurtAndBreak(2, p_179218_5_, MojankHelper::hurtEnemyBroadcastBreakEvent);
@@ -62,6 +66,7 @@ public class SoulScytheItem extends SwordItem implements IMeleeWeapon, ISoulGath
         return true;
     }
 
+    @Override
     public boolean isCorrectToolForDrops(BlockState p_150897_1_) {
         return p_150897_1_.is(Blocks.COBWEB) || p_150897_1_.is(BlockTags.LEAVES);
     }
