@@ -87,6 +87,8 @@ public class DungeonsGearConfig {
     public static ForgeConfigSpec.ConfigValue<Integer> DYNAMO_MAX_STACKS;
     public static ForgeConfigSpec.ConfigValue<Double> DYNAMO_DAMAGE_MULTIPLIER_PER_STACK;
     public static ForgeConfigSpec.ConfigValue<Integer> FREEZING_DURATION;
+    public static ForgeConfigSpec.ConfigValue<Double> SOUL_SIPHON_CHANCE;
+    public static ForgeConfigSpec.ConfigValue<Integer> SOUL_SIPHON_SOULS_PER_LEVEL;
 
 
     private static CommentedFileConfig cfg;
@@ -410,7 +412,7 @@ public class DungeonsGearConfig {
                 .comment("The decimal chance per level added for a tumble bee to spawn [0.0-1.0, default: 0.1]")
                 .defineInRange("tumbleBeeChancePerLevel", 0.1, 0, 1.0);
         RAMPAGING_CHANCE = builder
-                .comment("The decimal chance for ramapging to trigger [0.0-1.0, default: 0.1]")
+                .comment("The decimal chance for rampaging to trigger [0.0-1.0, default: 0.1]")
                 .defineInRange("rampagingChance", 0.1, 0, 1.0);
         RAMPAGING_DURATION = builder
                 .comment("The duration in ticks (20ticks = 1 second) per level added for rampaging. [0-10000, default: 100]")
@@ -446,5 +448,12 @@ public class DungeonsGearConfig {
         FREEZING_DURATION = builder
                 .comment("The duration in ticks (20ticks = 1 second) for freezing. [0-10000, default: 60]")
                 .defineInRange("freezingDuration", 60, 0, 10000);
+        SOUL_SIPHON_CHANCE = builder
+                .comment("The decimal chance for Soul Siphon to trigger [0.0-1.0, default: 0.05]")
+                .defineInRange("soulSiphonChance", 0.05, 0, 1.0);
+        SOUL_SIPHON_SOULS_PER_LEVEL = builder
+                .comment("The amount of souls per trigger of Soul Siphon. " +
+                        "Each souls will give a value based on Soul Gathering. [0-100, default: 2]")
+                .defineInRange("soulSiphonSoulsPerLevel", 2, 0, 100);
     }
 }

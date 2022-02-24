@@ -25,8 +25,9 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 
 import net.minecraft.item.Item.Properties;
+import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
-public abstract class ArtifactItem extends Item {
+public abstract class ArtifactItem extends Item implements ICurioItem {
     protected boolean procOnItemUse = false;
 
     public ArtifactItem(Properties properties) {

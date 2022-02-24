@@ -221,9 +221,6 @@ public class DescriptionHelper {
             if (meleeWeapon.hasSmiteBuiltIn(itemStack)) {
                 abilities.add("smite");
             }
-            if (meleeWeapon.hasSoulSiphonBuiltIn(itemStack)) {
-                abilities.add("soul_siphon");
-            }
             if (meleeWeapon.hasSpinAttack(itemStack)) {
                 abilities.add("spin_attack");
             }

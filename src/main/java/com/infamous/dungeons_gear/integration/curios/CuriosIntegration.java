@@ -13,9 +13,11 @@ import static com.infamous.dungeons_gear.integration.curios.client.CuriosClientI
 @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CuriosIntegration {
 
+	public static final String ARTIFACT_IDENTIFIER = "artifact";
+
 	@SubscribeEvent
 	public static void enqueue(InterModEnqueueEvent event) {
-		InterModComms.sendTo(CuriosApi.MODID, SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("artifact").icon(curiosIconTexture).priority(10).size(3).build());
+		InterModComms.sendTo(CuriosApi.MODID, SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder(ARTIFACT_IDENTIFIER).icon(curiosIconTexture).priority(10).size(3).build());
 	}
 	
 }

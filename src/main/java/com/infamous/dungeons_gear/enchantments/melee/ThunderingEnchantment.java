@@ -35,7 +35,6 @@ public class ThunderingEnchantment extends AOEDamageEnchantment {
     @Override
     public void doPostAttack(LivingEntity user, Entity target, int level) {
         if(!(target instanceof LivingEntity)) return;
-        if( user.getLastHurtMobTimestamp()==user.tickCount)return;
         float chance = user.getRandom().nextFloat();
         if(chance <=  0.3F){
             SoundHelper.playLightningStrikeSounds(user);

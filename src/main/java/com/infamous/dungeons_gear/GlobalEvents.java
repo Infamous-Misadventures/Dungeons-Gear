@@ -22,6 +22,7 @@ import com.infamous.dungeons_gear.items.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.items.interfaces.IRangedWeapon;
 import com.infamous.dungeons_gear.items.interfaces.ISoulGatherer;
 import com.infamous.dungeons_gear.utilties.*;
+import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
 import com.infamous.dungeons_libraries.utils.PetHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -83,6 +84,7 @@ public class GlobalEvents {
             }
         } else if (event.getEntity() instanceof ServerPlayerEntity) {
             gildedGearTest((ServerPlayerEntity) event.getEntity());
+            SoulCasterHelper.addSouls((ServerPlayerEntity) event.getEntity(), 200F);
             NetworkHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getEntity()), new PacketUpdateSouls(CapabilityHelper.getComboCapability(event.getEntity()).getSouls()));
         }
     }

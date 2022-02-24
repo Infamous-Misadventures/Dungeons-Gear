@@ -171,11 +171,11 @@ public class ItemRegistry {
 
     //DPS 7.2, crits once per 1.25 seconds
     public static final RegistryObject<Item> SOUL_KNIFE = registerMeleeWeapon("soul_knife",
-            () -> new SoulKnifeItem(ToolMaterialList.METAL, 8, (0.8f-4.0f), MELEE_WEAPON_PROPERTIES, false));
+            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> ETERNAL_KNIFE = registerMeleeWeapon("eternal_knife",
-            () -> new SoulKnifeItem(ToolMaterialList.METAL, 8, (0.8f-4.0f), MELEE_WEAPON_PROPERTIES, true));
+            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> TRUTHSEEKER = registerMeleeWeapon("truthseeker",
-            () -> new SoulKnifeItem(ToolMaterialList.METAL, 8, (0.8f-4.0f), MELEE_WEAPON_PROPERTIES, true));
+            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
 
     //DPS 9.6, crits once per 3.3 seconds
     public static final RegistryObject<Item> CLAYMORE = registerMeleeWeapon("claymore",
