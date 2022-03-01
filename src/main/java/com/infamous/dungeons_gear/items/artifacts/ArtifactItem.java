@@ -24,7 +24,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 
-import net.minecraft.item.Item.Properties;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 public abstract class ArtifactItem extends Item implements ICurioItem {
@@ -91,11 +90,7 @@ public abstract class ArtifactItem extends Item implements ICurioItem {
     @Override
     public ActionResultType useOn(ItemUseContext itemUseContext) {
         if (!procOnItemUse) return super.useOn(itemUseContext);
-        ActionResultType procResultType = procArtifact(itemUseContext).getResult();
-        if(procResultType.consumesAction() && itemUseContext.getPlayer() != null && !itemUseContext.getLevel().isClientSide){
-            triggerSynergy(itemUseContext.getPlayer(), itemUseContext.getItemInHand());
-        }
-        return procResultType;
+        return activateArtifact(itemUseContext).getResult();
     }
 
     public Rarity getRarity(ItemStack itemStack) {
@@ -110,9 +105,19 @@ public abstract class ArtifactItem extends Item implements ICurioItem {
     public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
         if (procOnItemUse) return super.use(worldIn, playerIn, handIn);
         ItemUseContext iuc = new ItemUseContext(playerIn, handIn, new BlockRayTraceResult(playerIn.position(), Direction.UP, playerIn.blockPosition(), false));
-        ActionResult<ItemStack> procResult = procArtifact(iuc);
-        if(procResult.getResult().consumesAction() && !worldIn.isClientSide){
-            triggerSynergy(playerIn, iuc.getItemInHand());
+        return activateArtifact(iuc);
+    }
+
+    public ActionResult<ItemStack> activateArtifact(ItemUseContext itemUseContext) {
+        if(itemUseContext.getPlayer() != null) {
+            ItemStack itemStack = itemUseContext.getItemInHand();
+            if (itemUseContext.getPlayer().getCooldowns().isOnCooldown(itemStack.getItem())){
+                return new ActionResult<>(ActionResultType.SUCCESS, itemStack);
+            }
+        }
+        ActionResult<ItemStack> procResult = procArtifact(itemUseContext);
+        if(procResult.getResult().consumesAction() && itemUseContext.getPlayer() != null && !itemUseContext.getLevel().isClientSide){
+            triggerSynergy(itemUseContext.getPlayer(), itemUseContext.getItemInHand());
         }
         return procResult;
     }

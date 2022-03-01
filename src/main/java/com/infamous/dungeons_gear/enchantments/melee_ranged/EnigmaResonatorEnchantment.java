@@ -40,9 +40,7 @@ public class EnigmaResonatorEnchantment extends DamageBoostEnchantment {
     public static void onVanillaNonCriticalHit(CriticalHitEvent event) {
         if (event.getPlayer() == null) return;
         PlayerEntity attacker = event.getPlayer();
-        LivingEntity victim = event.getEntityLiving();
         ItemStack mainhand = attacker.getMainHandItem();
-        boolean uniqueWeaponFlag = hasEnigmaResonatorBuiltIn(mainhand);
 
         int numSouls = (int) CapabilityHelper.getComboCapability(attacker).getSouls();
         if (!event.isVanillaCritical()) {
@@ -56,12 +54,6 @@ public class EnigmaResonatorEnchantment extends DamageBoostEnchantment {
                     success = true;
                 }
             }
-            if (uniqueWeaponFlag) {
-                float soulsCriticalBoostRand = attacker.getRandom().nextFloat();
-                if (soulsCriticalBoostRand <= Math.min(numSouls / 300.0, 0.15F)) {
-                    success = true;
-                }
-            }
             if (success) {
                 event.setResult(Event.Result.ALLOW);
                 float newDamageModifier = event.getDamageModifier() == event.getOldDamageModifier() && !(mainhand.getItem() instanceof IComboWeapon) ? event.getDamageModifier() + 1.5F : event.getDamageModifier() * 3.0F;
@@ -70,10 +62,6 @@ public class EnigmaResonatorEnchantment extends DamageBoostEnchantment {
                 PROXY.spawnParticles(attacker, ParticleTypes.SOUL);
             }
         }
-    }
-
-    private static boolean hasEnigmaResonatorBuiltIn(ItemStack mainhand) {
-        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasEnigmaResonatorBuiltIn(mainhand);
     }
 
     @Override

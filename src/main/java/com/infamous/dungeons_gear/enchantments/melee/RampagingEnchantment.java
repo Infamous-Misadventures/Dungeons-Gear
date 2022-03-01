@@ -51,12 +51,9 @@ public class RampagingEnchantment extends DungeonsEnchantment {
 
     private static void applyEnchantment(LivingEntity attacker) {
         ItemStack mainhand = attacker.getMainHandItem();
-        boolean uniqueWeaponFlag = hasRampagingBuiltIn(mainhand);
         if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.RAMPAGING)){
             int rampagingLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.RAMPAGING, mainhand);
             applyEffect(attacker, rampagingLevel);
-        } else if(uniqueWeaponFlag){
-            applyEffect(attacker, 1);
         }
     }
 
@@ -65,10 +62,6 @@ public class RampagingEnchantment extends DungeonsEnchantment {
         if(rampagingRand <= RAMPAGING_CHANCE.get()) {
             entity.addEffect(new EffectInstance(Effects.DIG_SPEED, rampagingLevel * RAMPAGING_DURATION.get(), 4));
         }
-    }
-
-    private static boolean hasRampagingBuiltIn(ItemStack mainhand) {
-        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasRampagingBuiltIn(mainhand);
     }
 
 }

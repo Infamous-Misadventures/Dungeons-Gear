@@ -47,36 +47,10 @@ public class FreezingEnchantment extends DungeonsEnchantment {
     @Override
     public void doPostAttack(LivingEntity user, Entity target, int level) {
         if(!(target instanceof LivingEntity)) return;
-        ItemStack mainhand = user.getMainHandItem();
-        boolean uniqueWeaponFlag = hasFreezingBuiltIn(mainhand);
-        if(uniqueWeaponFlag) level++;
         EffectInstance freezing = new EffectInstance(Effects.MOVEMENT_SLOWDOWN, FREEZING_DURATION.get(), level-1);
         EffectInstance miningFatigue = new EffectInstance(Effects.DIG_SLOWDOWN, FREEZING_DURATION.get(), level-1);
         ((LivingEntity) target).addEffect(freezing);
         ((LivingEntity) target).addEffect(miningFatigue);
         PROXY.spawnParticles(target, ParticleTypes.ITEM_SNOWBALL);
-    }
-
-    private static boolean hasFreezingBuiltIn(ItemStack mainhand) {
-        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasFreezingBuiltIn(mainhand);
-    }
-
-    @SubscribeEvent
-    public static void onFreezingAttack(LivingAttackEvent event){
-        if(event.getSource().getDirectEntity() instanceof AbstractArrowEntity) return;
-        if(event.getSource() instanceof OffhandAttackDamageSource) return;
-        if(!(event.getSource().getEntity() instanceof LivingEntity)) return;
-        LivingEntity attacker = (LivingEntity)event.getSource().getEntity();
-        LivingEntity victim = event.getEntityLiving();
-        ItemStack mainhand = attacker.getMainHandItem();
-        boolean uniqueWeaponFlag = hasFreezingBuiltIn(mainhand);
-        if(uniqueWeaponFlag
-                && !ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.FREEZING)){
-            EffectInstance freezing = new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 60);
-            EffectInstance miningFatigue = new EffectInstance(Effects.DIG_SLOWDOWN, 60);
-            victim.addEffect(freezing);
-            victim.addEffect(miningFatigue);
-            PROXY.spawnParticles(victim, ParticleTypes.ITEM_SNOWBALL);
-        }
     }
 }
