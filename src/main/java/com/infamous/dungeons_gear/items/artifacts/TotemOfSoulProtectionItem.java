@@ -5,6 +5,8 @@ import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.items.interfaces.ISoulGatherer;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
+import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
+import com.infamous.dungeons_libraries.items.interfaces.ISoulConsumer;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,7 +25,7 @@ import static com.infamous.dungeons_gear.utilties.AOECloudHelper.spawnSoulProtec
 
 import net.minecraft.item.Item.Properties;
 
-public class TotemOfSoulProtectionItem extends ArtifactItem implements ISoulGatherer {
+public class TotemOfSoulProtectionItem extends ArtifactItem implements ISoulConsumer {
     public TotemOfSoulProtectionItem(Properties properties) {
         super(properties);
         procOnItemUse=true;
@@ -47,7 +49,7 @@ public class TotemOfSoulProtectionItem extends ArtifactItem implements ISoulGath
                 blockPos = itemUseContextPos.relative(itemUseContextFace);
             }
             if(itemUseContextPlayer != null) {
-                if(itemUseContextPlayer.isCreative() || CapabilityHelper.getComboCapability(itemUseContextPlayer).consumeSouls(getActivationCost(itemUseContextItem))){
+                if(SoulCasterHelper.consumeSouls(itemUseContextPlayer, itemUseContextItem)){
                     spawnSoulProtectionCloudAtPos(itemUseContextPlayer, blockPos, 100);
                     itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemUseContextItem)));
 
@@ -73,11 +75,6 @@ public class TotemOfSoulProtectionItem extends ArtifactItem implements ISoulGath
     @Override
     public int getDurationInSeconds() {
         return 5;
-    }
-
-    @Override
-    public int getGatherAmount(ItemStack stack) {
-        return 1;
     }
 
     @Override

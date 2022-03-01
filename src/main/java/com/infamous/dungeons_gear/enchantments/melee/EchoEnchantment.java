@@ -47,10 +47,8 @@ public class EchoEnchantment extends AOEDamageEnchantment {
             PlayerEntity attacker = (PlayerEntity) event.getPlayer();
             LivingEntity victim = (LivingEntity) event.getTarget();
             ItemStack mainhand = attacker.getMainHandItem();
-            boolean uniqueWeaponFlag = hasEchoBuiltIn(mainhand);
-            if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.ECHO) || uniqueWeaponFlag) {
+            if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.ECHO)) {
                 int echoLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.ECHO, mainhand);
-                if (uniqueWeaponFlag) echoLevel++;
                 float cooldown = Math.max(3, 6 - echoLevel);
                 if (echoLevel > 3) {
                     echoLevel -= 3;
@@ -64,10 +62,6 @@ public class EchoEnchantment extends AOEDamageEnchantment {
                 //AreaOfEffectHelper.causeEchoAttack(attacker, victim, attackDamage, 3.0f, echoLevel);
             }
         }
-    }
-
-    private static boolean hasEchoBuiltIn(ItemStack mainhand) {
-        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasEchoBuiltIn(mainhand);
     }
 
     private static void echo(PlayerEntity user, LivingEntity target, int cooldown) {

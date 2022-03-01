@@ -51,20 +51,15 @@ public class CommittedEnchantment extends DamageBoostEnchantment {
             LivingEntity victim = event.getEntityLiving();
             if(victim.getHealth() >= victim.getMaxHealth()) return;
             ItemStack mainhand = attacker.getMainHandItem();
-            boolean uniqueWeaponFlag = hasCommittedBuiltIn(mainhand);
-            if((ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.COMMITTED)) || uniqueWeaponFlag){
+            if((ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.COMMITTED))){
                 int committedLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.COMMITTED, mainhand);
                 float victimRemainingHealth = victim.getHealth() / victim.getMaxHealth();
                 float originalDamage = event.getAmount();
                 // If normal damage is X, the same weapon with Tier 3 Committed adds an extra (X * (1 - (Mob Remaining HP/Mob Max HP))) damage.
                 float extraDamageMultiplier = (float) (COMMITTED_BASE_MULTIPLIER.get() + committedLevel * COMMITTED_MULTIPLIER_PER_LEVEL.get());
-                if(uniqueWeaponFlag) extraDamageMultiplier += COMMITTED_MULTIPLIER_PER_LEVEL.get();
                 event.setAmount(originalDamage * (1 + ((extraDamageMultiplier - 1) * (1 - victimRemainingHealth))));
             }
         }
     }
 
-    private static boolean hasCommittedBuiltIn(ItemStack mainhand) {
-        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasCommittedBuiltIn(mainhand);
-    }
 }

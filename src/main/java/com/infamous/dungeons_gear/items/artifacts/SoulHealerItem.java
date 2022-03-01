@@ -6,6 +6,8 @@ import com.infamous.dungeons_gear.items.interfaces.ISoulGatherer;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
+import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
+import com.infamous.dungeons_libraries.items.interfaces.ISoulConsumer;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -20,7 +22,7 @@ import java.util.List;
 
 import net.minecraft.item.Item.Properties;
 
-public class SoulHealerItem extends ArtifactItem implements ISoulGatherer {
+public class SoulHealerItem extends ArtifactItem implements ISoulConsumer {
     public SoulHealerItem(Properties properties) {
         super(properties);
         procOnItemUse = true;
@@ -30,7 +32,7 @@ public class SoulHealerItem extends ArtifactItem implements ISoulGatherer {
         PlayerEntity playerIn = c.getPlayer();
         ItemStack itemstack = c.getItemInHand();
 
-        if (playerIn.isCreative() || CapabilityHelper.getComboCapability(playerIn).consumeSouls(getActivationCost(itemstack))) {
+        if (SoulCasterHelper.consumeSouls(playerIn, itemstack)) {
             if ((playerIn.getHealth() < playerIn.getMaxHealth())) {
                 float currentHealth = playerIn.getHealth();
                 float maxHealth = playerIn.getMaxHealth();
@@ -67,11 +69,6 @@ public class SoulHealerItem extends ArtifactItem implements ISoulGatherer {
     @Override
     public int getDurationInSeconds() {
         return 0;
-    }
-
-    @Override
-    public int getGatherAmount(ItemStack stack) {
-        return 1;
     }
 
     @Override

@@ -13,7 +13,7 @@ import com.infamous.dungeons_gear.items.artifacts.beacon.EyeOfTheGuardianItem;
 import com.infamous.dungeons_gear.items.melee.*;
 import com.infamous.dungeons_gear.items.ranged.bows.*;
 import com.infamous.dungeons_gear.items.ranged.crossbows.*;
-import com.infamous.dungeons_libraries.items.gearconfig.SwordGearConfig;
+import com.infamous.dungeons_libraries.items.gearconfig.MeleeGear;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -49,69 +49,69 @@ public class ItemRegistry {
 
     //DPS 9.6 (19.2), crits once per 2.5 (1.25) seconds
     public static final RegistryObject<Item> DAGGER = registerMeleeWeapon("dagger",
-            () -> new DaggerItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new DualWieldMeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> FANG_OF_FROST = registerMeleeWeapon("fang_of_frost",
-            () -> new DaggerItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DualWieldMeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> MOON_DAGGER = registerMeleeWeapon("moon_dagger",
-            () -> new DaggerItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DualWieldMeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> SHEAR_DAGGER = registerMeleeWeapon("shear_dagger",
-            () -> new DaggerItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DualWieldMeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     //DPS 10 (20), crits once per 3 (1.5) seconds
     public static final RegistryObject<Item> SICKLE = registerMeleeWeapon("sickle",
-            () -> new SickleItem(ToolMaterialList.METAL, 4, (2.0f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new DualWieldMeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> NIGHTMARES_BITE = registerMeleeWeapon("nightmares_bite",
-            () -> new SickleItem(ToolMaterialList.METAL, 4, (2.0f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DualWieldMeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> THE_LAST_LAUGH = registerMeleeWeapon("the_last_laugh",
-            () -> new SickleItem(ToolMaterialList.METAL, 4, (2.0f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DualWieldMeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     //DPS 9.6/8 (19.2/16), crits once per 2.92/1 (1.46/0.5) seconds
     public static final RegistryObject<Item> GAUNTLET = registerMeleeWeapon("gauntlet",
-            () -> new GauntletItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), false));
+            () -> new DualWieldMeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> FIGHTERS_BINDING = registerMeleeWeapon("fighters_binding",
-            () -> new GauntletItem(ToolMaterialList.METAL, 1, (4.0f-4.0f), MELEE_WEAPON_PROPERTIES, true));
+            () -> new DualWieldMeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> MAULER = registerMeleeWeapon("mauler",
-            () -> new GauntletItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DualWieldMeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> SOUL_FIST = registerMeleeWeapon("soul_fist",
-            () -> new GauntletItem(ToolMaterialList.METAL, 3, (2.4f-4.0f), new Item.Properties().tab(DungeonsGear.MELEE_WEAPON_GROUP), true));
+            () -> new DualWieldMeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
 
     //DPS 8, crits once per 3.5 seconds
     public static final RegistryObject<Item> RAPIER = registerMeleeWeapon("rapier",
-            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> BEE_STINGER = registerMeleeWeapon("bee_stinger",
-            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> FREEZING_FOIL = registerMeleeWeapon("freezing_foil",
-            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
 
     //DPS 9.1, crits once per 1.53 seconds
     public static final RegistryObject<Item> SOUL_SCYTHE = registerMeleeWeapon("soul_scythe",
-            () -> new SoulScytheItem(ToolMaterialList.METAL, 6, (1.3f-4.0f), MELEE_WEAPON_PROPERTIES, false));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> FROST_SCYTHE = registerMeleeWeapon("frost_scythe",
-            () -> new SoulScytheItem(ToolMaterialList.METAL, 6, (1.3f-4.0f), MELEE_WEAPON_PROPERTIES, true));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> JAILORS_SCYTHE = registerMeleeWeapon("jailors_scythe",
-            () -> new SoulScytheItem(ToolMaterialList.METAL, 6, (1.3f-4.0f), MELEE_WEAPON_PROPERTIES, true));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
 
     //DPS 7.2, crits once per 1.11 seconds
     public static final RegistryObject<Item> CUTLASS = registerMeleeWeapon("cutlass",
-            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> DANCERS_SWORD = registerMeleeWeapon("dancers_sword",
-            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> NAMELESS_BLADE = registerMeleeWeapon("nameless_blade",
-            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> SPARKLER = registerMeleeWeapon("sparkler",
-            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
 
     //DPS 9.6, crits once per 1.875 seconds
     public static final RegistryObject<Item> SWORD = registerMeleeWeapon("sword",
-            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> STONE_SWORD = registerMeleeWeapon("stone_sword",
-            () -> new SwordGearConfig(ToolMaterialList.STONE, MELEE_WEAPON_PROPERTIES));;
+            () -> new MeleeGear(ToolMaterialList.STONE, MELEE_WEAPON_PROPERTIES));;
     public static final RegistryObject<Item> GOLD_SWORD = registerMeleeWeapon("gold_sword",
-            () -> new SwordGearConfig(ToolMaterialList.GOLD, MELEE_WEAPON_PROPERTIES));
+            () -> new MeleeGear(ToolMaterialList.GOLD, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> DIAMOND_SWORD = registerMeleeWeapon("diamond_sword",
-            () -> new SwordGearConfig(ToolMaterialList.DIAMOND, MELEE_WEAPON_PROPERTIES));
+            () -> new MeleeGear(ToolMaterialList.DIAMOND, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> HAWKBRAND = registerMeleeWeapon("hawkbrand",
-            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> SINISTER_SWORD = registerMeleeWeapon("sinister_sword",
-            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
 
     //DPS 4.8, crits once per 0.83 seconds
     public static final RegistryObject<Item> PICKAXE = registerMeleeWeapon("pickaxe",
@@ -121,11 +121,11 @@ public class ItemRegistry {
 
     //DPS 12, crits once per 5 seconds
     public static final RegistryObject<Item> BATTLESTAFF = registerMeleeWeapon("battlestaff",
-            () -> new StaffItem(ToolMaterialList.METAL, 4, (1.8f-4.0f), MELEE_WEAPON_PROPERTIES, false));
+            () -> new StaffGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> BATTLESTAFF_OF_TERROR = registerMeleeWeapon("battlestaff_of_terror",
-            () -> new StaffItem(ToolMaterialList.METAL, 4, (1.8f-4.0f), MELEE_WEAPON_PROPERTIES, true));
+            () -> new StaffGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> GROWING_STAFF = registerMeleeWeapon("growing_staff",
-            () -> new StaffItem(ToolMaterialList.METAL, 4, (1.8f-4.0f), MELEE_WEAPON_PROPERTIES, true));
+            () -> new StaffGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
 
     //DPS 10, crits once per 3 seconds, disables shields
     public static final RegistryObject<Item> AXE = registerMeleeWeapon("axe",
@@ -147,11 +147,11 @@ public class ItemRegistry {
 
     //DPS 9.8, crits once per 2.1 seconds, disables shields
     public static final RegistryObject<Item> MACE = registerMeleeWeapon("mace",
-            () -> new MaceItem(ToolMaterialList.METAL, 6, (1.4f-4.0f), MELEE_WEAPON_PROPERTIES, false));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> FLAIL = registerMeleeWeapon("flail",
-            () -> new MaceItem(ToolMaterialList.METAL, 6, (1.4f-4.0f), MELEE_WEAPON_PROPERTIES, true));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> SUNS_GRACE = registerMeleeWeapon("suns_grace",
-            () -> new MaceItem(ToolMaterialList.METAL, 6, (1.4f-4.0f), MELEE_WEAPON_PROPERTIES, true));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
 
     //DPS 8.8, crits once per 0.9 seconds, disables shields
     public static final RegistryObject<Item> GREAT_HAMMER = registerMeleeWeapon("great_hammer",
@@ -163,67 +163,67 @@ public class ItemRegistry {
 
     //DPS 11.2, crits once per 2.1 seconds
     public static final RegistryObject<Item> KATANA = registerMeleeWeapon("katana",
-            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> DARK_KATANA = registerMeleeWeapon("dark_katana",
-            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> MASTERS_KATANA = registerMeleeWeapon("masters_katana",
-            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
 
     //DPS 7.2, crits once per 1.25 seconds
     public static final RegistryObject<Item> SOUL_KNIFE = registerMeleeWeapon("soul_knife",
-            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> ETERNAL_KNIFE = registerMeleeWeapon("eternal_knife",
-            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> TRUTHSEEKER = registerMeleeWeapon("truthseeker",
-            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
 
     //DPS 9.6, crits once per 3.3 seconds
     public static final RegistryObject<Item> CLAYMORE = registerMeleeWeapon("claymore",
-            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> BROADSWORD = registerMeleeWeapon("broadsword",
-            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> HEARTSTEALER = registerMeleeWeapon("heartstealer",
-            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> GREAT_AXEBLADE = registerMeleeWeapon("great_axeblade",
-            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> FROST_SLAYER = registerMeleeWeapon("frost_slayer",
-            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
 
     //DPS 8.4, crits once per 2.14 seconds, +2 reach
     public static final RegistryObject<Item> SPEAR = registerMeleeWeapon("spear",
-            () -> new SpearItem(ToolMaterialList.METAL, 5, (1.4f-4.0f), 2.0F, MELEE_WEAPON_PROPERTIES, false));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> FORTUNE_SPEAR = registerMeleeWeapon("fortune_spear",
-            () -> new SpearItem(ToolMaterialList.METAL, 5, (1.4f-4.0f), 2.0F, MELEE_WEAPON_PROPERTIES, true));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> WHISPERING_SPEAR = registerMeleeWeapon("whispering_spear",
-            () -> new SpearItem(ToolMaterialList.METAL, 5, (1.4f-4.0f), 2.0F, MELEE_WEAPON_PROPERTIES, true));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
 
     //DPS 9.6, crits once per 2.5 seconds, +2 reach
     public static final RegistryObject<Item> GLAIVE = registerMeleeWeapon("glaive",
-            () -> new GlaiveItem(ToolMaterialList.METAL, 7, (1.2f-4.0f), 2.0F, MELEE_WEAPON_PROPERTIES, false));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> GRAVE_BANE = registerMeleeWeapon("grave_bane",
-            () -> new GlaiveItem(ToolMaterialList.METAL, 7, (1.2f-4.0f), 2.0F, MELEE_WEAPON_PROPERTIES, true));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> VENOM_GLAIVE = registerMeleeWeapon("venom_glaive",
-            () -> new GlaiveItem(ToolMaterialList.METAL, 7, (1.2f-4.0f), 2.0F, MELEE_WEAPON_PROPERTIES, true));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
 
     //DPS 7, crits once per second, +2 reach
     public static final RegistryObject<Item> WHIP = registerMeleeWeapon("whip",
-            () -> new WhipItem(ToolMaterialList.METAL, 6, (1.0f-4.0f), 2.5F, MELEE_WEAPON_PROPERTIES, false));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> VINE_WHIP = registerMeleeWeapon("vine_whip",
-            () -> new WhipItem(ToolMaterialList.METAL, 6, (1.0f-4.0f), 2.5F, MELEE_WEAPON_PROPERTIES, true));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
 
     //DPS 7.2, crits once per 1.25 seconds
     public static final RegistryObject<Item> TEMPEST_KNIFE = registerMeleeWeapon("tempest_knife",
-            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> RESOLUTE_TEMPEST_KNIFE = registerMeleeWeapon("resolute_tempest_knife",
-            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> CHILL_GALE_KNIFE = registerMeleeWeapon("chill_gale_knife",
-            () -> new SwordGearConfig(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
 
     //DPS 10.4, crits once per 2.5 seconds
     public static final RegistryObject<Item> BONECLUB = registerMeleeWeapon("boneclub",
-            () -> new BoneClubItem(ToolMaterialList.METAL, 12, (0.8f-4.0f), MELEE_WEAPON_PROPERTIES, false));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> BONE_CUDGEL = registerMeleeWeapon("bone_cudgel",
-            () -> new BoneClubItem(ToolMaterialList.METAL, 12, (0.8f-4.0f), MELEE_WEAPON_PROPERTIES, true));
+            () -> new MeleeGear(ToolMaterialList.METAL, MELEE_WEAPON_PROPERTIES));
 
     // sawblades TODO: How the bloody murder am I supposed to change this thing?
     public static final RegistryObject<Item> BROKEN_SAWBLADE = registerMeleeWeapon("broken_sawblade",

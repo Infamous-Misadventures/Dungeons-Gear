@@ -2,17 +2,22 @@
   "attributes": [
     {
       "attribute": "minecraft:generic.attack_damage",
-      "amount": 11,
+      "amount": 7,
       "operation": 0
     },
     {
       "attribute": "minecraft:generic.attack_speed",
-      "amount": -3.1,
+      "amount": -2.8,
       "operation": 0
     },
     {
-      "attribute": "minecraft:generic.attack_knockback",
-      "amount": 1,
+      "attribute": "forge:reach_distance",
+      "amount": 2,
+      "operation": 0
+    },
+    {
+      "attribute": "dungeons_gear:attack_reach",
+      "amount": 2,
       "operation": 0
     }
   ],

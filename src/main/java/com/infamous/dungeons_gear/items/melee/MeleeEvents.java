@@ -38,30 +38,12 @@ public class MeleeEvents {
             if (hasFireAspectBuiltIn(mainhand)) {
                 int fireAspectLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FIRE_ASPECT, mainhand);
                 victim.setSecondsOnFire(4 + fireAspectLevel * 4);
-            } else if (hasSmiteBuiltIn(mainhand)) {
-                if (victim.isInvertedHealAndHarm()) {
-                    float currentDamage = event.getAmount();
-                    event.setAmount(currentDamage + 2.5f);
-                }
-            } else if (hasIllagersBaneBuiltIn(mainhand)) {
-                if (victim.getMobType() == CreatureAttribute.ILLAGER) {
-                    float currentDamage = event.getAmount();
-                    event.setAmount(currentDamage + 2.5f);
-                }
             }
         }
     }
 
     private static boolean hasFireAspectBuiltIn(ItemStack mainhand) {
         return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasFireAspectBuiltIn(mainhand);
-    }
-
-    private static boolean hasSmiteBuiltIn(ItemStack mainhand) {
-        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasSmiteBuiltIn(mainhand);
-    }
-
-    private static boolean hasIllagersBaneBuiltIn(ItemStack mainhand) {
-        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasIllagersBaneBuiltIn(mainhand);
     }
 
     @SubscribeEvent
@@ -77,73 +59,5 @@ public class MeleeEvents {
                 ((IDualWieldWeapon) incoming.getItem()).updateMain(event.getEntityLiving(), incoming);
             }
         }
-    }
-
-//    @SubscribeEvent
-//    public static void onClaymoreAttack(LivingAttackEvent event) {
-//        if (event.getSource().getDirectEntity() instanceof AbstractArrowEntity) return;
-//        if (event.getSource() instanceof OffhandAttackDamageSource) return;
-//        if (event.getSource().getEntity() instanceof LivingEntity) {
-//            LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
-//            if (event.getEntityLiving() == null) return;
-//            LivingEntity victim = (LivingEntity) event.getEntityLiving();
-//            if ((attacker.getMainHandItem().getItem() instanceof ClaymoreItem)
-//                    && !ModEnchantmentHelper.hasEnchantment(attacker.getMainHandItem(), Enchantments.KNOCKBACK)) {
-//                if (attacker instanceof PlayerEntity) {
-//                    PlayerEntity playerEntity = (PlayerEntity) attacker;
-//                    float cooledAttackStrength = playerEntity.getAttackStrengthScale(0.5F);
-//                    boolean atFullAttackStrength = cooledAttackStrength > 0.9F;
-//                    float attackKnockbackStrength = 1;
-//                    if (playerEntity.isSprinting() && atFullAttackStrength) {
-//                        SoundHelper.playKnockbackSound(playerEntity);
-//                        ++attackKnockbackStrength;
-//                    }
-//                    victim.knockback(attackKnockbackStrength * 0.5F, (double) MathHelper.sin(playerEntity.yRot * ((float) Math.PI / 180F)), (double) (-MathHelper.cos(playerEntity.yRot * ((float) Math.PI / 180F))));
-//                    playerEntity.setDeltaMovement(playerEntity.getDeltaMovement().multiply(0.6D, 1.0D, 0.6D));
-//
-//                } else if (attacker instanceof MobEntity) {
-//                    MobEntity mobEntity = (MobEntity) attacker;
-//                    float attackKnockbackStrength = (float) mobEntity.getAttributeValue(Attributes.ATTACK_KNOCKBACK);
-//                    attackKnockbackStrength += 1;
-//                    if (attackKnockbackStrength > 0.0F) {
-//                        victim.knockback(attackKnockbackStrength * 0.5F, (double) MathHelper.sin(mobEntity.yRot * ((float) Math.PI / 180F)), (double) (-MathHelper.cos(mobEntity.yRot * ((float) Math.PI / 180F))));
-//                        mobEntity.setDeltaMovement(mobEntity.getDeltaMovement().multiply(0.6D, 1.0D, 0.6D));
-//                    }
-//                }
-//            }
-//        }
-//    }
-
-    // TODO: There is no longer an attacker passed into applyKnockback
-    /*
-    @SubscribeEvent
-    public static void onClaymoreKnockback(LivingKnockBackEvent event){
-        if(event.getAttacker() instanceof LivingEntity){
-            LivingEntity attacker = (LivingEntity) event.getAttacker();
-            if (attacker.getHeldItemMainhand().getItem() instanceof ClaymoreItem
-                            && ModEnchantmentHelper.hasEnchantment(attacker.getHeldItemMainhand(), Enchantments.KNOCKBACK)) {
-                float knockbackStrength = event.getStrength();
-                event.setStrength(knockbackStrength + 0.5f);
-            }
-        }
-    }
-
-     */
-
-    @SubscribeEvent
-    public static void onFortuneSpearLooting(LootingLevelEvent event) {
-        if (event.getDamageSource() == null) return; // should fix Scaling Health bug
-        if (event.getDamageSource().getDirectEntity() instanceof AbstractArrowEntity) return;
-        if (event.getDamageSource().getEntity() instanceof LivingEntity) {
-            LivingEntity attacker = (LivingEntity) event.getDamageSource().getEntity();
-            int lootingLevel = event.getLootingLevel();
-            if (hasFortuneBuiltIn(attacker.getMainHandItem())) {
-                event.setLootingLevel(lootingLevel + 1);
-            }
-        }
-    }
-
-    private static boolean hasFortuneBuiltIn(ItemStack mainhand) {
-        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasFortuneBuiltIn(mainhand);
     }
 }

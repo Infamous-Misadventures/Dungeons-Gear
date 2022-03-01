@@ -33,7 +33,7 @@ import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_G
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class SoulSiphonEnchantment extends DungeonsEnchantment {
-    public final static Map<EquipmentSlotType, UUID> EQUIPMENT_ATTRIBUTE_UUID_MAP = Stream.of(
+    private final static Map<EquipmentSlotType, UUID> EQUIPMENT_ATTRIBUTE_UUID_MAP = Stream.of(
                     new AbstractMap.SimpleImmutableEntry<>(EquipmentSlotType.HEAD, UUID.fromString("350050cf-ab03-4320-8792-21592e61ef6b")),
                     new AbstractMap.SimpleImmutableEntry<>(EquipmentSlotType.CHEST, UUID.fromString("55f68b68-139a-4d92-b8d3-54e0d6988f83")),
                     new AbstractMap.SimpleImmutableEntry<>(EquipmentSlotType.LEGS, UUID.fromString("d161bb99-0405-4546-a3ae-0e56076071d4")),
@@ -42,7 +42,7 @@ public class SoulSiphonEnchantment extends DungeonsEnchantment {
                     new AbstractMap.SimpleImmutableEntry<>(EquipmentSlotType.OFFHAND, UUID.fromString("5c4b8b7d-5252-40d4-a263-4f485512b734"))
             )
             .collect(Collectors.toMap(AbstractMap.SimpleImmutableEntry::getKey, AbstractMap.SimpleImmutableEntry::getValue));
-    public final static Map<Integer, UUID> CURIO_ATTRIBUTE_UUID_MAP = Stream.of(
+    private final static Map<Integer, UUID> CURIO_ATTRIBUTE_UUID_MAP = Stream.of(
                     new AbstractMap.SimpleImmutableEntry<>(0, UUID.fromString("ab82623a-99e9-4072-85ff-3c72e9b4c55e")),
                     new AbstractMap.SimpleImmutableEntry<>(1, UUID.fromString("83c34148-4ff4-4eea-83e3-02642d408fcf")),
                     new AbstractMap.SimpleImmutableEntry<>(2, UUID.fromString("d802da75-d195-415a-89ad-08fc7e5aedbf"))

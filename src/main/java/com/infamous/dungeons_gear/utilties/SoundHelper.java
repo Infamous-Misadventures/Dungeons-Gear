@@ -19,7 +19,7 @@ public class SoundHelper {
     public static void playLightningStrikeSounds(Entity soundEmissionTarget){
         PlayerEntity player = getPlayerFrom(soundEmissionTarget);
         soundEmissionTarget.level.playSound(player,
-                soundEmissionTarget.blockPosition(),
+                soundEmissionTarget.getX(), soundEmissionTarget.getY(), soundEmissionTarget.getZ(),
                 SoundEvents.LIGHTNING_BOLT_THUNDER, soundEmissionTarget.getSoundSource(), volumeLimit, 0.8F + RNG.nextFloat() * 0.2F);
         soundEmissionTarget.level.playSound(player,
                 soundEmissionTarget.getX(), soundEmissionTarget.getY(), soundEmissionTarget.getZ(),

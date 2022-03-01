@@ -12,8 +12,6 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-import net.minecraft.item.Item.Properties;
-
 public class EyeOfTheGuardianItem extends AbstractBeaconItem implements IChargeableItem {
 
     public static final BeaconBeamColor EYE_OF_THE_GUARDIAN_BEACON_BEAM_COLOR =
@@ -79,7 +77,7 @@ public class EyeOfTheGuardianItem extends AbstractBeaconItem implements IChargea
     }
 
     @Override
-    protected boolean consumeTick(PlayerEntity playerEntity) {
+    protected boolean consumeTick(PlayerEntity playerEntity, ItemStack stack) {
         return true;
     }
 

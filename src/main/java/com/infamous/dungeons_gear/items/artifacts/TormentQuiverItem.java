@@ -3,9 +3,10 @@ package com.infamous.dungeons_gear.items.artifacts;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
-import com.infamous.dungeons_gear.items.interfaces.ISoulGatherer;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
+import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
+import com.infamous.dungeons_libraries.items.interfaces.ISoulConsumer;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -18,9 +19,7 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 
-import net.minecraft.item.Item.Properties;
-
-public class TormentQuiverItem extends ArtifactItem implements ISoulGatherer {
+public class TormentQuiverItem extends ArtifactItem implements ISoulConsumer {
     public static final String TORMENT_ARROW = "TormentArrow";
 
     public TormentQuiverItem(Properties properties) {
@@ -31,7 +30,7 @@ public class TormentQuiverItem extends ArtifactItem implements ISoulGatherer {
         PlayerEntity playerIn = c.getPlayer();
         ItemStack itemstack = c.getItemInHand();
 
-        if(playerIn.isCreative() || CapabilityHelper.getComboCapability(playerIn).consumeSouls(getActivationCost(itemstack))){
+        if(SoulCasterHelper.consumeSouls(playerIn, itemstack)){
 
             ICombo comboCap = CapabilityHelper.getComboCapability(playerIn);
             if(comboCap == null) return new ActionResult<>(ActionResultType.FAIL, itemstack);
@@ -60,11 +59,6 @@ public class TormentQuiverItem extends ArtifactItem implements ISoulGatherer {
     @Override
     public int getDurationInSeconds() {
         return 0;
-    }
-
-    @Override
-    public int getGatherAmount(ItemStack stack) {
-        return 1;
     }
 
     @Override

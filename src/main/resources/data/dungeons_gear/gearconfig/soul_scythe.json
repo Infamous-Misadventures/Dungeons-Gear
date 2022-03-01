@@ -2,16 +2,16 @@
   "attributes": [
     {
       "attribute": "minecraft:generic.attack_damage",
-      "amount": 11,
+      "amount": 6,
       "operation": 0
     },
     {
       "attribute": "minecraft:generic.attack_speed",
-      "amount": -3.1,
+      "amount": -2.7,
       "operation": 0
     },
     {
-      "attribute": "minecraft:generic.attack_knockback",
+      "attribute": "dungeons_libraries:soul_gathering",
       "amount": 1,
       "operation": 0
     }
@@ -19,5 +19,5 @@
   "built_in_enchantments": [],
   "unique": false,
   "rarity": "UNCOMMON",
-  "combo": 3
+  "combo": 2
 }

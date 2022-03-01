@@ -2,11 +2,11 @@ package com.infamous.dungeons_gear.items.artifacts;
 
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
-import com.infamous.dungeons_gear.items.interfaces.ISoulGatherer;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
-import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
+import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
+import com.infamous.dungeons_libraries.items.interfaces.ISoulConsumer;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -19,9 +19,7 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 
-import net.minecraft.item.Item.Properties;
-
-public class LightningRodItem extends ArtifactItem implements ISoulGatherer {
+public class LightningRodItem extends ArtifactItem implements ISoulConsumer {
     public LightningRodItem(Properties properties) {
         super(properties);
     }
@@ -30,7 +28,7 @@ public class LightningRodItem extends ArtifactItem implements ISoulGatherer {
         PlayerEntity playerIn = c.getPlayer();
         ItemStack itemstack = c.getItemInHand();
 
-        if(playerIn.isCreative() || CapabilityHelper.getComboCapability(playerIn).consumeSouls(getActivationCost(itemstack))){
+        if(SoulCasterHelper.consumeSouls(playerIn, itemstack)){
             //AbilityUtils.castLightningBoltAtBlockPos(itemUseContextPlayer, blockPos);
             AreaOfEffectHelper.electrifyNearbyEnemies(playerIn, 5, 5, Integer.MAX_VALUE);
             SoundHelper.playLightningStrikeSounds(playerIn);
@@ -56,11 +54,6 @@ public class LightningRodItem extends ArtifactItem implements ISoulGatherer {
     @Override
     public int getDurationInSeconds() {
         return 0;
-    }
-
-    @Override
-    public int getGatherAmount(ItemStack stack) {
-        return 1;
     }
 
     @Override

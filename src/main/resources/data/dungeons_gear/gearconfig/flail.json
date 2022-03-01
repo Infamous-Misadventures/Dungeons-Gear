@@ -2,22 +2,18 @@
   "attributes": [
     {
       "attribute": "minecraft:generic.attack_damage",
-      "amount": 11,
+      "amount": 6,
       "operation": 0
     },
     {
       "attribute": "minecraft:generic.attack_speed",
-      "amount": -3.1,
-      "operation": 0
-    },
-    {
-      "attribute": "minecraft:generic.attack_knockback",
-      "amount": 1,
+      "amount": -2.6,
       "operation": 0
     }
   ],
-  "built_in_enchantments": [],
+  "built_in_enchantments": [{"enchantment": "dungeons_gear:chains", "level": 1}],
   "unique": false,
   "rarity": "UNCOMMON",
+  "disables_shield": true,
   "combo": 3
 }

@@ -9,9 +9,8 @@ import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.capabilities.offhand.IOffhand;
 import com.infamous.dungeons_gear.capabilities.offhand.Offhand;
 import com.infamous.dungeons_gear.capabilities.offhand.OffhandStorage;
-import com.infamous.dungeons_gear.client.renderer.totem.BuzzyNestRenderer;
-import com.infamous.dungeons_libraries.capabilities.minionmaster.*;
 import com.infamous.dungeons_gear.client.ClientProxy;
+import com.infamous.dungeons_gear.client.renderer.totem.BuzzyNestRenderer;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
 import com.infamous.dungeons_gear.compat.ElenaiCompat;
@@ -26,7 +25,6 @@ import com.infamous.dungeons_gear.items.BowItemModelsProperties;
 import com.infamous.dungeons_gear.items.CrossbowItemModelsProperties;
 import com.infamous.dungeons_gear.items.DualWieldItemProperties;
 import com.infamous.dungeons_gear.items.VanillaItemModelProperties;
-import com.infamous.dungeons_gear.items.melee.WeaponAttributeHandler;
 import com.infamous.dungeons_gear.loot.ModLootFunctionTypes;
 import com.infamous.dungeons_gear.registry.AttributeRegistry;
 import com.infamous.dungeons_gear.registry.ItemRegistry;
@@ -92,7 +90,6 @@ public class DungeonsGear
     private void setup(final FMLCommonSetupEvent event)
     {
         NetworkHandler.init();
-        WeaponAttributeHandler.setWeaponAttributeModifiers();
         CapabilityManager.INSTANCE.register(ICombo.class, new ComboStorage(), Combo::new);
         CapabilityManager.INSTANCE.register(IBow.class, new BowStorage(), Bow::new);
         CapabilityManager.INSTANCE.register(IOffhand.class, new OffhandStorage(), Offhand::new);
