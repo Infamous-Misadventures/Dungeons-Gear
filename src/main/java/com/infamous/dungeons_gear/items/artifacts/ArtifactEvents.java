@@ -4,11 +4,15 @@ import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.goals.*;
+import com.infamous.dungeons_gear.integration.curios.CuriosIntegration;
 import com.infamous.dungeons_gear.utilties.*;
 import com.infamous.dungeons_libraries.capabilities.minionmaster.IMinion;
 import com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.monster.IMob;
@@ -16,6 +20,7 @@ import net.minecraft.entity.passive.*;
 import net.minecraft.entity.passive.horse.LlamaEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -27,9 +32,12 @@ import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import top.theillusivec4.curios.api.event.CurioChangeEvent;
 
 import java.util.UUID;
 
+import static com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList.SOUL_SIPHON;
+import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_GATHERING;
 import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMinionCapability;
 
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
@@ -272,6 +280,24 @@ public class ArtifactEvents {
                     SoundHelper.playLightningStrikeSounds(arrowEntity);
                     AreaOfEffectHelper.electrifyNearbyEnemies(arrowEntity, 5, 5, Integer.MAX_VALUE);
                 }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onCurioChange(CurioChangeEvent event) {
+        if(!event.getIdentifier().equals(CuriosIntegration.ARTIFACT_IDENTIFIER)) return;
+        ItemStack itemstack = event.getTo();
+        if(itemstack.getItem() instanceof ArtifactItem) {
+            if (!itemstack.isEmpty()) {
+                event.getEntityLiving().getAttributes().addTransientAttributeModifiers(((ArtifactItem) itemstack.getItem()).getDefaultAttributeModifiers(event.getSlotIndex()));
+            }
+        }
+
+        ItemStack itemstack1 = event.getFrom();
+        if(itemstack1.getItem() instanceof ArtifactItem) {
+            if (!itemstack1.isEmpty()) {
+                event.getEntityLiving().getAttributes().removeAttributeModifiers(((ArtifactItem) itemstack1.getItem()).getDefaultAttributeModifiers(event.getSlotIndex()));
             }
         }
     }

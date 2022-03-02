@@ -252,66 +252,66 @@ public class GlobalEvents {
         }
     }
 
-    @SubscribeEvent
-    public static void onSoulGatheringItemsXPDrop(LivingDeathEvent event) {
-        if (event.getSource().getEntity() instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) event.getSource().getEntity();
-            int souls = 0;
-            ItemStack mainhand = player.getMainHandItem();
-            ItemStack offhand = player.getOffhandItem();
-            if (mainhand.getItem() instanceof ISoulGatherer && !(mainhand.getItem() instanceof ArtifactItem)) {
-                souls += ((ISoulGatherer) mainhand.getItem()).getGatherAmount(mainhand);
-            }
-            if (offhand.getItem() instanceof ISoulGatherer && !(offhand.getItem() instanceof ArtifactItem)) {
-                souls += ((ISoulGatherer) offhand.getItem()).getGatherAmount(offhand);
-            }
-            int counter = 0;
-            for (ItemStack is : player.inventory.offhand)
-                if (is.getItem() instanceof ArtifactItem && is.getItem() instanceof ISoulGatherer) {
-                    souls += ((ISoulGatherer) is.getItem()).getGatherAmount(is);
-                    counter++;
-                }
-            for (ItemStack is : player.inventory.items)
-                if (is.getItem() instanceof ArtifactItem && is.getItem() instanceof ISoulGatherer) {
-                    souls += ((ISoulGatherer) is.getItem()).getGatherAmount(is);
-                    if (++counter == 3) break;
-                }
-            ItemStack helmet = player.getItemBySlot(EquipmentSlotType.HEAD);
-            ItemStack chestplate = player.getItemBySlot(EquipmentSlotType.CHEST);
-
-            float soulsGathered = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getSoulsGathered() : 0;
-            float soulsGathered2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getSoulsGathered() : 0;
-            float totalSoulsGathered = 1 + soulsGathered * 0.01F + soulsGathered2 * 0.01F;
-
-            if (totalSoulsGathered > 0) {
-                souls = (int) (souls * totalSoulsGathered);
-            }
-
-            if (souls > 0) {
-                SoulHelper.addSouls(player, souls);
-                if (event.getSource().getDirectEntity() instanceof AbstractArrowEntity) {
-                    AbstractArrowEntity arrowEntity = (AbstractArrowEntity) event.getSource().getDirectEntity();
-                    int animaConduitLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrowEntity, MeleeRangedEnchantmentList.ANIMA_CONDUIT);
-                    if (animaConduitLevel > 0) {
-                        if (event.getSource().getEntity() instanceof LivingEntity) {
-                            LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
-                            if (attacker instanceof PlayerEntity) {
-                                double soulsToHealth = player.getMaxHealth() * souls * (0.02 * animaConduitLevel);
-                                PROXY.spawnParticles(player, ParticleTypes.SOUL);
-                                player.heal((float) soulsToHealth);
-                            }
-                        }
-                    }
-                } else if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.ANIMA_CONDUIT)) {
-                    int animaConduitLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeRangedEnchantmentList.ANIMA_CONDUIT, mainhand);
-                    double soulsToHealth = player.getMaxHealth() * souls * (0.02 * animaConduitLevel);
-                    PROXY.spawnParticles(player, ParticleTypes.SOUL);
-                    player.heal((float) soulsToHealth);
-                }
-            }
-        }
-
-    }
+//    @SubscribeEvent
+//    public static void onSoulGatheringItemsXPDrop(LivingDeathEvent event) {
+//        if (event.getSource().getEntity() instanceof PlayerEntity) {
+//            PlayerEntity player = (PlayerEntity) event.getSource().getEntity();
+//            int souls = 0;
+//            ItemStack mainhand = player.getMainHandItem();
+//            ItemStack offhand = player.getOffhandItem();
+//            if (mainhand.getItem() instanceof ISoulGatherer && !(mainhand.getItem() instanceof ArtifactItem)) {
+//                souls += ((ISoulGatherer) mainhand.getItem()).getGatherAmount(mainhand);
+//            }
+//            if (offhand.getItem() instanceof ISoulGatherer && !(offhand.getItem() instanceof ArtifactItem)) {
+//                souls += ((ISoulGatherer) offhand.getItem()).getGatherAmount(offhand);
+//            }
+//            int counter = 0;
+//            for (ItemStack is : player.inventory.offhand)
+//                if (is.getItem() instanceof ArtifactItem && is.getItem() instanceof ISoulGatherer) {
+//                    souls += ((ISoulGatherer) is.getItem()).getGatherAmount(is);
+//                    counter++;
+//                }
+//            for (ItemStack is : player.inventory.items)
+//                if (is.getItem() instanceof ArtifactItem && is.getItem() instanceof ISoulGatherer) {
+//                    souls += ((ISoulGatherer) is.getItem()).getGatherAmount(is);
+//                    if (++counter == 3) break;
+//                }
+//            ItemStack helmet = player.getItemBySlot(EquipmentSlotType.HEAD);
+//            ItemStack chestplate = player.getItemBySlot(EquipmentSlotType.CHEST);
+//
+//            float soulsGathered = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getSoulsGathered() : 0;
+//            float soulsGathered2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getSoulsGathered() : 0;
+//            float totalSoulsGathered = 1 + soulsGathered * 0.01F + soulsGathered2 * 0.01F;
+//
+//            if (totalSoulsGathered > 0) {
+//                souls = (int) (souls * totalSoulsGathered);
+//            }
+//
+//            if (souls > 0) {
+//                SoulHelper.addSouls(player, souls);
+//                if (event.getSource().getDirectEntity() instanceof AbstractArrowEntity) {
+//                    AbstractArrowEntity arrowEntity = (AbstractArrowEntity) event.getSource().getDirectEntity();
+//                    int animaConduitLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrowEntity, MeleeRangedEnchantmentList.ANIMA_CONDUIT);
+//                    if (animaConduitLevel > 0) {
+//                        if (event.getSource().getEntity() instanceof LivingEntity) {
+//                            LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
+//                            if (attacker instanceof PlayerEntity) {
+//                                double soulsToHealth = player.getMaxHealth() * souls * (0.02 * animaConduitLevel);
+//                                PROXY.spawnParticles(player, ParticleTypes.SOUL);
+//                                player.heal((float) soulsToHealth);
+//                            }
+//                        }
+//                    }
+//                } else if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.ANIMA_CONDUIT)) {
+//                    int animaConduitLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeRangedEnchantmentList.ANIMA_CONDUIT, mainhand);
+//                    double soulsToHealth = player.getMaxHealth() * souls * (0.02 * animaConduitLevel);
+//                    PROXY.spawnParticles(player, ParticleTypes.SOUL);
+//                    player.heal((float) soulsToHealth);
+//                }
+//            }
+//        }
+//
+//    }
 
     @SubscribeEvent
     public static void onGaleArrowImpact(ProjectileImpactEvent.Arrow event) {

@@ -1,5 +1,7 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
@@ -8,6 +10,8 @@ import com.infamous.dungeons_gear.utilties.SoundHelper;
 import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
 import com.infamous.dungeons_libraries.items.interfaces.ISoulConsumer;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
@@ -18,6 +22,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
+import java.util.UUID;
+
+import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_GATHERING;
 
 public class LightningRodItem extends ArtifactItem implements ISoulConsumer {
     public LightningRodItem(Properties properties) {
@@ -59,5 +66,15 @@ public class LightningRodItem extends ArtifactItem implements ISoulConsumer {
     @Override
     public float getActivationCost(ItemStack stack) {
         return 15;
+    }
+
+    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(int slotIndex) {
+        return getAttributeModifiersForSlot(getUUIDForSlot(slotIndex));
+    }
+
+    private ImmutableMultimap<Attribute, AttributeModifier> getAttributeModifiersForSlot(UUID slot_uuid) {
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+        builder.put(SOUL_GATHERING.get(), new AttributeModifier(slot_uuid, "Artifact modifier", 1, AttributeModifier.Operation.ADDITION));
+        return builder.build();
     }
 }

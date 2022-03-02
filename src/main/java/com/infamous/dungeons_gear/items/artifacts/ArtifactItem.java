@@ -1,5 +1,7 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
@@ -9,6 +11,8 @@ import com.infamous.dungeons_gear.mixin.CooldownAccessor;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
@@ -26,7 +30,12 @@ import net.minecraft.world.World;
 
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
+import java.util.UUID;
+
 public abstract class ArtifactItem extends Item implements ICurioItem {
+    protected final UUID SLOT0_UUID = UUID.fromString("7037798e-ac2c-4711-aa72-ba73589f1411");
+    protected final UUID SLOT1_UUID = UUID.fromString("1906bae9-9f26-4194-bb8a-ef95b8cad134");
+    protected final UUID SLOT2_UUID = UUID.fromString("b99aa930-03d0-4b2d-aa69-7b5d943dd75c");
     protected boolean procOnItemUse = false;
 
     public ArtifactItem(Properties properties) {
@@ -127,4 +136,17 @@ public abstract class ArtifactItem extends Item implements ICurioItem {
     public abstract int getCooldownInSeconds();
 
     public abstract int getDurationInSeconds();
+
+    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(int slotIndex) {
+        return ImmutableMultimap.of();
+    }
+
+    protected UUID getUUIDForSlot(int slotIndex){
+        switch(slotIndex){
+            case 0: return SLOT0_UUID;
+            case 1: return SLOT1_UUID;
+            case 2: return SLOT2_UUID;
+            default: return SLOT2_UUID;
+        }
+    }
 }
