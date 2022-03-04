@@ -15,6 +15,7 @@ import net.minecraft.enchantment.Enchantment.Rarity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import top.theillusivec4.curios.api.event.CurioChangeEvent;
 
 import java.util.AbstractMap;
@@ -23,11 +24,13 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList.TUMBLEBEE;
 import static com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList.SOUL_SIPHON;
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_GATHERING;
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SUMMON_CAP;
 
+@Mod.EventBusSubscriber(modid = MODID)
 public class TumblebeeEnchantment extends JumpingEnchantment {
     private final static Map<EquipmentSlotType, UUID> EQUIPMENT_ATTRIBUTE_UUID_MAP = Stream.of(
                     new AbstractMap.SimpleImmutableEntry<>(EquipmentSlotType.HEAD, UUID.fromString("350050cf-ab03-4320-8792-21592e61ef6b")),

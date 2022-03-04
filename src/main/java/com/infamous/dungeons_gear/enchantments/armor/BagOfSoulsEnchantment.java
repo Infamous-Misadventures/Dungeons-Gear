@@ -33,6 +33,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Mod.EventBusSubscriber(modid = MODID)
 public class BagOfSoulsEnchantment extends DungeonsEnchantment {
     private final static Map<EquipmentSlotType, UUID> EQUIPMENT_ATTRIBUTE_UUID_MAP = Stream.of(
                     new AbstractMap.SimpleImmutableEntry<>(EquipmentSlotType.HEAD, UUID.fromString("ff5e240f-2b25-4de4-a4c2-fdb0ee253e08")),
