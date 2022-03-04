@@ -6,6 +6,8 @@ import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
 import com.infamous.dungeons_gear.items.interfaces.IComboWeapon;
+import com.infamous.dungeons_libraries.capabilities.soulcaster.ISoulCaster;
+import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
 import com.infamous.dungeons_libraries.items.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -17,6 +19,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -41,8 +45,10 @@ public class EnigmaResonatorEnchantment extends DamageBoostEnchantment {
         if (event.getPlayer() == null) return;
         PlayerEntity attacker = event.getPlayer();
         ItemStack mainhand = attacker.getMainHandItem();
+        ISoulCaster soulCasterCapability = SoulCasterHelper.getSoulCasterCapability(attacker);
+        if(soulCasterCapability == null)  return;
 
-        int numSouls = (int) CapabilityHelper.getComboCapability(attacker).getSouls();
+        int numSouls = (int) soulCasterCapability.getSouls();
         if (!event.isVanillaCritical()) {
             boolean success = false;
             if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.ENIGMA_RESONATOR)) {

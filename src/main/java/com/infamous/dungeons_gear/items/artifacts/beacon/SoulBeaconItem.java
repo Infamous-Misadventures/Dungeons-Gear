@@ -26,8 +26,8 @@ public abstract class SoulBeaconItem extends AbstractBeaconItem implements ISoul
     }
 
     @Override
-    protected boolean consumeTick(PlayerEntity playerEntity, ItemStack stack) {
-        return SoulCasterHelper.consumeSouls(playerEntity, stack);
+    protected boolean consumeTick(PlayerEntity playerEntity, ItemStack itemStack) {
+        return SoulCasterHelper.consumeSouls(playerEntity, this.getActivationCost(itemStack));
     }
 
     @Override

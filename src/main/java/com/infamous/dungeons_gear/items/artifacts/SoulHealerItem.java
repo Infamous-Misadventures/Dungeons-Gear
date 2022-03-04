@@ -8,14 +8,17 @@ import com.infamous.dungeons_gear.items.interfaces.ISoulGatherer;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
+import com.infamous.dungeons_libraries.capabilities.soulcaster.ISoulCaster;
 import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
 import com.infamous.dungeons_libraries.items.interfaces.ISoulConsumer;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.text.ITextComponent;
@@ -27,6 +30,7 @@ import java.util.UUID;
 
 import net.minecraft.item.Item.Properties;
 
+import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_GATHERING;
 
 public class SoulHealerItem extends ArtifactItem implements ISoulConsumer {
@@ -37,29 +41,35 @@ public class SoulHealerItem extends ArtifactItem implements ISoulConsumer {
 
     public ActionResult<ItemStack> procArtifact(ItemUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
-        ItemStack itemstack = c.getItemInHand();
+        ItemStack itemStack = c.getItemInHand();
+        if(playerIn == null)  return new ActionResult<>(ActionResultType.FAIL, itemStack);
 
-        if (SoulCasterHelper.consumeSouls(playerIn, itemstack)) {
-            if ((playerIn.getHealth() < playerIn.getMaxHealth())) {
-                float currentHealth = playerIn.getHealth();
-                float maxHealth = playerIn.getMaxHealth();
-                float lostHealth = maxHealth - currentHealth;
-                float toHeal = Math.min(lostHealth, Math.min(maxHealth / 5, CapabilityHelper.getComboCapability(playerIn).getSouls() * 0.01f));
-                if (playerIn.isCreative() || CapabilityHelper.getComboCapability(playerIn).consumeSouls(toHeal * 100)) {
-                    playerIn.heal(toHeal);
-                    itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemstack)));
-                }
-                ArtifactItem.putArtifactOnCooldown(playerIn, itemstack.getItem());
-            } else {
-                float healedAmount = AreaOfEffectHelper.healMostInjuredAlly(playerIn, 12);
-                if (healedAmount > 0) {
-                    itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemstack)));
-                    ArtifactItem.putArtifactOnCooldown(playerIn, itemstack.getItem());
-                }
-            }
+        LivingEntity mostInjuredAlly = AreaOfEffectHelper.findMostInjuredAlly(playerIn, 12);
+        float currentHealth = mostInjuredAlly.getHealth();
+        float maxHealth = mostInjuredAlly.getMaxHealth();
+        float lostHealth = maxHealth - currentHealth;
+
+        float playerCurrentHealth = playerIn.getHealth();
+        float playerMaxHealth = playerIn.getMaxHealth();
+        float playerLostHealth = playerMaxHealth - playerCurrentHealth;
+        if(playerLostHealth > lostHealth) {
+            return healAlly(playerIn, playerLostHealth, playerIn, itemStack);
+        }else{
+            return healAlly(playerIn, lostHealth, mostInjuredAlly, itemStack);
         }
+    }
 
-        return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
+    private ActionResult<ItemStack> healAlly(PlayerEntity playerEntity, float lostHealth, LivingEntity target, ItemStack itemStack) {
+        ISoulCaster soulCasterCapability = SoulCasterHelper.getSoulCasterCapability(playerEntity);
+        if(soulCasterCapability == null)  return new ActionResult<>(ActionResultType.FAIL, itemStack);
+        float toHeal = Math.min(lostHealth, Math.min(target.getMaxHealth() / 5, soulCasterCapability.getSouls() * 0.1f));
+        if (toHeal > 0 && SoulCasterHelper.consumeSouls(playerEntity, toHeal*10)) {
+            target.heal(toHeal);
+            itemStack.hurtAndBreak(1, playerEntity, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemStack)));
+            ArtifactItem.putArtifactOnCooldown(playerEntity, itemStack.getItem());
+        }
+        PROXY.spawnParticles(target, ParticleTypes.HEART);
+        return new ActionResult<>(ActionResultType.SUCCESS, itemStack);
     }
 
     @Override
@@ -70,7 +80,7 @@ public class SoulHealerItem extends ArtifactItem implements ISoulConsumer {
 
     @Override
     public int getCooldownInSeconds() {
-        return 1;
+        return 5;
     }
 
     @Override

@@ -35,20 +35,20 @@ public class TormentQuiverItem extends ArtifactItem implements ISoulConsumer {
 
     public ActionResult<ItemStack> procArtifact(ItemUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
-        ItemStack itemstack = c.getItemInHand();
+        ItemStack itemStack = c.getItemInHand();
 
-        if(SoulCasterHelper.consumeSouls(playerIn, itemstack)){
+        if(SoulCasterHelper.consumeSouls(playerIn, this.getActivationCost(itemStack))){
 
             ICombo comboCap = CapabilityHelper.getComboCapability(playerIn);
-            if(comboCap == null) return new ActionResult<>(ActionResultType.FAIL, itemstack);
+            if(comboCap == null) return new ActionResult<>(ActionResultType.FAIL, itemStack);
 
             comboCap.setTormentArrowCount(3);
 
-            itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemstack)));
+            itemStack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemStack)));
 
-            ArtifactItem.putArtifactOnCooldown(playerIn, itemstack.getItem());
+            ArtifactItem.putArtifactOnCooldown(playerIn, itemStack.getItem());
         }
-        return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
+        return new ActionResult<>(ActionResultType.SUCCESS, itemStack);
     }
 
     @Override

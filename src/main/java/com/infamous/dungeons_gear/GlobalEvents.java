@@ -1,28 +1,22 @@
 package com.infamous.dungeons_gear;
 
 
-import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.capabilities.bow.IBow;
-import com.infamous.dungeons_gear.combat.NetworkHandler;
-import com.infamous.dungeons_gear.combat.PacketUpdateSouls;
+import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
 import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.enchantments.armor.AcrobatEnchantment;
 import com.infamous.dungeons_gear.enchantments.armor.MultiRollEnchantment;
-import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.ranged.BurstBowstringEnchantment;
 import com.infamous.dungeons_gear.enchantments.ranged.FuseShotEnchantment;
 import com.infamous.dungeons_gear.enchantments.ranged.RollChargeEnchantment;
 import com.infamous.dungeons_gear.items.GildedItemHelper;
-import com.infamous.dungeons_gear.registry.PotionList;
-import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_gear.items.interfaces.IArmor;
 import com.infamous.dungeons_gear.items.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.items.interfaces.IRangedWeapon;
-import com.infamous.dungeons_gear.items.interfaces.ISoulGatherer;
+import com.infamous.dungeons_gear.registry.PotionList;
 import com.infamous.dungeons_gear.utilties.*;
-import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
 import com.infamous.dungeons_libraries.utils.PetHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -50,7 +44,6 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.Optional;
 
@@ -84,8 +77,6 @@ public class GlobalEvents {
             }
         } else if (event.getEntity() instanceof ServerPlayerEntity) {
             gildedGearTest((ServerPlayerEntity) event.getEntity());
-            SoulCasterHelper.addSouls((ServerPlayerEntity) event.getEntity(), 200F);
-            NetworkHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getEntity()), new PacketUpdateSouls(CapabilityHelper.getComboCapability(event.getEntity()).getSouls()));
         }
     }
 

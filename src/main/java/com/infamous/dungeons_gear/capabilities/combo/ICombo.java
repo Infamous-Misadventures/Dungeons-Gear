@@ -7,10 +7,6 @@ import net.minecraft.util.math.BlockPos;
 import javax.annotation.Nullable;
 
 public interface ICombo {
-    void setSouls(float soul, @Nullable LivingEntity living);
-    boolean consumeSouls(float amount);
-    float getSouls();
-    float getMaxSouls(@Nullable LivingEntity living);
 
     void setComboTimer(int comboTimer);
     int getComboTimer();

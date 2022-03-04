@@ -37,7 +37,7 @@ public class HarvesterItem extends ArtifactItem implements ISoulConsumer {
         PlayerEntity playerIn = c.getPlayer();
         ItemStack itemStack = c.getItemInHand();
 
-        if (SoulCasterHelper.consumeSouls(playerIn, itemStack)) {
+        if (SoulCasterHelper.consumeSouls(playerIn, this.getActivationCost(itemStack))) {
             SoundHelper.playGenericExplodeSound(playerIn);
             AOECloudHelper.spawnExplosionCloud(playerIn, playerIn, 3.0F);
             AreaOfEffectHelper.causeMagicExplosionAttack(playerIn, playerIn, 15, 3.0F);

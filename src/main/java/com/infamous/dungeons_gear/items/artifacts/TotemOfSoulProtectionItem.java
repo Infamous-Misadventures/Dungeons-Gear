@@ -55,7 +55,7 @@ public class TotemOfSoulProtectionItem extends ArtifactItem implements ISoulCons
                 blockPos = itemUseContextPos.relative(itemUseContextFace);
             }
             if(itemUseContextPlayer != null) {
-                if(SoulCasterHelper.consumeSouls(itemUseContextPlayer, itemUseContextItem)){
+                if(SoulCasterHelper.consumeSouls(itemUseContextPlayer, this.getActivationCost(itemUseContextItem))){
                     spawnSoulProtectionCloudAtPos(itemUseContextPlayer, blockPos, 100);
                     itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemUseContextItem)));
 

@@ -141,7 +141,7 @@ public class AreaOfEffectHelper {
         );
     }
 
-    public static float healMostInjuredAlly(LivingEntity healer, float distance) {
+    public static LivingEntity findMostInjuredAlly(LivingEntity healer, float distance) {
         World world = healer.getCommandSenderWorld();
         List<LivingEntity> nearbyEntities = getNearbyEnemies(healer,distance, world, getCanHealPredicate(healer));
         if (!nearbyEntities.isEmpty()) {
@@ -153,11 +153,8 @@ public class AreaOfEffectHelper {
                     lostHealth = injure.getMaxHealth() - injure.getHealth();
                 }
             }
-            float heal = Math.min(lostHealth, Math.min(mostInjuredAlly.getMaxHealth() / 5, CapabilityHelper.getComboCapability(healer).getSouls() * 0.01f));
-            mostInjuredAlly.heal(heal);
-            PROXY.spawnParticles(mostInjuredAlly, ParticleTypes.HEART);
-            return heal;
-        } else return 0;
+            return mostInjuredAlly;
+        } else return null;
     }
 
     public static void causeShockwave(LivingEntity attacker, LivingEntity target, float damageAmount, float distance) {

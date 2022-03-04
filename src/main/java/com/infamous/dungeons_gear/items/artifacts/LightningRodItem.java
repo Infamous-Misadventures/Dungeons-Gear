@@ -33,17 +33,17 @@ public class LightningRodItem extends ArtifactItem implements ISoulConsumer {
 
     public ActionResult<ItemStack> procArtifact(ItemUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
-        ItemStack itemstack = c.getItemInHand();
+        ItemStack itemStack = c.getItemInHand();
 
-        if(SoulCasterHelper.consumeSouls(playerIn, itemstack)){
+        if(SoulCasterHelper.consumeSouls(playerIn, this.getActivationCost(itemStack))){
             //AbilityUtils.castLightningBoltAtBlockPos(itemUseContextPlayer, blockPos);
             AreaOfEffectHelper.electrifyNearbyEnemies(playerIn, 5, 5, Integer.MAX_VALUE);
             SoundHelper.playLightningStrikeSounds(playerIn);
-            itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemstack)));
-            ArtifactItem.putArtifactOnCooldown(playerIn, itemstack.getItem());
+            itemStack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemStack)));
+            ArtifactItem.putArtifactOnCooldown(playerIn, itemStack.getItem());
         }
 
-        return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
+        return new ActionResult<>(ActionResultType.SUCCESS, itemStack);
     }
 
     @Override
