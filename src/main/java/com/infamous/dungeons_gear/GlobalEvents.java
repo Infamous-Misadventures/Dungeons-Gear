@@ -76,7 +76,7 @@ public class GlobalEvents {
                 }
             }
         } else if (event.getEntity() instanceof ServerPlayerEntity) {
-            gildedGearTest((ServerPlayerEntity) event.getEntity());
+//            gildedGearTest((ServerPlayerEntity) event.getEntity());
         }
     }
 
