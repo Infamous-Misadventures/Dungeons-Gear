@@ -3,7 +3,6 @@ package com.infamous.dungeons_gear.enchantments.melee;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DropsEnchantment;
-import com.infamous.dungeons_gear.items.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.LootTableHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
@@ -14,14 +13,12 @@ import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.apache.logging.log4j.core.jmx.Server;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
@@ -44,7 +41,6 @@ public class ProspectorEnchantment extends DropsEnchantment {
             LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
             ItemStack mainhand = attacker.getMainHandItem();
             LivingEntity victim = event.getEntityLiving();
-            boolean uniqueWeaponFlag = hasProspectorBuiltIn(mainhand);
             if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.PROSPECTOR)){
                 int prospectorLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.PROSPECTOR, mainhand);
                 float prospectorChance;
@@ -52,15 +48,6 @@ public class ProspectorEnchantment extends DropsEnchantment {
                 float prospectorRand = attacker.getRandom().nextFloat();
                 if(prospectorRand <= prospectorChance){
                     if(victim instanceof MonsterEntity){
-                        ItemEntity drop = getProspectorDrop(attacker, victim);
-                        event.getDrops().add(drop);
-                    }
-                }
-            }
-            if(uniqueWeaponFlag){
-                float prospectorRand = attacker.getRandom().nextFloat();
-                if(prospectorRand <= 0.25F) {
-                    if (victim instanceof MonsterEntity) {
                         ItemEntity drop = getProspectorDrop(attacker, victim);
                         event.getDrops().add(drop);
                     }
@@ -82,10 +69,6 @@ public class ProspectorEnchantment extends DropsEnchantment {
         }else{
             return new ResourceLocation(MODID, "enchantments/prospector/overworld");
         }
-    }
-
-    private static boolean hasProspectorBuiltIn(ItemStack mainhand) {
-        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasProspectorBuiltIn(mainhand);
     }
 
 }

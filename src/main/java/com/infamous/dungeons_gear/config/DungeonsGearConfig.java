@@ -3,7 +3,6 @@ package com.infamous.dungeons_gear.config;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.google.common.collect.Lists;
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
@@ -91,6 +90,8 @@ public class DungeonsGearConfig {
     public static ForgeConfigSpec.ConfigValue<Integer> SOUL_SIPHON_SOULS_PER_LEVEL;
     public static ForgeConfigSpec.ConfigValue<Double> CHAINS_CHANCE;
     public static ForgeConfigSpec.ConfigValue<Double> RADIANCE_CHANCE;
+    public static ForgeConfigSpec.ConfigValue<Double> THUNDERING_CHANCE;
+    public static ForgeConfigSpec.ConfigValue<Integer> THUNDERING_BASE_DAMAGE;
 
 
     private static CommentedFileConfig cfg;
@@ -463,5 +464,11 @@ public class DungeonsGearConfig {
         RADIANCE_CHANCE = builder
                 .comment("The decimal chance for Radiance to trigger [0.0-1.0, default: 0.2]")
                 .defineInRange("radianceChance", 0.2, 0, 1.0);
+        THUNDERING_CHANCE = builder
+                .comment("The decimal chance for Thundering to trigger [0.0-1.0, default: 0.3]")
+                .defineInRange("thunderingChance", 0.3, 0, 1.0);
+        THUNDERING_BASE_DAMAGE = builder
+                .comment("The base damage for Thundering [0-10000, default: 5]")
+                .defineInRange("thunderingBaseDamage", 5, 0, 10000);
     }
 }

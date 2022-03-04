@@ -28,7 +28,6 @@ public class Combo implements ICombo {
     private int arrowsInCounter;
     private int jumpCooldownTimer;
     private int poisonImmunityTimer;
-    private double dynamoMultiplier;
     private int lastShoutTimer;
     private int offhandCooldown;
     private float cachedCooldown;//no need to be saved, it's stored and used in the span of a tick
@@ -61,7 +60,6 @@ public class Combo implements ICombo {
         this.snowballNearbyTimer = 100;
         this.jumpCooldownTimer = 0;
         this.poisonImmunityTimer = 0;
-        this.dynamoMultiplier = 1.0D;
         this.lastExplorerCheckpoint = BlockPos.ZERO;
         this.lastLuckyExplorerCheckpoint = BlockPos.ZERO;
 

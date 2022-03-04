@@ -1,0 +1,19 @@
+{
+  "attributes": [
+    {
+      "attribute": "minecraft:generic.attack_damage",
+      "amount": 7,
+      "operation": 0
+    },
+    {
+      "attribute": "minecraft:generic.attack_speed",
+      "amount": -2.9,
+      "operation": 0
+    }
+  ],
+  "built_in_enchantments": [{"enchantment": "dungeons_gear:swirling", "level": 1}, {"enchantment": "dungeons_gear:gravity", "level": 1}],
+  "unique": true,
+  "rarity": "RARE",
+  "disables_shield": true,
+  "combo": 1
+}

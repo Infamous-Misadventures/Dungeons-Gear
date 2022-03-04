@@ -6,7 +6,7 @@ import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
-import com.infamous.dungeons_gear.items.interfaces.IMeleeWeapon;
+import com.infamous.dungeons_libraries.items.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -54,13 +54,6 @@ public class PoisonCloudEnchantment extends DungeonsEnchantment {
         if (attacker.getLastHurtMobTimestamp() == attacker.tickCount) return;
         LivingEntity victim = event.getEntityLiving();
         ItemStack mainhand = attacker.getMainHandItem();
-        if (hasPoisonCloudBuiltIn(mainhand)) {
-            float chance = attacker.getRandom().nextFloat();
-            if (chance <= 0.3F) {
-                checkForPlayer(attacker);
-                AOECloudHelper.spawnPoisonCloud(attacker, victim, 0);
-            }
-        }
         if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.POISON_CLOUD)) {
             float chance = attacker.getRandom().nextFloat();
             int level = EnchantmentHelper.getItemEnchantmentLevel(MeleeRangedEnchantmentList.POISON_CLOUD, mainhand);
@@ -69,10 +62,6 @@ public class PoisonCloudEnchantment extends DungeonsEnchantment {
                 AOECloudHelper.spawnPoisonCloud(attacker, victim, level - 1);
             }
         }
-    }
-
-    private static boolean hasPoisonCloudBuiltIn(ItemStack mainhand) {
-        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasPoisonCloudBuiltIn(mainhand);
     }
 
     @SubscribeEvent
