@@ -45,7 +45,7 @@ public class ChillingEnchantment extends PulseEnchantment {
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event){
         PlayerEntity player = event.player;
-        if(player == null) return;
+        if(player == null || player.isSpectator()) return;
         if(event.phase == TickEvent.Phase.START) return;
         if(player.isAlive()&&player.isEffectiveAi()){
             ICombo comboCap = CapabilityHelper.getComboCapability(player);

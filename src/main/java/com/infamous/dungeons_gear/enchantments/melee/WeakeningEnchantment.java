@@ -29,8 +29,10 @@ public class WeakeningEnchantment extends DungeonsEnchantment {
     @Override
     public void doPostAttack(LivingEntity user, Entity target, int level) {
         if(!(target instanceof LivingEntity)) return;
+        LivingEntity livingTarget = (LivingEntity) target;
+        livingTarget.addEffect(new EffectInstance(Effects.WEAKNESS, WEAKENING_DURATION.get(), level-1));
         applyToNearbyEntities(target, target.level, WEAKENING_DISTANCE.get(),
-                getCanApplyToSecondEnemyPredicate(user, (LivingEntity)target), (LivingEntity nearbyEntity) -> {
+                getCanApplyToSecondEnemyPredicate(user, livingTarget), (LivingEntity nearbyEntity) -> {
                     nearbyEntity.addEffect(new EffectInstance(Effects.WEAKNESS, WEAKENING_DURATION.get(), level-1));
                 }
         );

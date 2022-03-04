@@ -13,7 +13,7 @@ import com.infamous.dungeons_gear.enchantments.ranged.FuseShotEnchantment;
 import com.infamous.dungeons_gear.enchantments.ranged.RollChargeEnchantment;
 import com.infamous.dungeons_gear.items.GildedItemHelper;
 import com.infamous.dungeons_gear.items.interfaces.IArmor;
-import com.infamous.dungeons_gear.items.interfaces.IComboWeapon;
+import com.infamous.dungeons_libraries.items.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.items.interfaces.IRangedWeapon;
 import com.infamous.dungeons_gear.registry.PotionList;
 import com.infamous.dungeons_gear.utilties.*;
