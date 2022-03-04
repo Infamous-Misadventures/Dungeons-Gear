@@ -102,7 +102,7 @@ public class SoulSiphonEnchantment extends DungeonsEnchantment {
         if (itemEnchantmentLevel > 0) {
             ModifiableAttributeInstance attributeInstance = livingEntity.getAttribute(SOUL_GATHERING.get());
             if (attributeInstance != null && attributeInstance.getModifier(attributeModifierUUID) == null) {
-                attributeInstance.addTransientModifier(new AttributeModifier(attributeModifierUUID, "Enchantment Soul Siphon", itemEnchantmentLevel, AttributeModifier.Operation.ADDITION));
+                attributeInstance.addTransientModifier(new AttributeModifier(attributeModifierUUID, "Enchantment Soul Siphon", 1, AttributeModifier.Operation.ADDITION));
             }
         }
     }

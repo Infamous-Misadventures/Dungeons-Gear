@@ -9,11 +9,6 @@
       "attribute": "minecraft:generic.attack_speed",
       "amount": 0,
       "operation": 0
-    },
-    {
-      "attribute": "dungeons_libraries:summon_cap",
-      "amount": 3,
-      "operation": 0
     }
   ],
   "built_in_enchantments": [{"enchantment": "dungeons_gear:busy_bee", "level": 1}],
