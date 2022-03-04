@@ -11,7 +11,7 @@ import net.minecraft.world.IWorldReader;
 
 import java.util.EnumSet;
 
-import static com.infamous.dungeons_libraries.capabilities.summoning.SummoningHelper.getSummoner;
+import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMaster;
 
 import net.minecraft.entity.ai.goal.Goal.Flag;
 
@@ -48,7 +48,7 @@ public class BatFollowOwnerGoal extends Goal {
      * method as well.
      */
     public boolean canUse() {
-        LivingEntity livingentity = getSummoner(this.batEntity);
+        LivingEntity livingentity = getMaster(this.batEntity);
         if (livingentity == null) {
             return false;
         } else if (livingentity.isSpectator()) {

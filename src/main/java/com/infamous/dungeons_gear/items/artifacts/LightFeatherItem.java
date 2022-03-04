@@ -12,7 +12,8 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
@@ -22,9 +23,7 @@ import net.minecraftforge.fml.network.PacketDistributor;
 import java.util.List;
 
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
-import static com.infamous.dungeons_libraries.utils.PetHelper.isPetOfAttacker;
-
-import net.minecraft.item.Item.Properties;
+import static com.infamous.dungeons_libraries.utils.PetHelper.isPetOf;
 
 public class LightFeatherItem extends ArtifactItem {
     public LightFeatherItem(Properties properties) {
@@ -41,7 +40,7 @@ public class LightFeatherItem extends ArtifactItem {
 
         List<LivingEntity> nearbyEntities = worldIn.getLoadedEntitiesOfClass(LivingEntity.class, new AxisAlignedBB(playerIn.getX() - 5, playerIn.getY() - 5, playerIn.getZ() - 5,
                 playerIn.getX() + 5, playerIn.getY() + 5, playerIn.getZ() + 5), (nearbyEntity) -> {
-            return nearbyEntity != playerIn && !isPetOfAttacker(playerIn, nearbyEntity) && nearbyEntity.isAlive();
+            return nearbyEntity != playerIn && !isPetOf(playerIn, nearbyEntity) && nearbyEntity.isAlive();
         });
 
         PROXY.spawnParticles(playerIn, ParticleTypes.CLOUD);

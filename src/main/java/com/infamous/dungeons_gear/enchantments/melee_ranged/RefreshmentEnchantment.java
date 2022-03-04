@@ -6,7 +6,7 @@ import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DropsEnchantment;
-import com.infamous.dungeons_gear.items.interfaces.IMeleeWeapon;
+import com.infamous.dungeons_libraries.items.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.items.interfaces.IRangedWeapon;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -58,9 +58,7 @@ public class RefreshmentEnchantment extends DropsEnchantment {
             PlayerEntity killerPlayer = (PlayerEntity) damageSource.getEntity();
             if(!PlayerAttackHelper.isProbablyNotMeleeDamage(damageSource)){
                 ItemStack mainhand = killerPlayer.getMainHandItem();
-                boolean uniqueWeaponFlag = hasRefreshmentBuiltIn(mainhand);
                 int refreshmentLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeRangedEnchantmentList.REFRESHMENT, mainhand);
-                if(uniqueWeaponFlag) refreshmentLevel++;
                 if(refreshmentLevel > 0){
                     updateRefreshment(killerPlayer, refreshmentLevel);
                 }
@@ -96,9 +94,4 @@ public class RefreshmentEnchantment extends DropsEnchantment {
         }
     }
 
-    private static boolean hasRefreshmentBuiltIn(ItemStack itemStack){
-        Item item = itemStack.getItem();
-        return item instanceof IMeleeWeapon && ((IMeleeWeapon<?>) item).hasRefreshmentBuiltIn(itemStack)
-                || item instanceof IRangedWeapon && ((IRangedWeapon<?>) item).hasRefreshmentBuiltIn(itemStack);
-    }
 }

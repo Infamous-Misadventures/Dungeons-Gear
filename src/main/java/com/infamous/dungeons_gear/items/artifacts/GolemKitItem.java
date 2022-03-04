@@ -1,23 +1,29 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
-import com.infamous.dungeons_libraries.capabilities.summoning.ISummonable;
-import com.infamous.dungeons_libraries.capabilities.summoning.ISummoner;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
-import com.infamous.dungeons_gear.goals.GolemOwnerHurtByTargetGoal;
-import com.infamous.dungeons_gear.goals.GolemOwnerHurtTargetGoal;
-import com.infamous.dungeons_gear.goals.IronGolemFollowOwnerGoal;
-import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.IMaster;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.IMinion;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.goals.MasterHurtByTargetGoal;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.goals.MasterHurtTargetGoal;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.goals.MinionFollowOwnerGoal;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Direction;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
@@ -25,12 +31,12 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
+import java.util.UUID;
 
-
-import net.minecraft.item.Item.Properties;
-
-import static com.infamous.dungeons_libraries.utils.CapabilityHelper.getSummonableCapability;
-import static com.infamous.dungeons_libraries.utils.CapabilityHelper.getSummonerCapability;
+import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_GATHERING;
+import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SUMMON_CAP;
+import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMasterCapability;
+import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMinionCapability;
 
 public class GolemKitItem extends ArtifactItem {
     public GolemKitItem(Properties p_i48487_1_) {
@@ -57,15 +63,15 @@ public class GolemKitItem extends ArtifactItem {
             }
 
             if(itemUseContextPlayer != null){
-                ISummoner summonerCap = getSummonerCapability(itemUseContextPlayer);
+                IMaster summonerCap = getMasterCapability(itemUseContextPlayer);
                 if (summonerCap != null) {
                     if(summonerCap.getSummonedGolem() == null){
                         IronGolemEntity ironGolemEntity = EntityType.IRON_GOLEM.create(world);
                         if (ironGolemEntity!= null) {
-                            ISummonable summonable = getSummonableCapability(ironGolemEntity);
+                            IMinion summonable = getMinionCapability(ironGolemEntity);
                             if(summonable != null){
 
-                                summonable.setSummoner(itemUseContextPlayer.getUUID());
+                                summonable.setMaster(itemUseContextPlayer.getUUID());
                                 summonerCap.setSummonedGolem(ironGolemEntity.getUUID());
 
                                 createIronGolem(world, itemUseContextPlayer, blockPos, ironGolemEntity);
@@ -93,10 +99,10 @@ public class GolemKitItem extends ArtifactItem {
         ironGolemEntity.setPlayerCreated(true);
         ironGolemEntity.moveTo((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D, 0.0F, 0.0F);
 
-        ironGolemEntity.goalSelector.addGoal(2, new IronGolemFollowOwnerGoal(ironGolemEntity, 2.1D, 10.0F, 2.0F, false));
+        ironGolemEntity.goalSelector.addGoal(2, new MinionFollowOwnerGoal(ironGolemEntity, 2.1D, 10.0F, 2.0F, false));
 
-        ironGolemEntity.targetSelector.addGoal(1, new GolemOwnerHurtByTargetGoal(ironGolemEntity));
-        ironGolemEntity.targetSelector.addGoal(2, new GolemOwnerHurtTargetGoal(ironGolemEntity));
+        ironGolemEntity.targetSelector.addGoal(1, new MasterHurtByTargetGoal(ironGolemEntity));
+        ironGolemEntity.targetSelector.addGoal(2, new MasterHurtTargetGoal(ironGolemEntity));
 
         SoundHelper.playCreatureSound(itemUseContextPlayer, SoundEvents.IRON_GOLEM_REPAIR);
         world.addFreshEntity(ironGolemEntity);
@@ -117,5 +123,15 @@ public class GolemKitItem extends ArtifactItem {
     @Override
     public int getDurationInSeconds() {
         return 0;
+    }
+
+    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(int slotIndex) {
+        return getAttributeModifiersForSlot(getUUIDForSlot(slotIndex));
+    }
+
+    private ImmutableMultimap<Attribute, AttributeModifier> getAttributeModifiersForSlot(UUID slot_uuid) {
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+        builder.put(SUMMON_CAP.get(), new AttributeModifier(slot_uuid, "Artifact modifier", 3, AttributeModifier.Operation.ADDITION));
+        return builder.build();
     }
 }

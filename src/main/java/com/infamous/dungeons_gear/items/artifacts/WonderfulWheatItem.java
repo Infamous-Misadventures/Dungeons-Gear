@@ -1,7 +1,9 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
-import com.infamous.dungeons_libraries.capabilities.summoning.ISummonable;
-import com.infamous.dungeons_libraries.capabilities.summoning.ISummoner;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.IMinion;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.IMaster;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.goals.LlamaFollowOwnerGoal;
@@ -15,6 +17,8 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
@@ -35,12 +39,15 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
+import java.util.UUID;
 
 
 import net.minecraft.item.Item.Properties;
 
-import static com.infamous.dungeons_libraries.utils.CapabilityHelper.getSummonableCapability;
-import static com.infamous.dungeons_libraries.utils.CapabilityHelper.getSummonerCapability;
+import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_GATHERING;
+import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SUMMON_CAP;
+import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMinionCapability;
+import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMasterCapability;
 
 public class WonderfulWheatItem extends ArtifactItem {
     public WonderfulWheatItem(Properties p_i48487_1_) {
@@ -67,15 +74,15 @@ public class WonderfulWheatItem extends ArtifactItem {
             }
 
             if(itemUseContextPlayer != null){
-                ISummoner summonerCap = getSummonerCapability(itemUseContextPlayer);
+                IMaster summonerCap = getMasterCapability(itemUseContextPlayer);
                 if (summonerCap != null) {
                     if(summonerCap.getSummonedLlama() == null){
                         LlamaEntity llamaEntity = EntityType.LLAMA.create(world);
                         if (llamaEntity!= null) {
-                            ISummonable summon = getSummonableCapability(llamaEntity);
+                            IMinion summon = getMinionCapability(llamaEntity);
                             if(summon != null){
 
-                                summon.setSummoner(itemUseContextPlayer.getUUID());
+                                summon.setMaster(itemUseContextPlayer.getUUID());
                                 summonerCap.setSummonedLlama(llamaEntity.getUUID());
 
                                 createLlama(world, itemUseContextPlayer, blockPos, llamaEntity);
@@ -137,5 +144,15 @@ public class WonderfulWheatItem extends ArtifactItem {
     @Override
     public int getDurationInSeconds() {
         return 0;
+    }
+
+    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(int slotIndex) {
+        return getAttributeModifiersForSlot(getUUIDForSlot(slotIndex));
+    }
+
+    private ImmutableMultimap<Attribute, AttributeModifier> getAttributeModifiersForSlot(UUID slot_uuid) {
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+        builder.put(SUMMON_CAP.get(), new AttributeModifier(slot_uuid, "Artifact modifier", 2, AttributeModifier.Operation.ADDITION));
+        return builder.build();
     }
 }

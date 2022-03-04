@@ -102,6 +102,7 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
+    maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
     maven {
         url "https://www.cursemaven.com"
     }
@@ -118,7 +119,16 @@ dependencies {
     compile fg.deobf("curse.maven:elenaidodge2-442962:3221492")
 
     //Library
-    implementation fg.deobf("dungeons_libraries:dungeons_libraries:1.16.5-0.0.1-beta")
+    implementation fg.deobf("dungeons_libraries:dungeons_libraries:1.16.5-0.0.8-alpha")
+    implementation fg.deobf("curse.maven:curios-309927:3456953")
+    runtimeOnly fg.deobf("curse.maven:neat-238372:3182258")
+    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.16.5:3.0.65')
+
+    //compat tests
+//    runtimeOnly fg.deobf("curse.maven:cofhcore-69162:3407019")
+//    runtimeOnly fg.deobf("curse.maven:thermalfoundation-222880:3412300")
+
+    implementation fg.deobf("curse.maven:customraid-532546:3511267")
 
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
@@ -137,7 +147,6 @@ dependencies {
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
-
 
 }
 

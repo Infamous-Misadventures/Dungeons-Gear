@@ -1,16 +1,10 @@
 package com.infamous.dungeons_gear.capabilities.combo;
 
-import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 
-import javax.annotation.Nullable;
-
 public class Combo implements ICombo {
 
-    private float souls;
     private int comboTimer;
     //private boolean ghostForm;
     private boolean shadowForm;
@@ -28,7 +22,6 @@ public class Combo implements ICombo {
     private int arrowsInCounter;
     private int jumpCooldownTimer;
     private int poisonImmunityTimer;
-    private double dynamoMultiplier;
     private int lastShoutTimer;
     private int offhandCooldown;
     private float cachedCooldown;//no need to be saved, it's stored and used in the span of a tick
@@ -43,7 +36,6 @@ public class Combo implements ICombo {
     private int echoCooldown;
 
     public Combo() {
-        this.souls = 0;
         this.comboTimer = 0;
         this.comboCount = 0;
         //this.ghostForm = false;
@@ -61,7 +53,6 @@ public class Combo implements ICombo {
         this.snowballNearbyTimer = 100;
         this.jumpCooldownTimer = 0;
         this.poisonImmunityTimer = 0;
-        this.dynamoMultiplier = 1.0D;
         this.lastExplorerCheckpoint = BlockPos.ZERO;
         this.lastLuckyExplorerCheckpoint = BlockPos.ZERO;
 
@@ -83,39 +74,7 @@ public class Combo implements ICombo {
         this.comboTimer = MathHelper.clamp(comboTimer, 0, 300);
     }
 
-    @Override
-    public boolean consumeSouls(float amount) {
-        if (souls < amount) return false;
-        souls -= amount;
-        return true;
-    }
-
-    @Override
-    public float getSouls() {
-        return souls;
-    }
-
-    @Override
-    public float getMaxSouls(@Nullable LivingEntity living) {
-        if (living == null) return 300;
-
-        int bagOfSoulsLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.BAG_OF_SOULS, living);
-        if (bagOfSoulsLevel > 0) {
-            return 300 + (100 * bagOfSoulsLevel);
-        } else {
-            return 300;
-        }
-    }
-
-    @Override
-    public void setSouls(float soul, @Nullable LivingEntity living) {
-        if (living != null) {
-            this.souls = MathHelper.clamp(soul, 0, this.getMaxSouls(living));
-        } else {
-            this.souls = Math.max(soul, 0);
-        }
-    }
-/*
+    /*
     @Override
     public void setGhostForm(boolean ghostForm) {
         this.ghostForm = ghostForm;
@@ -256,16 +215,6 @@ public class Combo implements ICombo {
     @Override
     public void setLastShoutTimer(int lastShoutTimer) {
         this.lastShoutTimer = lastShoutTimer;
-    }
-
-    @Override
-    public double getDynamoMultiplier() {
-        return this.dynamoMultiplier;
-    }
-
-    @Override
-    public void setDynamoMultiplier(double dynamoMultiplier) {
-        this.dynamoMultiplier = dynamoMultiplier;
     }
 
     @Override

@@ -1,8 +1,6 @@
 package com.infamous.dungeons_gear.items.artifacts.beacon;
 
-import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
-import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -17,8 +15,6 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
-
-import net.minecraft.item.Item.Properties;
 
 public abstract class AbstractBeaconItem extends ArtifactItem{
 
@@ -93,7 +89,7 @@ public abstract class AbstractBeaconItem extends ArtifactItem{
         if (livingEntity instanceof PlayerEntity) {
             PlayerEntity playerEntity = (PlayerEntity) livingEntity;
 
-            if (playerEntity.isCreative()|| this.consumeTick(playerEntity)) {
+            if (playerEntity.isCreative()|| this.consumeTick(playerEntity, stack)) {
                 RayTraceResult result = playerEntity.pick(RAYTRACE_DISTANCE, 1.0f, false);
                 Vector3d eyeVector = playerEntity.getEyePosition(1.0f);
                 Vector3d lookVector = playerEntity.getViewVector(1.0F);
@@ -116,7 +112,7 @@ public abstract class AbstractBeaconItem extends ArtifactItem{
         }
     }
 
-    protected abstract boolean consumeTick(PlayerEntity playerEntity);
+    protected abstract boolean consumeTick(PlayerEntity playerEntity, ItemStack stack);
 
     @Override
     public int getCooldownInSeconds() {

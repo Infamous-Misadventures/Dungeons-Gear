@@ -9,8 +9,8 @@ import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.capabilities.offhand.IOffhand;
 import com.infamous.dungeons_gear.capabilities.offhand.Offhand;
 import com.infamous.dungeons_gear.capabilities.offhand.OffhandStorage;
-import com.infamous.dungeons_libraries.capabilities.summoning.*;
 import com.infamous.dungeons_gear.client.ClientProxy;
+import com.infamous.dungeons_gear.client.renderer.totem.BuzzyNestRenderer;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
 import com.infamous.dungeons_gear.compat.ElenaiCompat;
@@ -25,7 +25,6 @@ import com.infamous.dungeons_gear.items.BowItemModelsProperties;
 import com.infamous.dungeons_gear.items.CrossbowItemModelsProperties;
 import com.infamous.dungeons_gear.items.DualWieldItemProperties;
 import com.infamous.dungeons_gear.items.VanillaItemModelProperties;
-import com.infamous.dungeons_gear.items.melee.WeaponAttributeHandler;
 import com.infamous.dungeons_gear.loot.ModLootFunctionTypes;
 import com.infamous.dungeons_gear.registry.AttributeRegistry;
 import com.infamous.dungeons_gear.registry.ItemRegistry;
@@ -43,6 +42,8 @@ import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import static com.infamous.dungeons_gear.integration.curios.client.CuriosKeyBindings.setupCuriosKeybindings;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(DungeonsGear.MODID)
@@ -89,8 +90,6 @@ public class DungeonsGear
     private void setup(final FMLCommonSetupEvent event)
     {
         NetworkHandler.init();
-        ItemRegistry.putItemsInMap();
-        WeaponAttributeHandler.setWeaponAttributeModifiers();
         CapabilityManager.INSTANCE.register(ICombo.class, new ComboStorage(), Combo::new);
         CapabilityManager.INSTANCE.register(IBow.class, new BowStorage(), Bow::new);
         CapabilityManager.INSTANCE.register(IOffhand.class, new OffhandStorage(), Offhand::new);
@@ -105,5 +104,8 @@ public class DungeonsGear
         MinecraftForge.EVENT_BUS.register(new VanillaItemModelProperties());
 
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ICE_CLOUD.get(), IceCloudRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BUZZY_NEST.get(), BuzzyNestRenderer::new);
+
+        setupCuriosKeybindings();
     }
 }

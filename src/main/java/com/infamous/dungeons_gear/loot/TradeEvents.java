@@ -2,7 +2,6 @@ package com.infamous.dungeons_gear.loot;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.items.interfaces.IArmor;
 import com.infamous.dungeons_gear.registry.ItemRegistry;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -11,7 +10,6 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.merchant.IReputationType;
 import net.minecraft.entity.merchant.villager.*;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -23,15 +21,16 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
-import static com.infamous.dungeons_gear.items.ArmorHelper.*;
+import static com.infamous.dungeons_gear.items.armor.ArmorHelper.*;
+import static com.infamous.dungeons_gear.items.artifacts.ArtifactHelper.getArtifactList;
+import static com.infamous.dungeons_gear.items.melee.MeleeWeaponHelper.getMeleeWeaponList;
+import static com.infamous.dungeons_gear.items.ranged.RangedWeaponHelper.getRangedWeaponList;
 import static net.minecraft.item.Items.*;
 
 
@@ -48,9 +47,8 @@ public class TradeEvents {
 
         moveTradesToDifferentGroup(rareTrades, genericTrades);
 
-        for(Item item : ItemRegistry.artifactMap.keySet()){
-            ResourceLocation resourceLocation = ItemRegistry.artifactMap.get(item);
-            Item artifact = ForgeRegistries.ITEMS.getValue(resourceLocation);
+        for(Item item : getArtifactList()){
+            Item artifact = ForgeRegistries.ITEMS.getValue(item.getRegistryName());
             ItemStack artifactStack = new ItemStack(artifact);
             BasicTrade trade = new BasicTrade(DungeonsGearConfig.ARTIFACT_VALUE.get(), artifactStack, 3, 30);
             rareTrades.add(trade);
@@ -69,7 +67,10 @@ public class TradeEvents {
             // Moving the Level 4 "Diamond for Emerald" Trade down to Level 3
             moveTrade(weaponsmithTrades, 4, 3, emeraldForItemFilter(DIAMOND));
 
-            addCommonAndUniqueTrades(weaponsmithTrades, ItemRegistry.commonWeaponMap, ItemRegistry.uniqueWeaponMap);
+            List<Item> commonList = getMeleeWeaponList(false);
+            List<Item> uniqueList = getMeleeWeaponList(true);
+
+            addCommonAndUniqueTradesNew(weaponsmithTrades, commonList, uniqueList);
         }
         if(event.getType() == VillagerProfession.FLETCHER){
             if(!ConfigurableLootHelper.isRangedWeaponLootEnabled()) return;
@@ -83,8 +84,10 @@ public class TradeEvents {
 
             //moveTradesToDifferentGroup(fletcherTrades.get(4), fletcherTrades.get(2));
             //moveTradesToDifferentGroup(fletcherTrades.get(5),  fletcherTrades.get(3));
+            List<Item> commonList = getRangedWeaponList(false);
+            List<Item> uniqueList = getRangedWeaponList(true);
 
-            addCommonAndUniqueTrades(fletcherTrades, ItemRegistry.commonRangedWeaponMap, ItemRegistry.uniqueRangedWeaponMap);
+            addCommonAndUniqueTradesNew(fletcherTrades, commonList, uniqueList);
         }
 
         if(event.getType() == VillagerProfession.ARMORER){
@@ -187,10 +190,10 @@ public class TradeEvents {
             if(villagerEntity.getVillagerData().getProfession() == VillagerProfession.WEAPONSMITH){
                 if(playerEntity.isShiftKeyDown()){
                     ItemStack interactStack = playerEntity.getItemInHand(event.getHand());
-                    if(ItemRegistry.commonWeaponMap.containsKey(interactStack.getItem())){
+                    if(getMeleeWeaponList(false).contains(interactStack.getItem())){
                         handleSalvageTrade(playerEntity, villagerEntity, interactStack, "COMMON");
                     }
-                    else if(ItemRegistry.uniqueWeaponMap.containsKey(interactStack.getItem())){
+                    else if(getMeleeWeaponList(true).contains(interactStack.getItem())){
                         handleSalvageTrade(playerEntity, villagerEntity, interactStack, "UNIQUE");
                     }
                 }
@@ -198,10 +201,10 @@ public class TradeEvents {
             if(villagerEntity.getVillagerData().getProfession() == VillagerProfession.FLETCHER){
                 if(playerEntity.isShiftKeyDown()){
                     ItemStack interactStack = playerEntity.getItemInHand(event.getHand());
-                    if(ItemRegistry.commonRangedWeaponMap.containsKey(interactStack.getItem())){
+                    if(getRangedWeaponList(false).contains(interactStack.getItem())){
                         handleSalvageTrade(playerEntity, villagerEntity, interactStack, "COMMON");
                     }
-                    else if(ItemRegistry.uniqueRangedWeaponMap.containsKey(interactStack.getItem())){
+                    else if(getRangedWeaponList(true).contains(interactStack.getItem())){
                         handleSalvageTrade(playerEntity, villagerEntity, interactStack, "UNIQUE");
                     }
                 }
@@ -233,7 +236,7 @@ public class TradeEvents {
             WanderingTraderEntity wanderingTraderEntity = (WanderingTraderEntity) entity;
             if(playerEntity.isShiftKeyDown()){
                 ItemStack interactStack = playerEntity.getItemInHand(event.getHand());
-                if(ItemRegistry.artifactMap.containsKey(interactStack.getItem())){
+                if(getArtifactList().contains(interactStack.getItem())){
                     handleSalvageTrade(playerEntity, wanderingTraderEntity, interactStack, "ARTIFACT");
                 }
             }

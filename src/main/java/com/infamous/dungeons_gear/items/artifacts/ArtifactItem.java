@@ -1,5 +1,7 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
@@ -9,6 +11,8 @@ import com.infamous.dungeons_gear.mixin.CooldownAccessor;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
@@ -24,9 +28,14 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 
-import net.minecraft.item.Item.Properties;
+import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
-public abstract class ArtifactItem extends Item {
+import java.util.UUID;
+
+public abstract class ArtifactItem extends Item implements ICurioItem {
+    protected final UUID SLOT0_UUID = UUID.fromString("7037798e-ac2c-4711-aa72-ba73589f1411");
+    protected final UUID SLOT1_UUID = UUID.fromString("1906bae9-9f26-4194-bb8a-ef95b8cad134");
+    protected final UUID SLOT2_UUID = UUID.fromString("b99aa930-03d0-4b2d-aa69-7b5d943dd75c");
     protected boolean procOnItemUse = false;
 
     public ArtifactItem(Properties properties) {
@@ -90,11 +99,7 @@ public abstract class ArtifactItem extends Item {
     @Override
     public ActionResultType useOn(ItemUseContext itemUseContext) {
         if (!procOnItemUse) return super.useOn(itemUseContext);
-        ActionResultType procResultType = procArtifact(itemUseContext).getResult();
-        if(procResultType.consumesAction() && itemUseContext.getPlayer() != null && !itemUseContext.getLevel().isClientSide){
-            triggerSynergy(itemUseContext.getPlayer(), itemUseContext.getItemInHand());
-        }
-        return procResultType;
+        return activateArtifact(itemUseContext).getResult();
     }
 
     public Rarity getRarity(ItemStack itemStack) {
@@ -109,9 +114,19 @@ public abstract class ArtifactItem extends Item {
     public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
         if (procOnItemUse) return super.use(worldIn, playerIn, handIn);
         ItemUseContext iuc = new ItemUseContext(playerIn, handIn, new BlockRayTraceResult(playerIn.position(), Direction.UP, playerIn.blockPosition(), false));
-        ActionResult<ItemStack> procResult = procArtifact(iuc);
-        if(procResult.getResult().consumesAction() && !worldIn.isClientSide){
-            triggerSynergy(playerIn, iuc.getItemInHand());
+        return activateArtifact(iuc);
+    }
+
+    public ActionResult<ItemStack> activateArtifact(ItemUseContext itemUseContext) {
+        if(itemUseContext.getPlayer() != null) {
+            ItemStack itemStack = itemUseContext.getItemInHand();
+            if (itemUseContext.getPlayer().getCooldowns().isOnCooldown(itemStack.getItem())){
+                return new ActionResult<>(ActionResultType.SUCCESS, itemStack);
+            }
+        }
+        ActionResult<ItemStack> procResult = procArtifact(itemUseContext);
+        if(procResult.getResult().consumesAction() && itemUseContext.getPlayer() != null && !itemUseContext.getLevel().isClientSide){
+            triggerSynergy(itemUseContext.getPlayer(), itemUseContext.getItemInHand());
         }
         return procResult;
     }
@@ -121,4 +136,17 @@ public abstract class ArtifactItem extends Item {
     public abstract int getCooldownInSeconds();
 
     public abstract int getDurationInSeconds();
+
+    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(int slotIndex) {
+        return ImmutableMultimap.of();
+    }
+
+    protected UUID getUUIDForSlot(int slotIndex){
+        switch(slotIndex){
+            case 0: return SLOT0_UUID;
+            case 1: return SLOT1_UUID;
+            case 2: return SLOT2_UUID;
+            default: return SLOT2_UUID;
+        }
+    }
 }

@@ -1,14 +1,14 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_libraries.capabilities.summoning.ISummoner;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.IMaster;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.BeastEnchantment;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
-import com.infamous.dungeons_libraries.utils.CapabilityHelper;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.Entity;
@@ -54,7 +54,7 @@ public class BeastBurstEnchantment extends BeastEnchantment {
             if(potionEffects.get(0).getEffect() == Effects.HEAL){
                 int beastBurstLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.BEAST_BURST, player);
                 if(beastBurstLevel > 0){
-                    ISummoner summonerCap = CapabilityHelper.getSummonerCapability(player);
+                    IMaster summonerCap = MinionMasterHelper.getMasterCapability(player);
                     if(summonerCap == null) return;
 
                     for(UUID summonedMobUUID : summonerCap.getSummonedMobs()){

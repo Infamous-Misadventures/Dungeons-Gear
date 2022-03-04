@@ -5,8 +5,7 @@ import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
-import com.infamous.dungeons_gear.items.interfaces.IComboWeapon;
-import com.infamous.dungeons_gear.items.interfaces.IMeleeWeapon;
+import com.infamous.dungeons_libraries.items.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.DamageEnchantment;
 import net.minecraft.enchantment.Enchantment;
@@ -22,6 +21,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+//ToDo: WTF IS UP WITH COMBOWEAPONS? Why so different?
 @Mod.EventBusSubscriber(modid = MODID)
 public class CriticalHitEnchantment extends DamageBoostEnchantment {
 
@@ -35,7 +35,6 @@ public class CriticalHitEnchantment extends DamageBoostEnchantment {
         if (event.getPlayer() != null && !event.isVanillaCritical()) {
             PlayerEntity attacker = event.getPlayer();
             ItemStack mainhand = attacker.getMainHandItem();
-            boolean uniqueWeaponFlag = hasCriticalHitBuiltIn(mainhand);
             boolean success = false;
             if (event.getResult() != Event.Result.ALLOW && mainhand.getItem() instanceof IComboWeapon) return;
             if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.CRITICAL_HIT)) {
@@ -47,22 +46,12 @@ public class CriticalHitEnchantment extends DamageBoostEnchantment {
                     success = true;
                 }
             }
-            if (uniqueWeaponFlag) {
-                float criticalHitRand = attacker.getRandom().nextFloat();
-                if (criticalHitRand <= 0.1F) {
-                    success = true;
-                }
-            }
             if (success) {
                 event.setResult(Event.Result.ALLOW);
                 float newDamageModifier = event.getDamageModifier() == event.getOldDamageModifier() && !(mainhand.getItem() instanceof IComboWeapon) ? event.getDamageModifier() + 1.5F : event.getDamageModifier() * 3.0F;
                 event.setDamageModifier(newDamageModifier);
             }
         }
-    }
-
-    private static boolean hasCriticalHitBuiltIn(ItemStack mainhand) {
-        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasCriticalHitBuiltIn(mainhand);
     }
 
     @Override

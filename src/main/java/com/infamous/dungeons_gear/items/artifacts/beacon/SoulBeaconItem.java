@@ -1,41 +1,47 @@
 package com.infamous.dungeons_gear.items.artifacts.beacon;
 
-import com.infamous.dungeons_gear.capabilities.combo.ICombo;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.items.interfaces.ISoulGatherer;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
+import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
+import com.infamous.dungeons_libraries.items.interfaces.ISoulConsumer;
+import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
-import net.minecraft.item.Item.Properties;
+import java.util.UUID;
 
-public abstract class SoulBeaconItem extends AbstractBeaconItem implements ISoulGatherer {
+import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_GATHERING;
+
+public abstract class SoulBeaconItem extends AbstractBeaconItem implements ISoulConsumer {
 
     public SoulBeaconItem(Properties properties) {
         super(properties);
     }
 
     public boolean canFire(PlayerEntity playerEntity, ItemStack stack) {
-        ISoulGatherer soulGatherer = stack.getItem() instanceof ISoulGatherer ? ((ISoulGatherer) stack.getItem()) : null;
-        if (soulGatherer != null) {
-            return CapabilityHelper.getComboCapability(playerEntity).getSouls() >= soulGatherer.getActivationCost(stack) || playerEntity.isCreative();
-        }
-        return false;
+        return SoulCasterHelper.canConsumeSouls(playerEntity, stack);
     }
 
     @Override
-    protected boolean consumeTick(PlayerEntity playerEntity) {
-        ICombo comboCap = CapabilityHelper.getComboCapability(playerEntity);
-        if(comboCap == null) return false;
-        return comboCap.consumeSouls(SOUL_COST_PER_TICK);
-    }
-
-    @Override
-    public int getGatherAmount(ItemStack stack) {
-        return 1;
+    protected boolean consumeTick(PlayerEntity playerEntity, ItemStack itemStack) {
+        return SoulCasterHelper.consumeSouls(playerEntity, this.getActivationCost(itemStack));
     }
 
     @Override
     public float getActivationCost(ItemStack stack) {
         return AbstractBeaconItem.SOUL_COST_PER_TICK;
+    }
+
+    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(int slotIndex) {
+        return getAttributeModifiersForSlot(getUUIDForSlot(slotIndex));
+    }
+
+    private ImmutableMultimap<Attribute, AttributeModifier> getAttributeModifiersForSlot(UUID slot_uuid) {
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+        builder.put(SOUL_GATHERING.get(), new AttributeModifier(slot_uuid, "Artifact modifier", 1, AttributeModifier.Operation.ADDITION));
+        return builder.build();
     }
 }

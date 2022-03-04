@@ -1,12 +1,18 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.items.interfaces.ISoulGatherer;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
+import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
+import com.infamous.dungeons_libraries.items.interfaces.ISoulConsumer;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
@@ -18,12 +24,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
+import java.util.UUID;
 
 import static com.infamous.dungeons_gear.utilties.AOECloudHelper.spawnSoulProtectionCloudAtPos;
+import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_GATHERING;
 
 import net.minecraft.item.Item.Properties;
 
-public class TotemOfSoulProtectionItem extends ArtifactItem implements ISoulGatherer {
+public class TotemOfSoulProtectionItem extends ArtifactItem implements ISoulConsumer {
     public TotemOfSoulProtectionItem(Properties properties) {
         super(properties);
         procOnItemUse=true;
@@ -47,7 +55,7 @@ public class TotemOfSoulProtectionItem extends ArtifactItem implements ISoulGath
                 blockPos = itemUseContextPos.relative(itemUseContextFace);
             }
             if(itemUseContextPlayer != null) {
-                if(itemUseContextPlayer.isCreative() || CapabilityHelper.getComboCapability(itemUseContextPlayer).consumeSouls(getActivationCost(itemUseContextItem))){
+                if(SoulCasterHelper.consumeSouls(itemUseContextPlayer, this.getActivationCost(itemUseContextItem))){
                     spawnSoulProtectionCloudAtPos(itemUseContextPlayer, blockPos, 100);
                     itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemUseContextItem)));
 
@@ -76,12 +84,17 @@ public class TotemOfSoulProtectionItem extends ArtifactItem implements ISoulGath
     }
 
     @Override
-    public int getGatherAmount(ItemStack stack) {
-        return 1;
-    }
-
-    @Override
     public float getActivationCost(ItemStack stack) {
         return 5;
+    }
+
+    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(int slotIndex) {
+        return getAttributeModifiersForSlot(getUUIDForSlot(slotIndex));
+    }
+
+    private ImmutableMultimap<Attribute, AttributeModifier> getAttributeModifiersForSlot(UUID slot_uuid) {
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+        builder.put(SOUL_GATHERING.get(), new AttributeModifier(slot_uuid, "Artifact modifier", 1, AttributeModifier.Operation.ADDITION));
+        return builder.build();
     }
 }

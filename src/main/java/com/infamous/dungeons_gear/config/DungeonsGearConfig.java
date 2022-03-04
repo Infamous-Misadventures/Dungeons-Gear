@@ -3,7 +3,6 @@ package com.infamous.dungeons_gear.config;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.google.common.collect.Lists;
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
@@ -71,6 +70,30 @@ public class DungeonsGearConfig {
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_ARMOR_TAB;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_ARTIFACT_TAB;
 
+    // Enchanting specific values
+    public static ForgeConfigSpec.ConfigValue<Double> BUSY_BEE_BASE_CHANCE;
+    public static ForgeConfigSpec.ConfigValue<Double> BUSY_BEE_CHANCE_PER_LEVEL;
+    public static ForgeConfigSpec.ConfigValue<Double> TUMBLE_BEE_CHANCE_PER_LEVEL;
+    public static ForgeConfigSpec.ConfigValue<Double> RAMPAGING_CHANCE;
+    public static ForgeConfigSpec.ConfigValue<Integer> RAMPAGING_DURATION;
+    public static ForgeConfigSpec.ConfigValue<Integer> RUSHDOWN_DURATION;
+    public static ForgeConfigSpec.ConfigValue<Integer> WEAKENING_DURATION;
+    public static ForgeConfigSpec.ConfigValue<Integer> WEAKENING_DISTANCE;
+    public static ForgeConfigSpec.ConfigValue<Double> LEECHING_BASE_MULTIPLIER;
+    public static ForgeConfigSpec.ConfigValue<Double> LEECHING_MULTIPLIER_PER_LEVEL;
+    public static ForgeConfigSpec.ConfigValue<Double> COMMITTED_BASE_MULTIPLIER;
+    public static ForgeConfigSpec.ConfigValue<Double> COMMITTED_MULTIPLIER_PER_LEVEL;
+    public static ForgeConfigSpec.ConfigValue<Integer> DYNAMO_MAX_STACKS;
+    public static ForgeConfigSpec.ConfigValue<Double> DYNAMO_DAMAGE_MULTIPLIER_PER_STACK;
+    public static ForgeConfigSpec.ConfigValue<Integer> FREEZING_DURATION;
+    public static ForgeConfigSpec.ConfigValue<Double> SOUL_SIPHON_CHANCE;
+    public static ForgeConfigSpec.ConfigValue<Integer> SOUL_SIPHON_SOULS_PER_LEVEL;
+    public static ForgeConfigSpec.ConfigValue<Double> CHAINS_CHANCE;
+    public static ForgeConfigSpec.ConfigValue<Double> RADIANCE_CHANCE;
+    public static ForgeConfigSpec.ConfigValue<Double> THUNDERING_CHANCE;
+    public static ForgeConfigSpec.ConfigValue<Integer> THUNDERING_BASE_DAMAGE;
+
+
     private static CommentedFileConfig cfg;
 
     public DungeonsGearConfig() {
@@ -135,7 +158,7 @@ public class DungeonsGearConfig {
                         (itemRaw) -> itemRaw instanceof String);
         ENABLE_MELEE_WEAPON_LOOT = builder
                 .comment("Enable melee weapons appearing in chest loot and trades. \n" +
-                        "If you want to disable obtaining this mod's melee weapons, disable this feature. [true / false]")
+                        "If you Ewant to disable obtaining this mod's melee weapons, disable this feature. [true / false]")
                 .define("enableMeleeWeaponLoot", true);
         ENABLE_RANGED_WEAPON_LOOT = builder
                 .comment("Enable ranged weapons appearing in chest loot and trades. \n" +
@@ -379,5 +402,73 @@ public class DungeonsGearConfig {
                 .comment("The decimal chance for an artifact to appear in super rare loot tables [0.0-1.0, default: 1.0]")
                 .defineInRange("artifactSuperRareLoot", 1.0, 0, 1.0);
         builder.pop();
+
+
+        builder.comment("Enchantment Specific Configuration").push("enchantment_specific_configuration");
+        BUSY_BEE_BASE_CHANCE = builder
+                .comment("The decimal base chance for a busy bee to spawn [0.0-1.0, default: 0.1]")
+                .defineInRange("busyBeeBaseChance", 0.1, 0, 1.0);
+        BUSY_BEE_CHANCE_PER_LEVEL = builder
+                .comment("The decimal chance per level added for a busy bee to spawn [0.0-1.0, default: 0.1]")
+                .defineInRange("busyBeeChancePerLevel", 0.1, 0, 1.0);
+        TUMBLE_BEE_CHANCE_PER_LEVEL = builder
+                .comment("The decimal chance per level added for a tumble bee to spawn [0.0-1.0, default: 0.1]")
+                .defineInRange("tumbleBeeChancePerLevel", 0.1, 0, 1.0);
+        RAMPAGING_CHANCE = builder
+                .comment("The decimal chance for rampaging to trigger [0.0-1.0, default: 0.1]")
+                .defineInRange("rampagingChance", 0.1, 0, 1.0);
+        RAMPAGING_DURATION = builder
+                .comment("The duration in ticks (20ticks = 1 second) per level added for rampaging. [0-10000, default: 100]")
+                .defineInRange("rampagingDuration", 100, 0, 10000);
+        RUSHDOWN_DURATION = builder
+                .comment("The duration in ticks (20ticks = 1 second) per level added for rushdown. [0-10000, default: 20]")
+                .defineInRange("rushdownDuration", 20, 0, 10000);
+        WEAKENING_DURATION = builder
+                .comment("The duration in ticks (20ticks = 1 second) for weakening. [0-10000, default: 100]")
+                .defineInRange("weakeningDuration", 100, 0, 10000);
+        WEAKENING_DISTANCE = builder
+                .comment("The application distance in blocks for weakening. [0-10000, default: 5]")
+                .defineInRange("weakeningDistance", 5, 0, 10000);
+        LEECHING_BASE_MULTIPLIER = builder
+                .comment("The decimal base multiplier on the victim's max health for leeching [0.0-5.0, default: 0.2]")
+                .defineInRange("leechingBaseMultiplier", 0.2, 0, 5.0);
+        LEECHING_MULTIPLIER_PER_LEVEL = builder
+                .comment("The multiplier increase per level for leeching [0.0-5.0, default: 0.2]")
+                .defineInRange("leechingMultiplierPerLevel", 0.2, 0, 5.0);
+        DYNAMO_MAX_STACKS = builder
+                .comment("The max stacks for dynamo. [0-10000, default: 20]")
+                .defineInRange("dynamoMaxStacks", 20, 0, 10000);
+        DYNAMO_DAMAGE_MULTIPLIER_PER_STACK = builder
+                .comment("Multiplier per level applied to the damage. " +
+                        "damage * (1 + (configValue*Stacks)) [0.0-5.0, default: 0.1]")
+                .defineInRange("dynamoDamageMultiplierPerStack", 0.1, 0, 5.0);
+        COMMITTED_BASE_MULTIPLIER = builder
+                .comment("The decimal base multiplier on the damage for max damage committed.  [0.0-5.0, default: 1.25]")
+                .defineInRange("committedBaseMultiplier", 1.25, 0, 5.0);
+        COMMITTED_MULTIPLIER_PER_LEVEL = builder
+                .comment("The multiplier increase per level for max damage committed [0.0-5.0, default: 0.25]")
+                .defineInRange("committedMultiplierPerLevel", 0.25, 0, 5.0);
+        FREEZING_DURATION = builder
+                .comment("The duration in ticks (20ticks = 1 second) for freezing. [0-10000, default: 60]")
+                .defineInRange("freezingDuration", 60, 0, 10000);
+        SOUL_SIPHON_CHANCE = builder
+                .comment("The decimal chance for Soul Siphon to trigger [0.0-1.0, default: 0.05]")
+                .defineInRange("soulSiphonChance", 0.05, 0, 1.0);
+        SOUL_SIPHON_SOULS_PER_LEVEL = builder
+                .comment("The amount of souls per trigger of Soul Siphon. " +
+                        "Each souls will give a value based on Soul Gathering. [0-100, default: 2]")
+                .defineInRange("soulSiphonSoulsPerLevel", 2, 0, 100);
+        CHAINS_CHANCE = builder
+                .comment("The decimal chance for Chains to trigger [0.0-1.0, default: 0.3]")
+                .defineInRange("chainsChance", 0.3, 0, 1.0);
+        RADIANCE_CHANCE = builder
+                .comment("The decimal chance for Radiance to trigger [0.0-1.0, default: 0.2]")
+                .defineInRange("radianceChance", 0.2, 0, 1.0);
+        THUNDERING_CHANCE = builder
+                .comment("The decimal chance for Thundering to trigger [0.0-1.0, default: 0.3]")
+                .defineInRange("thunderingChance", 0.3, 0, 1.0);
+        THUNDERING_BASE_DAMAGE = builder
+                .comment("The base damage for Thundering [0-10000, default: 5]")
+                .defineInRange("thunderingBaseDamage", 5, 0, 10000);
     }
 }

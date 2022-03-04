@@ -7,7 +7,7 @@ import net.minecraft.entity.passive.SheepEntity;
 
 import java.util.EnumSet;
 
-import static com.infamous.dungeons_libraries.capabilities.summoning.SummoningHelper.getSummoner;
+import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMaster;
 import static com.infamous.dungeons_gear.goals.GoalUtils.shouldAttackEntity;
 
 import net.minecraft.entity.ai.goal.Goal.Flag;
@@ -25,7 +25,7 @@ public class SheepOwnerHurtByTargetGoal extends TargetGoal {
 
     public boolean canUse() {
         //if (this.batEntity.isTame()) {
-            LivingEntity owner = getSummoner(this.sheepEntity);
+            LivingEntity owner = getMaster(this.sheepEntity);
             if (owner == null) {
                 return false;
             } else {
@@ -40,7 +40,7 @@ public class SheepOwnerHurtByTargetGoal extends TargetGoal {
 
     public void start() {
         this.mob.setTarget(this.attacker);
-        LivingEntity owner = getSummoner(this.sheepEntity);
+        LivingEntity owner = getMaster(this.sheepEntity);
         if (owner != null) {
             this.timestamp = owner.getLastHurtByMobTimestamp();
         }

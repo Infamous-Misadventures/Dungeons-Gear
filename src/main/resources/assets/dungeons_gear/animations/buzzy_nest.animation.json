@@ -1,0 +1,205 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.buzzy_nest.activate": {
+      "loop": "hold_on_last_frame",
+      "animation_length": 0.88,
+      "bones": {
+        "buzzy_nest": {
+          "rotation": {
+            "0.12": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            },
+            "0.24": {
+              "vector": [
+                0,
+                0,
+                7.5
+              ]
+            },
+            "0.44": {
+              "vector": [
+                0,
+                0,
+                -7.5
+              ]
+            },
+            "0.68": {
+              "vector": [
+                0,
+                0,
+                5
+              ]
+            },
+            "0.88": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "position": {
+            "0.0": {
+              "vector": [
+                0,
+                10,
+                0
+              ]
+            },
+            "0.12": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "scale": {
+            "0.0": {
+              "vector": [
+                0.45,
+                1,
+                0.45
+              ]
+            },
+            "0.12": {
+              "vector": [
+                1,
+                1,
+                1
+              ]
+            }
+          }
+        }
+      }
+    },
+    "animation.buzzy_nest.spawn": {
+      "loop": "hold_on_last_frame",
+      "animation_length": 0.24,
+      "bones": {
+        "buzzy_nest": {
+          "rotation": {
+            "vector": [
+              0,
+              0,
+              0
+            ]
+          },
+          "position": {
+            "vector": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "honeycomb": {
+          "scale": {
+            "0.0": {
+              "vector": [
+                1,
+                1,
+                1
+              ]
+            },
+            "0.12": {
+              "vector": [
+                1.25,
+                0.75,
+                1.25
+              ]
+            },
+            "0.24": {
+              "vector": [
+                1,
+                1,
+                1
+              ]
+            }
+          }
+        }
+      }
+    },
+    "animation.buzzy_nest.deactivate": {
+      "loop": "hold_on_last_frame",
+      "animation_length": 1,
+      "bones": {
+        "buzzy_nest": {
+          "rotation": {
+            "0.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            },
+            "0.28": {
+              "vector": [
+                0,
+                0,
+                7.5
+              ]
+            },
+            "0.64": {
+              "vector": [
+                0,
+                0,
+                -7.5
+              ]
+            },
+            "0.84": {
+              "vector": [
+                0,
+                0,
+                90
+              ]
+            },
+            "0.92": {
+              "vector": [
+                0,
+                0,
+                85
+              ]
+            },
+            "1.0": {
+              "vector": [
+                0,
+                0,
+                90
+              ]
+            }
+          },
+          "position": {
+            "vector": [
+              0,
+              0,
+              0
+            ]
+          },
+          "scale": {
+            "vector": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        "honeycomb": {
+          "scale": {
+            "vector": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      }
+    }
+  },
+  "geckolib_format_version": 2
+}

@@ -27,9 +27,9 @@ import java.util.List;
 import java.util.Random;
 
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
-import static com.infamous.dungeons_libraries.utils.PetHelper.isPetOfAttacker;
 import static com.infamous.dungeons_libraries.utils.AbilityHelper.isFacingEntity;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.*;
+import static com.infamous.dungeons_libraries.utils.PetHelper.isPetOf;
 
 public class AreaOfEffectHelper {
 
@@ -141,7 +141,7 @@ public class AreaOfEffectHelper {
         );
     }
 
-    public static float healMostInjuredAlly(LivingEntity healer, float distance) {
+    public static LivingEntity findMostInjuredAlly(LivingEntity healer, float distance) {
         World world = healer.getCommandSenderWorld();
         List<LivingEntity> nearbyEntities = getNearbyEnemies(healer,distance, world, getCanHealPredicate(healer));
         if (!nearbyEntities.isEmpty()) {
@@ -153,20 +153,8 @@ public class AreaOfEffectHelper {
                     lostHealth = injure.getMaxHealth() - injure.getHealth();
                 }
             }
-            float heal = Math.min(lostHealth, Math.min(mostInjuredAlly.getMaxHealth() / 5, CapabilityHelper.getComboCapability(healer).getSouls() * 0.01f));
-            mostInjuredAlly.heal(heal);
-            PROXY.spawnParticles(mostInjuredAlly, ParticleTypes.HEART);
-            return heal;
-        } else return 0;
-    }
-
-    public static void weakenNearbyEntities(LivingEntity attacker, LivingEntity target, int distance, int amplifier) {
-        applyToNearbyEntities(target, distance,
-                getCanApplyToSecondEnemyPredicate(attacker, target), (LivingEntity nearbyEntity) -> {
-                    EffectInstance weakness = new EffectInstance(Effects.WEAKNESS, 100, amplifier);
-                    nearbyEntity.addEffect(weakness);
-                }
-        );
+            return mostInjuredAlly;
+        } else return null;
     }
 
     public static void causeShockwave(LivingEntity attacker, LivingEntity target, float damageAmount, float distance) {
@@ -345,7 +333,7 @@ public class AreaOfEffectHelper {
     public static void makeLoversOutOfNearbyEnemies(PlayerEntity playerIn, World world, int distance, int limit) {
         applyToNearbyEntities(playerIn, distance, limit,
                 (nearbyEntity) -> nearbyEntity instanceof IMob
-                        && !isPetOfAttacker(playerIn, nearbyEntity)
+                        && !isPetOf(playerIn, nearbyEntity)
                         && nearbyEntity.isAlive()
                         && nearbyEntity.canChangeDimensions(),
                 (LivingEntity nearbyEntity) -> {

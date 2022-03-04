@@ -1,14 +1,12 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_libraries.capabilities.summoning.ISummonable;
-import com.infamous.dungeons_libraries.capabilities.summoning.SummoningHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.BeastEnchantment;
-import com.infamous.dungeons_libraries.utils.CapabilityHelper;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.IMinion;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -19,8 +17,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.UUID;
-
-import net.minecraft.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class BeastBossEnchantment extends BeastEnchantment {
@@ -45,14 +41,14 @@ public class BeastBossEnchantment extends BeastEnchantment {
         if(trueSource == null) return;
 
         if(trueSource.level instanceof ServerWorld
-                && SummoningHelper.isEntitySummonable(trueSource)){
+                && MinionMasterHelper.isMinionEntity(trueSource)){
             ServerWorld serverWorld = (ServerWorld) trueSource.level;
-            ISummonable attackerSummonableCap = CapabilityHelper.getSummonableCapability(trueSource);
+            IMinion attackerSummonableCap = MinionMasterHelper.getMinionCapability(trueSource);
             if(attackerSummonableCap == null) return;
 
-            UUID summonerUUID = attackerSummonableCap.getSummoner();
+            UUID summonerUUID = attackerSummonableCap.getMaster();
             if(summonerUUID != null){
-                if(!SummoningHelper.wasSummonedBy(target, summonerUUID)){
+                if(!MinionMasterHelper.isMinionOf(target, summonerUUID)){
                     Entity beastOwner = serverWorld.getEntity(summonerUUID);
                     if(beastOwner instanceof LivingEntity){
                         LivingEntity beastOwnerAsLiving = ((LivingEntity) beastOwner);

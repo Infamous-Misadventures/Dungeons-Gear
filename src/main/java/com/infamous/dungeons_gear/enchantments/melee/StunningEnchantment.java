@@ -4,7 +4,7 @@ import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
-import com.infamous.dungeons_gear.items.interfaces.IMeleeWeapon;
+import com.infamous.dungeons_libraries.items.interfaces.IMeleeWeapon;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
@@ -44,30 +44,5 @@ public class StunningEnchantment extends DungeonsEnchantment {
             ((LivingEntity)target).addEffect(nausea);
             ((LivingEntity)target).addEffect(slowness);
         }
-    }
-
-    @SubscribeEvent
-    public static void onHighlandAxeAttack(LivingAttackEvent event){
-        if(event.getSource().getDirectEntity() instanceof AbstractArrowEntity) return;
-        if(event.getSource() instanceof OffhandAttackDamageSource) return;
-        if(!(event.getSource().getEntity() instanceof LivingEntity)) return;
-        LivingEntity attacker = (LivingEntity)event.getSource().getEntity();
-        LivingEntity victim = event.getEntityLiving();
-        ItemStack mainhand = attacker.getMainHandItem();
-        if(hasStunningBuiltIn(mainhand)){
-            float chance = attacker.getRandom().nextFloat();
-            if(chance <= 0.05) {
-                EffectInstance stunned = new EffectInstance(CustomEffects.STUNNED, 60);
-                EffectInstance nausea = new EffectInstance(Effects.CONFUSION, 60);
-                EffectInstance slowness = new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 60, 5);
-                victim.addEffect(stunned);
-                victim.addEffect(nausea);
-                victim.addEffect(slowness);
-            }
-        }
-    }
-
-    private static boolean hasStunningBuiltIn(ItemStack mainhand) {
-        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasStunningBuiltIn(mainhand);
     }
 }

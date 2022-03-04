@@ -6,8 +6,8 @@ import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
-import com.infamous.dungeons_gear.items.interfaces.IComboWeapon;
-import com.infamous.dungeons_gear.items.interfaces.IMeleeWeapon;
+import com.infamous.dungeons_libraries.items.interfaces.IComboWeapon;
+import com.infamous.dungeons_libraries.items.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.*;
 import net.minecraft.enchantment.DamageEnchantment;
 import net.minecraft.enchantment.Enchantment;
@@ -46,10 +46,8 @@ public class SwirlingEnchantment extends AOEDamageEnchantment {
             if (attacker.getLastHurtMobTimestamp() == attacker.tickCount) return;
             ItemStack mainhand = attacker.getMainHandItem();
             if (event.getResult() != Event.Result.ALLOW && mainhand.getItem() instanceof IComboWeapon) return;
-            boolean uniqueWeaponFlag = hasSwirlingBuiltIn(mainhand);
-            if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.SWIRLING) || uniqueWeaponFlag) {
+            if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.SWIRLING)) {
                 int swirlingLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.SWIRLING, mainhand);
-                if (uniqueWeaponFlag) swirlingLevel += 1;
                 // gets the attack damage of the original attack before any enchantment modifiers are added
                 float attackDamage = (float) attacker.getAttributeValue(Attributes.ATTACK_DAMAGE);
                 ICombo ic = CapabilityHelper.getComboCapability(attacker);
@@ -64,10 +62,6 @@ public class SwirlingEnchantment extends AOEDamageEnchantment {
                 AreaOfEffectHelper.causeSwirlingAttack(attacker, victim, swirlingDamage, 3f);
             }
         }
-    }
-
-    private static boolean hasSwirlingBuiltIn(ItemStack mainhand) {
-        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasSwirlingBuiltIn(mainhand);
     }
 
     @Override

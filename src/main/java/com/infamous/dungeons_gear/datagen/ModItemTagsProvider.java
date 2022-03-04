@@ -2,6 +2,7 @@ package com.infamous.dungeons_gear.datagen;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.items.ItemTagWrappers;
+import com.infamous.dungeons_gear.registry.ItemRegistry;
 import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.Item;
@@ -19,7 +20,12 @@ public class ModItemTagsProvider extends net.minecraft.data.ItemTagsProvider {
 
     @Override
     protected void addTags() {
+        curiosArtifactTags();
         foodTags();
+    }
+
+    private void curiosArtifactTags() {
+        ItemRegistry.ARTIFACTS.forEach((resourceLocation, itemRegistryObject) -> this.tag(ItemTagWrappers.CURIOS_ARTIFACTS).add(itemRegistryObject.get()));
     }
 
     private void foodTags() {

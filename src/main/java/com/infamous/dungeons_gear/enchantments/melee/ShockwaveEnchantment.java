@@ -6,8 +6,8 @@ import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
-import com.infamous.dungeons_gear.items.interfaces.IComboWeapon;
-import com.infamous.dungeons_gear.items.interfaces.IMeleeWeapon;
+import com.infamous.dungeons_libraries.items.interfaces.IComboWeapon;
+import com.infamous.dungeons_libraries.items.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.*;
 import net.minecraft.enchantment.DamageEnchantment;
 import net.minecraft.enchantment.Enchantment;
@@ -57,10 +57,8 @@ public class ShockwaveEnchantment extends AOEDamageEnchantment {
             ItemStack mainhand = attacker.getMainHandItem();
             if (event.getResult() != Event.Result.ALLOW && mainhand.getItem() instanceof IComboWeapon) return;
             if(attacker.getLastHurtMobTimestamp()==attacker.tickCount)return;
-            boolean uniqueWeaponFlag = hasShockwaveBuiltIn(mainhand);
-            if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.SHOCKWAVE) || uniqueWeaponFlag){
+            if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.SHOCKWAVE)){
                 int shockwaveLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.SHOCKWAVE, mainhand);
-                if(uniqueWeaponFlag) shockwaveLevel += 1;
                 // gets the attack damage of the original attack before any enchantment modifiers are added
                 float attackDamage = (float)attacker.getAttributeValue(Attributes.ATTACK_DAMAGE);
                 ICombo ic = CapabilityHelper.getComboCapability(attacker);
@@ -76,7 +74,4 @@ public class ShockwaveEnchantment extends AOEDamageEnchantment {
         }
     }
 
-    private static boolean hasShockwaveBuiltIn(ItemStack mainhand) {
-        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasShockwaveBuiltIn(mainhand);
-    }
 }

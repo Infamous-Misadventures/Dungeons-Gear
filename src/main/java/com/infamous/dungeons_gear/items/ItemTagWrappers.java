@@ -18,4 +18,6 @@ public class ItemTagWrappers {
     public static final Tags.IOptionalNamedTag<Item> FOOD = ItemTags.createOptional(new ResourceLocation(MOD_ID, "food"));
     public static final Tags.IOptionalNamedTag<Item> FOOD_PROCESSED = ItemTags.createOptional(new ResourceLocation(MOD_ID, "food/processed"));
     public static final Tags.IOptionalNamedTag<Item> FOOD_RAW = ItemTags.createOptional(new ResourceLocation(MOD_ID, "food/raw"));
+
+    public static final Tags.IOptionalNamedTag<Item> CURIOS_ARTIFACTS = ItemTags.createOptional(new ResourceLocation("curios", "artifact"));
 }

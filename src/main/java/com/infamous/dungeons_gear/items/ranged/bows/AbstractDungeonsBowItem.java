@@ -183,4 +183,9 @@ public abstract class AbstractDungeonsBowItem extends BowItem implements IRanged
         }
         return Rarity.UNCOMMON;
     }
+
+    @Override
+    public boolean isUnique() {
+        return isUnique;
+    }
 }

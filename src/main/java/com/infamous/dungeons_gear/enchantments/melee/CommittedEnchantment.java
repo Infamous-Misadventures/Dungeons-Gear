@@ -5,7 +5,7 @@ import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
-import com.infamous.dungeons_gear.items.interfaces.IMeleeWeapon;
+import com.infamous.dungeons_libraries.items.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.DamageEnchantment;
 import net.minecraft.enchantment.Enchantment;
@@ -19,6 +19,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
+import static com.infamous.dungeons_gear.config.DungeonsGearConfig.COMMITTED_BASE_MULTIPLIER;
+import static com.infamous.dungeons_gear.config.DungeonsGearConfig.COMMITTED_MULTIPLIER_PER_LEVEL;
 
 import net.minecraft.enchantment.Enchantment.Rarity;
 
@@ -26,7 +28,7 @@ import net.minecraft.enchantment.Enchantment.Rarity;
 public class CommittedEnchantment extends DamageBoostEnchantment {
 
     public CommittedEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlotType[]{
+        super(Rarity.RARE, ModEnchantmentTypes.MELEE_RANGED, new EquipmentSlotType[]{
             EquipmentSlotType.MAINHAND});
     }
 
@@ -46,25 +48,18 @@ public class CommittedEnchantment extends DamageBoostEnchantment {
         if(event.getSource().getDirectEntity() instanceof AbstractArrowEntity) return;
         if(event.getSource().getEntity() instanceof LivingEntity){
             LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
-            LivingEntity victim = (LivingEntity) event.getSource().getEntity();
-            if(!(victim.getHealth() < victim.getMaxHealth())) return;
+            LivingEntity victim = event.getEntityLiving();
+            if(victim.getHealth() >= victim.getMaxHealth()) return;
             ItemStack mainhand = attacker.getMainHandItem();
-            boolean uniqueWeaponFlag = hasCommittedBuiltIn(mainhand);
-            if((ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.COMMITTED)) || uniqueWeaponFlag){
+            if((ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.COMMITTED))){
                 int committedLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.COMMITTED, mainhand);
                 float victimRemainingHealth = victim.getHealth() / victim.getMaxHealth();
                 float originalDamage = event.getAmount();
-                float extraDamageMultiplier;
                 // If normal damage is X, the same weapon with Tier 3 Committed adds an extra (X * (1 - (Mob Remaining HP/Mob Max HP))) damage.
-                extraDamageMultiplier = 0.25F + committedLevel * 0.25F;
-                if(uniqueWeaponFlag) extraDamageMultiplier += 0.5F;
-                float extraDamage = (originalDamage * (1 - victimRemainingHealth)) * extraDamageMultiplier;
-                event.setAmount(originalDamage + extraDamage);
+                float extraDamageMultiplier = (float) (COMMITTED_BASE_MULTIPLIER.get() + committedLevel * COMMITTED_MULTIPLIER_PER_LEVEL.get());
+                event.setAmount(originalDamage * (1 + ((extraDamageMultiplier - 1) * (1 - victimRemainingHealth))));
             }
         }
     }
 
-    private static boolean hasCommittedBuiltIn(ItemStack mainhand) {
-        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasCommittedBuiltIn(mainhand);
-    }
 }

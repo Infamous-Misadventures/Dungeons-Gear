@@ -1,26 +1,21 @@
 package com.infamous.dungeons_gear;
 
 
-import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.capabilities.bow.IBow;
-import com.infamous.dungeons_gear.combat.NetworkHandler;
-import com.infamous.dungeons_gear.combat.PacketUpdateSouls;
+import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
 import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.enchantments.armor.AcrobatEnchantment;
 import com.infamous.dungeons_gear.enchantments.armor.MultiRollEnchantment;
-import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.ranged.BurstBowstringEnchantment;
 import com.infamous.dungeons_gear.enchantments.ranged.FuseShotEnchantment;
 import com.infamous.dungeons_gear.enchantments.ranged.RollChargeEnchantment;
 import com.infamous.dungeons_gear.items.GildedItemHelper;
-import com.infamous.dungeons_gear.registry.PotionList;
-import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_gear.items.interfaces.IArmor;
-import com.infamous.dungeons_gear.items.interfaces.IComboWeapon;
+import com.infamous.dungeons_libraries.items.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.items.interfaces.IRangedWeapon;
-import com.infamous.dungeons_gear.items.interfaces.ISoulGatherer;
+import com.infamous.dungeons_gear.registry.PotionList;
 import com.infamous.dungeons_gear.utilties.*;
 import com.infamous.dungeons_libraries.utils.PetHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -34,6 +29,7 @@ import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.CrossbowItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effects;
@@ -48,14 +44,13 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.Optional;
 
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 import static com.infamous.dungeons_gear.config.DungeonsGearConfig.ENABLE_FRIENDLY_PET_FIRE;
-import static com.infamous.dungeons_libraries.utils.CapabilityHelper.getSummonableCapability;
-import static net.minecraft.item.Items.IRON_SWORD;
+import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMinionCapability;
+import static net.minecraft.item.Items.*;
 
 
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
@@ -81,13 +76,20 @@ public class GlobalEvents {
                 }
             }
         } else if (event.getEntity() instanceof ServerPlayerEntity) {
-//            gildedWeaponTest((ServerPlayerEntity) event.getEntity());
-            NetworkHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getEntity()), new PacketUpdateSouls(CapabilityHelper.getComboCapability(event.getEntity()).getSouls()));
+            gildedGearTest((ServerPlayerEntity) event.getEntity());
         }
     }
 
-    private static void gildedWeaponTest(ServerPlayerEntity entity) {
-        ItemStack sword = new ItemStack(IRON_SWORD);
+    private static void gildedGearTest(ServerPlayerEntity entity) {
+        dropGildedItem(entity, DIAMOND_SWORD);
+        dropGildedItem(entity, DIAMOND_HELMET);
+        dropGildedItem(entity, DIAMOND_CHESTPLATE);
+        dropGildedItem(entity, DIAMOND_LEGGINGS);
+        dropGildedItem(entity, DIAMOND_BOOTS);
+    }
+
+    private static void dropGildedItem(ServerPlayerEntity entity, Item item) {
+        ItemStack sword = new ItemStack(item);
         ItemStack gildedItem = GildedItemHelper.getGildedItem(entity.getRandom(), sword);
         ItemEntity gildedItemDrop = new ItemEntity(entity.level, entity.getX(), entity.getY(), entity.getZ(), gildedItem);
         entity.level.addFreshEntity(gildedItemDrop);
@@ -190,12 +192,6 @@ public class GlobalEvents {
                 comboCap.setShadowForm(false);
                 playerEntity.removeEffect(Effects.INVISIBILITY);
             }
-            if (comboCap.getDynamoMultiplier() > 1.0D) {
-                double dynamoMultiplier = comboCap.getDynamoMultiplier();
-                float originalDamage = event.getAmount();
-                event.setAmount((float) (originalDamage * dynamoMultiplier));
-                comboCap.setDynamoMultiplier(1.0);
-            }
         }
     }
 
@@ -240,73 +236,73 @@ public class GlobalEvents {
             }
         }
         if (DungeonsGearCompatibility.saveYourPets) {
-            if (getSummonableCapability(event.getEntityLiving()) != null && event.getAmount() > event.getEntityLiving().getMaxHealth()) {
+            if (getMinionCapability(event.getEntityLiving()) != null && event.getAmount() > event.getEntityLiving().getMaxHealth()) {
                 event.getEntityLiving().remove();
                 //so summoned wolves and llamas are disposable
             }
         }
     }
 
-    @SubscribeEvent
-    public static void onSoulGatheringItemsXPDrop(LivingDeathEvent event) {
-        if (event.getSource().getEntity() instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) event.getSource().getEntity();
-            int souls = 0;
-            ItemStack mainhand = player.getMainHandItem();
-            ItemStack offhand = player.getOffhandItem();
-            if (mainhand.getItem() instanceof ISoulGatherer && !(mainhand.getItem() instanceof ArtifactItem)) {
-                souls += ((ISoulGatherer) mainhand.getItem()).getGatherAmount(mainhand);
-            }
-            if (offhand.getItem() instanceof ISoulGatherer && !(offhand.getItem() instanceof ArtifactItem)) {
-                souls += ((ISoulGatherer) offhand.getItem()).getGatherAmount(offhand);
-            }
-            int counter = 0;
-            for (ItemStack is : player.inventory.offhand)
-                if (is.getItem() instanceof ArtifactItem && is.getItem() instanceof ISoulGatherer) {
-                    souls += ((ISoulGatherer) is.getItem()).getGatherAmount(is);
-                    counter++;
-                }
-            for (ItemStack is : player.inventory.items)
-                if (is.getItem() instanceof ArtifactItem && is.getItem() instanceof ISoulGatherer) {
-                    souls += ((ISoulGatherer) is.getItem()).getGatherAmount(is);
-                    if (++counter == 3) break;
-                }
-            ItemStack helmet = player.getItemBySlot(EquipmentSlotType.HEAD);
-            ItemStack chestplate = player.getItemBySlot(EquipmentSlotType.CHEST);
-
-            float soulsGathered = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getSoulsGathered() : 0;
-            float soulsGathered2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getSoulsGathered() : 0;
-            float totalSoulsGathered = 1 + soulsGathered * 0.01F + soulsGathered2 * 0.01F;
-
-            if (totalSoulsGathered > 0) {
-                souls = (int) (souls * totalSoulsGathered);
-            }
-
-            if (souls > 0) {
-                SoulHelper.addSouls(player, souls);
-                if (event.getSource().getDirectEntity() instanceof AbstractArrowEntity) {
-                    AbstractArrowEntity arrowEntity = (AbstractArrowEntity) event.getSource().getDirectEntity();
-                    int animaConduitLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrowEntity, MeleeRangedEnchantmentList.ANIMA_CONDUIT);
-                    if (animaConduitLevel > 0) {
-                        if (event.getSource().getEntity() instanceof LivingEntity) {
-                            LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
-                            if (attacker instanceof PlayerEntity) {
-                                double soulsToHealth = player.getMaxHealth() * souls * (0.02 * animaConduitLevel);
-                                PROXY.spawnParticles(player, ParticleTypes.SOUL);
-                                player.heal((float) soulsToHealth);
-                            }
-                        }
-                    }
-                } else if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.ANIMA_CONDUIT)) {
-                    int animaConduitLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeRangedEnchantmentList.ANIMA_CONDUIT, mainhand);
-                    double soulsToHealth = player.getMaxHealth() * souls * (0.02 * animaConduitLevel);
-                    PROXY.spawnParticles(player, ParticleTypes.SOUL);
-                    player.heal((float) soulsToHealth);
-                }
-            }
-        }
-
-    }
+//    @SubscribeEvent
+//    public static void onSoulGatheringItemsXPDrop(LivingDeathEvent event) {
+//        if (event.getSource().getEntity() instanceof PlayerEntity) {
+//            PlayerEntity player = (PlayerEntity) event.getSource().getEntity();
+//            int souls = 0;
+//            ItemStack mainhand = player.getMainHandItem();
+//            ItemStack offhand = player.getOffhandItem();
+//            if (mainhand.getItem() instanceof ISoulGatherer && !(mainhand.getItem() instanceof ArtifactItem)) {
+//                souls += ((ISoulGatherer) mainhand.getItem()).getGatherAmount(mainhand);
+//            }
+//            if (offhand.getItem() instanceof ISoulGatherer && !(offhand.getItem() instanceof ArtifactItem)) {
+//                souls += ((ISoulGatherer) offhand.getItem()).getGatherAmount(offhand);
+//            }
+//            int counter = 0;
+//            for (ItemStack is : player.inventory.offhand)
+//                if (is.getItem() instanceof ArtifactItem && is.getItem() instanceof ISoulGatherer) {
+//                    souls += ((ISoulGatherer) is.getItem()).getGatherAmount(is);
+//                    counter++;
+//                }
+//            for (ItemStack is : player.inventory.items)
+//                if (is.getItem() instanceof ArtifactItem && is.getItem() instanceof ISoulGatherer) {
+//                    souls += ((ISoulGatherer) is.getItem()).getGatherAmount(is);
+//                    if (++counter == 3) break;
+//                }
+//            ItemStack helmet = player.getItemBySlot(EquipmentSlotType.HEAD);
+//            ItemStack chestplate = player.getItemBySlot(EquipmentSlotType.CHEST);
+//
+//            float soulsGathered = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getSoulsGathered() : 0;
+//            float soulsGathered2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getSoulsGathered() : 0;
+//            float totalSoulsGathered = 1 + soulsGathered * 0.01F + soulsGathered2 * 0.01F;
+//
+//            if (totalSoulsGathered > 0) {
+//                souls = (int) (souls * totalSoulsGathered);
+//            }
+//
+//            if (souls > 0) {
+//                SoulHelper.addSouls(player, souls);
+//                if (event.getSource().getDirectEntity() instanceof AbstractArrowEntity) {
+//                    AbstractArrowEntity arrowEntity = (AbstractArrowEntity) event.getSource().getDirectEntity();
+//                    int animaConduitLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrowEntity, MeleeRangedEnchantmentList.ANIMA_CONDUIT);
+//                    if (animaConduitLevel > 0) {
+//                        if (event.getSource().getEntity() instanceof LivingEntity) {
+//                            LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
+//                            if (attacker instanceof PlayerEntity) {
+//                                double soulsToHealth = player.getMaxHealth() * souls * (0.02 * animaConduitLevel);
+//                                PROXY.spawnParticles(player, ParticleTypes.SOUL);
+//                                player.heal((float) soulsToHealth);
+//                            }
+//                        }
+//                    }
+//                } else if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.ANIMA_CONDUIT)) {
+//                    int animaConduitLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeRangedEnchantmentList.ANIMA_CONDUIT, mainhand);
+//                    double soulsToHealth = player.getMaxHealth() * souls * (0.02 * animaConduitLevel);
+//                    PROXY.spawnParticles(player, ParticleTypes.SOUL);
+//                    player.heal((float) soulsToHealth);
+//                }
+//            }
+//        }
+//
+//    }
 
     @SubscribeEvent
     public static void onGaleArrowImpact(ProjectileImpactEvent.Arrow event) {

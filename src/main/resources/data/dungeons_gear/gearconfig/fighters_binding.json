@@ -1,0 +1,28 @@
+{
+  "attributes": [
+    {
+      "attribute": "minecraft:generic.attack_damage",
+      "amount": 1,
+      "operation": 0
+    },
+    {
+      "attribute": "minecraft:generic.attack_speed",
+      "amount": -1.2,
+      "operation": 0
+    },
+    {
+      "attribute": "forge:reach_distance",
+      "amount": -0.5,
+      "operation": 0
+    },
+    {
+      "attribute": "dungeons_gear:attack_reach",
+      "amount": -0.5,
+      "operation": 0
+    }
+  ],
+  "built_in_enchantments": [],
+  "unique": true,
+  "rarity": "RARE",
+  "combo": 4
+}

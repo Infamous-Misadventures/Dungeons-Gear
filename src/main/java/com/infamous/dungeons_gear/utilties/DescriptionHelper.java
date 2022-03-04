@@ -103,7 +103,6 @@ public class DescriptionHelper {
         List<String> abilities = new ArrayList<>();
         checkRangedWeapon(itemStack, abilities);
         checkArmor(itemStack, abilities);
-        checkMeleeWeapon(itemStack, abilities);
         return abilities;
     }
 
@@ -127,132 +126,6 @@ public class DescriptionHelper {
             }
             if(armor.hasArrowHoarderBuiltIn(itemStack)){
                 abilities.add("arrow_hoarder");
-            }
-        }
-    }
-
-    private static void checkMeleeWeapon(ItemStack itemStack, List<String> abilities) {
-        if (itemStack.getItem() instanceof IMeleeWeapon) {
-            IMeleeWeapon meleeWeapon = (IMeleeWeapon) itemStack.getItem();
-            if (meleeWeapon.boostsAttackSpeed(itemStack)) {
-                abilities.add("boosts_attack_speed");
-            }
-            if (meleeWeapon.hasBusyBeeBuiltIn(itemStack)) {
-                abilities.add("busy_bee");
-            }
-            if (meleeWeapon.hasChainsBuiltIn(itemStack)) {
-                abilities.add("chains");
-            }
-            if (meleeWeapon.hasContinuousAttacks(itemStack)) {
-                abilities.add("continuous_attacks");
-            }
-            if (meleeWeapon.hasCommittedBuiltIn(itemStack)) {
-                abilities.add("committed");
-            }
-            if (meleeWeapon.hasCriticalHitBuiltIn(itemStack)) {
-                abilities.add("critical_hit");
-            }
-            if (meleeWeapon.dealsAbsorbedDamageDuringAttackCombo(itemStack)) {
-                abilities.add("deals_absorbed_damage_during_attack_combo");
-            }
-            if (meleeWeapon.canDualWield(itemStack)) {
-                abilities.add("dual_wield");
-            }
-            if (meleeWeapon.hasDynamoBuiltIn(itemStack)) {
-                abilities.add("dynamo");
-            }
-            if (meleeWeapon.hasEchoBuiltIn(itemStack)) {
-                abilities.add("echo");
-            }
-            if (meleeWeapon.hasEnigmaResonatorBuiltIn(itemStack)) {
-                abilities.add("enigma_resonator");
-            }
-            if (meleeWeapon.hasExplodingBuiltIn(itemStack)) {
-                abilities.add("exploding");
-            }
-            if (meleeWeapon.hasFastThrusts(itemStack)) {
-                abilities.add("fast_thrusts");
-            }
-            if (meleeWeapon.hasFireAspectBuiltIn(itemStack)) {
-                abilities.add("fire_aspect");
-            }
-            if (meleeWeapon.hasFortuneBuiltIn(itemStack)) {
-                abilities.add("fortune");
-            }
-            if (meleeWeapon.hasFreezingBuiltIn(itemStack)) {
-                abilities.add("freezing");
-            }
-            if (meleeWeapon.hasGravityBuiltIn(itemStack)) {
-                abilities.add("gravity");
-            }
-            if (meleeWeapon.hasGreatSplash(itemStack)) {
-                abilities.add("great_splash");
-            }
-            if (meleeWeapon.hasIllagersBaneBuiltIn(itemStack)) {
-                abilities.add("illagers_bane");
-            }
-            if (meleeWeapon.hasKnockbackBuiltIn(itemStack)) {
-                abilities.add("knockback");
-            }
-            if (meleeWeapon.hasLeechingBuiltIn(itemStack)) {
-                abilities.add("leeching");
-            }
-            if (meleeWeapon.hasPoisonCloudBuiltIn(itemStack)) {
-                abilities.add("poison_cloud");
-            }
-            if (meleeWeapon.hasProspectorBuiltIn(itemStack)) {
-                abilities.add("prospector");
-            }
-            if (meleeWeapon.hasRadianceBuiltIn(itemStack)) {
-                abilities.add("radiance");
-            }
-            if (meleeWeapon.hasRampagingBuiltIn(itemStack)) {
-                abilities.add("rampaging");
-            }
-            if (meleeWeapon.hasRapidSlashes(itemStack)) {
-                abilities.add("rapid_slashes");
-            }
-            if (meleeWeapon.hasReliableCombo(itemStack)) {
-                abilities.add("reliable_combo");
-            }
-            if (meleeWeapon.hasRelentlessCombo(itemStack)) {
-                abilities.add("relentless_combo");
-            }
-            if (meleeWeapon.hasRushdownBuiltIn(itemStack)) {
-                abilities.add("rushdown");
-            }
-            if (meleeWeapon.hasSharpnessBuiltIn(itemStack)) {
-                abilities.add("sharpness");
-            }
-            if (meleeWeapon.hasShockwaveBuiltIn(itemStack)) {
-                abilities.add("shockwave");
-            }
-            if (meleeWeapon.hasSmiteBuiltIn(itemStack)) {
-                abilities.add("smite");
-            }
-            if (meleeWeapon.hasSoulSiphonBuiltIn(itemStack)) {
-                abilities.add("soul_siphon");
-            }
-            if (meleeWeapon.hasSpinAttack(itemStack)) {
-                abilities.add("spin_attack");
-            }
-            if (meleeWeapon.hasStunningBuiltIn(itemStack)) {
-                abilities.add("stunning");
-            }
-            if (meleeWeapon.hasStylishCombo(itemStack)) {
-                abilities.add("stylish_combo");
-            }
-            if (meleeWeapon.hasSwirlingBuiltIn(itemStack)) {
-                abilities.add("swirling");
-            }
-            if (meleeWeapon.hasThrustAttack(itemStack)) {
-                abilities.add("thrust_attack");
-            }
-            if (meleeWeapon.hasThunderingBuiltIn(itemStack)) {
-                abilities.add("thundering");
-            }
-            if (meleeWeapon.hasWeakeningBuiltIn(itemStack)) {
-                abilities.add("weakening");
             }
         }
     }
@@ -373,12 +246,6 @@ public class DescriptionHelper {
 
     public static List<String> getPenalties(ItemStack itemStack) {
         List<String> penalties = new ArrayList<>();
-        if (itemStack.getItem() instanceof IMeleeWeapon) {
-            IMeleeWeapon meleeWeapon = (IMeleeWeapon) itemStack.getItem();
-            if (meleeWeapon.canOverheat(itemStack)) {
-                penalties.add("can_overheat");
-            }
-        }
         if (itemStack.getItem() instanceof IRangedWeapon) {
             IRangedWeapon rangedWeapon = (IRangedWeapon) itemStack.getItem();
             if (rangedWeapon.hasSlowFireRate(itemStack)) {

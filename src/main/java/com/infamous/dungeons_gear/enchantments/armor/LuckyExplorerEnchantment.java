@@ -55,7 +55,7 @@ public class LuckyExplorerEnchantment extends DropsEnchantment implements IEmera
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         PlayerEntity player = event.player;
-        if (player == null) return;
+        if (player == null || player.isSpectator()) return;
         if (event.phase == TickEvent.Phase.START) return;
         if (player.isAlive() && !player.level.isClientSide) {
             boolean armorFlag = StreamSupport.stream(player.getArmorSlots().spliterator(), false).anyMatch(LuckyExplorerEnchantment::hasLuckExplorerBuiltIn);

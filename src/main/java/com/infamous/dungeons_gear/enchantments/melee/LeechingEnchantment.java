@@ -4,7 +4,7 @@ import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.HealingEnchantment;
-import com.infamous.dungeons_gear.items.interfaces.IMeleeWeapon;
+import com.infamous.dungeons_libraries.items.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -44,20 +44,12 @@ public class LeechingEnchantment extends HealingEnchantment {
             LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
             LivingEntity victim = event.getEntityLiving();
             ItemStack mainhand = attacker.getMainHandItem();
-            boolean uniqueWeaponFlag = hasLeechingBuiltIn(mainhand);
             if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.LEECHING)){
                 int leechingLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.LEECHING, mainhand);
                 float victimMaxHealth = victim.getMaxHealth();
-                float healthRegained;
-                healthRegained = (0.02F + 0.02F * leechingLevel) * victimMaxHealth;
-                if(uniqueWeaponFlag) healthRegained += 0.04F * victimMaxHealth;
-                attacker.heal(healthRegained);
+                attacker.heal((0.02F + 0.02F * leechingLevel) * victimMaxHealth);
             }
         }
-    }
-
-    private static boolean hasLeechingBuiltIn(ItemStack mainhand) {
-        return mainhand.getItem() instanceof IMeleeWeapon && ((IMeleeWeapon) mainhand.getItem()).hasLeechingBuiltIn(mainhand);
     }
 
 }
