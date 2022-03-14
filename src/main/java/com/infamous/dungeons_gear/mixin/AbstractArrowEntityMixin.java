@@ -1,7 +1,8 @@
 package com.infamous.dungeons_gear.mixin;
 
+import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.items.artifacts.HarpoonQuiverItem;
-import com.infamous.dungeons_gear.items.interfaces.IRangedWeapon;
+import com.infamous.dungeons_libraries.utils.ArrowHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
@@ -24,8 +25,9 @@ public abstract class AbstractArrowEntityMixin extends Entity {
 
     @Inject(at = @At("RETURN"), method = "getWaterInertia", cancellable = true)
     private void checkForHarpoon(CallbackInfoReturnable<Float> cir){
+        int harpoonShotLevel = ArrowHelper.enchantmentTagToLevel((AbstractArrowEntity)(Object)this, RangedEnchantmentList.EXPLODING_SHOT);
         if(this.getTags().contains(HarpoonQuiverItem.HARPOON_QUIVER)
-                || this.getTags().contains(IRangedWeapon.HARPOON_TAG)){
+                || harpoonShotLevel > 0){
             cir.setReturnValue(0.99F);
         }
     }

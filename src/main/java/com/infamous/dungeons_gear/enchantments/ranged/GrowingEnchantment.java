@@ -5,6 +5,7 @@ import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
+import com.infamous.dungeons_libraries.utils.ArrowHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
@@ -47,7 +48,7 @@ public class GrowingEnchantment extends DungeonsEnchantment {
         if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
         LivingEntity shooter = (LivingEntity)arrow.getOwner();
         LivingEntity victim = (LivingEntity) ((EntityRayTraceResult)rayTraceResult).getEntity();
-        int growingLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.GROWING);
+        int growingLevel = ArrowHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.GROWING);
         boolean uniqueWeaponFlag = arrow.getTags().contains(INTRINSIC_GROWING_TAG);
         if(growingLevel > 0 || uniqueWeaponFlag){
             double originalDamage = arrow.getBaseDamage();

@@ -61,15 +61,15 @@ public class AreaOfEffectHelper {
         PROXY.spawnParticles(target, ParticleTypes.PORTAL);
         applyToNearbyEntities(target, distance,
                 getCanApplyToSecondEnemyPredicate(attacker, target),
-                (LivingEntity nearbyEntity) -> pullVictimTowardsTarget(target, nearbyEntity, particleType)
+                (LivingEntity nearbyEntity) -> pullVictimTowardsTarget(target, nearbyEntity, particleType, PULL_IN_SPEED_FACTOR)
         );
     }
 
-    public static void pullVictimTowardsTarget(LivingEntity target, LivingEntity nearbyEntity, BasicParticleType particleType) {
+    public static void pullVictimTowardsTarget(LivingEntity target, LivingEntity nearbyEntity, BasicParticleType particleType, double pullInSpeedFactor) {
         double motionX = target.getX() - (nearbyEntity.getX());
         double motionY = target.getY() - (nearbyEntity.getY());
         double motionZ = target.getZ() - (nearbyEntity.getZ());
-        Vector3d vector3d = new Vector3d(motionX, motionY, motionZ).scale(PULL_IN_SPEED_FACTOR);
+        Vector3d vector3d = new Vector3d(motionX, motionY, motionZ).scale(pullInSpeedFactor);
 
         nearbyEntity.setDeltaMovement(vector3d);
         PROXY.spawnParticles(nearbyEntity, particleType);

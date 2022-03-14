@@ -26,10 +26,9 @@ public class Bow implements IBow {
 
     @Override
     public float getBowChargeTime() {
-        return this.bowChargeTime;
+        return bowChargeTime;
     }
 
-    @Override
     public void setBowChargeTime(float bowChargeTime) {
         this.bowChargeTime = bowChargeTime;
     }

@@ -5,6 +5,7 @@ import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
+import com.infamous.dungeons_libraries.utils.ArrowHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
@@ -40,7 +41,7 @@ public class SuperchargeEnchantment extends DungeonsEnchantment {
         if(!ModEnchantmentHelper.arrowHitLivingEntity(event.getRayTraceResult())) return;
         AbstractArrowEntity arrow = event.getArrow();
         if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
-        int superchargeLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.SUPERCHARGE);
+        int superchargeLevel = ArrowHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.SUPERCHARGE);
         boolean uniqueWeaponFlag = arrow.getTags().contains(INTRINSIC_SUPERCHARGE_TAG);
         if(superchargeLevel > 0 || uniqueWeaponFlag){
             double originalDamage = arrow.getBaseDamage();

@@ -15,7 +15,6 @@ public class DescriptionHelper {
     public static void addFullDescription(List<ITextComponent> list, ItemStack itemStack){
         addLoreDescription(list, itemStack);
         addAbilityDescription(list, itemStack);
-        addPenaltyDescription(list, itemStack);
         addArtifactInfo(list, itemStack);
         addChargeableDescription(list, itemStack);
         addSoulGatheringDescription(list, itemStack);
@@ -66,15 +65,6 @@ public class DescriptionHelper {
         }
     }
 
-    public static void addPenaltyDescription(List<ITextComponent> list, ItemStack itemStack) {
-        List<String> penalties = getPenalties(itemStack);
-        for (String penalty : penalties) {
-            list.add(new TranslationTextComponent(
-                    "penalty.dungeons_gear." + penalty)
-                    .withStyle(TextFormatting.RED));
-        }
-    }
-
     public static void addArtifactInfo(List<ITextComponent> list, ItemStack itemStack) {
         if (itemStack.getItem() instanceof ArtifactItem) {
 
@@ -101,7 +91,6 @@ public class DescriptionHelper {
 
     public static List<String> getAbilities(ItemStack itemStack){
         List<String> abilities = new ArrayList<>();
-        checkRangedWeapon(itemStack, abilities);
         checkArmor(itemStack, abilities);
         return abilities;
     }
@@ -128,131 +117,6 @@ public class DescriptionHelper {
                 abilities.add("arrow_hoarder");
             }
         }
-    }
-
-    private static void checkRangedWeapon(ItemStack itemStack, List<String> abilities) {
-        if(itemStack.getItem() instanceof IRangedWeapon){
-            IRangedWeapon rangedWeapon = (IRangedWeapon) itemStack.getItem();
-            if(rangedWeapon.hasAccelerateBuiltIn(itemStack)){
-                 abilities.add("accelerate");
-            }
-            if(rangedWeapon.hasBonusShotBuiltIn(itemStack)){
-                abilities.add("bonus_shot");
-            }
-            if(rangedWeapon.hasBubbleDamage(itemStack)){
-                abilities.add("bubble_damage");
-            }
-            if(rangedWeapon.hasChainReactionBuiltIn(itemStack)){
-                abilities.add("chain_reaction");
-            }
-            if(rangedWeapon.hasMultishotWhenCharged(itemStack)){
-                abilities.add("charged_multishot");
-            }
-            if(rangedWeapon.hasDynamoBuiltIn(itemStack)){
-                abilities.add("dynamo");
-            }
-            if(rangedWeapon.canDualWield(itemStack)){
-                abilities.add("dual_wield");
-            }
-            if(rangedWeapon.hasEnigmaResonatorBuiltIn(itemStack)){
-                abilities.add("enigma_resonator");
-            }
-            if(rangedWeapon.shootsExplosiveArrows(itemStack)){
-                abilities.add("explosive_arrows");
-            }
-            if(rangedWeapon.hasExtraMultishot(itemStack)){
-                abilities.add("extra_multishot");
-            }
-            if(rangedWeapon.shootsFasterArrows(itemStack)){
-                abilities.add("faster_arrows");
-            }
-            if(rangedWeapon.firesHarpoons(itemStack)){
-                abilities.add("fires_harpoons");
-            }
-            if(rangedWeapon.shootsFreezingArrows(itemStack)){
-                abilities.add("freezing_arrows");
-            }
-            if(rangedWeapon.hasFuseShotBuiltIn(itemStack)){
-                abilities.add("fuse_shot");
-            }
-            if(rangedWeapon.shootsGaleArrows(itemStack)){
-                abilities.add("gale_arrows");
-            }
-            if(rangedWeapon.hasGravityBuiltIn(itemStack)){
-                abilities.add("gravity");
-            }
-            if(rangedWeapon.hasGrowingBuiltIn(itemStack)){
-                abilities.add("growing");
-            }
-            if(rangedWeapon.hasGuaranteedRicochet(itemStack)){
-                abilities.add("guaranteed_ricochet");
-            }
-            if(rangedWeapon.shootsHeavyArrows(itemStack)){
-                abilities.add("heavy_arrows");
-            }
-            if(rangedWeapon.hasHighFireRate(itemStack)){
-                abilities.add("high_fire_rate");
-            }
-            if(rangedWeapon.hasMultishotBuiltIn(itemStack)){
-                abilities.add("multishot");
-            }
-            if(rangedWeapon.setsPetsAttackTarget(itemStack)){
-                abilities.add("pet_targeting");
-            }
-            if(rangedWeapon.hasPiercingBuiltIn(itemStack)){
-                abilities.add("piercing");
-            }
-            if(rangedWeapon.hasPoisonCloudBuiltIn(itemStack)){
-                abilities.add("poison_cloud");
-            }
-            if(rangedWeapon.hasPowerBuiltIn(itemStack)){
-                abilities.add("power");
-            }
-            if(rangedWeapon.hasPunchBuiltIn(itemStack)){
-                abilities.add("punch");
-            }
-            if(rangedWeapon.hasQuickChargeBuiltIn(itemStack)){
-                abilities.add("quick_charge");
-            }
-            if(rangedWeapon.hasRadianceShotBuiltIn(itemStack)){
-                abilities.add("radiance_shot");
-            }
-            if(rangedWeapon.hasReplenishBuiltIn(itemStack)){
-                abilities.add("replenish");
-            }
-            if(rangedWeapon.hasRicochetBuiltIn(itemStack)){
-                abilities.add("ricochet");
-            }
-            if(rangedWeapon.hasRollChargeBuiltIn(itemStack)){
-                abilities.add("roll_charge");
-            }
-            if(rangedWeapon.shootsStrongChargedArrows(itemStack)){
-                abilities.add("strong_charged");
-            }
-            if(rangedWeapon.hasSuperChargedBuiltIn(itemStack)){
-                abilities.add("supercharged");
-            }
-            if(rangedWeapon.hasTempoTheftBuiltIn(itemStack)){
-                abilities.add("tempo_theft");
-            }
-            if(rangedWeapon.hasWildRageBuiltIn(itemStack)){
-                abilities.add("wild_rage");
-            }
-            if(rangedWeapon.hasWindUpAttack(itemStack)){
-                abilities.add("wind_up_attack");
-            }
-        }
-    }
-
-    public static List<String> getPenalties(ItemStack itemStack) {
-        List<String> penalties = new ArrayList<>();
-        if (itemStack.getItem() instanceof IRangedWeapon) {
-            IRangedWeapon rangedWeapon = (IRangedWeapon) itemStack.getItem();
-            if (rangedWeapon.hasSlowFireRate(itemStack)) {
-                penalties.add("slow_fire_rate");
-            }
-        }
-        return penalties;
     }
 
 }

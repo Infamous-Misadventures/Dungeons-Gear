@@ -4,18 +4,13 @@ import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
-import com.infamous.dungeons_gear.items.interfaces.IRangedWeapon;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
-import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
-import com.infamous.dungeons_gear.utilties.RangedAttackHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
-
-import net.minecraft.enchantment.Enchantment.Rarity;
 
 public class RollChargeEnchantment extends DungeonsEnchantment {
 
@@ -36,17 +31,13 @@ public class RollChargeEnchantment extends DungeonsEnchantment {
         ItemStack offHandWeapon = living.getOffhandItem();
 
         int rollChargeLevel = 0;
-        boolean uniqueWeaponFlag = false;
         if(mainHandWeapon.getItem() instanceof BowItem || mainHandWeapon.getItem() instanceof CrossbowItem){
             rollChargeLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.ROLL_CHARGE, mainHandWeapon);
-            uniqueWeaponFlag = hasRollChargeBuiltIn(mainHandWeapon);
         } else if(offHandWeapon.getItem() instanceof BowItem || offHandWeapon.getItem() instanceof CrossbowItem){
             rollChargeLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.ROLL_CHARGE, offHandWeapon);
-            uniqueWeaponFlag = hasRollChargeBuiltIn(offHandWeapon);
         }
 
-        if(rollChargeLevel > 0 || uniqueWeaponFlag){
-            if(uniqueWeaponFlag) rollChargeLevel++;
+        if(rollChargeLevel > 0){
             comboCap.setRollChargeTicks(20 * rollChargeLevel);
 
         }
@@ -69,9 +60,5 @@ public class RollChargeEnchantment extends DungeonsEnchantment {
         } else if(rollChargeTicks < 0){
             comboCap.setRollChargeTicks(0);
         }
-    }
-
-    public static boolean hasRollChargeBuiltIn(ItemStack stack) {
-        return stack.getItem() instanceof IRangedWeapon && ((IRangedWeapon) stack.getItem()).hasRollChargeBuiltIn(stack);
     }
 }

@@ -22,6 +22,7 @@ public class MeleeEnchantmentList {
     public static Enchantment SWIRLING;
     public static Enchantment THUNDERING;
     public static Enchantment WEAKENING;
+    public static Enchantment GRAVITY;
 
     public static Enchantment ARTIFACT_SYNERGY;
     public static Enchantment PAIN_CYCLE;

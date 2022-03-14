@@ -5,6 +5,7 @@ import com.infamous.dungeons_gear.goals.WildRageAttackGoal;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
+import com.infamous.dungeons_libraries.utils.ArrowHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
@@ -49,7 +50,7 @@ public class WildRageEnchantment extends DungeonsEnchantment {
         AbstractArrowEntity arrow = event.getArrow();
         if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
         LivingEntity shooter = (LivingEntity)arrow.getOwner();
-        int wildRageLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.WILD_RAGE);
+        int wildRageLevel = ArrowHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.WILD_RAGE);
         boolean uniqueWeaponFlag = arrow.getTags().contains(INTRINSIC_WILD_RAGE);
         MobEntity victim = (MobEntity) ((EntityRayTraceResult)rayTraceResult).getEntity();
         if(!(victim instanceof IMob) || !(victim.canChangeDimensions())) return;

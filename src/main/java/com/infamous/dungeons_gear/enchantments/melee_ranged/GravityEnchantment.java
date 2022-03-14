@@ -5,6 +5,7 @@ import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
+import com.infamous.dungeons_libraries.utils.ArrowHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
@@ -23,10 +24,8 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 @Mod.EventBusSubscriber(modid = MODID)
 public class GravityEnchantment extends DungeonsEnchantment {
 
-    public static final String INTRINSIC_GRAVITY_TAG = "IntrinsicGravity";
-
     public GravityEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.MELEE_RANGED, new EquipmentSlotType[]{
+        super(Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlotType[]{
             EquipmentSlotType.MAINHAND});
     }
 
@@ -40,38 +39,5 @@ public class GravityEnchantment extends DungeonsEnchantment {
         if(!(target instanceof LivingEntity)) return;
         if( user.getLastHurtMobTimestamp()==user.tickCount)return;
         AreaOfEffectHelper.pullInNearbyEntities(user, (LivingEntity)target, level * 3, ParticleTypes.PORTAL);
-    }
-
-    @SubscribeEvent
-    public static void onGravityCrossbowImpact(ProjectileImpactEvent.Arrow event){
-        RayTraceResult rayTraceResult = event.getRayTraceResult();
-        //if(!EnchantUtils.arrowHitLivingEntity(rayTraceResult)) return;
-        AbstractArrowEntity arrow = event.getArrow();
-        if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
-        LivingEntity shooter = (LivingEntity)arrow.getOwner();
-        int gravityLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrow, MeleeRangedEnchantmentList.GRAVITY);
-        boolean uniqueWeaponFlag = arrow.getTags().contains(INTRINSIC_GRAVITY_TAG);
-        if(uniqueWeaponFlag
-                && !(gravityLevel > 0)){
-            if(rayTraceResult instanceof EntityRayTraceResult){
-                EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult) rayTraceResult;
-                if(entityRayTraceResult.getEntity() instanceof LivingEntity){
-                    LivingEntity victim = (LivingEntity) ((EntityRayTraceResult)rayTraceResult).getEntity();
-                    AreaOfEffectHelper.pullInNearbyEntities(shooter, victim, 3, ParticleTypes.PORTAL);
-                }
-            }
-            if(rayTraceResult instanceof BlockRayTraceResult){
-                BlockRayTraceResult blockRayTraceResult = (BlockRayTraceResult)rayTraceResult;
-                BlockPos blockPos = blockRayTraceResult.getBlockPos();
-                AreaOfEffectHelper.pullInNearbyEntitiesAtPos(shooter, blockPos, 3, ParticleTypes.PORTAL);
-            }
-        }else if(gravityLevel > 0){
-            if(uniqueWeaponFlag) gravityLevel++;
-            if(rayTraceResult instanceof BlockRayTraceResult){
-                BlockRayTraceResult blockRayTraceResult = (BlockRayTraceResult)rayTraceResult;
-                BlockPos blockPos = blockRayTraceResult.getBlockPos();
-                AreaOfEffectHelper.pullInNearbyEntitiesAtPos(shooter, blockPos, 3 * gravityLevel, ParticleTypes.PORTAL);
-            }
-        }
     }
 }

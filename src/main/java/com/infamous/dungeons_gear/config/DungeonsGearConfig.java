@@ -153,7 +153,7 @@ public class DungeonsGearConfig {
                 .comment("Add enchantments that should be designated as treasure-only. \n"
                         + "To do so, enter their registry names.")
                 .defineList("treasureOnlyEnchantments", Lists.newArrayList(
-
+                        "dungeons_gear:masters_call"
                         ),
                         (itemRaw) -> itemRaw instanceof String);
         ENABLE_MELEE_WEAPON_LOOT = builder

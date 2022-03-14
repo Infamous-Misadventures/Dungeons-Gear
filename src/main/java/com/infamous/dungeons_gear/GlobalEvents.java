@@ -14,7 +14,6 @@ import com.infamous.dungeons_gear.enchantments.ranged.RollChargeEnchantment;
 import com.infamous.dungeons_gear.items.GildedItemHelper;
 import com.infamous.dungeons_gear.items.interfaces.IArmor;
 import com.infamous.dungeons_libraries.items.interfaces.IComboWeapon;
-import com.infamous.dungeons_gear.items.interfaces.IRangedWeapon;
 import com.infamous.dungeons_gear.registry.PotionList;
 import com.infamous.dungeons_gear.utilties.*;
 import com.infamous.dungeons_libraries.utils.PetHelper;
@@ -34,10 +33,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.PotionUtils;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -76,7 +72,7 @@ public class GlobalEvents {
                 }
             }
         } else if (event.getEntity() instanceof ServerPlayerEntity) {
-            gildedGearTest((ServerPlayerEntity) event.getEntity());
+//            gildedGearTest((ServerPlayerEntity) event.getEntity());
         }
     }
 
@@ -96,10 +92,7 @@ public class GlobalEvents {
     }
 
     private static void handleRangedEnchantments(AbstractArrowEntity arrowEntity, LivingEntity shooter, ItemStack stack) {
-        ModEnchantmentHelper.addEnchantmentTagsToArrow(stack, arrowEntity);
-
         int fuseShotLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.FUSE_SHOT, stack);
-        if (hasFuseShotBuiltIn(stack)) fuseShotLevel++;
         if (fuseShotLevel > 0) {
             IBow weaponCap = CapabilityHelper.getWeaponCapability(stack);
             if (weaponCap == null) return;
@@ -123,10 +116,6 @@ public class GlobalEvents {
                 arrowEntity.setBaseDamage(arrowEntity.getBaseDamage() * 2);
             }
         }
-    }
-
-    private static boolean hasFuseShotBuiltIn(ItemStack stack) {
-        return stack.getItem() instanceof IRangedWeapon && ((IRangedWeapon) stack.getItem()).hasFuseShotBuiltIn(stack);
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -282,7 +271,7 @@ public class GlobalEvents {
 //                SoulHelper.addSouls(player, souls);
 //                if (event.getSource().getDirectEntity() instanceof AbstractArrowEntity) {
 //                    AbstractArrowEntity arrowEntity = (AbstractArrowEntity) event.getSource().getDirectEntity();
-//                    int animaConduitLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrowEntity, MeleeRangedEnchantmentList.ANIMA_CONDUIT);
+//                    int animaConduitLevel = ArrowHelper.enchantmentTagToLevel(arrowEntity, MeleeRangedEnchantmentList.ANIMA_CONDUIT);
 //                    if (animaConduitLevel > 0) {
 //                        if (event.getSource().getEntity() instanceof LivingEntity) {
 //                            LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
@@ -303,25 +292,6 @@ public class GlobalEvents {
 //        }
 //
 //    }
-
-    @SubscribeEvent
-    public static void onGaleArrowImpact(ProjectileImpactEvent.Arrow event) {
-        RayTraceResult rayTraceResult = event.getRayTraceResult();
-        if (!ModEnchantmentHelper.arrowHitLivingEntity(rayTraceResult)) return;
-        AbstractArrowEntity arrow = event.getArrow();
-        if (!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
-        LivingEntity shooter = (LivingEntity) arrow.getOwner();
-        boolean isGaleArrow = arrow.getTags().contains(IRangedWeapon.GALE_ARROW_TAG);
-        if (isGaleArrow) {
-            if (rayTraceResult instanceof EntityRayTraceResult) {
-                EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult) rayTraceResult;
-                if (entityRayTraceResult.getEntity() instanceof LivingEntity) {
-                    LivingEntity victim = (LivingEntity) ((EntityRayTraceResult) rayTraceResult).getEntity();
-                    AreaOfEffectHelper.pullVictimTowardsTarget(shooter, victim, ParticleTypes.ENTITY_EFFECT);
-                }
-            }
-        }
-    }
 
     @SubscribeEvent
     public static void handleJumpAbilities(LivingEvent.LivingJumpEvent event) {

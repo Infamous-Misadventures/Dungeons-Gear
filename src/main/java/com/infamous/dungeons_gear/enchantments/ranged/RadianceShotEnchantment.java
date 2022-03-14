@@ -5,6 +5,7 @@ import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
+import com.infamous.dungeons_libraries.utils.ArrowHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
@@ -40,7 +41,7 @@ public class RadianceShotEnchantment extends DungeonsEnchantment {
         AbstractArrowEntity arrow = event.getArrow();
         if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
         LivingEntity shooter = (LivingEntity)arrow.getOwner();
-        int radianceShotLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.RADIANCE_SHOT);
+        int radianceShotLevel = ArrowHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.RADIANCE_SHOT);
         boolean uniqueWeaponFlag = arrow.getTags().contains(INTRINSIC_RADIANCE_SHOT_TAG);
         if(radianceShotLevel > 0){
             float radianceShotRand = shooter.getRandom().nextFloat();
