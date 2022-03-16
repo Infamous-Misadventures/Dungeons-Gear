@@ -2,6 +2,7 @@ package com.infamous.dungeons_gear.utilties;
 
 import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_gear.items.interfaces.*;
+import com.infamous.dungeons_libraries.items.interfaces.ISoulConsumer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -37,15 +38,9 @@ public class DescriptionHelper {
     }
 
     public static void addSoulGatheringDescription(List<ITextComponent> list, ItemStack itemStack) {
-        if(itemStack.getItem() instanceof ISoulGatherer){
-            ISoulGatherer soulGatherer = (ISoulGatherer) itemStack.getItem();
-            int gatherAmount = soulGatherer.getGatherAmount(itemStack);
+        if(itemStack.getItem() instanceof ISoulConsumer){
+            ISoulConsumer soulGatherer = (ISoulConsumer) itemStack.getItem();
             double activationCost = soulGatherer.getActivationCost(itemStack);
-            if(gatherAmount > 0) {
-                list.add(new TranslationTextComponent(
-                        "ability.dungeons_gear.soul_gathering", gatherAmount)
-                        .withStyle(TextFormatting.LIGHT_PURPLE));
-            }
             if(activationCost > 0) {
                 list.add(new TranslationTextComponent(
                         "artifact.dungeons_gear.activation", activationCost)

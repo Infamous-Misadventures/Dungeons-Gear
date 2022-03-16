@@ -45,9 +45,14 @@ public class SoulHealerItem extends ArtifactItem implements ISoulConsumer {
         if(playerIn == null)  return new ActionResult<>(ActionResultType.FAIL, itemStack);
 
         LivingEntity mostInjuredAlly = AreaOfEffectHelper.findMostInjuredAlly(playerIn, 12);
-        float currentHealth = mostInjuredAlly.getHealth();
-        float maxHealth = mostInjuredAlly.getMaxHealth();
-        float lostHealth = maxHealth - currentHealth;
+        float currentHealth = 0;
+        float maxHealth = 0;
+        float lostHealth = 0;
+        if(mostInjuredAlly != null) {
+            currentHealth = mostInjuredAlly.getHealth();
+            maxHealth = mostInjuredAlly.getMaxHealth();
+            lostHealth = maxHealth - currentHealth;
+        }
 
         float playerCurrentHealth = playerIn.getHealth();
         float playerMaxHealth = playerIn.getMaxHealth();
@@ -67,8 +72,8 @@ public class SoulHealerItem extends ArtifactItem implements ISoulConsumer {
             target.heal(toHeal);
             itemStack.hurtAndBreak(1, playerEntity, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemStack)));
             ArtifactItem.putArtifactOnCooldown(playerEntity, itemStack.getItem());
+            PROXY.spawnParticles(target, ParticleTypes.HEART);
         }
-        PROXY.spawnParticles(target, ParticleTypes.HEART);
         return new ActionResult<>(ActionResultType.SUCCESS, itemStack);
     }
 
