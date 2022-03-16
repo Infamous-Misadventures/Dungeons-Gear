@@ -47,7 +47,7 @@ public class CuriosArtifactMessage {
                             if(artifactStackHandler.isPresent()) {
                                 ItemStack artifact = artifactStackHandler.get().getStacks().getStackInSlot(packet.slot);
                                 if (!artifact.isEmpty() && artifact.getItem() instanceof ArtifactItem) {
-                                    ItemUseContext iuc = new ItemUseContext(player, Hand.MAIN_HAND, packet.hitResult);
+                                    ItemUseContext iuc = new ItemUseContext(player.level, player, Hand.MAIN_HAND, artifact, packet.hitResult);
                                     ((ArtifactItem) artifact.getItem()).activateArtifact(iuc);
                                 }
                             }
