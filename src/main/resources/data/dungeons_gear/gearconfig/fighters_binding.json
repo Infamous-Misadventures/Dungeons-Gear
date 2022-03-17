@@ -7,7 +7,7 @@
     },
     {
       "attribute": "minecraft:generic.attack_speed",
-      "amount": -1.2,
+      "amount": -0.0,
       "operation": 0
     },
     {
