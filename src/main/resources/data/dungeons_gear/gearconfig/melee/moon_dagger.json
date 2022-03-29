@@ -11,16 +11,6 @@
       "operation": 0
     },
     {
-      "attribute": "forge:reach_distance",
-      "amount": -0.5,
-      "operation": 0
-    },
-    {
-      "attribute": "dungeons_gear:attack_reach",
-      "amount": -0.5,
-      "operation": 0
-    },
-    {
       "attribute": "dungeons_libraries:soul_gathering",
       "amount": 1,
       "operation": 0

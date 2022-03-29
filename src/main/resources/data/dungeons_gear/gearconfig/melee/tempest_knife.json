@@ -2,7 +2,7 @@
   "attributes": [
     {
       "attribute": "minecraft:generic.attack_damage",
-      "amount": 2,
+      "amount": 3,
       "operation": 0
     },
     {

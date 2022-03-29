@@ -14,13 +14,13 @@ import java.util.function.Predicate;
 public class ModEnchantmentTypes {
     public static final EnchantmentType MELEE = addEnchantment("dungeons_gear_melee", item ->
                     DungeonsGearConfig.ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR.get() ?
-                            (item instanceof SwordItem || item instanceof IMeleeWeapon) :
+                            (item instanceof SwordItem || item instanceof TridentItem || item instanceof IMeleeWeapon) :
                             (item instanceof IMeleeWeapon)
     );
 
     public static final EnchantmentType MELEE_RANGED = addEnchantment("dungeons_gear_melee_ranged", item ->
                     DungeonsGearConfig.ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR.get() ?
-                            (item instanceof SwordItem || item instanceof IMeleeWeapon || item instanceof BowItem || item instanceof CrossbowItem) :
+                            (item instanceof SwordItem || item instanceof IMeleeWeapon || item instanceof TridentItem || item instanceof BowItem || item instanceof CrossbowItem) :
                             (item instanceof IMeleeWeapon || item instanceof IRangedWeapon)
     );
 
