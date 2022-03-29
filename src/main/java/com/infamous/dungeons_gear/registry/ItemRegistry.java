@@ -1,6 +1,7 @@
 package com.infamous.dungeons_gear.registry;
 
 import com.infamous.dungeons_gear.DungeonsGear;
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.items.ArmorMaterialList;
 import com.infamous.dungeons_gear.items.ArrowBundleItem;
 import com.infamous.dungeons_gear.items.ToolMaterialList;
@@ -8,14 +9,11 @@ import com.infamous.dungeons_gear.items.armor.*;
 import com.infamous.dungeons_gear.items.artifacts.*;
 import com.infamous.dungeons_gear.items.artifacts.beacon.CorruptedBeaconItem;
 import com.infamous.dungeons_gear.items.artifacts.beacon.CorruptedPumpkinItem;
-import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.items.artifacts.beacon.EyeOfTheGuardianItem;
-import com.infamous.dungeons_gear.items.melee.*;
-import com.infamous.dungeons_gear.items.ranged.bows.*;
-import com.infamous.dungeons_gear.items.ranged.crossbows.*;
-import com.infamous.dungeons_libraries.items.gearconfig.AxeGear;
-import com.infamous.dungeons_libraries.items.gearconfig.MeleeGear;
-import com.infamous.dungeons_libraries.items.gearconfig.PickaxeGear;
+import com.infamous.dungeons_gear.items.melee.DualWieldMeleeGear;
+import com.infamous.dungeons_gear.items.melee.StaffGear;
+import com.infamous.dungeons_gear.items.ranged.crossbows.DualCrossbowGear;
+import com.infamous.dungeons_libraries.items.gearconfig.*;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -247,146 +245,131 @@ public class ItemRegistry {
 
 
     public static final RegistryObject<Item> BONEBOW = registerRangedWeapon("bonebow",
-            () -> new DungeonsBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> TWIN_BOW = registerRangedWeapon("twin_bow",
-            () -> new DungeonsBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> HAUNTED_BOW = registerRangedWeapon("haunted_bow",
-            () -> new DungeonsBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
 
     public static final RegistryObject<Item> SOUL_BOW = registerRangedWeapon("soul_bow",
-            () -> new SoulBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, false));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> BOW_OF_LOST_SOULS = registerRangedWeapon("bow_of_lost_souls",
-            () -> new SoulBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> NOCTURNAL_BOW = registerRangedWeapon("nocturnal_bow",
-            () -> new SoulBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> SHIVERING_BOW = registerRangedWeapon("shivering_bow",
-            () -> new SoulBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
 
     public static final RegistryObject<Item> POWER_BOW = registerRangedWeapon("power_bow",
-            () -> new PowerBowItem(RANGED_WEAPON_PROPERTIES, 25.0F, false));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> ELITE_POWER_BOW = registerRangedWeapon("elite_power_bow",
-            () -> new PowerBowItem(RANGED_WEAPON_PROPERTIES, 25.0F, true));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> SABREWING = registerRangedWeapon("sabrewing",
-            () -> new PowerBowItem(RANGED_WEAPON_PROPERTIES, 25.0F, true));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
 
     public static final RegistryObject<Item> LONGBOW = registerRangedWeapon("longbow",
-            () -> new LongbowItem(RANGED_WEAPON_PROPERTIES, 25.0F, false));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> GUARDIAN_BOW = registerRangedWeapon("guardian_bow",
-            () -> new LongbowItem(RANGED_WEAPON_PROPERTIES, 25.0F, true));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> RED_SNAKE = registerRangedWeapon("red_snake",
-            () -> new LongbowItem(RANGED_WEAPON_PROPERTIES, 25.0F, true));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
 
     public static final RegistryObject<Item> HUNTING_BOW = registerRangedWeapon("hunting_bow",
-            () -> new HuntingBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, false));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> HUNTERS_PROMISE = registerRangedWeapon("hunters_promise",
-            () -> new HuntingBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> MASTERS_BOW = registerRangedWeapon("masters_bow",
-            () -> new HuntingBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> ANCIENT_BOW = registerRangedWeapon("ancient_bow",
-            () -> new HuntingBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
 
     public static final RegistryObject<Item> SHORTBOW = registerRangedWeapon("shortbow",
-            () -> new ShortbowItem(RANGED_WEAPON_PROPERTIES, 15.0F, false));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> MECHANICAL_SHORTBOW = registerRangedWeapon("mechanical_shortbow",
-            () -> new ShortbowItem(RANGED_WEAPON_PROPERTIES, 15.0F, true));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> PURPLE_STORM = registerRangedWeapon("purple_storm",
-            () -> new ShortbowItem(RANGED_WEAPON_PROPERTIES, 15.0F, true));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> LOVE_SPELL_BOW = registerRangedWeapon("love_spell_bow",
-            () -> new ShortbowItem(RANGED_WEAPON_PROPERTIES, 15.0F, true));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
 
     public static final RegistryObject<Item> TRICKBOW = registerRangedWeapon("trickbow",
-            () -> new TrickbowItem(RANGED_WEAPON_PROPERTIES, 20.0F, false));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> THE_GREEN_MENACE = registerRangedWeapon("the_green_menace",
-            () -> new TrickbowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> THE_PINK_SCOUNDREL = registerRangedWeapon("the_pink_scoundrel",
-            () -> new TrickbowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> SUGAR_RUSH = registerRangedWeapon("sugar_rush",
-            () -> new TrickbowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
 
     public static final RegistryObject<Item> SNOW_BOW = registerRangedWeapon("snow_bow",
-            () -> new SnowBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, false));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> WINTERS_TOUCH = registerRangedWeapon("winters_touch",
-            () -> new SnowBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
 
     public static final RegistryObject<Item> WIND_BOW = registerRangedWeapon("wind_bow",
-            () -> new WindBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, false));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> BURST_GALE_BOW = registerRangedWeapon("burst_gale_bow",
-            () -> new WindBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> ECHO_OF_THE_VALLEY = registerRangedWeapon("echo_of_the_valley",
-            () -> new WindBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
-
-    public static final RegistryObject<Item> TWISTING_VINE_BOW = registerRangedWeapon("twisting_vine_bow",
-            () -> new TwistingVineBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, false));
-    public static final RegistryObject<Item> WEEPING_VINE_BOW = registerRangedWeapon("weeping_vine_bow",
-            () -> new TwistingVineBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
-
-    public static final RegistryObject<Item> BUBBLE_BOW = registerRangedWeapon("bubble_bow",
-            () -> new BubbleBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, false));
-    public static final RegistryObject<Item> BUBBLE_BURSTER = registerRangedWeapon("bubble_burster",
-            () -> new BubbleBowItem(RANGED_WEAPON_PROPERTIES, 20.0F, true));
+            () -> new BowGear(RANGED_WEAPON_PROPERTIES));
 
 
     public static final RegistryObject<Item> RAPID_CROSSBOW = registerRangedWeapon("rapid_crossbow",
-            () -> new RapidCrossbowItem(RANGED_WEAPON_PROPERTIES, 20, false));
+            () -> new CrossbowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> BUTTERFLY_CROSSBOW = registerRangedWeapon("butterfly_crossbow",
-            () -> new RapidCrossbowItem(RANGED_WEAPON_PROPERTIES, 20, true));
+            () -> new CrossbowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> AUTO_CROSSBOW = registerRangedWeapon("auto_crossbow",
-            () -> new RapidCrossbowItem(RANGED_WEAPON_PROPERTIES, 20, true));
+            () -> new CrossbowGear(RANGED_WEAPON_PROPERTIES));
 
     public static final RegistryObject<Item> AZURE_SEEKER = registerRangedWeapon("azure_seeker",
-            () -> new DungeonsCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, true));
+            () -> new CrossbowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> THE_SLICER = registerRangedWeapon("the_slicer",
-            () -> new DungeonsCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, true));
+            () -> new CrossbowGear(RANGED_WEAPON_PROPERTIES));
 
     public static final RegistryObject<Item> HEAVY_CROSSBOW = registerRangedWeapon("heavy_crossbow",
-            () -> new HeavyCrossbowItem(RANGED_WEAPON_PROPERTIES, 30, false));
+            () -> new CrossbowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> DOOM_CROSSBOW = registerRangedWeapon("doom_crossbow",
-            () -> new HeavyCrossbowItem(RANGED_WEAPON_PROPERTIES, 30, true));
+            () -> new CrossbowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> SLAYER_CROSSBOW = registerRangedWeapon("slayer_crossbow",
-            () -> new HeavyCrossbowItem(RANGED_WEAPON_PROPERTIES, 30, true));
+            () -> new CrossbowGear(RANGED_WEAPON_PROPERTIES));
 
     public static final RegistryObject<Item> SOUL_CROSSBOW = registerRangedWeapon("soul_crossbow",
-            () -> new SoulCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, false));
+            () -> new CrossbowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> FERAL_SOUL_CROSSBOW = registerRangedWeapon("feral_soul_crossbow",
-            () -> new SoulCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, true));
+            () -> new CrossbowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> VOIDCALLER = registerRangedWeapon("voidcaller",
-            () -> new SoulCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, true));
+            () -> new CrossbowGear(RANGED_WEAPON_PROPERTIES));
 
     public static final RegistryObject<Item> SCATTER_CROSSBOW = registerRangedWeapon("scatter_crossbow",
-            () -> new ScatterCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, false));
+            () -> new CrossbowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> HARP_CROSSBOW = registerRangedWeapon("harp_crossbow",
-            () -> new ScatterCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, true));
+            () -> new CrossbowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> LIGHTNING_HARP_CROSSBOW = registerRangedWeapon("lightning_harp_crossbow",
-            () -> new ScatterCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, true));
+            () -> new CrossbowGear(RANGED_WEAPON_PROPERTIES));
 
     public static final RegistryObject<Item> EXPLODING_CROSSBOW = registerRangedWeapon("exploding_crossbow",
-            () -> new ExplodingCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, false));
+            () -> new CrossbowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> FIREBOLT_THROWER = registerRangedWeapon("firebolt_thrower",
-            () -> new ExplodingCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, true));
+            () -> new CrossbowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> IMPLODING_CROSSBOW = registerRangedWeapon("imploding_crossbow",
-            () -> new ExplodingCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, true));
+            () -> new CrossbowGear(RANGED_WEAPON_PROPERTIES));
 
     public static final RegistryObject<Item> BURST_CROSSBOW = registerRangedWeapon("burst_crossbow",
-            () -> new BurstCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, false));
+            () -> new CrossbowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> CORRUPTED_CROSSBOW = registerRangedWeapon("corrupted_crossbow",
-            () -> new BurstCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, true));
+            () -> new CrossbowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> SOUL_HUNTER_CROSSBOW = registerRangedWeapon("soul_hunter_crossbow",
-            () -> new BurstCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, true));
+            () -> new CrossbowGear(RANGED_WEAPON_PROPERTIES));
 
     public static final RegistryObject<Item> DUAL_CROSSBOW = registerRangedWeapon("dual_crossbow",
-            () -> new DualCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, false));
+            () -> new DualCrossbowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> BABY_CROSSBOW = registerRangedWeapon("baby_crossbow",
-            () -> new DualCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, true));
-
-    public static final RegistryObject<Item> COG_CROSSBOW = registerRangedWeapon("cog_crossbow",
-            () -> new CogCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, false));
-    public static final RegistryObject<Item> PRIDE_OF_THE_PIGLINS = registerRangedWeapon("pride_of_the_piglins",
-            () -> new CogCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, true));
+            () -> new DualCrossbowGear(RANGED_WEAPON_PROPERTIES));
 
     public static final RegistryObject<Item> HARPOON_CROSSBOW = registerRangedWeapon("harpoon_crossbow",
-            () -> new HarpoonCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, false));
+            () -> new CrossbowGear(RANGED_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> NAUTICAL_CROSSBOW = registerRangedWeapon("nautical_crossbow",
-            () -> new HarpoonCrossbowItem(RANGED_WEAPON_PROPERTIES, 25, true));
+            () -> new CrossbowGear(RANGED_WEAPON_PROPERTIES));
 
     public static final RegistryObject<Item> BOOTS_OF_SWIFTNESS = registerArtifact("boots_of_swiftness",
             () -> new BootsOfSwiftnessItem(ARTIFACT_PROPERTIES));

@@ -8,6 +8,7 @@ import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
+import com.infamous.dungeons_libraries.utils.ArrowHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
@@ -73,7 +74,7 @@ public class ShockWebEnchantment extends DungeonsEnchantment {
         if(!ENABLED) return;
         DungeonsGear.LOGGER.info("Firing shock web impact");
         AbstractArrowEntity eventArrow = event.getArrow();
-        int shockWebLevel = ModEnchantmentHelper.enchantmentTagToLevel(eventArrow, RangedEnchantmentList.SHOCK_WEB);
+        int shockWebLevel = ArrowHelper.enchantmentTagToLevel(eventArrow, RangedEnchantmentList.SHOCK_WEB);
         DungeonsGear.LOGGER.info("Shock web level is {}!", shockWebLevel);
         Entity shooter = eventArrow.getOwner();
         DungeonsGear.LOGGER.info("Shooter is {}!", shooter);

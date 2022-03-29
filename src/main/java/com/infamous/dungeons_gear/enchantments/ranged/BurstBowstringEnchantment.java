@@ -3,17 +3,14 @@ package com.infamous.dungeons_gear.enchantments.ranged;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
-import com.infamous.dungeons_gear.items.interfaces.IRangedWeapon;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
-import com.infamous.dungeons_gear.utilties.RangedAttackHelper;
+import com.infamous.dungeons_libraries.utils.RangedAttackHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
-
-import net.minecraft.enchantment.Enchantment.Rarity;
 
 public class BurstBowstringEnchantment extends DungeonsEnchantment {
 
@@ -25,22 +22,18 @@ public class BurstBowstringEnchantment extends DungeonsEnchantment {
     public static void activateBurstBowString(LivingEntity jumper) {
         ItemStack mainhandStack = jumper.getMainHandItem();
         ItemStack offhandStack = jumper.getOffhandItem();
-        boolean uniqueWeaponFlag = false;
         int burstBowStringLevel = 0;
         float arrowVelocity = 0.0F;
         if (mainhandStack.getItem() instanceof BowItem || mainhandStack.getItem() instanceof CrossbowItem) {
-            uniqueWeaponFlag = hasBurstBowstringBuiltIn(mainhandStack);
             burstBowStringLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.BURST_BOWSTRING, mainhandStack);
-            arrowVelocity = RangedAttackHelper.getVanillaOrModdedCrossbowArrowVelocity(mainhandStack);
+            arrowVelocity = RangedAttackHelper.getVanillaOrModdedCrossbowArrowVelocity(jumper, mainhandStack);
         } else if (offhandStack.getItem() instanceof BowItem || offhandStack.getItem() instanceof CrossbowItem) {
-            uniqueWeaponFlag = hasBurstBowstringBuiltIn(offhandStack);
             burstBowStringLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.BURST_BOWSTRING, offhandStack);
-            arrowVelocity = RangedAttackHelper.getVanillaOrModdedCrossbowArrowVelocity(offhandStack);
+            arrowVelocity = RangedAttackHelper.getVanillaOrModdedCrossbowArrowVelocity(jumper, offhandStack);
         }
 
-        if(burstBowStringLevel > 0 || uniqueWeaponFlag){
+        if(burstBowStringLevel > 0){
             int arrowsToFire = burstBowStringLevel;
-            if(uniqueWeaponFlag) arrowsToFire++;
             ProjectileEffectHelper.fireBurstBowstringShots(jumper, 16, 0.4F, arrowVelocity, arrowsToFire);
         }
     }
@@ -49,8 +42,4 @@ public class BurstBowstringEnchantment extends DungeonsEnchantment {
         return 3;
     }
 
-
-    public static boolean hasBurstBowstringBuiltIn(ItemStack stack) {
-        return stack.getItem() instanceof IRangedWeapon && ((IRangedWeapon) stack.getItem()).hasBurstBowstringBuiltIn(stack);
-    }
 }

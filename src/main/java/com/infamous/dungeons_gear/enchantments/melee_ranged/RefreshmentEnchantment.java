@@ -6,11 +6,9 @@ import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DropsEnchantment;
-import com.infamous.dungeons_libraries.items.interfaces.IMeleeWeapon;
-import com.infamous.dungeons_gear.items.interfaces.IRangedWeapon;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
-import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.utilties.PlayerAttackHelper;
+import com.infamous.dungeons_libraries.utils.ArrowHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -19,7 +17,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.GlassBottleItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtils;
@@ -28,8 +25,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
-import net.minecraft.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class RefreshmentEnchantment extends DropsEnchantment {
@@ -66,7 +61,7 @@ public class RefreshmentEnchantment extends DropsEnchantment {
                 Entity immediateSource = damageSource.getDirectEntity();
                 if(immediateSource instanceof AbstractArrowEntity){
                     AbstractArrowEntity arrowEntity = (AbstractArrowEntity) immediateSource;
-                    int refreshmentLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrowEntity, MeleeRangedEnchantmentList.REFRESHMENT);
+                    int refreshmentLevel = ArrowHelper.enchantmentTagToLevel(arrowEntity, MeleeRangedEnchantmentList.REFRESHMENT);
                     if(refreshmentLevel > 0){
                         updateRefreshment(killerPlayer, refreshmentLevel);
                     }

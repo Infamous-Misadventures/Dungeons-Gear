@@ -1,11 +1,9 @@
 package com.infamous.dungeons_gear.utilties;
 
-import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
-import com.infamous.dungeons_gear.items.interfaces.IRangedWeapon;
-import com.infamous.dungeons_gear.items.ranged.crossbows.AbstractDungeonsCrossbowItem;
 import com.infamous.dungeons_libraries.capabilities.soulcaster.ISoulCaster;
 import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
+import com.infamous.dungeons_libraries.items.gearconfig.CrossbowGear;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -168,7 +166,7 @@ public class ProjectileEffectHelper {
     }
 
     public static void fireChainReactionProjectiles(World world, LivingEntity attacker, LivingEntity victim, float v, float v1, AbstractArrowEntity originalArrow) {
-        float[] randomSoundPitches = AbstractDungeonsCrossbowItem.getRandomSoundPitches(victim.getRandom());
+        float[] randomSoundPitches = CrossbowGear.getRandomSoundPitches(victim.getRandom());
         for (int i = 0; i < 4; ++i) {
             ItemStack currentProjectile = new ItemStack(Items.ARROW);
             if (!currentProjectile.isEmpty()) {
@@ -208,7 +206,6 @@ public class ProjectileEffectHelper {
 
         float soulsLimit = 50.0F;
         float numSouls = Math.min(soulCasterCapability.getSouls(), soulsLimit);
-        boolean uniqueWeaponFlag = hasEnigmaResonatorBuiltIn(mainhand);
         if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.ENIGMA_RESONATOR)) {
             int enigmaResonatorLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeRangedEnchantmentList.ENIGMA_RESONATOR, mainhand);
             float soulsCriticalBoostChanceCap;
@@ -218,15 +215,7 @@ public class ProjectileEffectHelper {
                 return true;
             }
         }
-        if (uniqueWeaponFlag) {
-            float soulsCriticalBoostRand = attacker.getRandom().nextFloat();
-            return soulsCriticalBoostRand <= Math.min(numSouls / soulsLimit, 0.15F);
-        }
         return false;
-    }
-
-    private static boolean hasEnigmaResonatorBuiltIn(ItemStack mainhand) {
-        return mainhand.getItem() instanceof IRangedWeapon && ((IRangedWeapon) mainhand.getItem()).hasEnigmaResonatorBuiltIn(mainhand);
     }
 
     //Chief: it's a copy-paste of ProjectileEntity::shoot that creates a new Random. Why?

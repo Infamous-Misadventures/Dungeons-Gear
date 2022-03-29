@@ -4,6 +4,7 @@ import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
+import com.infamous.dungeons_libraries.utils.ArrowHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -41,7 +42,7 @@ public class TempoTheftEnchantment extends DungeonsEnchantment {
         if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
         LivingEntity shooter = (LivingEntity)arrow.getOwner();
         LivingEntity victim = (LivingEntity) ((EntityRayTraceResult)rayTraceResult).getEntity();
-        int tempoTheftLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.TEMPO_THEFT);
+        int tempoTheftLevel = ArrowHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.TEMPO_THEFT);
         boolean uniqueWeaponFlag = arrow.getTags().contains(INTRINSIC_TEMPO_THEFT_TAG);
         if(tempoTheftLevel > 0 || uniqueWeaponFlag){
             if(uniqueWeaponFlag) tempoTheftLevel++;

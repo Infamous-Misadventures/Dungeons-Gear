@@ -11,6 +11,7 @@ import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.utilties.PlayerAttackHelper;
+import com.infamous.dungeons_libraries.utils.ArrowHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -37,8 +38,6 @@ import net.minecraft.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class PoisonCloudEnchantment extends DungeonsEnchantment {
-
-    public static final String INTRINSIC_POISON_CLOUD_TAG = "IntrinsicPoisonCloud";
 
     public PoisonCloudEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.MELEE_RANGED, new EquipmentSlotType[]{
@@ -72,8 +71,7 @@ public class PoisonCloudEnchantment extends DungeonsEnchantment {
         if (!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
         LivingEntity shooter = (LivingEntity) arrow.getOwner();
 
-        int poisonLevel = ModEnchantmentHelper.enchantmentTagToLevel(arrow, MeleeRangedEnchantmentList.POISON_CLOUD);
-        boolean uniqueWeaponFlag = arrow.getTags().contains(INTRINSIC_POISON_CLOUD_TAG);
+        int poisonLevel = ArrowHelper.enchantmentTagToLevel(arrow, MeleeRangedEnchantmentList.POISON_CLOUD);
 
         if (poisonLevel > 0) {
             if (rayTraceResult instanceof EntityRayTraceResult) {
@@ -94,28 +92,6 @@ public class PoisonCloudEnchantment extends DungeonsEnchantment {
                 if (poisonRand <= 0.3F) {
                     checkForPlayer(shooter);
                     AOECloudHelper.spawnPoisonCloudAtPos(shooter, true, blockPos, poisonLevel - 1);
-                }
-            }
-        }
-        if (uniqueWeaponFlag) {
-            if (rayTraceResult instanceof EntityRayTraceResult) {
-                EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult) rayTraceResult;
-                if (entityRayTraceResult.getEntity() instanceof LivingEntity) {
-                    LivingEntity victim = (LivingEntity) ((EntityRayTraceResult) rayTraceResult).getEntity();
-                    float poisonRand = shooter.getRandom().nextFloat();
-                    if (poisonRand <= 0.3F) {
-                        checkForPlayer(shooter);
-                        AOECloudHelper.spawnPoisonCloud(shooter, victim, 0);
-                    }
-                }
-            }
-            if (rayTraceResult instanceof BlockRayTraceResult) {
-                BlockRayTraceResult blockRayTraceResult = (BlockRayTraceResult) rayTraceResult;
-                BlockPos blockPos = blockRayTraceResult.getBlockPos();
-                float poisonRand = shooter.getRandom().nextFloat();
-                if (poisonRand <= 0.3F) {
-                    checkForPlayer(shooter);
-                    AOECloudHelper.spawnPoisonCloudAtPos(shooter, true, blockPos, 0);
                 }
             }
         }

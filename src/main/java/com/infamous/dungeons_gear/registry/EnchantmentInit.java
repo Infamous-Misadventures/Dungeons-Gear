@@ -29,6 +29,7 @@ public class EnchantmentInit {
                     POISON_CLOUD = new PoisonCloudEnchantment().setRegistryName(location("poison_cloud")),
                     DYNAMO = new DynamoEnchantment().setRegistryName(location("dynamo")),
                     REFRESHMENT = new RefreshmentEnchantment().setRegistryName(location("refreshment")),
+                    MASTERS_CALL = new MastersCallEnchantment().setRegistryName(location("masters_call")),
 
                     ARTIFACT_SYNERGY = new ArtifactSynergyEnchantment().setRegistryName(location("artifact_synergy")),
                     BUSY_BEE = new BusyBeeEnchantment().setRegistryName(location("busy_bee")),
@@ -67,6 +68,12 @@ public class EnchantmentInit {
                     SHOCK_WEB = new ShockWebEnchantment().setRegistryName(location("shock_web")),
                     SUPERCHARGE = new SuperchargeEnchantment().setRegistryName(location("supercharge")),
                     TEMPO_THEFT = new TempoTheftEnchantment().setRegistryName(location("tempo_theft")),
+                    FREEZING_SHOT = new FreezingShotEnchantment().setRegistryName(location("freezing_shot")),
+                    GALE_SHOT = new FreezingShotEnchantment().setRegistryName(location("gale_shot")),
+                    GRAVITY_SHOT = new GravityShotEnchantment().setRegistryName(location("gravity_shot")),
+                    EXPLODING_SHOT = new ExplodingShotEnchantment().setRegistryName(location("exploding_shot")),
+                    HARPOON_SHOT = new HarpoonShotEnchantment().setRegistryName(location("harpoon_shot")),
+                    VELOCITY = new VelocityEnchantment().setRegistryName(location("velocity")),
                     //UNCHANTING = new UnchantingEnchantment().setRegistryName(location("unchanting")),
                     WILD_RAGE = new WildRageEnchantment().setRegistryName(location("wild_rage")),
 
@@ -112,29 +119,8 @@ public class EnchantmentInit {
                     ARROW_HOARDER = new ArrowHoarderEnchantment().setRegistryName(location("arrow_hoarder"))
                     );
 
-            putImpactRangedEnchantmentsInMap();
         }
 
-        private static void putImpactRangedEnchantmentsInMap() {
-            //rangedEnchantmentMap.put(ACCELERATE, "Accelerate");
-            //rangedEnchantmentToStringMap.put(BONUS_SHOT, "BonusShot");
-            rangedEnchantmentToStringMap.put(CHAIN_REACTION, "ChainReaction");
-            //rangedEnchantmentMap.put(FUSE_SHOT, "FuseShot");
-            rangedEnchantmentToStringMap.put(GROWING, "Growing");
-            rangedEnchantmentToStringMap.put(REPLENISH, "Replenish");
-            rangedEnchantmentToStringMap.put(RADIANCE_SHOT, "Radiance");
-            //rangedEnchantmentTagMap.put(RAPID_FIRE, "RapidFire");
-            rangedEnchantmentToStringMap.put(RICOCHET, "Ricochet");
-            rangedEnchantmentToStringMap.put(SUPERCHARGE, "Supercharge");
-            rangedEnchantmentToStringMap.put(TEMPO_THEFT, "TempoTheft");
-            //rangedEnchantmentMap.put(UNCHANTING, UNCHANTING.getRegistryName());
-            rangedEnchantmentToStringMap.put(ANIMA_CONDUIT, "AnimaConduit");
-            rangedEnchantmentToStringMap.put(ENIGMA_RESONATOR, "EnigmaResonator");
-            rangedEnchantmentToStringMap.put(GRAVITY, "Gravity");
-            rangedEnchantmentToStringMap.put(POISON_CLOUD, "PoisonCloud");
-            rangedEnchantmentToStringMap.put(REFRESHMENT, "Refreshment");
-            rangedEnchantmentToStringMap.put(SHOCK_WEB, "ShockWeb");
-        }
         private static ResourceLocation location(String name) {
             return new ResourceLocation(DungeonsGear.MODID, name);
         }

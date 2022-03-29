@@ -1,0 +1,14 @@
+{
+  "attributes": [
+    {
+      "attribute": "minecraft:generic.attack_damage",
+      "amount": 2,
+      "operation": 0
+    }
+  ],
+  "built_in_enchantments": [{"enchantment": "minecraft:power", "level": 1},{"enchantment": "minecraft:punch", "level": 1}],
+  "unique": false,
+  "durability": 384,
+  "default_charge_time": 30,
+  "rarity": "UNCOMMON"
+}

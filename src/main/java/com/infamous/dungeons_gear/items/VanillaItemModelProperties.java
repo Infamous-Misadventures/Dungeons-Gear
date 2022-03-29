@@ -1,11 +1,13 @@
 package com.infamous.dungeons_gear.items;
 
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_gear.utilties.RangedAttackHelper;
+import com.infamous.dungeons_libraries.utils.RangedAttackHelper;
 import net.minecraft.item.*;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.Map;
+
+import static com.infamous.dungeons_libraries.utils.RangedAttackHelper.getVanillaCrossbowChargeTime;
 
 public class VanillaItemModelProperties {
     public VanillaItemModelProperties(){
@@ -39,7 +41,7 @@ public class VanillaItemModelProperties {
                         } else {
                             return CrossbowItem.isCharged(stack) ? 0.0F
                                     : (float) (stack.getUseDuration() - livingEntity.getUseItemRemainingTicks())
-                                    / (float) RangedAttackHelper.getVanillaCrossbowChargeTime(livingEntity, stack);
+                                    / (float) getVanillaCrossbowChargeTime(livingEntity, stack);
                         }
                     });
             crossbowModelProperties.put(new ResourceLocation("pulling"),

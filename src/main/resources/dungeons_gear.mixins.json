@@ -7,7 +7,6 @@
   "mixins": [
     "AbstractArrowEntityMixin",
     "AreaEffectCloudEntityMixin",
-    "BowItemMixin",
     "ContainerMinecartEntityMixin",
     "CooldownAccessor",
     "CrossbowItemMixin",

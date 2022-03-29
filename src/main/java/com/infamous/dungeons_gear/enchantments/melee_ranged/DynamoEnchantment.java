@@ -6,7 +6,6 @@ import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
-import com.infamous.dungeons_gear.items.interfaces.IRangedWeapon;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.DamageEnchantment;
 import net.minecraft.enchantment.Enchantment;
@@ -44,10 +43,8 @@ public class DynamoEnchantment extends DamageBoostEnchantment {
 
     public static void handleAddDynamoEnchantment(PlayerEntity playerEntity) {
         ItemStack mainhand = playerEntity.getMainHandItem();
-        boolean uniqueWeaponFlag = hasDynamoBuiltIn(mainhand);
-        if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.DYNAMO) || uniqueWeaponFlag) {
+        if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.DYNAMO)) {
             int dynamoLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeRangedEnchantmentList.DYNAMO, mainhand);
-            if (uniqueWeaponFlag) dynamoLevel++;
             EffectInstance effectinstance1 = playerEntity.getEffect(CustomEffects.DYNAMO);
             int i = dynamoLevel;
             if (effectinstance1 != null) {
@@ -67,8 +64,7 @@ public class DynamoEnchantment extends DamageBoostEnchantment {
         if (event.getSource().getEntity() instanceof PlayerEntity) {
             PlayerEntity playerEntity = (PlayerEntity) event.getSource().getEntity();
             ItemStack mainhand = playerEntity.getMainHandItem();
-            boolean uniqueWeaponFlag = hasDynamoBuiltIn(mainhand);
-            if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.DYNAMO) || uniqueWeaponFlag) {
+            if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.DYNAMO)) {
                 EffectInstance effectinstance = playerEntity.getEffect(CustomEffects.DYNAMO);
                 if (effectinstance != null) {
                     int dynamoAmplifier = effectinstance.getAmplifier() + 1;
@@ -79,7 +75,4 @@ public class DynamoEnchantment extends DamageBoostEnchantment {
         }
     }
 
-    public static boolean hasDynamoBuiltIn(ItemStack mainhand) {
-        return mainhand.getItem() instanceof IRangedWeapon && ((IRangedWeapon) mainhand.getItem()).hasDynamoBuiltIn(mainhand);
-    }
 }

@@ -14,7 +14,6 @@ public class BowStorage implements Capability.IStorage<IBow> {
     public INBT writeNBT(Capability<IBow> capability, IBow instance, Direction side) {
         CompoundNBT tag = new CompoundNBT();
         tag.putInt("fuseShotCounter", instance.getFuseShotCounter());
-        tag.putFloat("bowChargeTime", instance.getBowChargeTime());
         tag.putInt("crossbowChargeTime", instance.getCrossbowChargeTime());
         tag.putLong("lastFiredTime", instance.getLastFiredTime());
         return tag;
@@ -24,7 +23,6 @@ public class BowStorage implements Capability.IStorage<IBow> {
     public void readNBT(Capability<IBow> capability, IBow instance, Direction side, INBT nbt) {
         CompoundNBT tag = (CompoundNBT) nbt;
         instance.setFuseShotCounter(tag.getInt("fuseShotCounter"));
-        instance.setBowChargeTime(tag.getFloat("bowChargeTime"));
         instance.setCrossbowChargeTime(tag.getInt("crossbowChargeTime"));
         instance.setLastFiredTime(tag.getLong("lastFiredTime"));
     }
