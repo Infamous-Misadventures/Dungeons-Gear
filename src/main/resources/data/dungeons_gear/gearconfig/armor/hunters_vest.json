@@ -1,0 +1,9 @@
+{
+  "attributes": [
+  ],
+  "built_in_enchantments": [{"enchantment": "dungeons_gear:arrow_hoarder", "level": 1}],
+  "armor_material": "dungeons_gear:vest",
+  "unique": false,
+  "rarity": "UNCOMMON",
+  "combo": 3
+}

@@ -44,6 +44,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import static com.infamous.dungeons_gear.integration.curios.client.CuriosKeyBindings.setupCuriosKeybindings;
+import static com.infamous.dungeons_gear.items.armor.models.ModArmorModels.setupArmorModels;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(DungeonsGear.MODID)
@@ -107,5 +108,7 @@ public class DungeonsGear
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BUZZY_NEST.get(), BuzzyNestRenderer::new);
 
         setupCuriosKeybindings();
+
+        setupArmorModels();
     }
 }

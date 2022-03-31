@@ -20,11 +20,6 @@ public class DualCrossbowGear extends CrossbowGear implements IDualWieldWeapon {
     }
 
     @Override
-    public boolean canDualWield(ItemStack stack) {
-        return true;
-    }
-
-    @Override
     public ActionResult<ItemStack> use(World world, PlayerEntity playerEntity, Hand handIn) {
         if (isCharged(playerEntity.getMainHandItem()) && playerEntity.getOffhandItem().getItem() instanceof DualCrossbowGear && isCharged(playerEntity.getOffhandItem()) && handIn == Hand.MAIN_HAND)
             super.use(world, playerEntity, Hand.OFF_HAND);

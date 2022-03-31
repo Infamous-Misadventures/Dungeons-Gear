@@ -441,7 +441,7 @@ public class ItemRegistry {
             () -> new EyeOfTheGuardianItem(ARTIFACT_PROPERTIES));
 
     public static final RegistryObject<Item> HUNTERS_ARMOR = registerArmor("hunters_vest",
-            () -> new HuntersArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/hunters_armor.png")));
     public static final RegistryObject<Item> ARCHERS_ARMOR = registerArmor("archers_vest",
             () -> new HuntersArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
     public static final RegistryObject<Item> ARCHERS_ARMOR_HOOD = registerArmor("archers_hood",
