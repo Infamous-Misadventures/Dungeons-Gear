@@ -443,9 +443,9 @@ public class ItemRegistry {
     public static final RegistryObject<Item> HUNTERS_ARMOR = registerArmor("hunters_vest",
             () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/hunters_armor.png")));
     public static final RegistryObject<Item> ARCHERS_ARMOR = registerArmor("archers_vest",
-            () -> new HuntersArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/archers_armor.png")));
     public static final RegistryObject<Item> ARCHERS_ARMOR_HOOD = registerArmor("archers_hood",
-            () ->  new HuntersArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/archers_armor.png")));
 
     public static final RegistryObject<Item> BATTLE_ROBE = registerArmor("battle_robe",
             () -> new BattleRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
