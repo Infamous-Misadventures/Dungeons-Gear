@@ -6,8 +6,6 @@ public class ArmorEnchantmentList {
     public static Enchantment TUMBLEBEE;
     public static Enchantment ALTRUISTIC;
     public static Enchantment BARRIER;
-    public static Enchantment BURNING;
-    public static Enchantment CHILLING;
     public static Enchantment COOLDOWN;
     public static Enchantment COWARDICE;
     public static Enchantment DEATH_BARTER;
@@ -18,7 +16,6 @@ public class ArmorEnchantmentList {
     public static Enchantment FIRE_TRAIL;
     public static Enchantment FOOD_RESERVES;
     public static Enchantment FRENZIED;
-    public static Enchantment GRAVITY_PULSE;
     public static Enchantment HEALTH_SYNERGY;
     public static Enchantment LUCKY_EXPLORER;
     public static Enchantment POTION_BARRIER;
@@ -31,6 +28,13 @@ public class ArmorEnchantmentList {
     public static Enchantment SURPRISE_GIFT;
     public static Enchantment SWIFTFOOTED;
     public static Enchantment BAG_OF_SOULS;
+
+    //Aura Enchantments
+    public static Enchantment GRAVITY_PULSE;
+    public static Enchantment BURNING;
+    public static Enchantment CHILLING;
+    public static Enchantment SPEED_AURA;
+    public static Enchantment MELEE_AURA;
 
     public static Enchantment BEAST_BOSS;
     public static Enchantment BEAST_BURST;

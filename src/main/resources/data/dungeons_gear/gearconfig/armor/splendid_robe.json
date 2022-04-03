@@ -1,0 +1,23 @@
+{
+  "attributes": [
+    {
+      "attribute": "minecraft:generic.attack_damage",
+      "amount": 0.15,
+      "operation": 1
+    },
+    {
+      "attribute": "dungeons_libraries:artifact_cooldown_multiplier",
+      "amount": -0.125,
+      "operation": 0
+    },
+    {
+      "attribute": "dungeons_libraries:magic_damage_multiplier",
+      "amount": 0.25,
+      "operation": 0
+    }
+  ],
+  "built_in_enchantments": [],
+  "armor_material": "dungeons_gear:cloth",
+  "unique": true,
+  "rarity": "RARE"
+}

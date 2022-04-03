@@ -28,11 +28,11 @@ public class PhantomArmorModel<T extends LivingEntity> extends BipedModel<T> {
 	private final ModelRenderer RightArm;
 	private final ModelRenderer LeftArm;
 
-	public PhantomArmorModel(float modelSize, EquipmentSlotType slot, LivingEntity entity, boolean unique) {
+	public PhantomArmorModel(float modelSize, EquipmentSlotType slot, LivingEntity entity) {
 		super(modelSize, 0.0F, 64, 64);
 		this.slot = slot;
 		this.entity = entity;
-		this.unique = unique;
+		this.unique = false;
 		texWidth = 64;
 		texHeight = 64;
 

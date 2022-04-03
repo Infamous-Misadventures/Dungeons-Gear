@@ -13,6 +13,7 @@ import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
@@ -32,6 +33,8 @@ import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 import java.util.UUID;
 
+import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.ARTIFACT_COOLDOWN_MULTIPLIER;
+
 public abstract class ArtifactItem extends Item implements ICurioItem {
     protected final UUID SLOT0_UUID = UUID.fromString("7037798e-ac2c-4711-aa72-ba73589f1411");
     protected final UUID SLOT1_UUID = UUID.fromString("1906bae9-9f26-4194-bb8a-ef95b8cad134");
@@ -47,21 +50,15 @@ public abstract class ArtifactItem extends Item implements ICurioItem {
     public static void putArtifactOnCooldown(PlayerEntity playerIn, Item item) {
         int cooldownInTicks = item instanceof ArtifactItem ?
                 ((ArtifactItem)item).getCooldownInSeconds() * 20 : 0;
-        ItemStack helmet = playerIn.getItemBySlot(EquipmentSlotType.HEAD);
-        ItemStack chestplate = playerIn.getItemBySlot(EquipmentSlotType.CHEST);
 
-
-        float armorCooldownModifier = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getArtifactCooldown() : 0;
-        float armorCooldownModifier2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getArtifactCooldown() : 0;
-
-        float totalArmorCooldownModifier = 1.0F - armorCooldownModifier * 0.01F - armorCooldownModifier2 * 0.01F;
+        ModifiableAttributeInstance artifactCooldownMultiplierAttribute = playerIn.getAttribute(ARTIFACT_COOLDOWN_MULTIPLIER.get());
+        double attributeModifier = artifactCooldownMultiplierAttribute != null ? artifactCooldownMultiplierAttribute.getValue() : 1.0D;
         float cooldownEnchantmentReduction = 0;
         if (ModEnchantmentHelper.hasEnchantment(playerIn, ArmorEnchantmentList.COOLDOWN)) {
             int cooldownEnchantmentLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.COOLDOWN, playerIn);
             cooldownEnchantmentReduction = (int) (cooldownEnchantmentLevel * 0.1F * cooldownInTicks);
-
         }
-        playerIn.getCooldowns().addCooldown(item, Math.max(0, (int) (cooldownInTicks * totalArmorCooldownModifier - cooldownEnchantmentReduction)));
+        playerIn.getCooldowns().addCooldown(item, Math.max(0, (int) (cooldownInTicks * attributeModifier - cooldownEnchantmentReduction)));
     }
 
     public static void triggerSynergy(PlayerEntity player, ItemStack stack){

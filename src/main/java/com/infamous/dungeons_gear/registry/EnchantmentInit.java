@@ -86,6 +86,8 @@ public class EnchantmentInit {
                     BEAST_BURST = new BeastBurstEnchantment().setRegistryName(location("beast_burst")),
                     BEAST_SURGE = new BeastSurgeEnchantment().setRegistryName(location("beast_surge")),
                     CHILLING = new ChillingEnchantment().setRegistryName(location("chilling")),
+                    SPEED_AURA = new SpeedAuraEnchantment().setRegistryName(location("speed_aura")),
+                    MELEE_AURA = new SpeedAuraEnchantment().setRegistryName(location("melee_aura")),
                     COOLDOWN = new CooldownEnchantment().setRegistryName(location("cooldown")),
                     COWARDICE = new CowardiceEnchantment().setRegistryName(location("cowardice")),
                     DEATH_BARTER = new DeathBarterEnchantment().setRegistryName(location("death_barter")),
