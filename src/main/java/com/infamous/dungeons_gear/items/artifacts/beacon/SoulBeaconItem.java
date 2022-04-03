@@ -2,8 +2,6 @@ package com.infamous.dungeons_gear.items.artifacts.beacon;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import com.infamous.dungeons_gear.items.interfaces.ISoulGatherer;
-import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
 import com.infamous.dungeons_libraries.items.interfaces.ISoulConsumer;
 import net.minecraft.entity.ai.attributes.Attribute;
