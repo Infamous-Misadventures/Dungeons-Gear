@@ -551,11 +551,11 @@ public class ItemRegistry {
             () -> new ReinforcedMailItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
     public static final RegistryObject<Item> SCALE_MAIL = registerArmor("scale_mail_chestplate",
-            () -> new ScaleMailItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/scale_mail.png")));
     public static final RegistryObject<Item> HIGHLAND_ARMOR = registerArmor("highland_chestplate",
-            () -> new ScaleMailItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/highland_armor.png")));
     public static final RegistryObject<Item> HIGHLAND_ARMOR_HELMET = registerArmor("highland_helmet",
-            () -> new ScaleMailItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/highland_armor.png")));
 
     public static final RegistryObject<Item> SNOW_ARMOR = registerArmor("snow_chestplate",
             () -> new SnowArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
@@ -620,17 +620,17 @@ public class ItemRegistry {
             () -> new ClimbingGearArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
 
     public static final RegistryObject<Item> EMERALD_GEAR = registerArmor("emerald_chestplate",
-            () -> new EmeraldGearArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/emerald_gear.png")));
     public static final RegistryObject<Item> EMERALD_GEAR_HELMET = registerArmor("emerald_helmet",
-            () -> new EmeraldGearArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/emerald_gear.png")));
     public static final RegistryObject<Item> GILDED_GLORY = registerArmor("gilded_glory_chestplate",
-            () -> new EmeraldGearArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/gilded_glory.png")));
     public static final RegistryObject<Item> GILDED_GLORY_HELMET = registerArmor("gilded_glory_helmet",
-            () -> new EmeraldGearArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/gilded_glory.png")));
     public static final RegistryObject<Item> OPULENT_ARMOR = registerArmor("opulent_chestplate",
-            () -> new EmeraldGearArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/opulent_armor.png")));
     public static final RegistryObject<Item> OPULENT_ARMOR_HELMET = registerArmor("opulent_helmet",
-            () -> new EmeraldGearArmorItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/opulent_armor.png")));
 
     public static final RegistryObject<Item> ARROW_BUNDLE = ITEMS.register("arrow_bundle",
             () -> new ArrowBundleItem(new Item.Properties().tab(RANGED_WEAPON_GROUP)));

@@ -34,5 +34,14 @@ public class ModArmorModels {
         ArmorGearModels.addModel(PHANTOM_ARMOR_HELMET.get().getRegistryName(), PhantomArmorModel::new);
         ArmorGearModels.addModel(FROST_BITE.get().getRegistryName(), PhantomArmorModel::new);
         ArmorGearModels.addModel(FROST_BITE_HELMET.get().getRegistryName(), PhantomArmorModel::new);
+        ArmorGearModels.addModel(SCALE_MAIL.get().getRegistryName(), ScaleMailModel::new);
+        ArmorGearModels.addModel(HIGHLAND_ARMOR.get().getRegistryName(), ScaleMailModel::new);
+        ArmorGearModels.addModel(HIGHLAND_ARMOR_HELMET.get().getRegistryName(), ScaleMailModel::new);
+        ArmorGearModels.addModel(EMERALD_GEAR.get().getRegistryName(), EmeraldArmorModel::new);
+        ArmorGearModels.addModel(EMERALD_GEAR_HELMET.get().getRegistryName(), EmeraldArmorModel::new);
+        ArmorGearModels.addModel(GILDED_GLORY.get().getRegistryName(), GildedGloryModel::new);
+        ArmorGearModels.addModel(GILDED_GLORY_HELMET.get().getRegistryName(), GildedGloryModel::new);
+        ArmorGearModels.addModel(OPULENT_ARMOR.get().getRegistryName(), OpulentArmorModel::new);
+        ArmorGearModels.addModel(OPULENT_ARMOR_HELMET.get().getRegistryName(), OpulentArmorModel::new);
     }
 }

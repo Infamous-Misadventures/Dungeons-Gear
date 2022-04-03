@@ -1,7 +1,6 @@
 package com.infamous.dungeons_gear.effects;
 
 import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectType;
 
 public class CustomEffects {
     public static Effect PARTY_STARTER;
@@ -10,4 +9,5 @@ public class CustomEffects {
     public static Effect STUNNED;
     public static Effect SHADOW_FORM;
     public static Effect DYNAMO;
+    public static Effect LIFE_STEAL;
 }

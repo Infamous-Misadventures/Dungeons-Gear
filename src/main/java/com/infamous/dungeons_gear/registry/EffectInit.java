@@ -3,11 +3,15 @@ package com.infamous.dungeons_gear.registry;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.effects.CustomEffect;
 import com.infamous.dungeons_gear.effects.CustomEffects;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.potion.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.LIFE_STEAL;
 
 public class EffectInit {
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -19,7 +23,8 @@ public class EffectInit {
                     CustomEffects.SOUL_PROTECTION = new CustomEffect(EffectType.BENEFICIAL, 2445989).setRegistryName(makeResourceName("soul_protection")),
                     CustomEffects.STUNNED = new CustomEffect(EffectType.HARMFUL, 4738376).setRegistryName(makeResourceName("stunned")),
                     CustomEffects.PARTY_STARTER = new CustomEffect(EffectType.BENEFICIAL, 0xE25822).setRegistryName(makeResourceName("party_starter")),
-                    CustomEffects.DYNAMO = new CustomEffect(EffectType.BENEFICIAL, 0xFFBB2E).setRegistryName(makeResourceName("dynamo"))
+                    CustomEffects.DYNAMO = new CustomEffect(EffectType.BENEFICIAL, 0xFFBB2E).setRegistryName(makeResourceName("dynamo")),
+                    CustomEffects.LIFE_STEAL = new CustomEffect(EffectType.BENEFICIAL, 0x660901).setRegistryName(makeResourceName("life_steal")).addAttributeModifier(LIFE_STEAL.get(), "ba815a35-c0d4-4bbd-b932-76a916d44eb9", 0.05F, AttributeModifier.Operation.ADDITION)
             );
         }
 
