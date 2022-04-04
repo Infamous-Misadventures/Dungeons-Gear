@@ -20,18 +20,18 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class GrimArmorModel<T extends LivingEntity> extends BipedModel<T> {
 	private final EquipmentSlotType slot;
 	private final LivingEntity entity;
-	private boolean unique;
+	private boolean unique = false;
 	private final ModelRenderer Everything;
 	private final ModelRenderer Head;
 	private final ModelRenderer Body;
 	private final ModelRenderer RightArm;
 	private final ModelRenderer LeftArm;
 
-	public GrimArmorModel(float modelSize, EquipmentSlotType slot, LivingEntity entity, boolean unique) {
+	public GrimArmorModel(float modelSize, EquipmentSlotType slot, LivingEntity entity) {
 		super(modelSize, 0.0F, 64, 64);
 		this.slot = slot;
 		this.entity = entity;
-		this.unique = unique;
+		this.unique = false;
 		texWidth = 64;
 		texHeight = 64;
 

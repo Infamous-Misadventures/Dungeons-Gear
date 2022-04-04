@@ -6,6 +6,6 @@
   "enchantability": 9,
   "repair_item":  "minecraft:bone",
   "equip_sound": "minecraft:item.armor.equip_turtle",
-  "toughness":  0.0,
+  "toughness":  2.0,
   "knockback_resistance": 0.0
 }

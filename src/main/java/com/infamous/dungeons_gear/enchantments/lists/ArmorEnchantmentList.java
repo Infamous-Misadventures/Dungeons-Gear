@@ -28,6 +28,7 @@ public class ArmorEnchantmentList {
     public static Enchantment SURPRISE_GIFT;
     public static Enchantment SWIFTFOOTED;
     public static Enchantment BAG_OF_SOULS;
+    public static Enchantment VOID_DODGE;
 
     //Aura Enchantments
     public static Enchantment GRAVITY_PULSE;
@@ -35,11 +36,14 @@ public class ArmorEnchantmentList {
     public static Enchantment CHILLING;
     public static Enchantment SPEED_AURA;
     public static Enchantment MELEE_AURA;
+    public static Enchantment POTION_AURA;
+    public static Enchantment LIFE_STEAL_AURA;
 
     public static Enchantment BEAST_BOSS;
     public static Enchantment BEAST_BURST;
     public static Enchantment BEAST_SURGE;
 
+    // Focus Enchantments
     public static Enchantment FIRE_FOCUS;
     public static Enchantment POISON_FOCUS;
     public static Enchantment LIGHTNING_FOCUS;

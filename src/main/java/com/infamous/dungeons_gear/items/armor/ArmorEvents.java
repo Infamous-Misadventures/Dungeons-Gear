@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
 
-import static com.infamous.dungeons_gear.registry.ItemRegistry.ARROW_BUNDLE;
+import static com.infamous.dungeons_gear.registry.ItemRegistry.*;
 
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class ArmorEvents {
@@ -164,8 +164,8 @@ public class ArmorEvents {
     }
 
     private static void reduceFreezingEffect(PotionEvent.PotionAddedEvent event, EffectInstance effectInstance, ItemStack helmet, ItemStack chestplate) {
-        float freezingResistance = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getFreezingResistance() : 0;
-        float freezingResistance2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getFreezingResistance() : 0;
+        float freezingResistance = helmet.getItem() instanceof FreezingResistanceArmorGear ? (float) ((FreezingResistanceArmorGear) helmet.getItem()).getFreezingResistance() : 0;
+        float freezingResistance2 = chestplate.getItem() instanceof FreezingResistanceArmorGear ? (float) ((FreezingResistanceArmorGear) chestplate.getItem()).getFreezingResistance() : 0;
 
         float freezingMultiplier = freezingResistance * 0.01F + freezingResistance2 * 0.01F;
 
@@ -236,8 +236,8 @@ public class ArmorEvents {
     }
 
     private static void handleHealthPotionBoost(PlayerEntity player, ItemStack helmet, ItemStack chestplate) {
-        float healthPotionBoost = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getHealthPotionBoost() : 0;
-        float healthPotionBoost2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getHealthPotionBoost() : 0;
+        float healthPotionBoost = helmet.getItem() == CHAMPIONS_ARMOR_HELMET.get() ? 1 : 0;
+        float healthPotionBoost2 = chestplate.getItem() == CHAMPIONS_ARMOR.get() ? 1 : 0;
         float totalhealthPotionBoost = (healthPotionBoost + healthPotionBoost2);
 
         if (totalhealthPotionBoost > 0) {

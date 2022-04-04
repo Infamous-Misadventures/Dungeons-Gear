@@ -87,7 +87,9 @@ public class EnchantmentInit {
                     BEAST_SURGE = new BeastSurgeEnchantment().setRegistryName(location("beast_surge")),
                     CHILLING = new ChillingEnchantment().setRegistryName(location("chilling")),
                     SPEED_AURA = new SpeedAuraEnchantment().setRegistryName(location("speed_aura")),
-                    MELEE_AURA = new SpeedAuraEnchantment().setRegistryName(location("melee_aura")),
+                    MELEE_AURA = new MeleeAuraEnchantment().setRegistryName(location("melee_aura")),
+                    POTION_AURA = new PotionAuraEnchantment().setRegistryName(location("potion_aura")),
+                    LIFE_STEAL_AURA = new PotionAuraEnchantment().setRegistryName(location("life_steal_aura")),
                     COOLDOWN = new CooldownEnchantment().setRegistryName(location("cooldown")),
                     COWARDICE = new CowardiceEnchantment().setRegistryName(location("cowardice")),
                     DEATH_BARTER = new DeathBarterEnchantment().setRegistryName(location("death_barter")),
@@ -118,7 +120,8 @@ public class EnchantmentInit {
                     SWIFTFOOTED = new SwiftfootedEnchantment().setRegistryName(location("swiftfooted")),
                     TUMBLEBEE = new TumblebeeEnchantment().setRegistryName(location("tumblebee")),
                     OPULENT_SHIELD = new OpulentShieldEnchantment().setRegistryName(location("opulent_shield")),
-                    ARROW_HOARDER = new ArrowHoarderEnchantment().setRegistryName(location("arrow_hoarder"))
+                    ARROW_HOARDER = new ArrowHoarderEnchantment().setRegistryName(location("arrow_hoarder")),
+                    VOID_DODGE = new VoidDodgeEnchantment().setRegistryName(location("void_dodge"))
                     );
 
         }

@@ -20,7 +20,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ThiefArmorModel<T extends LivingEntity> extends BipedModel<T> {
 	private final EquipmentSlotType slot;
 	private final LivingEntity entity;
-	private boolean unique;
+	private boolean unique = false;
 	private final ModelRenderer Everything;
 	private final ModelRenderer LeftArm;
 	private final ModelRenderer RightArm;
@@ -28,11 +28,10 @@ public class ThiefArmorModel<T extends LivingEntity> extends BipedModel<T> {
 	private final ModelRenderer Head;
 	private final ModelRenderer HoodBack;
 
-	public ThiefArmorModel(float modelSize, EquipmentSlotType slot, LivingEntity entity, boolean unique) {
+	public ThiefArmorModel(float modelSize, EquipmentSlotType slot, LivingEntity entity) {
 		super(modelSize, 0.0F, 64, 64);
 		this.slot = slot;
 		this.entity = entity;
-		this.unique = unique;
 		texWidth = 64;
 		texHeight = 64;
 

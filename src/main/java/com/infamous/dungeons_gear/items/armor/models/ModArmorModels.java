@@ -43,5 +43,25 @@ public class ModArmorModels {
         ArmorGearModels.addModel(GILDED_GLORY_HELMET.get().getRegistryName(), GildedGloryModel::new);
         ArmorGearModels.addModel(OPULENT_ARMOR.get().getRegistryName(), OpulentArmorModel::new);
         ArmorGearModels.addModel(OPULENT_ARMOR_HELMET.get().getRegistryName(), OpulentArmorModel::new);
+        ArmorGearModels.addModel(CHAMPIONS_ARMOR.get().getRegistryName(), ChampionsArmorModel::new);
+        ArmorGearModels.addModel(CHAMPIONS_ARMOR_HELMET.get().getRegistryName(), ChampionsArmorModel::new);
+        ArmorGearModels.addModel(HEROS_ARMOR.get().getRegistryName(), ChampionsArmorModel::new);
+        ArmorGearModels.addModel(HEROS_ARMOR_HELMET.get().getRegistryName(), ChampionsArmorModel::new);
+        ArmorGearModels.addModel(GRIM_ARMOR.get().getRegistryName(), GrimArmorModel::new);
+        ArmorGearModels.addModel(GRIM_ARMOR_HELMET.get().getRegistryName(), GrimArmorModel::new);
+        ArmorGearModels.addModel(WITHER_ARMOR.get().getRegistryName(), GrimArmorModel::new);
+        ArmorGearModels.addModel(WITHER_ARMOR_HELMET.get().getRegistryName(), GrimArmorModel::new);
+        ArmorGearModels.addModel(GUARDS_ARMOR.get().getRegistryName(), GuardsArmorModel::new);
+        ArmorGearModels.addModel(GUARDS_ARMOR_HELMET.get().getRegistryName(), GuardsArmorModel::new);
+        ArmorGearModels.addModel(CURIOUS_ARMOR.get().getRegistryName(), CuriousArmorModel::new);
+        ArmorGearModels.addModel(CURIOUS_ARMOR_HELMET.get().getRegistryName(), CuriousArmorModel::new);
+        ArmorGearModels.addModel(SNOW_ARMOR.get().getRegistryName(), SnowArmorModel::new);
+        ArmorGearModels.addModel(SNOW_ARMOR_HELMET.get().getRegistryName(), SnowArmorModel::new);
+        ArmorGearModels.addModel(FROST_ARMOR.get().getRegistryName(), FrostArmorModel::new);
+        ArmorGearModels.addModel(FROST_ARMOR_HELMET.get().getRegistryName(), FrostArmorModel::new);
+        ArmorGearModels.addModel(THIEF_ARMOR.get().getRegistryName(), ThiefArmorModel::new);
+        ArmorGearModels.addModel(THIEF_ARMOR_HOOD.get().getRegistryName(), ThiefArmorModel::new);
+        ArmorGearModels.addModel(SPIDER_ARMOR.get().getRegistryName(), ThiefArmorModel::new);
+        ArmorGearModels.addModel(SPIDER_ARMOR_HOOD.get().getRegistryName(), ThiefArmorModel::new);
     }
 }
