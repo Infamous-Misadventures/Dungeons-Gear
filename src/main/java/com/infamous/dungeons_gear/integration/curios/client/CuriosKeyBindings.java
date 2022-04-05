@@ -9,6 +9,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -18,7 +19,7 @@ import org.lwjgl.glfw.GLFW;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
-@Mod.EventBusSubscriber(modid = MODID)
+@Mod.EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
 public class CuriosKeyBindings {
 
     public static final KeyBinding activateArtifact1 = new KeyBinding("key.dungeons_gear.curiosintegration.description_slot1", GLFW.GLFW_KEY_V, "key.dungeons_gear.curiosintegration.category");

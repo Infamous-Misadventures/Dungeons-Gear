@@ -12,6 +12,8 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
@@ -54,6 +56,7 @@ public class TotemOfRegenerationItem extends ArtifactItem {
         return ActionResult.consume(itemUseContext.getItemInHand());
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {

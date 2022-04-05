@@ -12,6 +12,8 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
@@ -44,6 +46,7 @@ public class SatchelOfElementsItem extends ArtifactItem{
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
     {

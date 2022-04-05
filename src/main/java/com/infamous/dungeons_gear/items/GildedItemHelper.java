@@ -13,6 +13,7 @@ import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -22,7 +23,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.List;
 import java.util.Random;
 
-@Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
+@Mod.EventBusSubscriber(modid = DungeonsGear.MODID, value = Dist.CLIENT)
 public class GildedItemHelper {
 
     public static final ResourceLocation GILDED_ITEM_RESOURCELOCATION = new ResourceLocation(DungeonsGear.MODID, "gilded_item");
