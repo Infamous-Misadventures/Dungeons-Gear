@@ -1,15 +1,10 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
-import com.infamous.dungeons_gear.enchantments.types.DropsEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.IEmeraldsEnchantment;
-import com.infamous.dungeons_gear.items.interfaces.IArmor;
-import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
-import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -20,18 +15,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.StreamSupport;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-
-import net.minecraft.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class DeathBarterEnchantment extends DungeonsEnchantment implements IEmeraldsEnchantment {
@@ -69,8 +60,7 @@ public class DeathBarterEnchantment extends DungeonsEnchantment implements IEmer
             }
         }
 
-        boolean armorFlag = StreamSupport.stream(player.getArmorSlots().spliterator(), false).anyMatch(DeathBarterEnchantment::hasDeathBarterBuiltIn);
-        int deathBarterLevel = Math.max(EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.DEATH_BARTER, player), armorFlag ? 1 : 0);
+        int deathBarterLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.DEATH_BARTER, player);
         int emeraldRequirement = 150 - Math.min(100, 50 * (deathBarterLevel - 1)); // will always need at least 50 emeralds even if the level exceeds 3
         if(deathBarterLevel > 0 && totalEmeraldCount >= emeraldRequirement){
 
@@ -105,7 +95,4 @@ public class DeathBarterEnchantment extends DungeonsEnchantment implements IEmer
                 || !(enchantment instanceof IEmeraldsEnchantment);
     }
 
-    private static boolean hasDeathBarterBuiltIn(ItemStack stack) {
-        return stack.getItem() instanceof IArmor && ((IArmor) stack.getItem()).hasDeathBarterBuiltIn(stack);
-    }
 }

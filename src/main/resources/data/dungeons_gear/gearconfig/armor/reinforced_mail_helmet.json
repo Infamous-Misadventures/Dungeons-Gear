@@ -1,12 +1,12 @@
 {
   "attributes": [
     {
-      "attribute": "dungeons_libraries:soul_gathering",
+      "attribute": "dungeons_gear:roll_cooldown",
       "amount": 0.25,
       "operation": 1
     }
   ],
-  "built_in_enchantments": [],
+  "built_in_enchantments": [{"enchantment": "dungeons_gear:dodge", "level": 1}],
   "armor_material": "dungeons_gear:heavy_plate",
   "unique": false,
   "rarity": "UNCOMMON"

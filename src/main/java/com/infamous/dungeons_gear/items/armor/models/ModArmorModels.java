@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.items.armor.models;
 
+import com.infamous.dungeons_gear.items.armor.models.new_models.ArcticFoxArmorModel;
 import com.infamous.dungeons_gear.items.armor.models.new_models.HungryHorrorArmorModel;
 import com.infamous.dungeons_gear.items.armor.models.old_models.*;
 import com.infamous.dungeons_libraries.items.gearconfig.client.ArmorGearModels;
@@ -63,5 +64,38 @@ public class ModArmorModels {
         ArmorGearModels.addModel(THIEF_ARMOR_HOOD.get().getRegistryName(), ThiefArmorModel::new);
         ArmorGearModels.addModel(SPIDER_ARMOR.get().getRegistryName(), ThiefArmorModel::new);
         ArmorGearModels.addModel(SPIDER_ARMOR_HOOD.get().getRegistryName(), ThiefArmorModel::new);
+        ArmorGearModels.addModel(OCELOT_ARMOR.get().getRegistryName(), OcelotArmorModel::new);
+        ArmorGearModels.addModel(OCELOT_ARMOR_HOOD.get().getRegistryName(), OcelotArmorModel::new);
+        ArmorGearModels.addModel(SHADOW_WALKER.get().getRegistryName(), OcelotArmorModel::new);
+        ArmorGearModels.addModel(SHADOW_WALKER_HOOD.get().getRegistryName(), OcelotArmorModel::new);
+        ArmorGearModels.addModel(PLATE_ARMOR.get().getRegistryName(), PlateArmorModel::new);
+        ArmorGearModels.addModel(PLATE_ARMOR_HELMET.get().getRegistryName(), PlateArmorModel::new);
+        ArmorGearModels.addModel(FULL_METAL_ARMOR.get().getRegistryName(), PlateArmorModel::new);
+        ArmorGearModels.addModel(FULL_METAL_ARMOR_HELMET.get().getRegistryName(), PlateArmorModel::new);
+        ArmorGearModels.addModel(REINFORCED_MAIL.get().getRegistryName(), ReinforcedMailModel::new);
+        ArmorGearModels.addModel(REINFORCED_MAIL_HELMET.get().getRegistryName(), ReinforcedMailModel::new);
+        ArmorGearModels.addModel(STALWART_ARMOR.get().getRegistryName(), StalwartArmorModel::new);
+        ArmorGearModels.addModel(STALWART_ARMOR_HELMET.get().getRegistryName(), StalwartArmorModel::new);
+        ArmorGearModels.addModel(STALWART_ARMOR_HELMET.get().getRegistryName(), StalwartArmorModel::new);
+        ArmorGearModels.addModel(SOUL_ROBE.get().getRegistryName(), SoulRobeModel::new);
+        ArmorGearModels.addModel(SOUL_ROBE_HOOD.get().getRegistryName(), SoulRobeModel::new);
+        ArmorGearModels.addModel(SOULDANCER_ROBE.get().getRegistryName(), SoulRobeModel::new);
+        ArmorGearModels.addModel(SOULDANCER_ROBE_HOOD.get().getRegistryName(), SoulRobeModel::new);
+        ArmorGearModels.addModel(WOLF_ARMOR.get().getRegistryName(), WolfArmorModel::new);
+        ArmorGearModels.addModel(WOLF_ARMOR_HOOD.get().getRegistryName(), WolfArmorModel::new);
+        ArmorGearModels.addModel(FOX_ARMOR.get().getRegistryName(), WolfArmorModel::new);
+        ArmorGearModels.addModel(FOX_ARMOR_HOOD.get().getRegistryName(), WolfArmorModel::new);
+        ArmorGearModels.addModel(ARCTIC_FOX_VEST.get().getRegistryName(), ArcticFoxArmorModel::new);
+        ArmorGearModels.addModel(ARCTIC_FOX_HOOD.get().getRegistryName(), ArcticFoxArmorModel::new);
+        ArmorGearModels.addModel(CLIMBING_GEAR.get().getRegistryName(), ClimbingGearModel::new);
+        ArmorGearModels.addModel(CLIMBING_GEAR_HOOD.get().getRegistryName(), ClimbingGearModel::new);
+        ArmorGearModels.addModel(RUGGED_CLIMBING_GEAR.get().getRegistryName(), RuggedClimbingGearModel::new);
+        ArmorGearModels.addModel(RUGGED_CLIMBING_GEAR_HOOD.get().getRegistryName(), RuggedClimbingGearModel::new);
+        ArmorGearModels.addModel(GOAT_GEAR.get().getRegistryName(), GoatGearModel::new);
+        ArmorGearModels.addModel(GOAT_GEAR_HOOD.get().getRegistryName(), GoatGearModel::new);
+        ArmorGearModels.addModel(SPELUNKER_ARMOR.get().getRegistryName(), SpelunkerArmorModel::new);
+        ArmorGearModels.addModel(SPELUNKER_ARMOR_HELMET.get().getRegistryName(), SpelunkerArmorModel::new);
+        ArmorGearModels.addModel(CAVE_CRAWLER.get().getRegistryName(), SpelunkerArmorModel::new);
+        ArmorGearModels.addModel(CAVE_CRAWLER_HELMET.get().getRegistryName(), SpelunkerArmorModel::new);
     }
 }

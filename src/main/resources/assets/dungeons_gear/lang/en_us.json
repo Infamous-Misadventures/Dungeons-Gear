@@ -225,6 +225,7 @@
   "death.attack.electricShock.player": "%1$s was shock and awed whilst fighting %2$s",
 
   "attribute.name.generic.dungeons_gear.attackReach": "Attack Reach",
+  "attribute.name.generic.dungeons_gear.roll_cooldown": "Roll Cooldown",
 
   "item.dungeons_gear.bonebow": "Bonebow",
   "lore.dungeons_gear.bonebow": "The Bonebow is the pride of Pumpkin Pastures, crafted within the walls of their humble village.",

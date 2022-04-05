@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.enchantments;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.items.interfaces.IArmor;
+import com.infamous.dungeons_libraries.items.gearconfig.ArmorGear;
 import com.infamous.dungeons_libraries.items.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_libraries.items.interfaces.IRangedWeapon;
 import net.minecraft.enchantment.EnchantmentType;
@@ -39,13 +39,13 @@ public class ModEnchantmentTypes {
     public static final EnchantmentType ARMOR = addEnchantment("dungeons_gear_armor", item ->
             DungeonsGearConfig.ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR.get() ?
                     (item instanceof ArmorItem) :
-                    (item instanceof IArmor)
+                    (item instanceof ArmorGear)
     );
 
     public static final EnchantmentType ARMOR_RANGED = addEnchantment("dungeons_gear_armor_ranged", item ->
                     DungeonsGearConfig.ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR.get() ?
                             (item instanceof BowItem || item instanceof CrossbowItem || item instanceof ArmorItem) :
-                            (item instanceof IRangedWeapon || item instanceof IArmor)
+                            (item instanceof IRangedWeapon || item instanceof ArmorGear)
     );
 
     public static final EquipmentSlotType[] WEAPON_SLOT = new EquipmentSlotType[]{

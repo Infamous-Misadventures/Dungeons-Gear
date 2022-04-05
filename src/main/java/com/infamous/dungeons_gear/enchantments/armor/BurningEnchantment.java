@@ -5,7 +5,6 @@ import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.PulseEnchantment;
-import com.infamous.dungeons_gear.items.interfaces.IArmor;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -13,14 +12,11 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-
-import net.minecraft.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class BurningEnchantment extends PulseEnchantment {
@@ -52,14 +48,9 @@ public class BurningEnchantment extends PulseEnchantment {
             if(comboCap == null) return;
             int burnNearbyTimer = comboCap.getBurnNearbyTimer();
 
-            ItemStack chestplate = player.getItemBySlot(EquipmentSlotType.CHEST);
-            ItemStack helmet = player.getItemBySlot(EquipmentSlotType.HEAD);
-            boolean uniqueArmorFlag =
-                    hasBurningBuiltIn(chestplate) || hasBurningBuiltIn(helmet);
-            if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.BURNING) || uniqueArmorFlag){
+            if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.BURNING)){
                 if(burnNearbyTimer <= 0){
                     int burningLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.BURNING, player);
-                    if(uniqueArmorFlag) burningLevel++;
                     AreaOfEffectHelper.burnNearbyEnemies(player, 1.0F * burningLevel, 1.5F);
                     comboCap.setBurnNearbyTimer(10);
                 }
@@ -75,7 +66,4 @@ public class BurningEnchantment extends PulseEnchantment {
         }
     }
 
-    private static boolean hasBurningBuiltIn(ItemStack stack) {
-        return stack.getItem() instanceof IArmor && ((IArmor) stack.getItem()).hasBurningBuiltIn(stack);
-    }
 }

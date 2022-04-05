@@ -4,10 +4,15 @@
       "attribute": "dungeons_libraries:soul_gathering",
       "amount": 0.25,
       "operation": 1
+    },
+    {
+      "attribute": "dungeons_libraries:magic_damage_multiplier",
+      "amount": 0.25,
+      "operation": 1
     }
   ],
   "built_in_enchantments": [],
-  "armor_material": "dungeons_gear:heavy_plate",
+  "armor_material": "dungeons_gear:cloth",
   "unique": false,
   "rarity": "UNCOMMON"
 }

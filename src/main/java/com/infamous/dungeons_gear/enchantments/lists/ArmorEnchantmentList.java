@@ -29,6 +29,7 @@ public class ArmorEnchantmentList {
     public static Enchantment SWIFTFOOTED;
     public static Enchantment BAG_OF_SOULS;
     public static Enchantment VOID_DODGE;
+    public static Enchantment DODGE;
 
     //Aura Enchantments
     public static Enchantment GRAVITY_PULSE;

@@ -7,7 +7,6 @@ import com.infamous.dungeons_gear.goals.BatFollowOwnerGoal;
 import com.infamous.dungeons_gear.goals.BatMeleeAttackGoal;
 import com.infamous.dungeons_gear.goals.BatOwnerHurtByTargetGoal;
 import com.infamous.dungeons_gear.goals.BatOwnerHurtTargetGoal;
-import com.infamous.dungeons_gear.items.interfaces.IArmor;
 import com.infamous.dungeons_libraries.capabilities.minionmaster.IMaster;
 import com.infamous.dungeons_libraries.capabilities.minionmaster.IMinion;
 import com.infamous.dungeons_libraries.capabilities.minionmaster.summon.SummonHelper;
@@ -31,6 +30,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
+import static com.infamous.dungeons_gear.registry.ItemRegistry.*;
 import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMasterCapability;
 import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMinionCapability;
 
@@ -100,8 +100,8 @@ public class ArmorEffectHelper {
     }
 
     public static void handleInvulnerableJump(PlayerEntity playerEntity, ItemStack helmet, ItemStack chestplate) {
-        boolean invulnerableJump = helmet.getItem() instanceof IArmor && ((IArmor) helmet.getItem()).doBriefInvulnerabilityWhenJumping();
-        boolean invulnerableJump2 = chestplate.getItem() instanceof IArmor && ((IArmor) chestplate.getItem()).doBriefInvulnerabilityWhenJumping();
+        boolean invulnerableJump = helmet.getItem() == SHADOW_WALKER_HOOD.get();
+        boolean invulnerableJump2 = chestplate.getItem() == SHADOW_WALKER.get();
         boolean doInvulnerableJump = invulnerableJump || invulnerableJump2;
 
         if (doInvulnerableJump) {
@@ -111,8 +111,8 @@ public class ArmorEffectHelper {
     }
 
     public static void handleJumpBoost(PlayerEntity playerEntity, ItemStack helmet, ItemStack chestplate) {
-        float jumpBoost = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getLongerRolls() : 0;
-        float jumpBoost2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getLongerRolls() : 0;
+        float jumpBoost = helmet.getItem() == OCELOT_ARMOR_HOOD.get() || helmet.getItem() == SHADOW_WALKER_HOOD.get() ? 25 : 0;
+        float jumpBoost2 = chestplate.getItem() == OCELOT_ARMOR.get() || chestplate.getItem() == SHADOW_WALKER.get() ? 25 : 0;
         float totalJumpBoost = jumpBoost * 0.002F + jumpBoost2 * 0.002F;
 
         if (totalJumpBoost > 0) {
@@ -141,19 +141,13 @@ public class ArmorEffectHelper {
             }
         }
 
-        boolean highlandArmorFlag = hasSwiftfootedBuiltIn(chestplate) || hasSwiftfootedBuiltIn(helmet);
-        if (ModEnchantmentHelper.hasEnchantment(playerEntity, ArmorEnchantmentList.SWIFTFOOTED) || highlandArmorFlag) {
+        if (ModEnchantmentHelper.hasEnchantment(playerEntity, ArmorEnchantmentList.SWIFTFOOTED)) {
             int swiftfootedLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.SWIFTFOOTED, playerEntity);
-            if (highlandArmorFlag) swiftfootedLevel++;
             EffectInstance speedBoost = new EffectInstance(Effects.MOVEMENT_SPEED, 60, swiftfootedLevel - 1);
             playerEntity.addEffect(speedBoost);
         }
 
         DynamoEnchantment.handleAddDynamoEnchantment(playerEntity);
-    }
-
-    private static boolean hasSwiftfootedBuiltIn(ItemStack stack) {
-        return stack.getItem() instanceof IArmor && ((IArmor) stack.getItem()).hasSwiftfootedBuiltIn(stack);
     }
 
 

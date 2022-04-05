@@ -12,7 +12,6 @@ import com.infamous.dungeons_gear.enchantments.ranged.BurstBowstringEnchantment;
 import com.infamous.dungeons_gear.enchantments.ranged.FuseShotEnchantment;
 import com.infamous.dungeons_gear.enchantments.ranged.RollChargeEnchantment;
 import com.infamous.dungeons_gear.items.GildedItemHelper;
-import com.infamous.dungeons_gear.items.interfaces.IArmor;
 import com.infamous.dungeons_libraries.items.interfaces.IComboWeapon;
 import com.infamous.dungeons_gear.registry.PotionList;
 import com.infamous.dungeons_gear.utilties.*;
@@ -21,6 +20,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -45,6 +45,7 @@ import java.util.Optional;
 
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 import static com.infamous.dungeons_gear.config.DungeonsGearConfig.ENABLE_FRIENDLY_PET_FIRE;
+import static com.infamous.dungeons_gear.registry.AttributeRegistry.ROLL_COOLDOWN;
 import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMinionCapability;
 import static net.minecraft.item.Items.*;
 
@@ -318,11 +319,8 @@ public class GlobalEvents {
             MultiRollEnchantment.incrementJumpCounter(playerEntity);
 
             if(MultiRollEnchantment.hasReachedJumpLimit(playerEntity)){
-                float jumpCooldown = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getLongerRollCooldown() : 0;
-                float jumpCooldown2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getLongerRollCooldown() : 0;
-                float totalJumpCooldown = jumpCooldown * 0.01F + jumpCooldown2 * 0.01F;
-
-                int jumpCooldownTimerLength = totalJumpCooldown > 0 ? 60 + (int) (60 * totalJumpCooldown) : 60;
+                ModifiableAttributeInstance attribute = jumper.getAttribute(ROLL_COOLDOWN.get());
+                int jumpCooldownTimerLength = attribute != null ? 60 + (int) attribute.getValue() : 60;
                 AcrobatEnchantment.setJumpCooldown(comboCap, jumper, jumpCooldownTimerLength);
             }
         }

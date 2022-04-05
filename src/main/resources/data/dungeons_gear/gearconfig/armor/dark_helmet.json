@@ -3,7 +3,7 @@
     {
       "attribute": "dungeons_libraries:soul_gathering",
       "amount": 0.25,
-      "operation": 2
+      "operation": 1
     }
   ],
   "built_in_enchantments": [],

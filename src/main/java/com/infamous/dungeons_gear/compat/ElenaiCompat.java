@@ -2,20 +2,22 @@ package com.infamous.dungeons_gear.compat;
 
 import com.elenai.elenaidodge2.api.DodgeEvent;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
-import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
 import com.infamous.dungeons_gear.enchantments.armor.AcrobatEnchantment;
 import com.infamous.dungeons_gear.enchantments.armor.MultiRollEnchantment;
 import com.infamous.dungeons_gear.enchantments.ranged.BurstBowstringEnchantment;
 import com.infamous.dungeons_gear.enchantments.ranged.RollChargeEnchantment;
-import com.infamous.dungeons_gear.items.interfaces.IArmor;
 import com.infamous.dungeons_gear.utilties.ArmorEffectHelper;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+
+import static com.infamous.dungeons_gear.registry.AttributeRegistry.ROLL_COOLDOWN;
+import static com.infamous.dungeons_gear.registry.ItemRegistry.*;
+import static com.infamous.dungeons_gear.registry.ItemRegistry.SHADOW_WALKER;
 
 public class ElenaiCompat {
     @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -29,8 +31,8 @@ public class ElenaiCompat {
             int jumpCooldownTimer = comboCap.getJumpCooldownTimer();
 
             if (jumpCooldownTimer <= 0) {
-                float jumpBoost = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getLongerRolls() : 0;
-                float jumpBoost2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getLongerRolls() : 0;
+                float jumpBoost = helmet.getItem() == OCELOT_ARMOR_HOOD.get() || helmet.getItem() == SHADOW_WALKER_HOOD.get() ? 25 : 0;
+                float jumpBoost2 = chestplate.getItem() == OCELOT_ARMOR.get() || chestplate.getItem() == SHADOW_WALKER.get() ? 25 : 0;
                 float totalJumpBoost = jumpBoost * 0.02F + jumpBoost2 * 0.02F;
 
                 if (totalJumpBoost > 0) {
@@ -50,11 +52,8 @@ public class ElenaiCompat {
             MultiRollEnchantment.incrementJumpCounter(player);
 
             if(MultiRollEnchantment.hasReachedJumpLimit(player)){
-                float jumpCooldown = helmet.getItem() instanceof IArmor ? (float) ((IArmor) helmet.getItem()).getLongerRollCooldown() : 0;
-                float jumpCooldown2 = chestplate.getItem() instanceof IArmor ? (float) ((IArmor) chestplate.getItem()).getLongerRollCooldown() : 0;
-                float totalJumpCooldown = jumpCooldown * 0.01F + jumpCooldown2 * 0.01F;
-
-                int jumpCooldownTimerLength = totalJumpCooldown > 0 ? 60 + (int) (60 * totalJumpCooldown) : 60;
+                ModifiableAttributeInstance attribute = player.getAttribute(ROLL_COOLDOWN.get());
+                int jumpCooldownTimerLength = attribute != null ? 60 + (int) attribute.getValue() : 60;
                 AcrobatEnchantment.setJumpCooldown(comboCap, player, jumpCooldownTimerLength);
             }
         }

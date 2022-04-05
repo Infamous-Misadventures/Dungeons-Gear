@@ -515,13 +515,13 @@ public class ItemRegistry {
             () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/hungry_horror_armor.png")));
 
     public static final RegistryObject<Item> OCELOT_ARMOR = registerArmor("ocelot_vest",
-            () -> new OcelotArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/ocelot_armor.png")));
     public static final RegistryObject<Item> OCELOT_ARMOR_HOOD = registerArmor("ocelot_hood",
-            () -> new OcelotArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/ocelot_armor.png")));
     public static final RegistryObject<Item> SHADOW_WALKER = registerArmor("shadow_walker_vest",
-            () -> new OcelotArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/shadow_walker.png")));
     public static final RegistryObject<Item> SHADOW_WALKER_HOOD = registerArmor("shadow_walker_hood",
-            () -> new OcelotArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/shadow_walker.png")));
 
     public static final RegistryObject<Item> PHANTOM_ARMOR = registerArmor("phantom_chestplate",
             () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/phantom_armor.png")));
@@ -533,22 +533,22 @@ public class ItemRegistry {
             () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/frost_bite.png")));
 
     public static final RegistryObject<Item> PLATE_ARMOR = registerArmor("plate_chestplate",
-            () -> new PlateArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/plate_armor.png")));
     public static final RegistryObject<Item> PLATE_ARMOR_HELMET = registerArmor("plate_helmet",
-            () -> new PlateArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/plate_armor.png")));
     public static final RegistryObject<Item> FULL_METAL_ARMOR = registerArmor("full_metal_chestplate",
-            () -> new PlateArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/full_metal_armor.png")));
     public static final RegistryObject<Item> FULL_METAL_ARMOR_HELMET = registerArmor("full_metal_helmet",
-            () -> new PlateArmorItem(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/full_metal_armor.png")));
 
     public static final RegistryObject<Item> REINFORCED_MAIL = registerArmor("reinforced_mail_chestplate",
-            () -> new ReinforcedMailItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/reinforced_mail.png")));
     public static final RegistryObject<Item> REINFORCED_MAIL_HELMET = registerArmor("reinforced_mail_helmet",
-            () -> new ReinforcedMailItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/reinforced_mail.png")));
     public static final RegistryObject<Item> STALWART_ARMOR = registerArmor("stalwart_chestplate",
-            () -> new ReinforcedMailItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/stalwart_armor.png")));
     public static final RegistryObject<Item> STALWART_ARMOR_HELMET = registerArmor("stalwart_helmet",
-            () -> new ReinforcedMailItem(ArmorMaterialList.MEDIUM_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/stalwart_armor.png")));
 
     public static final RegistryObject<Item> SCALE_MAIL = registerArmor("scale_mail_chestplate",
             () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/scale_mail.png")));
@@ -567,22 +567,22 @@ public class ItemRegistry {
             () -> new FreezingResistanceArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/frost_armor.png")));
 
     public static final RegistryObject<Item> SOUL_ROBE = registerArmor("soul_robe",
-            () -> new SoulRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/soul_robe.png")));
     public static final RegistryObject<Item> SOUL_ROBE_HOOD = registerArmor("soul_hood",
-            () -> new SoulRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/soul_robe.png")));
     public static final RegistryObject<Item> SOULDANCER_ROBE = registerArmor("souldancer_robe",
-            () -> new SoulRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/souldancer_robe.png")));
     public static final RegistryObject<Item> SOULDANCER_ROBE_HOOD = registerArmor("souldancer_hood",
-            () -> new SoulRobeItem(ArmorMaterialList.ROBE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/souldancer_robe.png")));
 
     public static final RegistryObject<Item> SPELUNKER_ARMOR = registerArmor("spelunker_chestplate",
-            () -> new SpelunkerArmorItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
+            () -> new PetBatArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/spelunker_armor.png")));
     public static final RegistryObject<Item> SPELUNKER_ARMOR_HELMET = registerArmor("spelunker_helmet",
-            () -> new SpelunkerArmorItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/spelunker_armor.png")));
     public static final RegistryObject<Item> CAVE_CRAWLER = registerArmor("cave_crawler_chestplate",
-            () -> new SpelunkerArmorItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
+            () -> new PetBatArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/cave_crawler.png")));
     public static final RegistryObject<Item> CAVE_CRAWLER_HELMET = registerArmor("cave_crawler_helmet",
-            () -> new SpelunkerArmorItem(ArmorMaterialList.LIGHT_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/cave_crawler.png")));
 
     public static final RegistryObject<Item> THIEF_ARMOR = registerArmor("thief_vest",
             () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/thief_armor.png")));
@@ -594,30 +594,30 @@ public class ItemRegistry {
             () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/spider_armor.png")));
 
     public static final RegistryObject<Item> WOLF_ARMOR = registerArmor("wolf_vest",
-            () -> new WolfArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/wolf_armor.png")));
     public static final RegistryObject<Item> WOLF_ARMOR_HOOD = registerArmor("wolf_hood",
-            () -> new WolfArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/wolf_armor.png")));
     public static final RegistryObject<Item> FOX_ARMOR = registerArmor("fox_vest",
-            () -> new WolfArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/fox_armor.png")));
     public static final RegistryObject<Item> FOX_ARMOR_HOOD = registerArmor("fox_hood",
-            () -> new WolfArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/fox_armor.png")));
     public static final RegistryObject<Item> ARCTIC_FOX_VEST = registerArmor("arctic_fox_vest",
-            () -> new WolfArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/arctic_fox_armor.png")));
     public static final RegistryObject<Item> ARCTIC_FOX_HOOD = registerArmor("arctic_fox_hood",
-            () -> new WolfArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/arctic_fox_armor.png")));
 
     public static final RegistryObject<Item> CLIMBING_GEAR = registerArmor("climbing_vest",
-            () -> new ClimbingGearArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, false));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/climbing_gear.png")));
     public static final RegistryObject<Item> CLIMBING_GEAR_HOOD = registerArmor("climbing_hood",
-            () -> new ClimbingGearArmorItem(ArmorMaterialList.VEST, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, false));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/climbing_gear.png")));
     public static final RegistryObject<Item> RUGGED_CLIMBING_GEAR = registerArmor("rugged_climbing_vest",
-            () -> new ClimbingGearArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
+            () -> new FreezingResistanceArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/rugged_climbing_gear.png")));
     public static final RegistryObject<Item> RUGGED_CLIMBING_GEAR_HOOD = registerArmor("rugged_climbing_hood",
-            () -> new ClimbingGearArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
+            () -> new FreezingResistanceArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/rugged_climbing_gear.png")));
     public static final RegistryObject<Item> GOAT_GEAR = registerArmor("goat_vest",
-            () -> new ClimbingGearArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, true));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/goat_gear.png")));
     public static final RegistryObject<Item> GOAT_GEAR_HOOD = registerArmor("goat_hood",
-            () -> new ClimbingGearArmorItem(ArmorMaterialList.PELT, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, true));
+            () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.HEAD, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/goat_gear.png")));
 
     public static final RegistryObject<Item> EMERALD_GEAR = registerArmor("emerald_chestplate",
             () -> new ArmorGear(ArmorMaterialList.HEAVY_PLATE, EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/emerald_gear.png")));

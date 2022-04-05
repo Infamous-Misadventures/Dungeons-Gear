@@ -5,7 +5,6 @@ import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.PulseEnchantment;
-import com.infamous.dungeons_gear.items.interfaces.IArmor;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
@@ -13,14 +12,11 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-
-import net.minecraft.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class SnowballEnchantment extends PulseEnchantment {
@@ -42,12 +38,8 @@ public class SnowballEnchantment extends PulseEnchantment {
             ICombo comboCap = CapabilityHelper.getComboCapability(player);
             if (comboCap == null) return;
             int snowballNearbyTimer = comboCap.getSnowballNearbyTimer();
-            ItemStack helmet = player.getItemBySlot(EquipmentSlotType.HEAD);
-            ItemStack chestplate = player.getItemBySlot(EquipmentSlotType.CHEST);
-            boolean uniqueArmorFlag = hasSnowballBuiltIn(helmet) || hasSnowballBuiltIn(chestplate);
-            if (uniqueArmorFlag || ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.SNOWBALL)) {
+            if (ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.SNOWBALL)) {
                 int snowballLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.SNOWBALL, player);
-                if(uniqueArmorFlag) snowballLevel++;
                 if (snowballNearbyTimer <= 0) {
                     ProjectileEffectHelper.fireSnowballAtNearbyEnemy(player, 10);
                     comboCap.setSnowballNearbyTimer(Math.max(100 - (snowballLevel - 1) * 40, 20));
@@ -61,10 +53,6 @@ public class SnowballEnchantment extends PulseEnchantment {
                 }
             }
         }
-    }
-
-    private static boolean hasSnowballBuiltIn(ItemStack stack) {
-        return stack.getItem() instanceof IArmor && ((IArmor) stack.getItem()).hasSnowballBuiltIn(stack);
     }
 
     public int getMaxLevel() {

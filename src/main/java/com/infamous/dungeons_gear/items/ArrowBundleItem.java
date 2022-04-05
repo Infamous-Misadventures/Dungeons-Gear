@@ -1,6 +1,5 @@
 package com.infamous.dungeons_gear.items;
 
-import com.infamous.dungeons_gear.items.interfaces.IArmor;
 import com.infamous.dungeons_gear.utilties.LootTableHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.ItemEntity;
@@ -18,8 +17,6 @@ import java.util.stream.StreamSupport;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList.ARROW_HOARDER;
-
-import net.minecraft.item.Item.Properties;
 
 public class ArrowBundleItem  extends Item {
 
@@ -64,12 +61,7 @@ public class ArrowBundleItem  extends Item {
     }
 
     private int arrowAmount(ItemStack stack) {
-        int extraArrows = 0;
-        extraArrows += EnchantmentHelper.getItemEnchantmentLevel(ARROW_HOARDER, stack);
-        if (stack.getItem() instanceof IArmor && ((IArmor) stack.getItem()).hasArrowHoarderBuiltIn(stack)){
-            extraArrows += 1;
-        }
-        return extraArrows;
+        return EnchantmentHelper.getItemEnchantmentLevel(ARROW_HOARDER, stack);
     }
 
 
