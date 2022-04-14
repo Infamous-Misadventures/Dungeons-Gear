@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.registry;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.effects.CustomEffect;
 import com.infamous.dungeons_gear.effects.CustomEffects;
+import com.infamous.dungeons_gear.effects.ShieldingEffect;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.potion.*;
@@ -19,7 +20,7 @@ public class EffectInit {
         @SubscribeEvent
         public static void onEffectsRegistry(final RegistryEvent.Register<Effect> effectRegistryEvent) {
             effectRegistryEvent.getRegistry().registerAll(
-                    CustomEffects.SHIELDING = new CustomEffect(EffectType.BENEFICIAL, 10044730).setRegistryName(makeResourceName("shielding")),
+                    CustomEffects.SHIELDING = new ShieldingEffect(EffectType.BENEFICIAL, 10044730).setRegistryName(makeResourceName("shielding")),
                     CustomEffects.SOUL_PROTECTION = new CustomEffect(EffectType.BENEFICIAL, 2445989).setRegistryName(makeResourceName("soul_protection")),
                     CustomEffects.STUNNED = new CustomEffect(EffectType.HARMFUL, 4738376).setRegistryName(makeResourceName("stunned")),
                     CustomEffects.PARTY_STARTER = new CustomEffect(EffectType.BENEFICIAL, 0xE25822).setRegistryName(makeResourceName("party_starter")),

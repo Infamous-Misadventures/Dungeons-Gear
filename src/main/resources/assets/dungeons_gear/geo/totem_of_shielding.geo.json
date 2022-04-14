@@ -1,0 +1,62 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.totem_shield",
+				"texture_width": 364,
+				"texture_height": 195,
+				"visible_bounds_width": 15,
+				"visible_bounds_height": 7,
+				"visible_bounds_offset": [0, 1.5, 0]
+			},
+			"bones": [
+				{
+					"name": "Totem_of_Shielding",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "totem",
+					"parent": "Totem_of_Shielding",
+					"pivot": [0.25, -0.05, 0],
+					"cubes": [
+						{"origin": [-3.25, 12.9, -2], "size": [7, 8, 4], "uv": [4, 154]},
+						{"origin": [-5.25, 14.9, -1], "size": [2, 2, 2], "uv": [27, 158]},
+						{"origin": [3.75, 14.9, -1], "size": [2, 2, 2], "uv": [27, 158], "mirror": true},
+						{"origin": [-1.25, 12, -1], "size": [3, 1, 2], "uv": [22, 154]},
+						{"origin": [-5.25, 6, -2], "size": [11, 6, 4], "uv": [4, 166]},
+						{"origin": [-4.25, 0, -2], "size": [9, 6, 4], "uv": [4, 176]}
+					]
+				},
+				{
+					"name": "totem_rhomb",
+					"parent": "Totem_of_Shielding",
+					"pivot": [-0.5, 0, -0.75],
+					"cubes": [
+						{"origin": [-48, 0, -48.75], "size": [95, 0, 96], "uv": [57, 0]}
+					]
+				},
+				{
+					"name": "shield",
+					"parent": "Totem_of_Shielding",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{"origin": [-46.5, 67, -48.75], "size": [92, 0, 96], "uv": [-96, 0]},
+						{"origin": [-130.00091, 0, -78.00042], "size": [84, 30, 0], "pivot": [-44.00091, 33.5, -79.50042], "rotation": [0, 65, 0], "uv": [184, 100]},
+						{"origin": [-92.26608, 22.86554, -29.23812], "size": [86, 50, 0], "pivot": [-48.01608, 47.86554, -29.23812], "rotation": [-140, -65, -180], "uv": [0, 100]},
+						{"origin": [-43.5, 0, -77], "size": [87, 30, 0], "uv": [181, 100]},
+						{"origin": [-44.5, 22.54414, -62.0152], "size": [86, 50, 0], "pivot": [-0.75, 47.54414, -61.5152], "rotation": [-140, 0, -180], "uv": [0, 100]},
+						{"origin": [45.75, 0, -78], "size": [86, 30, 0], "pivot": [44, 33.5, -79.5], "rotation": [0, -65, 0], "uv": [182, 100]},
+						{"origin": [46, 30, -77.75], "size": [86, 50, 0], "pivot": [44, 30, -79.5], "rotation": [-40, -65, 0], "uv": [0, 100]},
+						{"origin": [-43, 0, 76.75], "size": [87, 30, 0], "uv": [181, 100]},
+						{"origin": [-42.75, 30, 76], "size": [86, 50, 0], "pivot": [0, 30, 79.5], "rotation": [40, 0, 0], "uv": [0, 100]},
+						{"origin": [46, 0, 78.25], "size": [85, 30, 0], "pivot": [44, 33.5, 79.5], "rotation": [0, 65, 0], "uv": [183, 100]},
+						{"origin": [47.75, 30, 78], "size": [86, 50, 0], "pivot": [44, 30, 79.5], "rotation": [40, 65, 0], "uv": [0, 100]},
+						{"origin": [-132, 0, 77.5], "size": [86, 30, 0], "pivot": [-44, 33.5, 79.5], "rotation": [0, -65, 0], "uv": [182, 100]},
+						{"origin": [-92.06329, 22.54414, 29.30283], "size": [86, 50, 0], "pivot": [-47.56329, 47.54414, 29.30283], "rotation": [140, 65, 180], "uv": [0, 100]}
+					]
+				}
+			]
+		}
+	]
+}

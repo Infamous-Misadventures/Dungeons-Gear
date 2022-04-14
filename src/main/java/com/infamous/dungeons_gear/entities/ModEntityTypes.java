@@ -32,4 +32,22 @@ public final class ModEntityTypes {
                     .build(new ResourceLocation(MODID, "buzzy_nest").toString())
     );
 
+    public static final RegistryObject<EntityType<TotemOfShieldingEntity>> TOTEM_OF_SHIELDING = ENTITY_TYPES.register("totem_of_shielding", () ->
+            EntityType.Builder.of(TotemOfShieldingEntity::new, EntityClassification.MISC)
+                    .fireImmune()
+                    .sized(2.0F, 1.0F)
+                    .clientTrackingRange(6)
+                    .updateInterval(2)
+                    .build(new ResourceLocation(MODID, "totem_of_shielding").toString())
+    );
+
+    public static final RegistryObject<EntityType<TotemOfRegenerationEntity>> TOTEM_OF_REGENERATION = ENTITY_TYPES.register("totem_of_regeneration", () ->
+            EntityType.Builder.of(TotemOfRegenerationEntity::new, EntityClassification.MISC)
+                    .fireImmune()
+                    .sized(2.0F, 1.0F)
+                    .clientTrackingRange(6)
+                    .updateInterval(2)
+                    .build(new ResourceLocation(MODID, "totem_of_shielding").toString())
+    );
+
 }

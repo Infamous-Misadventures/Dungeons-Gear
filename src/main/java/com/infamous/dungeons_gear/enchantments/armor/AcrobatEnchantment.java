@@ -25,7 +25,7 @@ public class AcrobatEnchantment extends JumpingEnchantment {
     public static void setJumpCooldown(ICombo comboCap, LivingEntity jumper, int timeIn){
         int acrobatLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.ACROBAT, jumper);
         if(acrobatLevel > 0){
-            double reductionFactor = Math.max(100 - 0.15D * acrobatLevel, 0); // zeroes out at level 7+
+            double reductionFactor = Math.max(1 - 0.15D * acrobatLevel, 0); // zeroes out at level 7+
             comboCap.setJumpCooldownTimer((int) (timeIn * reductionFactor));
         } else{
             comboCap.setJumpCooldownTimer(timeIn);

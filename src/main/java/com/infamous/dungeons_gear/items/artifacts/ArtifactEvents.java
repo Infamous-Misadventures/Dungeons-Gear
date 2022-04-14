@@ -138,27 +138,6 @@ public class ArtifactEvents {
     }
 
     @SubscribeEvent
-    public static void onShielding(ProjectileImpactEvent event){
-        if(event.getRayTraceResult() instanceof EntityRayTraceResult){
-            EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult) event.getRayTraceResult();
-            Entity entity = entityRayTraceResult.getEntity();
-            if(entity instanceof LivingEntity){
-                LivingEntity livingEntity = (LivingEntity) entity;
-                Effect shielding = CustomEffects.SHIELDING;
-                if(livingEntity.getEffect(shielding) != null){
-                    if(event.isCancelable()){
-                        event.setCanceled(true);
-                        if(event.getEntity() instanceof AbstractArrowEntity){
-                            AbstractArrowEntity arrowEntity = (AbstractArrowEntity) event.getEntity();
-                            ProjectileEffectHelper.ricochetArrowLikeShield(arrowEntity, livingEntity);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    @SubscribeEvent
     public static void onSouLProtection(LivingDeathEvent event){
         if(event.getEntityLiving().getEffect(CustomEffects.SOUL_PROTECTION) != null){
             event.setCanceled(true);

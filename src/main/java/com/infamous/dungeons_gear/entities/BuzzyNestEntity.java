@@ -3,9 +3,12 @@ package com.infamous.dungeons_gear.entities;
 import com.infamous.dungeons_libraries.capabilities.minionmaster.IMaster;
 import com.infamous.dungeons_libraries.capabilities.minionmaster.summon.SummonHelper;
 import com.infamous.dungeons_libraries.entities.TotemBaseEntity;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.IPacket;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -29,19 +32,14 @@ public class BuzzyNestEntity extends TotemBaseEntity implements IAnimatable {
     }
 
     @Override
-    public void tick() {
-        super.tick();
-        if(!this.level.isClientSide() && this.lifeTicks > 0 && this.lifeTicks % 20 == 0 && this.getOwner() != null) {
+    protected void applyTotemEffect() {
+        if(!this.level.isClientSide() && this.lifeTicks % 20 == 0 && this.getOwner() != null) {
             IMaster summonerCap = getMasterCapability(this.getOwner());
             if (summonerCap != null) {
                 SummonHelper.summonBee(this.getOwner(), this.blockPosition());
+                this.level.playSound((PlayerEntity)null, this.blockPosition(), SoundEvents.BEEHIVE_EXIT, SoundCategory.BLOCKS, 1.0F, 1.0F);
             }
         }
-    }
-
-    @Override
-    protected void affectTotemPower(List<Entity> list) {
-
     }
 
     @Override
@@ -60,7 +58,7 @@ public class BuzzyNestEntity extends TotemBaseEntity implements IAnimatable {
         } else if (this.lifeTicks > 0) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.buzzy_nest.activate", false));
         } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.buzzy_nest.deactivate", false));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.buzzy_nest.deactivate", true));
         }
         return PlayState.CONTINUE;
     }

@@ -1,0 +1,472 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.unknown",
+				"texture_width": 510,
+				"texture_height": 510,
+				"visible_bounds_width": 9,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
+			},
+			"bones": [
+				{
+					"name": "Totem_of_Regeneration",
+					"pivot": [-0.05772, 0.21429, -0.01469]
+				},
+				{
+					"name": "totem",
+					"parent": "Totem_of_Regeneration",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{
+							"origin": [-3, 10, -3],
+							"size": [6, 9, 6],
+							"uv": {
+								"north": {"uv": [45, 294], "uv_size": [6, 9]},
+								"east": {"uv": [39, 294], "uv_size": [6, 9]},
+								"south": {"uv": [57, 294], "uv_size": [6, 9]},
+								"west": {"uv": [51, 294], "uv_size": [6, 9]},
+								"up": {"uv": [45, 288.25], "uv_size": [6, 6]},
+								"down": {"uv": [51, 294.25], "uv_size": [6, -6]}
+							}
+						},
+						{
+							"origin": [-4, 5, -3],
+							"size": [8, 5, 6],
+							"uv": {
+								"north": {"uv": [45, 309], "uv_size": [8, 5]},
+								"east": {"uv": [39, 309], "uv_size": [6, 5]},
+								"south": {"uv": [59, 309], "uv_size": [8, 5]},
+								"west": {"uv": [53, 309], "uv_size": [6, 5]},
+								"up": {"uv": [45, 303], "uv_size": [8, 6]},
+								"down": {"uv": [53, 309], "uv_size": [8, -6]}
+							}
+						},
+						{
+							"origin": [-3, 0, -3],
+							"size": [6, 5, 6],
+							"uv": {
+								"north": {"uv": [45, 320], "uv_size": [6, 5]},
+								"east": {"uv": [39, 320], "uv_size": [6, 5]},
+								"south": {"uv": [57, 320], "uv_size": [6, 5]},
+								"west": {"uv": [51, 320], "uv_size": [6, 5]},
+								"up": {"uv": [45, 314], "uv_size": [6, 6]},
+								"down": {"uv": [51, 320], "uv_size": [6, -6]}
+							}
+						}
+					]
+				},
+				{
+					"name": "heart",
+					"parent": "totem",
+					"pivot": [0, 8, -2.5],
+					"cubes": [
+						{
+							"origin": [1, 8, -3],
+							"size": [2, 2, 1],
+							"uv": {
+								"north": {"uv": [53, 329], "uv_size": [2, 2]},
+								"east": {"uv": [52, 329], "uv_size": [1, 2]},
+								"south": {"uv": [56, 329], "uv_size": [2, 2]},
+								"west": {"uv": [55, 329], "uv_size": [1, 2]},
+								"up": {"uv": [53, 328], "uv_size": [2, 1]},
+								"down": {"uv": [55, 329], "uv_size": [2, -1]}
+							}
+						},
+						{
+							"origin": [-3, 8, -3],
+							"size": [2, 2, 1],
+							"uv": {
+								"north": {"uv": [46, 329], "uv_size": [2, 2]},
+								"east": {"uv": [45, 329], "uv_size": [1, 2]},
+								"south": {"uv": [49, 329], "uv_size": [2, 2]},
+								"west": {"uv": [48, 329], "uv_size": [1, 2]},
+								"up": {"uv": [46, 328], "uv_size": [2, 1]},
+								"down": {"uv": [48, 329], "uv_size": [2, -1]}
+							}
+						},
+						{
+							"origin": [-2, 7, -3],
+							"size": [4, 2, 1],
+							"uv": {
+								"north": {"uv": [48, 333], "uv_size": [4, 2]},
+								"east": {"uv": [47, 333], "uv_size": [1, 2]},
+								"south": {"uv": [53, 333], "uv_size": [4, 2]},
+								"west": {"uv": [52, 333], "uv_size": [1, 2]},
+								"up": {"uv": [48, 332], "uv_size": [4, 1]},
+								"down": {"uv": [52, 333], "uv_size": [4, -1]}
+							}
+						},
+						{
+							"origin": [-1, 5, -3],
+							"size": [2, 2, 1],
+							"uv": {
+								"north": {"uv": [50, 337], "uv_size": [2, 2]},
+								"east": {"uv": [49, 337], "uv_size": [1, 2]},
+								"south": {"uv": [53, 337], "uv_size": [2, 2]},
+								"west": {"uv": [52, 337], "uv_size": [1, 2]},
+								"up": {"uv": [50, 336], "uv_size": [2, 1]},
+								"down": {"uv": [52, 337], "uv_size": [2, -1]}
+							}
+						}
+					]
+				},
+				{
+					"name": "circle",
+					"parent": "Totem_of_Regeneration",
+					"pivot": [0.5, 0, -0.25],
+					"cubes": [
+						{
+							"origin": [-57.5, 0, -58.25],
+							"size": [116, 0, 116],
+							"uv": {
+								"north": {"uv": [256, 256], "uv_size": [-256, 0]},
+								"east": {"uv": [512, 256], "uv_size": [-256, 0]},
+								"south": {"uv": [768, 256], "uv_size": [-256, 0]},
+								"west": {"uv": [0, 256], "uv_size": [-256, 0]},
+								"up": {"uv": [256, 0], "uv_size": [-256, 256]},
+								"down": {"uv": [512, 256], "uv_size": [-256, -256]}
+							}
+						}
+					]
+				},
+				{
+					"name": "symbol1",
+					"parent": "Totem_of_Regeneration",
+					"pivot": [0, 0.03, 49],
+					"cubes": [
+						{
+							"origin": [-6.5, 0.03, 42],
+							"size": [13, 0, 14],
+							"uv": {
+								"north": {"uv": [38, 283], "uv_size": [7, 0]},
+								"east": {"uv": [30, 283], "uv_size": [8, 0]},
+								"south": {"uv": [53, 283], "uv_size": [7, 0]},
+								"west": {"uv": [45, 283], "uv_size": [8, 0]},
+								"up": {"uv": [38, 275], "uv_size": [7, 8]},
+								"down": {"uv": [45, 283], "uv_size": [7, -8]}
+							}
+						}
+					]
+				},
+				{
+					"name": "symbol2",
+					"parent": "Totem_of_Regeneration",
+					"pivot": [-19.12589, 0.03, 45.30945],
+					"cubes": [
+						{
+							"origin": [-14.33673, 0.03, 40.555],
+							"size": [13, 0, 14],
+							"pivot": [-7.83673, 0.01, 18.055],
+							"rotation": [0, -22.5, 0],
+							"uv": {
+								"north": {"uv": [72, 283], "uv_size": [7, 0]},
+								"east": {"uv": [64, 283], "uv_size": [8, 0]},
+								"south": {"uv": [87, 283], "uv_size": [7, 0]},
+								"west": {"uv": [79, 283], "uv_size": [8, 0]},
+								"up": {"uv": [72, 275], "uv_size": [7, 8]},
+								"down": {"uv": [79, 283], "uv_size": [7, -8]}
+							}
+						}
+					]
+				},
+				{
+					"name": "symbol3",
+					"parent": "Totem_of_Regeneration",
+					"pivot": [19.13826, 0.02, 45.63502],
+					"cubes": [
+						{
+							"origin": [1.31219, 0, -18.305],
+							"size": [13, 0, 14],
+							"pivot": [7.81219, 0.01, 18.29146],
+							"rotation": [-180, 22.5, 0],
+							"uv": {
+								"north": {"uv": [56.5, 283], "uv_size": [6, 0]},
+								"east": {"uv": [48.5, 283], "uv_size": [8, 0]},
+								"south": {"uv": [70.5, 283], "uv_size": [6, 0]},
+								"west": {"uv": [62.5, 283], "uv_size": [8, 0]},
+								"up": {"uv": [56.5, 275], "uv_size": [6, 8]},
+								"down": {"uv": [62.5, 283], "uv_size": [6, -8]}
+							}
+						}
+					]
+				},
+				{
+					"name": "symbol4",
+					"parent": "Totem_of_Regeneration",
+					"pivot": [-35.96729, 0.02, 33.09464],
+					"cubes": [
+						{
+							"origin": [-18.6901, 0.02, -27.94314],
+							"size": [13, 0, 14],
+							"pivot": [-12.1901, 0.02, 11.30686],
+							"rotation": [180, -47.5, 0],
+							"uv": {
+								"north": {"uv": [120, 283], "uv_size": [7, 0]},
+								"east": {"uv": [112, 283], "uv_size": [8, 0]},
+								"south": {"uv": [135, 283], "uv_size": [7, 0]},
+								"west": {"uv": [127, 283], "uv_size": [8, 0]},
+								"up": {"uv": [120, 275], "uv_size": [7, 8]},
+								"down": {"uv": [127, 283], "uv_size": [7, -8]}
+							}
+						}
+					]
+				},
+				{
+					"name": "symbol5",
+					"parent": "Totem_of_Regeneration",
+					"pivot": [34.61792, 0.03, 34.53924],
+					"cubes": [
+						{
+							"origin": [7.61182, 0.03, 36.03314],
+							"size": [13, 0, 14],
+							"pivot": [14.11182, 0.01, 14.03314],
+							"rotation": [0, 45, 0],
+							"uv": {
+								"north": {"uv": [89.5, 283], "uv_size": [6, 0]},
+								"east": {"uv": [81.5, 283], "uv_size": [8, 0]},
+								"south": {"uv": [103.5, 283], "uv_size": [6, 0]},
+								"west": {"uv": [95.5, 283], "uv_size": [8, 0]},
+								"up": {"uv": [89.5, 275], "uv_size": [6, 8]},
+								"down": {"uv": [95.5, 283], "uv_size": [6, -8]}
+							}
+						}
+					]
+				},
+				{
+					"name": "symbol6",
+					"parent": "Totem_of_Regeneration",
+					"pivot": [-45.52388, 0.02, 18.50525],
+					"cubes": [
+						{
+							"origin": [-24.89349, 0, 29.6332],
+							"size": [13, 0, 14],
+							"pivot": [-18.39349, 0.01, 7.26747],
+							"rotation": [0, 67.5, 180],
+							"uv": {
+								"north": {"uv": [135, 283], "uv_size": [7, 0]},
+								"east": {"uv": [127, 283], "uv_size": [8, 0]},
+								"south": {"uv": [150, 283], "uv_size": [7, 0]},
+								"west": {"uv": [142, 283], "uv_size": [8, 0]},
+								"up": {"uv": [135, 275], "uv_size": [7, 8]},
+								"down": {"uv": [142, 283], "uv_size": [7, -8]}
+							}
+						}
+					]
+				},
+				{
+					"name": "symbol7",
+					"parent": "Totem_of_Regeneration",
+					"pivot": [44.52363, 0.03, 19.95891],
+					"cubes": [
+						{
+							"origin": [11.85023, 0.03, 29.6332],
+							"size": [13, 0, 14],
+							"pivot": [18.35023, 0.01, 7.75405],
+							"rotation": [0, 65, 0],
+							"uv": {
+								"north": {"uv": [111.5, 283], "uv_size": [-6, 0]},
+								"east": {"uv": [119.5, 283], "uv_size": [-8, 0]},
+								"south": {"uv": [125.5, 283], "uv_size": [-6, 0]},
+								"west": {"uv": [105.5, 283], "uv_size": [-8, 0]},
+								"up": {"uv": [111.5, 275], "uv_size": [-6, 8]},
+								"down": {"uv": [117.5, 283], "uv_size": [-6, -8]}
+							}
+						}
+					]
+				},
+				{
+					"name": "symbol8",
+					"parent": "Totem_of_Regeneration",
+					"pivot": [-49.25, 0.02, 0.25],
+					"cubes": [
+						{
+							"origin": [-26, 0, 23],
+							"size": [13, 0, 14],
+							"pivot": [-19.5, 0.01, 0.25],
+							"rotation": [0, 90, -180],
+							"uv": {
+								"north": {"uv": [168.5, 283], "uv_size": [6, 0]},
+								"east": {"uv": [160.5, 283], "uv_size": [8, 0]},
+								"south": {"uv": [182.5, 283], "uv_size": [6, 0]},
+								"west": {"uv": [174.5, 283], "uv_size": [8, 0]},
+								"up": {"uv": [168.5, 275], "uv_size": [6, 8]},
+								"down": {"uv": [174.5, 283], "uv_size": [6, -8]}
+							}
+						}
+					]
+				},
+				{
+					"name": "symbol9",
+					"parent": "Totem_of_Regeneration",
+					"pivot": [49.5, 0.02, 0.25],
+					"cubes": [
+						{
+							"origin": [13.25, 0, 23],
+							"size": [13, 0, 14],
+							"pivot": [19.75, 0.01, 0.25],
+							"rotation": [0, -90, -180],
+							"uv": {
+								"north": {"uv": [151.5, 283], "uv_size": [6, 0]},
+								"east": {"uv": [143.5, 283], "uv_size": [8, 0]},
+								"south": {"uv": [165.5, 283], "uv_size": [6, 0]},
+								"west": {"uv": [157.5, 283], "uv_size": [8, 0]},
+								"up": {"uv": [151.5, 275], "uv_size": [6, 8]},
+								"down": {"uv": [157.5, 283], "uv_size": [6, -8]}
+							}
+						}
+					]
+				},
+				{
+					"name": "symbol10",
+					"parent": "Totem_of_Regeneration",
+					"pivot": [-45.7558, 0.02, -17.34415],
+					"cubes": [
+						{
+							"origin": [-24.92926, 0, 14.6822],
+							"size": [13, 0, 14],
+							"pivot": [-18.42926, 0.01, -7.3981],
+							"rotation": [180, 70, 0],
+							"uv": {
+								"north": {"uv": [183, 283], "uv_size": [7, 0]},
+								"east": {"uv": [175, 283], "uv_size": [8, 0]},
+								"south": {"uv": [198, 283], "uv_size": [7, 0]},
+								"west": {"uv": [190, 283], "uv_size": [8, 0]},
+								"up": {"uv": [183, 275], "uv_size": [7, 8]},
+								"down": {"uv": [190, 283], "uv_size": [7, -8]}
+							}
+						}
+					]
+				},
+				{
+					"name": "symbol11",
+					"parent": "Totem_of_Regeneration",
+					"pivot": [46.14276, 0.02, -19.04833],
+					"cubes": [
+						{
+							"origin": [11.92637, 0, 15.43217],
+							"size": [13, 0, 14],
+							"pivot": [18.42637, 0.01, -7.56783],
+							"rotation": [180, -67.5, 0],
+							"uv": {
+								"north": {"uv": [199, 283], "uv_size": [7, 0]},
+								"east": {"uv": [191, 283], "uv_size": [8, 0]},
+								"south": {"uv": [214, 283], "uv_size": [7, 0]},
+								"west": {"uv": [206, 283], "uv_size": [8, 0]},
+								"up": {"uv": [199, 275], "uv_size": [7, 8]},
+								"down": {"uv": [206, 283], "uv_size": [7, -8]}
+							}
+						}
+					]
+				},
+				{
+					"name": "symbol12",
+					"parent": "Totem_of_Regeneration",
+					"pivot": [-34.98949, 0.02, -34.99109],
+					"cubes": [
+						{
+							"origin": [-20.62558, 0, -50.6332],
+							"size": [13, 0, 14],
+							"pivot": [-14.12558, 0.01, -14.12719],
+							"rotation": [0, -45, 180],
+							"uv": {
+								"north": {"uv": [56.25, 283], "uv_size": [7, 0]},
+								"east": {"uv": [48.25, 283], "uv_size": [8, 0]},
+								"south": {"uv": [71.25, 283], "uv_size": [7, 0]},
+								"west": {"uv": [63.25, 283], "uv_size": [8, 0]},
+								"up": {"uv": [56.25, 275], "uv_size": [7, 8]},
+								"down": {"uv": [63.25, 283], "uv_size": [7, -8]}
+							}
+						}
+					]
+				},
+				{
+					"name": "symbol13",
+					"parent": "Totem_of_Regeneration",
+					"pivot": [35.0589, 0.03, -34.99282],
+					"cubes": [
+						{
+							"origin": [7.69925, 0.03, -50.63317],
+							"size": [13, 0, 14],
+							"pivot": [14.19925, 0.01, -14.13317],
+							"rotation": [0, -45, 0],
+							"uv": {
+								"north": {"uv": [38, 283], "uv_size": [7, 0]},
+								"east": {"uv": [30, 283], "uv_size": [8, 0]},
+								"south": {"uv": [53, 283], "uv_size": [7, 0]},
+								"west": {"uv": [45, 283], "uv_size": [8, 0]},
+								"up": {"uv": [38, 275], "uv_size": [7, 8]},
+								"down": {"uv": [45, 283], "uv_size": [7, -8]}
+							}
+						}
+					]
+				},
+				{
+					"name": "symbol14",
+					"parent": "Totem_of_Regeneration",
+					"pivot": [-20.46919, 0.02, -45.04582],
+					"cubes": [
+						{
+							"origin": [-14.3963, 0, 4.66684],
+							"size": [13, 0, 14],
+							"pivot": [-7.8963, 0.01, -18.08316],
+							"rotation": [180, 25, 0],
+							"uv": {
+								"north": {"uv": [105, 283], "uv_size": [7, 0]},
+								"east": {"uv": [97, 283], "uv_size": [8, 0]},
+								"south": {"uv": [120, 283], "uv_size": [7, 0]},
+								"west": {"uv": [112, 283], "uv_size": [8, 0]},
+								"up": {"uv": [105, 275], "uv_size": [7, 8]},
+								"down": {"uv": [112, 283], "uv_size": [7, -8]}
+							}
+						}
+					]
+				},
+				{
+					"name": "symbol15",
+					"parent": "Totem_of_Regeneration",
+					"pivot": [19.07397, 0.02, -46.16305],
+					"cubes": [
+						{
+							"origin": [1.09346, 0, 4.55333],
+							"size": [13, 0, 14],
+							"pivot": [7.59346, 0.01, -18.44667],
+							"rotation": [180, -22.5, 0],
+							"uv": {
+								"north": {"uv": [72, 283], "uv_size": [7, 0]},
+								"east": {"uv": [64, 283], "uv_size": [8, 0]},
+								"south": {"uv": [87, 283], "uv_size": [7, 0]},
+								"west": {"uv": [79, 283], "uv_size": [8, 0]},
+								"up": {"uv": [72, 275], "uv_size": [7, 8]},
+								"down": {"uv": [79, 283], "uv_size": [7, -8]}
+							}
+						}
+					]
+				},
+				{
+					"name": "symbol16",
+					"parent": "Totem_of_Regeneration",
+					"pivot": [0, 0.02, -49.5],
+					"cubes": [
+						{
+							"origin": [-6.5, 0, -62.5],
+							"size": [13, 0, 14],
+							"pivot": [0, 0.01, -52.5],
+							"rotation": [180, 0, 0],
+							"uv": {
+								"north": {"uv": [135, 283], "uv_size": [7, 0]},
+								"east": {"uv": [127, 283], "uv_size": [8, 0]},
+								"south": {"uv": [150, 283], "uv_size": [7, 0]},
+								"west": {"uv": [142, 283], "uv_size": [8, 0]},
+								"up": {"uv": [135, 275], "uv_size": [7, 8]},
+								"down": {"uv": [142, 283], "uv_size": [7, -8]}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

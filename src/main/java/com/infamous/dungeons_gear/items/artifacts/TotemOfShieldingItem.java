@@ -2,6 +2,9 @@ package com.infamous.dungeons_gear.items.artifacts;
 
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
+import com.infamous.dungeons_gear.entities.BuzzyNestEntity;
+import com.infamous.dungeons_gear.entities.ModEntityTypes;
+import com.infamous.dungeons_gear.entities.TotemOfShieldingEntity;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -48,10 +51,14 @@ public class TotemOfShieldingItem extends ArtifactItem {
             }
             if(itemUseContextPlayer != null) {
 
-                spawnShieldingCloudAtPos(itemUseContextPlayer, blockPos, 100);
-                itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemUseContextItem)));
-
-                ArtifactItem.putArtifactOnCooldown(itemUseContextPlayer, itemUseContextItem.getItem());
+                TotemOfShieldingEntity totemOfShieldingEntity = ModEntityTypes.TOTEM_OF_SHIELDING.get().create(itemUseContextPlayer.level);
+                if(totemOfShieldingEntity != null) {
+                    totemOfShieldingEntity.moveTo(blockPos, 0, 0);
+                    totemOfShieldingEntity.setOwner(itemUseContextPlayer);
+                    itemUseContextPlayer.level.addFreshEntity(totemOfShieldingEntity);
+                    itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemUseContextItem)));
+                    ArtifactItem.putArtifactOnCooldown(itemUseContextPlayer, itemUseContextItem.getItem());
+                }
             }
         }
         return ActionResult.consume(itemUseContext.getItemInHand());

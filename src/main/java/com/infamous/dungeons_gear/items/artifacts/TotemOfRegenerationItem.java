@@ -2,11 +2,14 @@ package com.infamous.dungeons_gear.items.artifacts;
 
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
+import com.infamous.dungeons_gear.entities.ModEntityTypes;
+import com.infamous.dungeons_gear.entities.TotemOfRegenerationEntity;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -17,10 +20,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
-
-import static com.infamous.dungeons_gear.utilties.AOECloudHelper.spawnRegenCloudAtPos;
-
-import net.minecraft.item.Item.Properties;
 
 public class TotemOfRegenerationItem extends ArtifactItem {
     public TotemOfRegenerationItem(Properties properties) {
@@ -46,11 +45,14 @@ public class TotemOfRegenerationItem extends ArtifactItem {
                 blockPos = itemUseContextPos.relative(itemUseContextFace);
             }
             if(itemUseContextPlayer != null) {
-
-                spawnRegenCloudAtPos(itemUseContextPlayer, false, blockPos, 1);
-                itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemUseContextItem)));
-
-                ArtifactItem.putArtifactOnCooldown(itemUseContextPlayer, itemUseContextItem.getItem());
+                TotemOfRegenerationEntity totemOfRegenerationEntity = ModEntityTypes.TOTEM_OF_REGENERATION.get().create(itemUseContextPlayer.level);
+                if(totemOfRegenerationEntity != null) {
+                    totemOfRegenerationEntity.moveTo(blockPos, 0, 0);
+                    totemOfRegenerationEntity.setOwner(itemUseContextPlayer);
+                    itemUseContextPlayer.level.addFreshEntity(totemOfRegenerationEntity);
+                    itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemUseContextItem)));
+                    ArtifactItem.putArtifactOnCooldown(itemUseContextPlayer, itemUseContextItem.getItem());
+                }
             }
         }
         return ActionResult.consume(itemUseContext.getItemInHand());
