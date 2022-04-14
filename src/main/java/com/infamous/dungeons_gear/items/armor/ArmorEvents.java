@@ -108,22 +108,6 @@ public class ArmorEvents {
     }
 
     @SubscribeEvent
-    public static void onArrowDrop(LivingDropsEvent event) {
-        if (event.getSource().getEntity() instanceof LivingEntity) {
-            LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
-            LivingEntity victim = (LivingEntity) event.getEntityLiving();
-            int maxLevel = StreamSupport.stream(attacker.getArmorSlots().spliterator(), false).map(ArrowHoarderEnchantment::arrowHoarderLevel).max(Integer::compare).orElse(0);
-            int drops = (maxLevel / 4);
-            drops += attacker.getRandom().nextFloat() <= (maxLevel % 4) / 4.0F ? 1 : 0;
-            Collection<ItemEntity> itemEntities = event.getDrops();
-            if (drops > 0 && victim instanceof IMob && itemEntities.stream().anyMatch(itemEntity -> itemEntity.getItem().getItem().equals(Items.ARROW))) {
-                ItemEntity arrowDrop = new ItemEntity(victim.level, victim.getX(), victim.getY(), victim.getZ(), new ItemStack(ARROW_BUNDLE.get(), drops));
-                itemEntities.add(arrowDrop);
-            }
-        }
-    }
-
-    @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         PlayerEntity player = event.player;
         if (player == null) return;
@@ -136,12 +120,6 @@ public class ArmorEvents {
                 comboCap.setJumpCooldownTimer(comboCap.getJumpCooldownTimer() - 1);
             } else if(comboCap.getJumpCooldownTimer() < 0){
                 comboCap.setJumpCooldownTimer(0);
-            }
-
-            if (comboCap.getLastShoutTimer() > 0) {
-                comboCap.setLastShoutTimer(comboCap.getLastShoutTimer() - 1);
-            } else if(comboCap.getLastShoutTimer() < 0){
-                comboCap.setLastShoutTimer(0);
             }
 
 

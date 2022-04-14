@@ -1,10 +1,7 @@
 package com.infamous.dungeons_gear.capabilities.combo;
 
 
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.BlockPos;
-
-import javax.annotation.Nullable;
 
 public interface ICombo {
 
@@ -29,12 +26,6 @@ public interface ICombo {
 
     int getArrowsInCounter();
     void setArrowsInCounter(int arrowsInCounter);
-
-    int getBurnNearbyTimer();
-    void setBurnNearbyTimer(int burnNearbyTimer);
-
-    int getFreezeNearbyTimer();
-    void setFreezeNearbyTimer(int freezeNearbyTimer);
 
     int getGravityPulseTimer();
     void setGravityPulseTimer(int gravityPulseTimer);

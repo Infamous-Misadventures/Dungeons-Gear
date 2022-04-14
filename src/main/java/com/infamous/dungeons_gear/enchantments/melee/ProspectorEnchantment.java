@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.enchantments.melee;
 
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DropsEnchantment;
@@ -44,7 +45,7 @@ public class ProspectorEnchantment extends DropsEnchantment {
             if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.PROSPECTOR)){
                 int prospectorLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.PROSPECTOR, mainhand);
                 float prospectorChance;
-                prospectorChance = 0.25F * prospectorLevel;
+                prospectorChance = (float) (DungeonsGearConfig.PROSPECTOR_CHANCE_PER_LEVEL.get() * prospectorLevel);
                 float prospectorRand = attacker.getRandom().nextFloat();
                 if(prospectorRand <= prospectorChance){
                     if(victim instanceof MonsterEntity){

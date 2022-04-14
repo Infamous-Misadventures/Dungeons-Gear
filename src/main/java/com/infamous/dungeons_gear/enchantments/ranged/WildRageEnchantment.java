@@ -51,7 +51,6 @@ public class WildRageEnchantment extends DungeonsEnchantment {
         if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
         LivingEntity shooter = (LivingEntity)arrow.getOwner();
         int wildRageLevel = ArrowHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.WILD_RAGE);
-        boolean uniqueWeaponFlag = arrow.getTags().contains(INTRINSIC_WILD_RAGE);
         MobEntity victim = (MobEntity) ((EntityRayTraceResult)rayTraceResult).getEntity();
         if(!(victim instanceof IMob) || !(victim.canChangeDimensions())) return;
         if(wildRageLevel > 0){
@@ -60,12 +59,6 @@ public class WildRageEnchantment extends DungeonsEnchantment {
 
             float chance = shooter.getRandom().nextFloat();
             if(chance <=  wildRageChance){
-                sendIntoWildRage(victim);
-            }
-        }
-        if(uniqueWeaponFlag){
-            float chance = shooter.getRandom().nextFloat();
-            if(chance <=  0.2F){
                 sendIntoWildRage(victim);
             }
         }

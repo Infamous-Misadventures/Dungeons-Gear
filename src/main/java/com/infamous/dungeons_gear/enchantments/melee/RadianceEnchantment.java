@@ -33,24 +33,6 @@ public class RadianceEnchantment extends DungeonsEnchantment {
                 EquipmentSlotType.MAINHAND});
     }
 
-//    @SubscribeEvent
-//    public static void onRadianceAttack(LivingAttackEvent event) {
-//        if (event.getSource().getDirectEntity() != event.getSource().getEntity()) return;
-//        if (event.getSource() instanceof OffhandAttackDamageSource) return;
-//        if (!(event.getSource().getEntity() instanceof LivingEntity)) return;
-//        LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
-//        if (attacker.getLastHurtMobTimestamp() == attacker.tickCount) return;
-//        LivingEntity victim = event.getEntityLiving();
-//        ItemStack mainhand = attacker.getMainHandItem();
-//        if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.RADIANCE)) {
-//            float chance = attacker.getRandom().nextFloat();
-//            int level = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.RADIANCE, mainhand);
-//            if (chance <= RADIANCE_CHANCE.get() && !PlayerAttackHelper.isProbablyNotMeleeDamage(event.getSource())) {
-//                AOECloudHelper.spawnRegenCloud(attacker, level - 1);
-//            }
-//        }
-//    }
-
     public int getMaxLevel() {
         return 3;
     }

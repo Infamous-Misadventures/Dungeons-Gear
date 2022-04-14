@@ -1,6 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.melee_ranged;
 
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
@@ -56,7 +57,7 @@ public class PoisonCloudEnchantment extends DungeonsEnchantment {
         if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.POISON_CLOUD)) {
             float chance = attacker.getRandom().nextFloat();
             int level = EnchantmentHelper.getItemEnchantmentLevel(MeleeRangedEnchantmentList.POISON_CLOUD, mainhand);
-            if (chance <= 0.3F && !PlayerAttackHelper.isProbablyNotMeleeDamage(event.getSource())) {
+            if (chance <= DungeonsGearConfig.POISON_CLOUD_CHANCE.get() && !PlayerAttackHelper.isProbablyNotMeleeDamage(event.getSource())) {
                 checkForPlayer(attacker);
                 AOECloudHelper.spawnPoisonCloud(attacker, victim, level - 1);
             }
@@ -79,7 +80,7 @@ public class PoisonCloudEnchantment extends DungeonsEnchantment {
                 if (entityRayTraceResult.getEntity() instanceof LivingEntity) {
                     LivingEntity victim = (LivingEntity) ((EntityRayTraceResult) rayTraceResult).getEntity();
                     float poisonRand = shooter.getRandom().nextFloat();
-                    if (poisonRand <= 0.3F) {
+                    if (poisonRand <= DungeonsGearConfig.POISON_CLOUD_CHANCE.get()) {
                         checkForPlayer(shooter);
                         AOECloudHelper.spawnPoisonCloud(shooter, victim, poisonLevel - 1);
                     }

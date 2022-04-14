@@ -64,7 +64,7 @@ public class ExplodingShotEnchantment extends DungeonsEnchantment {
     }
 
     @SubscribeEvent
-    public static void onCrossbowDamage(LivingDamageEvent event) {
+    public static void onDamage(LivingDamageEvent event) {
         if (event.getSource() instanceof IndirectEntityDamageSource) {
             if (event.getSource().getDirectEntity() instanceof AbstractArrowEntity) {
                 AbstractArrowEntity arrowEntity = (AbstractArrowEntity) event.getSource().getDirectEntity();

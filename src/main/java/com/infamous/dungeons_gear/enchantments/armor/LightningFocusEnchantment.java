@@ -1,6 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
 import com.infamous.dungeons_gear.DungeonsGear;
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.damagesources.ElectricShockDamageSource;
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
@@ -42,7 +43,7 @@ public class LightningFocusEnchantment extends FocusEnchantment {
             LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
             int lightningFocusLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.LIGHTNING_FOCUS, attacker);
             if(lightningFocusLevel > 0){
-                float multiplier = 1 + (0.25F * lightningFocusLevel);
+                float multiplier = 1 + (float) (DungeonsGearConfig.FOCUS_MULTIPLIER_PER_LEVEL.get() * lightningFocusLevel);
                 float currentDamage = event.getAmount();
                 event.setAmount(currentDamage * multiplier);
             }

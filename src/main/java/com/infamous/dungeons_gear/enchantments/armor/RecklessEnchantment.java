@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
@@ -41,8 +42,8 @@ public class RecklessEnchantment extends DungeonsEnchantment {
             player.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(RECKLESS);
             int recklessLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.RECKLESS, player);
             if (recklessLevel > 0) {
-                player.getAttribute(Attributes.MAX_HEALTH).addTransientModifier(new AttributeModifier(RECKLESS, "reckless multiplier", -0.6, AttributeModifier.Operation.MULTIPLY_TOTAL));
-                player.getAttribute(Attributes.ATTACK_DAMAGE).addTransientModifier(new AttributeModifier(RECKLESS, "reckless multiplier", 0.2 + (0.2 * recklessLevel), AttributeModifier.Operation.MULTIPLY_TOTAL));
+                player.getAttribute(Attributes.MAX_HEALTH).addTransientModifier(new AttributeModifier(RECKLESS, "reckless multiplier", DungeonsGearConfig.RECKLESS_MAX_HEALTH_MULTIPLIER.get(), AttributeModifier.Operation.MULTIPLY_TOTAL));
+                player.getAttribute(Attributes.ATTACK_DAMAGE).addTransientModifier(new AttributeModifier(RECKLESS, "reckless multiplier", DungeonsGearConfig.RECKLESS_ATTACK_DAMAGE_BASE_MULTIPLIER.get() + (DungeonsGearConfig.RECKLESS_ATTACK_DAMAGE_MULTIPLIER_PER_LEVEL.get() * recklessLevel), AttributeModifier.Operation.MULTIPLY_TOTAL));
             }
         }
     }

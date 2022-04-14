@@ -1,6 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
 import com.infamous.dungeons_gear.DungeonsGear;
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.FocusEnchantment;
@@ -40,7 +41,7 @@ public class SoulFocusEnchantment extends FocusEnchantment {
             LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
             int soulFocusLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.SOUL_FOCUS, attacker);
             if(soulFocusLevel > 0){
-                float multiplier = 1 + (0.1F * soulFocusLevel);
+                float multiplier = 1 + (float) (DungeonsGearConfig.FOCUS_MULTIPLIER_PER_LEVEL.get() * soulFocusLevel);
                 float currentDamage = event.getAmount();
                 event.setAmount(currentDamage * multiplier);
             }

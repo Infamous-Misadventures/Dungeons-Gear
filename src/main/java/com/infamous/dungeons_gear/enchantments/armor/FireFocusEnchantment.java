@@ -2,6 +2,7 @@ package com.infamous.dungeons_gear.enchantments.armor;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
@@ -47,7 +48,7 @@ public class FireFocusEnchantment extends FocusEnchantment {
         if(attacker != null){
             int fireFocusLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.FIRE_FOCUS, attacker);
             if(fireFocusLevel > 0){
-                float multiplier = 1 + (0.25F * fireFocusLevel);
+                float multiplier = 1 + (float) (DungeonsGearConfig.FOCUS_MULTIPLIER_PER_LEVEL.get() * fireFocusLevel);
                 float currentDamage = event.getAmount();
                 event.setAmount(currentDamage * multiplier);
             }

@@ -63,8 +63,8 @@ public class LuckyExplorerEnchantment extends DropsEnchantment implements IEmera
                         int rollCount = 1 + (luckyExplorerLevel - 1) * 2;
                         for (int i = 0; i < rollCount; i++) {
                             ItemStack itemStack = LootTableHelper.generateItemStack((ServerWorld) player.level, player.blockPosition(), new ResourceLocation(MODID, "enchantments/lucky_explorer"), player.getRandom());
-                            ItemEntity emeraldDrop = new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), itemStack);
-                            player.level.addFreshEntity(emeraldDrop);
+                            ItemEntity luckyExplorerDrop = new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), itemStack);
+                            player.level.addFreshEntity(luckyExplorerDrop);
                         }
                     }
                 }

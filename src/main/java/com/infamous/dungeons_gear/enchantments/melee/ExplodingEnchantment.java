@@ -53,7 +53,7 @@ public class ExplodingEnchantment extends AOEDamageEnchantment {
             if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.EXPLODING)){
                 int explodingLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.EXPLODING, mainhand);
                 float explosionDamage;
-                explosionDamage = victim.getMaxHealth() * 0.2F * explodingLevel;
+                explosionDamage = victim.getMaxHealth() * (float) (DungeonsGearConfig.EXPLODING_MULTIPLIER_PER_LEVEL.get() * explodingLevel);
                 SoundHelper.playGenericExplodeSound(victim);
                 AOECloudHelper.spawnExplosionCloud(attacker, victim, 3.0F);
                 AreaOfEffectHelper.causeExplosionAttack(attacker, victim, explosionDamage, 3.0F);

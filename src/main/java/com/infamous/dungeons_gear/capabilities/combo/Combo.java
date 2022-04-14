@@ -14,8 +14,6 @@ public class Combo implements ICombo {
     private int thunderingArrowCount;
     private int harpoonCount;
 
-    private int burnNearbyTimer;
-    private int freezeNearbyTimer;
     private int snowballNearbyTimer;
     private int gravityPulseTimer;
     private int comboCount;
@@ -47,8 +45,6 @@ public class Combo implements ICombo {
         this.harpoonCount = 0;
 
         this.arrowsInCounter = 0;
-        this.burnNearbyTimer = 10;
-        this.burnNearbyTimer = 40;
         this.gravityPulseTimer = 100;
         this.snowballNearbyTimer = 100;
         this.jumpCooldownTimer = 0;
@@ -145,26 +141,6 @@ public class Combo implements ICombo {
     @Override
     public void setArrowsInCounter(int arrowsInCounter) {
         this.arrowsInCounter = arrowsInCounter;
-    }
-
-    @Override
-    public int getBurnNearbyTimer() {
-        return this.burnNearbyTimer;
-    }
-
-    @Override
-    public void setBurnNearbyTimer(int burnNearbyTimer) {
-        this.burnNearbyTimer = burnNearbyTimer;
-    }
-
-    @Override
-    public int getFreezeNearbyTimer() {
-        return this.freezeNearbyTimer;
-    }
-
-    @Override
-    public void setFreezeNearbyTimer(int freezeNearbyTimer) {
-        this.freezeNearbyTimer = freezeNearbyTimer;
     }
 
     @Override

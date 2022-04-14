@@ -1,6 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
 import com.infamous.dungeons_gear.DungeonsGear;
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
@@ -45,7 +46,7 @@ public class PoisonFocusEnchantment extends FocusEnchantment {
             if(attacker != null){
                 int poisonFocusLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.POISON_FOCUS, attacker);
                 if(poisonFocusLevel > 0){
-                    float multiplier = 1 + (0.25F * poisonFocusLevel);
+                    float multiplier = 1 + (float) (DungeonsGearConfig.FOCUS_MULTIPLIER_PER_LEVEL.get() * poisonFocusLevel);
                     float currentDamage = event.getAmount();
                     event.setAmount(currentDamage * multiplier);
                 }

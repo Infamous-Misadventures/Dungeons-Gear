@@ -41,8 +41,6 @@ public class DeflectEnchantment extends DungeonsEnchantment {
         return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof ProtectionEnchantment);
     }
 
-
-
     @SubscribeEvent
     public static void onDeflectImpact(ProjectileImpactEvent.Arrow event){
         RayTraceResult rayTraceResult = event.getRayTraceResult();
@@ -55,7 +53,7 @@ public class DeflectEnchantment extends DungeonsEnchantment {
             int deflectLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.DEFLECT, victim);
             double originalDamage = arrow.getBaseDamage();
             double deflectChance;
-            deflectChance = deflectLevel * 0.2F;
+            deflectChance = deflectLevel * DungeonsGearConfig.DEFLECT_CHANCE_PER_LEVEL.get();
             float deflectRand = victim.getRandom().nextFloat();
             if(deflectRand <= deflectChance){
                 event.setCanceled(true);

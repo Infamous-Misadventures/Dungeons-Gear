@@ -47,7 +47,7 @@ public class FrenziedEnchantment extends HealthAbilityEnchantment {
             if (currentHealth <= maxHealth / 2) {
                 if (ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.FRENZIED)) {
                     int frenziedLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.FRENZIED, player);
-                    player.getAttribute(Attributes.ATTACK_SPEED).addTransientModifier(new AttributeModifier(FRENZY, "frenzy multiplier", 0.1 * frenziedLevel, AttributeModifier.Operation.MULTIPLY_TOTAL));
+                    player.getAttribute(Attributes.ATTACK_SPEED).addTransientModifier(new AttributeModifier(FRENZY, "frenzy multiplier", DungeonsGearConfig.FRENZIED_MULTIPLIER_PER_LEVEL.get() * frenziedLevel, AttributeModifier.Operation.MULTIPLY_TOTAL));
                 }
             }
         }

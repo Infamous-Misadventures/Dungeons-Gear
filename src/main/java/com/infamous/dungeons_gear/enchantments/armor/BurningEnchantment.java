@@ -1,18 +1,20 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
-import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.PulseEnchantment;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
-import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
+import com.infamous.dungeons_libraries.capabilities.timers.ITimers;
+import com.infamous.dungeons_libraries.capabilities.timers.TimersHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -43,25 +45,27 @@ public class BurningEnchantment extends PulseEnchantment {
         PlayerEntity player = event.player;
         if(player == null || player.isSpectator()) return;
         if(event.phase == TickEvent.Phase.START) return;
-        if(player.isAlive()&&player.isEffectiveAi()){
-            ICombo comboCap = CapabilityHelper.getComboCapability(player);
-            if(comboCap == null) return;
-            int burnNearbyTimer = comboCap.getBurnNearbyTimer();
+        if(player.isAlive() && player.isEffectiveAi()){
+            triggerEffect(player);
+        }
+    }
 
-            if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.BURNING)){
-                if(burnNearbyTimer <= 0){
-                    int burningLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.BURNING, player);
-                    AreaOfEffectHelper.burnNearbyEnemies(player, 1.0F * burningLevel, 1.5F);
-                    comboCap.setBurnNearbyTimer(10);
-                }
-                else{
-                    comboCap.setBurnNearbyTimer(burnNearbyTimer - 1);
-                }
-            }
-            else{
-                if(burnNearbyTimer != 10){
-                    comboCap.setBurnNearbyTimer(10);
-                }
+    @SubscribeEvent
+    public static void onLivingUpdate(LivingEvent.LivingUpdateEvent event){
+        triggerEffect(event.getEntityLiving());
+    }
+
+    public static void triggerEffect(LivingEntity livingEntity){
+        if(ModEnchantmentHelper.hasEnchantment(livingEntity, ArmorEnchantmentList.BURNING)){
+            ITimers timers = TimersHelper.getTimersCapability(livingEntity);
+            if(timers == null) return;
+            int currentTimer = timers.getEnchantmentTimer(ArmorEnchantmentList.BURNING);
+            if(currentTimer < 0) {
+                timers.setEnchantmentTimer(ArmorEnchantmentList.BURNING, 10);
+            }else if(currentTimer == 0){
+                int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.BURNING, livingEntity);
+                AreaOfEffectHelper.burnNearbyEnemies(livingEntity, 1.0F * enchantmentLevel, 1.5F);
+                timers.setEnchantmentTimer(ArmorEnchantmentList.BURNING, 10);
             }
         }
     }

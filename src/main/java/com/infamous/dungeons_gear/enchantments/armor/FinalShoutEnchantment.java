@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
+import com.infamous.dungeons_gear.integration.curios.CuriosIntegration;
 import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_gear.items.artifacts.beacon.AbstractBeaconItem;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
@@ -9,6 +10,8 @@ import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.HealthAbilityEnchantment;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
+import com.infamous.dungeons_libraries.capabilities.timers.ITimers;
+import com.infamous.dungeons_libraries.capabilities.timers.TimersHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -25,8 +28,13 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
+import static com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList.FINAL_SHOUT;
 
 import net.minecraft.enchantment.Enchantment.Rarity;
+import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
+
+import java.util.Optional;
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class FinalShoutEnchantment extends HealthAbilityEnchantment {
@@ -48,10 +56,23 @@ public class FinalShoutEnchantment extends HealthAbilityEnchantment {
                 float currentHealth = player.getHealth();
                 float maxHealth = player.getMaxHealth();
                 float damageDealt = event.getAmount();
+                ITimers timers = TimersHelper.getTimersCapability(player);
                 ICombo comboCap = CapabilityHelper.getComboCapability(player);
                 if (currentHealth - damageDealt <= (0.25F * maxHealth)) {
-                    if (comboCap != null && comboCap.getLastShoutTimer() == 0 && ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.FINAL_SHOUT)) {
+                    if (timers != null && timers.getEnchantmentTimer(FINAL_SHOUT) == 0 && ModEnchantmentHelper.hasEnchantment(player, FINAL_SHOUT)) {
                         int proc = 0;
+                        for(ItemStack is : CuriosIntegration.getArtifacts(player))
+                            if (is.getItem() instanceof ArtifactItem && !(is.getItem() instanceof AbstractBeaconItem)) {
+                                ActionResult<ItemStack> procResult = ((ArtifactItem) is.getItem()).procArtifact(new ItemUseContext(player, Hand.MAIN_HAND, new BlockRayTraceResult(player.position(), Direction.UP, player.blockPosition(), false)));
+                                if(procResult.getResult().consumesAction() && !player.level.isClientSide) ArtifactItem.triggerSynergy(player, is);
+                                proc++;
+                            }
+                        for (ItemStack is : player.inventory.offhand)
+                            if (is.getItem() instanceof ArtifactItem && !(is.getItem() instanceof AbstractBeaconItem)) {
+                                ActionResult<ItemStack> procResult = ((ArtifactItem) is.getItem()).procArtifact(new ItemUseContext(player, Hand.OFF_HAND, new BlockRayTraceResult(player.position(), Direction.UP, player.blockPosition(), false)));
+                                if(procResult.getResult().consumesAction() && !player.level.isClientSide) ArtifactItem.triggerSynergy(player, is);
+                                proc++;
+                            }
                         for (ItemStack is : player.inventory.offhand)
                             if (is.getItem() instanceof ArtifactItem && !(is.getItem() instanceof AbstractBeaconItem)) {
                                 ActionResult<ItemStack> procResult = ((ArtifactItem) is.getItem()).procArtifact(new ItemUseContext(player, Hand.OFF_HAND, new BlockRayTraceResult(player.position(), Direction.UP, player.blockPosition(), false)));
@@ -66,14 +87,16 @@ public class FinalShoutEnchantment extends HealthAbilityEnchantment {
                                 if (++proc == 3) break;
                             }
                         if (proc > 0) {
-                            comboCap.setLastShoutTimer(240 - 40 * Math.min(EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.FINAL_SHOUT, player), 6));
+                            comboCap.setLastShoutTimer(240 - 40 * Math.min(EnchantmentHelper.getEnchantmentLevel(FINAL_SHOUT, player), 6));
                         }
-
+                    }else if(timers != null && timers.getEnchantmentTimer(FINAL_SHOUT) < 0 && ModEnchantmentHelper.hasEnchantment(player, FINAL_SHOUT)){
+                        timers.setEnchantmentTimer(FINAL_SHOUT, 0);
                     }
                 }
             }
         }
     }
+
 
     public int getMaxLevel() {
         return 3;

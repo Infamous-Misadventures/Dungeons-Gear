@@ -5,19 +5,20 @@ import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.HealthAbilityEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
+import com.infamous.dungeons_libraries.attribute.AttributeRegistry;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
 import net.minecraft.util.IndirectEntityDamageSource;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -25,8 +26,6 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.UUID;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-
-import net.minecraft.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class CowardiceEnchantment extends HealthAbilityEnchantment {
@@ -45,37 +44,26 @@ public class CowardiceEnchantment extends HealthAbilityEnchantment {
         PlayerEntity player = event.player;
         if (player == null) return;
         if (event.phase == TickEvent.Phase.START) return;
-        if (player.isAlive()) {
-            float maxHealth = player.getMaxHealth();
-            float currentHealth = player.getHealth();
-            player.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(COWARD);
-            if (currentHealth == maxHealth) {
-                if (ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.COWARDICE)) {
-                    int cowardiceLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.COWARDICE, player);
-                    player.getAttribute(Attributes.ATTACK_DAMAGE).addTransientModifier(new AttributeModifier(COWARD, "cowardice multiplier", 0.1 * (cowardiceLevel+1), AttributeModifier.Operation.MULTIPLY_TOTAL));
-                }
-            }
-        }
+        triggerEffect(player);
+    }
+    @SubscribeEvent
+    public static void onLivingUpdate(LivingEvent.LivingUpdateEvent event){
+        triggerEffect(event.getEntityLiving());
     }
 
-    @SubscribeEvent
-    public static void onDamage(LivingHurtEvent event) {
-        if (event.getSource() instanceof IndirectEntityDamageSource) {
-            if (event.getSource().getDirectEntity() instanceof AbstractArrowEntity) {
-                AbstractArrowEntity arrowEntity = (AbstractArrowEntity) event.getSource().getDirectEntity();
-                Entity shooterEntity = arrowEntity.getOwner();
-                if (shooterEntity instanceof PlayerEntity) {
-                    PlayerEntity playerEntity = (PlayerEntity) arrowEntity.getOwner();
-                    if (playerEntity != null) {
-                        if (playerEntity.getHealth() == playerEntity.getMaxHealth()) {
-                            if (ModEnchantmentHelper.hasEnchantment(playerEntity, ArmorEnchantmentList.COWARDICE)) {
-                                int cowardiceLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.COWARDICE, playerEntity);
-                                float originalDamage = event.getAmount();
-                                event.setAmount(originalDamage *
-                                        (1 + 0.1F * (cowardiceLevel + 1)));
-                            }
-                        }
-                    }
+    private static void triggerEffect(LivingEntity livingEntity) {
+        if (livingEntity.isAlive()) {
+            float maxHealth = livingEntity.getMaxHealth();
+            float currentHealth = livingEntity.getHealth();
+            ModifiableAttributeInstance attackDamage = livingEntity.getAttribute(Attributes.ATTACK_DAMAGE);
+            if(attackDamage == null) return;
+            attackDamage.removeModifier(COWARD);
+            livingEntity.getAttribute(AttributeRegistry.RANGED_DAMAGE_MULTIPLIER.get()).removeModifier(COWARD);
+            if (currentHealth >= maxHealth) {
+                if (ModEnchantmentHelper.hasEnchantment(livingEntity, ArmorEnchantmentList.COWARDICE)) {
+                    int cowardiceLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.COWARDICE, livingEntity);
+                    livingEntity.getAttribute(Attributes.ATTACK_DAMAGE).addTransientModifier(new AttributeModifier(COWARD, "cowardice multiplier", DungeonsGearConfig.COWARDICE_BASE_MULTIPLIER.get() + DungeonsGearConfig.COWARDICE_MULTIPLIER_PER_LEVEL.get() * cowardiceLevel, AttributeModifier.Operation.MULTIPLY_TOTAL));
+                    livingEntity.getAttribute(AttributeRegistry.RANGED_DAMAGE_MULTIPLIER.get()).addTransientModifier(new AttributeModifier(COWARD, "cowardice multiplier", DungeonsGearConfig.COWARDICE_BASE_MULTIPLIER.get() + DungeonsGearConfig.COWARDICE_MULTIPLIER_PER_LEVEL.get() * cowardiceLevel, AttributeModifier.Operation.MULTIPLY_TOTAL));
                 }
             }
         }

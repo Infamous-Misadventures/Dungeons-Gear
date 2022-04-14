@@ -42,23 +42,12 @@ public class RadianceShotEnchantment extends DungeonsEnchantment {
         if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
         LivingEntity shooter = (LivingEntity)arrow.getOwner();
         int radianceShotLevel = ArrowHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.RADIANCE_SHOT);
-        boolean uniqueWeaponFlag = arrow.getTags().contains(INTRINSIC_RADIANCE_SHOT_TAG);
         if(radianceShotLevel > 0){
             float radianceShotRand = shooter.getRandom().nextFloat();
             if(radianceShotRand <=  0.2F){
-                if(uniqueWeaponFlag) radianceShotLevel++;
                 if(rayTraceResult instanceof BlockRayTraceResult){
                     BlockPos blockPos = ((BlockRayTraceResult) rayTraceResult).getBlockPos();
                     AOECloudHelper.spawnRegenCloudAtPos(shooter, true, blockPos, radianceShotLevel - 1);
-                }
-            }
-        }
-        if(uniqueWeaponFlag){
-            float radianceShotRand = shooter.getRandom().nextFloat();
-            if(radianceShotRand <=  0.2F){
-                if(rayTraceResult instanceof BlockRayTraceResult){
-                    BlockPos blockPos = ((BlockRayTraceResult) rayTraceResult).getBlockPos();
-                    AOECloudHelper.spawnRegenCloudAtPos(shooter, true, blockPos, 0);
                 }
             }
         }

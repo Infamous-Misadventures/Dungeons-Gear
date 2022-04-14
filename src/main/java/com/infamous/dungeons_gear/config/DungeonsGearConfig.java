@@ -92,6 +92,26 @@ public class DungeonsGearConfig {
     public static ForgeConfigSpec.ConfigValue<Double> RADIANCE_CHANCE;
     public static ForgeConfigSpec.ConfigValue<Double> THUNDERING_CHANCE;
     public static ForgeConfigSpec.ConfigValue<Integer> THUNDERING_BASE_DAMAGE;
+    public static ForgeConfigSpec.ConfigValue<Double> ALTRUISTIC_DAMAGE_TO_HEALING_PER_LEVEL;
+    public static ForgeConfigSpec.ConfigValue<Double> BEAST_BOSS_BASE_MULTIPLIER;
+    public static ForgeConfigSpec.ConfigValue<Double> BEAST_BOSS_MULTIPLIER_PER_LEVEL;
+    public static ForgeConfigSpec.ConfigValue<Integer> BEAST_BURST_DAMAGE_PER_LEVEL;
+    public static ForgeConfigSpec.ConfigValue<Integer> BEAST_SURGE_DURATION;
+    public static ForgeConfigSpec.ConfigValue<Double> COWARDICE_BASE_MULTIPLIER;
+    public static ForgeConfigSpec.ConfigValue<Double> COWARDICE_MULTIPLIER_PER_LEVEL;
+    public static ForgeConfigSpec.ConfigValue<Double> DEFLECT_CHANCE_PER_LEVEL;
+    public static ForgeConfigSpec.ConfigValue<Double> FOCUS_MULTIPLIER_PER_LEVEL;
+    public static ForgeConfigSpec.ConfigValue<Double> FRENZIED_MULTIPLIER_PER_LEVEL;
+    public static ForgeConfigSpec.ConfigValue<Double> GRAVITY_PULSE_BASE_STRENGTH;
+    public static ForgeConfigSpec.ConfigValue<Double> GRAVITY_PULSE_STRENGTH_PER_LEVEL;
+    public static ForgeConfigSpec.ConfigValue<Integer> POTION_BARRIER_BASE_DURATION;
+    public static ForgeConfigSpec.ConfigValue<Integer> POTION_BARRIER_DURATION_PER_LEVEL;
+    public static ForgeConfigSpec.ConfigValue<Double> RECKLESS_MAX_HEALTH_MULTIPLIER;
+    public static ForgeConfigSpec.ConfigValue<Double> RECKLESS_ATTACK_DAMAGE_BASE_MULTIPLIER;
+    public static ForgeConfigSpec.ConfigValue<Double> RECKLESS_ATTACK_DAMAGE_MULTIPLIER_PER_LEVEL;
+    public static ForgeConfigSpec.ConfigValue<Double> EXPLODING_MULTIPLIER_PER_LEVEL;
+    public static ForgeConfigSpec.ConfigValue<Double> PROSPECTOR_CHANCE_PER_LEVEL;
+    public static ForgeConfigSpec.ConfigValue<Double> POISON_CLOUD_CHANCE;
 
 
     private static CommentedFileConfig cfg;
@@ -470,5 +490,66 @@ public class DungeonsGearConfig {
         THUNDERING_BASE_DAMAGE = builder
                 .comment("The base damage for Thundering [0-10000, default: 5]")
                 .defineInRange("thunderingBaseDamage", 5, 0, 10000);
+        ALTRUISTIC_DAMAGE_TO_HEALING_PER_LEVEL = builder
+                .comment("Multiplier per level damage to healing conversion. [0.0-5.0, default: 0.25]")
+                .defineInRange("altruisticDamageToHealingPerLevel", 0.25, 0, 5.0);
+        BEAST_BOSS_BASE_MULTIPLIER = builder
+                .comment("The decimal base multiplier on the minions's damage for beast boss [0.0-5.0, default: 0.1]")
+                .defineInRange("beastBossBaseMultiplier", 0.1, 0, 5.0);
+        BEAST_BOSS_MULTIPLIER_PER_LEVEL = builder
+                .comment("The multiplier increase per level for beast boss [0.0-5.0, default: 0.1]")
+                .defineInRange("beastBossMultiplierPerLevel", 0.1, 0, 5.0);
+        BEAST_BURST_DAMAGE_PER_LEVEL = builder
+                .comment("The amount of damage per trigger of Beast burst. " +
+                        "Each trigger causes an explosion around each minion [0-100, default: 5]")
+                .defineInRange("beastBurstDamagePerLevel", 5, 0, 100);
+        BEAST_SURGE_DURATION = builder
+                .comment("The duration in ticks of the speed boost applied by Beast Surge. [0-10000, default: 200]")
+                .defineInRange("beastSurgeDuration", 200, 0, 10000);
+        COWARDICE_BASE_MULTIPLIER = builder
+                .comment("The decimal base multiplier on the damage for cowardice [0.0-5.0, default: 0.1]")
+                .defineInRange("cowardiceBaseMultiplier", 0.1, 0, 5.0);
+        COWARDICE_MULTIPLIER_PER_LEVEL = builder
+                .comment("The multiplier increase per level for cowardice [0.0-5.0, default: 0.1]")
+                .defineInRange("cowardiceMultiplierPerLevel", 0.1, 0, 5.0);
+        DEFLECT_CHANCE_PER_LEVEL = builder
+                .comment("The chance per level for deflect to trigger [0.0-5.0, default: 0.2]")
+                .defineInRange("deflectChancePerLevel", 0.2, 0, 5.0);
+        FOCUS_MULTIPLIER_PER_LEVEL = builder
+                .comment("The multiplier increase per level for Focus Enchantments [0.0-5.0, default: 0.25]")
+                .defineInRange("focusMultiplierPerLevel", 0.25, 0, 5.0);
+        FRENZIED_MULTIPLIER_PER_LEVEL = builder
+                .comment("The multiplier increase per level for Frenzied [0.0-5.0, default: 0.1]")
+                .defineInRange("frenziedMultiplierPerLevel", 0.1, 0, 5.0);
+        GRAVITY_PULSE_BASE_STRENGTH = builder
+                .comment("The decimal base pull strength for Gravity Pulse [0.0-5.0, default: 0.1]")
+                .defineInRange("gravityPulseBaseStrength", 0.1, 0, 5.0);
+        GRAVITY_PULSE_STRENGTH_PER_LEVEL = builder
+                .comment("The strength increase per level for Gravity Pulse [0.0-5.0, default: 0.1]")
+                .defineInRange("gravityPulseStrengthPerLevel", 0.1, 0, 5.0);
+        POTION_BARRIER_BASE_DURATION = builder
+                .comment("The decimal base duration for Potion Barrier [0-10000, default: 60]")
+                .defineInRange("potionBarrierBaseDuration", 60, 0, 10000);
+        POTION_BARRIER_DURATION_PER_LEVEL = builder
+                .comment("The duration increase per level for Potion Barrier [0-10000, default: 20]")
+                .defineInRange("potionBarrierDurationPerLevel", 20, 0, 10000);
+        RECKLESS_MAX_HEALTH_MULTIPLIER = builder
+                .comment("The multiplier to max health for reckless. Balanced as a negative number. [-5.0-5.0, default: -0.6]")
+                .defineInRange("recklessMaxHealthMultiplier", -0.6, -5.0, 5.0);
+        RECKLESS_ATTACK_DAMAGE_BASE_MULTIPLIER = builder
+                .comment("The decimal base multiplier on the damage for reckless [-5.0-5.0, default: 0.2]")
+                .defineInRange("recklessAttackDamageBaseMultiplier", 0.2, -5.0, 5.0);
+        RECKLESS_ATTACK_DAMAGE_MULTIPLIER_PER_LEVEL = builder
+                .comment("The multiplier increase per level for reckless [-5.0-5.0, default: 0.2]")
+                .defineInRange("recklessAttackDamageMultiplierPerLevel", 0.2, -5.0, 5.0);
+        EXPLODING_MULTIPLIER_PER_LEVEL = builder
+                .comment("The multiplier increase per level for exploding [-5.0-5.0, default: 0.2]")
+                .defineInRange("explodingMultiplierPerLevel", 0.2, -5.0, 5.0);
+        PROSPECTOR_CHANCE_PER_LEVEL = builder
+                .comment("The chance per level for prospector to trigger [-5.0-5.0, default: 0.25]")
+                .defineInRange("prospectorChancePerLevel", 0.25, -5.0, 5.0);
+        POISON_CLOUD_CHANCE = builder
+                .comment("The chance for Poison Cloud to trigger [-5.0-5.0, default: 0.3]")
+                .defineInRange("prospectorChancePerLevel", 0.3, -5.0, 5.0);
     }
 }

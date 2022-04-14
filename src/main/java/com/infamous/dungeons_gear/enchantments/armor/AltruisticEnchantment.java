@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
@@ -34,16 +35,12 @@ public class AltruisticEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onDamage(LivingDamageEvent event) {
-        LivingEntity livingEntity = event.getEntityLiving();
-        if(livingEntity instanceof PlayerEntity){
-            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
-            if(ModEnchantmentHelper.hasEnchantment(playerEntity, ArmorEnchantmentList.ALTRUISTIC)){
-                int altruisticLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.ALTRUISTIC, playerEntity);
-                float damage = event.getAmount();
-                float damageToHealingMultiplier = 0.25F * altruisticLevel;
-                AreaOfEffectHelper.healNearbyAllies(playerEntity, damage * damageToHealingMultiplier, 12);
-
-            }
+    LivingEntity livingEntity = event.getEntityLiving();
+        if(ModEnchantmentHelper.hasEnchantment(livingEntity, ArmorEnchantmentList.ALTRUISTIC)){
+            int altruisticLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.ALTRUISTIC, livingEntity);
+            float damage = event.getAmount();
+            float damageToHealingMultiplier = DungeonsGearConfig.ALTRUISTIC_DAMAGE_TO_HEALING_PER_LEVEL.get().floatValue() * altruisticLevel;
+            AreaOfEffectHelper.healNearbyAllies(livingEntity, damage * damageToHealingMultiplier, 12);
         }
     }
 }

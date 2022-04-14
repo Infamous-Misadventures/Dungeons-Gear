@@ -1,6 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
 import com.infamous.dungeons_gear.DungeonsGear;
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.BeastEnchantment;
@@ -54,7 +55,7 @@ public class BeastBossEnchantment extends BeastEnchantment {
                         LivingEntity beastOwnerAsLiving = ((LivingEntity) beastOwner);
                         int beastBossLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.BEAST_BOSS, beastOwnerAsLiving);
                         if(beastBossLevel > 0){
-                            float beastBossFactor = 0.1F + (0.1F * beastBossLevel);
+                            float beastBossFactor = (float) (DungeonsGearConfig.BEAST_BOSS_BASE_MULTIPLIER.get() + (DungeonsGearConfig.BEAST_BOSS_MULTIPLIER_PER_LEVEL.get()  * beastBossLevel));
                             float currentDamage = event.getAmount();
                             float newDamage = currentDamage * beastBossFactor;
                             event.setAmount(newDamage);

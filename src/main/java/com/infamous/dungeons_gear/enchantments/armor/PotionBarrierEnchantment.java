@@ -34,7 +34,7 @@ public class PotionBarrierEnchantment extends DungeonsEnchantment {
     }
 
     @SubscribeEvent
-    public static void onPlayerDamaged(LivingEntityUseItemEvent.Finish event){
+    public static void onDrinkPotion(LivingEntityUseItemEvent.Finish event){
         if(!(event.getEntityLiving() instanceof PlayerEntity)) return;
         PlayerEntity player = (PlayerEntity) event.getEntityLiving();
         if(player.isAlive()){

@@ -1,16 +1,16 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_libraries.capabilities.minionmaster.IMaster;
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.BeastEnchantment;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.IMaster;
 import com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,8 +25,6 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
 import java.util.UUID;
-
-import net.minecraft.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class BeastBurstEnchantment extends BeastEnchantment {
@@ -63,7 +61,7 @@ public class BeastBurstEnchantment extends BeastEnchantment {
                             LivingEntity summonedMobAsLiving = (LivingEntity) summonedMob;
                             SoundHelper.playGenericExplodeSound(summonedMobAsLiving);
                             AOECloudHelper.spawnExplosionCloud(summonedMobAsLiving, summonedMobAsLiving, 3.0F);
-                            AreaOfEffectHelper.causeExplosionAttack(summonedMobAsLiving, summonedMobAsLiving, 15 * beastBurstLevel, 3.0F);
+                            AreaOfEffectHelper.causeExplosionAttack(summonedMobAsLiving, summonedMobAsLiving, DungeonsGearConfig.BEAST_BURST_DAMAGE_PER_LEVEL.get() * beastBurstLevel, 3.0F);
                         }
                     }
                 }
