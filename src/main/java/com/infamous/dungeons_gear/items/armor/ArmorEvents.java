@@ -89,7 +89,6 @@ public class ArmorEvents {
             ItemStack chestplate = player.getItemBySlot(EquipmentSlotType.CHEST);
 
             if (potionEffects.get(0).getEffect() == Effects.HEAL) {
-                EffectInstance instantHealth = potionEffects.get(0);
                 handleHealthPotionBoost(player, helmet, chestplate);
             }
         }
@@ -122,7 +121,6 @@ public class ArmorEvents {
                 comboCap.setJumpCooldownTimer(0);
             }
 
-
             if (comboCap.getComboTimer() > 0) {
                 comboCap.setComboTimer(comboCap.getComboTimer() - 1);
             } else if (comboCap.getComboCount() < 0){
@@ -131,6 +129,5 @@ public class ArmorEvents {
             comboCap.setOffhandCooldown(comboCap.getOffhandCooldown() + 1);
         }
     }
-
 
 }

@@ -41,11 +41,13 @@ public class FireFocusEnchantment extends FocusEnchantment {
 
     @SubscribeEvent
     public static void onFireAttack(LivingDamageEvent event){
-        if(event.getSource() == DamageSource.ON_FIRE) return; // ON_FIRE is applied when you set something on fire
+        DamageSource source = event.getSource();
+        if(!source.isFire()) return;
+        if(source == DamageSource.ON_FIRE) return; // ON_FIRE is applied when you set something on fire
         if(event.getEntityLiving().level.isClientSide) return;
 
-        LivingEntity attacker = event.getEntityLiving().getKillCredit();
-        if(attacker != null){
+        if(event.getSource().getEntity() instanceof LivingEntity){
+            LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
             int fireFocusLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.FIRE_FOCUS, attacker);
             if(fireFocusLevel > 0){
                 float multiplier = 1 + (float) (DungeonsGearConfig.FOCUS_MULTIPLIER_PER_LEVEL.get() * fireFocusLevel);

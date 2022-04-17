@@ -2,16 +2,15 @@ package com.infamous.dungeons_gear.items.artifacts;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import com.infamous.dungeons_libraries.capabilities.minionmaster.IMinion;
-import com.infamous.dungeons_libraries.capabilities.minionmaster.IMaster;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
-import com.infamous.dungeons_gear.goals.LlamaFollowOwnerGoal;
-import com.infamous.dungeons_gear.goals.LlamaOwnerHurtByTargetGoal;
-import com.infamous.dungeons_gear.goals.LlamaOwnerHurtTargetGoal;
-import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.IMaster;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.IMinion;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.goals.MasterHurtByTargetGoal;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.goals.MasterHurtTargetGoal;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.goals.MinionFollowOwnerGoal;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -43,13 +42,9 @@ import net.minecraftforge.fml.network.PacketDistributor;
 import java.util.List;
 import java.util.UUID;
 
-
-import net.minecraft.item.Item.Properties;
-
-import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_GATHERING;
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SUMMON_CAP;
-import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMinionCapability;
 import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMasterCapability;
+import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMinionCapability;
 
 public class WonderfulWheatItem extends ArtifactItem {
     public WonderfulWheatItem(Properties p_i48487_1_) {
@@ -119,12 +114,12 @@ public class WonderfulWheatItem extends ArtifactItem {
         llamaEntity.inventory.setItem(1, new ItemStack(Items.RED_CARPET.asItem()));
         llamaEntity.moveTo((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D, 0.0F, 0.0F);
 
-        llamaEntity.targetSelector.addGoal(1, new LlamaOwnerHurtByTargetGoal(llamaEntity));
-        llamaEntity.targetSelector.addGoal(2, new LlamaOwnerHurtTargetGoal(llamaEntity));
+        llamaEntity.targetSelector.addGoal(1, new MasterHurtByTargetGoal(llamaEntity));
+        llamaEntity.targetSelector.addGoal(2, new MasterHurtTargetGoal(llamaEntity));
         llamaEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(llamaEntity, LivingEntity.class, 5, false, false, (entityIterator) -> {
             return entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity);
         }));
-        llamaEntity.goalSelector.addGoal(2, new LlamaFollowOwnerGoal(llamaEntity, 2.1D, 10.0F, 2.0F, false));
+        llamaEntity.goalSelector.addGoal(2, new MinionFollowOwnerGoal(llamaEntity, 2.1D, 10.0F, 2.0F, false));
 
         SoundHelper.playCreatureSound(itemUseContextPlayer, SoundEvents.LLAMA_AMBIENT);
 

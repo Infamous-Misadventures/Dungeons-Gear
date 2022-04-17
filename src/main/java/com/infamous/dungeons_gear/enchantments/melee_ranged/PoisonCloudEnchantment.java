@@ -7,6 +7,8 @@ import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
+import com.infamous.dungeons_libraries.capabilities.timers.ITimers;
+import com.infamous.dungeons_libraries.capabilities.timers.TimersHelper;
 import com.infamous.dungeons_libraries.items.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
@@ -34,6 +36,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
+import static com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList.POISON_CLOUD;
 
 import net.minecraft.enchantment.Enchantment.Rarity;
 
@@ -54,9 +57,9 @@ public class PoisonCloudEnchantment extends DungeonsEnchantment {
         if (attacker.getLastHurtMobTimestamp() == attacker.tickCount) return;
         LivingEntity victim = event.getEntityLiving();
         ItemStack mainhand = attacker.getMainHandItem();
-        if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.POISON_CLOUD)) {
+        if (ModEnchantmentHelper.hasEnchantment(mainhand, POISON_CLOUD)) {
             float chance = attacker.getRandom().nextFloat();
-            int level = EnchantmentHelper.getItemEnchantmentLevel(MeleeRangedEnchantmentList.POISON_CLOUD, mainhand);
+            int level = EnchantmentHelper.getItemEnchantmentLevel(POISON_CLOUD, mainhand);
             if (chance <= DungeonsGearConfig.POISON_CLOUD_CHANCE.get() && !PlayerAttackHelper.isProbablyNotMeleeDamage(event.getSource())) {
                 checkForPlayer(attacker);
                 AOECloudHelper.spawnPoisonCloud(attacker, victim, level - 1);
@@ -72,7 +75,7 @@ public class PoisonCloudEnchantment extends DungeonsEnchantment {
         if (!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
         LivingEntity shooter = (LivingEntity) arrow.getOwner();
 
-        int poisonLevel = ArrowHelper.enchantmentTagToLevel(arrow, MeleeRangedEnchantmentList.POISON_CLOUD);
+        int poisonLevel = ArrowHelper.enchantmentTagToLevel(arrow, POISON_CLOUD);
 
         if (poisonLevel > 0) {
             if (rayTraceResult instanceof EntityRayTraceResult) {
@@ -99,29 +102,13 @@ public class PoisonCloudEnchantment extends DungeonsEnchantment {
     }
 
     @SubscribeEvent
-    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        PlayerEntity player = event.player;
-        if (player == null) return;
-        if (event.phase == TickEvent.Phase.START) return;
-        if (player.isAlive()) {
-            ICombo comboCap = CapabilityHelper.getComboCapability(player);
-            if (comboCap == null) return;
-            int poisonImmunityTimer = comboCap.getPoisonImmunityTimer();
-            if (poisonImmunityTimer <= 0) {
-                comboCap.setPoisonImmunityTimer(poisonImmunityTimer - 1);
-            }
-        }
-    }
-
-    @SubscribeEvent
     public static void onPoisonEvent(PotionEvent.PotionApplicableEvent event) {
         if (event.getPotionEffect().getEffect() == Effects.POISON) {
             if (event.getEntityLiving() instanceof PlayerEntity) {
                 PlayerEntity playerEntity = (PlayerEntity) event.getEntityLiving();
-                ICombo comboCap = CapabilityHelper.getComboCapability(playerEntity);
-                if (comboCap == null) return;
-                int poisonImmunityTimer = comboCap.getPoisonImmunityTimer();
-                if (poisonImmunityTimer > 0) {
+                ITimers timersCapability = TimersHelper.getTimersCapability(playerEntity);
+                int enchantmentTimer = timersCapability.getEnchantmentTimer(POISON_CLOUD);
+                if (enchantmentTimer > 0) {
                     event.setResult(Event.Result.DENY);
                 }
             }
@@ -131,12 +118,10 @@ public class PoisonCloudEnchantment extends DungeonsEnchantment {
     private static void checkForPlayer(LivingEntity livingEntity) {
         if (livingEntity instanceof PlayerEntity) {
             PlayerEntity playerEntity = (PlayerEntity) livingEntity;
-
-            ICombo comboCap = CapabilityHelper.getComboCapability(playerEntity);
-            if (comboCap == null) return;
-            int poisonImmunityTimer = comboCap.getPoisonImmunityTimer();
-            if (poisonImmunityTimer <= 0) {
-                comboCap.setPoisonImmunityTimer(60);
+            ITimers timersCapability = TimersHelper.getTimersCapability(playerEntity);
+            int enchantmentTimer = timersCapability.getEnchantmentTimer(POISON_CLOUD);
+            if(enchantmentTimer <= 0) {
+                timersCapability.setEnchantmentTimer(POISON_CLOUD, 60);
             }
         }
     }

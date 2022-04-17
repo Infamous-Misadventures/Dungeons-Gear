@@ -50,16 +50,18 @@ public class ArchersArmorModel<T extends LivingEntity> extends BipedModel<T> {
 		int testificateHelmetShiftUp = testificate ? 2 : 0;
 
 		Head = new ModelRenderer(this);
-		Head.setPos(0.0F, -24.0F + 24.0F, 0.0F);
-		Everything.addChild(Head);
-		Head.texOffs(0, 0).addBox(-4.0F, -8.0F - testificateHelmetShiftUp, -4.0F, 8.0F, 8.0F, 8.0F, 0.4F, false);
-		Head.texOffs(32, 20).addBox(-4.0F, -8.0F - testificateHelmetShiftUp, -4.0F, 8.0F, 8.0F, 8.0F, 1.0F, false);
-
 		BackHead = new ModelRenderer(this);
-		BackHead.setPos(4.0F, -6.0F, 4.0F);
-		Head.addChild(BackHead);
-		setRotationAngle(BackHead, -0.3491F, 0.0F, 0.0F);
-		BackHead.texOffs(40, 16).addBox(-8.0F, -2.0F - testificateHelmetShiftUp, 0.0F, 8.0F, 2.0F, 2.0F, 0.9F, false);
+		if(super.head.visible) {
+			Head.setPos(0.0F, -24.0F + 24.0F, 0.0F);
+			Everything.addChild(Head);
+			Head.texOffs(0, 0).addBox(-4.0F, -8.0F - testificateHelmetShiftUp, -4.0F, 8.0F, 8.0F, 8.0F, 0.4F, false);
+			Head.texOffs(32, 20).addBox(-4.0F, -8.0F - testificateHelmetShiftUp, -4.0F, 8.0F, 8.0F, 8.0F, 1.0F, false);
+
+			BackHead.setPos(4.0F, -6.0F, 4.0F);
+			Head.addChild(BackHead);
+			setRotationAngle(BackHead, -0.3491F, 0.0F, 0.0F);
+			BackHead.texOffs(40, 16).addBox(-8.0F, -2.0F - testificateHelmetShiftUp, 0.0F, 8.0F, 2.0F, 2.0F, 0.9F, false);
+		}
 
 		Body = new ModelRenderer(this);
 		Body.setPos(0.0F, -24.0F + 24.0F, 0.0F);

@@ -2,7 +2,6 @@ package com.infamous.dungeons_gear.items.artifacts;
 
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
-import com.infamous.dungeons_gear.entities.BuzzyNestEntity;
 import com.infamous.dungeons_gear.entities.ModEntityTypes;
 import com.infamous.dungeons_gear.entities.TotemOfShieldingEntity;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
@@ -21,10 +20,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
-
-import static com.infamous.dungeons_gear.utilties.AOECloudHelper.spawnShieldingCloudAtPos;
-
-import net.minecraft.item.Item.Properties;
 
 public class TotemOfShieldingItem extends ArtifactItem {
     public TotemOfShieldingItem(Properties properties) {

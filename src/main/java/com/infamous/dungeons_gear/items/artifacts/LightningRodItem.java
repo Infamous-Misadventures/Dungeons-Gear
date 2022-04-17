@@ -38,8 +38,7 @@ public class LightningRodItem extends ArtifactItem implements ISoulConsumer {
         ItemStack itemStack = c.getItemInHand();
 
         if(SoulCasterHelper.consumeSouls(playerIn, this.getActivationCost(itemStack))){
-            //AbilityUtils.castLightningBoltAtBlockPos(itemUseContextPlayer, blockPos);
-            AreaOfEffectHelper.electrifyNearbyEnemies(playerIn, 5, 5, Integer.MAX_VALUE);
+            AreaOfEffectHelper.electrifyNearbyEnemies(playerIn, 5, 5, Integer.MAX_VALUE); //ToDo Rewrite to be only 1 bolt?
             SoundHelper.playLightningStrikeSounds(playerIn);
             itemStack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemStack)));
             ArtifactItem.putArtifactOnCooldown(playerIn, itemStack.getItem());

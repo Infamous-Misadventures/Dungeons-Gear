@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.registry;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.effects.CustomEffect;
 import com.infamous.dungeons_gear.effects.CustomEffects;
+import com.infamous.dungeons_gear.effects.PartyStarterEffect;
 import com.infamous.dungeons_gear.effects.ShieldingEffect;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -23,7 +24,7 @@ public class EffectInit {
                     CustomEffects.SHIELDING = new ShieldingEffect(EffectType.BENEFICIAL, 10044730).setRegistryName(makeResourceName("shielding")),
                     CustomEffects.SOUL_PROTECTION = new CustomEffect(EffectType.BENEFICIAL, 2445989).setRegistryName(makeResourceName("soul_protection")),
                     CustomEffects.STUNNED = new CustomEffect(EffectType.HARMFUL, 4738376).setRegistryName(makeResourceName("stunned")),
-                    CustomEffects.PARTY_STARTER = new CustomEffect(EffectType.BENEFICIAL, 0xE25822).setRegistryName(makeResourceName("party_starter")),
+                    CustomEffects.PARTY_STARTER = new PartyStarterEffect(EffectType.BENEFICIAL, 0xE25822).setRegistryName(makeResourceName("party_starter")),
                     CustomEffects.DYNAMO = new CustomEffect(EffectType.BENEFICIAL, 0xFFBB2E).setRegistryName(makeResourceName("dynamo")),
                     CustomEffects.LIFE_STEAL = new CustomEffect(EffectType.BENEFICIAL, 0x660901).setRegistryName(makeResourceName("life_steal")).addAttributeModifier(LIFE_STEAL.get(), "ba815a35-c0d4-4bbd-b932-76a916d44eb9", 0.05F, AttributeModifier.Operation.ADDITION)
             );

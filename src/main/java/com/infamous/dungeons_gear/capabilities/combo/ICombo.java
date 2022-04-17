@@ -27,20 +27,11 @@ public interface ICombo {
     int getArrowsInCounter();
     void setArrowsInCounter(int arrowsInCounter);
 
-    int getGravityPulseTimer();
-    void setGravityPulseTimer(int gravityPulseTimer);
-
     int getSnowballNearbyTimer();
     void setSnowballNearbyTimer(int snowballTimer);
 
     int getJumpCooldownTimer();
     void setJumpCooldownTimer(int jumpCooldownTimer);
-
-    int getPoisonImmunityTimer();
-    void setPoisonImmunityTimer(int poisoncloudimmunitytimer);
-
-    int getLastShoutTimer();
-    void setLastShoutTimer(int lastShoutTimer);
 
     int getComboCount();
     void setComboCount(int comboCount);

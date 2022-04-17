@@ -30,7 +30,7 @@ public class PowershakerItem extends ArtifactItem {
         PlayerEntity playerIn = c.getPlayer();
         ItemStack itemstack = c.getItemInHand();
 
-        EffectInstance partyStarter = new EffectInstance(CustomEffects.PARTY_STARTER, 15 * 20, 2);
+        EffectInstance partyStarter = new EffectInstance(CustomEffects.PARTY_STARTER, 15 * 20, 4);
         playerIn.addEffect(partyStarter);
         itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemstack)));
         ArtifactItem.putArtifactOnCooldown(playerIn, itemstack.getItem());

@@ -50,48 +50,45 @@ public class FinalShoutEnchantment extends HealthAbilityEnchantment {
     @SubscribeEvent
     public static void onPlayerHurt(LivingDamageEvent event) {
         LivingEntity victim = event.getEntityLiving();
-        if (victim != null && victim.isAlive()) {
-            if (victim instanceof PlayerEntity) {
-                PlayerEntity player = (PlayerEntity) victim;
-                float currentHealth = player.getHealth();
-                float maxHealth = player.getMaxHealth();
-                float damageDealt = event.getAmount();
-                ITimers timers = TimersHelper.getTimersCapability(player);
-                ICombo comboCap = CapabilityHelper.getComboCapability(player);
-                if (currentHealth - damageDealt <= (0.25F * maxHealth)) {
-                    if (timers != null && timers.getEnchantmentTimer(FINAL_SHOUT) == 0 && ModEnchantmentHelper.hasEnchantment(player, FINAL_SHOUT)) {
-                        int proc = 0;
-                        for(ItemStack is : CuriosIntegration.getArtifacts(player))
-                            if (is.getItem() instanceof ArtifactItem && !(is.getItem() instanceof AbstractBeaconItem)) {
-                                ActionResult<ItemStack> procResult = ((ArtifactItem) is.getItem()).procArtifact(new ItemUseContext(player, Hand.MAIN_HAND, new BlockRayTraceResult(player.position(), Direction.UP, player.blockPosition(), false)));
-                                if(procResult.getResult().consumesAction() && !player.level.isClientSide) ArtifactItem.triggerSynergy(player, is);
-                                proc++;
-                            }
-                        for (ItemStack is : player.inventory.offhand)
-                            if (is.getItem() instanceof ArtifactItem && !(is.getItem() instanceof AbstractBeaconItem)) {
-                                ActionResult<ItemStack> procResult = ((ArtifactItem) is.getItem()).procArtifact(new ItemUseContext(player, Hand.OFF_HAND, new BlockRayTraceResult(player.position(), Direction.UP, player.blockPosition(), false)));
-                                if(procResult.getResult().consumesAction() && !player.level.isClientSide) ArtifactItem.triggerSynergy(player, is);
-                                proc++;
-                            }
-                        for (ItemStack is : player.inventory.offhand)
-                            if (is.getItem() instanceof ArtifactItem && !(is.getItem() instanceof AbstractBeaconItem)) {
-                                ActionResult<ItemStack> procResult = ((ArtifactItem) is.getItem()).procArtifact(new ItemUseContext(player, Hand.OFF_HAND, new BlockRayTraceResult(player.position(), Direction.UP, player.blockPosition(), false)));
-                                if(procResult.getResult().consumesAction() && !player.level.isClientSide) ArtifactItem.triggerSynergy(player, is);
-                                proc++;
-                            }
-                        for (ItemStack is : player.inventory.items)
-                            if (is.getItem() instanceof ArtifactItem && !(is.getItem() instanceof AbstractBeaconItem)) {
-                                ActionResult<ItemStack> procResult = ((ArtifactItem) is.getItem()).procArtifact(new ItemUseContext(player.level, player, Hand.MAIN_HAND, is, new BlockRayTraceResult(player.position(), Direction.UP, player.blockPosition(), false)));
-                                if(procResult.getResult().consumesAction() && !player.level.isClientSide) ArtifactItem.triggerSynergy(player, is);
-
-                                if (++proc == 3) break;
-                            }
-                        if (proc > 0) {
-                            comboCap.setLastShoutTimer(240 - 40 * Math.min(EnchantmentHelper.getEnchantmentLevel(FINAL_SHOUT, player), 6));
+        if (victim != null && victim.isAlive() && victim instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) victim;
+            float currentHealth = player.getHealth();
+            float maxHealth = player.getMaxHealth();
+            float damageDealt = event.getAmount();
+            ITimers timers = TimersHelper.getTimersCapability(player);
+            if (currentHealth - damageDealt <= (0.25F * maxHealth)) {
+                if (timers != null && timers.getEnchantmentTimer(FINAL_SHOUT) == 0 && ModEnchantmentHelper.hasEnchantment(player, FINAL_SHOUT)) {
+                    int proc = 0;
+                    for(ItemStack is : CuriosIntegration.getArtifacts(player))
+                        if (is.getItem() instanceof ArtifactItem && !(is.getItem() instanceof AbstractBeaconItem)) {
+                            ActionResult<ItemStack> procResult = ((ArtifactItem) is.getItem()).procArtifact(new ItemUseContext(player, Hand.MAIN_HAND, new BlockRayTraceResult(player.position(), Direction.UP, player.blockPosition(), false)));
+                            if(procResult.getResult().consumesAction() && !player.level.isClientSide) ArtifactItem.triggerSynergy(player, is);
+                            proc++;
                         }
-                    }else if(timers != null && timers.getEnchantmentTimer(FINAL_SHOUT) < 0 && ModEnchantmentHelper.hasEnchantment(player, FINAL_SHOUT)){
-                        timers.setEnchantmentTimer(FINAL_SHOUT, 0);
+                    for (ItemStack is : player.inventory.offhand)
+                        if (is.getItem() instanceof ArtifactItem && !(is.getItem() instanceof AbstractBeaconItem)) {
+                            ActionResult<ItemStack> procResult = ((ArtifactItem) is.getItem()).procArtifact(new ItemUseContext(player, Hand.OFF_HAND, new BlockRayTraceResult(player.position(), Direction.UP, player.blockPosition(), false)));
+                            if(procResult.getResult().consumesAction() && !player.level.isClientSide) ArtifactItem.triggerSynergy(player, is);
+                            proc++;
+                        }
+                    for (ItemStack is : player.inventory.offhand)
+                        if (is.getItem() instanceof ArtifactItem && !(is.getItem() instanceof AbstractBeaconItem)) {
+                            ActionResult<ItemStack> procResult = ((ArtifactItem) is.getItem()).procArtifact(new ItemUseContext(player, Hand.OFF_HAND, new BlockRayTraceResult(player.position(), Direction.UP, player.blockPosition(), false)));
+                            if(procResult.getResult().consumesAction() && !player.level.isClientSide) ArtifactItem.triggerSynergy(player, is);
+                            proc++;
+                        }
+                    for (ItemStack is : player.inventory.items)
+                        if (is.getItem() instanceof ArtifactItem && !(is.getItem() instanceof AbstractBeaconItem)) {
+                            ActionResult<ItemStack> procResult = ((ArtifactItem) is.getItem()).procArtifact(new ItemUseContext(player.level, player, Hand.MAIN_HAND, is, new BlockRayTraceResult(player.position(), Direction.UP, player.blockPosition(), false)));
+                            if(procResult.getResult().consumesAction() && !player.level.isClientSide) ArtifactItem.triggerSynergy(player, is);
+
+                            if (++proc == 3) break;
+                        }
+                    if (proc > 0) {
+                        timers.setEnchantmentTimer(FINAL_SHOUT, 240 - 40 * Math.min(EnchantmentHelper.getEnchantmentLevel(FINAL_SHOUT, player), 6));
                     }
+                }else if(timers != null && timers.getEnchantmentTimer(FINAL_SHOUT) < 0 && ModEnchantmentHelper.hasEnchantment(player, FINAL_SHOUT)){
+                    timers.setEnchantmentTimer(FINAL_SHOUT, 0);
                 }
             }
         }

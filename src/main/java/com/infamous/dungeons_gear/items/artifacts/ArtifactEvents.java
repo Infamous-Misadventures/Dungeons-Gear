@@ -151,35 +151,6 @@ public class ArtifactEvents {
 
 
 
-    @SubscribeEvent
-    public static void onPartyStarterAttack(LivingAttackEvent event){
-        if (PlayerAttackHelper.isProbablyNotMeleeDamage(event.getSource())) return;
-
-        LivingEntity victim = event.getEntityLiving();
-        Entity trueSource = event.getSource().getEntity();
-        if(trueSource instanceof LivingEntity) {
-            LivingEntity attacker = (LivingEntity) trueSource;
-            EffectInstance partyStarter = attacker.getEffect(CustomEffects.PARTY_STARTER);
-            if (partyStarter != null) {
-                int partyStarterLevel = partyStarter.getAmplifier() + 1;
-
-                SoundHelper.playGenericExplodeSound(victim);
-                if(!attacker.level.isClientSide){
-                    float explosionDamage;
-                    explosionDamage = victim.getMaxHealth() * 0.2F * partyStarterLevel;
-                    AOECloudHelper.spawnExplosionCloud(attacker, victim, 3.0F);
-                    AreaOfEffectHelper.causeExplosionAttack(attacker, victim, explosionDamage, 3.0F);
-
-                }
-                partyStarterLevel--;
-                if(partyStarterLevel <= 0){
-                    attacker.removeEffect(CustomEffects.PARTY_STARTER);
-                } else{
-                    partyStarter.amplifier = partyStarterLevel - 1;
-                }
-            }
-        }
-    }
 
 
     @SubscribeEvent

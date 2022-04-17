@@ -70,6 +70,9 @@ public class DungeonsGearConfig {
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_ARMOR_TAB;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_ARTIFACT_TAB;
 
+    //Effect Values
+    public static ForgeConfigSpec.ConfigValue<Integer> PARTY_STARTER_DAMAGE;
+
     // Enchanting specific values
     public static ForgeConfigSpec.ConfigValue<Double> BUSY_BEE_BASE_CHANCE;
     public static ForgeConfigSpec.ConfigValue<Double> BUSY_BEE_CHANCE_PER_LEVEL;
@@ -423,6 +426,11 @@ public class DungeonsGearConfig {
                 .defineInRange("artifactSuperRareLoot", 1.0, 0, 1.0);
         builder.pop();
 
+        builder.comment("Effect Specific Configuration").push("effect_specific_configuration");
+        PARTY_STARTER_DAMAGE = builder
+                .comment("The damage caused by Party Starter. [0-10000, default: 4]")
+                .defineInRange("partyStarterDamage", 4, 0, 10000);
+        builder.pop();
 
         builder.comment("Enchantment Specific Configuration").push("enchantment_specific_configuration");
         BUSY_BEE_BASE_CHANCE = builder

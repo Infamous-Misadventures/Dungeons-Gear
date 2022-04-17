@@ -19,7 +19,6 @@ public class Combo implements ICombo {
     private int comboCount;
     private int arrowsInCounter;
     private int jumpCooldownTimer;
-    private int poisonImmunityTimer;
     private int lastShoutTimer;
     private int offhandCooldown;
     private float cachedCooldown;//no need to be saved, it's stored and used in the span of a tick
@@ -48,7 +47,6 @@ public class Combo implements ICombo {
         this.gravityPulseTimer = 100;
         this.snowballNearbyTimer = 100;
         this.jumpCooldownTimer = 0;
-        this.poisonImmunityTimer = 0;
         this.lastExplorerCheckpoint = BlockPos.ZERO;
         this.lastLuckyExplorerCheckpoint = BlockPos.ZERO;
 
@@ -144,16 +142,6 @@ public class Combo implements ICombo {
     }
 
     @Override
-    public int getGravityPulseTimer() {
-        return gravityPulseTimer;
-    }
-
-    @Override
-    public void setGravityPulseTimer(int gravityPulseTimer) {
-        this.gravityPulseTimer = gravityPulseTimer;
-    }
-
-    @Override
     public int getSnowballNearbyTimer() {
         return this.snowballNearbyTimer;
     }
@@ -171,26 +159,6 @@ public class Combo implements ICombo {
     @Override
     public void setJumpCooldownTimer(int jumpCooldownTimer) {
         this.jumpCooldownTimer = jumpCooldownTimer;
-    }
-
-    @Override
-    public int getPoisonImmunityTimer() {
-        return this.poisonImmunityTimer;
-    }
-
-    @Override
-    public void setPoisonImmunityTimer(int poisonImmunityTimer) {
-        this.poisonImmunityTimer = poisonImmunityTimer;
-    }
-
-    @Override
-    public int getLastShoutTimer() {
-        return lastShoutTimer;
-    }
-
-    @Override
-    public void setLastShoutTimer(int lastShoutTimer) {
-        this.lastShoutTimer = lastShoutTimer;
     }
 
     @Override

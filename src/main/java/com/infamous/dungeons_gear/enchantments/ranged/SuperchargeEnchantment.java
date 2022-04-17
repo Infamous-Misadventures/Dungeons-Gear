@@ -19,7 +19,6 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 @Mod.EventBusSubscriber(modid= MODID)
 public class SuperchargeEnchantment extends DungeonsEnchantment {
 
-    public static final String INTRINSIC_SUPERCHARGE_TAG = "IntrinsicSupercharge";
 
     public SuperchargeEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.RANGED, new EquipmentSlotType[]{
@@ -42,15 +41,13 @@ public class SuperchargeEnchantment extends DungeonsEnchantment {
         AbstractArrowEntity arrow = event.getArrow();
         if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
         int superchargeLevel = ArrowHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.SUPERCHARGE);
-        boolean uniqueWeaponFlag = arrow.getTags().contains(INTRINSIC_SUPERCHARGE_TAG);
-        if(superchargeLevel > 0 || uniqueWeaponFlag){
+        if(superchargeLevel > 0){
             double originalDamage = arrow.getBaseDamage();
             int originalKnockback = arrow.knockback;
             double damageModifier = 0;
             if(superchargeLevel == 1) damageModifier = 1.2D;
             if(superchargeLevel == 2) damageModifier = 1.4D;
             if(superchargeLevel == 3) damageModifier = 1.6D;
-            if(uniqueWeaponFlag) damageModifier += 1.2D;
             arrow.setBaseDamage(originalDamage * damageModifier);
             arrow.setKnockback(originalKnockback + 1);
         }
