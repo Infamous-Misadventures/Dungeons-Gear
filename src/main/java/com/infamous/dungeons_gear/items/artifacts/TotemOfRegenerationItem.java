@@ -9,7 +9,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -27,7 +26,7 @@ public class TotemOfRegenerationItem extends ArtifactItem {
         procOnItemUse=true;
     }
 
-    public ActionResult<ItemStack> procArtifact(ItemUseContext itemUseContext) {
+    public ActionResult<ItemStack> procArtifact(ArtifactUseContext itemUseContext) {
         World world = itemUseContext.getLevel();
         if (world.isClientSide) {
             return ActionResult.success(itemUseContext.getItemInHand());

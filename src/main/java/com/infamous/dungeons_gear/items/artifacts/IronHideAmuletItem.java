@@ -6,7 +6,6 @@ import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.ActionResult;
@@ -19,14 +18,12 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 
-import net.minecraft.item.Item.Properties;
-
 public class IronHideAmuletItem extends ArtifactItem {
     public IronHideAmuletItem(Properties properties) {
         super(properties);
     }
 
-    public ActionResult<ItemStack> procArtifact(ItemUseContext c) {
+    public ActionResult<ItemStack> procArtifact(ArtifactUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
         ItemStack itemstack = c.getItemInHand();
 

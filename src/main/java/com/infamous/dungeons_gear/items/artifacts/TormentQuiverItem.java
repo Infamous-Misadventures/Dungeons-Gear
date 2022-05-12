@@ -14,7 +14,6 @@ import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.text.ITextComponent;
@@ -35,7 +34,7 @@ public class TormentQuiverItem extends ArtifactItem implements ISoulConsumer {
         super(properties);
     }
 
-    public ActionResult<ItemStack> procArtifact(ItemUseContext c) {
+    public ActionResult<ItemStack> procArtifact(ArtifactUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
         ItemStack itemStack = c.getItemInHand();
 

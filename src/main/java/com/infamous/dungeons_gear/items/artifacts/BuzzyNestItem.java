@@ -13,7 +13,6 @@ import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -35,7 +34,7 @@ public class BuzzyNestItem extends ArtifactItem {
         procOnItemUse = true;
     }
 
-    public ActionResult<ItemStack> procArtifact(ItemUseContext itemUseContext) {
+    public ActionResult<ItemStack> procArtifact(ArtifactUseContext itemUseContext) {
         World world = itemUseContext.getLevel();
         if (world.isClientSide) {
             return ActionResult.success(itemUseContext.getItemInHand());

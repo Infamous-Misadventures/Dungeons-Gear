@@ -13,7 +13,7 @@ import java.util.List;
 public class CorruptedBeaconItem extends SoulBeaconItem {
 
     public static final BeaconBeamColor CORRUPTED_BEACON_BEAM_COLOR =
-            new BeaconBeamColor((short) 128, (short) 0, (short) 128, (short) 255, (short) 255, (short) 255);
+            new BeaconBeamColor((short) 90, (short) 0, (short) 90, (short) 255, (short) 255, (short) 255);
 
     public CorruptedBeaconItem(Properties properties) {
         super(properties);

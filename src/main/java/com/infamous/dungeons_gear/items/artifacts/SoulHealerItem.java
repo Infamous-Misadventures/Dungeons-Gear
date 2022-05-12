@@ -15,7 +15,6 @@ import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
@@ -37,7 +36,7 @@ public class SoulHealerItem extends ArtifactItem implements ISoulConsumer {
         procOnItemUse = true;
     }
 
-    public ActionResult<ItemStack> procArtifact(ItemUseContext c) {
+    public ActionResult<ItemStack> procArtifact(ArtifactUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
         ItemStack itemStack = c.getItemInHand();
         if(playerIn == null)  return new ActionResult<>(ActionResultType.FAIL, itemStack);

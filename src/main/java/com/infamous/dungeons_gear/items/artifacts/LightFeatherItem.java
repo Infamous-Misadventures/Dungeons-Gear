@@ -8,7 +8,6 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -32,7 +31,7 @@ public class LightFeatherItem extends ArtifactItem {
         super(properties);
     }
 
-    public ActionResult<ItemStack> procArtifact(ItemUseContext c) {
+    public ActionResult<ItemStack> procArtifact(ArtifactUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
         ItemStack itemstack = c.getItemInHand();
         World worldIn = c.getLevel();

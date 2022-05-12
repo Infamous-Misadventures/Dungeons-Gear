@@ -8,8 +8,6 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
-import net.minecraft.util.HandSide;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.*;
@@ -17,48 +15,33 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 
 // borrowed from direwolf20's MiningGadget mod
 public class BeaconBeamRenderer {
-    public static void renderBeam(RenderWorldLastEvent event, PlayerEntity player, float ticks) {
-        ItemStack stack = AbstractBeaconItem.getBeacon(player);
-
+    public static void renderBeam(RenderWorldLastEvent event, PlayerEntity player, float ticks, ItemStack stack) {
         double range = AbstractBeaconItem.RAYTRACE_DISTANCE;
 
         Vector3d playerPos = player.getEyePosition(ticks);
-        RayTraceResult trace = player.pick(range, 0.0F, false);
+        RayTraceResult trace = AbstractBeaconItem.beamTrace(player, range, 1.0f, false);
 
         float speedModifier = -0.02f;
 
         BeaconBeamColor beaconBeamColor = AbstractBeaconItem.getBeaconBeamColor(stack);
         if(beaconBeamColor != null){
-            drawBeams(event, playerPos, trace, 0, 0, 0, beaconBeamColor.getRedValue() / 255f, beaconBeamColor.getGreenValue() / 255f, beaconBeamColor.getBlueValue() / 255f, 0.02f, player, ticks, speedModifier);
+            drawBeams(event, playerPos, trace, beaconBeamColor, 0.04f, player, ticks, speedModifier);
         }
     }
 
-    private static void drawBeams(RenderWorldLastEvent event, Vector3d from, RayTraceResult trace, double xOffset, double yOffset, double zOffset, float r, float g, float b, float thickness, PlayerEntity player, float ticks, float speedModifier) {
-        Hand activeHand;
-        if (player.getMainHandItem().getItem() instanceof AbstractBeaconItem) {
-            activeHand = Hand.MAIN_HAND;
-        } else if (player.getOffhandItem().getItem() instanceof AbstractBeaconItem) {
-            activeHand = Hand.OFF_HAND;
-        } else {
-            return;
-        }
-
+    private static void drawBeams(RenderWorldLastEvent event, Vector3d from, RayTraceResult trace, BeaconBeamColor beaconBeamColor, float thickness, PlayerEntity player, float ticks, float speedModifier) {
         IVertexBuilder builder;
-        ItemStack stack = player.getItemInHand(activeHand);
         double distance = Math.max(1, from.subtract(trace.getLocation()).length());
         long gameTime = player.level.getGameTime();
         double v = gameTime * speedModifier;
-        float additiveThickness = (thickness * 3.5f) * calculateLaserFlickerModifier(gameTime);
+        float additiveThickness = (thickness * 1.75f) * calculateLaserFlickerModifier(gameTime);
 
-        float beam2r = 0;
-        float beam2g = 0;
-        float beam2b = 0;
-        BeaconBeamColor beaconBeamColor = AbstractBeaconItem.getBeaconBeamColor(stack);
-        if(beaconBeamColor != null){
-            beam2r = beaconBeamColor.getInnerRedValue() / 255f;
-            beam2g = beaconBeamColor.getInnerGreenValue() / 255f;
-            beam2b = beaconBeamColor.getInnerBlueValue() / 255f;
-        }
+        float beam1r = beaconBeamColor.getRedValue() / 255f;
+        float beam1g = beaconBeamColor.getGreenValue() / 255f;
+        float beam1b = beaconBeamColor.getBlueValue() / 255f;
+        float beam2r = beaconBeamColor.getInnerRedValue() / 255f;
+        float beam2g = beaconBeamColor.getInnerGreenValue() / 255f;
+        float beam2b = beaconBeamColor.getInnerBlueValue() / 255f;
 
         Vector3d view = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
         IRenderTypeBuffer.Impl buffer = Minecraft.getInstance().renderBuffers().bufferSource();
@@ -78,17 +61,16 @@ public class BeaconBeamRenderer {
 
         //additive laser beam
         builder = buffer.getBuffer(MyRenderType.BEACON_BEAM_GLOW);
-        drawBeam(xOffset, yOffset, zOffset, builder, positionMatrix, matrixNormal, additiveThickness, activeHand, distance, 0.5, 1, ticks, r,g,b,0.7f);
+        drawClosingBeam(builder, positionMatrix, matrixNormal, additiveThickness, distance/10, 0.5, 1, ticks, beam2r,beam2g,beam2b,0.9f);
 
         //main laser, colored part
         builder = buffer.getBuffer(MyRenderType.BEACON_BEAM_MAIN);
-        drawBeam(xOffset, yOffset, zOffset, builder, positionMatrix, matrixNormal, thickness, activeHand, distance, v, v + distance * 1.5, ticks, r,g,b,1f);
+        drawBeam(builder, positionMatrix, matrixNormal, thickness, distance, v, v + distance * 1.5, ticks,  beam2r,beam2g,beam2b, 0.7f);
 
         //core
         builder = buffer.getBuffer(MyRenderType.BEACON_BEAM_CORE);
-        drawBeam(xOffset, yOffset, zOffset, builder, positionMatrix, matrixNormal, thickness/2, activeHand, distance, v, v + distance * 1.5, ticks, beam2r,beam2g,beam2b,1f);
+        drawBeam(builder, positionMatrix, matrixNormal, thickness*0.7f, distance, v, v + distance * 1.5, ticks, beam1r,beam1g,beam1b, 1f);
         matrix.popPose();
-//        RenderSystem.disableDepthTest();
         buffer.endBatch();
     }
 
@@ -96,23 +78,10 @@ public class BeaconBeamRenderer {
         return 0.9f + 0.1f * MathHelper.sin(gameTime * 0.99f) * MathHelper.sin(gameTime * 0.3f) * MathHelper.sin(gameTime * 0.1f);
     }
 
-    private static void drawBeam(double xOffset, double yOffset, double zOffset, IVertexBuilder builder, Matrix4f positionMatrix, Matrix3f matrixNormalIn, float thickness, Hand hand, double distance, double v1, double v2, float ticks, float r, float g, float b, float alpha) {
+    private static void drawBeam(IVertexBuilder builder, Matrix4f positionMatrix, Matrix3f matrixNormalIn, float thickness, double distance, double v1, double v2, float ticks, float r, float g, float b, float alpha) {
         Vector3f vector3f = new Vector3f(0.0f, 1.0f, 0.0f);
         vector3f.transform(matrixNormalIn);
         ClientPlayerEntity player = Minecraft.getInstance().player;
-        // Support for hand sides remembering to take into account of Skin options
-        if( Minecraft.getInstance().options.mainHand != HandSide.RIGHT )
-            hand = hand == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND;
-        float startXOffset = -0.25f;
-        float startYOffset = -.115f;
-        float startZOffset = 0;
-        if (player != null) {
-            startZOffset = 0.65f + (1 - player.getFieldOfViewModifier());
-        }
-        if (hand == Hand.OFF_HAND) {
-            startYOffset = -.120f;
-            startXOffset = 0.25f;
-        }
         float f = 0;
         if (player != null) {
             f = (MathHelper.lerp(ticks, player.xRotO, player.xRot) - MathHelper.lerp(ticks, player.xBobO, player.xBob));
@@ -121,38 +90,135 @@ public class BeaconBeamRenderer {
         if (player != null) {
             f1 = (MathHelper.lerp(ticks, player.yRotO, player.yRot) - MathHelper.lerp(ticks, player.yBobO, player.yBob));
         }
-        startXOffset = startXOffset + (f1 / 750);
-        startYOffset = startYOffset + (f / 750);
+        float movementXOffset = (f1 / 750);
+        float movementYOffset = (f / 750);
 
-        Vector4f vec1 = new Vector4f(startXOffset, -thickness + startYOffset, startZOffset, 1.0F);
-        vec1.transform(positionMatrix);
-        Vector4f vec2 = new Vector4f((float) xOffset, -thickness + (float) yOffset, (float) distance + (float) zOffset, 1.0F);
-        vec2.transform(positionMatrix);
-        Vector4f vec3 = new Vector4f((float) xOffset, thickness + (float) yOffset, (float) distance + (float) zOffset, 1.0F);
-        vec3.transform(positionMatrix);
-        Vector4f vec4 = new Vector4f(startXOffset, thickness + startYOffset, startZOffset, 1.0F);
-        vec4.transform(positionMatrix);
-
-        if (hand == Hand.MAIN_HAND) {
-            builder.vertex(vec4.x(), vec4.y(), vec4.z(), r, g, b, alpha, 0, (float) v1, OverlayTexture.NO_OVERLAY, 15728880, vector3f.x(), vector3f.y(), vector3f.z());
-            builder.vertex(vec3.x(), vec3.y(), vec3.z(), r, g, b, alpha, 0, (float) v2, OverlayTexture.NO_OVERLAY, 15728880, vector3f.x(), vector3f.y(), vector3f.z());
-            builder.vertex(vec2.x(), vec2.y(), vec2.z(), r, g, b, alpha, 1, (float) v2, OverlayTexture.NO_OVERLAY, 15728880, vector3f.x(), vector3f.y(), vector3f.z());
-            builder.vertex(vec1.x(), vec1.y(), vec1.z(), r, g, b, alpha, 1, (float) v1, OverlayTexture.NO_OVERLAY, 15728880, vector3f.x(), vector3f.y(), vector3f.z());
-            //Rendering a 2nd time to allow you to see both sides in multiplayer, shouldn't be necessary with culling disabled but here we are....
-            builder.vertex(vec1.x(), vec1.y(), vec1.z(), r, g, b, alpha, 1, (float) v1, OverlayTexture.NO_OVERLAY, 15728880, vector3f.x(), vector3f.y(), vector3f.z());
-            builder.vertex(vec2.x(), vec2.y(), vec2.z(), r, g, b, alpha, 1, (float) v2, OverlayTexture.NO_OVERLAY, 15728880, vector3f.x(), vector3f.y(), vector3f.z());
-            builder.vertex(vec3.x(), vec3.y(), vec3.z(), r, g, b, alpha, 0, (float) v2, OverlayTexture.NO_OVERLAY, 15728880, vector3f.x(), vector3f.y(), vector3f.z());
-            builder.vertex(vec4.x(), vec4.y(), vec4.z(), r, g, b, alpha, 0, (float) v1, OverlayTexture.NO_OVERLAY, 15728880, vector3f.x(), vector3f.y(), vector3f.z());
-        } else {
-            builder.vertex(vec1.x(), vec1.y(), vec1.z(), r, g, b, alpha, 1, (float) v1, OverlayTexture.NO_OVERLAY, 15728880, vector3f.x(), vector3f.y(), vector3f.z());
-            builder.vertex(vec2.x(), vec2.y(), vec2.z(), r, g, b, alpha, 1, (float) v2, OverlayTexture.NO_OVERLAY, 15728880, vector3f.x(), vector3f.y(), vector3f.z());
-            builder.vertex(vec3.x(), vec3.y(), vec3.z(), r, g, b, alpha, 0, (float) v2, OverlayTexture.NO_OVERLAY, 15728880, vector3f.x(), vector3f.y(), vector3f.z());
-            builder.vertex(vec4.x(), vec4.y(), vec4.z(), r, g, b, alpha, 0, (float) v1, OverlayTexture.NO_OVERLAY, 15728880, vector3f.x(), vector3f.y(), vector3f.z());
-            //Rendering a 2nd time to allow you to see both sides in multiplayer, shouldn't be necessary with culling disabled but here we are....
-            builder.vertex(vec4.x(), vec4.y(), vec4.z(), r, g, b, alpha, 0, (float) v1, OverlayTexture.NO_OVERLAY, 15728880, vector3f.x(), vector3f.y(), vector3f.z());
-            builder.vertex(vec3.x(), vec3.y(), vec3.z(), r, g, b, alpha, 0, (float) v2, OverlayTexture.NO_OVERLAY, 15728880, vector3f.x(), vector3f.y(), vector3f.z());
-            builder.vertex(vec2.x(), vec2.y(), vec2.z(), r, g, b, alpha, 1, (float) v2, OverlayTexture.NO_OVERLAY, 15728880, vector3f.x(), vector3f.y(), vector3f.z());
-            builder.vertex(vec1.x(), vec1.y(), vec1.z(), r, g, b, alpha, 1, (float) v1, OverlayTexture.NO_OVERLAY, 15728880, vector3f.x(), vector3f.y(), vector3f.z());
+        float xMin = -thickness;
+        float xMax = thickness;
+        float yMin = -thickness - 0.115f;
+        float yMax = thickness - 0.115f;
+        float zMin = 0;
+        float zMax = (float) distance;
+        if (player != null) {
+            zMin = 0.65f + (1 - player.getFieldOfViewModifier());
         }
+
+        Vector4f vec1 = new Vector4f(xMin + movementXOffset, yMin + movementYOffset, zMin, 1.0F);
+        vec1.transform(positionMatrix);
+        Vector4f vec2 = new Vector4f(xMin, yMin, zMax, 1.0F);
+        vec2.transform(positionMatrix);
+        Vector4f vec3 = new Vector4f(xMin, yMax, zMax, 1.0F);
+        vec3.transform(positionMatrix);
+        Vector4f vec4 = new Vector4f(xMin + movementXOffset, yMax + movementYOffset, zMin, 1.0F);
+        vec4.transform(positionMatrix);
+        drawQuad(builder, (float) v1, (float) v2, r, g, b, alpha, vector3f, vec1, vec2, vec3, vec4);
+
+        vec1 = new Vector4f(xMax + movementXOffset, yMin + movementYOffset, zMin, 1.0F);
+        vec1.transform(positionMatrix);
+        vec2 = new Vector4f(xMax, yMin, zMax, 1.0F);
+        vec2.transform(positionMatrix);
+        vec3 = new Vector4f(xMax, yMax, zMax, 1.0F);
+        vec3.transform(positionMatrix);
+        vec4 = new Vector4f(xMax + movementXOffset, yMax + movementYOffset, zMin, 1.0F);
+        vec4.transform(positionMatrix);
+        drawQuad(builder, (float) v1, (float) v2, r, g, b, alpha, vector3f, vec1, vec2, vec3, vec4);
+
+        vec1 = new Vector4f(xMin + movementXOffset, yMax + movementYOffset, zMin, 1.0F);
+        vec1.transform(positionMatrix);
+        vec2 = new Vector4f(xMin, yMax, zMax, 1.0F);
+        vec2.transform(positionMatrix);
+        vec3 = new Vector4f(xMax, yMax, zMax, 1.0F);
+        vec3.transform(positionMatrix);
+        vec4 = new Vector4f(xMax + movementXOffset, yMax + movementYOffset, zMin, 1.0F);
+        vec4.transform(positionMatrix);
+        drawQuad(builder, (float) v1, (float) v2, r, g, b, alpha, vector3f, vec1, vec2, vec3, vec4);
+
+        vec1 = new Vector4f(xMin + movementXOffset, yMin + movementYOffset, zMin, 1.0F);
+        vec1.transform(positionMatrix);
+        vec2 = new Vector4f(xMin, yMin, zMax, 1.0F);
+        vec2.transform(positionMatrix);
+        vec3 = new Vector4f(xMax, yMin, zMax, 1.0F);
+        vec3.transform(positionMatrix);
+        vec4 = new Vector4f(xMax + movementXOffset, yMin + movementYOffset, zMin, 1.0F);
+        vec4.transform(positionMatrix);
+        drawQuad(builder, (float) v1, (float) v2, r, g, b, alpha, vector3f, vec1, vec2, vec3, vec4);
+    }
+
+    private static void drawClosingBeam(IVertexBuilder builder, Matrix4f positionMatrix, Matrix3f matrixNormalIn, float thickness, double distance, double v1, double v2, float ticks, float r, float g, float b, float alpha) {
+        Vector3f vector3f = new Vector3f(0.0f, 1.0f, 0.0f);
+        vector3f.transform(matrixNormalIn);
+        ClientPlayerEntity player = Minecraft.getInstance().player;
+        float f = 0;
+        if (player != null) {
+            f = (MathHelper.lerp(ticks, player.xRotO, player.xRot) - MathHelper.lerp(ticks, player.xBobO, player.xBob));
+        }
+        float f1 = 0;
+        if (player != null) {
+            f1 = (MathHelper.lerp(ticks, player.yRotO, player.yRot) - MathHelper.lerp(ticks, player.yBobO, player.yBob));
+        }
+        float movementXOffset = (f1 / 750);
+        float movementYOffset = (f / 750);
+
+        float xMin = -thickness;
+        float xMax = thickness;
+        float yMin = -thickness - 0.115f;
+        float yMax = thickness - 0.115f;
+        float zMin = 0;
+        float zMax = (float) distance;
+        if (player != null) {
+            zMin = 0.65f + (1 - player.getFieldOfViewModifier());
+        }
+
+        Vector4f vec1 = new Vector4f(xMin + movementXOffset, yMin + movementYOffset, zMin, 1.0F);
+        vec1.transform(positionMatrix);
+        Vector4f vec2 = new Vector4f(0, 0, zMax, 1.0F);
+        vec2.transform(positionMatrix);
+        Vector4f vec3 = new Vector4f(0, 0, zMax, 1.0F);
+        vec3.transform(positionMatrix);
+        Vector4f vec4 = new Vector4f(xMin + movementXOffset, yMax + movementYOffset, zMin, 1.0F);
+        vec4.transform(positionMatrix);
+        drawQuad(builder, (float) v1, (float) v2, r, g, b, alpha, vector3f, vec1, vec2, vec3, vec4);
+
+        vec1 = new Vector4f(xMax + movementXOffset, yMin + movementYOffset, zMin, 1.0F);
+        vec1.transform(positionMatrix);
+        vec2 = new Vector4f(0, 0, zMax, 1.0F);
+        vec2.transform(positionMatrix);
+        vec3 = new Vector4f(0, 0, zMax, 1.0F);
+        vec3.transform(positionMatrix);
+        vec4 = new Vector4f(xMax + movementXOffset, yMax + movementYOffset, zMin, 1.0F);
+        vec4.transform(positionMatrix);
+        drawQuad(builder, (float) v1, (float) v2, r, g, b, alpha, vector3f, vec1, vec2, vec3, vec4);
+
+        vec1 = new Vector4f(xMin + movementXOffset, yMax + movementYOffset, zMin, 1.0F);
+        vec1.transform(positionMatrix);
+        vec2 = new Vector4f(0, 0, zMax, 1.0F);
+        vec2.transform(positionMatrix);
+        vec3 = new Vector4f(0, 0, zMax, 1.0F);
+        vec3.transform(positionMatrix);
+        vec4 = new Vector4f(xMax + movementXOffset, yMax + movementYOffset, zMin, 1.0F);
+        vec4.transform(positionMatrix);
+        drawQuad(builder, (float) v1, (float) v2, r, g, b, alpha, vector3f, vec1, vec2, vec3, vec4);
+
+        vec1 = new Vector4f(xMin + movementXOffset, yMin + movementYOffset, zMin, 1.0F);
+        vec1.transform(positionMatrix);
+        vec2 = new Vector4f(0, 0, zMax, 1.0F);
+        vec2.transform(positionMatrix);
+        vec3 = new Vector4f(0, 0, zMax, 1.0F);
+        vec3.transform(positionMatrix);
+        vec4 = new Vector4f(xMax + movementXOffset, yMin + movementYOffset, zMin, 1.0F);
+        vec4.transform(positionMatrix);
+        drawQuad(builder, (float) v1, (float) v2, r, g, b, alpha, vector3f, vec1, vec2, vec3, vec4);
+    }
+
+    private static void drawQuad(IVertexBuilder builder, float v1, float v2, float r, float g, float b, float alpha, Vector3f vector3f, Vector4f vec1, Vector4f vec2, Vector4f vec3, Vector4f vec4) {
+        builder.vertex(vec4.x(), vec4.y(), vec4.z(), r, g, b, alpha, 0, v1, OverlayTexture.NO_OVERLAY, 15728880, vector3f.x(), vector3f.y(), vector3f.z());
+        builder.vertex(vec3.x(), vec3.y(), vec3.z(), r, g, b, alpha, 0, v2, OverlayTexture.NO_OVERLAY, 15728880, vector3f.x(), vector3f.y(), vector3f.z());
+        builder.vertex(vec2.x(), vec2.y(), vec2.z(), r, g, b, alpha, 1, v2, OverlayTexture.NO_OVERLAY, 15728880, vector3f.x(), vector3f.y(), vector3f.z());
+        builder.vertex(vec1.x(), vec1.y(), vec1.z(), r, g, b, alpha, 1, v1, OverlayTexture.NO_OVERLAY, 15728880, vector3f.x(), vector3f.y(), vector3f.z());
+        //Rendering a 2nd time to allow you to see both sides in multiplayer, shouldn't be necessary with culling disabled but here we are....
+        /*builder.vertex(vec1.x(), vec1.y(), vec1.z(), r, g, b, alpha, 1, v1, OverlayTexture.NO_OVERLAY, 15728880, vector3f.x(), vector3f.y(), vector3f.z());
+        builder.vertex(vec2.x(), vec2.y(), vec2.z(), r, g, b, alpha, 1, v2, OverlayTexture.NO_OVERLAY, 15728880, vector3f.x(), vector3f.y(), vector3f.z());
+        builder.vertex(vec3.x(), vec3.y(), vec3.z(), r, g, b, alpha, 0, v2, OverlayTexture.NO_OVERLAY, 15728880, vector3f.x(), vector3f.y(), vector3f.z());
+        builder.vertex(vec4.x(), vec4.y(), vec4.z(), r, g, b, alpha, 0, v1, OverlayTexture.NO_OVERLAY, 15728880, vector3f.x(), vector3f.y(), vector3f.z());*/
     }
 }

@@ -1,6 +1,5 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
@@ -12,9 +11,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.text.ITextComponent;
@@ -24,7 +21,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_GATHERING;
@@ -35,7 +31,7 @@ public class HarvesterItem extends ArtifactItem implements ISoulConsumer {
         super(properties);
     }
 
-    public ActionResult<ItemStack> procArtifact(ItemUseContext c) {
+    public ActionResult<ItemStack> procArtifact(ArtifactUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
         ItemStack itemStack = c.getItemInHand();
 

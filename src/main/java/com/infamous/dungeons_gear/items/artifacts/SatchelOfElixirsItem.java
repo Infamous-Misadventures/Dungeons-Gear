@@ -8,7 +8,6 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.ResourceLocation;
@@ -23,8 +22,6 @@ import java.util.List;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
-import net.minecraft.item.Item.Properties;
-
 public class SatchelOfElixirsItem extends ArtifactItem{
 
     public SatchelOfElixirsItem(Properties properties) {
@@ -32,7 +29,7 @@ public class SatchelOfElixirsItem extends ArtifactItem{
     }
 
     @Override
-    public ActionResult<ItemStack> procArtifact(ItemUseContext c) {
+    public ActionResult<ItemStack> procArtifact(ArtifactUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
         ItemStack itemstack = c.getItemInHand();
 

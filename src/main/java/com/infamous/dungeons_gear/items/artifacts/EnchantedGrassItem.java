@@ -7,7 +7,6 @@ import com.infamous.dungeons_libraries.capabilities.minionmaster.IMaster;
 import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.goals.*;
-import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.block.BlockState;
@@ -35,8 +34,6 @@ import net.minecraftforge.fml.network.PacketDistributor;
 import java.util.List;
 import java.util.UUID;
 
-import net.minecraft.item.Item.Properties;
-
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_GATHERING;
 import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMinionCapability;
 import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMasterCapability;
@@ -48,7 +45,7 @@ public class EnchantedGrassItem extends ArtifactItem {
         procOnItemUse=true;
     }
 
-    public ActionResult<ItemStack> procArtifact(ItemUseContext itemUseContext) {
+    public ActionResult<ItemStack> procArtifact(ArtifactUseContext itemUseContext) {
         World world = itemUseContext.getLevel();
         if (world.isClientSide) {
             return ActionResult.success(itemUseContext.getItemInHand());

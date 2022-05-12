@@ -4,7 +4,6 @@ import com.infamous.dungeons_gear.combat.NetworkHandler;
 import com.infamous.dungeons_gear.combat.PacketBreakItem;
 import com.infamous.dungeons_gear.entities.IceCloudEntity;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
-import javafx.util.Pair;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,8 +24,6 @@ import java.util.List;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.applyToNearbyEntities;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.getCanApplyToEnemyPredicate;
 
-import net.minecraft.item.Item.Properties;
-
 public class IceWandItem extends ArtifactItem {
     public IceWandItem(Properties properties) {
         super(properties);
@@ -38,7 +35,7 @@ public class IceWandItem extends ArtifactItem {
     }
 
     @Override
-    public ActionResult<ItemStack> procArtifact(ItemUseContext c) {
+    public ActionResult<ItemStack> procArtifact(ArtifactUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
         ItemStack itemstack = c.getItemInHand();
         final MutablePair<LivingEntity, Double> targetDistance = new MutablePair(null, 123456);

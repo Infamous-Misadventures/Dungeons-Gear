@@ -7,7 +7,6 @@ import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.text.ITextComponent;
@@ -18,8 +17,6 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 
-import net.minecraft.item.Item.Properties;
-
 public class SatchelOfElementsItem extends ArtifactItem{
 
     public SatchelOfElementsItem(Properties properties) {
@@ -27,7 +24,7 @@ public class SatchelOfElementsItem extends ArtifactItem{
     }
 
     @Override
-    public ActionResult<ItemStack> procArtifact(ItemUseContext c) {
+    public ActionResult<ItemStack> procArtifact(ArtifactUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
         ItemStack itemstack = c.getItemInHand();
 

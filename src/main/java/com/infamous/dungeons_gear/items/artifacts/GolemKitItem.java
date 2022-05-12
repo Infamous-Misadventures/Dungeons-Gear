@@ -20,7 +20,6 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundEvents;
@@ -35,7 +34,6 @@ import net.minecraftforge.fml.network.PacketDistributor;
 import java.util.List;
 import java.util.UUID;
 
-import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_GATHERING;
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SUMMON_CAP;
 import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMasterCapability;
 import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMinionCapability;
@@ -46,7 +44,7 @@ public class GolemKitItem extends ArtifactItem {
         procOnItemUse=true;
     }
 
-    public ActionResult<ItemStack> procArtifact(ItemUseContext itemUseContext) {
+    public ActionResult<ItemStack> procArtifact(ArtifactUseContext itemUseContext) {
         World world = itemUseContext.getLevel();
         if (world.isClientSide) {
             return ActionResult.success(itemUseContext.getItemInHand());

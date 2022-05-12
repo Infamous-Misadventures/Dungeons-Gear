@@ -18,14 +18,12 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 
-import net.minecraft.item.Item.Properties;
-
 public class BootsOfSwiftnessItem extends ArtifactItem {
     public BootsOfSwiftnessItem(Properties properties) {
         super(properties);
     }
 
-    public ActionResult<ItemStack> procArtifact(ItemUseContext c) {
+    public ActionResult<ItemStack> procArtifact(ArtifactUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
         ItemStack itemstack = c.getItemInHand();
 

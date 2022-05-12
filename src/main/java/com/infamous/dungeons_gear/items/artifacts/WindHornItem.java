@@ -8,7 +8,6 @@ import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
@@ -18,14 +17,12 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 
-import net.minecraft.item.Item.Properties;
-
 public class WindHornItem extends ArtifactItem {
     public WindHornItem(Properties properties) {
         super(properties);
     }
 
-    public ActionResult<ItemStack> procArtifact(ItemUseContext c) {
+    public ActionResult<ItemStack> procArtifact(ArtifactUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
         ItemStack itemstack = c.getItemInHand();
         World worldIn = c.getLevel();

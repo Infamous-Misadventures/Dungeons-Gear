@@ -16,17 +16,11 @@ import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.World;
-
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 import java.util.UUID;
@@ -91,12 +85,6 @@ public abstract class ArtifactItem extends Item implements ICurioItem {
         }
     }
 
-    @Override
-    public ActionResultType useOn(ItemUseContext itemUseContext) {
-        if (!procOnItemUse) return super.useOn(itemUseContext);
-        return activateArtifact(itemUseContext).getResult();
-    }
-
     public Rarity getRarity(ItemStack itemStack) {
         return Rarity.RARE;
     }
@@ -106,27 +94,27 @@ public abstract class ArtifactItem extends Item implements ICurioItem {
         return ItemTagWrappers.ARTIFACT_REPAIR_ITEMS.contains(repair.getItem()) || super.isValidRepairItem(toRepair, repair);
     }
 
-    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        if (procOnItemUse) return super.use(worldIn, playerIn, handIn);
-        ItemUseContext iuc = new ItemUseContext(playerIn, handIn, new BlockRayTraceResult(playerIn.position(), Direction.UP, playerIn.blockPosition(), false));
-        return activateArtifact(iuc);
-    }
+//    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+//        if (procOnItemUse) return super.use(worldIn, playerIn, handIn);
+//        ArtifactUseContext iuc = new ArtifactUseContext(playerIn, handIn, new BlockRayTraceResult(playerIn.position(), Direction.UP, playerIn.blockPosition(), false));
+//        return activateArtifact(iuc);
+//    }
 
-    public ActionResult<ItemStack> activateArtifact(ItemUseContext itemUseContext) {
-        if(itemUseContext.getPlayer() != null) {
-            ItemStack itemStack = itemUseContext.getItemInHand();
-            if (itemUseContext.getPlayer().getCooldowns().isOnCooldown(itemStack.getItem())){
+    public ActionResult<ItemStack> activateArtifact(ArtifactUseContext artifactUseContext) {
+        if(artifactUseContext.getPlayer() != null) {
+            ItemStack itemStack = artifactUseContext.getItemInHand();
+            if (artifactUseContext.getPlayer().getCooldowns().isOnCooldown(itemStack.getItem())){
                 return new ActionResult<>(ActionResultType.SUCCESS, itemStack);
             }
         }
-        ActionResult<ItemStack> procResult = procArtifact(itemUseContext);
-        if(procResult.getResult().consumesAction() && itemUseContext.getPlayer() != null && !itemUseContext.getLevel().isClientSide){
-            triggerSynergy(itemUseContext.getPlayer(), itemUseContext.getItemInHand());
+        ActionResult<ItemStack> procResult = procArtifact(artifactUseContext);
+        if(procResult.getResult().consumesAction() && artifactUseContext.getPlayer() != null && !artifactUseContext.getLevel().isClientSide){
+            triggerSynergy(artifactUseContext.getPlayer(), artifactUseContext.getItemInHand());
         }
         return procResult;
     }
 
-    public abstract ActionResult<ItemStack> procArtifact(ItemUseContext iuc);
+    public abstract ActionResult<ItemStack> procArtifact(ArtifactUseContext iuc);
 
     public abstract int getCooldownInSeconds();
 

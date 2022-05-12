@@ -1,5 +1,8 @@
 package com.infamous.dungeons_gear;
 
+import com.infamous.dungeons_gear.capabilities.artifact.ArtifactUsage;
+import com.infamous.dungeons_gear.capabilities.artifact.ArtifactUsageStorage;
+import com.infamous.dungeons_gear.capabilities.artifact.IArtifactUsage;
 import com.infamous.dungeons_gear.capabilities.bow.Bow;
 import com.infamous.dungeons_gear.capabilities.bow.BowStorage;
 import com.infamous.dungeons_gear.capabilities.bow.IBow;
@@ -94,6 +97,7 @@ public class DungeonsGear
     {
         NetworkHandler.init();
         CapabilityManager.INSTANCE.register(ICombo.class, new ComboStorage(), Combo::new);
+        CapabilityManager.INSTANCE.register(IArtifactUsage.class, new ArtifactUsageStorage(), ArtifactUsage::new);
         CapabilityManager.INSTANCE.register(IBow.class, new BowStorage(), Bow::new);
         CapabilityManager.INSTANCE.register(IOffhand.class, new OffhandStorage(), Offhand::new);
         event.enqueueWork(ModLootFunctionTypes::register);
