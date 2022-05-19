@@ -36,22 +36,14 @@ public class DungeonsGearConfig {
     public static ForgeConfigSpec.ConfigValue<Integer> COMMON_ITEM_VALUE;
     public static ForgeConfigSpec.ConfigValue<Integer> UNIQUE_ITEM_VALUE;
     public static ForgeConfigSpec.ConfigValue<Integer> ARTIFACT_VALUE;
-    public static ForgeConfigSpec.ConfigValue<Double> UNIQUE_ITEM_COMMON_LOOT;
-    public static ForgeConfigSpec.ConfigValue<Double> ARTIFACT_COMMON_LOOT;
-    public static ForgeConfigSpec.ConfigValue<Double> UNIQUE_ITEM_UNCOMMON_LOOT;
-    public static ForgeConfigSpec.ConfigValue<Double> ARTIFACT_UNCOMMON_LOOT;
-    public static ForgeConfigSpec.ConfigValue<Double> UNIQUE_ITEM_RARE_LOOT;
-    public static ForgeConfigSpec.ConfigValue<Double> ARTIFACT_RARE_LOOT;
-    public static ForgeConfigSpec.ConfigValue<Double> UNIQUE_ITEM_SUPER_RARE_LOOT;
-    public static ForgeConfigSpec.ConfigValue<Double> ARTIFACT_SUPER_RARE_LOOT;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> COMMON_LOOT_TABLES;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> COMMON_LOOT_TABLES_BLACKLIST;
-    public static ForgeConfigSpec.ConfigValue<List<? extends String>> UNCOMMON_LOOT_TABLES;
-    public static ForgeConfigSpec.ConfigValue<List<? extends String>> UNCOMMON_LOOT_TABLES_BLACKLIST;
-    public static ForgeConfigSpec.ConfigValue<List<? extends String>> RARE_LOOT_TABLES;
-    public static ForgeConfigSpec.ConfigValue<List<? extends String>> RARE_LOOT_TABLES_BLACKLIST;
-    public static ForgeConfigSpec.ConfigValue<List<? extends String>> SUPER_RARE_LOOT_TABLES;
-    public static ForgeConfigSpec.ConfigValue<List<? extends String>> SUPER_RARE_LOOT_TABLES_BLACKLIST;
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> FANCY_LOOT_TABLES;
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> FANCY_LOOT_TABLES_BLACKLIST;
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> OBSIDIAN_LOOT_TABLES;
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> OBSIDIAN_LOOT_TABLES_BLACKLIST;
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> BASIC_LOOT_TABLES;
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> BASIC_LOOT_TABLES_BLACKLIST;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> ENEMY_BLACKLIST;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_AREA_OF_EFFECT_ON_PLAYERS;
 
@@ -333,97 +325,69 @@ public class DungeonsGearConfig {
 
                         ),
                         (itemRaw) -> itemRaw instanceof String);
-        UNIQUE_ITEM_COMMON_LOOT = builder
-                .comment("The decimal chance for a unique item to appear in common loot tables instead of a common one [0.0-1.0, default: 0.25] \n"
-                        + "Note: If a player has the Fortune of the Sea enchantment, this value will effectively be increased by 0.1 per level of the enchantment for them.")
-                .defineInRange("uniqueItemCommonLoot", 0.25, 0.0, 1.0);
-        ARTIFACT_COMMON_LOOT = builder
-                .comment("The decimal chance for an artifact to appear in common loot tables [0.0-1.0, default: 0.25]")
-                .defineInRange("artifactCommonLoot", 0.25, 0.0, 1.0);
         builder.pop();
 
-        builder.comment("Uncommon Loot Table Configuration").push("uncommon_loot_table_configuration");
-        UNCOMMON_LOOT_TABLES = builder
+        builder.comment("Fancy Loot Table Configuration").push("fancy_loot_table_configuration");
+        FANCY_LOOT_TABLES = builder
                 .comment("Add gear from this mod to loot tables considered uncommon. \n"
                         + "To do so, enter the full path of the specific loot table, or the path of the folder containing the loot tables.\n"
                         + "You can also write an incomplete path, and the mod will add to loot tables containing that incomplete path.")
-                .defineList("uncommonLootTables", Lists.newArrayList(
+                .defineList("fancyLootTables", Lists.newArrayList(
                         "minecraft:chests/jungle_temple",
                         "minecraft:chests/nether_bridge",
                         "minecraft:chests/bastion"
                         ),
                         (itemRaw) -> itemRaw instanceof String);
-        UNCOMMON_LOOT_TABLES_BLACKLIST = builder
+        FANCY_LOOT_TABLES_BLACKLIST = builder
                 .comment("Use this list to prevent specific loot tables from getting uncommon loot. \n"
                         + "To do so, enter the full path of the specific loot table.")
-                .defineList("uncommonLootTablesBlacklist", Lists.newArrayList(
+                .defineList("fancyLootTablesBlacklist", Lists.newArrayList(
                         "minecraft:chests/jungle_temple_dispenser"
                         ),
                         (itemRaw) -> itemRaw instanceof String);
-        UNIQUE_ITEM_UNCOMMON_LOOT = builder
-                .comment("The decimal chance for a unique item to appear in uncommon loot tables instead of a common one [0.0-1.0, default: 0.5] \n"
-                        + "Note: If a player has the Fortune of the Sea enchantment, this value will effectively be increased by 0.1 per level of the enchantment for them.")
-                .defineInRange("uniqueItemUncommonLoot", 0.5, 0.0, 1.0);
-        ARTIFACT_UNCOMMON_LOOT = builder
-                .comment("The decimal chance for an artifact to appear in uncommon loot tables [0.0-1.0, default: 0.5]")
-                .defineInRange("artifactUncommonLoot", 0.5, 0.0, 1.0);
         builder.pop();
 
-        builder.comment("Rare Loot Table Configuration").push("rare_loot_table_configuration");
-        RARE_LOOT_TABLES = builder
+        builder.comment("Obsidian Loot Table Configuration").push("obsidian_loot_table_configuration");
+        OBSIDIAN_LOOT_TABLES = builder
                 .comment("Add gear from this mod to loot tables considered rare. \n"
                         + "To do so, enter the full path of the specific loot table, or the path of the folder containing the loot tables.\n"
                         + "You can also write an incomplete path, and the mod will add to loot tables containing that incomplete path.")
-                .defineList("rareLootTables", Lists.newArrayList(
+                .defineList("obsidianLootTables", Lists.newArrayList(
                         "minecraft:chests/stronghold",
                         "minecraft:chests/underwater_ruin",
                         "minecraft:chests/ruined_portal",
                         "minecraft:chests/pillager_outpost",
                         "minecraft:chests/simple_dungeon",
                         "minecraft:chests/end_city_treasure",
-                        "minecraft:chests/igloo_chest"
-                        ),
-                        (itemRaw) -> itemRaw instanceof String);
-        RARE_LOOT_TABLES_BLACKLIST = builder
-                .comment("Use this list to prevent specific loot tables from getting rare loot. \n"
-                        + "To do so, enter the full path of the specific loot table.")
-                .defineList("rareLootTableBlacklist", Lists.newArrayList(
-
-                        ),
-                        (itemRaw) -> itemRaw instanceof String);
-        UNIQUE_ITEM_RARE_LOOT = builder
-                .comment("The decimal chance for a unique weapon to appear in rare loot table instead of a common ones [0.0-1.0, default: 0.75] \n"
-                        + "Note: If a player has the Fortune of the Sea enchantment, this value will effectively be increased by 0.1 per level of the enchantment for them.")
-                .defineInRange("uniqueItemRareLoot", 0.75, 0.0, 1.0);
-        ARTIFACT_RARE_LOOT = builder
-                .comment("The decimal chance for an artifact to appear in rare loot tables [0.0-1.0, default: 0.75]")
-                .defineInRange("artifactRareLoot", 0.75, 0.0, 1.0);
-        builder.pop();
-
-        builder.comment("Super Rare Loot Table Configuration").push("super_rare_loot_table_configuration");
-        SUPER_RARE_LOOT_TABLES = builder
-                .comment("Add gear from this mod to loot tables considered super rare. \n"
-                        + "To do so, enter the full path of the specific loot table, or the path of the folder containing the loot tables.\n"
-                        + "You can also write an incomplete path, and the mod will add to loot tables containing that incomplete path.")
-                .defineList("superRareLootTables", Lists.newArrayList(
+                        "minecraft:chests/igloo_chest",
                         "minecraft:chests/woodland_mansion",
                         "minecraft:chests/buried_treasure"
                         ),
                         (itemRaw) -> itemRaw instanceof String);
-        SUPER_RARE_LOOT_TABLES_BLACKLIST = builder
-                .comment("Use this list to prevent specific loot tables from getting super rare loot. \n"
+        OBSIDIAN_LOOT_TABLES_BLACKLIST = builder
+                .comment("Use this list to prevent specific loot tables from getting rare loot. \n"
                         + "To do so, enter the full path of the specific loot table.")
-                .defineList("superRareLootTablesBlacklist", Lists.newArrayList(
+                .defineList("obsidianLootTableBlacklist", Lists.newArrayList(
 
                         ),
                         (itemRaw) -> itemRaw instanceof String);
-        UNIQUE_ITEM_SUPER_RARE_LOOT = builder
-                .comment("The decimal chance for a unique item to appear in super rare loot tables instead of a common one [0.0-1.0, default: 1.0] \n"
-                        + "Note: If a player has the Fortune of the Sea enchantment, this value will effectively be increased by 0.1 per level of the enchantment for them.")
-                .defineInRange("uniqueItemSuperRareLoot", 1.0, 0, 1.0);
-        ARTIFACT_SUPER_RARE_LOOT = builder
-                .comment("The decimal chance for an artifact to appear in super rare loot tables [0.0-1.0, default: 1.0]")
-                .defineInRange("artifactSuperRareLoot", 1.0, 0, 1.0);
+        builder.pop();
+
+        builder.comment("Basic Loot Table Configuration").push("basic_loot_table_configuration");
+        BASIC_LOOT_TABLES = builder
+                .comment("Add gear from this mod to loot tables considered to belong to no actual environment. \n"
+                        + "To do so, enter the full path of the specific loot table, or the path of the folder containing the loot tables.\n"
+                        + "You can also write an incomplete path, and the mod will add to loot tables containing that incomplete path.")
+                .defineList("basicLootTables", Lists.newArrayList(
+                        ),
+                        (itemRaw) -> itemRaw instanceof String);
+        BASIC_LOOT_TABLES_BLACKLIST = builder
+                .comment("Use this list to prevent specific loot tables from getting super rare loot. \n"
+                        + "To do so, enter the full path of the specific loot table.")
+                .defineList("basicLootTablesBlacklist", Lists.newArrayList(
+
+                        ),
+                        (itemRaw) -> itemRaw instanceof String);
         builder.pop();
 
         builder.comment("Effect Specific Configuration").push("effect_specific_configuration");

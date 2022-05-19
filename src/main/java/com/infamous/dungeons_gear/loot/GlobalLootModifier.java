@@ -2,11 +2,9 @@ package com.infamous.dungeons_gear.loot;
 
 import com.google.gson.JsonObject;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
+import com.infamous.dungeons_gear.utilties.LootTableHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
 import net.minecraft.loot.conditions.ILootCondition;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
@@ -19,6 +17,7 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
+import static net.minecraft.loot.LootParameters.ORIGIN;
 
 
 public class GlobalLootModifier{
@@ -29,145 +28,75 @@ public class GlobalLootModifier{
         @SubscribeEvent
         public static void registerModifierSerializers(@Nonnull final RegistryEvent.Register<GlobalLootModifierSerializer<?>> event) {
             event.getRegistry().register(
-                    new CommonLootAdditions.Serializer().setRegistryName(new ResourceLocation(MODID,"common_loot_additions"))
-            );
-            event.getRegistry().register(
-                    new UncommonLootAdditions.Serializer().setRegistryName(new ResourceLocation(MODID,"uncommon_loot_additions"))
-            );
-            event.getRegistry().register(
-                    new RareLootAdditions.Serializer().setRegistryName(new ResourceLocation(MODID,"rare_loot_additions"))
-            );
-            event.getRegistry().register(
-                    new SuperRareLootAdditions.Serializer().setRegistryName(new ResourceLocation(MODID,"super_rare_loot_additions"))
+                    new DungeonsLootAdditions.Serializer().setRegistryName(new ResourceLocation(MODID,"dungeons_loot_additions"))
             );
         }
     }
 
-    public static class CommonLootAdditions extends LootModifier {
+    public static class DungeonsLootAdditions extends LootModifier {
 
-        public CommonLootAdditions(ILootCondition[] conditionsIn) {
+        public DungeonsLootAdditions(ILootCondition[] conditionsIn) {
             super(conditionsIn);
         }
 
         @Nonnull
         @Override
         public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-            injectLoot(generatedLoot, context, DungeonsGearConfig.COMMON_LOOT_TABLES.get(), DungeonsGearConfig.COMMON_LOOT_TABLES_BLACKLIST.get(), DungeonsGearConfig.UNIQUE_ITEM_COMMON_LOOT.get(), DungeonsGearConfig.ARTIFACT_COMMON_LOOT.get());
+            // return early if the user has disabled this feature
+            if(!DungeonsGearConfig.ENABLE_DUNGEONS_GEAR_LOOT.get()){
+                return generatedLoot;
+            }
+            ResourceLocation lootTable = determineTable(context.getQueriedLootTableId());
+            if(lootTable == null) return generatedLoot;
+            List<ItemStack> itemStacks = LootTableHelper.generateItemStacks(context.getLevel(), context.getParamOrNull(ORIGIN), lootTable, context.getRandom());
+            generatedLoot.addAll(itemStacks);
             return generatedLoot;
         }
 
-        public static class Serializer extends GlobalLootModifierSerializer<CommonLootAdditions> {
-
-            @Override
-            public CommonLootAdditions read(ResourceLocation name, JsonObject object, ILootCondition[] conditionsIn) {
-                return new CommonLootAdditions(conditionsIn);
-            }
-
-            @Override
-            public JsonObject write(CommonLootAdditions instance) {
-                return null;
-            }
-        }
-    }
-
-    public static class UncommonLootAdditions extends LootModifier {
-
-        public UncommonLootAdditions(ILootCondition[] conditionsIn) {
-            super(conditionsIn);
-        }
-
-        @Nonnull
-        @Override
-        public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-            injectLoot(generatedLoot, context, DungeonsGearConfig.UNCOMMON_LOOT_TABLES.get(), DungeonsGearConfig.UNCOMMON_LOOT_TABLES_BLACKLIST.get(), DungeonsGearConfig.UNIQUE_ITEM_UNCOMMON_LOOT.get(), DungeonsGearConfig.ARTIFACT_UNCOMMON_LOOT.get());
-            return generatedLoot;
-        }
-
-        public static class Serializer extends GlobalLootModifierSerializer<UncommonLootAdditions> {
-
-            @Override
-            public UncommonLootAdditions read(ResourceLocation name, JsonObject object, ILootCondition[] conditionsIn) {
-                return new UncommonLootAdditions(conditionsIn);
-            }
-
-            @Override
-            public JsonObject write(UncommonLootAdditions instance) {
-                return null;
-            }
-        }
-    }
-
-    public static class RareLootAdditions extends LootModifier {
-
-        public RareLootAdditions(ILootCondition[] conditionsIn) {
-            super(conditionsIn);
-        }
-
-        @Nonnull
-        @Override
-        public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-            injectLoot(generatedLoot, context, DungeonsGearConfig.RARE_LOOT_TABLES.get(), DungeonsGearConfig.RARE_LOOT_TABLES_BLACKLIST.get(), DungeonsGearConfig.UNIQUE_ITEM_RARE_LOOT.get(), DungeonsGearConfig.ARTIFACT_RARE_LOOT.get());
-            return generatedLoot;
-        }
-
-        public static class Serializer extends GlobalLootModifierSerializer<RareLootAdditions> {
-
-            @Override
-            public RareLootAdditions read(ResourceLocation name, JsonObject object, ILootCondition[] conditionsIn) {
-                return new RareLootAdditions(conditionsIn);
-            }
-
-            @Override
-            public JsonObject write(RareLootAdditions instance) {
-                return null;
-            }
-        }
-    }
-
-    public static class SuperRareLootAdditions extends LootModifier {
-
-        public SuperRareLootAdditions(ILootCondition[] conditionsIn) {
-            super(conditionsIn);
-        }
-
-        @Nonnull
-        @Override
-        public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-            injectLoot(generatedLoot, context, DungeonsGearConfig.SUPER_RARE_LOOT_TABLES.get(), DungeonsGearConfig.SUPER_RARE_LOOT_TABLES_BLACKLIST.get(), DungeonsGearConfig.UNIQUE_ITEM_SUPER_RARE_LOOT.get(), DungeonsGearConfig.ARTIFACT_SUPER_RARE_LOOT.get());
-            return generatedLoot;
-        }
-
-        public static class Serializer extends GlobalLootModifierSerializer<SuperRareLootAdditions> {
-
-            @Override
-            public SuperRareLootAdditions read(ResourceLocation name, JsonObject object, ILootCondition[] conditionsIn) {
-                return new SuperRareLootAdditions(conditionsIn);
-            }
-
-            @Override
-            public JsonObject write(SuperRareLootAdditions instance) {
-                return null;
-            }
-        }
-    }
-
-    private static void injectLoot(List<ItemStack> generatedLoot, LootContext context, List<? extends String> lootTables, List<? extends String> lootTableBlacklist, Double uniqueItemChance, Double artifactChance) {
-        // return early if the user has disabled this feature
-        if(!DungeonsGearConfig.ENABLE_DUNGEONS_GEAR_LOOT.get()){
-            return;
-        }
-
-        Entity thisEntity = context.getParamOrNull(LootParameters.THIS_ENTITY);
-        final PlayerEntity player = thisEntity instanceof PlayerEntity ? (PlayerEntity) thisEntity : null;
-
-        ResourceLocation lootTable = context.getQueriedLootTableId();
-        if (lootTable != null) {
+        private ResourceLocation determineTable(ResourceLocation lootTable) {
             String lootTablePath = lootTable.toString();
-            lootTables.forEach((path) ->{
-                if(lootTablePath.contains(path) && !lootTableBlacklist.contains(lootTablePath)){
-                    generatedLoot.addAll(ChestLootHelper.generateLootFromValues(uniqueItemChance, artifactChance, player));
-                }
-            });
+            String rarity = getRarity(lootTablePath);
+            String type = getType(lootTablePath);
+            if(rarity.isEmpty() || type.isEmpty()) return null;
+            return new ResourceLocation(MODID, rarity + "_" + type);
+        }
+
+        private String getType(String lootTablePath) {
+            if(checkLootTableConfig(lootTablePath, DungeonsGearConfig.BASIC_LOOT_TABLES.get(), DungeonsGearConfig.BASIC_LOOT_TABLES_BLACKLIST.get())){
+                return "basic";
+            }
+            return "basic";
+        }
+
+        private String getRarity(String lootTablePath) {
+            if(checkLootTableConfig(lootTablePath, DungeonsGearConfig.OBSIDIAN_LOOT_TABLES.get(), DungeonsGearConfig.OBSIDIAN_LOOT_TABLES_BLACKLIST.get())){
+                return "obsidian";
+            }
+            if(checkLootTableConfig(lootTablePath, DungeonsGearConfig.FANCY_LOOT_TABLES.get(), DungeonsGearConfig.FANCY_LOOT_TABLES_BLACKLIST.get())){
+                return "fancy";
+            }
+            if(checkLootTableConfig(lootTablePath, DungeonsGearConfig.COMMON_LOOT_TABLES.get(), DungeonsGearConfig.COMMON_LOOT_TABLES_BLACKLIST.get())){
+                return "common";
+            }
+            return "";
+        }
+
+        private boolean checkLootTableConfig(String lootTablePath, List<? extends String> whitelist, List<? extends String> blacklist) {
+            if(blacklist.contains(lootTablePath)) return false;
+            return whitelist.stream().anyMatch(lootTablePath::contains);
+        }
+
+        public static class Serializer extends GlobalLootModifierSerializer<DungeonsLootAdditions> {
+
+            @Override
+            public DungeonsLootAdditions read(ResourceLocation name, JsonObject object, ILootCondition[] conditionsIn) {
+                return new DungeonsLootAdditions(conditionsIn);
+            }
+
+            @Override
+            public JsonObject write(DungeonsLootAdditions instance) {
+                return null;
+            }
         }
     }
 }
