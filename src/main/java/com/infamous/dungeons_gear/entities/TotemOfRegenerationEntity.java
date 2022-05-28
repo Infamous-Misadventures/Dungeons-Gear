@@ -34,8 +34,10 @@ public class TotemOfRegenerationEntity extends TotemBaseEntity implements IAnima
 
     @Override
     protected void applyTotemEffect() {
-        applyToNearbyEntities(getOwner(), 8,
-                getCanHealPredicate(getOwner()), (LivingEntity nearbyEntity) -> {
+        LivingEntity owner = getOwner();
+        if(owner == null) return;
+        applyToNearbyEntities(owner, 8,
+                getCanHealPredicate(owner), (LivingEntity nearbyEntity) -> {
                     EffectInstance effectInstance = new EffectInstance(Effects.REGENERATION, 10);
                     nearbyEntity.addEffect(new EffectInstance(effectInstance));
                 }
