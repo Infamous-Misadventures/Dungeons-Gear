@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:diamond_sword"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:hawkbrand"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:diamond_pickaxe"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:firebrand"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:highland_axe"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:archers_vest"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:archers_hood"
+        }
+      ]
+    }
+  ]
+}

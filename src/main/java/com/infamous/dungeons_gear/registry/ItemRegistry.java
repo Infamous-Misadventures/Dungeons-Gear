@@ -13,6 +13,7 @@ import com.infamous.dungeons_gear.items.artifacts.beacon.EyeOfTheGuardianItem;
 import com.infamous.dungeons_gear.items.melee.DualWieldMeleeGear;
 import com.infamous.dungeons_gear.items.melee.StaffGear;
 import com.infamous.dungeons_gear.items.ranged.crossbows.DualCrossbowGear;
+import com.infamous.dungeons_gear.utilties.GeneralHelper;
 import com.infamous.dungeons_libraries.items.gearconfig.*;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
@@ -637,30 +638,26 @@ public class ItemRegistry {
 
     private static RegistryObject<Item> registerArmor(String armorId, Supplier<Item> itemSupplier) {
         RegistryObject<Item> register = ITEMS.register(armorId, itemSupplier);
-        ARMORS.put(modLoc(armorId), register);
+        ARMORS.put(GeneralHelper.modLoc(armorId), register);
         return register;
     }
 
     private static RegistryObject<Item> registerMeleeWeapon(String meleeWeaponId, Supplier<Item> itemSupplier) {
         RegistryObject<Item> register = ITEMS.register(meleeWeaponId, itemSupplier);
-        MELEE_WEAPONS.put(modLoc(meleeWeaponId), register);
+        MELEE_WEAPONS.put(GeneralHelper.modLoc(meleeWeaponId), register);
         return register;
     }
 
     private static RegistryObject<Item> registerRangedWeapon(String meleeWeaponId, Supplier<Item> itemSupplier) {
         RegistryObject<Item> register = ITEMS.register(meleeWeaponId, itemSupplier);
-        RANGED_WEAPONS.put(modLoc(meleeWeaponId), register);
+        RANGED_WEAPONS.put(GeneralHelper.modLoc(meleeWeaponId), register);
         return register;
     }
 
     private static RegistryObject<Item> registerArtifact(String meleeWeaponId, Supplier<Item> itemSupplier) {
         RegistryObject<Item> register = ITEMS.register(meleeWeaponId, itemSupplier);
-        ARTIFACTS.put(modLoc(meleeWeaponId), register);
+        ARTIFACTS.put(GeneralHelper.modLoc(meleeWeaponId), register);
         return register;
-    }
-
-    private static ResourceLocation modLoc(String armorId) {
-        return new ResourceLocation(MODID, armorId);
     }
 
 }

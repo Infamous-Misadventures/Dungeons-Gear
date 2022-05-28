@@ -1,22 +1,30 @@
 package com.infamous.dungeons_gear.datagen;
 
 import com.infamous.dungeons_gear.loot.AddPotionLootFunction;
+import com.infamous.dungeons_gear.registry.ItemRegistry;
 import net.minecraft.data.loot.ChestLootTables;
 import net.minecraft.loot.*;
+import net.minecraft.loot.functions.EnchantWithLevels;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.function.BiConsumer;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.items.ItemTagWrappers.FOOD_PROCESSED;
-import static com.infamous.dungeons_gear.registry.ItemRegistry.ARROW_BUNDLE;
+import static com.infamous.dungeons_gear.registry.ItemRegistry.*;
+import static com.infamous.dungeons_gear.utilties.GeneralHelper.modLoc;
 import static net.minecraft.item.Items.*;
 import static net.minecraft.tags.ItemTags.ARROWS;
 
 public class ModChestLootTables extends ChestLootTables {
 
+    private static final ResourceLocation BASIC_NORMAL = modLoc("basic_normal");
+    private static final ResourceLocation BASIC_UNIQUE = modLoc("basic_unique");
+
     @Override
     public void accept(BiConsumer<ResourceLocation, LootTable.Builder> consumer) {
+        //ChestAdditions
+        chestAdditionsLootTables(consumer);
         //Enchantments
         prospectorLootTables(consumer);
         luckyExplorerLootTable(consumer);
@@ -26,6 +34,59 @@ public class ModChestLootTables extends ChestLootTables {
         satchelOfSnacksLootTable(consumer);
         satchelOfElixirsLootTable(consumer);
         arrowBundleTable(consumer);
+    }
+
+    private void chestAdditionsLootTables(BiConsumer<ResourceLocation, LootTable.Builder> consumer) {
+        createCommonLootTable(consumer, "basic", BASIC_NORMAL, BASIC_UNIQUE);
+        consumer.accept(BASIC_NORMAL,
+                LootTable.lootTable().
+                        withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
+                                .add(ItemLootEntry.lootTableItem(SWORD::get).setWeight(1))
+                                .add(ItemLootEntry.lootTableItem(PICKAXE::get).setWeight(1))
+                                .add(ItemLootEntry.lootTableItem(AXE::get).setWeight(1))
+                                .add(ItemLootEntry.lootTableItem(HUNTERS_ARMOR::get).setWeight(1))
+                        )
+
+        );
+        consumer.accept(BASIC_UNIQUE,
+                LootTable.lootTable().
+                        withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
+                                .add(ItemLootEntry.lootTableItem(ItemRegistry.DIAMOND_SWORD::get).setWeight(1))
+                                .add(ItemLootEntry.lootTableItem(HAWKBRAND::get).setWeight(1))
+                                .add(ItemLootEntry.lootTableItem(ItemRegistry.DIAMOND_PICKAXE::get).setWeight(1))
+                                .add(ItemLootEntry.lootTableItem(FIREBRAND::get).setWeight(1))
+                                .add(ItemLootEntry.lootTableItem(HIGHLAND_AXE::get).setWeight(1))
+                                .add(ItemLootEntry.lootTableItem(ARCHERS_ARMOR::get).setWeight(1))
+                                .add(ItemLootEntry.lootTableItem(ARCHERS_ARMOR_HOOD::get).setWeight(1))
+                        )
+
+        );
+    }
+
+    private void createCommonLootTable(BiConsumer<ResourceLocation, LootTable.Builder> consumer, String type, ResourceLocation typeNormalTable, ResourceLocation typeUniqueTable) {
+        consumer.accept(modLoc("common_" + type),
+                LootTable.lootTable().
+                        withPool(LootPool.lootPool().setRolls(RandomValueRange.between(0.0F, 2.0F)).bonusRolls(0, 1)
+                                .add(TableLootEntry.lootTableReference(typeNormalTable).setWeight(54))
+                                .add(TableLootEntry.lootTableReference(typeUniqueTable).setWeight(1).setQuality(1))
+                                .add(EmptyLootEntry.emptyItem().setWeight(45).setQuality(-1)))
+        );
+        consumer.accept(modLoc("fancy_" + type),
+                LootTable.lootTable().
+                        withPool(LootPool.lootPool().setRolls(RandomValueRange.between(1.0F, 3.0F)).bonusRolls(0, 2)
+                                .add(TableLootEntry.lootTableReference(typeNormalTable).setWeight(20).setQuality(-2))
+                                .add(TableLootEntry.lootTableReference(typeNormalTable).setWeight(35).setQuality(2).apply(EnchantWithLevels.enchantWithLevels(ConstantRange.exactly(15)).allowTreasure()))
+                                .add(TableLootEntry.lootTableReference(typeUniqueTable).setWeight(5).setQuality(2).apply(EnchantWithLevels.enchantWithLevels(ConstantRange.exactly(15)).allowTreasure()))
+                                .add(EmptyLootEntry.emptyItem().setWeight(40).setQuality(-2)))
+        );
+        consumer.accept(modLoc("obsidian_" + type),
+                LootTable.lootTable().
+                        withPool(LootPool.lootPool().setRolls(RandomValueRange.between(1.0F, 4.0F)).bonusRolls(0, 2)
+                                .add(TableLootEntry.lootTableReference(typeNormalTable).setWeight(25).setQuality(-3).apply(EnchantWithLevels.enchantWithLevels(ConstantRange.exactly(15)).allowTreasure()))
+                                .add(TableLootEntry.lootTableReference(typeNormalTable).setWeight(35).setQuality(3).apply(EnchantWithLevels.enchantWithLevels(ConstantRange.exactly(30)).allowTreasure()))
+                                .add(TableLootEntry.lootTableReference(typeUniqueTable).setWeight(5).setQuality(3).apply(EnchantWithLevels.enchantWithLevels(ConstantRange.exactly(30)).allowTreasure()))
+                                .add(EmptyLootEntry.emptyItem().setWeight(35).setQuality(-3)))
+        );
     }
 
     private void arrowBundleTable(BiConsumer<ResourceLocation, LootTable.Builder> consumer) {

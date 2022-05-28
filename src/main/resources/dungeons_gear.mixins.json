@@ -12,7 +12,8 @@
     "CrossbowItemMixin",
     "HurtByTargetGoalMixin",
     "LockableLootTileEntityMixin",
-    "PlayerEntityMixin"
+    "PlayerEntityMixin",
+    "LootContextAccessor"
   ],
   "client": [
     "GameRendererMixin",

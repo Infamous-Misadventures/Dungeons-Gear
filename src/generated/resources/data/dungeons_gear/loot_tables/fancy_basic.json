@@ -1,0 +1,51 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": {
+        "min": 1.0,
+        "max": 3.0,
+        "type": "minecraft:uniform"
+      },
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "weight": 20,
+          "quality": -2,
+          "name": "dungeons_gear:basic_normal"
+        },
+        {
+          "type": "minecraft:loot_table",
+          "weight": 35,
+          "quality": 2,
+          "functions": [
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": 15,
+              "treasure": true
+            }
+          ],
+          "name": "dungeons_gear:basic_normal"
+        },
+        {
+          "type": "minecraft:loot_table",
+          "weight": 5,
+          "quality": 2,
+          "functions": [
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": 15,
+              "treasure": true
+            }
+          ],
+          "name": "dungeons_gear:basic_unique"
+        },
+        {
+          "type": "minecraft:empty",
+          "weight": 40,
+          "quality": -2
+        }
+      ]
+    }
+  ]
+}

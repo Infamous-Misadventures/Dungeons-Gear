@@ -48,7 +48,7 @@ public class GlobalLootModifier{
             }
             ResourceLocation lootTable = determineTable(context.getQueriedLootTableId());
             if(lootTable == null) return generatedLoot;
-            List<ItemStack> itemStacks = LootTableHelper.generateItemStacks(context.getLevel(), context.getParamOrNull(ORIGIN), lootTable, context.getRandom());
+            List<ItemStack> itemStacks = LootTableHelper.generateItemStacks(context.getLevel(), context, lootTable);
             generatedLoot.addAll(itemStacks);
             return generatedLoot;
         }
@@ -95,7 +95,7 @@ public class GlobalLootModifier{
 
             @Override
             public JsonObject write(DungeonsLootAdditions instance) {
-                return null;
+                return this.makeConditions(instance.conditions);
             }
         }
     }

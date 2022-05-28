@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.utilties;
 
+import com.infamous.dungeons_gear.mixin.LootContextAccessor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameterSets;
@@ -42,10 +43,22 @@ public class LootTableHelper {
         return table.getRandomItems(context);
     }
 
+    public static List<ItemStack> generateItemStacks(ServerWorld world, LootContext originContext, ResourceLocation lootTable) {
+        LootContext newContext = copyLootContextWithNewQueryID(originContext, lootTable);
+        List<ItemStack> newlyGeneratedLoot = originContext.getLootTable(lootTable).getRandomItems(newContext);
+        return newlyGeneratedLoot;
+    }
+
     public static boolean lootTableExists(ServerWorld world, ResourceLocation lootTable){
         return ! world.getServer()
                 .getLootTables()
                 .get(lootTable)
                 .equals(LootTable.EMPTY);
+    }
+
+    protected static LootContext copyLootContextWithNewQueryID(LootContext oldLootContext, ResourceLocation newQueryID){
+        LootContext newContext = new LootContext.Builder(oldLootContext).create(LootParameterSets.CHEST);
+        ((LootContextAccessor)newContext).dungeonsgear_setQueriedLootTableId(newQueryID);
+        return newContext;
     }
 }

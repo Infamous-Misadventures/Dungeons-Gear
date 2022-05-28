@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:sword"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:pickaxe"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:axe"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:hunters_vest"
+        }
+      ]
+    }
+  ]
+}

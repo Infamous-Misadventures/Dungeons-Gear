@@ -1,5 +1,5 @@
 {
-  "type": "dungeons_gear:rare_loot_additions",
+  "type": "dungeons_gear:dungeons_loot_additions",
   "conditions": [
     {
       "condition": "random_chance",
