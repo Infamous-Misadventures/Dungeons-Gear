@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.entities;
 
+import com.infamous.dungeons_gear.items.artifacts.beacon.BeamColor;
 import com.infamous.dungeons_gear.network.NetworkHandler;
 import com.infamous.dungeons_gear.network.entity.PlayerBeamMessage;
 import net.minecraft.entity.Entity;
@@ -27,9 +28,9 @@ import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.getCanApp
 public class BeamEntity extends Entity implements IEntityAdditionalSpawnData {
     public static final double MAX_RAYTRACE_DISTANCE = 256;
     public static final float BEAM_DAMAGE_PER_TICK = 0.5F; // 10.0F damage per second
-
     private LivingEntity owner;
     private UUID ownerUUID;
+    private BeamColor beamColor;
     private float beamWidth = 0.2f;
 
 
@@ -38,22 +39,25 @@ public class BeamEntity extends Entity implements IEntityAdditionalSpawnData {
     }
 
 
-    public BeamEntity(EntityType<?> p_i48580_1_, World p_i48580_2_, LivingEntity owner) {
+    public BeamEntity(EntityType<?> p_i48580_1_, BeamColor beamColor, World p_i48580_2_, LivingEntity owner) {
         super(p_i48580_1_, p_i48580_2_);
         this.owner = owner;
-        this.ownerUUID = owner.getUUID();
+        this.beamColor = beamColor;
         updatePositionAndRotation();
+    }
+
+    public BeamColor getBeamColor() {
+        if(beamColor == null) return new BeamColor((short) 90, (short) 0, (short) 90, (short) 255, (short) 255, (short) 255);
+        return beamColor;
     }
 
     public void setOwner(LivingEntity owner) {
         this.owner = owner;
-        this.ownerUUID = owner.getUUID();
         updatePositionAndRotation();
     }
 
     @Override
     public void tick() {
-//        super.tick();
         LivingEntity owner = getOwner();
         if(owner == null) return;
         if (this.owner instanceof PlayerEntity && this.level.isClientSide()){
@@ -127,13 +131,6 @@ public class BeamEntity extends Entity implements IEntityAdditionalSpawnData {
 
     @Nullable
     public LivingEntity getOwner() {
-        if (this.owner == null && this.ownerUUID != null && this.level instanceof ServerWorld) {
-            Entity entity = ((ServerWorld)this.level).getEntity(this.ownerUUID);
-            if (entity instanceof LivingEntity) {
-                this.owner = (LivingEntity)entity;
-            }
-        }
-
         return this.owner;
     }
 
@@ -145,15 +142,20 @@ public class BeamEntity extends Entity implements IEntityAdditionalSpawnData {
     @Override
     protected void readAdditionalSaveData(CompoundNBT pCompound) {
         if (pCompound.hasUUID("Owner")) {
-            this.ownerUUID = pCompound.getUUID("Owner");
+            Entity entity = ((ServerWorld)this.level).getEntity(pCompound.getUUID("Owner"));
+            if (entity instanceof LivingEntity) {
+                this.owner = (LivingEntity)entity;
+            }
         }
+        this.beamColor = BeamColor.load(pCompound.getCompound("BeamColor"));
     }
 
     @Override
     protected void addAdditionalSaveData(CompoundNBT pCompound) {
-        if (this.ownerUUID != null) {
-            pCompound.putUUID("Owner", this.ownerUUID);
+        if (this.owner != null) {
+            pCompound.putUUID("Owner", this.owner.getUUID());
         }
+        pCompound.put("BeamColor", this.getBeamColor().save(new CompoundNBT()));
     }
 
     @Override
@@ -165,11 +167,24 @@ public class BeamEntity extends Entity implements IEntityAdditionalSpawnData {
     @Override
     public void writeSpawnData(PacketBuffer buffer) {
         buffer.writeInt(this.getOwner().getId());
+        buffer.writeShort(this.getBeamColor().getRedValue());
+        buffer.writeShort(this.getBeamColor().getGreenValue());
+        buffer.writeShort(this.getBeamColor().getBlueValue());
+        buffer.writeShort(this.getBeamColor().getInnerRedValue());
+        buffer.writeShort(this.getBeamColor().getInnerGreenValue());
+        buffer.writeShort(this.getBeamColor().getInnerBlueValue());
     }
 
     @Override
     public void readSpawnData(PacketBuffer additionalData) {
         this.owner = (LivingEntity) this.level.getEntity(additionalData.readInt());
-        this.ownerUUID = owner.getUUID();
+        this.beamColor = new BeamColor(
+                additionalData.readShort(),
+                additionalData.readShort(),
+                additionalData.readShort(),
+                additionalData.readShort(),
+                additionalData.readShort(),
+                additionalData.readShort()
+        );
     }
 }

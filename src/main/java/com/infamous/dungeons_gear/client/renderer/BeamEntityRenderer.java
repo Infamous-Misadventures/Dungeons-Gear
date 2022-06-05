@@ -7,7 +7,6 @@ import com.infamous.dungeons_gear.items.artifacts.beacon.MyRenderType;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -34,16 +33,16 @@ public class BeamEntityRenderer<T extends BeamEntity> extends EntityRenderer<T> 
 
       float speedModifier = -0.02f;
 
-      BeamColor beamColor = new BeamColor((short) 90, (short) 0, (short) 90, (short) 255, (short) 255, (short) 255);
-      drawBeams(distance, beamColor, pEntity.getBeamWidth(), pEntity, pPartialTicks, speedModifier, pMatrixStack);
+      drawBeams(distance, pEntity, pPartialTicks, speedModifier, pMatrixStack);
    }
 
-   private static void drawBeams(double distance, BeamColor beamColor, float thickness, BeamEntity entity, float ticks, float speedModifier, MatrixStack pMatrixStack) {
+   private static void drawBeams(double distance, BeamEntity entity, float ticks, float speedModifier, MatrixStack pMatrixStack) {
       IVertexBuilder builder;
       long gameTime = entity.level.getGameTime();
       double v = gameTime * speedModifier;
-      float additiveThickness = (thickness * 1.75f) * calculateLaserFlickerModifier(gameTime);
+      float additiveThickness = (entity.getBeamWidth() * 1.75f) * calculateLaserFlickerModifier(gameTime);
 
+      BeamColor beamColor = entity.getBeamColor();
       float beam1r = beamColor.getRedValue() / 255f;
       float beam1g = beamColor.getGreenValue() / 255f;
       float beam1b = beamColor.getBlueValue() / 255f;
@@ -66,11 +65,11 @@ public class BeamEntityRenderer<T extends BeamEntity> extends EntityRenderer<T> 
 
       //main laser, colored part
       builder = buffer.getBuffer(MyRenderType.BEACON_BEAM_MAIN);
-      drawBeam(builder, positionMatrix, matrixNormal, thickness, distance, v, v + distance * 1.5, ticks,  beam2r,beam2g,beam2b, 0.7f);
+      drawBeam(builder, positionMatrix, matrixNormal, entity.getBeamWidth(), distance, v, v + distance * 1.5, ticks,  beam2r,beam2g,beam2b, 0.7f);
 
       //core
       builder = buffer.getBuffer(MyRenderType.BEACON_BEAM_CORE);
-      drawBeam(builder, positionMatrix, matrixNormal, thickness*0.7f, distance, v, v + distance * 1.5, ticks, beam1r,beam1g,beam1b, 1f);
+      drawBeam(builder, positionMatrix, matrixNormal, entity.getBeamWidth() *0.7f, distance, v, v + distance * 1.5, ticks, beam1r,beam1g,beam1b, 1f);
       pMatrixStack.popPose();
       buffer.endBatch();
    }

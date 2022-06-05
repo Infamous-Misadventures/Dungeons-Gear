@@ -73,7 +73,7 @@ public abstract class AbstractBeaconItem extends ArtifactItem{
         if (!worldIn.isClientSide) {
             ArtifactItem.triggerSynergy(playerIn, itemstack);
         }
-        BeamEntity beamEntity = new BeamEntity(BEAM_ENTITY.get(), worldIn, playerIn);
+        BeamEntity beamEntity = new BeamEntity(BEAM_ENTITY.get(), this.getBeamColor(), worldIn, playerIn);
         beamEntity.moveTo(playerIn.position().x, playerIn.position().y + 0.7D, playerIn.position().z, playerIn.yRot, playerIn.xRot);
         beamEntity.setOwner(playerIn);
         worldIn.addFreshEntity(beamEntity);

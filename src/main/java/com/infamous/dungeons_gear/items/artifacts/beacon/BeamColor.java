@@ -1,5 +1,7 @@
 package com.infamous.dungeons_gear.items.artifacts.beacon;
 
+import net.minecraft.nbt.CompoundNBT;
+
 public class BeamColor {
 
     private final short redValue;
@@ -40,5 +42,26 @@ public class BeamColor {
 
     public short getInnerBlueValue() {
         return this.innerBlueValue;
+    }
+
+    public static BeamColor load(CompoundNBT beamColor) {
+        beamColor.getShort("RedValue");
+        beamColor.getShort("RedValue");
+        beamColor.getShort("GreenValue");
+        beamColor.getShort("BlueValue");
+        beamColor.getShort("InnerRedValue");
+        beamColor.getShort("InnerGreenValue");
+        beamColor.getShort("InnerBlueValue");
+        return null;
+    }
+
+    public CompoundNBT save(CompoundNBT compoundNBT) {
+        compoundNBT.putShort("RedValue", redValue);
+        compoundNBT.putShort("GreenValue", greenValue);
+        compoundNBT.putShort("BlueValue", blueValue);
+        compoundNBT.putShort("InnerRedValue", innerRedValue);
+        compoundNBT.putShort("InnerGreenValue", innerGreenValue);
+        compoundNBT.putShort("InnerBlueValue", innerBlueValue);
+        return compoundNBT;
     }
 }
