@@ -10,6 +10,7 @@ import com.infamous.dungeons_gear.mixin.CooldownAccessor;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
@@ -119,6 +120,8 @@ public abstract class ArtifactItem extends Item implements ICurioItem {
     public abstract int getCooldownInSeconds();
 
     public abstract int getDurationInSeconds();
+
+    public void stopUsingArtifact(LivingEntity livingEntity){}
 
     public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(int slotIndex) {
         return ImmutableMultimap.of();

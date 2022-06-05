@@ -12,11 +12,12 @@
     "CrossbowItemMixin",
     "HurtByTargetGoalMixin",
     "LockableLootTileEntityMixin",
-    "PlayerEntityMixin",
-    "LootContextAccessor"
+    "LootContextAccessor",
+    "PlayerEntityMixin"
   ],
   "client": [
     "GameRendererMixin",
+    "HeldItemLayerMixin",
     "PlayerRendererMixin"
   ],
   "injectors": {

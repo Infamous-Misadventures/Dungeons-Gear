@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
-import com.infamous.dungeons_gear.combat.NetworkHandler;
-import com.infamous.dungeons_gear.combat.PacketBreakItem;
+import com.infamous.dungeons_gear.network.NetworkHandler;
+import com.infamous.dungeons_gear.network.PacketBreakItem;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import com.infamous.dungeons_gear.utilties.LootTableHelper;
 import net.minecraft.client.util.ITooltipFlag;

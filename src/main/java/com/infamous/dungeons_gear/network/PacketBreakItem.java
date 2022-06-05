@@ -1,4 +1,4 @@
-package com.infamous.dungeons_gear.combat;
+package com.infamous.dungeons_gear.network;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;

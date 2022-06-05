@@ -1,4 +1,4 @@
-package com.infamous.dungeons_gear.combat;
+package com.infamous.dungeons_gear.network;
 
 import com.infamous.dungeons_gear.registry.AttributeRegistry;
 import com.infamous.dungeons_gear.items.interfaces.IDualWieldWeapon;

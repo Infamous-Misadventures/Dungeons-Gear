@@ -3,12 +3,9 @@ package com.infamous.dungeons_gear.integration.curios.client.message;
 import com.infamous.dungeons_gear.capabilities.artifact.ArtifactUsageHelper;
 import com.infamous.dungeons_gear.capabilities.artifact.IArtifactUsage;
 import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
-import com.infamous.dungeons_gear.items.artifacts.ArtifactUseContext;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraftforge.fml.network.NetworkEvent;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
@@ -44,6 +41,7 @@ public class CuriosArtifactStopMessage {
                                 ItemStack artifact = artifactStackHandler.get().getStacks().getStackInSlot(packet.slot);
                                 IArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(player);
                                 if (!artifact.isEmpty() && artifact.getItem() instanceof ArtifactItem && cap.isSameUsingArtifact(artifact)) {
+                                    ((ArtifactItem) cap.getUsingArtifact().getItem()).stopUsingArtifact(player);
                                     cap.stopUsingArtifact();
                                 }
                             }

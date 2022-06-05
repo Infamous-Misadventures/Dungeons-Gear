@@ -1,5 +1,7 @@
 package com.infamous.dungeons_gear.combat;
 
+import com.infamous.dungeons_gear.network.NetworkHandler;
+import com.infamous.dungeons_gear.network.PacketOffhandAttack;
 import com.infamous.dungeons_gear.registry.AttributeRegistry;
 import com.infamous.dungeons_gear.items.interfaces.IDualWieldWeapon;
 import net.minecraft.client.Minecraft;

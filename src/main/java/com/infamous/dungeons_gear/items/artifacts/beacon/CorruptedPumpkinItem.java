@@ -13,15 +13,15 @@ import java.util.List;
 
 public class CorruptedPumpkinItem extends SoulBeaconItem {
 
-    public static final BeaconBeamColor CORRUPTED_PUMPKIN_BEAM_COLOR =
-            new BeaconBeamColor((short) 255, (short) 165, (short) 0, (short) 255, (short) 255, (short) 255);
+    public static final BeamColor CORRUPTED_PUMPKIN_BEAM_COLOR =
+            new BeamColor((short) 255, (short) 165, (short) 0, (short) 255, (short) 255, (short) 255);
 
     public CorruptedPumpkinItem(Properties properties) {
         super(properties);
     }
 
     @Override
-    public BeaconBeamColor getBeamColor() {
+    public BeamColor getBeamColor() {
         return CORRUPTED_PUMPKIN_BEAM_COLOR;
     }
 

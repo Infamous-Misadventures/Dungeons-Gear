@@ -1,5 +1,7 @@
-package com.infamous.dungeons_gear.entities;
+package com.infamous.dungeons_gear.client.renderer;
 
+import com.infamous.dungeons_gear.entities.IceCloudEntity;
+import com.infamous.dungeons_gear.entities.IceCloudModel;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.IRenderTypeBuffer;

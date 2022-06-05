@@ -2,7 +2,7 @@
 
 import com.infamous.dungeons_gear.capabilities.artifact.ArtifactUsageHelper;
 import com.infamous.dungeons_gear.capabilities.artifact.IArtifactUsage;
-import com.infamous.dungeons_gear.combat.NetworkHandler;
+import com.infamous.dungeons_gear.network.NetworkHandler;
 import com.infamous.dungeons_gear.integration.curios.client.message.CuriosArtifactStartMessage;
 import com.infamous.dungeons_gear.integration.curios.client.message.CuriosArtifactStopMessage;
 import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
@@ -118,6 +118,7 @@ public class CuriosKeyBindings {
                     if (!artifact.isEmpty() && artifact.getItem() instanceof ArtifactItem && cap.isSameUsingArtifact(artifact)) {
                         NetworkHandler.INSTANCE.sendToServer(new CuriosArtifactStopMessage(slot));
                         IArtifactUsage capability = ArtifactUsageHelper.getArtifactUsageCapability(player);
+                        ((ArtifactItem) capability.getUsingArtifact().getItem()).stopUsingArtifact(player);
                         capability.stopUsingArtifact();
                     }
                 }

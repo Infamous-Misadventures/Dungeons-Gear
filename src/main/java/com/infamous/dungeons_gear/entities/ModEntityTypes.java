@@ -50,4 +50,14 @@ public final class ModEntityTypes {
                     .build(new ResourceLocation(MODID, "totem_of_shielding").toString())
     );
 
+    public static final RegistryObject<EntityType<BeamEntity>> BEAM_ENTITY = ENTITY_TYPES.register("beam_entity", () ->
+            EntityType.Builder.<BeamEntity>of(BeamEntity::new, EntityClassification.MISC)
+                    .fireImmune()
+                    .setShouldReceiveVelocityUpdates(false)
+                    .sized(2.0F, 1.0F)
+                    .clientTrackingRange(6)
+                    .updateInterval(2)
+                    .build(new ResourceLocation(MODID, "beam_entity").toString())
+    );
+
 }

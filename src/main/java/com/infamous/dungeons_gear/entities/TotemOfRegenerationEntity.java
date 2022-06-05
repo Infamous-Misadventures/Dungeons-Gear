@@ -1,14 +1,11 @@
 package com.infamous.dungeons_gear.entities;
 
-import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_libraries.entities.TotemBaseEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.network.IPacket;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -19,10 +16,8 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-import java.util.List;
-
-import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
-import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.*;
+import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.applyToNearbyEntities;
+import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.getCanHealPredicate;
 
 public class TotemOfRegenerationEntity extends TotemBaseEntity implements IAnimatable {
 

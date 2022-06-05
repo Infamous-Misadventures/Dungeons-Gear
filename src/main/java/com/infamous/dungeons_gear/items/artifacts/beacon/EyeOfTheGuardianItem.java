@@ -16,8 +16,8 @@ import java.util.List;
 
 public class EyeOfTheGuardianItem extends AbstractBeaconItem implements IChargeableItem {
 
-    public static final BeaconBeamColor EYE_OF_THE_GUARDIAN_BEACON_BEAM_COLOR =
-            new BeaconBeamColor((short) 25, (short) 88, (short) 82, (short) 255, (short) 255, (short) 255);
+    public static final BeamColor EYE_OF_THE_GUARDIAN_BEACON_BEAM_COLOR =
+            new BeamColor((short) 25, (short) 88, (short) 82, (short) 255, (short) 255, (short) 255);
 
     public EyeOfTheGuardianItem(Properties properties) {
         super(properties);
@@ -57,7 +57,7 @@ public class EyeOfTheGuardianItem extends AbstractBeaconItem implements IChargea
     }
 
     @Override
-    public BeaconBeamColor getBeamColor() {
+    public BeamColor getBeamColor() {
         return EYE_OF_THE_GUARDIAN_BEACON_BEAM_COLOR;
     }
 

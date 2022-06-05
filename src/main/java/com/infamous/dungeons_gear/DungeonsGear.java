@@ -13,14 +13,15 @@ import com.infamous.dungeons_gear.capabilities.offhand.IOffhand;
 import com.infamous.dungeons_gear.capabilities.offhand.Offhand;
 import com.infamous.dungeons_gear.capabilities.offhand.OffhandStorage;
 import com.infamous.dungeons_gear.client.ClientProxy;
+import com.infamous.dungeons_gear.client.renderer.BeamEntityRenderer;
 import com.infamous.dungeons_gear.client.renderer.totem.BuzzyNestRenderer;
 import com.infamous.dungeons_gear.client.renderer.totem.TotemOfRegenerationRenderer;
 import com.infamous.dungeons_gear.client.renderer.totem.TotemOfShieldingRenderer;
-import com.infamous.dungeons_gear.combat.NetworkHandler;
+import com.infamous.dungeons_gear.network.NetworkHandler;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
 import com.infamous.dungeons_gear.compat.ElenaiCompat;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.entities.IceCloudRenderer;
+import com.infamous.dungeons_gear.client.renderer.IceCloudRenderer;
 import com.infamous.dungeons_gear.entities.ModEntityTypes;
 import com.infamous.dungeons_gear.groups.ArmorGroup;
 import com.infamous.dungeons_gear.groups.ArtifactGroup;
@@ -114,6 +115,7 @@ public class DungeonsGear
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BUZZY_NEST.get(), BuzzyNestRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.TOTEM_OF_SHIELDING.get(), TotemOfShieldingRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.TOTEM_OF_REGENERATION.get(), TotemOfRegenerationRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BEAM_ENTITY.get(), BeamEntityRenderer::new);
 
         setupCuriosKeybindings();
 

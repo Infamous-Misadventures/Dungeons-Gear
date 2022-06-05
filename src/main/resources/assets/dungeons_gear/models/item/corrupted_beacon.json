@@ -122,17 +122,17 @@
 	"display": {
 		"thirdperson_righthand": {
 			"rotation": [68, 0, 0],
-			"translation": [-6, 5.25, 5]
+			"translation": [-6, 7, 5]
 		},
 		"thirdperson_lefthand": {
 			"rotation": [59, 0, 0],
-			"translation": [-6, 5.25, 5]
+			"translation": [-6, 7, 5]
 		},
 		"firstperson_righthand": {
-			"translation": [-9, 6, -4.25]
+			"translation": [-9, 7, -4.25]
 		},
 		"firstperson_lefthand": {
-			"translation": [-9, 6, -4.25]
+			"translation": [-9, 7, -4.25]
 		},
 		"ground": {
 			"translation": [0, 3.75, 0]
