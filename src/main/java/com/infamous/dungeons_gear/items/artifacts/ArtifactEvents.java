@@ -133,7 +133,7 @@ public class ArtifactEvents {
     }
 
     @SubscribeEvent
-    public static void onSouLProtection(LivingDeathEvent event){
+    public static void onSoulProtection(LivingDeathEvent event){
         if(event.getEntityLiving().getEffect(CustomEffects.SOUL_PROTECTION) != null){
             event.setCanceled(true);
             event.getEntityLiving().setHealth(1.0F);
@@ -143,10 +143,6 @@ public class ArtifactEvents {
             event.getEntityLiving().addEffect(new EffectInstance(Effects.ABSORPTION, 100, 1));
         }
     }
-
-
-
-
 
     @SubscribeEvent
     public static void onArrowJoinWorld(EntityJoinWorldEvent event){
@@ -257,5 +253,10 @@ public class ArtifactEvents {
             cap.getUsingArtifact().getItem().onUseTick(event.player.level, event.player, cap.getUsingArtifact(), cap.getUsingArtifactRemaining());
             cap.setUsingArtifactRemaining(cap.getUsingArtifactRemaining() - 1);
         }
+    }
+
+    @SubscribeEvent
+    public static void onBeamKnockback(LivingKnockBackEvent knockBackEvent){
+
     }
 }

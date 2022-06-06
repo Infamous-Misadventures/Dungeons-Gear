@@ -83,7 +83,9 @@ public class BeamEntity extends Entity implements IEntityAdditionalSpawnData {
             }
             for (LivingEntity entity : entities) {
                 entity.invulnerableTime = 0;
+                Vector3d deltaMovement = entity.getDeltaMovement();
                 entity.hurt(DamageSource.indirectMagic(owner, owner), BEAM_DAMAGE_PER_TICK);
+                entity.setDeltaMovement(deltaMovement);
             }
         }
     }

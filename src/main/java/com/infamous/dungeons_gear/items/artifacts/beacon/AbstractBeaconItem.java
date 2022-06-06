@@ -30,12 +30,6 @@ public abstract class AbstractBeaconItem extends ArtifactItem{
         super(properties);
     }
 
-    @Nullable
-    public static BeamColor getBeaconBeamColor(ItemStack stack) {
-        Item stackItem = stack.getItem();
-        return stackItem instanceof AbstractBeaconItem ? ((AbstractBeaconItem) stackItem).getBeamColor() : null;
-    }
-
     public abstract boolean canFire(PlayerEntity playerEntity, ItemStack stack);
 
     public abstract BeamColor getBeamColor();
