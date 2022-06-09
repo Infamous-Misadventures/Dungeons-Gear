@@ -54,7 +54,7 @@ public class SoulHealerItem extends ArtifactItem implements ISoulConsumer {
         float playerCurrentHealth = playerIn.getHealth();
         float playerMaxHealth = playerIn.getMaxHealth();
         float playerLostHealth = playerMaxHealth - playerCurrentHealth;
-        if(playerLostHealth > lostHealth) {
+        if(playerLostHealth >= lostHealth || mostInjuredAlly == null) {
             return healAlly(playerIn, playerLostHealth, playerIn, itemStack);
         }else{
             return healAlly(playerIn, lostHealth, mostInjuredAlly, itemStack);
@@ -63,7 +63,7 @@ public class SoulHealerItem extends ArtifactItem implements ISoulConsumer {
 
     private ActionResult<ItemStack> healAlly(PlayerEntity playerEntity, float lostHealth, LivingEntity target, ItemStack itemStack) {
         ISoulCaster soulCasterCapability = SoulCasterHelper.getSoulCasterCapability(playerEntity);
-        if(soulCasterCapability == null)  return new ActionResult<>(ActionResultType.FAIL, itemStack);
+        if(soulCasterCapability == null) return new ActionResult<>(ActionResultType.FAIL, itemStack);
         float toHeal = Math.min(lostHealth, Math.min(target.getMaxHealth() / 5, soulCasterCapability.getSouls() * 0.1f));
         if (toHeal > 0 && SoulCasterHelper.consumeSouls(playerEntity, toHeal*10)) {
             target.heal(toHeal);

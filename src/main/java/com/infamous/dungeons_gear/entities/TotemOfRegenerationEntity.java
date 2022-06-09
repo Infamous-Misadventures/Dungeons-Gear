@@ -4,6 +4,7 @@ import com.infamous.dungeons_libraries.entities.TotemBaseEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.network.IPacket;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.world.World;
@@ -16,6 +17,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
+import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.applyToNearbyEntities;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.getCanHealPredicate;
 
@@ -31,14 +33,20 @@ public class TotemOfRegenerationEntity extends TotemBaseEntity implements IAnima
     protected void applyTotemEffect() {
         LivingEntity owner = getOwner();
         if(owner == null) return;
-        applyToNearbyEntities(owner, 8,
-                getCanHealPredicate(owner), (LivingEntity nearbyEntity) -> {
-                    EffectInstance effectInstance = new EffectInstance(Effects.REGENERATION, 10);
-                    nearbyEntity.addEffect(effectInstance);
-                }
-        );
-        EffectInstance resistance = new EffectInstance(Effects.REGENERATION, 10);
-        owner.addEffect(resistance);
+        if(this.lifeTicks % 20 == 0) {
+            applyToNearbyEntities(owner, 8,
+                    getCanHealPredicate(owner), (LivingEntity nearbyEntity) -> {
+                        if (nearbyEntity.getHealth() < nearbyEntity.getMaxHealth()) {
+                            nearbyEntity.heal(1F);
+                            PROXY.spawnParticles(nearbyEntity, ParticleTypes.HEART);
+                        }
+                    }
+            );
+            if(owner.getHealth() < owner.getMaxHealth()){
+                owner.heal(1F);
+                PROXY.spawnParticles(owner, ParticleTypes.HEART);
+            }
+        }
     }
 
     @Override
@@ -52,7 +60,7 @@ public class TotemOfRegenerationEntity extends TotemBaseEntity implements IAnima
     }
 
     private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.totem_of_regeneration.spawn", true));
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.totem_of_regeneration", true));
         return PlayState.CONTINUE;
     }
 

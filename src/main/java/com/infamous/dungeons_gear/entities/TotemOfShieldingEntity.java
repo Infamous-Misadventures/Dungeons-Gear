@@ -37,11 +37,11 @@ public class TotemOfShieldingEntity extends TotemBaseEntity implements IAnimatab
         if(owner == null) return;
         applyToNearbyEntities(getOwner(), 8,
                 getCanHealPredicate(getOwner()), (LivingEntity nearbyEntity) -> {
-                    EffectInstance effectInstance = new EffectInstance(CustomEffects.SHIELDING, 10);
+                    EffectInstance effectInstance = new EffectInstance(CustomEffects.SHIELDING, 21);
                     nearbyEntity.addEffect(effectInstance);
                 }
         );
-        EffectInstance resistance = new EffectInstance(CustomEffects.SHIELDING, 10);
+        EffectInstance resistance = new EffectInstance(CustomEffects.SHIELDING, 21);
         owner.addEffect(resistance);
     }
 
