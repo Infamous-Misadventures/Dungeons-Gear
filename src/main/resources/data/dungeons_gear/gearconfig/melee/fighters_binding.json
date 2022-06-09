@@ -11,6 +11,7 @@
       "operation": 0
     }
   ],
+  "material": "minecraft:iron",
   "built_in_enchantments": [],
   "unique": true,
   "rarity": "RARE",

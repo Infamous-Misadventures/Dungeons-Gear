@@ -12,7 +12,7 @@
     }
   ],
   "built_in_enchantments": [{"enchantment": "dungeons_gear:snowball", "level": 1}],
-  "armor_material": "dungeons_gear:bone",
+  "material": "dungeons_gear:bone",
   "unique": true,
   "rarity": "RARE"
 }

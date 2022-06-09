@@ -8,9 +8,6 @@ public interface ICombo {
     void setComboTimer(int comboTimer);
     int getComboTimer();
 
-    //void setGhostForm(boolean ghostForm);
-    //boolean getGhostForm();
-
     void setShadowForm(boolean shadowForm);
     boolean getShadowForm();
 
@@ -26,9 +23,6 @@ public interface ICombo {
 
     int getArrowsInCounter();
     void setArrowsInCounter(int arrowsInCounter);
-
-    int getSnowballNearbyTimer();
-    void setSnowballNearbyTimer(int snowballTimer);
 
     int getJumpCooldownTimer();
     void setJumpCooldownTimer(int jumpCooldownTimer);

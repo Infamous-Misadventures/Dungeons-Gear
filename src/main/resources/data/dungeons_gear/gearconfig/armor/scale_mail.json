@@ -7,7 +7,7 @@
     }
   ],
   "built_in_enchantments": [],
-  "armor_material": "dungeons_gear:medium_plate",
+  "material": "dungeons_gear:medium_plate",
   "unique": false,
   "rarity": "UNCOMMON"
 }

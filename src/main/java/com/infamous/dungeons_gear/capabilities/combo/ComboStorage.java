@@ -27,7 +27,6 @@ public class ComboStorage implements Capability.IStorage<ICombo> {
         tag.putInt("harpoonCount", instance.getHarpoonCount());
 
         tag.putInt("arrowsInCounter", instance.getArrowsInCounter());
-        tag.putInt("snowballNearbyTimer", instance.getSnowballNearbyTimer());
         tag.putInt("jumpCooldownTimer", instance.getJumpCooldownTimer());
 
         BlockPos lastExplorerCheckpoint = instance.getLastExplorerCheckpoint();
@@ -63,7 +62,6 @@ public class ComboStorage implements Capability.IStorage<ICombo> {
         instance.setHarpoonCount(tag.getInt("harpoonCount"));
 
         instance.setArrowsInCounter(tag.getInt("arrowsInCounter"));
-        instance.setSnowballNearbyTimer(tag.getInt("snowballNearbyTimer"));
         instance.setJumpCooldownTimer(tag.getInt("jumpCooldownTimer"));
 
         ListNBT listnbt = tag.getList("lastExplorerCheckpoint", 6);

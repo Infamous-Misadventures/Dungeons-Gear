@@ -7,6 +7,8 @@ import net.minecraft.loot.*;
 import net.minecraft.loot.functions.EnchantWithLevels;
 import net.minecraft.util.ResourceLocation;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.BiConsumer;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
@@ -18,8 +20,7 @@ import static net.minecraft.tags.ItemTags.ARROWS;
 
 public class ModChestLootTables extends ChestLootTables {
 
-    private static final ResourceLocation BASIC_NORMAL = modLoc("basic_normal");
-    private static final ResourceLocation BASIC_UNIQUE = modLoc("basic_unique");
+    private static final List<String> TYPES = Arrays.asList("basic", "nether", "sea", "jungle", "snow", "end", "desert");
 
     @Override
     public void accept(BiConsumer<ResourceLocation, LootTable.Builder> consumer) {
@@ -37,8 +38,8 @@ public class ModChestLootTables extends ChestLootTables {
     }
 
     private void chestAdditionsLootTables(BiConsumer<ResourceLocation, LootTable.Builder> consumer) {
-        createCommonLootTable(consumer, "basic", BASIC_NORMAL, BASIC_UNIQUE);
-        consumer.accept(BASIC_NORMAL,
+        TYPES.forEach(type -> createItemLootTables(consumer, type));
+        consumer.accept(modLoc("basic_normal"),
                 LootTable.lootTable().
                         withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
                                 .add(ItemLootEntry.lootTableItem(SWORD::get).setWeight(1))
@@ -48,7 +49,7 @@ public class ModChestLootTables extends ChestLootTables {
                         )
 
         );
-        consumer.accept(BASIC_UNIQUE,
+        consumer.accept(modLoc("basic_unique"),
                 LootTable.lootTable().
                         withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
                                 .add(ItemLootEntry.lootTableItem(ItemRegistry.DIAMOND_SWORD::get).setWeight(1))
@@ -63,7 +64,9 @@ public class ModChestLootTables extends ChestLootTables {
         );
     }
 
-    private void createCommonLootTable(BiConsumer<ResourceLocation, LootTable.Builder> consumer, String type, ResourceLocation typeNormalTable, ResourceLocation typeUniqueTable) {
+    private void createItemLootTables(BiConsumer<ResourceLocation, LootTable.Builder> consumer, String type) {
+        ResourceLocation typeNormalTable = modLoc(type + "_normal");
+        ResourceLocation typeUniqueTable = modLoc(type + "_unique");
         consumer.accept(modLoc("common_" + type),
                 LootTable.lootTable().
                         withPool(LootPool.lootPool().setRolls(RandomValueRange.between(0.0F, 2.0F)).bonusRolls(0, 1)

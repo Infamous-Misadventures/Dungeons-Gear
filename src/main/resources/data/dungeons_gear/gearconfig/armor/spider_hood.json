@@ -7,7 +7,7 @@
     }
   ],
   "built_in_enchantments": [{"enchantment": "dungeons_gear:life_steal_aura", "level": 1}],
-  "armor_material": "minecraft:leather",
+  "material": "minecraft:leather",
   "unique": true,
   "rarity": "RARE"
 }

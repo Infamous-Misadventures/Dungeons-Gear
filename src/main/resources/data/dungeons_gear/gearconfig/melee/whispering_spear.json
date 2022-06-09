@@ -21,6 +21,7 @@
       "operation": 0
     }
   ],
+  "material": "minecraft:iron",
   "built_in_enchantments": [{"enchantment": "dungeons_gear:echo", "level": 1}],
   "unique": true,
   "rarity": "RARE",

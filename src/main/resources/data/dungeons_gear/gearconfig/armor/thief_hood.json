@@ -7,7 +7,7 @@
     }
   ],
   "built_in_enchantments": [],
-  "armor_material": "minecraft:leather",
+  "material": "minecraft:leather",
   "unique": false,
   "rarity": "UNCOMMON"
 }

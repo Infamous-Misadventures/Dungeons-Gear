@@ -17,8 +17,8 @@ import net.minecraft.world.World;
 
 public class DualWieldMeleeGear extends MeleeGear implements IDualWieldWeapon {
 
-    public DualWieldMeleeGear(IItemTier tier, Properties properties) {
-        super(tier, properties);
+    public DualWieldMeleeGear(Properties properties) {
+        super(properties);
     }
 
     @Override

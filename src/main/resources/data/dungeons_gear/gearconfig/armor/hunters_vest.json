@@ -7,7 +7,7 @@
     }
   ],
   "built_in_enchantments": [{"enchantment": "dungeons_gear:arrow_hoarder", "level": 1}],
-  "armor_material": "minecraft:leather",
+  "material": "minecraft:leather",
   "unique": false,
   "rarity": "UNCOMMON"
 }

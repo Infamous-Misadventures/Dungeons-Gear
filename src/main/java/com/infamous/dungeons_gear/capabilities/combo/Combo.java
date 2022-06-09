@@ -142,16 +142,6 @@ public class Combo implements ICombo {
     }
 
     @Override
-    public int getSnowballNearbyTimer() {
-        return this.snowballNearbyTimer;
-    }
-
-    @Override
-    public void setSnowballNearbyTimer(int snowballTimer) {
-        this.snowballNearbyTimer = snowballTimer;
-    }
-
-    @Override
     public int getJumpCooldownTimer() {
         return this.jumpCooldownTimer;
     }

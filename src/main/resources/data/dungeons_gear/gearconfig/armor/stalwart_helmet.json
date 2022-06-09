@@ -7,7 +7,7 @@
     }
   ],
   "built_in_enchantments": [{"enchantment": "dungeons_gear:dodge", "level": 1},{"enchantment": "dungeons_gear:potion_barrier", "level": 1}],
-  "armor_material": "dungeons_gear:heavy_plate",
+  "material": "dungeons_gear:heavy_plate",
   "unique": true,
   "rarity": "RARE"
 }

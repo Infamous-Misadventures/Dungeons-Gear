@@ -6,8 +6,8 @@ import net.minecraft.item.*;
 
 public class StaffGear extends MeleeGear {
 
-    public StaffGear(IItemTier tier, Properties properties) {
-        super(tier, properties);
+    public StaffGear(Properties properties) {
+        super(properties);
     }
 
     @Override
