@@ -7,5 +7,6 @@
   "repair_item":  "minecraft:bone",
   "equip_sound": "minecraft:item.armor.equip_turtle",
   "toughness":  2.0,
-  "knockback_resistance": 0.0
+  "knockback_resistance": 0.0,
+  "base_type": "leather"
 }

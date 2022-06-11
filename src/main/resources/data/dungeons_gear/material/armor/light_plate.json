@@ -7,5 +7,6 @@
   "repair_item":  "minecraft:iron_ingot",
   "equip_sound": "minecraft:item.armor.equip_iron",
   "toughness":  0.0,
-  "knockback_resistance": 0.0
+  "knockback_resistance": 0.0,
+  "base_type": "metal"
 }

@@ -10,6 +10,7 @@ import com.infamous.dungeons_gear.items.artifacts.beacon.CorruptedBeaconItem;
 import com.infamous.dungeons_gear.items.artifacts.beacon.CorruptedPumpkinItem;
 import com.infamous.dungeons_gear.items.artifacts.beacon.EyeOfTheGuardianItem;
 import com.infamous.dungeons_gear.items.melee.DualWieldMeleeGear;
+import com.infamous.dungeons_gear.items.melee.ShearsGear;
 import com.infamous.dungeons_gear.items.melee.StaffGear;
 import com.infamous.dungeons_gear.items.ranged.crossbows.DualCrossbowGear;
 import com.infamous.dungeons_gear.utilties.GeneralHelper;
@@ -55,7 +56,7 @@ public class ItemRegistry {
     public static final RegistryObject<Item> MOON_DAGGER = registerMeleeWeapon("moon_dagger",
             () -> new DualWieldMeleeGear(MELEE_WEAPON_PROPERTIES));
     public static final RegistryObject<Item> SHEAR_DAGGER = registerMeleeWeapon("shear_dagger",
-            () -> new DualWieldMeleeGear(MELEE_WEAPON_PROPERTIES));
+            () -> new ShearsGear(MELEE_WEAPON_PROPERTIES));
     //DPS 10 (20), crits once per 3 (1.5) seconds
     public static final RegistryObject<Item> SICKLE = registerMeleeWeapon("sickle",
             () -> new DualWieldMeleeGear(MELEE_WEAPON_PROPERTIES));

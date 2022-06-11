@@ -6,10 +6,12 @@ import com.infamous.dungeons_gear.registry.ItemRegistry;
 import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.Item;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import javax.annotation.Nullable;
 
+import static com.infamous.dungeons_gear.registry.ItemRegistry.SHEAR_DAGGER;
 import static net.minecraft.item.Items.*;
 
 public class ModItemTagsProvider extends net.minecraft.data.ItemTagsProvider {
@@ -22,6 +24,7 @@ public class ModItemTagsProvider extends net.minecraft.data.ItemTagsProvider {
     protected void addTags() {
         curiosArtifactTags();
         foodTags();
+        this.tag(Tags.Items.SHEARS).add(SHEAR_DAGGER.get());
     }
 
     private void curiosArtifactTags() {

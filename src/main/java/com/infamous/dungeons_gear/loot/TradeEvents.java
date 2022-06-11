@@ -2,8 +2,8 @@ package com.infamous.dungeons_gear.loot;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.registry.ItemRegistry;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
+import com.infamous.dungeons_libraries.items.materials.armor.ArmorMaterialBaseType;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
@@ -27,15 +27,22 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.*;
 import java.util.function.Predicate;
 
-import static com.infamous.dungeons_gear.items.armor.ArmorHelper.*;
+import static com.infamous.dungeons_gear.items.armor.ArmorHelper.getArmorList;
 import static com.infamous.dungeons_gear.items.artifacts.ArtifactHelper.getArtifactList;
 import static com.infamous.dungeons_gear.items.melee.MeleeWeaponHelper.getMeleeWeaponList;
 import static com.infamous.dungeons_gear.items.ranged.RangedWeaponHelper.getRangedWeaponList;
+import static com.infamous.dungeons_gear.registry.ItemRegistry.SHEAR_DAGGER;
+import static com.infamous.dungeons_libraries.items.materials.armor.ArmorMaterialBaseType.BONE;
+import static com.infamous.dungeons_libraries.items.materials.armor.ArmorMaterialBaseType.LEATHER;
+import static com.infamous.dungeons_libraries.items.materials.armor.ArmorMaterialBaseType.*;
 import static net.minecraft.item.Items.*;
 
 
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class TradeEvents {
+
+    private static List<ArmorMaterialBaseType> METAL_MATERIALS = Arrays.asList(METAL, GEM);
+    private static List<ArmorMaterialBaseType> LEATHER_MATERIALS = Arrays.asList(CLOTH, BONE, LEATHER);
 
     @SubscribeEvent
     public static void onWandererTrades(WandererTradesEvent event){
@@ -45,7 +52,7 @@ public class TradeEvents {
         List<VillagerTrades.ITrade> genericTrades = event.getGenericTrades();
         List<VillagerTrades.ITrade> rareTrades = event.getRareTrades();
 
-        moveTradesToDifferentGroup(rareTrades, genericTrades);
+//        moveTradesToDifferentGroup(rareTrades, genericTrades);
 
         for(Item item : getArtifactList()){
             Item artifact = ForgeRegistries.ITEMS.getValue(item.getRegistryName());
@@ -112,6 +119,14 @@ public class TradeEvents {
             List<Item> uniqueList = getArmorList(LEATHER_MATERIALS, true);
 
             addCommonAndUniqueTradesNew(leatherworkerTrades, commonList, uniqueList);
+        }
+        if(event.getType() == VillagerProfession.SHEPHERD){
+            if(!ConfigurableLootHelper.isMeleeWeaponLootEnabled()) return;
+
+            Int2ObjectMap<List<VillagerTrades.ITrade>> shepherdTrades = event.getTrades();
+
+            TradeHelper.EnchantedItemForEmeraldsTrade trade = new TradeHelper.EnchantedItemForEmeraldsTrade(SHEAR_DAGGER.get(), DungeonsGearConfig.UNIQUE_ITEM_VALUE.get(), 3, 30, 0.2F);
+            shepherdTrades.get(5).add(trade);
         }
     }
 
