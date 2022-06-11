@@ -254,9 +254,4 @@ public class ArtifactEvents {
             cap.setUsingArtifactRemaining(cap.getUsingArtifactRemaining() - 1);
         }
     }
-
-    @SubscribeEvent
-    public static void onBeamKnockback(LivingKnockBackEvent knockBackEvent){
-
-    }
 }

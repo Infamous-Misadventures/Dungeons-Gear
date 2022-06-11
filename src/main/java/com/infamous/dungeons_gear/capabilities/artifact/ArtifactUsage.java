@@ -43,18 +43,11 @@ public class ArtifactUsage implements IArtifactUsage {
 
     @Override
     public INBT save(CompoundNBT tag, Direction side) {
-//        if(usingArtifact != null){
-//            tag.put("usingArtifact", usingArtifact.save(new CompoundNBT()));
-//        }
         return tag;
     }
 
     @Override
     public void load(INBT nbt, Direction side) {
-//        CompoundNBT tag = (CompoundNBT) nbt;
-//        if(tag.contains("usingArtifact")) {
-//            usingArtifact = ItemStack.of(tag.getCompound("usingArtifact"));
-//        }
     }
 
     @Override

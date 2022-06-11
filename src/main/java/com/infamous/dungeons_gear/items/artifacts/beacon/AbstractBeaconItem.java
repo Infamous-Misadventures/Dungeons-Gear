@@ -54,9 +54,9 @@ public abstract class AbstractBeaconItem extends ArtifactItem{
     @Override
     public ActionResult<ItemStack> procArtifact(ArtifactUseContext iuc) {
         ItemStack itemstack = iuc.getItemInHand();
-
         PlayerEntity playerIn = iuc.getPlayer();
-        World worldIn = playerIn.level;
+        World worldIn = iuc.getLevel();
+
         IArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(playerIn);
         if(!canFire(playerIn, itemstack) || cap.isUsingArtifact()){
             return new ActionResult<>(ActionResultType.FAIL, itemstack);
@@ -66,11 +66,11 @@ public abstract class AbstractBeaconItem extends ArtifactItem{
         ArtifactUsageHelper.startUsingArtifact(playerIn, cap, itemstack);
         if (!worldIn.isClientSide) {
             ArtifactItem.triggerSynergy(playerIn, itemstack);
+            BeamEntity beamEntity = new BeamEntity(BEAM_ENTITY.get(), this.getBeamColor(), worldIn, playerIn);
+            beamEntity.moveTo(playerIn.position().x, playerIn.position().y + 0.7D, playerIn.position().z, playerIn.yRot, playerIn.xRot);
+            beamEntity.setOwner(playerIn);
+            worldIn.addFreshEntity(beamEntity);
         }
-        BeamEntity beamEntity = new BeamEntity(BEAM_ENTITY.get(), this.getBeamColor(), worldIn, playerIn);
-        beamEntity.moveTo(playerIn.position().x, playerIn.position().y + 0.7D, playerIn.position().z, playerIn.yRot, playerIn.xRot);
-        beamEntity.setOwner(playerIn);
-        worldIn.addFreshEntity(beamEntity);
         return new ActionResult<>(ActionResultType.PASS, itemstack);
     }
 

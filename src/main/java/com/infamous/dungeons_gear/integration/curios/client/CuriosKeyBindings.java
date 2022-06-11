@@ -20,6 +20,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -78,6 +79,37 @@ public class CuriosKeyBindings {
         }
     }
 
+    @SubscribeEvent
+    public static void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event){
+        stopUsingAllArtifacts(event.getPlayer());
+    }
+
+    @SubscribeEvent
+    public static void onPlayerLoggedOutEvent(PlayerEvent.PlayerLoggedOutEvent event){
+        stopUsingAllArtifacts(event.getPlayer());
+
+    }
+
+    @SubscribeEvent
+    public static void onPlayerRespawnEvent(PlayerEvent.PlayerRespawnEvent event){
+        stopUsingAllArtifacts(event.getPlayer());
+    }
+
+    private static void stopUsingAllArtifacts(PlayerEntity player) {
+        CuriosApi.getCuriosHelper().getCuriosHandler(player).ifPresent(iCuriosItemHandler -> {
+            Optional<ICurioStacksHandler> artifactStackHandler = iCuriosItemHandler.getStacksHandler("artifact");
+            if (artifactStackHandler.isPresent()) {
+                int slots = artifactStackHandler.get().getStacks().getSlots();
+                for(int slot = 0; slot < slots; slot++) {
+                    ItemStack artifact = artifactStackHandler.get().getStacks().getStackInSlot(slot);
+                    if (!artifact.isEmpty() && artifact.getItem() instanceof ArtifactItem) {
+                        ((ArtifactItem) artifact.getItem()).stopUsingArtifact(player);
+                    }
+                }
+            }
+        });
+    }
+
     private static void sendCuriosStartMessageToServer(int slot) {
         RayTraceResult hitResult = Minecraft.getInstance().hitResult;
         ClientPlayerEntity player = Minecraft.getInstance().player;
@@ -118,7 +150,6 @@ public class CuriosKeyBindings {
                     if (!artifact.isEmpty() && artifact.getItem() instanceof ArtifactItem && cap.isSameUsingArtifact(artifact)) {
                         NetworkHandler.INSTANCE.sendToServer(new CuriosArtifactStopMessage(slot));
                         IArtifactUsage capability = ArtifactUsageHelper.getArtifactUsageCapability(player);
-                        ((ArtifactItem) capability.getUsingArtifact().getItem()).stopUsingArtifact(player);
                         capability.stopUsingArtifact();
                     }
                 }

@@ -3,6 +3,7 @@ package com.infamous.dungeons_gear.entities;
 import com.infamous.dungeons_gear.items.artifacts.beacon.BeamColor;
 import com.infamous.dungeons_gear.network.NetworkHandler;
 import com.infamous.dungeons_gear.network.entity.PlayerBeamMessage;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -41,9 +42,8 @@ public class BeamEntity extends Entity implements IEntityAdditionalSpawnData {
 
     public BeamEntity(EntityType<?> p_i48580_1_, BeamColor beamColor, World p_i48580_2_, LivingEntity owner) {
         super(p_i48580_1_, p_i48580_2_);
-        this.owner = owner;
+        this.setOwner(owner);
         this.beamColor = beamColor;
-        updatePositionAndRotation();
     }
 
     public BeamColor getBeamColor() {
@@ -53,13 +53,23 @@ public class BeamEntity extends Entity implements IEntityAdditionalSpawnData {
 
     public void setOwner(LivingEntity owner) {
         this.owner = owner;
-        updatePositionAndRotation();
+        if(owner != null){
+            this.ownerUUID = owner.getUUID();
+            updatePositionAndRotation();
+        }
     }
 
     @Override
     public void tick() {
         LivingEntity owner = getOwner();
-        if(owner == null) return;
+        if(owner == null) {
+            this.remove();
+            return;
+        }
+        if(!owner.isAlive()){
+            this.remove();
+            return;
+        }
         if (this.owner instanceof PlayerEntity && this.level.isClientSide()){
             updatePositionAndRotation();
             NetworkHandler.INSTANCE.sendToServer(new PlayerBeamMessage(this));
@@ -91,13 +101,14 @@ public class BeamEntity extends Entity implements IEntityAdditionalSpawnData {
     }
 
     public void updatePositionAndRotation() {
-        Vector3d vec1 = this.owner.position();
+        LivingEntity owner = this.getOwner();
+        Vector3d vec1 = owner.position();
         vec1 = vec1.add(this.getOffsetVector());
         this.setPos(vec1.x, vec1.y, vec1.z);
-        this.yRot = boundDegrees(owner.yRot);
-        this.xRot = boundDegrees(owner.xRot);
-        this.yRotO = boundDegrees(owner.yRotO);
-        this.xRotO = boundDegrees(owner.xRotO);
+        this.yRot = boundDegrees(this.owner.yRot);
+        this.xRot = boundDegrees(this.owner.xRot);
+        this.yRotO = boundDegrees(this.owner.yRotO);
+        this.xRotO = boundDegrees(this.owner.xRotO);
     }
 
     private float boundDegrees(float v){
@@ -106,7 +117,7 @@ public class BeamEntity extends Entity implements IEntityAdditionalSpawnData {
 
     private Vector3d getOffsetVector() {
         Vector3d viewVector = this.getViewVector(1.0F);
-        return new Vector3d(viewVector.x, owner.getEyeHeight()*0.8D, viewVector.z);
+        return new Vector3d(viewVector.x, getOwner().getEyeHeight()*0.8D, viewVector.z);
     }
 
     public float getBeamWidth() {
@@ -133,6 +144,16 @@ public class BeamEntity extends Entity implements IEntityAdditionalSpawnData {
 
     @Nullable
     public LivingEntity getOwner() {
+        if(this.owner == null && this.ownerUUID != null){
+            if(this.level instanceof ServerWorld) {
+                Entity entity = ((ServerWorld) this.level).getEntity(this.ownerUUID);
+                if (entity instanceof LivingEntity) {
+                    this.owner = (LivingEntity) entity;
+                }
+            } else if(this.ownerUUID.equals(Minecraft.getInstance().player.getUUID())){
+                this.owner = Minecraft.getInstance().player;
+            }
+        }
         return this.owner;
     }
 
@@ -144,18 +165,15 @@ public class BeamEntity extends Entity implements IEntityAdditionalSpawnData {
     @Override
     protected void readAdditionalSaveData(CompoundNBT pCompound) {
         if (pCompound.hasUUID("Owner")) {
-            Entity entity = ((ServerWorld)this.level).getEntity(pCompound.getUUID("Owner"));
-            if (entity instanceof LivingEntity) {
-                this.owner = (LivingEntity)entity;
-            }
+            this.ownerUUID = pCompound.getUUID("Owner");
         }
         this.beamColor = BeamColor.load(pCompound.getCompound("BeamColor"));
     }
 
     @Override
     protected void addAdditionalSaveData(CompoundNBT pCompound) {
-        if (this.owner != null) {
-            pCompound.putUUID("Owner", this.owner.getUUID());
+        if (this.ownerUUID != null) {
+            pCompound.putUUID("Owner", this.ownerUUID);
         }
         pCompound.put("BeamColor", this.getBeamColor().save(new CompoundNBT()));
     }
@@ -168,7 +186,7 @@ public class BeamEntity extends Entity implements IEntityAdditionalSpawnData {
 
     @Override
     public void writeSpawnData(PacketBuffer buffer) {
-        buffer.writeInt(this.getOwner().getId());
+        buffer.writeUUID(this.ownerUUID);
         buffer.writeShort(this.getBeamColor().getRedValue());
         buffer.writeShort(this.getBeamColor().getGreenValue());
         buffer.writeShort(this.getBeamColor().getBlueValue());
@@ -179,7 +197,7 @@ public class BeamEntity extends Entity implements IEntityAdditionalSpawnData {
 
     @Override
     public void readSpawnData(PacketBuffer additionalData) {
-        this.owner = (LivingEntity) this.level.getEntity(additionalData.readInt());
+        this.ownerUUID = additionalData.readUUID();
         this.beamColor = new BeamColor(
                 additionalData.readShort(),
                 additionalData.readShort(),
