@@ -43,7 +43,19 @@ public class DungeonsGearConfig {
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> OBSIDIAN_LOOT_TABLES;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> OBSIDIAN_LOOT_TABLES_BLACKLIST;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> BASIC_LOOT_TABLES;
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> DESERT_LOOT_TABLES;
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> OCEAN_LOOT_TABLES;
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> COLD_LOOT_TABLES;
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> JUNGLE_LOOT_TABLES;
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> NETHER_LOOT_TABLES;
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> END_LOOT_TABLES;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> BASIC_LOOT_TABLES_BLACKLIST;
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> DESERT_LOOT_TABLES_BLACKLIST;
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> OCEAN_LOOT_TABLES_BLACKLIST;
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> COLD_LOOT_TABLES_BLACKLIST;
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> JUNGLE_LOOT_TABLES_BLACKLIST;
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> NETHER_LOOT_TABLES_BLACKLIST;
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> END_LOOT_TABLES_BLACKLIST;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> ENEMY_BLACKLIST;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_AREA_OF_EFFECT_ON_PLAYERS;
 
@@ -315,7 +327,8 @@ public class DungeonsGearConfig {
                 .defineList("commonLootTables", Lists.newArrayList(
                         "minecraft:chests/abandoned_mineshaft",
                         "minecraft:chests/shipwreck",
-                        "minecraft:chests/desert_pyramid"
+                        "minecraft:chests/desert_pyramid",
+                        "minecraft:chests/ruined_portal"
                         ),
                         (itemRaw) -> itemRaw instanceof String);
         COMMON_LOOT_TABLES_BLACKLIST = builder
@@ -335,7 +348,7 @@ public class DungeonsGearConfig {
                 .defineList("fancyLootTables", Lists.newArrayList(
                         "minecraft:chests/jungle_temple",
                         "minecraft:chests/nether_bridge",
-                        "minecraft:chests/bastion"
+                        "minecraft:chests/simple_dungeon"
                         ),
                         (itemRaw) -> itemRaw instanceof String);
         FANCY_LOOT_TABLES_BLACKLIST = builder
@@ -355,13 +368,12 @@ public class DungeonsGearConfig {
                 .defineList("obsidianLootTables", Lists.newArrayList(
                         "minecraft:chests/stronghold",
                         "minecraft:chests/underwater_ruin",
-                        "minecraft:chests/ruined_portal",
                         "minecraft:chests/pillager_outpost",
-                        "minecraft:chests/simple_dungeon",
                         "minecraft:chests/end_city_treasure",
                         "minecraft:chests/igloo_chest",
                         "minecraft:chests/woodland_mansion",
-                        "minecraft:chests/buried_treasure"
+                        "minecraft:chests/buried_treasure",
+                        "minecraft:chests/bastion"
                         ),
                         (itemRaw) -> itemRaw instanceof String);
         OBSIDIAN_LOOT_TABLES_BLACKLIST = builder
@@ -373,19 +385,126 @@ public class DungeonsGearConfig {
                         (itemRaw) -> itemRaw instanceof String);
         builder.pop();
 
-        builder.comment("Basic Loot Table Configuration").push("basic_loot_table_configuration");
+        builder.comment("Loot Table Configuration").push("loot_table_configuration");
         BASIC_LOOT_TABLES = builder
                 .comment("Add gear from this mod to loot tables considered to belong to no actual environment. \n"
                         + "To do so, enter the full path of the specific loot table, or the path of the folder containing the loot tables.\n"
                         + "You can also write an incomplete path, and the mod will add to loot tables containing that incomplete path.")
                 .defineList("basicLootTables", Lists.newArrayList(
+                        "minecraft:chests/abandoned_mineshaft",
+                                "minecraft:chests/stronghold",
+                                "minecraft:chests/simple_dungeon",
+                                "minecraft:chests/pillager_outpost",
+                                "minecraft:chests/woodland_mansion",
+                                "minecraft:village/village_armorer",
+                                "minecraft:village/village_tannery",
+                                "minecraft:village/village_temple",
+                                "minecraft:village/village_weaponsmith",
+                                "minecraft:village/village_plains_house",
+                                "minecraft:village/village_savanna_house"
                         ),
                         (itemRaw) -> itemRaw instanceof String);
         BASIC_LOOT_TABLES_BLACKLIST = builder
-                .comment("Use this list to prevent specific loot tables from getting super rare loot. \n"
+                .comment("Use this list to prevent specific loot tables from getting loot. \n"
                         + "To do so, enter the full path of the specific loot table.")
                 .defineList("basicLootTablesBlacklist", Lists.newArrayList(
+                        ),
+                        (itemRaw) -> itemRaw instanceof String);
 
+        DESERT_LOOT_TABLES = builder
+                .comment("Add gear from this mod to loot tables considered to belong to the desert environment. \n"
+                        + "To do so, enter the full path of the specific loot table, or the path of the folder containing the loot tables.\n"
+                        + "You can also write an incomplete path, and the mod will add to loot tables containing that incomplete path.")
+                .defineList("desertLootTables", Lists.newArrayList(
+                                "minecraft:chests/desert_pyramid",
+                                "minecraft:village/village_desert_house"
+                        ),
+                        (itemRaw) -> itemRaw instanceof String);
+        DESERT_LOOT_TABLES_BLACKLIST = builder
+                .comment("Use this list to prevent specific loot tables from getting loot. \n"
+                        + "To do so, enter the full path of the specific loot table.")
+                .defineList("desertLootTablesBlacklist", Lists.newArrayList(
+                        ),
+                        (itemRaw) -> itemRaw instanceof String);
+
+        OCEAN_LOOT_TABLES = builder
+                .comment("Add gear from this mod to loot tables considered to belong to the ocean environment. \n"
+                        + "To do so, enter the full path of the specific loot table, or the path of the folder containing the loot tables.\n"
+                        + "You can also write an incomplete path, and the mod will add to loot tables containing that incomplete path.")
+                .defineList("oceanLootTables", Lists.newArrayList(
+                                "minecraft:chests/shipwreck",
+                                "minecraft:chests/underwater_ruin"
+                        ),
+                        (itemRaw) -> itemRaw instanceof String);
+        OCEAN_LOOT_TABLES_BLACKLIST = builder
+                .comment("Use this list to prevent specific loot tables from getting loot. \n"
+                        + "To do so, enter the full path of the specific loot table.")
+                .defineList("oceanLootTablesBlacklist", Lists.newArrayList(
+                                "minecraft:chests/buried_treasure"
+                        ),
+                        (itemRaw) -> itemRaw instanceof String);
+
+        COLD_LOOT_TABLES = builder
+                .comment("Add gear from this mod to loot tables considered to belong to cold environment chests. \n"
+                        + "To do so, enter the full path of the specific loot table, or the path of the folder containing the loot tables.\n"
+                        + "You can also write an incomplete path, and the mod will add to loot tables containing that incomplete path.")
+                .defineList("coldLootTables", Lists.newArrayList(
+                                "minecraft:chests/igloo_chest",
+                                "minecraft:village/village_snowy_house",
+                                "minecraft:village/village_taiga_house"
+                        ),
+                        (itemRaw) -> itemRaw instanceof String);
+        COLD_LOOT_TABLES_BLACKLIST = builder
+                .comment("Use this list to prevent specific loot tables from getting loot. \n"
+                        + "To do so, enter the full path of the specific loot table.")
+                .defineList("coldLootTablesBlacklist", Lists.newArrayList(
+                        ),
+                        (itemRaw) -> itemRaw instanceof String);
+
+        JUNGLE_LOOT_TABLES = builder
+                .comment("Add gear from this mod to loot tables considered to belong to the jungle environment. \n"
+                        + "To do so, enter the full path of the specific loot table, or the path of the folder containing the loot tables.\n"
+                        + "You can also write an incomplete path, and the mod will add to loot tables containing that incomplete path.")
+                .defineList("jungleLootTables", Lists.newArrayList(
+                                "minecraft:chests/jungle_temple"
+                        ),
+                        (itemRaw) -> itemRaw instanceof String);
+        JUNGLE_LOOT_TABLES_BLACKLIST = builder
+                .comment("Use this list to prevent specific loot tables from getting loot. \n"
+                        + "To do so, enter the full path of the specific loot table.")
+                .defineList("jungleLootTablesBlacklist", Lists.newArrayList(
+                        ),
+                        (itemRaw) -> itemRaw instanceof String);
+
+        NETHER_LOOT_TABLES = builder
+                .comment("Add gear from this mod to loot tables considered to belong to the nether environment. \n"
+                        + "To do so, enter the full path of the specific loot table, or the path of the folder containing the loot tables.\n"
+                        + "You can also write an incomplete path, and the mod will add to loot tables containing that incomplete path.")
+                .defineList("netherLootTables", Lists.newArrayList(
+                                "minecraft:chests/nether_bridge",
+                                "minecraft:chests/bastion",
+                                "minecraft:chests/ruined_portal"
+                        ),
+                        (itemRaw) -> itemRaw instanceof String);
+        NETHER_LOOT_TABLES_BLACKLIST = builder
+                .comment("Use this list to prevent specific loot tables from getting loot. \n"
+                        + "To do so, enter the full path of the specific loot table.")
+                .defineList("netherLootTablesBlacklist", Lists.newArrayList(
+                        ),
+                        (itemRaw) -> itemRaw instanceof String);
+
+        END_LOOT_TABLES = builder
+                .comment("Add gear from this mod to loot tables considered to belong to the end environment. \n"
+                        + "To do so, enter the full path of the specific loot table, or the path of the folder containing the loot tables.\n"
+                        + "You can also write an incomplete path, and the mod will add to loot tables containing that incomplete path.")
+                .defineList("endLootTables", Lists.newArrayList(
+                                "minecraft:chests/end_city_treasure"
+                        ),
+                        (itemRaw) -> itemRaw instanceof String);
+        END_LOOT_TABLES_BLACKLIST = builder
+                .comment("Use this list to prevent specific loot tables from getting loot. \n"
+                        + "To do so, enter the full path of the specific loot table.")
+                .defineList("endLootTablesBlacklist", Lists.newArrayList(
                         ),
                         (itemRaw) -> itemRaw instanceof String);
         builder.pop();

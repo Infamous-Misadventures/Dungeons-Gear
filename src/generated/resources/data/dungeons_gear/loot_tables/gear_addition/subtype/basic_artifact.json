@@ -1,0 +1,82 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:boots_of_swiftness"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:death_cap_mushroom"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:golem_kit"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:tasty_bone"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:wonderful_wheat"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:lightning_rod"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:iron_hide_amulet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:love_medallion"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:ghost_cloak"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:harvester"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:shock_powder"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:light_feather"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:flaming_quiver"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:torment_quiver"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:buzzy_nest"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:enchanted_grass"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:corrupted_pumpkin"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:thundering_quiver"
+        }
+      ]
+    }
+  ]
+}

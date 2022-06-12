@@ -1,0 +1,42 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:cutlass"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:dancers_sword"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:nameless_blade"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:sparkler"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:anchor"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:encrusted_anchor"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:harpoon_crossbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:nautical_crossbow"
+        }
+      ]
+    }
+  ]
+}

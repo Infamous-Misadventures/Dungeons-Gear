@@ -1,0 +1,110 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:moon_dagger"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:sickle"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:nightmares_bite"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:the_last_laugh"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:soul_scythe"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:jailors_scythe"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:battlestaff"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:battlestaff_of_terror"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:growing_staff"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:soul_knife"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:eternal_knife"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:truthseeker"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:glaive"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:grave_bane"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:venom_glaive"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:dual_crossbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:baby_crossbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:grim_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:grim_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:wither_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:wither_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:soul_robe"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:soul_hood"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:souldancer_robe"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:souldancer_hood"
+        }
+      ]
+    }
+  ]
+}

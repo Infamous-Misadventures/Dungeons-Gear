@@ -11,12 +11,12 @@
         {
           "type": "minecraft:loot_table",
           "weight": 54,
-          "name": "dungeons_gear:basic_normal"
+          "name": "dungeons_gear:gear_addition/subtype/nether_normal"
         },
         {
           "type": "minecraft:loot_table",
           "quality": 1,
-          "name": "dungeons_gear:basic_unique"
+          "name": "dungeons_gear:gear_addition/subtype/nether_unique"
         },
         {
           "type": "minecraft:empty",

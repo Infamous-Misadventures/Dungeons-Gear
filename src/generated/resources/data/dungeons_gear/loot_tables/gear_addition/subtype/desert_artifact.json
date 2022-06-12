@@ -6,31 +6,27 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:diamond_sword"
+          "name": "dungeons_gear:gong_of_weakening"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:hawkbrand"
+          "name": "dungeons_gear:soul_healer"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:diamond_pickaxe"
+          "name": "dungeons_gear:totem_of_regeneration"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:firebrand"
+          "name": "dungeons_gear:totem_of_shielding"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:highland_axe"
+          "name": "dungeons_gear:totem_of_soul_protection"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:archers_vest"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:archers_hood"
+          "name": "dungeons_gear:corrupted_beacon"
         }
       ]
     }

@@ -6,19 +6,19 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:sword"
+          "name": "dungeons_gear:harpoon_quiver"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:pickaxe"
+          "name": "dungeons_gear:satchel_of_elixirs"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:axe"
+          "name": "dungeons_gear:satchel_of_snacks"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:hunters_vest"
+          "name": "dungeons_gear:eye_of_the_guardian"
         }
       ]
     }

@@ -1,26 +1,34 @@
 package com.infamous.dungeons_gear.datagen;
 
+import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_gear.loot.AddPotionLootFunction;
-import com.infamous.dungeons_gear.registry.ItemRegistry;
+import com.infamous.dungeons_gear.loot.LootTableRarity;
+import com.infamous.dungeons_gear.loot.LootTableType;
+import com.infamous.dungeons_libraries.items.interfaces.IArmor;
+import com.infamous.dungeons_libraries.items.interfaces.IMeleeWeapon;
+import com.infamous.dungeons_libraries.items.interfaces.IRangedWeapon;
 import net.minecraft.data.loot.ChestLootTables;
+import net.minecraft.item.Item;
 import net.minecraft.loot.*;
 import net.minecraft.loot.functions.EnchantWithLevels;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.RegistryObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.items.ItemTagWrappers.FOOD_PROCESSED;
+import static com.infamous.dungeons_gear.loot.LootTableRarity.COMMON;
 import static com.infamous.dungeons_gear.registry.ItemRegistry.*;
 import static com.infamous.dungeons_gear.utilties.GeneralHelper.modLoc;
 import static net.minecraft.item.Items.*;
 import static net.minecraft.tags.ItemTags.ARROWS;
 
 public class ModChestLootTables extends ChestLootTables {
-
-    private static final List<String> TYPES = Arrays.asList("basic", "nether", "sea", "jungle", "snow", "end", "desert");
 
     @Override
     public void accept(BiConsumer<ResourceLocation, LootTable.Builder> consumer) {
@@ -38,57 +46,76 @@ public class ModChestLootTables extends ChestLootTables {
     }
 
     private void chestAdditionsLootTables(BiConsumer<ResourceLocation, LootTable.Builder> consumer) {
-        TYPES.forEach(type -> createItemLootTables(consumer, type));
-        consumer.accept(modLoc("basic_normal"),
-                LootTable.lootTable().
-                        withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
-                                .add(ItemLootEntry.lootTableItem(SWORD::get).setWeight(1))
-                                .add(ItemLootEntry.lootTableItem(PICKAXE::get).setWeight(1))
-                                .add(ItemLootEntry.lootTableItem(AXE::get).setWeight(1))
-                                .add(ItemLootEntry.lootTableItem(HUNTERS_ARMOR::get).setWeight(1))
-                        )
-
-        );
-        consumer.accept(modLoc("basic_unique"),
-                LootTable.lootTable().
-                        withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
-                                .add(ItemLootEntry.lootTableItem(ItemRegistry.DIAMOND_SWORD::get).setWeight(1))
-                                .add(ItemLootEntry.lootTableItem(HAWKBRAND::get).setWeight(1))
-                                .add(ItemLootEntry.lootTableItem(ItemRegistry.DIAMOND_PICKAXE::get).setWeight(1))
-                                .add(ItemLootEntry.lootTableItem(FIREBRAND::get).setWeight(1))
-                                .add(ItemLootEntry.lootTableItem(HIGHLAND_AXE::get).setWeight(1))
-                                .add(ItemLootEntry.lootTableItem(ARCHERS_ARMOR::get).setWeight(1))
-                                .add(ItemLootEntry.lootTableItem(ARCHERS_ARMOR_HOOD::get).setWeight(1))
-                        )
-
-        );
+        for (LootTableType lootTableType : LootTableType.values()) {
+            createTypeLootTables(consumer, lootTableType);
+        }
     }
 
-    private void createItemLootTables(BiConsumer<ResourceLocation, LootTable.Builder> consumer, String type) {
-        ResourceLocation typeNormalTable = modLoc(type + "_normal");
-        ResourceLocation typeUniqueTable = modLoc(type + "_unique");
-        consumer.accept(modLoc("common_" + type),
+    private void createTypeLootTables(BiConsumer<ResourceLocation, LootTable.Builder> consumer, LootTableType lootTableType) {
+        List<Item> lootItems = LOOT_TABLES.getOrDefault(lootTableType, new ArrayList<>()).stream().map(RegistryObject::get).collect(Collectors.toList());
+        createTableForSubtype(consumer, lootItems.stream().filter(this::isNormalItem).collect(Collectors.toList()), lootTableType.normalTable());
+        createTableForSubtype(consumer, lootItems.stream().filter(this::isUniqueItem).collect(Collectors.toList()), lootTableType.uniqueTable());
+        createTableForSubtype(consumer, lootItems.stream().filter(this::isArtifactItem).collect(Collectors.toList()), lootTableType.artifactTable());
+        createItemLootTables(consumer, lootTableType);
+    }
+
+    private void createTableForSubtype(BiConsumer<ResourceLocation, LootTable.Builder> consumer, List<Item> items, ResourceLocation lootTable) {
+        LootPool.Builder lootPool = LootPool.lootPool().setRolls(ConstantRange.exactly(1));
+        if(items.isEmpty()){
+            lootPool.add(EmptyLootEntry.emptyItem());
+        }else{
+            items.forEach(item -> lootPool.add(ItemLootEntry.lootTableItem(item)));
+        }
+        consumer.accept(lootTable, LootTable.lootTable().withPool(lootPool));
+    }
+
+    private boolean isArtifactItem(Item item) {
+        return item instanceof ArtifactItem;
+    }
+
+    private boolean isNormalItem(Item item) {
+        if(item instanceof ArtifactItem){
+            return  false;
+        }
+        return !isUniqueItem(item);
+    }
+
+    private boolean isUniqueItem(Item item) {
+        if(item instanceof IMeleeWeapon){
+            return ((IMeleeWeapon) item).isUnique();
+        }else if(item instanceof IArmor){
+            return ((IArmor) item).isUnique();
+        }else if(item instanceof IRangedWeapon){
+            return ((IRangedWeapon)item).isUnique();
+        }
+        return false;
+    }
+
+    private void createItemLootTables(BiConsumer<ResourceLocation, LootTable.Builder> consumer, LootTableType lootTableType) {
+        consumer.accept(LootTableRarity.COMMON.getTable(lootTableType),
                 LootTable.lootTable().
                         withPool(LootPool.lootPool().setRolls(RandomValueRange.between(0.0F, 2.0F)).bonusRolls(0, 1)
-                                .add(TableLootEntry.lootTableReference(typeNormalTable).setWeight(54))
-                                .add(TableLootEntry.lootTableReference(typeUniqueTable).setWeight(1).setQuality(1))
+                                .add(TableLootEntry.lootTableReference(lootTableType.normalTable()).setWeight(54))
+                                .add(TableLootEntry.lootTableReference(lootTableType.uniqueTable()).setWeight(1).setQuality(1))
                                 .add(EmptyLootEntry.emptyItem().setWeight(45).setQuality(-1)))
         );
-        consumer.accept(modLoc("fancy_" + type),
+        consumer.accept(LootTableRarity.FANCY.getTable(lootTableType),
                 LootTable.lootTable().
                         withPool(LootPool.lootPool().setRolls(RandomValueRange.between(1.0F, 3.0F)).bonusRolls(0, 2)
-                                .add(TableLootEntry.lootTableReference(typeNormalTable).setWeight(20).setQuality(-2))
-                                .add(TableLootEntry.lootTableReference(typeNormalTable).setWeight(35).setQuality(2).apply(EnchantWithLevels.enchantWithLevels(ConstantRange.exactly(15)).allowTreasure()))
-                                .add(TableLootEntry.lootTableReference(typeUniqueTable).setWeight(5).setQuality(2).apply(EnchantWithLevels.enchantWithLevels(ConstantRange.exactly(15)).allowTreasure()))
+                                .add(TableLootEntry.lootTableReference(lootTableType.artifactTable()).setWeight(15))
+                                .add(TableLootEntry.lootTableReference(lootTableType.normalTable()).setWeight(12).setQuality(-2))
+                                .add(TableLootEntry.lootTableReference(lootTableType.normalTable()).setWeight(28).setQuality(2).apply(EnchantWithLevels.enchantWithLevels(ConstantRange.exactly(15)).allowTreasure()))
+                                .add(TableLootEntry.lootTableReference(lootTableType.uniqueTable()).setWeight(5).setQuality(2).apply(EnchantWithLevels.enchantWithLevels(ConstantRange.exactly(15)).allowTreasure()))
                                 .add(EmptyLootEntry.emptyItem().setWeight(40).setQuality(-2)))
         );
-        consumer.accept(modLoc("obsidian_" + type),
+        consumer.accept(LootTableRarity.OBSIDIAN.getTable(lootTableType),
                 LootTable.lootTable().
                         withPool(LootPool.lootPool().setRolls(RandomValueRange.between(1.0F, 4.0F)).bonusRolls(0, 2)
-                                .add(TableLootEntry.lootTableReference(typeNormalTable).setWeight(25).setQuality(-3).apply(EnchantWithLevels.enchantWithLevels(ConstantRange.exactly(15)).allowTreasure()))
-                                .add(TableLootEntry.lootTableReference(typeNormalTable).setWeight(35).setQuality(3).apply(EnchantWithLevels.enchantWithLevels(ConstantRange.exactly(30)).allowTreasure()))
-                                .add(TableLootEntry.lootTableReference(typeUniqueTable).setWeight(5).setQuality(3).apply(EnchantWithLevels.enchantWithLevels(ConstantRange.exactly(30)).allowTreasure()))
-                                .add(EmptyLootEntry.emptyItem().setWeight(35).setQuality(-3)))
+                                .add(TableLootEntry.lootTableReference(lootTableType.artifactTable()).setWeight(15))
+                                .add(TableLootEntry.lootTableReference(lootTableType.normalTable()).setWeight(17).setQuality(-2).apply(EnchantWithLevels.enchantWithLevels(ConstantRange.exactly(15)).allowTreasure()))
+                                .add(TableLootEntry.lootTableReference(lootTableType.normalTable()).setWeight(28).setQuality(3).apply(EnchantWithLevels.enchantWithLevels(ConstantRange.exactly(30)).allowTreasure()))
+                                .add(TableLootEntry.lootTableReference(lootTableType.uniqueTable()).setWeight(5).setQuality(3).apply(EnchantWithLevels.enchantWithLevels(ConstantRange.exactly(30)).allowTreasure()))
+                                .add(EmptyLootEntry.emptyItem().setWeight(35).setQuality(-4)))
         );
     }
 

@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-import static net.minecraft.loot.LootParameters.ORIGIN;
+import static com.infamous.dungeons_gear.loot.LootTableType.*;
 
 
 public class GlobalLootModifier{
@@ -55,30 +55,48 @@ public class GlobalLootModifier{
 
         private ResourceLocation determineTable(ResourceLocation lootTable) {
             String lootTablePath = lootTable.toString();
-            String rarity = getRarity(lootTablePath);
-            String type = getType(lootTablePath);
-            if(rarity.isEmpty() || type.isEmpty()) return null;
-            return new ResourceLocation(MODID, rarity + "_" + type);
+            LootTableRarity rarity = getRarity(lootTablePath);
+            LootTableType type = getType(lootTablePath);
+            if(rarity == null || type == null) return null;
+            return rarity.getTable(type);
         }
 
-        private String getType(String lootTablePath) {
+        private LootTableType getType(String lootTablePath) {
             if(checkLootTableConfig(lootTablePath, DungeonsGearConfig.BASIC_LOOT_TABLES.get(), DungeonsGearConfig.BASIC_LOOT_TABLES_BLACKLIST.get())){
-                return "basic";
+                return BASIC;
             }
-            return "basic";
+            if(checkLootTableConfig(lootTablePath, DungeonsGearConfig.DESERT_LOOT_TABLES.get(), DungeonsGearConfig.DESERT_LOOT_TABLES_BLACKLIST.get())){
+                return DESERT;
+            }
+            if(checkLootTableConfig(lootTablePath, DungeonsGearConfig.OCEAN_LOOT_TABLES.get(), DungeonsGearConfig.OCEAN_LOOT_TABLES_BLACKLIST.get())){
+                return OCEAN;
+            }
+            if(checkLootTableConfig(lootTablePath, DungeonsGearConfig.COLD_LOOT_TABLES.get(), DungeonsGearConfig.COLD_LOOT_TABLES_BLACKLIST.get())){
+                return COLD;
+            }
+            if(checkLootTableConfig(lootTablePath, DungeonsGearConfig.JUNGLE_LOOT_TABLES.get(), DungeonsGearConfig.JUNGLE_LOOT_TABLES_BLACKLIST.get())){
+                return JUNGLE;
+            }
+            if(checkLootTableConfig(lootTablePath, DungeonsGearConfig.NETHER_LOOT_TABLES.get(), DungeonsGearConfig.NETHER_LOOT_TABLES_BLACKLIST.get())){
+                return NETHER;
+            }
+            if(checkLootTableConfig(lootTablePath, DungeonsGearConfig.END_LOOT_TABLES.get(), DungeonsGearConfig.END_LOOT_TABLES_BLACKLIST.get())){
+                return END;
+            }
+            return null;
         }
 
-        private String getRarity(String lootTablePath) {
+        private LootTableRarity getRarity(String lootTablePath) {
             if(checkLootTableConfig(lootTablePath, DungeonsGearConfig.OBSIDIAN_LOOT_TABLES.get(), DungeonsGearConfig.OBSIDIAN_LOOT_TABLES_BLACKLIST.get())){
-                return "obsidian";
+                return LootTableRarity.OBSIDIAN;
             }
             if(checkLootTableConfig(lootTablePath, DungeonsGearConfig.FANCY_LOOT_TABLES.get(), DungeonsGearConfig.FANCY_LOOT_TABLES_BLACKLIST.get())){
-                return "fancy";
+                return LootTableRarity.FANCY;
             }
             if(checkLootTableConfig(lootTablePath, DungeonsGearConfig.COMMON_LOOT_TABLES.get(), DungeonsGearConfig.COMMON_LOOT_TABLES_BLACKLIST.get())){
-                return "common";
+                return LootTableRarity.COMMON;
             }
-            return "";
+            return null;
         }
 
         private boolean checkLootTableConfig(String lootTablePath, List<? extends String> whitelist, List<? extends String> blacklist) {

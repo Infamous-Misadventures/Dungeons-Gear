@@ -4,20 +4,19 @@
     {
       "rolls": {
         "min": 1.0,
-        "max": 3.0,
+        "max": 4.0,
         "type": "minecraft:uniform"
       },
       "entries": [
         {
           "type": "minecraft:loot_table",
-          "weight": 20,
-          "quality": -2,
-          "name": "dungeons_gear:basic_normal"
+          "weight": 15,
+          "name": "dungeons_gear:gear_addition/subtype/jungle_artifact"
         },
         {
           "type": "minecraft:loot_table",
-          "weight": 35,
-          "quality": 2,
+          "weight": 17,
+          "quality": -2,
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
@@ -25,25 +24,38 @@
               "treasure": true
             }
           ],
-          "name": "dungeons_gear:basic_normal"
+          "name": "dungeons_gear:gear_addition/subtype/jungle_normal"
+        },
+        {
+          "type": "minecraft:loot_table",
+          "weight": 28,
+          "quality": 3,
+          "functions": [
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": 30,
+              "treasure": true
+            }
+          ],
+          "name": "dungeons_gear:gear_addition/subtype/jungle_normal"
         },
         {
           "type": "minecraft:loot_table",
           "weight": 5,
-          "quality": 2,
+          "quality": 3,
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
-              "levels": 15,
+              "levels": 30,
               "treasure": true
             }
           ],
-          "name": "dungeons_gear:basic_unique"
+          "name": "dungeons_gear:gear_addition/subtype/jungle_unique"
         },
         {
           "type": "minecraft:empty",
-          "weight": 40,
-          "quality": -2
+          "weight": 35,
+          "quality": -4
         }
       ]
     }

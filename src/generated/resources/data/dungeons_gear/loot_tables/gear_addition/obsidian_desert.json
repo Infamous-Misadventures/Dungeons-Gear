@@ -1,0 +1,63 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": {
+        "min": 1.0,
+        "max": 4.0,
+        "type": "minecraft:uniform"
+      },
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "weight": 15,
+          "name": "dungeons_gear:gear_addition/subtype/desert_artifact"
+        },
+        {
+          "type": "minecraft:loot_table",
+          "weight": 17,
+          "quality": -2,
+          "functions": [
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": 15,
+              "treasure": true
+            }
+          ],
+          "name": "dungeons_gear:gear_addition/subtype/desert_normal"
+        },
+        {
+          "type": "minecraft:loot_table",
+          "weight": 28,
+          "quality": 3,
+          "functions": [
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": 30,
+              "treasure": true
+            }
+          ],
+          "name": "dungeons_gear:gear_addition/subtype/desert_normal"
+        },
+        {
+          "type": "minecraft:loot_table",
+          "weight": 5,
+          "quality": 3,
+          "functions": [
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": 30,
+              "treasure": true
+            }
+          ],
+          "name": "dungeons_gear:gear_addition/subtype/desert_unique"
+        },
+        {
+          "type": "minecraft:empty",
+          "weight": 35,
+          "quality": -4
+        }
+      ]
+    }
+  ]
+}

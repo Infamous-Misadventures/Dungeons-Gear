@@ -1,0 +1,146 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:fang_of_frost"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:freezing_foil"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:frost_scythe"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:frost_slayer"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:tempest_knife"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:resolute_tempest_knife"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:chill_gale_knife"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:snow_bow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:winters_touch"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:wind_bow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:burst_gale_bow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:echo_of_the_valley"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:phantom_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:phantom_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:frost_bite_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:frost_bite_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:snow_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:snow_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:frost_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:frost_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:arctic_fox_vest"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:arctic_fox_hood"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:climbing_vest"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:climbing_hood"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:rugged_climbing_vest"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:rugged_climbing_hood"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:goat_vest"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:goat_hood"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:emerald_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:emerald_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:gilded_glory_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:gilded_glory_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:opulent_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:opulent_helmet"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:boneclub"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:bone_cudgel"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:bow_of_lost_souls"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:soul_crossbow"
+        }
+      ]
+    }
+  ]
+}
