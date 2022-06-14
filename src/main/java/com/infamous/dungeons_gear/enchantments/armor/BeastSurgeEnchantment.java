@@ -52,8 +52,7 @@ public class BeastSurgeEnchantment extends BeastEnchantment {
                     IMaster summonerCap = MinionMasterHelper.getMasterCapability(player);
                     if(summonerCap == null) return;
 
-                    for(UUID summonedMobUUID : summonerCap.getSummonedMobs()){
-                        Entity summonedMob = serverWorld.getEntity(summonedMobUUID);
+                    for(Entity summonedMob : summonerCap.getSummonedMobs()){
                         if(summonedMob instanceof LivingEntity){
                             LivingEntity summonedMobAsLiving = (LivingEntity) summonedMob;
                             EffectInstance surgeSpeed = new EffectInstance(Effects.MOVEMENT_SPEED, DungeonsGearConfig.BEAST_SURGE_DURATION.get(), beastSurgeLevel);

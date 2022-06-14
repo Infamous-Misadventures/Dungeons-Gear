@@ -23,7 +23,7 @@ public class GoalUtils {
                     return false;
                 }
             } else if(MinionMasterHelper.isMinionEntity(target)){
-                return !MinionMasterHelper.isMinionOf(target, owner.getUUID());
+                return !MinionMasterHelper.isMinionOf(target, owner);
             }
 
             if (target instanceof PlayerEntity && owner instanceof PlayerEntity && !((PlayerEntity)owner).canHarmPlayer((PlayerEntity)target)) {

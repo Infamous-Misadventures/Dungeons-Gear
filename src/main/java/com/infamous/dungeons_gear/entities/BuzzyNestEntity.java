@@ -1,11 +1,9 @@
 package com.infamous.dungeons_gear.entities;
 
 import com.infamous.dungeons_libraries.capabilities.minionmaster.IMaster;
-import com.infamous.dungeons_libraries.capabilities.minionmaster.summon.SummonHelper;
 import com.infamous.dungeons_libraries.entities.TotemBaseEntity;
+import com.infamous.dungeons_libraries.summon.SummonHelper;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.IPacket;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -18,8 +16,6 @@ import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
-
-import java.util.List;
 
 import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMasterCapability;
 
@@ -36,8 +32,8 @@ public class BuzzyNestEntity extends TotemBaseEntity implements IAnimatable {
         if(!this.level.isClientSide() && this.lifeTicks % 20 == 0 && this.getOwner() != null) {
             IMaster summonerCap = getMasterCapability(this.getOwner());
             if (summonerCap != null) {
-                SummonHelper.summonBee(this.getOwner(), this.blockPosition());
-                this.level.playSound((PlayerEntity)null, this.blockPosition(), SoundEvents.BEEHIVE_EXIT, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                SummonHelper.summonEntity(this.getOwner(), this.blockPosition(), EntityType.BEE);
+                this.level.playSound(null, this.blockPosition(), SoundEvents.BEEHIVE_EXIT, SoundCategory.BLOCKS, 1.0F, 1.0F);
             }
         }
     }

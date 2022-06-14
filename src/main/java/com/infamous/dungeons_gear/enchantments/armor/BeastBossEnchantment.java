@@ -43,23 +43,18 @@ public class BeastBossEnchantment extends BeastEnchantment {
 
         if(trueSource.level instanceof ServerWorld
                 && MinionMasterHelper.isMinionEntity(trueSource)){
-            ServerWorld serverWorld = (ServerWorld) trueSource.level;
             IMinion attackerSummonableCap = MinionMasterHelper.getMinionCapability(trueSource);
             if(attackerSummonableCap == null) return;
 
-            UUID summonerUUID = attackerSummonableCap.getMaster();
-            if(summonerUUID != null){
-                if(!MinionMasterHelper.isMinionOf(target, summonerUUID)){
-                    Entity beastOwner = serverWorld.getEntity(summonerUUID);
-                    if(beastOwner instanceof LivingEntity){
-                        LivingEntity beastOwnerAsLiving = ((LivingEntity) beastOwner);
-                        int beastBossLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.BEAST_BOSS, beastOwnerAsLiving);
-                        if(beastBossLevel > 0){
-                            float beastBossFactor = (float) (DungeonsGearConfig.BEAST_BOSS_BASE_MULTIPLIER.get() + (DungeonsGearConfig.BEAST_BOSS_MULTIPLIER_PER_LEVEL.get()  * beastBossLevel));
-                            float currentDamage = event.getAmount();
-                            float newDamage = currentDamage * beastBossFactor;
-                            event.setAmount(newDamage);
-                        }
+            LivingEntity beastOwner = attackerSummonableCap.getMaster();
+            if(beastOwner != null){
+                if(!MinionMasterHelper.isMinionOf(target, beastOwner)){
+                    int beastBossLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.BEAST_BOSS, beastOwner);
+                    if(beastBossLevel > 0){
+                        float beastBossFactor = (float) (DungeonsGearConfig.BEAST_BOSS_BASE_MULTIPLIER.get() + (DungeonsGearConfig.BEAST_BOSS_MULTIPLIER_PER_LEVEL.get()  * beastBossLevel));
+                        float currentDamage = event.getAmount();
+                        float newDamage = currentDamage * beastBossFactor;
+                        event.setAmount(newDamage);
                     }
                 }
             }

@@ -5,14 +5,17 @@ import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.integration.curios.CuriosIntegration;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
-import com.infamous.dungeons_libraries.capabilities.minionmaster.summon.SummonHelper;
+import com.infamous.dungeons_gear.utilties.SoundHelper;
+import com.infamous.dungeons_libraries.summon.SummonHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.SoundEvents;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -69,7 +72,9 @@ public class BusyBeeEnchantment extends DungeonsEnchantment {
                     float busyBeeRand = attacker.getRandom().nextFloat();
                     float busyBeeChance = (float) (DungeonsGearConfig.BUSY_BEE_BASE_CHANCE.get() + busyBeeLevel * DungeonsGearConfig.BUSY_BEE_CHANCE_PER_LEVEL.get());
                     if(busyBeeRand <= busyBeeChance) {
-                        SummonHelper.summonBee(attacker, victim.blockPosition());
+                        if(SummonHelper.summonEntity(attacker, victim.blockPosition(), EntityType.BEE) != null) {
+                            SoundHelper.playCreatureSound(attacker, SoundEvents.BEE_LOOP);
+                        }
                     }
                 }
             }

@@ -5,18 +5,14 @@ import com.infamous.dungeons_gear.capabilities.artifact.ArtifactUsageHelper;
 import com.infamous.dungeons_gear.capabilities.artifact.IArtifactUsage;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.effects.CustomEffects;
-import com.infamous.dungeons_gear.goals.*;
 import com.infamous.dungeons_gear.integration.curios.CuriosIntegration;
-import com.infamous.dungeons_gear.utilties.*;
+import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
+import com.infamous.dungeons_gear.utilties.CapabilityHelper;
+import com.infamous.dungeons_gear.utilties.SoundHelper;
 import com.infamous.dungeons_libraries.capabilities.minionmaster.IMinion;
-import com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.monster.CreeperEntity;
-import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.passive.*;
-import net.minecraft.entity.passive.horse.LlamaEntity;
+import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
@@ -28,7 +24,9 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.event.entity.living.*;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import top.theillusivec4.curios.api.event.CurioChangeEvent;
@@ -41,57 +39,6 @@ public class ArtifactEvents {
     public static final String FIRE_SHEEP_TAG = "FireSheep";
     public static final String POISON_SHEEP_TAG = "PoisonSheep";
     public static final String SPEED_SHEEP_TAG = "SpeedSheep";
-
-    @SubscribeEvent
-    public static void reAddSummonableGoals(EntityJoinWorldEvent event){
-        if(MinionMasterHelper.isMinionEntity(event.getEntity())){
-            IMinion summonableCap = getMinionCapability(event.getEntity());
-            if(summonableCap == null) return;
-            if(event.getEntity() instanceof LlamaEntity){
-                LlamaEntity llamaEntity = (LlamaEntity) event.getEntity();
-                if(summonableCap.getMaster() != null){
-                    llamaEntity.targetSelector.addGoal(1, new LlamaOwnerHurtByTargetGoal(llamaEntity));
-                    llamaEntity.targetSelector.addGoal(2, new LlamaOwnerHurtTargetGoal(llamaEntity));
-                    llamaEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(llamaEntity, LivingEntity.class, 5, false, false,
-                            (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
-                    llamaEntity.goalSelector.addGoal(2, new LlamaFollowOwnerGoal(llamaEntity, 2.1D, 10.0F, 2.0F, false));
-                }
-            }
-            if(event.getEntity() instanceof WolfEntity){
-                WolfEntity wolfEntity = (WolfEntity) event.getEntity();
-                if(summonableCap.getMaster() != null){
-                    wolfEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(wolfEntity, LivingEntity.class, 5, false, false,
-                            (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
-                }
-            }
-            if(event.getEntity() instanceof BatEntity){
-                BatEntity batEntity = (BatEntity) event.getEntity();
-                if(summonableCap.getMaster() != null){
-                    batEntity.goalSelector.addGoal(1, new BatMeleeAttackGoal(batEntity, 1.0D, true));
-                    batEntity.goalSelector.addGoal(2, new BatFollowOwnerGoal(batEntity, 2.1D, 10.0F, 2.0F, false));
-
-                    batEntity.targetSelector.addGoal(1, new BatOwnerHurtByTargetGoal(batEntity));
-                    batEntity.targetSelector.addGoal(2, new BatOwnerHurtTargetGoal(batEntity));
-                    batEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(batEntity, LivingEntity.class, 5, false, false,
-                            (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
-                }
-            }
-            if(event.getEntity() instanceof SheepEntity){
-                SheepEntity sheepEntity = (SheepEntity) event.getEntity();
-                if(summonableCap.getMaster() != null){
-                    if(sheepEntity.getTags().contains(FIRE_SHEEP_TAG) || sheepEntity.getTags().contains(POISON_SHEEP_TAG)){
-                        sheepEntity.goalSelector.addGoal(1, new SheepMeleeAttackGoal(sheepEntity, 1.0D, true));
-
-                        sheepEntity.targetSelector.addGoal(1, new SheepOwnerHurtByTargetGoal(sheepEntity));
-                        sheepEntity.targetSelector.addGoal(2, new SheepOwnerHurtTargetGoal(sheepEntity));
-                        sheepEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(sheepEntity, LivingEntity.class, 5, false, false,
-                                (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
-                    }
-                    sheepEntity.goalSelector.addGoal(2, new SheepFollowOwnerGoal(sheepEntity, 2.1D, 10.0F, 2.0F, false));
-                }
-            }
-        }
-    }
 
     @SubscribeEvent
     public static void onEnchantedSheepAttack(LivingDamageEvent event){
@@ -117,15 +64,12 @@ public class ArtifactEvents {
             SheepEntity sheepEntity = (SheepEntity)event.getEntityLiving();
             IMinion summonableCap = getMinionCapability(sheepEntity);
             if(summonableCap == null) return;
-            if(summonableCap.getMaster() != null){
+            LivingEntity summoner = summonableCap.getMaster();
+            if(summoner != null){
                 if(sheepEntity.level instanceof ServerWorld){
-                    Entity summoner = ((ServerWorld) sheepEntity.level).getEntity(summonableCap.getMaster());
-                    if(summoner instanceof PlayerEntity){
-                        PlayerEntity playerEntity = (PlayerEntity)summoner;
-                        if(!playerEntity.hasEffect(Effects.MOVEMENT_SPEED) && sheepEntity.getTags().contains(SPEED_SHEEP_TAG)){
-                            EffectInstance speed = new EffectInstance(Effects.MOVEMENT_SPEED, 100);
-                            playerEntity.addEffect(speed);
-                        }
+                    if(!summoner.hasEffect(Effects.MOVEMENT_SPEED) && sheepEntity.getTags().contains(SPEED_SHEEP_TAG)){
+                        EffectInstance speed = new EffectInstance(Effects.MOVEMENT_SPEED, 100);
+                        summoner.addEffect(speed);
                     }
                 }
             }

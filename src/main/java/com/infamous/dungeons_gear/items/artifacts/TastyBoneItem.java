@@ -2,22 +2,19 @@ package com.infamous.dungeons_gear.items.artifacts;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import com.infamous.dungeons_libraries.capabilities.minionmaster.IMinion;
 import com.infamous.dungeons_libraries.capabilities.minionmaster.IMaster;
 import com.infamous.dungeons_gear.network.NetworkHandler;
 import com.infamous.dungeons_gear.network.PacketBreakItem;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
+import com.infamous.dungeons_libraries.summon.SummonHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.monster.CreeperEntity;
-import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -32,10 +29,10 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SUMMON_CAP;
-import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMinionCapability;
 import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMasterCapability;
 
 public class TastyBoneItem extends ArtifactItem {
@@ -65,29 +62,23 @@ public class TastyBoneItem extends ArtifactItem {
             if(itemUseContextPlayer != null){
                 IMaster summonerCap = getMasterCapability(itemUseContextPlayer);
                 if (summonerCap != null) {
-                    if(summonerCap.getSummonedWolf() == null){
-                        WolfEntity wolfEntity = EntityType.WOLF.create(world);
-                        if (wolfEntity!= null) {
-                            IMinion summon = getMinionCapability(wolfEntity);
-                            if(summon != null){
-
-                                summon.setMaster(itemUseContextPlayer.getUUID());
-
-                                createWolf(world, itemUseContextPlayer, blockPos, wolfEntity);
-
-                                summonerCap.setSummonedWolf(wolfEntity.getUUID());
-
-                                itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemUseContextItem)));
-
-                            }
+                    Entity summoned = SummonHelper.summonEntity(itemUseContextPlayer, itemUseContextPlayer.blockPosition(), EntityType.WOLF);
+                    if(summoned != null) {
+                        if(summoned instanceof WolfEntity) {
+                            updateWolf(itemUseContextPlayer, (WolfEntity) summoned);
                         }
+                        SoundHelper.playCreatureSound(itemUseContextPlayer, SoundEvents.WOLF_AMBIENT);
+                        itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemUseContextItem)));
+                        ArtifactItem.putArtifactOnCooldown(itemUseContextPlayer, itemUseContextItem.getItem());
                     } else{
                         if(world instanceof ServerWorld) {
-                            Entity entity = ((ServerWorld) world).getEntity(summonerCap.getSummonedWolf());
-                            if (entity instanceof WolfEntity) {
-                                WolfEntity wolfEntity = (WolfEntity) entity;
-                                wolfEntity.teleportToWithTicket((double) blockPos.getX() + 0.5D, (double) blockPos.getY() + 0.05D, (double) blockPos.getZ() + 0.5D);
-                            }
+                            List<Entity> wolfEntities = summonerCap.getSummonedMobs().stream().filter(entity -> entity.getType() == EntityType.WOLF).collect(Collectors.toList());
+                            wolfEntities.forEach(entity -> {
+                                if (entity instanceof WolfEntity) {
+                                    WolfEntity wolfEntity = (WolfEntity) entity;
+                                    wolfEntity.teleportToWithTicket((double) blockPos.getX() + 0.5D, (double) blockPos.getY() + 0.05D, (double) blockPos.getZ() + 0.5D);
+                                }
+                            });
                         }
                     }
                 }
@@ -96,18 +87,8 @@ public class TastyBoneItem extends ArtifactItem {
         }
     }
 
-    private void createWolf(World world, PlayerEntity itemUseContextPlayer, BlockPos blockPos, WolfEntity wolfEntity) {
-        wolfEntity.tame(itemUseContextPlayer);
-        wolfEntity.moveTo((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.05D, (double)blockPos.getZ() + 0.5D, 0.0F, 0.0F);
-
-
-        wolfEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(wolfEntity, LivingEntity.class, 5, false, false, (entityIterator) -> {
-            return entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity);
-        }));
-
-        SoundHelper.playCreatureSound(itemUseContextPlayer, SoundEvents.WOLF_AMBIENT);
-
-        world.addFreshEntity(wolfEntity);
+    private void updateWolf(PlayerEntity playerEntity, WolfEntity wolfEntity) {
+        wolfEntity.tame(playerEntity);
     }
 
     @OnlyIn(Dist.CLIENT)

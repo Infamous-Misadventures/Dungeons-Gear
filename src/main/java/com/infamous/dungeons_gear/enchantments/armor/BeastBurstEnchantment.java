@@ -24,7 +24,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
-import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class BeastBurstEnchantment extends BeastEnchantment {
@@ -55,8 +54,7 @@ public class BeastBurstEnchantment extends BeastEnchantment {
                     IMaster summonerCap = MinionMasterHelper.getMasterCapability(player);
                     if(summonerCap == null) return;
 
-                    for(UUID summonedMobUUID : summonerCap.getSummonedMobs()){
-                        Entity summonedMob = serverWorld.getEntity(summonedMobUUID);
+                    for(Entity summonedMob : summonerCap.getSummonedMobs()){
                         if(summonedMob instanceof LivingEntity){
                             LivingEntity summonedMobAsLiving = (LivingEntity) summonedMob;
                             SoundHelper.playGenericExplodeSound(summonedMobAsLiving);

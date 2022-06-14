@@ -3,21 +3,12 @@ package com.infamous.dungeons_gear.utilties;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.melee_ranged.DynamoEnchantment;
-import com.infamous.dungeons_gear.goals.BatFollowOwnerGoal;
-import com.infamous.dungeons_gear.goals.BatMeleeAttackGoal;
-import com.infamous.dungeons_gear.goals.BatOwnerHurtByTargetGoal;
-import com.infamous.dungeons_gear.goals.BatOwnerHurtTargetGoal;
 import com.infamous.dungeons_libraries.capabilities.minionmaster.IMaster;
-import com.infamous.dungeons_libraries.capabilities.minionmaster.IMinion;
-import com.infamous.dungeons_libraries.capabilities.minionmaster.summon.SummonHelper;
+import com.infamous.dungeons_libraries.summon.SummonHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.monster.CreeperEntity;
-import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.passive.BatEntity;
 import net.minecraft.entity.passive.FoxEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -30,51 +21,24 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
+import java.util.Optional;
+
 import static com.infamous.dungeons_gear.registry.ItemRegistry.*;
 import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMasterCapability;
-import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMinionCapability;
 
 public class ArmorEffectHelper {
     public static void summonOrTeleportBat(PlayerEntity playerEntity, World world) {
         IMaster summonerCap = getMasterCapability(playerEntity);
         if(summonerCap == null) return;
-        if(summonerCap.getSummonedBat() == null){
-            BatEntity batEntity = EntityType.BAT.create(world);
-            if (batEntity!= null) {
-                IMinion summonable = getMinionCapability(batEntity);
-                if(summonable != null){
-
-                    summonable.setMaster(playerEntity.getUUID());
-                    summonerCap.setSummonedBat(batEntity.getUUID());
-
-                    createBat(playerEntity, world, batEntity);
-                }
-            }
+        Optional<Entity> batPet = summonerCap.getSummonedMobs().stream().filter(entity -> entity.getType() == EntityType.BAT).findFirst();
+        if(!batPet.isPresent()){
+            SummonHelper.summonEntity(playerEntity, playerEntity.blockPosition(), EntityType.BAT);
+            SoundHelper.playCreatureSound(playerEntity, SoundEvents.BAT_AMBIENT);
         } else{
             if(world instanceof ServerWorld){
-                Entity entity = ((ServerWorld)world).getEntity(summonerCap.getSummonedBat());
-                if(entity instanceof BatEntity){
-                    BatEntity batEntity = (BatEntity) entity;
-                    batEntity.teleportToWithTicket(playerEntity.getX() + playerEntity.getEyeHeight(), playerEntity.getY() + playerEntity.getEyeHeight(), playerEntity.getZ() + playerEntity.getEyeHeight());
-                }
+                batPet.get().teleportToWithTicket(playerEntity.getX() + playerEntity.getEyeHeight(), playerEntity.getY() + playerEntity.getEyeHeight(), playerEntity.getZ() + playerEntity.getEyeHeight());
             }
         }
-    }
-
-    private static void createBat(PlayerEntity playerEntity, World world, BatEntity batEntity) {
-        batEntity.moveTo((double)playerEntity.getX() + playerEntity.getEyeHeight(), (double)playerEntity.getY() + playerEntity.getEyeHeight(), (double)playerEntity.getZ() + playerEntity.getEyeHeight(), 0.0F, 0.0F);
-
-        batEntity.goalSelector.addGoal(1, new BatMeleeAttackGoal(batEntity, 1.0D, true));
-        batEntity.goalSelector.addGoal(2, new BatFollowOwnerGoal(batEntity, 2.1D, 10.0F, 2.0F, false));
-
-
-        batEntity.targetSelector.addGoal(1, new BatOwnerHurtByTargetGoal(batEntity));
-        batEntity.targetSelector.addGoal(2, new BatOwnerHurtTargetGoal(batEntity));
-        batEntity.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(batEntity, LivingEntity.class, 5, false, false,
-                (entityIterator) -> entityIterator instanceof IMob && !(entityIterator instanceof CreeperEntity)));
-
-        SoundHelper.playCreatureSound(playerEntity, SoundEvents.BAT_AMBIENT);
-        world.addFreshEntity(batEntity);
     }
 
     public static void teleportOnHit(LivingEntity livingEntity){
@@ -137,7 +101,9 @@ public class ArmorEffectHelper {
 
             float tumblebeeRand = playerEntity.getRandom().nextFloat();
             if (tumblebeeRand <= DungeonsGearConfig.TUMBLE_BEE_CHANCE_PER_LEVEL.get() * tumblebeeLevel) {
-                SummonHelper.summonBee(playerEntity, playerEntity.blockPosition());
+                if(SummonHelper.summonEntity(playerEntity, playerEntity.blockPosition(), EntityType.BEE) != null) {
+                    SoundHelper.playCreatureSound(playerEntity, SoundEvents.BEE_LOOP);
+                }
             }
         }
 
