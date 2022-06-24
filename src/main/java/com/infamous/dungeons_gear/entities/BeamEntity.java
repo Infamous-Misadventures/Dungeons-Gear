@@ -62,13 +62,15 @@ public class BeamEntity extends Entity implements IEntityAdditionalSpawnData {
     @Override
     public void tick() {
         LivingEntity owner = getOwner();
-        if(owner == null) {
-            this.remove();
-            return;
-        }
-        if(!owner.isAlive()){
-            this.remove();
-            return;
+        if(!this.level.isClientSide) {
+            if (owner == null) {
+                this.remove();
+                return;
+            }
+            if (!owner.isAlive()) {
+                this.remove();
+                return;
+            }
         }
         if (this.owner instanceof PlayerEntity && this.level.isClientSide()){
             updatePositionAndRotation();
@@ -150,8 +152,8 @@ public class BeamEntity extends Entity implements IEntityAdditionalSpawnData {
                 if (entity instanceof LivingEntity) {
                     this.owner = (LivingEntity) entity;
                 }
-            } else if(this.ownerUUID.equals(Minecraft.getInstance().player.getUUID())){
-                this.owner = Minecraft.getInstance().player;
+            } else if(this.level.isClientSide) {
+                this.owner = this.level.getPlayerByUUID(this.ownerUUID);
             }
         }
         return this.owner;

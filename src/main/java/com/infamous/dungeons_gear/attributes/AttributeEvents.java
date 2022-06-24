@@ -12,8 +12,6 @@ import java.util.stream.Collectors;
 
 import static com.infamous.dungeons_gear.registry.AttributeRegistry.ROLL_COOLDOWN;
 import static com.infamous.dungeons_libraries.DungeonsLibraries.MODID;
-import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.*;
-import static net.minecraft.util.datafix.TypeReferences.PLAYER;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = MODID)
 public class AttributeEvents {

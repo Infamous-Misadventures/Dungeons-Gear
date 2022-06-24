@@ -75,6 +75,7 @@ public class PlayerBeamMessage {
                         Entity entity = player.level.getEntity(packet.beamEntityID);
                         if(entity instanceof BeamEntity) {
                             BeamEntity beamEntity = (BeamEntity) entity;
+                            if(beamEntity.getOwner() != player) return;
                             beamEntity.setPos(packet.positionX, packet.positionY, packet.positionZ);
                             beamEntity.xRot = packet.xRot;
                             beamEntity.yRot = packet.yRot;
