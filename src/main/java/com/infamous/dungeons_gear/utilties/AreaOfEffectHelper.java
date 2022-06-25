@@ -5,6 +5,9 @@ import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.goals.LoverHurtByTargetGoal;
 import com.infamous.dungeons_gear.goals.LoverHurtTargetGoal;
 import com.infamous.dungeons_gear.registry.ParticleInit;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.IMaster;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.IMinion;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -333,15 +336,20 @@ public class AreaOfEffectHelper {
     public static void makeLoversOutOfNearbyEnemies(PlayerEntity playerIn, World world, int distance, int limit) {
         applyToNearbyEntities(playerIn, distance, limit,
                 (nearbyEntity) -> nearbyEntity instanceof IMob
-                        && !isPetOf(playerIn, nearbyEntity)
+                        && !MinionMasterHelper.isMinionEntity(nearbyEntity)
                         && nearbyEntity.isAlive()
                         && nearbyEntity.canChangeDimensions(),
                 (LivingEntity nearbyEntity) -> {
                     if (nearbyEntity instanceof MonsterEntity) {
                         MonsterEntity mobEntity = (MonsterEntity) nearbyEntity;
                         PROXY.spawnParticles(nearbyEntity, ParticleTypes.HEART);
-                        mobEntity.targetSelector.addGoal(0, new LoverHurtByTargetGoal(mobEntity, playerIn));
-                        mobEntity.targetSelector.addGoal(1, new LoverHurtTargetGoal(mobEntity, playerIn));
+                        IMaster masterCapability = MinionMasterHelper.getMasterCapability(playerIn);
+                        IMinion minionCapability = MinionMasterHelper.getMinionCapability(nearbyEntity);
+                        if(masterCapability != null && minionCapability != null){
+                            masterCapability.addMinion(mobEntity);
+                            minionCapability.setMaster(playerIn);
+                            MinionMasterHelper.addMinionGoals(mobEntity);
+                        }
                     }
                 });
     }

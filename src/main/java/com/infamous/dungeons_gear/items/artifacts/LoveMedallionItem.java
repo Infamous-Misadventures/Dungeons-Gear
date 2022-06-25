@@ -26,7 +26,7 @@ public class LoveMedallionItem extends ArtifactItem {
         ItemStack itemstack = c.getItemStack();
         World world = c.getLevel();
 
-        AreaOfEffectHelper.makeLoversOutOfNearbyEnemies(playerIn, world, 5, 3);
+        AreaOfEffectHelper.makeLoversOutOfNearbyEnemies(playerIn, world, 5, 2);
 
         itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemstack)));
 

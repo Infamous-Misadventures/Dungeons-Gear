@@ -116,7 +116,7 @@ dependencies {
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
-    compile fg.deobf("curse.maven:elenaidodge2-442962:3221492")
+    compileOnly fg.deobf("curse.maven:elenaidodge2-442962:3221492")
 
     //Library
     implementation fg.deobf("dungeons_libraries:dungeons_libraries:1.16.5-0.0.12-alpha")
