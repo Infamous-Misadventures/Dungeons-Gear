@@ -30,7 +30,7 @@ public class CriticalHitEnchantment extends DamageBoostEnchantment {
                 EquipmentSlotType.MAINHAND});
     }
 
-    @SubscribeEvent(priority = EventPriority.LOWEST)
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onVanillaNonCriticalHit(CriticalHitEvent event) {
         if (event.getPlayer() != null && !event.isVanillaCritical()) {
             PlayerEntity attacker = event.getPlayer();
