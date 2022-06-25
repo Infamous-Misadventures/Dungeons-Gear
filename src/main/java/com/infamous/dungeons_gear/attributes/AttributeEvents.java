@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.infamous.dungeons_gear.registry.AttributeRegistry.ROLL_COOLDOWN;
+import static com.infamous.dungeons_gear.registry.AttributeRegistry.ROLL_LIMIT;
 import static com.infamous.dungeons_libraries.DungeonsLibraries.MODID;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = MODID)
@@ -19,6 +20,7 @@ public class AttributeEvents {
     @SubscribeEvent
     public static void onEntityAttributeModificationEvent(EntityAttributeModificationEvent event){
         addAttributeToPlayer(event, ROLL_COOLDOWN.get());
+        addAttributeToPlayer(event, ROLL_LIMIT.get());
     }
 
     private static void addAttributeToAll(EntityAttributeModificationEvent event, Attribute attribute) {
