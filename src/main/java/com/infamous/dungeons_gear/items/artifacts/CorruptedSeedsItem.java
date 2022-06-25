@@ -24,7 +24,7 @@ public class CorruptedSeedsItem extends ArtifactItem {
 
     public ActionResult<ItemStack> procArtifact(ArtifactUseContext c) {
         PlayerEntity playerIn=c.getPlayer();
-        ItemStack itemstack = c.getItemInHand();
+        ItemStack itemstack = c.getItemStack();
 
         AreaOfEffectHelper.poisonAndSlowNearbyEnemies(c.getLevel(), playerIn, 5);
 

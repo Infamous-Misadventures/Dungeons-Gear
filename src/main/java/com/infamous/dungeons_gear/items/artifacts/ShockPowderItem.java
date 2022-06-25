@@ -24,7 +24,7 @@ public class ShockPowderItem extends ArtifactItem {
 
     public ActionResult<ItemStack> procArtifact(ArtifactUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
-        ItemStack itemstack = c.getItemInHand();
+        ItemStack itemstack = c.getItemStack();
 
         AreaOfEffectHelper.stunNearbyEnemies(c.getLevel(), playerIn, 5);
         itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemstack)));

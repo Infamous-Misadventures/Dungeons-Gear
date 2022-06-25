@@ -31,7 +31,7 @@ public class SatchelOfSnacksItem extends ArtifactItem{
     @Override
     public ActionResult<ItemStack> procArtifact(ArtifactUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
-        ItemStack itemstack = c.getItemInHand();
+        ItemStack itemstack = c.getItemStack();
 
         if(playerIn == null) return new ActionResult<>(ActionResultType.FAIL, itemstack);
 

@@ -22,8 +22,6 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 import java.util.UUID;
@@ -99,14 +97,14 @@ public abstract class ArtifactItem extends Item implements ICurioItem {
 
     public ActionResult<ItemStack> activateArtifact(ArtifactUseContext artifactUseContext) {
         if(artifactUseContext.getPlayer() != null) {
-            ItemStack itemStack = artifactUseContext.getItemInHand();
+            ItemStack itemStack = artifactUseContext.getItemStack();
             if (artifactUseContext.getPlayer().getCooldowns().isOnCooldown(itemStack.getItem())){
                 return new ActionResult<>(ActionResultType.SUCCESS, itemStack);
             }
         }
         ActionResult<ItemStack> procResult = procArtifact(artifactUseContext);
         if(procResult.getResult().consumesAction() && artifactUseContext.getPlayer() != null && !artifactUseContext.getLevel().isClientSide){
-            triggerSynergy(artifactUseContext.getPlayer(), artifactUseContext.getItemInHand());
+            triggerSynergy(artifactUseContext.getPlayer(), artifactUseContext.getItemStack());
         }
         return procResult;
     }

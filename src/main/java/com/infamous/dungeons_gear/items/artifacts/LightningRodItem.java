@@ -34,7 +34,7 @@ public class LightningRodItem extends ArtifactItem implements ISoulConsumer {
 
     public ActionResult<ItemStack> procArtifact(ArtifactUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
-        ItemStack itemStack = c.getItemInHand();
+        ItemStack itemStack = c.getItemStack();
 
         if(SoulCasterHelper.consumeSouls(playerIn, this.getActivationCost(itemStack))){
             AreaOfEffectHelper.electrifyNearbyEnemies(playerIn, 5, 5, Integer.MAX_VALUE); //ToDo Rewrite to be only 1 bolt?

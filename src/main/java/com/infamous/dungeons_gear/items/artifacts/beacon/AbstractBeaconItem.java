@@ -3,8 +3,6 @@ package com.infamous.dungeons_gear.items.artifacts.beacon;
 import com.infamous.dungeons_gear.capabilities.artifact.ArtifactUsageHelper;
 import com.infamous.dungeons_gear.capabilities.artifact.IArtifactUsage;
 import com.infamous.dungeons_gear.entities.BeamEntity;
-import com.infamous.dungeons_gear.entities.BuzzyNestEntity;
-import com.infamous.dungeons_gear.entities.ModEntityTypes;
 import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_gear.items.artifacts.ArtifactUseContext;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
@@ -15,7 +13,6 @@ import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 import static com.infamous.dungeons_gear.entities.ModEntityTypes.BEAM_ENTITY;
@@ -36,7 +33,7 @@ public abstract class AbstractBeaconItem extends ArtifactItem{
 
     @Override
     public ActionResult<ItemStack> procArtifact(ArtifactUseContext iuc) {
-        ItemStack itemstack = iuc.getItemInHand();
+        ItemStack itemstack = iuc.getItemStack();
         PlayerEntity playerIn = iuc.getPlayer();
         World worldIn = iuc.getLevel();
 

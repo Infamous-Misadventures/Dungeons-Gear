@@ -27,7 +27,7 @@ public class ThunderingQuiverItem extends ArtifactItem {
 
     public ActionResult<ItemStack> procArtifact(ArtifactUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
-        ItemStack itemstack = c.getItemInHand();
+        ItemStack itemstack = c.getItemStack();
 
         ICombo comboCap = CapabilityHelper.getComboCapability(playerIn);
         if (comboCap == null) return new ActionResult<>(ActionResultType.FAIL, itemstack);

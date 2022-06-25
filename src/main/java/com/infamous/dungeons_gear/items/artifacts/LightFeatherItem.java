@@ -33,7 +33,7 @@ public class LightFeatherItem extends ArtifactItem {
 
     public ActionResult<ItemStack> procArtifact(ArtifactUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
-        ItemStack itemstack = c.getItemInHand();
+        ItemStack itemstack = c.getItemStack();
         World worldIn = c.getLevel();
 
         // Jump instead of roll

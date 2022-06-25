@@ -7,25 +7,15 @@ import com.infamous.dungeons_gear.network.PacketBreakItem;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
 import com.infamous.dungeons_libraries.capabilities.minionmaster.IMaster;
-import com.infamous.dungeons_libraries.capabilities.minionmaster.IMinion;
-import com.infamous.dungeons_libraries.capabilities.minionmaster.goals.MasterHurtByTargetGoal;
-import com.infamous.dungeons_libraries.capabilities.minionmaster.goals.MasterHurtTargetGoal;
-import com.infamous.dungeons_libraries.capabilities.minionmaster.goals.MinionFollowOwnerGoal;
 import com.infamous.dungeons_libraries.summon.SummonHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.monster.CreeperEntity;
-import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.passive.IronGolemEntity;
-import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.passive.horse.LlamaEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -47,7 +37,6 @@ import java.util.stream.Collectors;
 
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SUMMON_CAP;
 import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMasterCapability;
-import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMinionCapability;
 
 public class WonderfulWheatItem extends ArtifactItem {
     public WonderfulWheatItem(Properties p_i48487_1_) {
@@ -58,9 +47,9 @@ public class WonderfulWheatItem extends ArtifactItem {
     public ActionResult<ItemStack> procArtifact(ArtifactUseContext itemUseContext) {
         World world = itemUseContext.getLevel();
         if (world.isClientSide) {
-            return ActionResult.success(itemUseContext.getItemInHand());
+            return ActionResult.success(itemUseContext.getItemStack());
         } else {
-            ItemStack itemUseContextItem = itemUseContext.getItemInHand();
+            ItemStack itemUseContextItem = itemUseContext.getItemStack();
             PlayerEntity itemUseContextPlayer = itemUseContext.getPlayer();
             BlockPos itemUseContextPos = itemUseContext.getClickedPos();
             Direction itemUseContextFace = itemUseContext.getClickedFace();

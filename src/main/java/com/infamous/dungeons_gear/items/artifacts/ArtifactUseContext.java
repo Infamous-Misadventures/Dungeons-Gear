@@ -14,18 +14,16 @@ import javax.annotation.Nullable;
 public class ArtifactUseContext {
    @Nullable
    private final PlayerEntity player;
-   private final Hand hand;
    private final BlockRayTraceResult hitResult;
    private final World level;
    private final ItemStack itemStack;
 
    public ArtifactUseContext(PlayerEntity p_i50033_1_, Hand p_i50033_2_, BlockRayTraceResult p_i50033_3_) {
-      this(p_i50033_1_.level, p_i50033_1_, p_i50033_2_, p_i50033_1_.getItemInHand(p_i50033_2_), p_i50033_3_);
+      this(p_i50033_1_.level, p_i50033_1_, p_i50033_1_.getItemInHand(p_i50033_2_), p_i50033_3_);
    }
 
-   public ArtifactUseContext(World p_i50034_1_, @Nullable PlayerEntity p_i50034_2_, Hand p_i50034_3_, ItemStack p_i50034_4_, BlockRayTraceResult p_i50034_5_) {
+   public ArtifactUseContext(World p_i50034_1_, @Nullable PlayerEntity p_i50034_2_, ItemStack p_i50034_4_, BlockRayTraceResult p_i50034_5_) {
       this.player = p_i50034_2_;
-      this.hand = p_i50034_3_;
       this.hitResult = p_i50034_5_;
       this.itemStack = p_i50034_4_;
       this.level = p_i50034_1_;
@@ -51,17 +49,13 @@ public class ArtifactUseContext {
       return this.hitResult.isInside();
    }
 
-   public ItemStack getItemInHand() {
+   public ItemStack getItemStack() {
       return this.itemStack;
    }
 
    @Nullable
    public PlayerEntity getPlayer() {
       return this.player;
-   }
-
-   public Hand getHand() {
-      return this.hand;
    }
 
    public World getLevel() {

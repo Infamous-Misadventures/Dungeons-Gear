@@ -37,9 +37,9 @@ public class BuzzyNestItem extends ArtifactItem {
     public ActionResult<ItemStack> procArtifact(ArtifactUseContext itemUseContext) {
         World world = itemUseContext.getLevel();
         if (world.isClientSide) {
-            return ActionResult.success(itemUseContext.getItemInHand());
+            return ActionResult.success(itemUseContext.getItemStack());
         } else {
-            ItemStack itemUseContextItem = itemUseContext.getItemInHand();
+            ItemStack itemUseContextItem = itemUseContext.getItemStack();
             PlayerEntity itemUseContextPlayer = itemUseContext.getPlayer();
             BlockPos itemUseContextPos = itemUseContext.getClickedPos();
             Direction itemUseContextFace = itemUseContext.getClickedFace();
@@ -62,7 +62,7 @@ public class BuzzyNestItem extends ArtifactItem {
                     ArtifactItem.putArtifactOnCooldown(itemUseContextPlayer, itemUseContextItem.getItem());
                 }
             }
-            return ActionResult.consume(itemUseContext.getItemInHand());
+            return ActionResult.consume(itemUseContext.getItemStack());
         }
     }
 

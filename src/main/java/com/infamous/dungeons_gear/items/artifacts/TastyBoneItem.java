@@ -14,7 +14,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -44,9 +43,9 @@ public class TastyBoneItem extends ArtifactItem {
     public ActionResult<ItemStack> procArtifact(ArtifactUseContext itemUseContext) {
         World world = itemUseContext.getLevel();
         if (world.isClientSide) {
-            return ActionResult.success(itemUseContext.getItemInHand());
+            return ActionResult.success(itemUseContext.getItemStack());
         } else {
-            ItemStack itemUseContextItem = itemUseContext.getItemInHand();
+            ItemStack itemUseContextItem = itemUseContext.getItemStack();
             PlayerEntity itemUseContextPlayer = itemUseContext.getPlayer();
             BlockPos itemUseContextPos = itemUseContext.getClickedPos();
             Direction itemUseContextFace = itemUseContext.getClickedFace();

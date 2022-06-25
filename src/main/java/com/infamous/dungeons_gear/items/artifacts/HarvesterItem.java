@@ -33,7 +33,7 @@ public class HarvesterItem extends ArtifactItem implements ISoulConsumer {
 
     public ActionResult<ItemStack> procArtifact(ArtifactUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
-        ItemStack itemStack = c.getItemInHand();
+        ItemStack itemStack = c.getItemStack();
 
         if (SoulCasterHelper.consumeSouls(playerIn, this.getActivationCost(itemStack))) {
             SoundHelper.playGenericExplodeSound(playerIn);

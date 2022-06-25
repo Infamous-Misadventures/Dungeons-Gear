@@ -29,7 +29,7 @@ public class IronHideAmuletItem extends ArtifactItem {
 
     public ActionResult<ItemStack> procArtifact(ArtifactUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
-        ItemStack itemstack = c.getItemInHand();
+        ItemStack itemstack = c.getItemStack();
 
         EffectInstance resistance = new EffectInstance(Effects.DAMAGE_RESISTANCE, 220, 1);
         playerIn.addEffect(resistance);

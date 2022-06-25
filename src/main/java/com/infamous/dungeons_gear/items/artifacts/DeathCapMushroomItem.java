@@ -25,7 +25,7 @@ public class DeathCapMushroomItem extends ArtifactItem {
 
     public ActionResult<ItemStack> procArtifact(ArtifactUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
-        ItemStack itemstack = c.getItemInHand();
+        ItemStack itemstack = c.getItemStack();
 
         EffectInstance haste = new EffectInstance(Effects.DIG_SPEED, 180, 3);
         EffectInstance swiftness = new EffectInstance(Effects.MOVEMENT_SPEED, 180, 1);

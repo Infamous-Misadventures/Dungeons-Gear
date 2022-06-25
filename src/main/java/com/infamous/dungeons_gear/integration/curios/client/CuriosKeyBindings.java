@@ -13,7 +13,6 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
@@ -134,7 +133,7 @@ public class CuriosKeyBindings {
             if (artifactStackHandler.isPresent()) {
                 ItemStack artifact = artifactStackHandler.get().getStacks().getStackInSlot(slot);
                 if (!artifact.isEmpty() && artifact.getItem() instanceof ArtifactItem) {
-                    ArtifactUseContext iuc = new ArtifactUseContext(player.level, player, Hand.MAIN_HAND, artifact, blockRayTraceResult);
+                    ArtifactUseContext iuc = new ArtifactUseContext(player.level, player, artifact, blockRayTraceResult);
                     ((ArtifactItem) artifact.getItem()).activateArtifact(iuc);
                 }
             }

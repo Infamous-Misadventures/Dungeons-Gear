@@ -5,7 +5,6 @@ import com.infamous.dungeons_gear.items.artifacts.ArtifactUseContext;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraftforge.fml.network.NetworkEvent;
 import top.theillusivec4.curios.api.CuriosApi;
@@ -44,7 +43,7 @@ public class CuriosArtifactStartMessage {
                             if(artifactStackHandler.isPresent()) {
                                 ItemStack artifact = artifactStackHandler.get().getStacks().getStackInSlot(packet.slot);
                                 if (!artifact.isEmpty() && artifact.getItem() instanceof ArtifactItem) {
-                                    ArtifactUseContext iuc = new ArtifactUseContext(player.level, player, Hand.MAIN_HAND, artifact, packet.hitResult);
+                                    ArtifactUseContext iuc = new ArtifactUseContext(player.level, player, artifact, packet.hitResult);
                                     ((ArtifactItem) artifact.getItem()).activateArtifact(iuc);
                                 }
                             }

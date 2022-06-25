@@ -25,7 +25,7 @@ public class PowershakerItem extends ArtifactItem {
 
     public ActionResult<ItemStack> procArtifact(ArtifactUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
-        ItemStack itemstack = c.getItemInHand();
+        ItemStack itemstack = c.getItemStack();
 
         EffectInstance partyStarter = new EffectInstance(CustomEffects.PARTY_STARTER, 15 * 20, 4);
         playerIn.addEffect(partyStarter);

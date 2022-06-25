@@ -37,7 +37,7 @@ public class IceWandItem extends ArtifactItem {
     @Override
     public ActionResult<ItemStack> procArtifact(ArtifactUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
-        ItemStack itemstack = c.getItemInHand();
+        ItemStack itemstack = c.getItemStack();
         final MutablePair<LivingEntity, Double> targetDistance = new MutablePair(null, 123456);
         applyToNearbyEntities(playerIn, 16,
                 getCanApplyToEnemyPredicate(playerIn),
