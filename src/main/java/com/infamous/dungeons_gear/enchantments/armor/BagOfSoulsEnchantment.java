@@ -82,6 +82,10 @@ public class BagOfSoulsEnchantment extends DungeonsEnchantment {
             if (attributeInstance != null && attributeInstance.getModifier(attributeModifierUUID) != null) {
                 attributeInstance.removeModifier(attributeModifierUUID);
             }
+            attributeInstance = livingEntity.getAttribute(SOUL_CAP.get());
+            if (attributeInstance != null && attributeInstance.getModifier(attributeModifierUUID) == null) {
+                attributeInstance.removeModifier(attributeModifierUUID);
+            }
         }
     }
 
