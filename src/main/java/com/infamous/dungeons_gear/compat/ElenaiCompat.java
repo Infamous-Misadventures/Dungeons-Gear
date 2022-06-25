@@ -2,8 +2,7 @@ package com.infamous.dungeons_gear.compat;
 
 import com.elenai.elenaidodge2.api.DodgeEvent;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
-import com.infamous.dungeons_gear.enchantments.armor.AcrobatEnchantment;
-import com.infamous.dungeons_gear.enchantments.armor.MultiRollEnchantment;
+import com.infamous.dungeons_gear.capabilities.combo.RollHelper;
 import com.infamous.dungeons_gear.enchantments.ranged.BurstBowstringEnchantment;
 import com.infamous.dungeons_gear.enchantments.ranged.RollChargeEnchantment;
 import com.infamous.dungeons_gear.utilties.ArmorEffectHelper;
@@ -49,12 +48,10 @@ public class ElenaiCompat {
                 RollChargeEnchantment.activateRollCharge(player);
             }
 
-            MultiRollEnchantment.incrementJumpCounter(player);
+            RollHelper.incrementJumpCounter(player);
 
-            if(MultiRollEnchantment.hasReachedJumpLimit(player)){
-                ModifiableAttributeInstance attribute = player.getAttribute(ROLL_COOLDOWN.get());
-                int jumpCooldownTimerLength = attribute != null ? (int) attribute.getValue() : 180;
-                comboCap.setJumpCooldownTimer(jumpCooldownTimerLength);
+            if(RollHelper.hasReachedJumpLimit(player)){
+                RollHelper.startCooldown(player, comboCap);
             }
         }
     }

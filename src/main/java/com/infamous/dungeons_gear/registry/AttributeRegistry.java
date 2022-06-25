@@ -25,4 +25,11 @@ public class AttributeRegistry {
             0.0D,
             1024.0D)
             .setSyncable(true));
+
+    public static final RegistryObject<Attribute> ROLL_LIMIT = ATTRIBUTES.register("roll_limit", () -> new RangedAttribute(
+            "attribute.name.generic.dungeons_gear.roll_cooldown",
+            1.0D,
+            0.0D,
+            1024.0D)
+            .setSyncable(true));
 }

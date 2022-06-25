@@ -3,10 +3,9 @@ package com.infamous.dungeons_gear;
 
 import com.infamous.dungeons_gear.capabilities.bow.IBow;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
+import com.infamous.dungeons_gear.capabilities.combo.RollHelper;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
 import com.infamous.dungeons_gear.effects.CustomEffects;
-import com.infamous.dungeons_gear.enchantments.armor.AcrobatEnchantment;
-import com.infamous.dungeons_gear.enchantments.armor.MultiRollEnchantment;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.ranged.BurstBowstringEnchantment;
 import com.infamous.dungeons_gear.enchantments.ranged.FuseShotEnchantment;
@@ -22,7 +21,6 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -47,7 +45,6 @@ import java.util.Optional;
 
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 import static com.infamous.dungeons_gear.config.DungeonsGearConfig.ENABLE_FRIENDLY_PET_FIRE;
-import static com.infamous.dungeons_gear.registry.AttributeRegistry.ROLL_COOLDOWN;
 import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMinionCapability;
 import static net.minecraft.item.Items.*;
 
@@ -318,12 +315,10 @@ public class GlobalEvents {
 
                 RollChargeEnchantment.activateRollCharge(jumper);
             }
-            MultiRollEnchantment.incrementJumpCounter(playerEntity);
+            RollHelper.incrementJumpCounter(playerEntity);
 
-            if(MultiRollEnchantment.hasReachedJumpLimit(playerEntity)){
-                ModifiableAttributeInstance attribute = jumper.getAttribute(ROLL_COOLDOWN.get());
-                int jumpCooldownTimerLength = attribute != null ? (int) attribute.getValue() : 180;
-                comboCap.setJumpCooldownTimer(jumpCooldownTimerLength);
+            if(RollHelper.hasReachedJumpLimit(playerEntity)){
+                RollHelper.startCooldown(jumper, comboCap);
             }
         }
     }
