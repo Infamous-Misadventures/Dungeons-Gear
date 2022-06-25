@@ -126,8 +126,15 @@ public class BeamEntity extends Entity implements IEntityAdditionalSpawnData {
         return beamWidth;
     }
 
+    public final Vector3d getWorldPosition(float p_242282_1_) {
+        double d0 = MathHelper.lerp((double)p_242282_1_, this.xo, this.getX());
+        double d1 = MathHelper.lerp((double)p_242282_1_, this.yo, this.getY());
+        double d2 = MathHelper.lerp((double)p_242282_1_, this.zo, this.getZ());
+        return new Vector3d(d0, d1, d2);
+    }
+
     public RayTraceResult beamTraceResult(double distance, float ticks, boolean passesWater) {
-        Vector3d vector3d = this.getPosition(ticks);
+        Vector3d vector3d = this.getWorldPosition(ticks);
         Vector3d vector3d1 = this.getViewVector(ticks);
         Vector3d vector3d2 = vector3d.add(vector3d1.x * distance, vector3d1.y * distance, vector3d1.z * distance);
         return level.clip(new RayTraceContext(vector3d, vector3d2, RayTraceContext.BlockMode.COLLIDER, passesWater ? RayTraceContext.FluidMode.ANY : RayTraceContext.FluidMode.NONE, this));

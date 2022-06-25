@@ -35,23 +35,6 @@ public abstract class AbstractBeaconItem extends ArtifactItem{
     public abstract BeamColor getBeamColor();
 
     @Override
-    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        ItemStack itemstack = playerIn.getItemInHand(handIn);
-
-        if(canFire(playerIn, itemstack)){
-            SoundHelper.playBeaconSound(playerIn, true);
-        } else{
-            return new ActionResult<>(ActionResultType.FAIL, itemstack);
-        }
-
-        if (!worldIn.isClientSide) {
-            playerIn.startUsingItem(handIn);
-            ArtifactItem.triggerSynergy(playerIn, itemstack);
-        }
-        return new ActionResult<>(ActionResultType.PASS, itemstack);
-    }
-
-    @Override
     public ActionResult<ItemStack> procArtifact(ArtifactUseContext iuc) {
         ItemStack itemstack = iuc.getItemInHand();
         PlayerEntity playerIn = iuc.getPlayer();

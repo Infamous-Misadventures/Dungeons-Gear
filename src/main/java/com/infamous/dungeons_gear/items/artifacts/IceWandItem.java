@@ -84,8 +84,4 @@ public class IceWandItem extends ArtifactItem {
     public ActionResultType useOn(ItemUseContext itemUseContext) {
         return ActionResultType.PASS;
     }
-
-    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        return new ActionResult<>(ActionResultType.PASS, playerIn.getItemInHand(handIn));
-    }
 }

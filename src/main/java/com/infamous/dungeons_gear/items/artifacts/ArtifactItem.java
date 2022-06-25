@@ -22,6 +22,8 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
+import net.minecraft.world.World;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 import java.util.UUID;
@@ -94,12 +96,6 @@ public abstract class ArtifactItem extends Item implements ICurioItem {
     public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
         return ItemTagWrappers.ARTIFACT_REPAIR_ITEMS.contains(repair.getItem()) || super.isValidRepairItem(toRepair, repair);
     }
-
-//    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
-//        if (procOnItemUse) return super.use(worldIn, playerIn, handIn);
-//        ArtifactUseContext iuc = new ArtifactUseContext(playerIn, handIn, new BlockRayTraceResult(playerIn.position(), Direction.UP, playerIn.blockPosition(), false));
-//        return activateArtifact(iuc);
-//    }
 
     public ActionResult<ItemStack> activateArtifact(ArtifactUseContext artifactUseContext) {
         if(artifactUseContext.getPlayer() != null) {
