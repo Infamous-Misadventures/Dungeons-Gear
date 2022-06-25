@@ -322,8 +322,8 @@ public class GlobalEvents {
 
             if(MultiRollEnchantment.hasReachedJumpLimit(playerEntity)){
                 ModifiableAttributeInstance attribute = jumper.getAttribute(ROLL_COOLDOWN.get());
-                int jumpCooldownTimerLength = attribute != null ? 60 + (int) attribute.getValue() : 60;
-                AcrobatEnchantment.setJumpCooldown(comboCap, jumper, jumpCooldownTimerLength);
+                int jumpCooldownTimerLength = attribute != null ? (int) attribute.getValue() : 180;
+                comboCap.setJumpCooldownTimer(jumpCooldownTimerLength);
             }
         }
     }
