@@ -16,14 +16,14 @@ import static com.infamous.dungeons_libraries.utils.RangedAttackHelper.getModded
 public class CrossbowItemModelsProperties {
 
 	public CrossbowItemModelsProperties() {
-		RANGED_WEAPONS.values().forEach(itemRegistryObject ->  {
+		/*RANGED_WEAPONS.values().forEach(itemRegistryObject ->  {
 			if(itemRegistryObject.get() instanceof CrossbowGear && !(itemRegistryObject.get() instanceof DualCrossbowGear)){
 				applyCrossbowModelProperties(itemRegistryObject.get());
 			}
 			if(itemRegistryObject.get() instanceof CrossbowGear && itemRegistryObject.get() instanceof DualCrossbowGear){
 				applyDualWieldCrossbowModelProperties(itemRegistryObject.get());
 			}
-		});
+		});*/
 	}
 
 	private float getDualWieldPullingProperty(ItemStack itemStack, ClientWorld clientWorld, LivingEntity livingEntity) {

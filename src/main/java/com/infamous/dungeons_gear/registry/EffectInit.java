@@ -26,7 +26,8 @@ public class EffectInit {
                     CustomEffects.STUNNED = new CustomEffect(EffectType.HARMFUL, 4738376).setRegistryName(makeResourceName("stunned")),
                     CustomEffects.PARTY_STARTER = new PartyStarterEffect(EffectType.BENEFICIAL, 0xE25822).setRegistryName(makeResourceName("party_starter")),
                     CustomEffects.DYNAMO = new CustomEffect(EffectType.BENEFICIAL, 0xFFBB2E).setRegistryName(makeResourceName("dynamo")),
-                    CustomEffects.LIFE_STEAL = new CustomEffect(EffectType.BENEFICIAL, 0x660901).setRegistryName(makeResourceName("life_steal")).addAttributeModifier(LIFE_STEAL.get(), "ba815a35-c0d4-4bbd-b932-76a916d44eb9", 0.05F, AttributeModifier.Operation.ADDITION)
+                    CustomEffects.LIFE_STEAL = new CustomEffect(EffectType.BENEFICIAL, 0x660901).setRegistryName(makeResourceName("life_steal")).addAttributeModifier(LIFE_STEAL.get(), "ba815a35-c0d4-4bbd-b932-76a916d44eb9", 0.05F, AttributeModifier.Operation.ADDITION),
+                    CustomEffects.BOW_CHARGE = new CustomEffect(EffectType.BENEFICIAL, 0x3571D4).setRegistryName(makeResourceName("bow_charge"))
             );
         }
 

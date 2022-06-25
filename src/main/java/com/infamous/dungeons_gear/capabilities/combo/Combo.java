@@ -222,16 +222,6 @@ public class Combo implements ICombo {
     }
 
     @Override
-    public int getRollChargeTicks() {
-        return this.rollChargeTicks;
-    }
-
-    @Override
-    public void setRollChargeTicks(int rollChargeTicks) {
-        this.rollChargeTicks = rollChargeTicks;
-    }
-
-    @Override
     public int getJumpCounter() {
         return jumpCounter;
     }

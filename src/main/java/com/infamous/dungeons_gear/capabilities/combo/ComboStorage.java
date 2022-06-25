@@ -39,7 +39,6 @@ public class ComboStorage implements Capability.IStorage<ICombo> {
 
         tag.putInt("painCycleStacks", instance.getPainCycleStacks());
 
-        tag.putInt("rollChargeTicks", instance.getRollChargeTicks());
         tag.putInt("jumpCounter", instance.getJumpCounter());
         tag.putInt("refreshmentCounter", instance.getRefreshmentCounter());
 
@@ -76,7 +75,6 @@ public class ComboStorage implements Capability.IStorage<ICombo> {
 
         instance.setPainCycleStacks(tag.getInt("painCycleStacks"));
 
-        instance.setRollChargeTicks(tag.getInt("rollChargeTicks"));
         instance.setJumpCounter(tag.getInt("jumpCounter"));
         instance.setRefreshmentCounter(tag.getInt("refreshmentCounter"));
 

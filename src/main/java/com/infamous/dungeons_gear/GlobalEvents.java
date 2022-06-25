@@ -152,7 +152,6 @@ public class GlobalEvents {
     @SubscribeEvent
     public static void onLivingTick(LivingEvent.LivingUpdateEvent event) {
         LivingEntity living = event.getEntityLiving();
-        RollChargeEnchantment.tickRollCharge(living);
 
         if (living instanceof MobEntity) {
             MobEntity mobEntity = (MobEntity) living;

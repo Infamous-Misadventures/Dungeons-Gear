@@ -14,11 +14,11 @@ import static com.infamous.dungeons_gear.registry.ItemRegistry.RANGED_WEAPONS;
 public class BowItemModelsProperties {
 
 	public BowItemModelsProperties() {
-		RANGED_WEAPONS.values().forEach(itemRegistryObject ->  {
+		/*RANGED_WEAPONS.values().forEach(itemRegistryObject ->  {
 			if(itemRegistryObject.get() instanceof BowGear){
 				applyBowModelProperties(itemRegistryObject.get());
 			}
-		});
+		});*/
 	}
 
 	private void applyBowModelProperties(Item item) {
@@ -41,7 +41,7 @@ public class BowItemModelsProperties {
 		} else {
 			return !(livingEntity.getUseItem().getItem() instanceof BowGear) ? 0.0F
 					: (stack.getUseDuration() - livingEntity.getUseItemRemainingTicks())
-					/ RangedAttackHelper.getModdedBowChargeTime(livingEntity, livingEntity.getUseItem());
+					/ RangedAttackHelper.getBowChargeTime(livingEntity, livingEntity.getUseItem());
 		}
 	}
 }

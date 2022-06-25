@@ -10,4 +10,5 @@ public class CustomEffects {
     public static Effect SHADOW_FORM;
     public static Effect DYNAMO;
     public static Effect LIFE_STEAL;
+    public static Effect BOW_CHARGE;
 }
