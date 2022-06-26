@@ -316,7 +316,7 @@ public class GlobalEvents {
             }
             RollHelper.incrementJumpCounter(playerEntity);
 
-            if(RollHelper.hasReachedJumpLimit(playerEntity)){
+            if(jumpCooldownTimer <= 0 && RollHelper.hasReachedJumpLimit(playerEntity)){
                 RollHelper.startCooldown(jumper, comboCap);
             }
         }

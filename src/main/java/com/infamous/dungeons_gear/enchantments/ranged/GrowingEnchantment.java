@@ -24,13 +24,12 @@ import net.minecraft.enchantment.Enchantment.Rarity;
 @Mod.EventBusSubscriber(modid= MODID)
 public class GrowingEnchantment extends DungeonsEnchantment {
 
-    public static final String INTRINSIC_GROWING_TAG = "IntrinsicGrowing";
-
     public GrowingEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.RANGED, new EquipmentSlotType[]{
                 EquipmentSlotType.MAINHAND});
     }
 
+    @Override
     public int getMaxLevel() {
         return 3;
     }
@@ -49,17 +48,12 @@ public class GrowingEnchantment extends DungeonsEnchantment {
         LivingEntity shooter = (LivingEntity)arrow.getOwner();
         LivingEntity victim = (LivingEntity) ((EntityRayTraceResult)rayTraceResult).getEntity();
         int growingLevel = ArrowHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.GROWING);
-        boolean uniqueWeaponFlag = arrow.getTags().contains(INTRINSIC_GROWING_TAG);
-        if(growingLevel > 0 || uniqueWeaponFlag){
+        if(growingLevel > 0){
             double originalDamage = arrow.getBaseDamage();
-            double damageModifierCap = 0;
-            if(growingLevel == 1) damageModifierCap = 1.25D;
-            if(growingLevel == 2) damageModifierCap = 1.5D;
-            if(growingLevel == 3) damageModifierCap = 1.75D;
-            if(uniqueWeaponFlag) damageModifierCap += 1.25D;
+            double damageModifierCap = 1 + (growingLevel * 0.25D);
             double squareDistanceTo = shooter.distanceToSqr(victim);
             double distance = Math.sqrt(squareDistanceTo);
-            double distanceTraveledModifier = distance * 0.1;
+            double distanceTraveledModifier = Math.max(distance * 0.1D, 1.0D);
             arrow.setBaseDamage(originalDamage * Math.min(distanceTraveledModifier, damageModifierCap));
         }
     }

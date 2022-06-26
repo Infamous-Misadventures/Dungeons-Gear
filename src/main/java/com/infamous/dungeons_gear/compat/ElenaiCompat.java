@@ -50,7 +50,7 @@ public class ElenaiCompat {
 
             RollHelper.incrementJumpCounter(player);
 
-            if(RollHelper.hasReachedJumpLimit(player)){
+            if(jumpCooldownTimer <= 0 && RollHelper.hasReachedJumpLimit(player)){
                 RollHelper.startCooldown(player, comboCap);
             }
         }

@@ -15,6 +15,12 @@ public class RollHelper {
         comboCap.setJumpCounter(comboCap.getJumpCounter() + 1);
     }
 
+    public static int getRollLimit(LivingEntity livingEntity){
+        ModifiableAttributeInstance attribute = livingEntity.getAttribute(ROLL_LIMIT.get());
+        return attribute != null ? (int) attribute.getValue() : 1;
+    }
+
+
     public static boolean hasReachedJumpLimit(LivingEntity jumper){
         ICombo comboCap = CapabilityHelper.getComboCapability(jumper);
         if(comboCap == null) return false;
