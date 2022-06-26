@@ -37,7 +37,7 @@ public class CooldownShotEnchantment extends DungeonsEnchantment {
         ItemStack stack = event.getBow();
         if(livingEntity instanceof PlayerEntity && !event.getWorld().isClientSide){
             PlayerEntity player = (PlayerEntity) livingEntity;
-            float arrowVelocity = RangedAttackHelper.getVanillaOrModdedBowArrowVelocity(livingEntity, stack, charge);
+            float arrowVelocity = RangedAttackHelper.getArrowVelocity(livingEntity, stack, charge);
             if(arrowVelocity >= 1.0F){
                 int cooldownShotLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.COOLDOWN_SHOT, stack);
                 if(cooldownShotLevel > 0){
