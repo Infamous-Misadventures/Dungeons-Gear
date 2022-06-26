@@ -126,27 +126,11 @@ dependencies {
 
     //compat tests
 //    runtimeOnly fg.deobf("curse.maven:cofhcore-69162:3407019")
+//    runtimeOnly fg.deobf("curse.maven:abnormalscore-382216:3457851")
+//    runtimeOnly fg.deobf("curse.maven:Environmental-388992:3561534")
 //    runtimeOnly fg.deobf("curse.maven:thermalfoundation-222880:3412300")
 
     implementation fg.deobf("curse.maven:customraid-532546:3511267")
-
-    // You may put jars on which you depend on in ./libs or you may define them like so..
-    // compile "some.group:artifact:version:classifier"
-    // compile "some.group:artifact:version"
-
-    // Real examples
-    // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
-    // compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
-
-    // The 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
-    // provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // These dependencies get remapped to your current MCP mappings
-    // deobf 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // For more info...
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
 }
 

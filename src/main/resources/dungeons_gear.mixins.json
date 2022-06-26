@@ -10,6 +10,7 @@
     "ContainerMinecartEntityMixin",
     "CooldownAccessor",
     "CrossbowItemMixin",
+    "DataPackRegistriesMixin",
     "HurtByTargetGoalMixin",
     "LockableLootTileEntityMixin",
     "LootContextAccessor",
