@@ -123,6 +123,7 @@ public class ArtifactEvents {
                     count--;
                     comboCap.setHarpoonCount(count);
                     arrowEntity.setDeltaMovement(arrowEntity.getDeltaMovement().scale(1.5D));
+                    arrowEntity.setPierceLevel((byte) (arrowEntity.getPierceLevel() + 1));
                 }
             }
         }
