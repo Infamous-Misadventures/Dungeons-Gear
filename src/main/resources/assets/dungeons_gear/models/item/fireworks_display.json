@@ -1,0 +1,6 @@
+{
+  "parent": "dungeons_gear:item/fireworks_box",
+  "textures": {
+    "layer0": "dungeons_gear:item/fireworks_display"
+  }
+}

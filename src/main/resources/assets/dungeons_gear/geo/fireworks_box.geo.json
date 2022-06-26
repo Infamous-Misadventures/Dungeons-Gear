@@ -1,0 +1,270 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.unknown",
+				"texture_width": 82,
+				"texture_height": 82,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 3.5,
+				"visible_bounds_offset": [0, 1.25, 0]
+			},
+			"bones": [
+				{
+					"name": "firework_box",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{"origin": [-8, 0, -8], "size": [16, 16, 16], "uv": [0, 0]},
+						{"origin": [-7, 2, -7], "size": [14, 14, 14], "uv": [0, 32]}
+					]
+				},
+				{
+					"name": "firework1",
+					"parent": "firework_box",
+					"pivot": [4.07143, 30.3751, -4.07143],
+					"rotation": [0, 0, 0],
+					"cubes": [
+						{"origin": [4, 3, -5], "size": [1, 11, 1], "uv": [0, 32]},
+						{"origin": [1, 24, -7], "size": [6, 0, 6], "uv": [42, 0]},
+						{"origin": [7, 23, -8.5], "size": [0, 8, 9], "pivot": [7, 24, -4], "rotation": [0, 0, -25], "uv": [48, -1]},
+						{"origin": [-0.5, 23, -1], "size": [9, 8, 0], "pivot": [4, 24, -1], "rotation": [25, 0, 0], "uv": [48, 8]},
+						{"origin": [-0.5, 23, -7], "size": [9, 8, 0], "pivot": [4, 24, -7], "rotation": [-25, 0, 0], "uv": [48, 8]},
+						{"origin": [1, 23, -8.5], "size": [0, 8, 9], "pivot": [1, 24, -4], "rotation": [0, 0, 25], "uv": [48, -1]},
+						{"origin": [2, 14, -6], "size": [4, 10, 4], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "firework_spark1",
+					"parent": "firework1",
+					"pivot": [4.5, 3, -4.5]
+				},
+				{
+					"name": "spark1",
+					"parent": "firework_spark1",
+					"pivot": [4.5, 3, -4.5],
+					"cubes": [
+						{"origin": [-1, -2, -4.5], "size": [11, 10, 0], "uv": [56, 34]}
+					]
+				},
+				{
+					"name": "spark2",
+					"parent": "firework_spark1",
+					"pivot": [4.5, 3, -4.5],
+					"cubes": [
+						{"origin": [-1, -2, -4.5], "size": [11, 10, 0], "uv": [56, 44]}
+					]
+				},
+				{
+					"name": "spark3",
+					"parent": "firework_spark1",
+					"pivot": [4.5, 3, -4.5],
+					"cubes": [
+						{"origin": [-1, -2, -4.5], "size": [11, 10, 0], "uv": [56, 54]}
+					]
+				},
+				{
+					"name": "spark4",
+					"parent": "firework_spark1",
+					"pivot": [4.5, 3, -4.5],
+					"cubes": [
+						{"origin": [-1, -2, -4.5], "size": [11, 10, 0], "uv": [56, 64]}
+					]
+				},
+				{
+					"name": "firework2",
+					"parent": "firework_box",
+					"pivot": [-3.92857, 30.3751, -4.07143],
+					"rotation": [0, 0, 0],
+					"cubes": [
+						{"origin": [-4, 3, -5], "size": [1, 11, 1], "uv": [0, 32]},
+						{"origin": [-7, 24, -7], "size": [6, 0, 6], "uv": [42, 0]},
+						{"origin": [-1, 23, -8.5], "size": [0, 8, 9], "pivot": [-1, 24, -4], "rotation": [0, 0, -25], "uv": [48, -1]},
+						{"origin": [-8.5, 23, -1], "size": [9, 8, 0], "pivot": [-4, 24, -1], "rotation": [25, 0, 0], "uv": [48, 8]},
+						{"origin": [-8.5, 23, -7], "size": [9, 8, 0], "pivot": [-4, 24, -7], "rotation": [-25, 0, 0], "uv": [48, 8]},
+						{"origin": [-7, 23, -8.5], "size": [0, 8, 9], "pivot": [-7, 24, -4], "rotation": [0, 0, 25], "uv": [48, -1]},
+						{"origin": [-6, 14, -6], "size": [4, 10, 4], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "firework_spark2",
+					"parent": "firework2",
+					"pivot": [-3.5, 3, -4.5]
+				},
+				{
+					"name": "spark5",
+					"parent": "firework_spark2",
+					"pivot": [-3.5, 3, -4.5],
+					"cubes": [
+						{"origin": [-9, -2, -4.5], "size": [11, 10, 0], "uv": [56, 34]}
+					]
+				},
+				{
+					"name": "spark6",
+					"parent": "firework_spark2",
+					"pivot": [-3.5, 3, -4.5],
+					"cubes": [
+						{"origin": [-9, -2, -4.5], "size": [11, 10, 0], "uv": [56, 44]}
+					]
+				},
+				{
+					"name": "spark7",
+					"parent": "firework_spark2",
+					"pivot": [-3.5, 3, -4.5],
+					"cubes": [
+						{"origin": [-9, -2, -4.5], "size": [11, 10, 0], "uv": [56, 54]}
+					]
+				},
+				{
+					"name": "spark8",
+					"parent": "firework_spark2",
+					"pivot": [-3.5, 3, -4.5],
+					"cubes": [
+						{"origin": [-9, -2, -4.5], "size": [11, 10, 0], "uv": [56, 64]}
+					]
+				},
+				{
+					"name": "firework3",
+					"parent": "firework_box",
+					"pivot": [-3.92857, 30.3751, 3.92857],
+					"rotation": [0, 0, 0],
+					"cubes": [
+						{"origin": [-4, 3, 3], "size": [1, 11, 1], "uv": [0, 32]},
+						{"origin": [-7, 24, 1], "size": [6, 0, 6], "uv": [42, 0]},
+						{"origin": [-1, 23, -0.5], "size": [0, 8, 9], "pivot": [-1, 24, 4], "rotation": [0, 0, -25], "uv": [48, -1]},
+						{"origin": [-8.5, 23, 7], "size": [9, 8, 0], "pivot": [-4, 24, 7], "rotation": [25, 0, 0], "uv": [48, 8]},
+						{"origin": [-8.5, 23, 1], "size": [9, 8, 0], "pivot": [-4, 24, 1], "rotation": [-25, 0, 0], "uv": [48, 8]},
+						{"origin": [-7, 23, -0.5], "size": [0, 8, 9], "pivot": [-7, 24, 4], "rotation": [0, 0, 25], "uv": [48, -1]},
+						{"origin": [-6, 14, 2], "size": [4, 10, 4], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "firework_spark3",
+					"parent": "firework3",
+					"pivot": [-3.5, 3, 3.5]
+				},
+				{
+					"name": "spark9",
+					"parent": "firework_spark3",
+					"pivot": [-3.5, 3, 3.5],
+					"cubes": [
+						{"origin": [-9, -2, 3.5], "size": [11, 10, 0], "uv": [56, 34]}
+					]
+				},
+				{
+					"name": "spark10",
+					"parent": "firework_spark3",
+					"pivot": [-3.5, 3, 3.5],
+					"cubes": [
+						{"origin": [-9, -2, 3.5], "size": [11, 10, 0], "uv": [56, 44]}
+					]
+				},
+				{
+					"name": "spark11",
+					"parent": "firework_spark3",
+					"pivot": [-3.5, 3, 3.5],
+					"cubes": [
+						{"origin": [-9, -2, 3.5], "size": [11, 10, 0], "uv": [56, 54]}
+					]
+				},
+				{
+					"name": "spark12",
+					"parent": "firework_spark3",
+					"pivot": [-3.5, 3, 3.5],
+					"cubes": [
+						{"origin": [-9, -2, 3.5], "size": [11, 10, 0], "uv": [56, 64]}
+					]
+				},
+				{
+					"name": "firework4",
+					"parent": "firework_box",
+					"pivot": [4.07143, 30.3751, 3.92857],
+					"rotation": [0, 0, 0],
+					"cubes": [
+						{"origin": [4, 3, 3], "size": [1, 11, 1], "uv": [0, 32]},
+						{"origin": [1, 24, 1], "size": [6, 0, 6], "uv": [42, 0]},
+						{"origin": [7, 23, -0.5], "size": [0, 8, 9], "pivot": [7, 24, 4], "rotation": [0, 0, -25], "uv": [48, -1]},
+						{"origin": [-0.5, 23, 7], "size": [9, 8, 0], "pivot": [4, 24, 7], "rotation": [25, 0, 0], "uv": [48, 8]},
+						{"origin": [-0.5, 23, 1], "size": [9, 8, 0], "pivot": [4, 24, 1], "rotation": [-25, 0, 0], "uv": [48, 8]},
+						{"origin": [1, 23, -0.5], "size": [0, 8, 9], "pivot": [1, 24, 4], "rotation": [0, 0, 25], "uv": [48, -1]},
+						{"origin": [2, 14, 2], "size": [4, 10, 4], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "firework_spark4",
+					"parent": "firework4",
+					"pivot": [4.5, 3, 3.5]
+				},
+				{
+					"name": "spark13",
+					"parent": "firework_spark4",
+					"pivot": [4.5, 3, 3.5],
+					"cubes": [
+						{"origin": [-1, -2, 3.5], "size": [11, 10, 0], "uv": [56, 34]}
+					]
+				},
+				{
+					"name": "spark14",
+					"parent": "firework_spark4",
+					"pivot": [4.5, 3, 3.5],
+					"cubes": [
+						{"origin": [-1, -2, 3.5], "size": [11, 10, 0], "uv": [56, 44]}
+					]
+				},
+				{
+					"name": "spark15",
+					"parent": "firework_spark4",
+					"pivot": [4.5, 3, 3.5],
+					"cubes": [
+						{"origin": [-1, -2, 3.5], "size": [11, 10, 0], "uv": [56, 54]}
+					]
+				},
+				{
+					"name": "spark16",
+					"parent": "firework_spark4",
+					"pivot": [4.5, 3, 3.5],
+					"cubes": [
+						{"origin": [-1, -2, 3.5], "size": [11, 10, 0], "uv": [56, 64]}
+					]
+				},
+				{
+					"name": "big_spark",
+					"parent": "firework_box",
+					"pivot": [0, 21, 0]
+				},
+				{
+					"name": "big_spark1",
+					"parent": "big_spark",
+					"pivot": [0, 21, 0],
+					"cubes": [
+						{"origin": [-5.5, 16, 0], "size": [11, 10, 0], "uv": [56, 34]}
+					]
+				},
+				{
+					"name": "big_spark2",
+					"parent": "big_spark",
+					"pivot": [0, 21, 0],
+					"cubes": [
+						{"origin": [-5.5, 16, 0], "size": [11, 10, 0], "uv": [56, 44]}
+					]
+				},
+				{
+					"name": "big_spark3",
+					"parent": "big_spark",
+					"pivot": [0, 21, 0],
+					"cubes": [
+						{"origin": [-5.5, 16, 0], "size": [11, 10, 0], "uv": [56, 54]}
+					]
+				},
+				{
+					"name": "big_spark4",
+					"parent": "big_spark",
+					"pivot": [0, 21, 0],
+					"cubes": [
+						{"origin": [-5.5, 16, 0], "size": [11, 10, 0], "uv": [56, 64]}
+					]
+				}
+			]
+		}
+	]
+}

@@ -60,4 +60,14 @@ public final class ModEntityTypes {
                     .build(new ResourceLocation(MODID, "beam_entity").toString())
     );
 
+    public static final RegistryObject<EntityType<FireworksDisplayEntity>> FIREWORKS_DISPLAY = ENTITY_TYPES.register("fireworks_display", () ->
+            EntityType.Builder.of(FireworksDisplayEntity::new, EntityClassification.MISC)
+                    .fireImmune()
+                    .setShouldReceiveVelocityUpdates(false)
+                    .sized(2.0F, 1.0F)
+                    .clientTrackingRange(6)
+                    .updateInterval(2)
+                    .build(new ResourceLocation(MODID, "fireworks_display").toString())
+    );
+
 }

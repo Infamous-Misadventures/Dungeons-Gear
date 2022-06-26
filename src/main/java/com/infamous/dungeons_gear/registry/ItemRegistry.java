@@ -445,6 +445,8 @@ public class ItemRegistry {
             () -> new UpdraftTomeItem(ARTIFACT_PROPERTIES), COLD);
     public static final RegistryObject<Item> EYE_OF_THE_GUARDIAN = registerArtifact("eye_of_the_guardian",
             () -> new EyeOfTheGuardianItem(ARTIFACT_PROPERTIES), OCEAN);
+    public static final RegistryObject<Item> FIREWORKS_DISPLAY = registerArtifact("fireworks_display",
+            () -> new FireworksDisplayItem(ARTIFACT_PROPERTIES), GIFT);
 
     public static final RegistryObject<Item> HUNTERS_ARMOR = registerArmor("hunters_vest",
             () -> new ArmorGear(EquipmentSlotType.CHEST, ARMOR_PROPERTIES, new ResourceLocation(MODID, "textures/models/armor/hunters_armor.png")), BASIC);
