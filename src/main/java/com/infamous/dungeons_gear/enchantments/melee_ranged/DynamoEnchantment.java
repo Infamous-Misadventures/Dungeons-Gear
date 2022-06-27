@@ -45,13 +45,10 @@ public class DynamoEnchantment extends DamageBoostEnchantment {
         ItemStack mainhand = playerEntity.getMainHandItem();
         if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.DYNAMO)) {
             int dynamoLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeRangedEnchantmentList.DYNAMO, mainhand);
-            EffectInstance effectinstance1 = playerEntity.getEffect(CustomEffects.DYNAMO);
+            EffectInstance currentEffectInstance = playerEntity.getEffect(CustomEffects.DYNAMO);
             int i = dynamoLevel;
-            if (effectinstance1 != null) {
-                i += effectinstance1.getAmplifier();
-                playerEntity.removeEffectNoUpdate(CustomEffects.DYNAMO);
-            } else {
-                --i;
+            if (currentEffectInstance != null) {
+                i += currentEffectInstance.getAmplifier();
             }
             i = MathHelper.clamp(i, 0, DYNAMO_MAX_STACKS.get());
             EffectInstance effectinstance = new EffectInstance(CustomEffects.DYNAMO, 120000, i);
@@ -69,7 +66,7 @@ public class DynamoEnchantment extends DamageBoostEnchantment {
                 if (effectinstance != null) {
                     int dynamoAmplifier = effectinstance.getAmplifier() + 1;
                     event.setAmount((float) (event.getAmount() * (1 + dynamoAmplifier * DYNAMO_DAMAGE_MULTIPLIER_PER_STACK.get())));
-                    playerEntity.removeEffectNoUpdate(CustomEffects.DYNAMO);
+                    playerEntity.removeEffect(CustomEffects.DYNAMO);
                 }
             }
         }
