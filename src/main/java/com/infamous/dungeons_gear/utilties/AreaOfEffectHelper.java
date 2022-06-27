@@ -2,18 +2,11 @@ package com.infamous.dungeons_gear.utilties;
 
 import com.infamous.dungeons_gear.damagesources.ElectricShockDamageSource;
 import com.infamous.dungeons_gear.effects.CustomEffects;
-import com.infamous.dungeons_gear.goals.LoverHurtByTargetGoal;
-import com.infamous.dungeons_gear.goals.LoverHurtTargetGoal;
 import com.infamous.dungeons_gear.registry.ParticleInit;
-import com.infamous.dungeons_libraries.capabilities.minionmaster.IMaster;
-import com.infamous.dungeons_libraries.capabilities.minionmaster.IMinion;
-import com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.LightningBoltEntity;
-import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.particles.BasicParticleType;
@@ -32,7 +25,6 @@ import java.util.Random;
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 import static com.infamous.dungeons_libraries.utils.AbilityHelper.isFacingEntity;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.*;
-import static com.infamous.dungeons_libraries.utils.PetHelper.isPetOf;
 
 public class AreaOfEffectHelper {
 
@@ -330,27 +322,6 @@ public class AreaOfEffectHelper {
                     nearbyEntity.addEffect(slowness);
                     nearbyEntity.addEffect(nausea);
                     nearbyEntity.addEffect(stunned);
-                });
-    }
-
-    public static void makeLoversOutOfNearbyEnemies(PlayerEntity playerIn, World world, int distance, int limit) {
-        applyToNearbyEntities(playerIn, distance, limit,
-                (nearbyEntity) -> nearbyEntity instanceof IMob
-                        && !MinionMasterHelper.isMinionEntity(nearbyEntity)
-                        && nearbyEntity.isAlive()
-                        && nearbyEntity.canChangeDimensions(),
-                (LivingEntity nearbyEntity) -> {
-                    if (nearbyEntity instanceof MonsterEntity) {
-                        MonsterEntity mobEntity = (MonsterEntity) nearbyEntity;
-                        PROXY.spawnParticles(nearbyEntity, ParticleTypes.HEART);
-                        IMaster masterCapability = MinionMasterHelper.getMasterCapability(playerIn);
-                        IMinion minionCapability = MinionMasterHelper.getMinionCapability(nearbyEntity);
-                        if(masterCapability != null && minionCapability != null){
-                            masterCapability.addMinion(mobEntity);
-                            minionCapability.setMaster(playerIn);
-                            MinionMasterHelper.addMinionGoals(mobEntity);
-                        }
-                    }
                 });
     }
 

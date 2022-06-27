@@ -13,16 +13,7 @@ import java.util.List;
 
 public class DungeonsGearConfig {
     private static final ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
-    public static ForgeConfigSpec.ConfigValue<Integer> VEST_ARMOR_DURABILITY;
-    public static ForgeConfigSpec.ConfigValue<Integer> ROBE_ARMOR_DURABILITY;
-    public static ForgeConfigSpec.ConfigValue<Integer> PELT_ARMOR_DURABILITY;
-    public static ForgeConfigSpec.ConfigValue<Integer> BONE_ARMOR_DURABILITY;
-    public static ForgeConfigSpec.ConfigValue<Integer> LIGHT_PLATE_ARMOR_DURABILITY;
-    public static ForgeConfigSpec.ConfigValue<Integer> MEDIUM_PLATE_ARMOR_DURABILITY;
-    public static ForgeConfigSpec.ConfigValue<Integer> HEAVY_PLATE_ARMOR_DURABILITY;
     public static ForgeConfigSpec.ConfigValue<Integer> METAL_MELEE_WEAPON_DURABILITY;
-    public static ForgeConfigSpec.ConfigValue<Integer> BOW_DURABILITY;
-    public static ForgeConfigSpec.ConfigValue<Integer> CROSSBOW_DURABILITY;
     public static ForgeConfigSpec.ConfigValue<Integer> ARTIFACT_DURABILITY;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_DUNGEONS_GEAR_LOOT;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_SALVAGING;
@@ -120,6 +111,7 @@ public class DungeonsGearConfig {
     public static ForgeConfigSpec.ConfigValue<Double> PROSPECTOR_CHANCE_PER_LEVEL;
     public static ForgeConfigSpec.ConfigValue<Double> POISON_CLOUD_CHANCE;
 
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> LOVE_MEDALLION_BLACKLIST;
 
     private static CommentedFileConfig cfg;
 
@@ -173,14 +165,14 @@ public class DungeonsGearConfig {
                 .comment("Add enchantments that should be prevented from being applied to any gear. \n"
                         + "To do so, enter their registry names.")
                 .defineList("enchantmentBlacklist", Lists.newArrayList(
-                        "dungeons_gear:lucky_explorer"
+                                "dungeons_gear:lucky_explorer"
                         ),
                         (itemRaw) -> itemRaw instanceof String);
         TREASURE_ONLY_ENCHANTMENTS = builder
                 .comment("Add enchantments that should be designated as treasure-only. \n"
                         + "To do so, enter their registry names.")
                 .defineList("treasureOnlyEnchantments", Lists.newArrayList(
-                        "dungeons_gear:masters_call"
+                                "dungeons_gear:masters_call"
                         ),
                         (itemRaw) -> itemRaw instanceof String);
         ENABLE_MELEE_WEAPON_LOOT = builder
@@ -242,36 +234,9 @@ public class DungeonsGearConfig {
 
 
         builder.comment("Item Configuration").push("item_configuration");
-        VEST_ARMOR_DURABILITY = builder
-                .comment("Set the durability multiplier for armors that can be classified as a vest, such as Hunter's Armor. [0-1024, default: 14")
-                .defineInRange("vestArmorDurabilityMultiplier", 14, 0, 1024);
-        ROBE_ARMOR_DURABILITY = builder
-                .comment("Set the durability multiplier for armors that can be classified as a robe, such as the Evocation Robe. [0-1024, default: 14")
-                .defineInRange("robeArmorDurabilityMultiplier", 14, 0, 1024);
-        PELT_ARMOR_DURABILITY = builder
-                .comment("Set the durability multiplier for armors that are made out of pelts, such as Wolf Armor. [0-1024, default: 14")
-                .defineInRange("peltArmorDurabilityMultiplier", 14, 0, 1024);
-        BONE_ARMOR_DURABILITY = builder
-                .comment("Set the durability multiplier for armors that are made out of bones, such as Grim Armor. [0-1024, default: 14")
-                .defineInRange("boneArmorDurabilityMultiplier", 14, 0, 1024);
-        LIGHT_PLATE_ARMOR_DURABILITY = builder
-                .comment("Set the durability multiplier for armors that can be classified as light plate, such as Guard's Armor. [0-1024, default: 14")
-                .defineInRange("lightArmorDurabilityMultiplier", 14, 0, 1024);
-        MEDIUM_PLATE_ARMOR_DURABILITY = builder
-                .comment("Set the durability multiplier for armors that can be classified as medium plate, such as Reinforced Mail. [0-1024, default: 14")
-                .defineInRange("mediumArmorDurabilityMultiplier", 14, 0, 1024);
-        HEAVY_PLATE_ARMOR_DURABILITY = builder
-                .comment("Set the durability multiplier for armors that can be classified as heavy plate, such as Mercenary Armor. [0-1024, default: 14")
-                .defineInRange("heavyArmorDurabilityMultiplier", 14, 0, 1024);
         METAL_MELEE_WEAPON_DURABILITY = builder
                 .comment("Set the durability for melee weapons. [0-1024, default: 250")
                 .defineInRange("meleeWeaponDurability", 250, 0, 1024);
-        BOW_DURABILITY = builder
-                .comment("Set the durability for bows. [0-1024, default: 384")
-                .defineInRange("bowDurability", 384, 0, 1024);
-        CROSSBOW_DURABILITY = builder
-                .comment("Set the durability for crossbows. [0-1024, default: 326")
-                .defineInRange("crossbowDurability", 326, 0, 1024);
         ARTIFACT_DURABILITY = builder
                 .comment("Set the durability for artifacts. [0-1024, default: 64")
                 .defineInRange("artifactDurability", 64, 0, 1024);
@@ -286,35 +251,35 @@ public class DungeonsGearConfig {
                 .comment("Add entities that will never be targeted by aggressive Dungeons Gear effects. \n"
                         + "To do so, enter their registry names.")
                 .defineList("effectTargetBlacklist", Lists.newArrayList(
-                        "guardvillagers:guard",
-                        "minecraft:bat",
-                        "minecraft:bee",
-                        "minecraft:chicken",
-                        "minecraft:cod",
-                        "minecraft:cow",
-                        "minecraft:dolphin",
-                        "minecraft:donkey",
-                        "minecraft:fox",
-                        "minecraft:horse",
-                        "minecraft:iron_golem",
-                        "minecraft:mooshroom",
-                        "minecraft:ocelot",
-                        "minecraft:panda",
-                        "minecraft:parrot",
-                        "minecraft:pig",
-                        "minecraft:polar_bear",
-                        "minecraft:pufferfish",
-                        "minecraft:rabbit",
-                        "minecraft:salmon",
-                        "minecraft:sheep",
-                        "minecraft:squid",
-                        "minecraft:strider",
-                        "minecraft:trader_llama",
-                        "minecraft:tropical_fish",
-                        "minecraft:turtle",
-                        "minecraft:villager",
-                        "minecraft:wandering_trader",
-                        "minecraft:wolf"
+                                "guardvillagers:guard",
+                                "minecraft:bat",
+                                "minecraft:bee",
+                                "minecraft:chicken",
+                                "minecraft:cod",
+                                "minecraft:cow",
+                                "minecraft:dolphin",
+                                "minecraft:donkey",
+                                "minecraft:fox",
+                                "minecraft:horse",
+                                "minecraft:iron_golem",
+                                "minecraft:mooshroom",
+                                "minecraft:ocelot",
+                                "minecraft:panda",
+                                "minecraft:parrot",
+                                "minecraft:pig",
+                                "minecraft:polar_bear",
+                                "minecraft:pufferfish",
+                                "minecraft:rabbit",
+                                "minecraft:salmon",
+                                "minecraft:sheep",
+                                "minecraft:squid",
+                                "minecraft:strider",
+                                "minecraft:trader_llama",
+                                "minecraft:tropical_fish",
+                                "minecraft:turtle",
+                                "minecraft:villager",
+                                "minecraft:wandering_trader",
+                                "minecraft:wolf"
                         ),
                         (itemRaw) -> itemRaw instanceof String);
         builder.pop();
@@ -325,10 +290,10 @@ public class DungeonsGearConfig {
                         + "To do so, enter the full path of the specific loot table, or the path of the folder containing the loot tables.\n"
                         + "You can also write an incomplete path, and the mod will add to loot tables containing that incomplete path.")
                 .defineList("commonLootTables", Lists.newArrayList(
-                        "minecraft:chests/abandoned_mineshaft",
-                        "minecraft:chests/shipwreck",
-                        "minecraft:chests/desert_pyramid",
-                        "minecraft:chests/ruined_portal"
+                                "minecraft:chests/abandoned_mineshaft",
+                                "minecraft:chests/shipwreck",
+                                "minecraft:chests/desert_pyramid",
+                                "minecraft:chests/ruined_portal"
                         ),
                         (itemRaw) -> itemRaw instanceof String);
         COMMON_LOOT_TABLES_BLACKLIST = builder
@@ -346,16 +311,16 @@ public class DungeonsGearConfig {
                         + "To do so, enter the full path of the specific loot table, or the path of the folder containing the loot tables.\n"
                         + "You can also write an incomplete path, and the mod will add to loot tables containing that incomplete path.")
                 .defineList("fancyLootTables", Lists.newArrayList(
-                        "minecraft:chests/jungle_temple",
-                        "minecraft:chests/nether_bridge",
-                        "minecraft:chests/simple_dungeon"
+                                "minecraft:chests/jungle_temple",
+                                "minecraft:chests/nether_bridge",
+                                "minecraft:chests/simple_dungeon"
                         ),
                         (itemRaw) -> itemRaw instanceof String);
         FANCY_LOOT_TABLES_BLACKLIST = builder
                 .comment("Use this list to prevent specific loot tables from getting uncommon loot. \n"
                         + "To do so, enter the full path of the specific loot table.")
                 .defineList("fancyLootTablesBlacklist", Lists.newArrayList(
-                        "minecraft:chests/jungle_temple_dispenser"
+                                "minecraft:chests/jungle_temple_dispenser"
                         ),
                         (itemRaw) -> itemRaw instanceof String);
         builder.pop();
@@ -366,14 +331,14 @@ public class DungeonsGearConfig {
                         + "To do so, enter the full path of the specific loot table, or the path of the folder containing the loot tables.\n"
                         + "You can also write an incomplete path, and the mod will add to loot tables containing that incomplete path.")
                 .defineList("obsidianLootTables", Lists.newArrayList(
-                        "minecraft:chests/stronghold",
-                        "minecraft:chests/underwater_ruin",
-                        "minecraft:chests/pillager_outpost",
-                        "minecraft:chests/end_city_treasure",
-                        "minecraft:chests/igloo_chest",
-                        "minecraft:chests/woodland_mansion",
-                        "minecraft:chests/buried_treasure",
-                        "minecraft:chests/bastion"
+                                "minecraft:chests/stronghold",
+                                "minecraft:chests/underwater_ruin",
+                                "minecraft:chests/pillager_outpost",
+                                "minecraft:chests/end_city_treasure",
+                                "minecraft:chests/igloo_chest",
+                                "minecraft:chests/woodland_mansion",
+                                "minecraft:chests/buried_treasure",
+                                "minecraft:chests/bastion"
                         ),
                         (itemRaw) -> itemRaw instanceof String);
         OBSIDIAN_LOOT_TABLES_BLACKLIST = builder
@@ -391,7 +356,7 @@ public class DungeonsGearConfig {
                         + "To do so, enter the full path of the specific loot table, or the path of the folder containing the loot tables.\n"
                         + "You can also write an incomplete path, and the mod will add to loot tables containing that incomplete path.")
                 .defineList("basicLootTables", Lists.newArrayList(
-                        "minecraft:chests/abandoned_mineshaft",
+                                "minecraft:chests/abandoned_mineshaft",
                                 "minecraft:chests/stronghold",
                                 "minecraft:chests/simple_dungeon",
                                 "minecraft:chests/pillager_outpost",
@@ -642,5 +607,17 @@ public class DungeonsGearConfig {
         POISON_CLOUD_CHANCE = builder
                 .comment("The chance for Poison Cloud to trigger [-5.0-5.0, default: 0.3]")
                 .defineInRange("prospectorChancePerLevel", 0.3, -5.0, 5.0);
+        builder.pop();
+
+        builder.comment("Artifact Specific Configuration").push("artifact_specific_configuration");
+        LOVE_MEDALLION_BLACKLIST = builder
+                .comment("Entities that can not be converted by Love Medallion.")
+                .defineList("loveMedallionBlacklist", Lists.newArrayList(
+                                "minecraft:ender_dragon",
+                                "minecraft:elder_guardian",
+                                "minecraft:wither"
+                                ),
+                        (itemRaw) -> itemRaw instanceof String);
+        builder.pop();
     }
 }
