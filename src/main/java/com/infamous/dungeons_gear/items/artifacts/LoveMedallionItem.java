@@ -13,7 +13,8 @@ import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -34,7 +35,6 @@ public class LoveMedallionItem extends ArtifactItem {
     public ActionResult<ItemStack> procArtifact(ArtifactUseContext c) {
         PlayerEntity playerIn = c.getPlayer();
         ItemStack itemstack = c.getItemStack();
-        World world = c.getLevel();
 
         applyToNearbyEntities(playerIn, 5, 2,
                 (nearbyEntity) -> nearbyEntity instanceof IMob
@@ -76,7 +76,7 @@ public class LoveMedallionItem extends ArtifactItem {
 
     @Override
     public int getCooldownInSeconds() {
-        return 35;
+        return 40;
     }
 
     @Override
