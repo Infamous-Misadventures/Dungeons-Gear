@@ -26,6 +26,7 @@ public class DungeonsGearConfig {
     public static ForgeConfigSpec.ConfigValue<Integer> CROSSBOW_DURABILITY;
     public static ForgeConfigSpec.ConfigValue<Integer> ARTIFACT_DURABILITY;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_DUNGEONS_GEAR_LOOT;
+    public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_DUAL_WIELD;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_SALVAGING;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_VILLAGER_TRADES;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_FRIENDLY_PET_FIRE;
@@ -90,6 +91,10 @@ public class DungeonsGearConfig {
                 .comment("Enable the mass addition of Dungeons Gear items to various vanilla loot tables by the mod itself. \n" +
                         "If you prefer to write your own loot pools via datapack or simply don't want it, disable this feature. [true / false]")
                 .define("enableDungeonsGearLoot", true);
+        ENABLE_DUAL_WIELD = builder
+                .comment("Enable Dual Wield items. These items work fairly fine, but have a couple game breaking bugs, like a duplication issue \n" +
+                        "If you prefer to play with bugged features, enable this feature. [true / false]")
+                .define("enableDualWield", false);
         ENABLE_SALVAGING = builder
                 .comment("Enable the salvaging of Dungeons Gear items by shift-right clicking villagers with the item in your hand. \n" +
                         "If you have other mods messing with shift-right clicking villagers or simply don't want it, disable this feature. [true / false]")
