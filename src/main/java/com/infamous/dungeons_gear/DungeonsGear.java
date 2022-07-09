@@ -27,9 +27,8 @@ import com.infamous.dungeons_gear.groups.ArmorGroup;
 import com.infamous.dungeons_gear.groups.ArtifactGroup;
 import com.infamous.dungeons_gear.groups.MeleeWeaponGroup;
 import com.infamous.dungeons_gear.groups.RangedWeaponGroup;
-import com.infamous.dungeons_gear.items.BowItemModelsProperties;
-import com.infamous.dungeons_gear.items.CrossbowItemModelsProperties;
 import com.infamous.dungeons_gear.items.DualWieldItemProperties;
+import com.infamous.dungeons_gear.items.GearRangedItemModelProperties;
 import com.infamous.dungeons_gear.loot.LootConditionRegistry;
 import com.infamous.dungeons_gear.loot.ModLootFunctionTypes;
 import com.infamous.dungeons_gear.network.NetworkHandler;
@@ -109,8 +108,7 @@ public class DungeonsGear
     private void doClientStuff(final FMLClientSetupEvent event) {
 
         MinecraftForge.EVENT_BUS.register(new DualWieldItemProperties());
-        MinecraftForge.EVENT_BUS.register(new CrossbowItemModelsProperties());
-        MinecraftForge.EVENT_BUS.register(new BowItemModelsProperties());
+        GearRangedItemModelProperties.init();
 
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ICE_CLOUD.get(), IceCloudRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BUZZY_NEST.get(), BuzzyNestRenderer::new);

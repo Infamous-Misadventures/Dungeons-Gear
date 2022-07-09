@@ -59,8 +59,9 @@ public class LoveMedallionItem extends ArtifactItem {
             if(masterCapability != null && minionCapability != null){
                 masterCapability.addMinion(mobEntity);
                 minionCapability.setMaster(playerIn);
-                minionCapability.setLimitedLifetime(true);
-                minionCapability.setLifeTimer(200);
+                minionCapability.setTemporary(true);
+                minionCapability.setRevertsOnExpiration(true);
+                minionCapability.setMinionTimer(200);
                 MinionMasterHelper.addMinionGoals(mobEntity);
             }
         }
