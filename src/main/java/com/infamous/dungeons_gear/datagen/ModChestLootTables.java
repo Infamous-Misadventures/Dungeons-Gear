@@ -2,6 +2,7 @@ package com.infamous.dungeons_gear.datagen;
 
 import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_gear.loot.AddPotionLootFunction;
+import com.infamous.dungeons_gear.loot.ExperimentalCondition;
 import com.infamous.dungeons_gear.loot.LootTableRarity;
 import com.infamous.dungeons_gear.loot.LootTableType;
 import com.infamous.dungeons_libraries.items.interfaces.IArmor;
@@ -10,6 +11,7 @@ import com.infamous.dungeons_libraries.items.interfaces.IRangedWeapon;
 import net.minecraft.data.loot.ChestLootTables;
 import net.minecraft.item.Item;
 import net.minecraft.loot.*;
+import net.minecraft.loot.conditions.ILootCondition;
 import net.minecraft.loot.functions.EnchantWithLevels;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.RegistryObject;
@@ -29,6 +31,22 @@ import static net.minecraft.item.Items.*;
 import static net.minecraft.tags.ItemTags.ARROWS;
 
 public class ModChestLootTables extends ChestLootTables {
+
+    private List<Item> EXPERIMENTAL_ITEMS = Arrays.asList(
+            DAGGER.get(),
+            FANG_OF_FROST.get(),
+            MOON_DAGGER.get(),
+            SHEAR_DAGGER.get(),
+            SICKLE.get(),
+            NIGHTMARES_BITE.get(),
+            THE_LAST_LAUGH.get(),
+            GAUNTLET.get(),
+            FIGHTERS_BINDING.get(),
+            MAULER.get(),
+            SOUL_FIST.get(),
+            DUAL_CROSSBOW.get(),
+            BABY_CROSSBOW.get()
+    );
 
     @Override
     public void accept(BiConsumer<ResourceLocation, LootTable.Builder> consumer) {
@@ -64,9 +82,17 @@ public class ModChestLootTables extends ChestLootTables {
         if(items.isEmpty()){
             lootPool.add(EmptyLootEntry.emptyItem());
         }else{
-            items.forEach(item -> lootPool.add(ItemLootEntry.lootTableItem(item)));
+            items.forEach(item -> lootPool.add(getItemLootEntry(item)));
         }
         consumer.accept(lootTable, LootTable.lootTable().withPool(lootPool));
+    }
+
+    private StandaloneLootEntry.Builder<?> getItemLootEntry(Item item) {
+        StandaloneLootEntry.Builder<?> builder = ItemLootEntry.lootTableItem(item);
+        if(EXPERIMENTAL_ITEMS.contains(item)){
+            builder.when(ExperimentalCondition::new);
+        }
+        return builder;
     }
 
     private boolean isArtifactItem(Item item) {

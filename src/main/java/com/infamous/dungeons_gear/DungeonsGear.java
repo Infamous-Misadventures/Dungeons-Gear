@@ -30,6 +30,7 @@ import com.infamous.dungeons_gear.groups.RangedWeaponGroup;
 import com.infamous.dungeons_gear.items.BowItemModelsProperties;
 import com.infamous.dungeons_gear.items.CrossbowItemModelsProperties;
 import com.infamous.dungeons_gear.items.DualWieldItemProperties;
+import com.infamous.dungeons_gear.loot.LootConditionRegistry;
 import com.infamous.dungeons_gear.loot.ModLootFunctionTypes;
 import com.infamous.dungeons_gear.network.NetworkHandler;
 import com.infamous.dungeons_gear.registry.AttributeRegistry;
@@ -83,6 +84,7 @@ public class DungeonsGear
         AttributeRegistry.ATTRIBUTES.register(modEventBus);
         ItemRegistry.ITEMS.register(modEventBus);
         PROXY = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
+        LootConditionRegistry.init();
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);

@@ -16,6 +16,7 @@ public class DungeonsGearConfig {
     public static ForgeConfigSpec.ConfigValue<Integer> METAL_MELEE_WEAPON_DURABILITY;
     public static ForgeConfigSpec.ConfigValue<Integer> ARTIFACT_DURABILITY;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_DUNGEONS_GEAR_LOOT;
+    public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_EXPERIMENTAL;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_SALVAGING;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_VILLAGER_TRADES;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_FRIENDLY_PET_FIRE;
@@ -132,6 +133,10 @@ public class DungeonsGearConfig {
                 .comment("Enable the mass addition of Dungeons Gear items to various vanilla loot tables by the mod itself. \n" +
                         "If you prefer to write your own loot pools via datapack or simply don't want it, disable this feature. [true / false]")
                 .define("enableDungeonsGearLoot", true);
+        ENABLE_EXPERIMENTAL = builder
+                .comment("Enables the experimental features.\n" +
+                        "If you like living on the edge with broken items, enable this feature. [true / false]")
+                .define("enableExperimental", false);
         ENABLE_SALVAGING = builder
                 .comment("Enable the salvaging of Dungeons Gear items by shift-right clicking villagers with the item in your hand. \n" +
                         "If you have other mods messing with shift-right clicking villagers or simply don't want it, disable this feature. [true / false]")
