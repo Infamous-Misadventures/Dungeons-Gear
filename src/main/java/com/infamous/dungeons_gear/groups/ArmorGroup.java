@@ -1,10 +1,10 @@
 package com.infamous.dungeons_gear.groups;
 
 import com.infamous.dungeons_gear.registry.ItemRegistry;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 
-public class ArmorGroup extends ItemGroup
+public class ArmorGroup extends CreativeModeTab
 {
     public ArmorGroup()
     {
@@ -14,6 +14,6 @@ public class ArmorGroup extends ItemGroup
     @Override
     public ItemStack makeIcon()
     {
-        return new ItemStack(ItemRegistry.FULL_METAL_ARMOR.get());
+        return new ItemStack(ItemRegistry.ROYAL_GUARD_ARMOR.getChest().get());
     }
 }

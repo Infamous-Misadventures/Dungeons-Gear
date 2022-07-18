@@ -1,14 +1,14 @@
 package com.infamous.dungeons_gear.utilties;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 
 public class ModEnchantmentHelper {
 
@@ -20,13 +20,13 @@ public class ModEnchantmentHelper {
         return enchantment != null && EnchantmentHelper.getEnchantmentLevel(enchantment, entity) > 0;
     }
 
-    public static boolean shooterIsLiving(AbstractArrowEntity arrowEntity) {
+    public static boolean shooterIsLiving(AbstractArrow arrowEntity) {
         return arrowEntity.getOwner() != null && arrowEntity.getOwner() instanceof LivingEntity;
     }
 
-    public static boolean arrowHitLivingEntity(RayTraceResult rayTraceResult) {
-        if(rayTraceResult instanceof EntityRayTraceResult){
-            EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult)rayTraceResult;
+    public static boolean arrowHitLivingEntity(HitResult rayTraceResult) {
+        if(rayTraceResult instanceof EntityHitResult){
+            EntityHitResult entityRayTraceResult = (EntityHitResult)rayTraceResult;
             if(entityRayTraceResult.getEntity() instanceof LivingEntity){
                 return true;
             } else{
@@ -37,10 +37,10 @@ public class ModEnchantmentHelper {
         }
     }
 
-    public static boolean arrowHitMob(RayTraceResult rayTraceResult) {
-        if(rayTraceResult instanceof EntityRayTraceResult){
-            EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult)rayTraceResult;
-            if(entityRayTraceResult.getEntity() instanceof MobEntity){
+    public static boolean arrowHitMob(HitResult rayTraceResult) {
+        if(rayTraceResult instanceof EntityHitResult){
+            EntityHitResult entityRayTraceResult = (EntityHitResult)rayTraceResult;
+            if(entityRayTraceResult.getEntity() instanceof Mob){
                 return true;
             } else{
                 return false;

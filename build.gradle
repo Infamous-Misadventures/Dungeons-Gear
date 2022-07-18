@@ -8,7 +8,9 @@ buildscript {
         maven { url 'https://plugins.gradle.org/m2/' }
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath(group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true) { exclude group: 'org.apache.logging.log4j' }
+        classpath 'org.apache.logging.log4j:log4j-api:2.11.2'
+        classpath 'org.apache.logging.log4j:log4j-core:2.11.2'
         classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
     }
 }
@@ -17,6 +19,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
+apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
 
 mixin {
     add sourceSets.main, "dungeons_gear.refmap.json"
@@ -26,7 +29,7 @@ version = "${mc_version}-${mod_version}"
 group = 'com.infamous.dungeons_gear' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "${modid}"
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
@@ -106,6 +109,7 @@ repositories {
     maven {
         url "https://www.cursemaven.com"
     }
+    maven { url = "https://maven.theillusivec4.top/"}
     flatDir {
         dirs 'mods'
     }
@@ -116,21 +120,20 @@ dependencies {
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
-    compileOnly fg.deobf("curse.maven:elenaidodge2-442962:3221492")
+    //compileOnly fg.deobf("curse.maven:elenaidodge2-442962:3221492")
 
     //Library
-    implementation fg.deobf("dungeons_libraries:dungeons_libraries:1.16.5-0.0.14-alpha")
-    implementation fg.deobf("curse.maven:curios-309927:3456953")
-    runtimeOnly fg.deobf("curse.maven:neat-238372:3182258")
-    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.16.5:3.0.65')
+    implementation fg.deobf("dungeons_libraries:dungeons_libraries:1.18.2-1.0.0-alpha")
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
+    //runtimeOnly fg.deobf("curse.maven:neat-238372:3182258")
+    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.18:3.0.28')
 
     //compat tests
 //    runtimeOnly fg.deobf("curse.maven:cofhcore-69162:3407019")
 //    runtimeOnly fg.deobf("curse.maven:abnormalscore-382216:3457851")
 //    runtimeOnly fg.deobf("curse.maven:Environmental-388992:3561534")
 //    runtimeOnly fg.deobf("curse.maven:thermalfoundation-222880:3412300")
-
-    implementation fg.deobf("curse.maven:customraid-532546:3511267")
 
 }
 
@@ -152,7 +155,7 @@ jar {
 
 // Example configuration to allow publishing using the maven-publish task
 // This is the preferred method to reobfuscate your jar file
-jar.finalizedBy('reobfJar') 
+jar.finalizedBy('reobfJar')
 // However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
 //publish.dependsOn('reobfJar')
 

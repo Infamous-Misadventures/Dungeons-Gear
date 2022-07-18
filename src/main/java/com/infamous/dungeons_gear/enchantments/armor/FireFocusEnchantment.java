@@ -1,37 +1,27 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
-import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
-import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.FocusEnchantment;
-import com.infamous.dungeons_gear.utilties.CapabilityHelper;
-import com.infamous.dungeons_gear.utilties.PlayerAttackHelper;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
-import net.minecraft.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class FireFocusEnchantment extends FocusEnchantment {
 
     public FireFocusEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlotType[]{
-                EquipmentSlotType.HEAD,
-                EquipmentSlotType.CHEST,
-                EquipmentSlotType.LEGS,
-                EquipmentSlotType.FEET});
+        super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlot[]{
+                EquipmentSlot.HEAD,
+                EquipmentSlot.CHEST,
+                EquipmentSlot.LEGS,
+                EquipmentSlot.FEET});
     }
 
     @Override

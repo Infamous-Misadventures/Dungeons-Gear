@@ -7,13 +7,13 @@ import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
 import com.infamous.dungeons_libraries.items.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
-import net.minecraft.enchantment.DamageEnchantment;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.enchantment.DamageEnchantment;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -22,14 +22,14 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.config.DungeonsGearConfig.COMMITTED_BASE_MULTIPLIER;
 import static com.infamous.dungeons_gear.config.DungeonsGearConfig.COMMITTED_MULTIPLIER_PER_LEVEL;
 
-import net.minecraft.enchantment.Enchantment.Rarity;
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class CommittedEnchantment extends DamageBoostEnchantment {
 
     public CommittedEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.MELEE_RANGED, new EquipmentSlotType[]{
-            EquipmentSlotType.MAINHAND});
+        super(Rarity.RARE, ModEnchantmentTypes.MELEE_RANGED, new EquipmentSlot[]{
+            EquipmentSlot.MAINHAND});
     }
 
     @Override
@@ -45,7 +45,7 @@ public class CommittedEnchantment extends DamageBoostEnchantment {
 
     @SubscribeEvent
     public static void onCommittedDamage(LivingDamageEvent event){
-        if(event.getSource().getDirectEntity() instanceof AbstractArrowEntity) return;
+        if(event.getSource().getDirectEntity() instanceof AbstractArrow) return;
         if(event.getSource().getEntity() instanceof LivingEntity){
             LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
             LivingEntity victim = event.getEntityLiving();

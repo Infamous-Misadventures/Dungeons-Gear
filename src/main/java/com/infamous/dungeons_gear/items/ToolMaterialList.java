@@ -1,14 +1,14 @@
 package com.infamous.dungeons_gear.items;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.LazyValue;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.util.LazyLoadedValue;
 import net.minecraftforge.common.Tags;
 
 import java.util.function.Supplier;
 
-public enum ToolMaterialList implements IItemTier {
+public enum ToolMaterialList implements Tier {
     /*
      * Durability:
      * Wood = 59
@@ -70,7 +70,7 @@ public enum ToolMaterialList implements IItemTier {
     private int durability;
     private int harvestLevel;
     private int enchantability;
-    private LazyValue<Ingredient> repairMaterial;
+    private LazyLoadedValue<Ingredient> repairMaterial;
 
     private ToolMaterialList(float attackDamage, float efficiency, int durability, int harvestLevel, int enchantability, Supplier<Ingredient> repairMaterial)
     {
@@ -79,7 +79,7 @@ public enum ToolMaterialList implements IItemTier {
         this.durability = durability;
         this.harvestLevel = harvestLevel;
         this.enchantability = enchantability;
-        this.repairMaterial = new LazyValue<>(repairMaterial);
+        this.repairMaterial = new LazyLoadedValue<>(repairMaterial);
     }
 
     @Override

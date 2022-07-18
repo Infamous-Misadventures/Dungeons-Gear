@@ -9,16 +9,16 @@ import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
 import com.infamous.dungeons_libraries.utils.ArrowHelper;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -28,7 +28,7 @@ import java.util.List;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.getCanApplyToEnemyPredicate;
 
-import net.minecraft.enchantment.Enchantment.Rarity;
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class ShockWebEnchantment extends DungeonsEnchantment {
@@ -70,49 +70,50 @@ public class ShockWebEnchantment extends DungeonsEnchantment {
     }
 
     @SubscribeEvent
-    public static void onShockWebImpact(ProjectileImpactEvent.Arrow event){
-        if(!ENABLED) return;
+    public static void onShockWebImpact(ProjectileImpactEvent event) {
+        if (!ENABLED) return;
         DungeonsGear.LOGGER.info("Firing shock web impact");
-        AbstractArrowEntity eventArrow = event.getArrow();
-        int shockWebLevel = ArrowHelper.enchantmentTagToLevel(eventArrow, RangedEnchantmentList.SHOCK_WEB);
-        DungeonsGear.LOGGER.info("Shock web level is {}!", shockWebLevel);
-        Entity shooter = eventArrow.getOwner();
-        DungeonsGear.LOGGER.info("Shooter is {}!", shooter);
-        World world = eventArrow.level;
-        if(shockWebLevel > 0 && shooter instanceof LivingEntity){
-            double searchRadius = 16.0D;
-            AxisAlignedBB boundingBox = eventArrow.getBoundingBox().inflate(searchRadius, searchRadius, searchRadius);
-            List<AbstractArrowEntity> nearbyArrows = world.getEntitiesOfClass(AbstractArrowEntity.class, boundingBox,
-                    nearbyArrow -> nearbyArrow != eventArrow);
-            if(nearbyArrows.isEmpty()) return;
-            DungeonsGear.LOGGER.info("Found {} arrows!", nearbyArrows.size());
+        if (event.getProjectile() instanceof AbstractArrow arrow) {
+            int shockWebLevel = ArrowHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.SHOCK_WEB);
+            DungeonsGear.LOGGER.info("Shock web level is {}!", shockWebLevel);
+            Entity shooter = arrow.getOwner();
+            DungeonsGear.LOGGER.info("Shooter is {}!", shooter);
+            Level world = arrow.level;
+            if (shockWebLevel > 0 && shooter instanceof LivingEntity) {
+                double searchRadius = 16.0D;
+                AABB boundingBox = arrow.getBoundingBox().inflate(searchRadius, searchRadius, searchRadius);
+                List<AbstractArrow> nearbyArrows = world.getEntitiesOfClass(AbstractArrow.class, boundingBox,
+                    nearbyArrow -> nearbyArrow != arrow);
+                if (nearbyArrows.isEmpty()) return;
+                DungeonsGear.LOGGER.info("Found {} arrows!", nearbyArrows.size());
 
-            int shockWebsCreated = 0;
-            for(AbstractArrowEntity nearbyArrow : nearbyArrows){
-                if(shockWebsCreated >= shockWebLevel) break;
+                int shockWebsCreated = 0;
+                for (AbstractArrow nearbyArrow : nearbyArrows) {
+                    if (shockWebsCreated >= shockWebLevel) break;
 
-                BlockPos fromPos = eventArrow.blockPosition();
-                DungeonsGear.LOGGER.info("From Block: {}", world.getBlockState(fromPos));
-                Vector3d from = eventArrow.position().add(0, eventArrow.getBbHeight() * 0.5D, 0);
-                BlockPos toPos = nearbyArrow.blockPosition();
-                DungeonsGear.LOGGER.info("To Block: {}", world.getBlockState(toPos));
-                Vector3d to = nearbyArrow.position().add(0, nearbyArrow.getBbHeight() * 0.5D, 0);
+                    BlockPos fromPos = arrow.blockPosition();
+                    DungeonsGear.LOGGER.info("From Block: {}", world.getBlockState(fromPos));
+                    Vec3 from = arrow.position().add(0, arrow.getBbHeight() * 0.5D, 0);
+                    BlockPos toPos = nearbyArrow.blockPosition();
+                    DungeonsGear.LOGGER.info("To Block: {}", world.getBlockState(toPos));
+                    Vec3 to = nearbyArrow.position().add(0, nearbyArrow.getBbHeight() * 0.5D, 0);
                 /*
-                RayTraceResult traceBetweenArrows = world.rayTraceBlocks(new RayTraceContext(from, to, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, eventArrow));
+                RayTraceResult traceBetweenArrows = world.rayTraceBlocks(new RayTraceContext(from, to, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, arrow));
                 if (traceBetweenArrows.getType() != RayTraceResult.Type.MISS) {
                     to = traceBetweenArrows.getHitVec();
                 }
                  */
-                List<LivingEntity> entitiesToShock = ProjectileEffectHelper.rayTraceEntities(world, from, to, boundingBox,
+                    List<LivingEntity> entitiesToShock = ProjectileEffectHelper.rayTraceEntities(world, from, to, boundingBox,
                         getCanApplyToEnemyPredicate((LivingEntity) shooter));
-                if(entitiesToShock.isEmpty()) continue;
-                DungeonsGear.LOGGER.info("Found {} targets!", entitiesToShock.size());
+                    if (entitiesToShock.isEmpty()) continue;
+                    DungeonsGear.LOGGER.info("Found {} targets!", entitiesToShock.size());
 
-                for(LivingEntity target : entitiesToShock){
-                    ElectricShockDamageSource shockDamageSource = new ElectricShockDamageSource(shooter);
-                    target.hurt(shockDamageSource, 5.0F);
+                    for (LivingEntity target : entitiesToShock) {
+                        ElectricShockDamageSource shockDamageSource = new ElectricShockDamageSource(shooter);
+                        target.hurt(shockDamageSource, 5.0F);
+                    }
+                    shockWebsCreated++;
                 }
-                shockWebsCreated++;
             }
         }
     }

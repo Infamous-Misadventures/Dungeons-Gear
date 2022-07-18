@@ -3,18 +3,18 @@ package com.infamous.dungeons_gear.datagen;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.items.ItemTagWrappers;
 import com.infamous.dungeons_gear.registry.ItemRegistry;
-import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.item.Item;
+import net.minecraft.data.tags.BlockTagsProvider;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import javax.annotation.Nullable;
 
 import static com.infamous.dungeons_gear.registry.ItemRegistry.SHEAR_DAGGER;
-import static net.minecraft.item.Items.*;
+import static net.minecraft.world.item.Items.*;
 
-public class ModItemTagsProvider extends net.minecraft.data.ItemTagsProvider {
+public class ModItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
 
     public ModItemTagsProvider(DataGenerator dataGenerator, BlockTagsProvider blockTagProvider, @Nullable ExistingFileHelper existingFileHelper) {
         super(dataGenerator, blockTagProvider, DungeonsGear.MODID, existingFileHelper);

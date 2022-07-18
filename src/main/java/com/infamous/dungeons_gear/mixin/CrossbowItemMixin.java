@@ -1,11 +1,11 @@
 package com.infamous.dungeons_gear.mixin;
 
 import com.infamous.dungeons_libraries.utils.RangedAttackHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.CrossbowItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class CrossbowItemMixin {
 
     @Shadow
-    public static void performShooting(World worldIn, LivingEntity shooter, Hand handIn, ItemStack stack, float velocityIn, float inaccuracyIn) {
+    public static void performShooting(Level worldIn, LivingEntity shooter, InteractionHand handIn, ItemStack stack, float velocityIn, float inaccuracyIn) {
     }
 
     @Inject(at = @At("RETURN"), method = "getChargeDuration(Lnet/minecraft/item/ItemStack;)I", cancellable = true)

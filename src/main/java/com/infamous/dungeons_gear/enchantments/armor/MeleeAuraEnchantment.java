@@ -4,13 +4,13 @@ import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.PulseEnchantment;
 import com.infamous.dungeons_libraries.utils.AbilityHelper;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -21,15 +21,17 @@ import static com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList
 import static com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList.SPEED_AURA;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.applyToNearbyEntities;
 
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class MeleeAuraEnchantment extends PulseEnchantment {
 
     public MeleeAuraEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlotType[]{
-                EquipmentSlotType.HEAD,
-                EquipmentSlotType.CHEST,
-                EquipmentSlotType.LEGS,
-                EquipmentSlotType.FEET});
+        super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlot[]{
+                EquipmentSlot.HEAD,
+                EquipmentSlot.CHEST,
+                EquipmentSlot.LEGS,
+                EquipmentSlot.FEET});
     }
 
     public int getMaxLevel() {
@@ -43,7 +45,7 @@ public class MeleeAuraEnchantment extends PulseEnchantment {
 
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event){
-        PlayerEntity player = event.player;
+        Player player = event.player;
         if(player == null || player.isSpectator()) return;
         if(event.phase == TickEvent.Phase.START) return;
         if(player.isAlive()&&player.isEffectiveAi()){
@@ -54,14 +56,14 @@ public class MeleeAuraEnchantment extends PulseEnchantment {
     @SubscribeEvent
     public static void onLivingEntityTick(LivingEvent.LivingUpdateEvent event){
         LivingEntity livingEntity = event.getEntityLiving();
-        if(livingEntity == null || livingEntity instanceof PlayerEntity) return;
+        if(livingEntity == null || livingEntity instanceof Player) return;
         if(livingEntity.isAlive() && livingEntity.isEffectiveAi()){
             apply(livingEntity);
         }
     }
 
     private static void apply(LivingEntity entity) {
-//        ICombo comboCap = CapabilityHelper.getComboCapability(entity);
+//        DualWield comboCap = DualWieldHelper.getDualWieldCapability(entity);
 //        if(comboCap == null) return;
 //        int burnNearbyTimer = comboCap.getBurnNearbyTimer();
 
@@ -72,7 +74,7 @@ public class MeleeAuraEnchantment extends PulseEnchantment {
                     (nearbyEntity) -> {
                         return AbilityHelper.isAlly(entity, nearbyEntity);
                     }, (LivingEntity nearbyEntity) -> {
-                        EffectInstance speedBoost = new EffectInstance(Effects.DAMAGE_BOOST, 20, enchantmentLevel);
+                        MobEffectInstance speedBoost = new MobEffectInstance(MobEffects.DAMAGE_BOOST, 20, enchantmentLevel);
                         nearbyEntity.addEffect(speedBoost);
 //                        PROXY.spawnParticles(nearbyEntity, ParticleTypes.FLAME);
                     }

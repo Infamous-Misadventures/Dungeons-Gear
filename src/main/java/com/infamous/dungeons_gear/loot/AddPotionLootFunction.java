@@ -4,37 +4,37 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.gson.*;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootFunction;
-import net.minecraft.loot.LootFunctionType;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
+import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Collection;
 import java.util.List;
 
 import static com.infamous.dungeons_gear.loot.ModLootFunctionTypes.ADD_POTION;
-import static net.minecraft.item.Items.POTION;
-import static net.minecraft.item.Items.TIPPED_ARROW;
+import static net.minecraft.world.item.Items.POTION;
+import static net.minecraft.world.item.Items.TIPPED_ARROW;
 
-public class AddPotionLootFunction extends LootFunction
+public class AddPotionLootFunction extends LootItemConditionalFunction
 {
     private final ImmutableList<Pair<Potion, Float>> weightedPotionOptions;
     private final boolean isRegistryRandom;
     private final float totalWeight;
 
-    public AddPotionLootFunction(ILootCondition[] conditions, Collection<Pair<Potion, Float>> weightedPotionOptions, float totalWeight)
+    public AddPotionLootFunction(LootItemCondition[] conditions, Collection<Pair<Potion, Float>> weightedPotionOptions, float totalWeight)
     {
         super(conditions);
         if (weightedPotionOptions.size() == 0)
         {
             isRegistryRandom = true;
-            this.weightedPotionOptions = ForgeRegistries.POTION_TYPES.getEntries().stream().map(e -> Pair.of(e.getValue(), 1.0f)).collect(ImmutableList.toImmutableList());
+            this.weightedPotionOptions = ForgeRegistries.POTIONS.getEntries().stream().map(e -> Pair.of(e.getValue(), 1.0f)).collect(ImmutableList.toImmutableList());
         }
         else
         {
@@ -71,7 +71,7 @@ public class AddPotionLootFunction extends LootFunction
     }
 
     @Override
-    public LootFunctionType getType()
+    public LootItemFunctionType getType()
     {
         return ADD_POTION;
     }
@@ -81,7 +81,7 @@ public class AddPotionLootFunction extends LootFunction
         return new Builder();
     }
 
-    public static class Builder extends LootFunction.Builder<AddPotionLootFunction.Builder>
+    public static class Builder extends LootItemConditionalFunction.Builder<AddPotionLootFunction.Builder>
     {
         private final List<Pair<Potion, Float>> options = Lists.newArrayList();
 
@@ -113,16 +113,16 @@ public class AddPotionLootFunction extends LootFunction
         }
     }
 
-    public static class Serializer extends LootFunction.Serializer<AddPotionLootFunction>
+    public static class Serializer extends LootItemConditionalFunction.Serializer<AddPotionLootFunction>
     {
         @Override
-        public AddPotionLootFunction deserialize(JsonObject object, JsonDeserializationContext deserializationContext, ILootCondition[] conditionsIn)
+        public AddPotionLootFunction deserialize(JsonObject object, JsonDeserializationContext deserializationContext, LootItemCondition[] conditionsIn)
         {
             AddPotionLootFunction.Builder b = builder();
             boolean hasEntries = false;
             if (object.has("potions"))
             {
-                JsonArray potions = JSONUtils.getAsJsonArray(object, "potions");
+                JsonArray potions = GsonHelper.getAsJsonArray(object, "potions");
                 for (JsonElement e : potions)
                 {
                     float weight = 1;
@@ -134,8 +134,8 @@ public class AddPotionLootFunction extends LootFunction
                     else
                     {
                         JsonObject obj = e.getAsJsonObject();
-                        p = getPotion(JSONUtils.getAsString(obj, "potion"));
-                        weight = JSONUtils.getAsFloat(obj, "weight");
+                        p = getPotion(GsonHelper.getAsString(obj, "potion"));
+                        weight = GsonHelper.getAsFloat(obj, "weight");
                     }
                     b.with(p, weight);
                 }
@@ -148,11 +148,11 @@ public class AddPotionLootFunction extends LootFunction
                 {
                     throw new IllegalStateException("Cannot specify both 'potion' and 'potions' at the same time!");
                 }
-                b.with(getPotion(JSONUtils.getAsString(object, "potion")));
+                b.with(getPotion(GsonHelper.getAsString(object, "potion")));
             }
             if (!hasEntries)
             {
-                ForgeRegistries.POTION_TYPES.forEach(b::with);
+                ForgeRegistries.POTIONS.forEach(b::with);
             }
             return b.build();
         }
@@ -160,7 +160,7 @@ public class AddPotionLootFunction extends LootFunction
         private Potion getPotion(String name)
         {
             ResourceLocation key = new ResourceLocation(name);
-            Potion p = ForgeRegistries.POTION_TYPES.getValue(key);
+            Potion p = ForgeRegistries.POTIONS.getValue(key);
             if (p == null)
                 throw new IllegalStateException("No potion found with name " + key);
             return p;

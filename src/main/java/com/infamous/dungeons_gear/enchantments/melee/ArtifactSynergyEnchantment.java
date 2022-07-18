@@ -1,35 +1,28 @@
 package com.infamous.dungeons_gear.enchantments.melee;
 
-import com.infamous.dungeons_gear.capabilities.combo.ICombo;
+import com.infamous.dungeons_gear.capabilities.combo.Combo;
+import com.infamous.dungeons_gear.capabilities.combo.ComboHelper;
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
-import com.infamous.dungeons_libraries.items.interfaces.IMeleeWeapon;
-import com.infamous.dungeons_gear.utilties.AOECloudHelper;
-import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.PlayerAttackHelper;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
-import net.minecraft.enchantment.Enchantment.Rarity;
-
 @Mod.EventBusSubscriber(modid = MODID)
 public class ArtifactSynergyEnchantment extends DungeonsEnchantment {
 
     public ArtifactSynergyEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlotType[]{
-                EquipmentSlotType.MAINHAND});
+        super(Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlot[]{
+                EquipmentSlot.MAINHAND});
     }
 
     public int getMaxLevel() {
@@ -43,7 +36,7 @@ public class ArtifactSynergyEnchantment extends DungeonsEnchantment {
         if(!(event.getSource().getEntity() instanceof LivingEntity)) return;
         LivingEntity attacker = (LivingEntity)event.getSource().getEntity();
         ItemStack mainhand = attacker.getMainHandItem();
-        ICombo comboCap = CapabilityHelper.getComboCapability(attacker);
+        Combo comboCap = ComboHelper.getComboCapability(attacker);
         if(comboCap == null) return;
 
         if(comboCap.hasArtifactSynergy() && !attacker.level.isClientSide){

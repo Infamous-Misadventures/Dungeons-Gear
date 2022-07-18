@@ -4,14 +4,16 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
 import com.infamous.dungeons_libraries.items.interfaces.ISoulConsumer;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.UUID;
 
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_GATHERING;
+
+import net.minecraft.world.item.Item.Properties;
 
 public abstract class SoulBeaconItem extends AbstractBeaconItem implements ISoulConsumer {
 
@@ -19,12 +21,12 @@ public abstract class SoulBeaconItem extends AbstractBeaconItem implements ISoul
         super(properties);
     }
 
-    public boolean canFire(PlayerEntity playerEntity, ItemStack stack) {
+    public boolean canFire(Player playerEntity, ItemStack stack) {
         return SoulCasterHelper.canConsumeSouls(playerEntity, stack);
     }
 
     @Override
-    protected boolean consumeTick(PlayerEntity playerEntity, ItemStack itemStack) {
+    protected boolean consumeTick(Player playerEntity, ItemStack itemStack) {
         return SoulCasterHelper.consumeSouls(playerEntity, this.getActivationCost(itemStack));
     }
 

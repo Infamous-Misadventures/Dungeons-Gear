@@ -1,21 +1,22 @@
 package com.infamous.dungeons_gear.mixin;
 
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameterSets;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.LootTable;
-import net.minecraft.tileentity.LockableLootTileEntity;
-import net.minecraft.tileentity.LockableTileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,8 +26,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import javax.annotation.Nullable;
 
-@Mixin(LockableLootTileEntity.class)
-public abstract class LockableLootTileEntityMixin extends LockableTileEntity {
+@Mixin(RandomizableContainerBlockEntity.class)
+public abstract class LockableLootTileEntityMixin extends BaseContainerBlockEntity {
 
     @Shadow
     @Nullable
@@ -37,25 +38,25 @@ public abstract class LockableLootTileEntityMixin extends LockableTileEntity {
 
     private boolean isApplyingModifier = false;
 
-    protected LockableLootTileEntityMixin(TileEntityType<?> typeIn) {
-        super(typeIn);
+    protected LockableLootTileEntityMixin(BlockEntityType<?> p_155076_, BlockPos p_155077_, BlockState p_155078_) {
+        super(p_155076_, p_155077_, p_155078_);
     }
 
     @Inject(at = @At("HEAD"), method = "unpackLootTable", cancellable = true)
-    private void fillWithLoot(@Nullable PlayerEntity player, CallbackInfo callbackInfo){
+    private void fillWithLoot(@Nullable Player player, CallbackInfo callbackInfo){
         if (this.lootTable != null && this.level.getServer() != null) {
             LootTable lootTable = this.level.getServer().getLootTables().get(this.lootTable);
-            if (player instanceof ServerPlayerEntity) {
-                CriteriaTriggers.GENERATE_LOOT.trigger((ServerPlayerEntity)player, this.lootTable);
+            if (player instanceof ServerPlayer) {
+                CriteriaTriggers.GENERATE_LOOT.trigger((ServerPlayer)player, this.lootTable);
             }
 
-            LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld)this.level)).withParameter(LootParameters.ORIGIN, Vector3d.atCenterOf(this.worldPosition)).withOptionalRandomSeed(this.lootTableSeed);
+            LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerLevel)this.level)).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(this.worldPosition)).withOptionalRandomSeed(this.lootTableSeed);
             if (player != null) {
-                lootcontext$builder.withLuck(player.getLuck()).withParameter(LootParameters.THIS_ENTITY, player);
+                lootcontext$builder.withLuck(player.getLuck()).withParameter(LootContextParams.THIS_ENTITY, player);
             }
 
             this.isApplyingModifier = true;
-            lootTable.fill(this, lootcontext$builder.create(LootParameterSets.CHEST));
+            lootTable.fill(this, lootcontext$builder.create(LootContextParamSets.CHEST));
             this.isApplyingModifier = false;
 
             // Moved to the bottom of the method instead of being in the middle, with an if-check to see if it was already set to null during the loot modifier's doApply call

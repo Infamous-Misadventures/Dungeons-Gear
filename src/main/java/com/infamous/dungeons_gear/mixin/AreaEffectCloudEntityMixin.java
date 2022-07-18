@@ -1,11 +1,11 @@
 package com.infamous.dungeons_gear.mixin;
 
 import com.infamous.dungeons_libraries.utils.AbilityHelper;
-import net.minecraft.entity.AreaEffectCloudEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
+import net.minecraft.world.entity.AreaEffectCloud;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
 
 import static com.infamous.dungeons_libraries.utils.AbilityHelper.canApplyToEnemy;
 
-@Mixin(AreaEffectCloudEntity.class)
+@Mixin(AreaEffectCloud.class)
 public abstract class AreaEffectCloudEntityMixin {
 
     @Shadow
@@ -23,7 +23,7 @@ public abstract class AreaEffectCloudEntityMixin {
     public abstract LivingEntity getOwner();
 
     @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/potion/Effect;applyInstantenousEffect(Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/LivingEntity;ID)V"), method = "tick", require = 0)
-    private void instantHack(Effect effect, Entity source, Entity indirectSource, LivingEntity entityLivingBaseIn, int amplifier, double health) {
+    private void instantHack(MobEffect effect, Entity source, Entity indirectSource, LivingEntity entityLivingBaseIn, int amplifier, double health) {
         if (indirectSource instanceof LivingEntity) {
             final boolean isEnemy = effect.isBeneficial() == AbilityHelper.isAlly((LivingEntity) indirectSource, entityLivingBaseIn);
             final boolean isSelf = effect.isBeneficial() && (indirectSource == entityLivingBaseIn);
@@ -34,7 +34,7 @@ public abstract class AreaEffectCloudEntityMixin {
     }
 
     @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;addEffect(Lnet/minecraft/potion/EffectInstance;)Z"), method = "tick", require = 0)
-    private boolean extendedHack(LivingEntity livingEntity, EffectInstance effectInstanceIn) {
+    private boolean extendedHack(LivingEntity livingEntity, MobEffectInstance effectInstanceIn) {
         if (getOwner() != null) {
             final boolean isEnemy = effectInstanceIn.getEffect().isBeneficial() == AbilityHelper.isAlly(getOwner(), livingEntity);
             final boolean isSelf = effectInstanceIn.getEffect().isBeneficial() && (getOwner() == livingEntity);

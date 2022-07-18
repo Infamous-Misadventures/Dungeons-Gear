@@ -5,18 +5,20 @@ import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
 import com.infamous.dungeons_libraries.utils.RangedAttackHelper;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.BowItem;
-import net.minecraft.item.CrossbowItem;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.ItemStack;
+
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 
 public class BurstBowstringEnchantment extends DungeonsEnchantment {
 
     public BurstBowstringEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.RANGED, new EquipmentSlotType[]{
-                EquipmentSlotType.MAINHAND});
+        super(Rarity.RARE, ModEnchantmentTypes.RANGED, new EquipmentSlot[]{
+                EquipmentSlot.MAINHAND});
     }
 
     public static void activateBurstBowString(LivingEntity jumper) {

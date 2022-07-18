@@ -1,25 +1,21 @@
 package com.infamous.dungeons_gear.enchantments.melee;
 
-import com.infamous.dungeons_gear.capabilities.combo.ICombo;
-import com.infamous.dungeons_gear.damagesources.ElectricShockDamageSource;
+import com.infamous.dungeons_gear.capabilities.combo.Combo;
+import com.infamous.dungeons_gear.capabilities.combo.ComboHelper;
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
-import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.PlayerAttackHelper;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-
-import net.minecraft.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class PainCycleEnchantment extends DungeonsEnchantment {
@@ -38,7 +34,7 @@ public class PainCycleEnchantment extends DungeonsEnchantment {
             LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
             ItemStack mainhand = attacker.getMainHandItem();
             if (attacker.getLastHurtMobTimestamp() == attacker.tickCount) return;
-            ICombo comboCap = CapabilityHelper.getComboCapability(attacker);
+            Combo comboCap = ComboHelper.getComboCapability(attacker);
             if (comboCap != null) {
                 int painCycleLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.PAIN_CYCLE, mainhand);
                 int painDamage = 2;

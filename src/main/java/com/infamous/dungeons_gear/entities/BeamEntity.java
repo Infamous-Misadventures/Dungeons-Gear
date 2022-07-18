@@ -3,21 +3,25 @@ package com.infamous.dungeons_gear.entities;
 import com.infamous.dungeons_gear.items.artifacts.beacon.BeamColor;
 import com.infamous.dungeons_gear.network.NetworkHandler;
 import com.infamous.dungeons_gear.network.entity.PlayerBeamMessage;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.*;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.entity.IEntityAdditionalSpawnData;
+import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
@@ -35,12 +39,12 @@ public class BeamEntity extends Entity implements IEntityAdditionalSpawnData {
     private float beamWidth = 0.2f;
 
 
-    public BeamEntity(EntityType<?> p_i48580_1_, World p_i48580_2_) {
+    public BeamEntity(EntityType<?> p_i48580_1_, Level p_i48580_2_) {
         super(p_i48580_1_, p_i48580_2_);
     }
 
 
-    public BeamEntity(EntityType<?> p_i48580_1_, BeamColor beamColor, World p_i48580_2_, LivingEntity owner) {
+    public BeamEntity(EntityType<?> p_i48580_1_, BeamColor beamColor, Level p_i48580_2_, LivingEntity owner) {
         super(p_i48580_1_, p_i48580_2_);
         this.setOwner(owner);
         this.beamColor = beamColor;
@@ -64,38 +68,38 @@ public class BeamEntity extends Entity implements IEntityAdditionalSpawnData {
         LivingEntity owner = getOwner();
         if(!this.level.isClientSide) {
             if (owner == null) {
-                this.remove();
+                this.remove(RemovalReason.DISCARDED);
                 return;
             }
             if (!owner.isAlive()) {
-                this.remove();
+                this.remove(RemovalReason.DISCARDED);
                 return;
             }
         }
-        if (this.owner instanceof PlayerEntity && this.level.isClientSide()){
+        if (this.owner instanceof Player && this.level.isClientSide()){
             updatePositionAndRotation();
             NetworkHandler.INSTANCE.sendToServer(new PlayerBeamMessage(this));
-        }else if (!(this.owner instanceof PlayerEntity) && !this.level.isClientSide()) {
+        }else if (!(this.owner instanceof Player) && !this.level.isClientSide()) {
             updatePositionAndRotation();
         }
 
         if(!this.level.isClientSide()){
             Set<LivingEntity> entities = new HashSet<>();
-            AxisAlignedBB aabb = new AxisAlignedBB(this.position(), this.position()).inflate(beamWidth);
+            AABB aabb = new AABB(this.position(), this.position()).inflate(beamWidth);
             double distanceToDestination = beamTraceDistance(MAX_RAYTRACE_DISTANCE, 1.0f, false);
             double distanceTraveled = 0;
             while (true) {
                 if (this.position().distanceTo(aabb.getCenter()) > distanceToDestination || this.position().distanceTo(aabb.getCenter()) > MAX_RAYTRACE_DISTANCE)
                     break;
-                entities.addAll(this.level.getLoadedEntitiesOfClass(LivingEntity.class, aabb, getCanApplyToEnemyPredicate(owner)));
+                entities.addAll(this.level.getEntitiesOfClass(LivingEntity.class, aabb, getCanApplyToEnemyPredicate(owner)));
                 distanceTraveled += 1.0d;
-                Vector3d viewVector = this.getViewVector(1.0F);
-                Vector3d targetVector = this.position().add(viewVector.x * distanceTraveled, viewVector.y * distanceTraveled, viewVector.z * distanceTraveled);
-                aabb = new AxisAlignedBB(targetVector, targetVector).inflate(1.0D);
+                Vec3 viewVector = this.getViewVector(1.0F);
+                Vec3 targetVector = this.position().add(viewVector.x * distanceTraveled, viewVector.y * distanceTraveled, viewVector.z * distanceTraveled);
+                aabb = new AABB(targetVector, targetVector).inflate(1.0D);
             }
             for (LivingEntity entity : entities) {
                 entity.invulnerableTime = 0;
-                Vector3d deltaMovement = entity.getDeltaMovement();
+                Vec3 deltaMovement = entity.getDeltaMovement();
                 entity.hurt(DamageSource.indirectMagic(owner, owner), BEAM_DAMAGE_PER_TICK);
                 entity.setDeltaMovement(deltaMovement);
             }
@@ -104,11 +108,11 @@ public class BeamEntity extends Entity implements IEntityAdditionalSpawnData {
 
     public void updatePositionAndRotation() {
         LivingEntity owner = this.getOwner();
-        Vector3d vec1 = owner.position();
+        Vec3 vec1 = owner.position();
         vec1 = vec1.add(this.getOffsetVector());
         this.setPos(vec1.x, vec1.y, vec1.z);
-        this.yRot = boundDegrees(this.owner.yRot);
-        this.xRot = boundDegrees(this.owner.xRot);
+        this.setYRot(boundDegrees(this.owner.getYRot()));
+        this.setXRot(boundDegrees(this.owner.getXRot()));
         this.yRotO = boundDegrees(this.owner.yRotO);
         this.xRotO = boundDegrees(this.owner.xRotO);
     }
@@ -117,35 +121,35 @@ public class BeamEntity extends Entity implements IEntityAdditionalSpawnData {
         return (v % 360 + 360) % 360;
     }
 
-    private Vector3d getOffsetVector() {
-        Vector3d viewVector = this.getViewVector(1.0F);
-        return new Vector3d(viewVector.x, getOwner().getEyeHeight()*0.8D, viewVector.z);
+    private Vec3 getOffsetVector() {
+        Vec3 viewVector = this.getViewVector(1.0F);
+        return new Vec3(viewVector.x, getOwner().getEyeHeight()*0.8D, viewVector.z);
     }
 
     public float getBeamWidth() {
         return beamWidth;
     }
 
-    public final Vector3d getWorldPosition(float p_242282_1_) {
-        double d0 = MathHelper.lerp((double)p_242282_1_, this.xo, this.getX());
-        double d1 = MathHelper.lerp((double)p_242282_1_, this.yo, this.getY());
-        double d2 = MathHelper.lerp((double)p_242282_1_, this.zo, this.getZ());
-        return new Vector3d(d0, d1, d2);
+    public final Vec3 getWorldPosition(float p_242282_1_) {
+        double d0 = Mth.lerp((double)p_242282_1_, this.xo, this.getX());
+        double d1 = Mth.lerp((double)p_242282_1_, this.yo, this.getY());
+        double d2 = Mth.lerp((double)p_242282_1_, this.zo, this.getZ());
+        return new Vec3(d0, d1, d2);
     }
 
-    public RayTraceResult beamTraceResult(double distance, float ticks, boolean passesWater) {
-        Vector3d vector3d = this.getWorldPosition(ticks);
-        Vector3d vector3d1 = this.getViewVector(ticks);
-        Vector3d vector3d2 = vector3d.add(vector3d1.x * distance, vector3d1.y * distance, vector3d1.z * distance);
-        return level.clip(new RayTraceContext(vector3d, vector3d2, RayTraceContext.BlockMode.COLLIDER, passesWater ? RayTraceContext.FluidMode.ANY : RayTraceContext.FluidMode.NONE, this));
+    public HitResult beamTraceResult(double distance, float ticks, boolean passesWater) {
+        Vec3 vector3d = this.getWorldPosition(ticks);
+        Vec3 vector3d1 = this.getViewVector(ticks);
+        Vec3 vector3d2 = vector3d.add(vector3d1.x * distance, vector3d1.y * distance, vector3d1.z * distance);
+        return level.clip(new ClipContext(vector3d, vector3d2, ClipContext.Block.COLLIDER, passesWater ? ClipContext.Fluid.ANY : ClipContext.Fluid.NONE, this));
     }
 
     public double beamTraceDistance(double distance, float ticks, boolean passesWater) {
-        RayTraceResult rayTraceResult = beamTraceResult(distance, ticks, passesWater);
+        HitResult rayTraceResult = beamTraceResult(distance, ticks, passesWater);
         double distanceToDestination = MAX_RAYTRACE_DISTANCE;
-        if(rayTraceResult instanceof BlockRayTraceResult) {
-            BlockPos collision = ((BlockRayTraceResult) rayTraceResult).getBlockPos();
-            Vector3d destination = new Vector3d(collision.getX(), collision.getY(), collision.getZ());
+        if(rayTraceResult instanceof BlockHitResult) {
+            BlockPos collision = ((BlockHitResult) rayTraceResult).getBlockPos();
+            Vec3 destination = new Vec3(collision.getX(), collision.getY(), collision.getZ());
             distanceToDestination = this.position().distanceTo(destination);
         }
         return distanceToDestination;
@@ -154,8 +158,8 @@ public class BeamEntity extends Entity implements IEntityAdditionalSpawnData {
     @Nullable
     public LivingEntity getOwner() {
         if(this.owner == null && this.ownerUUID != null){
-            if(this.level instanceof ServerWorld) {
-                Entity entity = ((ServerWorld) this.level).getEntity(this.ownerUUID);
+            if(this.level instanceof ServerLevel) {
+                Entity entity = ((ServerLevel) this.level).getEntity(this.ownerUUID);
                 if (entity instanceof LivingEntity) {
                     this.owner = (LivingEntity) entity;
                 }
@@ -172,7 +176,7 @@ public class BeamEntity extends Entity implements IEntityAdditionalSpawnData {
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundNBT pCompound) {
+    protected void readAdditionalSaveData(CompoundTag pCompound) {
         if (pCompound.hasUUID("Owner")) {
             this.ownerUUID = pCompound.getUUID("Owner");
         }
@@ -180,21 +184,21 @@ public class BeamEntity extends Entity implements IEntityAdditionalSpawnData {
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundNBT pCompound) {
+    protected void addAdditionalSaveData(CompoundTag pCompound) {
         if (this.ownerUUID != null) {
             pCompound.putUUID("Owner", this.ownerUUID);
         }
-        pCompound.put("BeamColor", this.getBeamColor().save(new CompoundNBT()));
+        pCompound.put("BeamColor", this.getBeamColor().save(new CompoundTag()));
     }
 
     @Override
-    public IPacket<?> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
 
     @Override
-    public void writeSpawnData(PacketBuffer buffer) {
+    public void writeSpawnData(FriendlyByteBuf buffer) {
         buffer.writeUUID(this.ownerUUID);
         buffer.writeShort(this.getBeamColor().getRedValue());
         buffer.writeShort(this.getBeamColor().getGreenValue());
@@ -205,7 +209,7 @@ public class BeamEntity extends Entity implements IEntityAdditionalSpawnData {
     }
 
     @Override
-    public void readSpawnData(PacketBuffer additionalData) {
+    public void readSpawnData(FriendlyByteBuf additionalData) {
         this.ownerUUID = additionalData.readUUID();
         this.beamColor = new BeamColor(
                 additionalData.readShort(),

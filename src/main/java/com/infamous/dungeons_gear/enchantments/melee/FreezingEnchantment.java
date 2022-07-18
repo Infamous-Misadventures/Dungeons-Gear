@@ -1,44 +1,28 @@
 package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
-import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
-import com.infamous.dungeons_libraries.items.interfaces.IMeleeWeapon;
-import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 import static com.infamous.dungeons_gear.config.DungeonsGearConfig.FREEZING_DURATION;
 
-import net.minecraft.enchantment.Enchantment.Rarity;
-
 @Mod.EventBusSubscriber(modid = MODID)
 public class FreezingEnchantment extends DungeonsEnchantment {
 
     public FreezingEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlotType[]{
-                EquipmentSlotType.MAINHAND});
+        super(Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlot[]{
+                EquipmentSlot.MAINHAND});
     }
 
     public int getMaxLevel() {
@@ -57,8 +41,8 @@ public class FreezingEnchantment extends DungeonsEnchantment {
     }
 
     private static void applyFreezing(LivingEntity target, int level) {
-        EffectInstance freezing = new EffectInstance(Effects.MOVEMENT_SLOWDOWN, FREEZING_DURATION.get(), level -1);
-        EffectInstance miningFatigue = new EffectInstance(Effects.DIG_SLOWDOWN, FREEZING_DURATION.get(), level -1);
+        MobEffectInstance freezing = new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, FREEZING_DURATION.get(), level -1);
+        MobEffectInstance miningFatigue = new MobEffectInstance(MobEffects.DIG_SLOWDOWN, FREEZING_DURATION.get(), level -1);
         target.addEffect(freezing);
         target.addEffect(miningFatigue);
         PROXY.spawnParticles(target, ParticleTypes.ITEM_SNOWBALL);

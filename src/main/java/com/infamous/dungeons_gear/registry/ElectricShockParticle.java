@@ -1,9 +1,9 @@
 package com.infamous.dungeons_gear.registry;
 
 import net.minecraft.client.particle.*;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particles.BasicParticleType;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -11,10 +11,10 @@ import javax.annotation.Nullable;
 
 
 @OnlyIn(Dist.CLIENT)
-public class ElectricShockParticle extends SpriteTexturedParticle {
+public class ElectricShockParticle extends TextureSheetParticle {
 
 
-    private ElectricShockParticle(ClientWorld clientWorld, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeed, double ySpeed, double zSpeed) {
+    private ElectricShockParticle(ClientLevel clientWorld, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeed, double ySpeed, double zSpeed) {
         super(clientWorld, xCoordIn, yCoordIn, zCoordIn, 0, 0, 0);
         this.xd *= 0.009999999776482582D;
         this.yd *= 0.009999999776482582D;
@@ -25,12 +25,12 @@ public class ElectricShockParticle extends SpriteTexturedParticle {
         this.hasPhysics = false;
     }
 
-    public IParticleRenderType getRenderType() {
-        return IParticleRenderType.PARTICLE_SHEET_OPAQUE;
+    public ParticleRenderType getRenderType() {
+        return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
     }
 
     public float getQuadSize(float scaleFactor) {
-        return this.quadSize * MathHelper.clamp(((float)this.age + scaleFactor) / (float)this.lifetime * 32.0F, 0.0F, 1.0F);
+        return this.quadSize * Mth.clamp(((float)this.age + scaleFactor) / (float)this.lifetime * 32.0F, 0.0F, 1.0F);
     }
 
     public void tick() {
@@ -58,16 +58,16 @@ public class ElectricShockParticle extends SpriteTexturedParticle {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static class Factory implements IParticleFactory<BasicParticleType> {
-        private final IAnimatedSprite spriteSet;
+    public static class Factory implements ParticleProvider<SimpleParticleType> {
+        private final SpriteSet spriteSet;
 
-        Factory(IAnimatedSprite sprite){
+        Factory(SpriteSet sprite){
             this.spriteSet = sprite;
         }
 
         @Nullable
         @Override
-        public Particle createParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(SimpleParticleType typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             ElectricShockParticle shockParticle = new ElectricShockParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed);
             shockParticle.setColor(1.0f, 1.0f, 1.0f);
             shockParticle.pickSprite(this.spriteSet);

@@ -1,12 +1,11 @@
 package com.infamous.dungeons_gear.goals;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.monster.VindicatorEntity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 
 public class WildRageAttackGoal extends NearestAttackableTargetGoal<LivingEntity> {
-    public WildRageAttackGoal(MobEntity mob) {
+    public WildRageAttackGoal(Mob mob) {
         super(mob, LivingEntity.class, 0, true, true, LivingEntity::attackable);
     }
 

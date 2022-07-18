@@ -2,18 +2,17 @@ package com.infamous.dungeons_gear.entities;
 
 import com.google.common.collect.Lists;
 import com.infamous.dungeons_libraries.entities.TotemBaseEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.FireworkRocketEntity;
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.DyeItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.FireworkRocketEntity;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.network.NetworkHooks;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -29,7 +28,7 @@ public class FireworksDisplayEntity extends TotemBaseEntity implements IAnimatab
 
     AnimationFactory factory = new AnimationFactory(this);
 
-    public FireworksDisplayEntity(EntityType<?> p_i48580_1_, World p_i48580_2_) {
+    public FireworksDisplayEntity(EntityType<?> p_i48580_1_, Level p_i48580_2_) {
         super(p_i48580_1_, p_i48580_2_, 240, 2);
     }
 
@@ -49,11 +48,11 @@ public class FireworksDisplayEntity extends TotemBaseEntity implements IAnimatab
 
     private ItemStack generateRandomFireworksRocket(){
         ItemStack fireworksRocket = new ItemStack(Items.FIREWORK_ROCKET);
-        CompoundNBT fireworkNbt = fireworksRocket.getOrCreateTagElement("Fireworks");
+        CompoundTag fireworkNbt = fireworksRocket.getOrCreateTagElement("Fireworks");
 
-        ListNBT listnbt = new ListNBT();
+        ListTag listnbt = new ListTag();
         for(int i = 0; i < random.nextInt(3); i++) {
-            CompoundNBT starNbt = generateRandomStarNbt();
+            CompoundTag starNbt = generateRandomStarNbt();
             listnbt.add(starNbt);
             if (!listnbt.isEmpty()) {
                 fireworkNbt.put("Explosions", listnbt);
@@ -63,9 +62,9 @@ public class FireworksDisplayEntity extends TotemBaseEntity implements IAnimatab
         return fireworksRocket;
     }
 
-    private CompoundNBT generateRandomStarNbt() {
+    private CompoundTag generateRandomStarNbt() {
         ItemStack fireworksStar = new ItemStack(Items.FIREWORK_STAR);
-        CompoundNBT starNbt = fireworksStar.getOrCreateTagElement("Explosion");
+        CompoundTag starNbt = fireworksStar.getOrCreateTagElement("Explosion");
         starNbt.putByte("Type", (byte) random.nextInt(5));
         starNbt.putBoolean("Flicker", random.nextBoolean());
         starNbt.putBoolean("Trail", random.nextBoolean());
@@ -87,7 +86,7 @@ public class FireworksDisplayEntity extends TotemBaseEntity implements IAnimatab
     }
 
     @Override
-    public IPacket<?> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 

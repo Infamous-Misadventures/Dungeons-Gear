@@ -1,15 +1,15 @@
 package com.infamous.dungeons_gear.network;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.DistExecutor.SafeRunnable;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -22,12 +22,12 @@ public class PacketBreakItem {
         this.entityID = entityID;
     }
 
-    public static void encode(PacketBreakItem packet, PacketBuffer buf) {
+    public static void encode(PacketBreakItem packet, FriendlyByteBuf buf) {
         buf.writeInt(packet.entityID);
         buf.writeItem(packet.stack);
     }
 
-    public static PacketBreakItem decode(PacketBuffer buf) {
+    public static PacketBreakItem decode(FriendlyByteBuf buf) {
         return new PacketBreakItem(buf.readInt(), buf.readItem());
     }
 
@@ -40,7 +40,7 @@ public class PacketBreakItem {
 
                     @Override
                     public void run() {
-                        ClientWorld world = Minecraft.getInstance().level;
+                        ClientLevel world = Minecraft.getInstance().level;
                         Entity target = null;
                         if (world != null)
                             target = world.getEntity(packet.entityID);

@@ -1,8 +1,8 @@
 package com.infamous.dungeons_gear.items.melee;
 
 import com.infamous.dungeons_libraries.items.gearconfig.MeleeGear;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.*;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 
 public class StaffGear extends MeleeGear {
 

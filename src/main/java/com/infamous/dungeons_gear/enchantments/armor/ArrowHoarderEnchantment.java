@@ -4,13 +4,13 @@ import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.JumpingEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.monster.IMob;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -22,15 +22,17 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList.ARROW_HOARDER;
 import static com.infamous.dungeons_gear.registry.ItemRegistry.ARROW_BUNDLE;
 
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class ArrowHoarderEnchantment extends JumpingEnchantment {
 
     public ArrowHoarderEnchantment() {
-        super(Rarity.UNCOMMON, ModEnchantmentTypes.ARMOR, new EquipmentSlotType[]{
-                EquipmentSlotType.HEAD,
-                EquipmentSlotType.CHEST,
-                EquipmentSlotType.LEGS,
-                EquipmentSlotType.FEET});
+        super(Rarity.UNCOMMON, ModEnchantmentTypes.ARMOR, new EquipmentSlot[]{
+                EquipmentSlot.HEAD,
+                EquipmentSlot.CHEST,
+                EquipmentSlot.LEGS,
+                EquipmentSlot.FEET});
     }
 
     public int getMaxLevel() {
@@ -46,7 +48,7 @@ public class ArrowHoarderEnchantment extends JumpingEnchantment {
             int drops = (maxLevel / 4);
             drops += attacker.getRandom().nextFloat() <= (maxLevel % 4) / 4.0F ? 1 : 0;
             Collection<ItemEntity> itemEntities = event.getDrops();
-            if (drops > 0 && victim instanceof IMob && itemEntities.stream().anyMatch(itemEntity -> itemEntity.getItem().getItem().equals(Items.ARROW))) {
+            if (drops > 0 && victim instanceof Enemy && itemEntities.stream().anyMatch(itemEntity -> itemEntity.getItem().getItem().equals(Items.ARROW))) {
                 ItemEntity arrowDrop = new ItemEntity(victim.level, victim.getX(), victim.getY(), victim.getZ(), new ItemStack(ARROW_BUNDLE.get(), drops));
                 itemEntities.add(arrowDrop);
             }

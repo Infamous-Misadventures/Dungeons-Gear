@@ -1,14 +1,14 @@
 package com.infamous.dungeons_gear.items.melee;
 
-import com.infamous.dungeons_libraries.items.gearconfig.MeleeGear;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class ShearsGear extends DualWieldMeleeGear {
 
@@ -17,10 +17,10 @@ public class ShearsGear extends DualWieldMeleeGear {
     }
 
     @Override
-    public boolean mineBlock(ItemStack p_179218_1_, World p_179218_2_, BlockState p_179218_3_, BlockPos p_179218_4_, LivingEntity p_179218_5_) {
-        if (!p_179218_2_.isClientSide && !p_179218_3_.getBlock().is(BlockTags.FIRE)) {
+    public boolean mineBlock(ItemStack p_179218_1_, Level p_179218_2_, BlockState p_179218_3_, BlockPos p_179218_4_, LivingEntity p_179218_5_) {
+        if (!p_179218_2_.isClientSide && !ForgeRegistries.BLOCKS.tags().getTag(BlockTags.FIRE).contains(p_179218_3_.getBlock())) {
             p_179218_1_.hurtAndBreak(1, p_179218_5_, (p_220036_0_) -> {
-                p_220036_0_.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
+                p_220036_0_.broadcastBreakEvent(EquipmentSlot.MAINHAND);
             });
         }
 
@@ -42,23 +42,23 @@ public class ShearsGear extends DualWieldMeleeGear {
     }
 
     @Override
-    public net.minecraft.util.ActionResultType interactLivingEntity(ItemStack stack, net.minecraft.entity.player.PlayerEntity playerIn, LivingEntity entity, net.minecraft.util.Hand hand) {
-        if (entity.level.isClientSide) return net.minecraft.util.ActionResultType.PASS;
+    public net.minecraft.world.InteractionResult interactLivingEntity(ItemStack stack, net.minecraft.world.entity.player.Player playerIn, LivingEntity entity, net.minecraft.world.InteractionHand hand) {
+        if (entity.level.isClientSide) return net.minecraft.world.InteractionResult.PASS;
         if (entity instanceof net.minecraftforge.common.IForgeShearable) {
             net.minecraftforge.common.IForgeShearable target = (net.minecraftforge.common.IForgeShearable)entity;
             BlockPos pos = new BlockPos(entity.getX(), entity.getY(), entity.getZ());
             if (target.isShearable(stack, entity.level, pos)) {
                 java.util.List<ItemStack> drops = target.onSheared(playerIn, stack, entity.level, pos,
-                        net.minecraft.enchantment.EnchantmentHelper.getItemEnchantmentLevel(net.minecraft.enchantment.Enchantments.BLOCK_FORTUNE, stack));
+                        net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(net.minecraft.world.item.enchantment.Enchantments.BLOCK_FORTUNE, stack));
                 java.util.Random rand = new java.util.Random();
                 drops.forEach(d -> {
-                    net.minecraft.entity.item.ItemEntity ent = entity.spawnAtLocation(d, 1.0F);
+                    net.minecraft.world.entity.item.ItemEntity ent = entity.spawnAtLocation(d, 1.0F);
                     ent.setDeltaMovement(ent.getDeltaMovement().add((double)((rand.nextFloat() - rand.nextFloat()) * 0.1F), (double)(rand.nextFloat() * 0.05F), (double)((rand.nextFloat() - rand.nextFloat()) * 0.1F)));
                 });
                 stack.hurtAndBreak(1, entity, e -> e.broadcastBreakEvent(hand));
             }
-            return net.minecraft.util.ActionResultType.SUCCESS;
+            return net.minecraft.world.InteractionResult.SUCCESS;
         }
-        return net.minecraft.util.ActionResultType.PASS;
+        return net.minecraft.world.InteractionResult.PASS;
     }
 }

@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.utilties;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 

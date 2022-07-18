@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.registry;
 
-import net.minecraft.potion.Potion;
+import net.minecraft.world.item.alchemy.Potion;
 
 public class PotionList {
     public static Potion SHORT_STRENGTH;

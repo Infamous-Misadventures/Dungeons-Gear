@@ -6,12 +6,12 @@ import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_libraries.utils.PetHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -25,8 +25,8 @@ import static com.infamous.dungeons_libraries.utils.ArrowHelper.shooterIsLiving;
 public class MastersCallEnchantment extends DungeonsEnchantment {
 
     public MastersCallEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.MELEE_RANGED, new EquipmentSlotType[]{
-                EquipmentSlotType.MAINHAND});
+        super(Rarity.RARE, ModEnchantmentTypes.MELEE_RANGED, new EquipmentSlot[]{
+                EquipmentSlot.MAINHAND});
     }
 
     @SubscribeEvent
@@ -44,21 +44,21 @@ public class MastersCallEnchantment extends DungeonsEnchantment {
     }
 
     @SubscribeEvent
-    public static void onArrowImpact(ProjectileImpactEvent.Arrow event) {
-        RayTraceResult rayTraceResult = event.getRayTraceResult();
-        //if(!EnchantUtils.arrowHitLivingEntity(rayTraceResult)) return;
-        AbstractArrowEntity arrow = event.getArrow();
-        if (!shooterIsLiving(arrow)) return;
-        LivingEntity shooter = (LivingEntity) arrow.getOwner();
+    public static void onArrowImpact(ProjectileImpactEvent event) {
+        HitResult rayTraceResult = event.getRayTraceResult();
+        if(event.getProjectile() instanceof AbstractArrow arrow) {
+            if (!shooterIsLiving(arrow)) return;
+            LivingEntity shooter = (LivingEntity) arrow.getOwner();
 
-        int enchantLevel = enchantmentTagToLevel(arrow, MeleeRangedEnchantmentList.MASTERS_CALL);
+            int enchantLevel = enchantmentTagToLevel(arrow, MeleeRangedEnchantmentList.MASTERS_CALL);
 
-        if (enchantLevel > 0) {
-            if (rayTraceResult instanceof EntityRayTraceResult) {
-                EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult) rayTraceResult;
-                if (entityRayTraceResult.getEntity() instanceof LivingEntity) {
-                    LivingEntity victim = (LivingEntity) ((EntityRayTraceResult) rayTraceResult).getEntity();
-                    PetHelper.makeNearbyPetsAttackTarget(victim, shooter);
+            if (enchantLevel > 0) {
+                if (rayTraceResult instanceof EntityHitResult) {
+                    EntityHitResult entityRayTraceResult = (EntityHitResult) rayTraceResult;
+                    if (entityRayTraceResult.getEntity() instanceof LivingEntity) {
+                        LivingEntity victim = (LivingEntity) ((EntityHitResult) rayTraceResult).getEntity();
+                        PetHelper.makeNearbyPetsAttackTarget(victim, shooter);
+                    }
                 }
             }
         }

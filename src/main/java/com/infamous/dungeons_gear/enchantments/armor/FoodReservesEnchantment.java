@@ -2,43 +2,38 @@ package com.infamous.dungeons_gear.enchantments.armor;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
+import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DropsEnchantment;
 import com.infamous.dungeons_gear.utilties.LootTableHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
-import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-
-import net.minecraft.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class FoodReservesEnchantment extends DropsEnchantment {
 
     public FoodReservesEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlotType[]{
-                EquipmentSlotType.HEAD,
-                EquipmentSlotType.CHEST,
-                EquipmentSlotType.LEGS,
-                EquipmentSlotType.FEET});
+        super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlot[]{
+                EquipmentSlot.HEAD,
+                EquipmentSlot.CHEST,
+                EquipmentSlot.LEGS,
+                EquipmentSlot.FEET});
     }
 
     public int getMaxLevel() {
@@ -52,16 +47,16 @@ public class FoodReservesEnchantment extends DropsEnchantment {
 
     @SubscribeEvent
     public static void onPlayerUsedHealthPotion(LivingEntityUseItemEvent.Finish event){
-        if(!(event.getEntityLiving() instanceof PlayerEntity)) return;
-        PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+        if(!(event.getEntityLiving() instanceof Player)) return;
+        Player player = (Player) event.getEntityLiving();
         if(player.isAlive()){
-            List<EffectInstance> potionEffects = PotionUtils.getMobEffects(event.getItem());
+            List<MobEffectInstance> potionEffects = PotionUtils.getMobEffects(event.getItem());
             if(potionEffects.isEmpty()) return;
-            if(potionEffects.get(0).getEffect() == Effects.HEAL){
+            if(potionEffects.get(0).getEffect() == MobEffects.HEAL){
                 if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.FOOD_RESERVES)){
                     int foodReservesLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.FOOD_RESERVES, player);
                     while(foodReservesLevel > 0){
-                        ItemStack itemStack = LootTableHelper.generateItemStack((ServerWorld) player.level, player.blockPosition(), new ResourceLocation(MODID, "enchantments/food_reserves"), player.getRandom());
+                        ItemStack itemStack = LootTableHelper.generateItemStack((ServerLevel) player.level, player.blockPosition(), new ResourceLocation(MODID, "enchantments/food_reserves"), player.getRandom());
                         ItemEntity foodDrop = new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), itemStack);
                         player.level.addFreshEntity(foodDrop);
                         foodReservesLevel--;

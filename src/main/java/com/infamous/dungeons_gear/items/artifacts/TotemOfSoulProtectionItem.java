@@ -7,20 +7,20 @@ import com.infamous.dungeons_gear.network.PacketBreakItem;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
 import com.infamous.dungeons_libraries.items.interfaces.ISoulConsumer;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.network.PacketDistributor;
 
 import java.util.List;
 import java.util.UUID;
@@ -28,19 +28,21 @@ import java.util.UUID;
 import static com.infamous.dungeons_gear.utilties.AOECloudHelper.spawnSoulProtectionCloudAtPos;
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_GATHERING;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class TotemOfSoulProtectionItem extends ArtifactItem implements ISoulConsumer {
     public TotemOfSoulProtectionItem(Properties properties) {
         super(properties);
         procOnItemUse=true;
     }
 
-    public ActionResult<ItemStack> procArtifact(ArtifactUseContext itemUseContext) {
-        World world = itemUseContext.getLevel();
+    public InteractionResultHolder<ItemStack> procArtifact(ArtifactUseContext itemUseContext) {
+        Level world = itemUseContext.getLevel();
         if (world.isClientSide) {
-            return ActionResult.success(itemUseContext.getItemStack());
+            return InteractionResultHolder.success(itemUseContext.getItemStack());
         } else {
             ItemStack itemUseContextItem = itemUseContext.getItemStack();
-            PlayerEntity itemUseContextPlayer = itemUseContext.getPlayer();
+            Player itemUseContextPlayer = itemUseContext.getPlayer();
             BlockPos itemUseContextPos = itemUseContext.getClickedPos();
             Direction itemUseContextFace = itemUseContext.getClickedFace();
             BlockState blockState = world.getBlockState(itemUseContextPos);
@@ -60,12 +62,12 @@ public class TotemOfSoulProtectionItem extends ArtifactItem implements ISoulCons
                 }
             }
         }
-        return ActionResult.consume(itemUseContext.getItemStack());
+        return InteractionResultHolder.consume(itemUseContext.getItemStack());
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
+    public void appendHoverText(ItemStack stack, Level world, List<Component> list, TooltipFlag flag)
     {
         super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);

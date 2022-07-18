@@ -5,10 +5,10 @@ import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -17,7 +17,7 @@ import java.util.UUID;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
-import net.minecraft.enchantment.Enchantment.Rarity;
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class RecklessEnchantment extends DungeonsEnchantment {
@@ -34,7 +34,7 @@ public class RecklessEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        PlayerEntity player = event.player;
+        Player player = event.player;
         if (player == null) return;
         if (event.phase == TickEvent.Phase.START) return;
         if (player.isAlive()) {

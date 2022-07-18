@@ -165,7 +165,7 @@ public class DungeonsGearConfig {
         ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS = builder
                 .comment("Enable applying enchantments together to create combinations would  be considered too overpowered. \n" +
                         "If you don't want overpowered enchantment combinations, like Sharpness and Committed on a sword, disable this feature. [true / false]")
-                .define("enableOverpoweredEnchantmentCombos", false);
+                .define("enableOverpoweredEnchantmentDualWields", false);
         ENCHANTMENT_BLACKLIST = builder
                 .comment("Add enchantments that should be prevented from being applied to any gear. \n"
                         + "To do so, enter their registry names.")

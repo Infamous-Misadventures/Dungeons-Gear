@@ -4,26 +4,26 @@ import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.utilties.PlayerAttackHelper;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
-import net.minecraft.enchantment.Enchantment.Rarity;
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class GuardingStrikeEnchantment extends AOEDamageEnchantment {
 
     public GuardingStrikeEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlotType[]{
-                EquipmentSlotType.MAINHAND});
+        super(Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlot[]{
+                EquipmentSlot.MAINHAND});
     }
 
     public int getMaxLevel() {
@@ -39,7 +39,7 @@ public class GuardingStrikeEnchantment extends AOEDamageEnchantment {
             int guardingStrikeLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.GUARDING_STRIKE, mainhand);
             if(guardingStrikeLevel > 0){
                 int duration = 20 + 20 * guardingStrikeLevel;
-                EffectInstance shield = new EffectInstance(Effects.DAMAGE_RESISTANCE, duration, 2);
+                MobEffectInstance shield = new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, duration, 2);
                 attacker.addEffect(shield);
             }
         }

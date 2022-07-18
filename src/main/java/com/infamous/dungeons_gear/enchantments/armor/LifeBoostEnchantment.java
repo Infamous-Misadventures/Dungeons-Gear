@@ -4,22 +4,17 @@ import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.util.DamageSource;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.UUID;
-
-import net.minecraft.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class LifeBoostEnchantment extends DungeonsEnchantment {
@@ -35,13 +30,13 @@ public class LifeBoostEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onRespawn(PlayerEvent.Clone event){
-        PlayerEntity oldPlayer = event.getOriginal();
+        Player oldPlayer = event.getOriginal();
         DamageSource lastDamageSource = oldPlayer.getLastDamageSource();
         if(lastDamageSource != null
                 && (lastDamageSource.getEntity() == null || lastDamageSource.getEntity() == oldPlayer)) return;
         // must have been killed by another entity to receive the life boost
 
-        ModifiableAttributeInstance oldMaxHealth = oldPlayer.getAttribute(Attributes.MAX_HEALTH);
+        AttributeInstance oldMaxHealth = oldPlayer.getAttribute(Attributes.MAX_HEALTH);
         double oldLifeBoostValue = 0;
         if(oldMaxHealth != null){
             AttributeModifier oldLifeBoost = oldMaxHealth.getModifier(LIFE_BOOST);
@@ -50,10 +45,10 @@ public class LifeBoostEnchantment extends DungeonsEnchantment {
             }
         }
 
-        PlayerEntity newPlayer = event.getPlayer();
+        Player newPlayer = event.getPlayer();
         int lifeBoostLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.LIFE_BOOST, oldPlayer);
         if(lifeBoostLevel > 0){
-            ModifiableAttributeInstance newMaxHealth = newPlayer.getAttribute(Attributes.MAX_HEALTH);
+            AttributeInstance newMaxHealth = newPlayer.getAttribute(Attributes.MAX_HEALTH);
             if (newMaxHealth != null) {
                 newMaxHealth.addPermanentModifier(new AttributeModifier(LIFE_BOOST, "life boost addition", (2.0D * lifeBoostLevel) + oldLifeBoostValue, AttributeModifier.Operation.ADDITION));
             }

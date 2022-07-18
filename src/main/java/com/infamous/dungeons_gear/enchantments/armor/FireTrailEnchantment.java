@@ -3,19 +3,19 @@ package com.infamous.dungeons_gear.enchantments.armor;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.JumpingEnchantment;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.entity.EquipmentSlot;
 
-import net.minecraft.enchantment.Enchantment.Rarity;
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 
 public class FireTrailEnchantment extends JumpingEnchantment {
 
     public FireTrailEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlotType[]{
-                EquipmentSlotType.HEAD,
-                EquipmentSlotType.CHEST,
-                EquipmentSlotType.LEGS,
-                EquipmentSlotType.FEET});
+        super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlot[]{
+                EquipmentSlot.HEAD,
+                EquipmentSlot.CHEST,
+                EquipmentSlot.LEGS,
+                EquipmentSlot.FEET});
     }
 
     public int getMaxLevel() {

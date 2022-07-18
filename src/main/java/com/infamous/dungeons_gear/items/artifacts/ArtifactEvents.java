@@ -1,26 +1,26 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
 import com.infamous.dungeons_gear.DungeonsGear;
+import com.infamous.dungeons_gear.capabilities.artifact.ArtifactUsage;
 import com.infamous.dungeons_gear.capabilities.artifact.ArtifactUsageHelper;
-import com.infamous.dungeons_gear.capabilities.artifact.IArtifactUsage;
-import com.infamous.dungeons_gear.capabilities.combo.ICombo;
+import com.infamous.dungeons_gear.capabilities.combo.Combo;
+import com.infamous.dungeons_gear.capabilities.combo.ComboHelper;
 import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.integration.curios.CuriosIntegration;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
-import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
-import com.infamous.dungeons_libraries.capabilities.minionmaster.IMinion;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.passive.SheepEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.world.server.ServerWorld;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.Minion;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Sheep;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
@@ -42,16 +42,16 @@ public class ArtifactEvents {
 
     @SubscribeEvent
     public static void onEnchantedSheepAttack(LivingDamageEvent event){
-        if(event.getSource().getEntity() instanceof SheepEntity){
-            SheepEntity sheepEntity = (SheepEntity)event.getSource().getEntity();
-            IMinion summonableCap = getMinionCapability(sheepEntity);
+        if(event.getSource().getEntity() instanceof Sheep){
+            Sheep sheepEntity = (Sheep)event.getSource().getEntity();
+            Minion summonableCap = getMinionCapability(sheepEntity);
             if(summonableCap == null) return;
             if(summonableCap.getMaster() != null){
                 if(sheepEntity.getTags().contains(FIRE_SHEEP_TAG)){
                     event.getEntityLiving().setSecondsOnFire(5);
                 }
                 else if(sheepEntity.getTags().contains(POISON_SHEEP_TAG)){
-                    EffectInstance poison = new EffectInstance(Effects.POISON, 100);
+                    MobEffectInstance poison = new MobEffectInstance(MobEffects.POISON, 100);
                     event.getEntityLiving().addEffect(poison);
                 }
             }
@@ -60,15 +60,15 @@ public class ArtifactEvents {
 
     @SubscribeEvent
     public static void updateBlueEnchantedSheep(LivingEvent.LivingUpdateEvent event){
-        if(event.getEntityLiving() instanceof SheepEntity){
-            SheepEntity sheepEntity = (SheepEntity)event.getEntityLiving();
-            IMinion summonableCap = getMinionCapability(sheepEntity);
+        if(event.getEntityLiving() instanceof Sheep){
+            Sheep sheepEntity = (Sheep)event.getEntityLiving();
+            Minion summonableCap = getMinionCapability(sheepEntity);
             if(summonableCap == null) return;
             LivingEntity summoner = summonableCap.getMaster();
             if(summoner != null){
-                if(sheepEntity.level instanceof ServerWorld){
-                    if(!summoner.hasEffect(Effects.MOVEMENT_SPEED) && sheepEntity.getTags().contains(SPEED_SHEEP_TAG)){
-                        EffectInstance speed = new EffectInstance(Effects.MOVEMENT_SPEED, 100);
+                if(sheepEntity.level instanceof ServerLevel){
+                    if(!summoner.hasEffect(MobEffects.MOVEMENT_SPEED) && sheepEntity.getTags().contains(SPEED_SHEEP_TAG)){
+                        MobEffectInstance speed = new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 100);
                         summoner.addEffect(speed);
                     }
                 }
@@ -82,20 +82,20 @@ public class ArtifactEvents {
             event.setCanceled(true);
             event.getEntityLiving().setHealth(1.0F);
             event.getEntityLiving().removeAllEffects();
-            event.getEntityLiving().addEffect(new EffectInstance(Effects.REGENERATION, 900, 1));
-            event.getEntityLiving().addEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 900, 1));
-            event.getEntityLiving().addEffect(new EffectInstance(Effects.ABSORPTION, 100, 1));
+            event.getEntityLiving().addEffect(new MobEffectInstance(MobEffects.REGENERATION, 900, 1));
+            event.getEntityLiving().addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 900, 1));
+            event.getEntityLiving().addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 1));
         }
     }
 
     @SubscribeEvent
     public static void onArrowJoinWorld(EntityJoinWorldEvent event){
-        if(event.getEntity() instanceof AbstractArrowEntity){
-            AbstractArrowEntity arrowEntity = (AbstractArrowEntity) event.getEntity();
+        if(event.getEntity() instanceof AbstractArrow){
+            AbstractArrow arrowEntity = (AbstractArrow) event.getEntity();
             Entity shooter = arrowEntity.getOwner();
-            if(shooter instanceof PlayerEntity){
-                PlayerEntity playerEntity = (PlayerEntity) shooter;
-                ICombo comboCap = CapabilityHelper.getComboCapability(playerEntity);
+            if(shooter instanceof Player){
+                Player playerEntity = (Player) shooter;
+                Combo comboCap = ComboHelper.getComboCapability(playerEntity);
                 if(comboCap == null) return;
                 if(comboCap.getFlamingArrowsCount() > 0){
                     int count = comboCap.getFlamingArrowsCount();
@@ -131,40 +131,41 @@ public class ArtifactEvents {
 
 
     @SubscribeEvent
-    public static void onSpecialArrowImpact(ProjectileImpactEvent.Arrow event)  {
+    public static void onSpecialArrowImpact(ProjectileImpactEvent event) {
 
-        AbstractArrowEntity arrowEntity = event.getArrow();
-        Entity shooter = arrowEntity.getOwner();
+        if (event.getProjectile() instanceof AbstractArrow arrow) {
+            Entity shooter = arrow.getOwner();
 
-        if (!(shooter instanceof PlayerEntity))return;
-        PlayerEntity player = (PlayerEntity) shooter;
+            if (!(shooter instanceof Player)) return;
+            Player player = (Player) shooter;
 
-        if (arrowEntity.getTags().contains(TormentQuiverItem.TORMENT_ARROW)){
-            if (arrowEntity.tickCount > 1200){
-                arrowEntity.remove();
-                event.setCanceled(true);
-            }
-
-            if(event.getRayTraceResult() instanceof EntityRayTraceResult){
-                EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult) event.getRayTraceResult();
-                Entity targetEntity = entityRayTraceResult.getEntity();
-                if(!(targetEntity instanceof LivingEntity)){
+            if (arrow.getTags().contains(TormentQuiverItem.TORMENT_ARROW)) {
+                if (arrow.tickCount > 1200) {
+                    arrow.remove(Entity.RemovalReason.DISCARDED);
                     event.setCanceled(true);
                 }
 
-                int currentKnockbackStrength = arrowEntity.knockback;
-                (arrowEntity).setKnockback(currentKnockbackStrength + 1);
-            }
+                if (event.getRayTraceResult() instanceof EntityHitResult) {
+                    EntityHitResult entityRayTraceResult = (EntityHitResult) event.getRayTraceResult();
+                    Entity targetEntity = entityRayTraceResult.getEntity();
+                    if (!(targetEntity instanceof LivingEntity)) {
+                        event.setCanceled(true);
+                    }
 
-            if(event.getRayTraceResult() instanceof BlockRayTraceResult)event.setCanceled(true);
-        }
-        if (arrowEntity.getTags().contains(ThunderingQuiverItem.THUNDERING_ARROW)){
-            if(event.getRayTraceResult() instanceof EntityRayTraceResult){
-                EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult) event.getRayTraceResult();
-                Entity targetEntity = entityRayTraceResult.getEntity();
-                if(targetEntity instanceof LivingEntity){
-                    SoundHelper.playLightningStrikeSounds(arrowEntity);
-                    AreaOfEffectHelper.electrifyNearbyEnemies(arrowEntity, 5, 5, Integer.MAX_VALUE);
+                    int currentKnockbackStrength = arrow.knockback;
+                    (arrow).setKnockback(currentKnockbackStrength + 1);
+                }
+
+                if (event.getRayTraceResult() instanceof BlockHitResult) event.setCanceled(true);
+            }
+            if (arrow.getTags().contains(ThunderingQuiverItem.THUNDERING_ARROW)) {
+                if (event.getRayTraceResult() instanceof EntityHitResult) {
+                    EntityHitResult entityRayTraceResult = (EntityHitResult) event.getRayTraceResult();
+                    Entity targetEntity = entityRayTraceResult.getEntity();
+                    if (targetEntity instanceof LivingEntity) {
+                        SoundHelper.playLightningStrikeSounds(arrow);
+                        AreaOfEffectHelper.electrifyNearbyEnemies(arrow, 5, 5, Integer.MAX_VALUE);
+                    }
                 }
             }
         }
@@ -193,7 +194,7 @@ public class ArtifactEvents {
         if (event.phase != TickEvent.Phase.END) {
             return;
         }
-        IArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(event.player);
+        ArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(event.player);
         if(cap != null && cap.isUsingArtifact() && cap.getUsingArtifact().getItem() instanceof ArtifactItem){
             cap.getUsingArtifact().getItem().onUseTick(event.player.level, event.player, cap.getUsingArtifact(), cap.getUsingArtifactRemaining());
             cap.setUsingArtifactRemaining(cap.getUsingArtifactRemaining() - 1);

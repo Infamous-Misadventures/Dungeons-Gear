@@ -5,26 +5,26 @@ import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.FocusEnchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.IndirectEntityDamageSource;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import net.minecraft.enchantment.Enchantment.Rarity;
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class SoulFocusEnchantment extends FocusEnchantment {
 
     public SoulFocusEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlotType[]{
-                EquipmentSlotType.HEAD,
-                EquipmentSlotType.CHEST,
-                EquipmentSlotType.LEGS,
-                EquipmentSlotType.FEET});
+        super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlot[]{
+                EquipmentSlot.HEAD,
+                EquipmentSlot.CHEST,
+                EquipmentSlot.LEGS,
+                EquipmentSlot.FEET});
     }
 
     @Override

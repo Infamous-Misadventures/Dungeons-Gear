@@ -5,12 +5,12 @@ import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.potion.PotionUtils;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -19,15 +19,17 @@ import java.util.List;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class PotionAuraEnchantment extends DungeonsEnchantment {
 
     public PotionAuraEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlotType[]{
-                EquipmentSlotType.HEAD,
-                EquipmentSlotType.CHEST,
-                EquipmentSlotType.LEGS,
-                EquipmentSlotType.FEET});
+        super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlot[]{
+                EquipmentSlot.HEAD,
+                EquipmentSlot.CHEST,
+                EquipmentSlot.LEGS,
+                EquipmentSlot.FEET});
     }
 
     public int getMaxLevel() {
@@ -36,13 +38,13 @@ public class PotionAuraEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onPlayerDamaged(LivingEntityUseItemEvent.Finish event){
-        if(!(event.getEntityLiving() instanceof PlayerEntity)) return;
-        PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+        if(!(event.getEntityLiving() instanceof Player)) return;
+        Player player = (Player) event.getEntityLiving();
         if(player.isAlive()){
-            List<EffectInstance> potionEffects = PotionUtils.getMobEffects(event.getItem());
+            List<MobEffectInstance> potionEffects = PotionUtils.getMobEffects(event.getItem());
             if(potionEffects.isEmpty()) return;
-            EffectInstance effectInstance = potionEffects.get(0);
-            if(effectInstance.getEffect() == Effects.HEAL){
+            MobEffectInstance effectInstance = potionEffects.get(0);
+            if(effectInstance.getEffect() == MobEffects.HEAL){
                 if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.POTION_AURA)){
                     int potionBarrierLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.POTION_AURA, player);
                     AreaOfEffectHelper.healNearbyAllies(player, effectInstance, 6.0F*potionBarrierLevel);

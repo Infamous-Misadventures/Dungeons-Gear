@@ -2,11 +2,11 @@ package com.infamous.dungeons_gear.integration.curios.client.message;
 
 import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_gear.items.artifacts.ArtifactUseContext;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.network.NetworkEvent;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 
@@ -15,19 +15,19 @@ import java.util.function.Supplier;
 
 public class CuriosArtifactStartMessage {
     private final int slot;
-    private BlockRayTraceResult hitResult;
+    private BlockHitResult hitResult;
 
-    public CuriosArtifactStartMessage(int slot, BlockRayTraceResult hitResult) {
+    public CuriosArtifactStartMessage(int slot, BlockHitResult hitResult) {
         this.slot = slot;
         this.hitResult = hitResult;
     }
 
-    public static void encode(CuriosArtifactStartMessage packet, PacketBuffer buf) {
+    public static void encode(CuriosArtifactStartMessage packet, FriendlyByteBuf buf) {
         buf.writeInt(packet.slot);
         buf.writeBlockHitResult(packet.hitResult);
     }
 
-    public static CuriosArtifactStartMessage decode(PacketBuffer buf) {
+    public static CuriosArtifactStartMessage decode(FriendlyByteBuf buf) {
         return new CuriosArtifactStartMessage(buf.readInt(), buf.readBlockHitResult());
     }
 
@@ -36,7 +36,7 @@ public class CuriosArtifactStartMessage {
             if (packet != null) {
                 ctx.get().setPacketHandled(true);
                 ctx.get().enqueueWork(() -> {
-                    ServerPlayerEntity player = ctx.get().getSender();
+                    ServerPlayer player = ctx.get().getSender();
                     if (player != null) {
                         CuriosApi.getCuriosHelper().getCuriosHandler(player).ifPresent(iCuriosItemHandler -> {
                             Optional<ICurioStacksHandler> artifactStackHandler = iCuriosItemHandler.getStacksHandler("artifact");

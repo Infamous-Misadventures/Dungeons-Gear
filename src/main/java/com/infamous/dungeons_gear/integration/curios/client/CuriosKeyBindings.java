@@ -1,28 +1,28 @@
  package com.infamous.dungeons_gear.integration.curios.client;
 
 import com.infamous.dungeons_gear.capabilities.artifact.ArtifactUsageHelper;
-import com.infamous.dungeons_gear.capabilities.artifact.IArtifactUsage;
+import com.infamous.dungeons_gear.capabilities.artifact.ArtifactUsage;
 import com.infamous.dungeons_gear.network.NetworkHandler;
 import com.infamous.dungeons_gear.integration.curios.client.message.CuriosArtifactStartMessage;
 import com.infamous.dungeons_gear.integration.curios.client.message.CuriosArtifactStopMessage;
 import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_gear.items.artifacts.ArtifactUseContext;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import org.lwjgl.glfw.GLFW;
 import top.theillusivec4.curios.api.CuriosApi;
@@ -35,9 +35,9 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 @Mod.EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
 public class CuriosKeyBindings {
 
-    public static final KeyBinding activateArtifact1 = new KeyBinding("key.dungeons_gear.curiosintegration.description_slot1", GLFW.GLFW_KEY_V, "key.dungeons_gear.curiosintegration.category");
-    public static final KeyBinding activateArtifact2 = new KeyBinding("key.dungeons_gear.curiosintegration.description_slot2", GLFW.GLFW_KEY_B, "key.dungeons_gear.curiosintegration.category");
-    public static final KeyBinding activateArtifact3 = new KeyBinding("key.dungeons_gear.curiosintegration.description_slot3", GLFW.GLFW_KEY_N, "key.dungeons_gear.curiosintegration.category");
+    public static final KeyMapping activateArtifact1 = new KeyMapping("key.dungeons_gear.curiosintegration.description_slot1", GLFW.GLFW_KEY_V, "key.dungeons_gear.curiosintegration.category");
+    public static final KeyMapping activateArtifact2 = new KeyMapping("key.dungeons_gear.curiosintegration.description_slot2", GLFW.GLFW_KEY_B, "key.dungeons_gear.curiosintegration.category");
+    public static final KeyMapping activateArtifact3 = new KeyMapping("key.dungeons_gear.curiosintegration.description_slot3", GLFW.GLFW_KEY_N, "key.dungeons_gear.curiosintegration.category");
 
     public static void setupCuriosKeybindings() {
         activateArtifact1.setKeyConflictContext(KeyConflictContext.IN_GAME);
@@ -53,8 +53,8 @@ public class CuriosKeyBindings {
         if (event.phase != TickEvent.Phase.START || event.side != LogicalSide.CLIENT) {
             return;
         }
-        PlayerEntity player = event.player;
-        IArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(player);
+        Player player = event.player;
+        ArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(player);
         if(cap.isUsingArtifact()) {
             if (!activateArtifact1.isDown()) {
                 sendCuriosStopMessageToServer(0, player, cap);
@@ -94,7 +94,7 @@ public class CuriosKeyBindings {
         stopUsingAllArtifacts(event.getPlayer());
     }
 
-    private static void stopUsingAllArtifacts(PlayerEntity player) {
+    private static void stopUsingAllArtifacts(Player player) {
         CuriosApi.getCuriosHelper().getCuriosHandler(player).ifPresent(iCuriosItemHandler -> {
             Optional<ICurioStacksHandler> artifactStackHandler = iCuriosItemHandler.getStacksHandler("artifact");
             if (artifactStackHandler.isPresent()) {
@@ -110,23 +110,23 @@ public class CuriosKeyBindings {
     }
 
     private static void sendCuriosStartMessageToServer(int slot) {
-        RayTraceResult hitResult = Minecraft.getInstance().hitResult;
-        ClientPlayerEntity player = Minecraft.getInstance().player;
+        HitResult hitResult = Minecraft.getInstance().hitResult;
+        LocalPlayer player = Minecraft.getInstance().player;
         if(player != null) {
-            if (hitResult == null || hitResult.getType() == RayTraceResult.Type.MISS) {
-                BlockRayTraceResult blockRayTraceResult = new BlockRayTraceResult(player.position(), Direction.UP, player.blockPosition(), false);
+            if (hitResult == null || hitResult.getType() == HitResult.Type.MISS) {
+                BlockHitResult blockRayTraceResult = new BlockHitResult(player.position(), Direction.UP, player.blockPosition(), false);
                 curiosStartMessage(slot, blockRayTraceResult, player);
-            } else if (hitResult.getType() == RayTraceResult.Type.BLOCK) {
-                curiosStartMessage(slot, (BlockRayTraceResult) hitResult, player);
-            } else if (hitResult.getType() == RayTraceResult.Type.ENTITY) {
-                EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult) hitResult;
-                BlockRayTraceResult blockRayTraceResult = new BlockRayTraceResult(entityRayTraceResult.getEntity().position(), Direction.UP, entityRayTraceResult.getEntity().blockPosition(), false);
+            } else if (hitResult.getType() == HitResult.Type.BLOCK) {
+                curiosStartMessage(slot, (BlockHitResult) hitResult, player);
+            } else if (hitResult.getType() == HitResult.Type.ENTITY) {
+                EntityHitResult entityRayTraceResult = (EntityHitResult) hitResult;
+                BlockHitResult blockRayTraceResult = new BlockHitResult(entityRayTraceResult.getEntity().position(), Direction.UP, entityRayTraceResult.getEntity().blockPosition(), false);
                 curiosStartMessage(slot, blockRayTraceResult, player);
             }
         }
     }
 
-    private static void curiosStartMessage(int slot, BlockRayTraceResult blockRayTraceResult, ClientPlayerEntity player) {
+    private static void curiosStartMessage(int slot, BlockHitResult blockRayTraceResult, LocalPlayer player) {
         NetworkHandler.INSTANCE.sendToServer(new CuriosArtifactStartMessage(slot, blockRayTraceResult));
         CuriosApi.getCuriosHelper().getCuriosHandler(player).ifPresent(iCuriosItemHandler -> {
             Optional<ICurioStacksHandler> artifactStackHandler = iCuriosItemHandler.getStacksHandler("artifact");
@@ -140,7 +140,7 @@ public class CuriosKeyBindings {
         });
     }
 
-    private static void sendCuriosStopMessageToServer(int slot, PlayerEntity player, IArtifactUsage cap) {
+    private static void sendCuriosStopMessageToServer(int slot, Player player, ArtifactUsage cap) {
         if(player != null) {
             CuriosApi.getCuriosHelper().getCuriosHandler(player).ifPresent(iCuriosItemHandler -> {
                 Optional<ICurioStacksHandler> artifactStackHandler = iCuriosItemHandler.getStacksHandler("artifact");
@@ -148,7 +148,7 @@ public class CuriosKeyBindings {
                     ItemStack artifact = artifactStackHandler.get().getStacks().getStackInSlot(slot);
                     if (!artifact.isEmpty() && artifact.getItem() instanceof ArtifactItem && cap.isSameUsingArtifact(artifact)) {
                         NetworkHandler.INSTANCE.sendToServer(new CuriosArtifactStopMessage(slot));
-                        IArtifactUsage capability = ArtifactUsageHelper.getArtifactUsageCapability(player);
+                        ArtifactUsage capability = ArtifactUsageHelper.getArtifactUsageCapability(player);
                         capability.stopUsingArtifact();
                     }
                 }

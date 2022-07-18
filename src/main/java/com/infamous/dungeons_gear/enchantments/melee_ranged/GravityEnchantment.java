@@ -1,22 +1,12 @@
 package com.infamous.dungeons_gear.enchantments.melee_ranged;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
-import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
-import com.infamous.dungeons_libraries.utils.ArrowHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
@@ -25,8 +15,8 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 public class GravityEnchantment extends DungeonsEnchantment {
 
     public GravityEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlotType[]{
-            EquipmentSlotType.MAINHAND});
+        super(Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlot[]{
+            EquipmentSlot.MAINHAND});
     }
 
     @Override

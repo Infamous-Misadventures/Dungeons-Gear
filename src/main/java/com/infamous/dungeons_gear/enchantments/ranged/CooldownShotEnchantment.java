@@ -5,25 +5,25 @@ import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_libraries.utils.RangedAttackHelper;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
-import net.minecraft.enchantment.Enchantment.Rarity;
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class CooldownShotEnchantment extends DungeonsEnchantment {
 
     public CooldownShotEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.RANGED, new EquipmentSlotType[]{
-                EquipmentSlotType.MAINHAND});
+        super(Rarity.RARE, ModEnchantmentTypes.RANGED, new EquipmentSlot[]{
+                EquipmentSlot.MAINHAND});
     }
 
     public int getMaxLevel() {
@@ -35,8 +35,8 @@ public class CooldownShotEnchantment extends DungeonsEnchantment {
         LivingEntity livingEntity = event.getEntityLiving();
         int charge = event.getCharge();
         ItemStack stack = event.getBow();
-        if(livingEntity instanceof PlayerEntity && !event.getWorld().isClientSide){
-            PlayerEntity player = (PlayerEntity) livingEntity;
+        if(livingEntity instanceof Player && !event.getWorld().isClientSide){
+            Player player = (Player) livingEntity;
             float arrowVelocity = RangedAttackHelper.getArrowVelocity(livingEntity, stack, charge);
             if(arrowVelocity >= 1.0F){
                 int cooldownShotLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.COOLDOWN_SHOT, stack);

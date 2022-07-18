@@ -1,14 +1,14 @@
 package com.infamous.dungeons_gear.entities;
 
-import com.infamous.dungeons_libraries.capabilities.minionmaster.IMaster;
+import com.infamous.dungeons_libraries.capabilities.minionmaster.Master;
 import com.infamous.dungeons_libraries.entities.TotemBaseEntity;
 import com.infamous.dungeons_libraries.summon.SummonHelper;
-import net.minecraft.entity.EntityType;
-import net.minecraft.network.IPacket;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.network.NetworkHooks;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -23,23 +23,23 @@ public class BuzzyNestEntity extends TotemBaseEntity implements IAnimatable {
 
     AnimationFactory factory = new AnimationFactory(this);
 
-    public BuzzyNestEntity(EntityType<?> p_i48580_1_, World p_i48580_2_) {
+    public BuzzyNestEntity(EntityType<?> p_i48580_1_, Level p_i48580_2_) {
         super(p_i48580_1_, p_i48580_2_, 200, 20);
     }
 
     @Override
     protected void applyTotemEffect() {
         if(!this.level.isClientSide() && this.lifeTicks % 20 == 0 && this.getOwner() != null) {
-            IMaster summonerCap = getMasterCapability(this.getOwner());
+            Master summonerCap = getMasterCapability(this.getOwner());
             if (summonerCap != null) {
                 SummonHelper.summonEntity(this.getOwner(), this.blockPosition(), EntityType.BEE);
-                this.level.playSound(null, this.blockPosition(), SoundEvents.BEEHIVE_EXIT, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                this.level.playSound(null, this.blockPosition(), SoundEvents.BEEHIVE_EXIT, SoundSource.BLOCKS, 1.0F, 1.0F);
             }
         }
     }
 
     @Override
-    public IPacket<?> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 

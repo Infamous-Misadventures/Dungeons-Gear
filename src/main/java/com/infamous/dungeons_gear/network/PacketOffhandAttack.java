@@ -1,14 +1,14 @@
 package com.infamous.dungeons_gear.network;
 
-import com.infamous.dungeons_gear.registry.AttributeRegistry;
 import com.infamous.dungeons_gear.items.interfaces.IDualWieldWeapon;
+import com.infamous.dungeons_gear.registry.AttributeRegistry;
 import com.infamous.dungeons_gear.utilties.PlayerAttackHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.*;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.Hand;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -19,11 +19,11 @@ public class PacketOffhandAttack {
         this.entityID = entityID;
     }
 
-    public static void encode(PacketOffhandAttack packet, PacketBuffer buf) {
+    public static void encode(PacketOffhandAttack packet, FriendlyByteBuf buf) {
         buf.writeInt(packet.entityID);
     }
 
-    public static PacketOffhandAttack decode(PacketBuffer buf) {
+    public static PacketOffhandAttack decode(FriendlyByteBuf buf) {
         return new PacketOffhandAttack(buf.readInt());
     }
 
@@ -37,7 +37,7 @@ public class PacketOffhandAttack {
                 ((NetworkEvent.Context)ctx.get()).enqueueWork(new Runnable() {
                     @Override
                     public void run() {
-                            ServerPlayerEntity player = ((NetworkEvent.Context)ctx.get()).getSender();
+                            ServerPlayer player = ((NetworkEvent.Context)ctx.get()).getSender();
                         Entity target = null;
                         if (player != null) {
                             target = player.level.getEntity(packet.entityID);
@@ -61,7 +61,7 @@ public class PacketOffhandAttack {
                                             PlayerAttackHelper.attackTargetEntityWithCurrentOffhandItem(player, target);
                                         }
 
-                                        PlayerAttackHelper.swingArm(player, Hand.OFF_HAND);
+                                        PlayerAttackHelper.swingArm(player, InteractionHand.OFF_HAND);
                                     }
 
                                 }

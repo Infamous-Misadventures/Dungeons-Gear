@@ -7,14 +7,14 @@ import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
-import net.minecraft.enchantment.DamageEnchantment;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.item.enchantment.DamageEnchantment;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.util.Mth;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -27,8 +27,8 @@ import static com.infamous.dungeons_gear.config.DungeonsGearConfig.DYNAMO_MAX_ST
 public class DynamoEnchantment extends DamageBoostEnchantment {
 
     public DynamoEnchantment() {
-        super(Enchantment.Rarity.RARE, ModEnchantmentTypes.MELEE_RANGED, new EquipmentSlotType[]{
-                EquipmentSlotType.MAINHAND});
+        super(Enchantment.Rarity.RARE, ModEnchantmentTypes.MELEE_RANGED, new EquipmentSlot[]{
+                EquipmentSlot.MAINHAND});
     }
 
     @Override
@@ -41,28 +41,28 @@ public class DynamoEnchantment extends DamageBoostEnchantment {
         return 3;
     }
 
-    public static void handleAddDynamoEnchantment(PlayerEntity playerEntity) {
+    public static void handleAddDynamoEnchantment(Player playerEntity) {
         ItemStack mainhand = playerEntity.getMainHandItem();
         if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.DYNAMO)) {
             int dynamoLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeRangedEnchantmentList.DYNAMO, mainhand);
-            EffectInstance currentEffectInstance = playerEntity.getEffect(CustomEffects.DYNAMO);
+            MobEffectInstance currentEffectInstance = playerEntity.getEffect(CustomEffects.DYNAMO);
             int i = dynamoLevel;
             if (currentEffectInstance != null) {
                 i += currentEffectInstance.getAmplifier();
             }
-            i = MathHelper.clamp(i, 0, DYNAMO_MAX_STACKS.get());
-            EffectInstance effectinstance = new EffectInstance(CustomEffects.DYNAMO, 120000, i);
+            i = Mth.clamp(i, 0, DYNAMO_MAX_STACKS.get());
+            MobEffectInstance effectinstance = new MobEffectInstance(CustomEffects.DYNAMO, 120000, i);
             playerEntity.addEffect(effectinstance);
         }
     }
 
     @SubscribeEvent
     public static void onLivingDamageEvent(LivingDamageEvent event) {
-        if (event.getSource().getEntity() instanceof PlayerEntity) {
-            PlayerEntity playerEntity = (PlayerEntity) event.getSource().getEntity();
+        if (event.getSource().getEntity() instanceof Player) {
+            Player playerEntity = (Player) event.getSource().getEntity();
             ItemStack mainhand = playerEntity.getMainHandItem();
             if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.DYNAMO)) {
-                EffectInstance effectinstance = playerEntity.getEffect(CustomEffects.DYNAMO);
+                MobEffectInstance effectinstance = playerEntity.getEffect(CustomEffects.DYNAMO);
                 if (effectinstance != null) {
                     int dynamoAmplifier = effectinstance.getAmplifier() + 1;
                     event.setAmount((float) (event.getAmount() * (1 + dynamoAmplifier * DYNAMO_DAMAGE_MULTIPLIER_PER_STACK.get())));

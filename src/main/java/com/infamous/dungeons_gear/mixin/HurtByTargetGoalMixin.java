@@ -2,12 +2,12 @@ package com.infamous.dungeons_gear.mixin;
 
 
 import com.google.common.collect.Lists;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.goal.HurtByTargetGoal;
-import net.minecraft.entity.ai.goal.TargetGoal;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.TargetGoal;
+import net.minecraft.world.phys.AABB;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -21,7 +21,7 @@ public abstract class HurtByTargetGoalMixin extends TargetGoal {
     @Shadow
     private Class<?>[] toIgnoreAlert;
 
-    public HurtByTargetGoalMixin(MobEntity mobIn, boolean checkSight) {
+    public HurtByTargetGoalMixin(Mob mobIn, boolean checkSight) {
         super(mobIn, checkSight);
     }
 
@@ -33,19 +33,19 @@ public abstract class HurtByTargetGoalMixin extends TargetGoal {
     @Overwrite
     protected void alertOthers() {
         double d0 = this.getFollowDistance();
-        AxisAlignedBB axisalignedbb = AxisAlignedBB.unitCubeFromLowerCorner(this.mob.position()).inflate(d0, 10.0D, d0);
+        AABB axisalignedbb = AABB.unitCubeFromLowerCorner(this.mob.position()).inflate(d0, 10.0D, d0);
         List<Class<?>> reinforcement = null;
         if (toIgnoreAlert != null)
             reinforcement = Lists.newArrayList(toIgnoreAlert);
-        List<MobEntity> list = this.mob.level.getLoadedEntitiesOfClass(this.mob.getClass(), axisalignedbb);
-        Iterator<MobEntity> iterator = list.iterator();
+        List<? extends Mob> list = this.mob.level.getEntitiesOfClass(this.mob.getClass(), axisalignedbb);
+        Iterator<? extends Mob> iterator = list.iterator();
 
         while (reinforcement != null && iterator.hasNext()) {
-            MobEntity mobentity = iterator.next();
+            Mob mobentity = iterator.next();
             if (this.mob != mobentity
                     && mobentity.getTarget() == null
-                    && (!(this.mob instanceof TameableEntity) ||
-                    (mobentity instanceof TameableEntity && ((TameableEntity) this.mob).getOwner() == ((TameableEntity) mobentity).getOwner()))
+                    && (!(this.mob instanceof TamableAnimal) ||
+                    (mobentity instanceof TamableAnimal && ((TamableAnimal) this.mob).getOwner() == ((TamableAnimal) mobentity).getOwner()))
                     && (this.mob.getLastHurtByMob() != null && !mobentity.isAlliedTo(this.mob.getLastHurtByMob()))
                     && reinforcement.contains(mobentity.getClass())) {
                 //if you're not me and have no target and I'm either not tamed or you're tamed to the same master and I have a revenge target and you're not on the same team as my revenge target and you're one of the reinforcement types, set attack target to the same person
@@ -55,7 +55,7 @@ public abstract class HurtByTargetGoalMixin extends TargetGoal {
         }
     }
 
-    protected void setAttackTarget(MobEntity mobIn, LivingEntity targetIn) {
+    protected void setAttackTarget(Mob mobIn, LivingEntity targetIn) {
         mobIn.setTarget(targetIn);
     }
 

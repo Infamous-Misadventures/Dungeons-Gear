@@ -4,21 +4,23 @@ import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.config.DungeonsGearConfig.THUNDERING_BASE_DAMAGE;
 import static com.infamous.dungeons_gear.config.DungeonsGearConfig.THUNDERING_CHANCE;
 
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = MODID)
 public class ThunderingEnchantment extends AOEDamageEnchantment {
 
     public ThunderingEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlotType[]{
-                EquipmentSlotType.MAINHAND});
+        super(Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlot[]{
+                EquipmentSlot.MAINHAND});
     }
 
     public int getMaxLevel() {

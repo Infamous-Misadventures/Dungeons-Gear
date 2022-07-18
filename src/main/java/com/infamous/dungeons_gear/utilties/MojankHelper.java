@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.utilties;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.EquipmentSlot;
 
 public class MojankHelper {
 
@@ -10,6 +10,6 @@ public class MojankHelper {
      * Try undoing in 1.18
      * */
     public static void hurtEnemyBroadcastBreakEvent(LivingEntity livingEntity) {
-        livingEntity.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
+        livingEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND);
     }
 }

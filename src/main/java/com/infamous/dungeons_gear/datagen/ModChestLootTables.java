@@ -8,13 +8,16 @@ import com.infamous.dungeons_gear.loot.LootTableType;
 import com.infamous.dungeons_libraries.items.interfaces.IArmor;
 import com.infamous.dungeons_libraries.items.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_libraries.items.interfaces.IRangedWeapon;
-import net.minecraft.data.loot.ChestLootTables;
-import net.minecraft.item.Item;
-import net.minecraft.loot.*;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.loot.functions.EnchantWithLevels;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.data.loot.ChestLoot;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.*;
+import net.minecraft.world.level.storage.loot.functions.EnchantWithLevelsFunction;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,13 +27,11 @@ import java.util.stream.Collectors;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.items.ItemTagWrappers.FOOD_PROCESSED;
-import static com.infamous.dungeons_gear.loot.LootTableRarity.COMMON;
 import static com.infamous.dungeons_gear.registry.ItemRegistry.*;
-import static com.infamous.dungeons_gear.utilties.GeneralHelper.modLoc;
-import static net.minecraft.item.Items.*;
 import static net.minecraft.tags.ItemTags.ARROWS;
+import static net.minecraft.world.item.Items.*;
 
-public class ModChestLootTables extends ChestLootTables {
+public class ModChestLootTables extends ChestLoot {
 
     private List<Item> EXPERIMENTAL_ITEMS = Arrays.asList(
             DAGGER.get(),
@@ -78,17 +79,17 @@ public class ModChestLootTables extends ChestLootTables {
     }
 
     private void createTableForSubtype(BiConsumer<ResourceLocation, LootTable.Builder> consumer, List<Item> items, ResourceLocation lootTable) {
-        LootPool.Builder lootPool = LootPool.lootPool().setRolls(ConstantRange.exactly(1));
+        LootPool.Builder lootPool = LootPool.lootPool().setRolls(ConstantValue.exactly(1));
         if(items.isEmpty()){
-            lootPool.add(EmptyLootEntry.emptyItem());
+            lootPool.add(EmptyLootItem.emptyItem());
         }else{
             items.forEach(item -> lootPool.add(getItemLootEntry(item)));
         }
         consumer.accept(lootTable, LootTable.lootTable().withPool(lootPool));
     }
 
-    private StandaloneLootEntry.Builder<?> getItemLootEntry(Item item) {
-        StandaloneLootEntry.Builder<?> builder = ItemLootEntry.lootTableItem(item);
+    private LootPoolSingletonContainer.Builder<?> getItemLootEntry(Item item) {
+        LootPoolSingletonContainer.Builder<?> builder = LootItem.lootTableItem(item);
         if(EXPERIMENTAL_ITEMS.contains(item)){
             builder.when(ExperimentalCondition::new);
         }
@@ -120,28 +121,28 @@ public class ModChestLootTables extends ChestLootTables {
     private void createItemLootTables(BiConsumer<ResourceLocation, LootTable.Builder> consumer, LootTableType lootTableType) {
         consumer.accept(LootTableRarity.COMMON.getTable(lootTableType),
                 LootTable.lootTable().
-                        withPool(LootPool.lootPool().setRolls(RandomValueRange.between(0.0F, 2.0F)).bonusRolls(0, 1)
-                                .add(TableLootEntry.lootTableReference(lootTableType.normalTable()).setWeight(54))
-                                .add(TableLootEntry.lootTableReference(lootTableType.uniqueTable()).setWeight(1).setQuality(1))
-                                .add(EmptyLootEntry.emptyItem().setWeight(45).setQuality(-1)))
+                        withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0.0F, 2.0F)).setBonusRolls(UniformGenerator.between(0, 1))
+                                .add(LootTableReference.lootTableReference(lootTableType.normalTable()).setWeight(54))
+                                .add(LootTableReference.lootTableReference(lootTableType.uniqueTable()).setWeight(1).setQuality(1))
+                                .add(EmptyLootItem.emptyItem().setWeight(45).setQuality(-1)))
         );
         consumer.accept(LootTableRarity.FANCY.getTable(lootTableType),
                 LootTable.lootTable().
-                        withPool(LootPool.lootPool().setRolls(RandomValueRange.between(1.0F, 3.0F)).bonusRolls(0, 2)
-                                .add(TableLootEntry.lootTableReference(lootTableType.artifactTable()).setWeight(15))
-                                .add(TableLootEntry.lootTableReference(lootTableType.normalTable()).setWeight(12).setQuality(-2))
-                                .add(TableLootEntry.lootTableReference(lootTableType.normalTable()).setWeight(28).setQuality(2).apply(EnchantWithLevels.enchantWithLevels(ConstantRange.exactly(15)).allowTreasure()))
-                                .add(TableLootEntry.lootTableReference(lootTableType.uniqueTable()).setWeight(5).setQuality(2).apply(EnchantWithLevels.enchantWithLevels(ConstantRange.exactly(15)).allowTreasure()))
-                                .add(EmptyLootEntry.emptyItem().setWeight(40).setQuality(-2)))
+                        withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 3.0F)).setBonusRolls(UniformGenerator.between(0, 2))
+                                .add(LootTableReference.lootTableReference(lootTableType.artifactTable()).setWeight(15))
+                                .add(LootTableReference.lootTableReference(lootTableType.normalTable()).setWeight(12).setQuality(-2))
+                                .add(LootTableReference.lootTableReference(lootTableType.normalTable()).setWeight(28).setQuality(2).apply(EnchantWithLevelsFunction.enchantWithLevels(ConstantValue.exactly(15)).allowTreasure()))
+                                .add(LootTableReference.lootTableReference(lootTableType.uniqueTable()).setWeight(5).setQuality(2).apply(EnchantWithLevelsFunction.enchantWithLevels(ConstantValue.exactly(15)).allowTreasure()))
+                                .add(EmptyLootItem.emptyItem().setWeight(40).setQuality(-2)))
         );
         consumer.accept(LootTableRarity.OBSIDIAN.getTable(lootTableType),
                 LootTable.lootTable().
-                        withPool(LootPool.lootPool().setRolls(RandomValueRange.between(1.0F, 4.0F)).bonusRolls(0, 2)
-                                .add(TableLootEntry.lootTableReference(lootTableType.artifactTable()).setWeight(15))
-                                .add(TableLootEntry.lootTableReference(lootTableType.normalTable()).setWeight(17).setQuality(-2).apply(EnchantWithLevels.enchantWithLevels(ConstantRange.exactly(15)).allowTreasure()))
-                                .add(TableLootEntry.lootTableReference(lootTableType.normalTable()).setWeight(28).setQuality(3).apply(EnchantWithLevels.enchantWithLevels(ConstantRange.exactly(30)).allowTreasure()))
-                                .add(TableLootEntry.lootTableReference(lootTableType.uniqueTable()).setWeight(5).setQuality(3).apply(EnchantWithLevels.enchantWithLevels(ConstantRange.exactly(30)).allowTreasure()))
-                                .add(EmptyLootEntry.emptyItem().setWeight(35).setQuality(-4)))
+                        withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 4.0F)).setBonusRolls(UniformGenerator.between(0, 2))
+                                .add(LootTableReference.lootTableReference(lootTableType.artifactTable()).setWeight(15))
+                                .add(LootTableReference.lootTableReference(lootTableType.normalTable()).setWeight(17).setQuality(-2).apply(EnchantWithLevelsFunction.enchantWithLevels(ConstantValue.exactly(15)).allowTreasure()))
+                                .add(LootTableReference.lootTableReference(lootTableType.normalTable()).setWeight(28).setQuality(3).apply(EnchantWithLevelsFunction.enchantWithLevels(ConstantValue.exactly(30)).allowTreasure()))
+                                .add(LootTableReference.lootTableReference(lootTableType.uniqueTable()).setWeight(5).setQuality(3).apply(EnchantWithLevelsFunction.enchantWithLevels(ConstantValue.exactly(30)).allowTreasure()))
+                                .add(EmptyLootItem.emptyItem().setWeight(35).setQuality(-4)))
         );
     }
 
@@ -149,64 +150,64 @@ public class ModChestLootTables extends ChestLootTables {
         ResourceLocation tagTable = new ResourceLocation(MODID, "items/arrow_bundle/expand_tag");
         consumer.accept(tagTable,
                 LootTable.lootTable().
-                        withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
-                                .add(TagLootEntry.expandTag(ARROWS))));
+                        withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                                .add(TagEntry.expandTag(ARROWS))));
         consumer.accept(new ResourceLocation(MODID, "items/arrow_bundle"),
                 LootTable.lootTable().
-                        withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
-                                .add(ItemLootEntry.lootTableItem(() -> ARROW).setWeight(3))
-                                .add(TableLootEntry.lootTableReference(tagTable).setWeight(1).apply(AddPotionLootFunction.builder()))));
+                        withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                                .add(LootItem.lootTableItem(() -> ARROW).setWeight(3))
+                                .add(LootTableReference.lootTableReference(tagTable).setWeight(1).apply(AddPotionLootFunction.builder()))));
     }
 
     private void satchelOfSnacksLootTable(BiConsumer<ResourceLocation, LootTable.Builder> consumer) {
         consumer.accept(new ResourceLocation(MODID, "items/satchel_of_snacks"),
                 LootTable.lootTable().
-                        withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
-                                .add(TagLootEntry.expandTag(FOOD_PROCESSED))));
+                        withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                                .add(TagEntry.expandTag(FOOD_PROCESSED))));
     }
 
     private void satchelOfElixirsLootTable(BiConsumer<ResourceLocation, LootTable.Builder> consumer) {
         consumer.accept(new ResourceLocation(MODID, "items/satchel_of_elixirs"),
                 LootTable.lootTable().
-                        withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
-                                .add(ItemLootEntry.lootTableItem(() -> POTION).apply(AddPotionLootFunction.builder()))));
+                        withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                                .add(LootItem.lootTableItem(() -> POTION).apply(AddPotionLootFunction.builder()))));
     }
 
     private void foodReservesLootTable(BiConsumer<ResourceLocation, LootTable.Builder> consumer) {
         consumer.accept(new ResourceLocation(MODID, "enchantments/food_reserves"),
                 LootTable.lootTable().
-                        withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
-                                .add(TagLootEntry.expandTag(FOOD_PROCESSED))));
+                        withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                                .add(TagEntry.expandTag(FOOD_PROCESSED))));
     }
 
     private void surpriseGiftLootTable(BiConsumer<ResourceLocation, LootTable.Builder> consumer) {
         consumer.accept(new ResourceLocation(MODID, "enchantments/surprise_gift"),
                 LootTable.lootTable().
-                        withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
-                                .add(ItemLootEntry.lootTableItem(() -> POTION).setWeight(75).apply(AddPotionLootFunction.builder()))
-                                .add(ItemLootEntry.lootTableItem(ARROW_BUNDLE::get).setWeight(25))));
+                        withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                                .add(LootItem.lootTableItem(() -> POTION).setWeight(75).apply(AddPotionLootFunction.builder()))
+                                .add(LootItem.lootTableItem(ARROW_BUNDLE::get).setWeight(25))));
     }
 
     private void luckyExplorerLootTable(BiConsumer<ResourceLocation, LootTable.Builder> consumer) {
         consumer.accept(new ResourceLocation(MODID, "enchantments/lucky_explorer"),
                 LootTable.lootTable().
-                        withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
-                                .add(ItemLootEntry.lootTableItem(() -> EMERALD))));
+                        withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                                .add(LootItem.lootTableItem(() -> EMERALD))));
     }
 
     private void prospectorLootTables(BiConsumer<ResourceLocation, LootTable.Builder> consumer) {
         consumer.accept(new ResourceLocation(MODID, "enchantments/prospector/overworld"),
                 LootTable.lootTable().
-                        withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
-                                .add(ItemLootEntry.lootTableItem(() -> EMERALD))));
+                        withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                                .add(LootItem.lootTableItem(() -> EMERALD))));
         consumer.accept(new ResourceLocation(MODID, "enchantments/prospector/the_nether"),
                 LootTable.lootTable().
-                        withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
-                                .add(ItemLootEntry.lootTableItem(() -> GOLD_INGOT))));
+                        withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                                .add(LootItem.lootTableItem(() -> GOLD_INGOT))));
         consumer.accept(new ResourceLocation(MODID, "enchantments/prospector/the_end"),
                 LootTable.lootTable().
-                        withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
-                                .add(ItemLootEntry.lootTableItem(() -> EMERALD))));
+                        withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                                .add(LootItem.lootTableItem(() -> EMERALD))));
     }
 
 

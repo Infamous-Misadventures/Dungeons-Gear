@@ -3,21 +3,21 @@ package com.infamous.dungeons_gear.utilties;
 import com.infamous.dungeons_gear.damagesources.ElectricShockDamageSource;
 import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.registry.ParticleInit;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.LightningBoltEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.particles.BasicParticleType;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 import java.util.Random;
@@ -31,7 +31,7 @@ public class AreaOfEffectHelper {
     public static final double PULL_IN_SPEED_FACTOR = 0.15;
     public static final Random RANDOM = new Random();
 
-    public static boolean applyElementalEffectsToNearbyEnemies(PlayerEntity playerIn, int limit, float distance) {
+    public static boolean applyElementalEffectsToNearbyEnemies(Player playerIn, int limit, float distance) {
         applyToNearbyEntities(playerIn, distance, limit,
                 getCanApplyToEnemyPredicate(playerIn),
                 (LivingEntity nearbyEntity) -> {
@@ -52,7 +52,7 @@ public class AreaOfEffectHelper {
         return true;
     }
 
-    public static void pullInNearbyEntities(LivingEntity attacker, LivingEntity target, float distance, BasicParticleType particleType) {
+    public static void pullInNearbyEntities(LivingEntity attacker, LivingEntity target, float distance, SimpleParticleType particleType) {
         PROXY.spawnParticles(target, ParticleTypes.PORTAL);
         applyToNearbyEntities(target, distance,
                 getCanApplyToSecondEnemyPredicate(attacker, target),
@@ -60,29 +60,29 @@ public class AreaOfEffectHelper {
         );
     }
 
-    public static void pullVictimTowardsTarget(LivingEntity target, LivingEntity nearbyEntity, BasicParticleType particleType, double pullInSpeedFactor) {
+    public static void pullVictimTowardsTarget(LivingEntity target, LivingEntity nearbyEntity, SimpleParticleType particleType, double pullInSpeedFactor) {
         double motionX = target.getX() - (nearbyEntity.getX());
         double motionY = target.getY() - (nearbyEntity.getY());
         double motionZ = target.getZ() - (nearbyEntity.getZ());
-        Vector3d vector3d = new Vector3d(motionX, motionY, motionZ).scale(pullInSpeedFactor);
+        Vec3 vector3d = new Vec3(motionX, motionY, motionZ).scale(pullInSpeedFactor);
 
         nearbyEntity.setDeltaMovement(vector3d);
         PROXY.spawnParticles(nearbyEntity, particleType);
     }
 
-    public static void pullInNearbyEntitiesAtPos(LivingEntity attacker, BlockPos blockPos, int distance, BasicParticleType particleType) {
-        World world = attacker.getCommandSenderWorld();
+    public static void pullInNearbyEntitiesAtPos(LivingEntity attacker, BlockPos blockPos, int distance, SimpleParticleType particleType) {
+        Level world = attacker.getCommandSenderWorld();
         applyToNearbyEntitiesAtPos(blockPos, world, distance,
                 getCanApplyToEnemyPredicate(attacker),
                 (LivingEntity nearbyEntity) -> pullVictimTowardsPos(blockPos, nearbyEntity, particleType)
         );
     }
 
-    private static void pullVictimTowardsPos(BlockPos targetPos, LivingEntity nearbyEntity, BasicParticleType particleType) {
+    private static void pullVictimTowardsPos(BlockPos targetPos, LivingEntity nearbyEntity, SimpleParticleType particleType) {
         double motionX = targetPos.getX() - (nearbyEntity.getX());
         double motionY = targetPos.getY() - (nearbyEntity.getY());
         double motionZ = targetPos.getZ() - (nearbyEntity.getZ());
-        Vector3d vector3d = new Vector3d(motionX, motionY, motionZ).scale(PULL_IN_SPEED_FACTOR);
+        Vec3 vector3d = new Vec3(motionX, motionY, motionZ).scale(PULL_IN_SPEED_FACTOR);
 
         nearbyEntity.setDeltaMovement(vector3d);
         PROXY.spawnParticles(nearbyEntity, particleType);
@@ -90,7 +90,7 @@ public class AreaOfEffectHelper {
 
     public static void chainNearbyEntities(LivingEntity attacker, LivingEntity target, float distance, int timeMultiplier) {
         PROXY.spawnParticles(target, ParticleTypes.PORTAL);
-        EffectInstance chained = new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 20 * timeMultiplier, 5);
+        MobEffectInstance chained = new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * timeMultiplier, 5);
         target.addEffect(chained);
         applyToNearbyEntities(target, distance,
                 getCanApplyToSecondEnemyPredicate(attacker, target),
@@ -98,7 +98,7 @@ public class AreaOfEffectHelper {
                     double motionX = target.getX() - (nearbyEntity.getX());
                     double motionY = target.getY() - (nearbyEntity.getY());
                     double motionZ = target.getZ() - (nearbyEntity.getZ());
-                    Vector3d vector3d = new Vector3d(motionX, motionY, motionZ).scale(PULL_IN_SPEED_FACTOR);
+                    Vec3 vector3d = new Vec3(motionX, motionY, motionZ).scale(PULL_IN_SPEED_FACTOR);
 
                     nearbyEntity.setDeltaMovement(vector3d);
                     nearbyEntity.addEffect(chained);
@@ -107,8 +107,8 @@ public class AreaOfEffectHelper {
         );
     }
 
-    public static void healNearbyAllies(LivingEntity healer, EffectInstance potionEffect, float distance) {
-        PlayerEntity playerentity = healer instanceof PlayerEntity ? (PlayerEntity) healer : null;
+    public static void healNearbyAllies(LivingEntity healer, MobEffectInstance potionEffect, float distance) {
+        Player playerentity = healer instanceof Player ? (Player) healer : null;
         applyToNearbyEntities(healer, distance,
                 getCanHealPredicate(healer),
                 (LivingEntity nearbyEntity) -> {
@@ -116,7 +116,7 @@ public class AreaOfEffectHelper {
                         if (potionEffect.getEffect().isInstantenous()) {
                             potionEffect.getEffect().applyInstantenousEffect(playerentity, playerentity, nearbyEntity, potionEffect.getAmplifier(), 1.0D);
                         } else {
-                            nearbyEntity.addEffect(new EffectInstance(potionEffect));
+                            nearbyEntity.addEffect(new MobEffectInstance(potionEffect));
                         }
                         PROXY.spawnParticles(nearbyEntity, ParticleTypes.HEART);
                     }
@@ -137,7 +137,7 @@ public class AreaOfEffectHelper {
     }
 
     public static LivingEntity findMostInjuredAlly(LivingEntity healer, float distance) {
-        World world = healer.getCommandSenderWorld();
+        Level world = healer.getCommandSenderWorld();
         List<LivingEntity> nearbyEntities = getNearbyEnemies(healer,distance, world, getCanHealPredicate(healer));
         if (!nearbyEntities.isEmpty()) {
             float lostHealth = 0;
@@ -154,8 +154,8 @@ public class AreaOfEffectHelper {
 
     public static void causeShockwave(LivingEntity attacker, LivingEntity target, float damageAmount, float distance) {
         DamageSource shockwave = DamageSource.explosion(attacker);
-        Vector3d vec1 = target.position();
-        Vector3d vec2 = attacker.position();
+        Vec3 vec1 = target.position();
+        Vec3 vec2 = attacker.position();
         applyToNearbyEntities(target, distance,
                 (nearbyEntity) -> isFacingEntity(attacker, nearbyEntity, vec1.subtract(vec2), 60) && getCanApplyToSecondEnemyPredicate(attacker, target).test(nearbyEntity), (LivingEntity nearbyEntity) -> nearbyEntity.hurt(shockwave, damageAmount)
         );
@@ -203,15 +203,15 @@ public class AreaOfEffectHelper {
     }
 
     public static void freezeEnemy(int amplifier, LivingEntity nearbyEntity, int durationInSeconds) {
-        EffectInstance slowness = new EffectInstance(Effects.MOVEMENT_SLOWDOWN, durationInSeconds * 20, amplifier);
-        EffectInstance fatigue = new EffectInstance(Effects.DIG_SLOWDOWN, durationInSeconds * 20, Math.max(0, amplifier * 2 - 1));
+        MobEffectInstance slowness = new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, durationInSeconds * 20, amplifier);
+        MobEffectInstance fatigue = new MobEffectInstance(MobEffects.DIG_SLOWDOWN, durationInSeconds * 20, Math.max(0, amplifier * 2 - 1));
         nearbyEntity.addEffect(slowness);
         nearbyEntity.addEffect(fatigue);
         PROXY.spawnParticles(nearbyEntity, ParticleTypes.ITEM_SNOWBALL);
     }
 
     public static void causeExplosionAttackAtPos(LivingEntity attacker, boolean inGround, BlockPos blockPos, float damageAmount, float distance) {
-        World world = attacker.getCommandSenderWorld();
+        Level world = attacker.getCommandSenderWorld();
         DamageSource explosion = DamageSource.explosion(attacker);
         BlockPos origin = blockPos;
         if(inGround) {
@@ -223,7 +223,7 @@ public class AreaOfEffectHelper {
         );
     }
 
-    public static void causeSwirlingAttack(PlayerEntity attacker, LivingEntity target, float damageAmount, float distance) {
+    public static void causeSwirlingAttack(Player attacker, LivingEntity target, float damageAmount, float distance) {
         DamageSource swirling = DamageSource.playerAttack(attacker);
         applyToNearbyEntities(attacker, distance,
                 getCanApplyToSecondEnemyPredicate(attacker, target), (LivingEntity nearbyEntity) -> {
@@ -237,16 +237,16 @@ public class AreaOfEffectHelper {
                 getCanApplyToSecondEnemyPredicate(attacker, target),
                 (LivingEntity nearbyEntity) -> {
                     DamageSource echo = DamageSource.mobAttack(attacker);
-                    if (attacker instanceof PlayerEntity) {
-                        echo = DamageSource.playerAttack((PlayerEntity) attacker);
+                    if (attacker instanceof Player) {
+                        echo = DamageSource.playerAttack((Player) attacker);
                     }
                     nearbyEntity.hurt(echo, damageAmount);
                 });
     }
 
     public static void createVisualLightningBoltOnEntity(Entity target) {
-        World world = target.getCommandSenderWorld();
-        LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
+        Level world = target.getCommandSenderWorld();
+        LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(world);
         if (lightningboltentity != null) {
             lightningboltentity.moveTo(target.getX(), target.getY(), target.getZ());
             lightningboltentity.setVisualOnly(true);
@@ -262,7 +262,7 @@ public class AreaOfEffectHelper {
     }
 
     public static void levitate(int amplifier, LivingEntity nearbyEntity, int durationInSeconds) {
-        EffectInstance levitation = new EffectInstance(Effects.LEVITATION, durationInSeconds * 20, amplifier);
+        MobEffectInstance levitation = new MobEffectInstance(MobEffects.LEVITATION, durationInSeconds * 20, amplifier);
         nearbyEntity.addEffect(levitation);
     }
 
@@ -278,8 +278,8 @@ public class AreaOfEffectHelper {
                 (LivingEntity nearbyEntity) -> levitate(amplifier, nearbyEntity, durationInSeconds));
     }
 
-    public static void electrifyNearbyEnemies(AbstractArrowEntity arrow, float distance, float damageAmount, int limit) {
-        World world = arrow.getCommandSenderWorld();
+    public static void electrifyNearbyEnemies(AbstractArrow arrow, float distance, float damageAmount, int limit) {
+        Level world = arrow.getCommandSenderWorld();
         Entity shooter = arrow.getOwner();
         if(shooter instanceof LivingEntity){
             LivingEntity livingShooter = (LivingEntity) shooter;
@@ -289,43 +289,43 @@ public class AreaOfEffectHelper {
         }
     }
 
-    public static void poisonAndSlowNearbyEnemies(World worldIn, PlayerEntity playerIn, int distance) {
+    public static void poisonAndSlowNearbyEnemies(Level worldIn, Player playerIn, int distance) {
         applyToNearbyEntities(playerIn, worldIn, distance,
                 getCanApplyToEnemyPredicate(playerIn),
                 (LivingEntity nearbyEntity) -> {
-                    EffectInstance entangled = new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 140, 4);
-                    EffectInstance poison = new EffectInstance(Effects.POISON, 140, 1);
+                    MobEffectInstance entangled = new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 140, 4);
+                    MobEffectInstance poison = new MobEffectInstance(MobEffects.POISON, 140, 1);
                     nearbyEntity.addEffect(entangled);
                     nearbyEntity.addEffect(poison);
 
                 });
     }
 
-    public static void weakenAndMakeNearbyEnemiesVulnerable(PlayerEntity playerIn, World world, int distance) {
+    public static void weakenAndMakeNearbyEnemiesVulnerable(Player playerIn, Level world, int distance) {
         applyToNearbyEntities(playerIn, world, distance,
                 getCanApplyToEnemyPredicate(playerIn),
                 (LivingEntity nearbyEntity) -> {
-                    EffectInstance weakness = new EffectInstance(Effects.WEAKNESS, 140);
-                    EffectInstance vulnerability = new EffectInstance(Effects.DAMAGE_RESISTANCE, 140, -2);
+                    MobEffectInstance weakness = new MobEffectInstance(MobEffects.WEAKNESS, 140);
+                    MobEffectInstance vulnerability = new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 140, -2);
                     nearbyEntity.addEffect(weakness);
                     nearbyEntity.addEffect(vulnerability);
                 });
     }
 
-    public static void stunNearbyEnemies(World worldIn, PlayerEntity playerIn, int distance) {
+    public static void stunNearbyEnemies(Level worldIn, Player playerIn, int distance) {
         applyToNearbyEntities(playerIn, distance,
                 getCanApplyToEnemyPredicate(playerIn),
                 (LivingEntity nearbyEntity) -> {
-                    EffectInstance stunned = new EffectInstance(CustomEffects.STUNNED, 100);
-                    EffectInstance nausea = new EffectInstance(Effects.CONFUSION, 100);
-                    EffectInstance slowness = new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 100, 4);
+                    MobEffectInstance stunned = new MobEffectInstance(CustomEffects.STUNNED, 100);
+                    MobEffectInstance nausea = new MobEffectInstance(MobEffects.CONFUSION, 100);
+                    MobEffectInstance slowness = new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 4);
                     nearbyEntity.addEffect(slowness);
                     nearbyEntity.addEffect(nausea);
                     nearbyEntity.addEffect(stunned);
                 });
     }
 
-    public static void knockbackNearbyEnemies(World worldIn, PlayerEntity playerIn, int distance) {
+    public static void knockbackNearbyEnemies(Level worldIn, Player playerIn, int distance) {
         applyToNearbyEntities(playerIn, distance,
                 getCanApplyToEnemyPredicate(playerIn),
                 (LivingEntity nearbyEntity) -> {
@@ -336,13 +336,13 @@ public class AreaOfEffectHelper {
                     for (zRatio = playerIn.getZ() - nearbyEntity.getZ(); xRatio * xRatio + zRatio * zRatio < 1.0E-4D; zRatio = (Math.random() - Math.random()) * 0.01D) {
                         xRatio = (Math.random() - Math.random()) * 0.01D;
                     }
-                    nearbyEntity.hurtDir = (float) (MathHelper.atan2(zRatio, xRatio) * 57.2957763671875D - (double) nearbyEntity.yRot);
+                    nearbyEntity.hurtDir = (float) (Mth.atan2(zRatio, xRatio) * 57.2957763671875D - (double) nearbyEntity.getYRot());
                     nearbyEntity.knockback(0.4F * knockbackMultiplier, xRatio, zRatio);
                     // END OF KNOCKBACK
 
                     PROXY.spawnParticles(nearbyEntity, ParticleTypes.CLOUD);
 
-                    EffectInstance stun = new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 60, 4);
+                    MobEffectInstance stun = new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 4);
                     nearbyEntity.addEffect(stun);
                 });
     }

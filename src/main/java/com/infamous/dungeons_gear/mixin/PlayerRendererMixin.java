@@ -1,11 +1,11 @@
 package com.infamous.dungeons_gear.mixin;
 
-import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
-import net.minecraft.client.renderer.entity.PlayerRenderer;
-import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.item.CrossbowItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionHand;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -15,11 +15,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class PlayerRendererMixin {
 
     @Inject(at = @At("RETURN"), method = "getArmPose", cancellable = true)
-    private static void getArmPose(AbstractClientPlayerEntity clientPlayerEntity, Hand hand, CallbackInfoReturnable<BipedModel.ArmPose> cir){
+    private static void getArmPose(AbstractClientPlayer clientPlayerEntity, InteractionHand hand, CallbackInfoReturnable<HumanoidModel.ArmPose> cir){
         ItemStack itemstack = clientPlayerEntity.getItemInHand(hand);
         
         if (!clientPlayerEntity.swinging && itemstack.getItem() instanceof CrossbowItem && CrossbowItem.isCharged(itemstack)) {
-            cir.setReturnValue(BipedModel.ArmPose.CROSSBOW_HOLD);
+            cir.setReturnValue(HumanoidModel.ArmPose.CROSSBOW_HOLD);
         }
     }
 }

@@ -2,30 +2,32 @@ package com.infamous.dungeons_gear.items.artifacts;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import com.infamous.dungeons_gear.capabilities.combo.ICombo;
+import com.infamous.dungeons_gear.capabilities.combo.Combo;
+import com.infamous.dungeons_gear.capabilities.combo.ComboHelper;
+import com.infamous.dungeons_gear.capabilities.offhand.DualWieldHelper;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
-import com.infamous.dungeons_gear.items.ItemTagWrappers;
 import com.infamous.dungeons_gear.mixin.CooldownAccessor;
-import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 import java.util.UUID;
 
+import static com.infamous.dungeons_gear.items.ItemTagWrappers.ARTIFACT_REPAIR_ITEMS;
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.ARTIFACT_COOLDOWN_MULTIPLIER;
 
 public abstract class ArtifactItem extends Item implements ICurioItem {
@@ -40,11 +42,11 @@ public abstract class ArtifactItem extends Item implements ICurioItem {
         );
     }
 
-    public static void putArtifactOnCooldown(PlayerEntity playerIn, Item item) {
+    public static void putArtifactOnCooldown(Player playerIn, Item item) {
         int cooldownInTicks = item instanceof ArtifactItem ?
                 ((ArtifactItem)item).getCooldownInSeconds() * 20 : 0;
 
-        ModifiableAttributeInstance artifactCooldownMultiplierAttribute = playerIn.getAttribute(ARTIFACT_COOLDOWN_MULTIPLIER.get());
+        AttributeInstance artifactCooldownMultiplierAttribute = playerIn.getAttribute(ARTIFACT_COOLDOWN_MULTIPLIER.get());
         double attributeModifier = artifactCooldownMultiplierAttribute != null ? artifactCooldownMultiplierAttribute.getValue() : 1.0D;
         float cooldownEnchantmentReduction = 0;
         if (ModEnchantmentHelper.hasEnchantment(playerIn, ArmorEnchantmentList.COOLDOWN)) {
@@ -54,8 +56,8 @@ public abstract class ArtifactItem extends Item implements ICurioItem {
         playerIn.getCooldowns().addCooldown(item, Math.max(0, (int) (cooldownInTicks * attributeModifier - cooldownEnchantmentReduction)));
     }
 
-    public static void triggerSynergy(PlayerEntity player, ItemStack stack){
-        ICombo comboCap = CapabilityHelper.getComboCapability(player);
+    public static void triggerSynergy(Player player, ItemStack stack){
+        Combo comboCap = ComboHelper.getComboCapability(player);
         if(comboCap == null) return;
 
         if(!comboCap.hasArtifactSynergy()){
@@ -64,7 +66,7 @@ public abstract class ArtifactItem extends Item implements ICurioItem {
         if(stack.getItem() instanceof ArtifactItem){
             if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.SPEED_SYNERGY)){
                 int speedSynergyLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.SPEED_SYNERGY, player);
-                EffectInstance speedBoost = new EffectInstance(Effects.MOVEMENT_SPEED, 20 * speedSynergyLevel);
+                MobEffectInstance speedBoost = new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 20 * speedSynergyLevel);
                 player.addEffect(speedBoost);
             }
             if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.HEALTH_SYNERGY)){
@@ -75,7 +77,7 @@ public abstract class ArtifactItem extends Item implements ICurioItem {
 
     }
 
-    public static void reduceArtifactCooldowns(PlayerEntity playerEntity, double reductionInSeconds){
+    public static void reduceArtifactCooldowns(Player playerEntity, double reductionInSeconds){
         for(Item item : playerEntity.getCooldowns().cooldowns.keySet()){
             if(item instanceof ArtifactItem){
                 int createTicks = ((CooldownAccessor)playerEntity.getCooldowns().cooldowns.get(item)).getStartTime();
@@ -92,24 +94,24 @@ public abstract class ArtifactItem extends Item implements ICurioItem {
 
     @Override
     public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-        return ItemTagWrappers.ARTIFACT_REPAIR_ITEMS.contains(repair.getItem()) || super.isValidRepairItem(toRepair, repair);
+        return ForgeRegistries.ITEMS.tags().getTag(ARTIFACT_REPAIR_ITEMS).contains(repair.getItem()) || super.isValidRepairItem(toRepair, repair);
     }
 
-    public ActionResult<ItemStack> activateArtifact(ArtifactUseContext artifactUseContext) {
+    public InteractionResultHolder<ItemStack> activateArtifact(ArtifactUseContext artifactUseContext) {
         if(artifactUseContext.getPlayer() != null) {
             ItemStack itemStack = artifactUseContext.getItemStack();
             if (artifactUseContext.getPlayer().getCooldowns().isOnCooldown(itemStack.getItem())){
-                return new ActionResult<>(ActionResultType.SUCCESS, itemStack);
+                return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemStack);
             }
         }
-        ActionResult<ItemStack> procResult = procArtifact(artifactUseContext);
+        InteractionResultHolder<ItemStack> procResult = procArtifact(artifactUseContext);
         if(procResult.getResult().consumesAction() && artifactUseContext.getPlayer() != null && !artifactUseContext.getLevel().isClientSide){
             triggerSynergy(artifactUseContext.getPlayer(), artifactUseContext.getItemStack());
         }
         return procResult;
     }
 
-    public abstract ActionResult<ItemStack> procArtifact(ArtifactUseContext iuc);
+    public abstract InteractionResultHolder<ItemStack> procArtifact(ArtifactUseContext iuc);
 
     public abstract int getCooldownInSeconds();
 

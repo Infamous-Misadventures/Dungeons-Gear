@@ -1,14 +1,12 @@
 package com.infamous.dungeons_gear.entities;
 
 import com.infamous.dungeons_libraries.entities.TotemBaseEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.network.IPacket;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.network.NetworkHooks;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -25,7 +23,7 @@ public class TotemOfRegenerationEntity extends TotemBaseEntity implements IAnima
 
     AnimationFactory factory = new AnimationFactory(this);
 
-    public TotemOfRegenerationEntity(EntityType<?> p_i48580_1_, World p_i48580_2_) {
+    public TotemOfRegenerationEntity(EntityType<?> p_i48580_1_, Level p_i48580_2_) {
         super(p_i48580_1_, p_i48580_2_, 240, 2);
     }
 
@@ -50,7 +48,7 @@ public class TotemOfRegenerationEntity extends TotemBaseEntity implements IAnima
     }
 
     @Override
-    public IPacket<?> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 

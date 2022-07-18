@@ -3,21 +3,17 @@ package com.infamous.dungeons_gear.enchantments.ranged;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
-import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
 import com.infamous.dungeons_libraries.utils.ArrowHelper;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.util.IndirectEntityDamageSource;
+import net.minecraft.world.damagesource.IndirectEntityDamageSource;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-
-import net.minecraft.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class ChainReactionEnchantment extends DungeonsEnchantment {
@@ -25,16 +21,16 @@ public class ChainReactionEnchantment extends DungeonsEnchantment {
     public static final String INTRINSIC_CHAIN_REACTION_TAG = "IntrinsicChainReaction";
 
     public ChainReactionEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.RANGED, new EquipmentSlotType[]{
-                EquipmentSlotType.MAINHAND});
+        super(Rarity.RARE, ModEnchantmentTypes.RANGED, new EquipmentSlot[]{
+                EquipmentSlot.MAINHAND});
     }
 
     @SubscribeEvent
     public static void onChainReactionDamage(LivingDamageEvent event) {
         if (event.getSource() instanceof IndirectEntityDamageSource) {
             IndirectEntityDamageSource indirectEntityDamageSource = (IndirectEntityDamageSource) event.getSource();
-            if (indirectEntityDamageSource.getDirectEntity() instanceof AbstractArrowEntity) {
-                AbstractArrowEntity arrowEntity = (AbstractArrowEntity) indirectEntityDamageSource.getDirectEntity();
+            if (indirectEntityDamageSource.getDirectEntity() instanceof AbstractArrow) {
+                AbstractArrow arrowEntity = (AbstractArrow) indirectEntityDamageSource.getDirectEntity();
 
                 LivingEntity victim = event.getEntityLiving();
                 if (indirectEntityDamageSource.getEntity() instanceof LivingEntity) {

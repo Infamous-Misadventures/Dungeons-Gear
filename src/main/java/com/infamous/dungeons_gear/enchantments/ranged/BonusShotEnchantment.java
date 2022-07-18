@@ -6,12 +6,12 @@ import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
 import com.infamous.dungeons_libraries.utils.RangedAttackHelper;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.CrossbowItem;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -20,12 +20,14 @@ import net.minecraftforge.fml.common.Mod;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_libraries.utils.RangedAttackHelper.getVanillaOrModdedCrossbowArrowVelocity;
 
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class BonusShotEnchantment extends DungeonsEnchantment {
 
     public BonusShotEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.RANGED, new EquipmentSlotType[]{
-                EquipmentSlotType.MAINHAND});
+        super(Rarity.RARE, ModEnchantmentTypes.RANGED, new EquipmentSlot[]{
+                EquipmentSlot.MAINHAND});
     }
 
     public int getMaxLevel() {
@@ -34,7 +36,7 @@ public class BonusShotEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onCrossbowFired(PlayerInteractEvent.RightClickItem event){
-        PlayerEntity player = event.getPlayer();
+        Player player = event.getPlayer();
         ItemStack stack = event.getItemStack();
         if(stack.getItem() instanceof CrossbowItem){
             if(CrossbowItem.isCharged(stack)){

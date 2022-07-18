@@ -4,19 +4,19 @@ import com.infamous.dungeons_gear.network.NetworkHandler;
 import com.infamous.dungeons_gear.network.PacketBreakItem;
 import com.infamous.dungeons_gear.entities.IceCloudEntity;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.network.PacketDistributor;
 import org.apache.commons.lang3.tuple.MutablePair;
 
 import java.util.List;
@@ -24,19 +24,21 @@ import java.util.List;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.applyToNearbyEntities;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.getCanApplyToEnemyPredicate;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class IceWandItem extends ArtifactItem {
     public IceWandItem(Properties properties) {
         super(properties);
     }
 
     @Override
-    public ActionResultType interactLivingEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target, Hand hand) {
+    public InteractionResult interactLivingEntity(ItemStack stack, Player playerIn, LivingEntity target, InteractionHand hand) {
         return freezeEntity(stack, playerIn, target);
     }
 
     @Override
-    public ActionResult<ItemStack> procArtifact(ArtifactUseContext c) {
-        PlayerEntity playerIn = c.getPlayer();
+    public InteractionResultHolder<ItemStack> procArtifact(ArtifactUseContext c) {
+        Player playerIn = c.getPlayer();
         ItemStack itemstack = c.getItemStack();
         final MutablePair<LivingEntity, Double> targetDistance = new MutablePair(null, 123456);
         applyToNearbyEntities(playerIn, 16,
@@ -48,24 +50,24 @@ public class IceWandItem extends ArtifactItem {
                     }
                 }
         );
-        return new ActionResult<>(freezeEntity(itemstack, playerIn, targetDistance.getLeft()), itemstack);
+        return new InteractionResultHolder<>(freezeEntity(itemstack, playerIn, targetDistance.getLeft()), itemstack);
     }
 
-    private ActionResultType freezeEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target) {
+    private InteractionResult freezeEntity(ItemStack stack, Player playerIn, LivingEntity target) {
         if (target != null) {
-            World world = playerIn.getCommandSenderWorld();
+            Level world = playerIn.getCommandSenderWorld();
             IceCloudEntity iceCloudEntity = new IceCloudEntity(world, playerIn, target);
             world.addFreshEntity(iceCloudEntity);
             stack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), stack)));
             ArtifactItem.putArtifactOnCooldown(playerIn, stack.getItem());
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
-        return ActionResultType.PASS;
+        return InteractionResult.PASS;
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, Level world, List<Component> list, TooltipFlag flag) {
         super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
     }
@@ -81,7 +83,7 @@ public class IceWandItem extends ArtifactItem {
     }
 
     @Override
-    public ActionResultType useOn(ItemUseContext itemUseContext) {
-        return ActionResultType.PASS;
+    public InteractionResult useOn(UseOnContext itemUseContext) {
+        return InteractionResult.PASS;
     }
 }

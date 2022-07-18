@@ -3,11 +3,11 @@ package com.infamous.dungeons_gear.enchantments.melee;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
-import net.minecraft.enchantment.DamageEnchantment;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.CreatureAttribute;
+import net.minecraft.world.item.enchantment.DamageEnchantment;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.entity.MobType;
 
-import net.minecraft.enchantment.Enchantment.Rarity;
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 
 public class IllagersBaneEnchantment extends DungeonsEnchantment {
 
@@ -32,8 +32,8 @@ public class IllagersBaneEnchantment extends DungeonsEnchantment {
      * calcModifierDamage is sensitive to the targets EnumCreatureAttribute.
      */
     @Override
-    public float getDamageBonus(int level, CreatureAttribute creatureType) {
-        if(creatureType == CreatureAttribute.ILLAGER){
+    public float getDamageBonus(int level, MobType creatureType) {
+        if(creatureType == MobType.ILLAGER){
             return (float)level * 2.5F;
         } else {
             return 0.0F;

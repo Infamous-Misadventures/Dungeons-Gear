@@ -1,21 +1,18 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
-import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.PulseEnchantment;
-import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
-import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
-import com.infamous.dungeons_libraries.capabilities.timers.ITimers;
+import com.infamous.dungeons_libraries.capabilities.timers.Timers;
 import com.infamous.dungeons_libraries.capabilities.timers.TimersHelper;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -27,16 +24,16 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 public class SnowballEnchantment extends PulseEnchantment {
 
     public SnowballEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlotType[]{
-                EquipmentSlotType.HEAD,
-                EquipmentSlotType.CHEST,
-                EquipmentSlotType.LEGS,
-                EquipmentSlotType.FEET});
+        super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlot[]{
+                EquipmentSlot.HEAD,
+                EquipmentSlot.CHEST,
+                EquipmentSlot.LEGS,
+                EquipmentSlot.FEET});
     }
 
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event){
-        PlayerEntity player = event.player;
+        Player player = event.player;
         if(player == null || player.isSpectator()) return;
         if(event.phase == TickEvent.Phase.START) return;
         if(player.isAlive() && player.isEffectiveAi()){
@@ -52,7 +49,7 @@ public class SnowballEnchantment extends PulseEnchantment {
     public static void triggerEffect(LivingEntity livingEntity){
         if(ModEnchantmentHelper.hasEnchantment(livingEntity, ArmorEnchantmentList.SNOWBALL)){
             int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.SNOWBALL, livingEntity);
-            ITimers timers = TimersHelper.getTimersCapability(livingEntity);
+            Timers timers = TimersHelper.getTimersCapability(livingEntity);
             if(timers == null) return;
             int currentTimer = timers.getEnchantmentTimer(ArmorEnchantmentList.SNOWBALL);
             if(currentTimer < 0) {

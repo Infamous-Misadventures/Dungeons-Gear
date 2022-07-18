@@ -1,9 +1,9 @@
 package com.infamous.dungeons_gear.utilties;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -17,7 +17,7 @@ public class SoundHelper {
     public static final Random RNG = new Random();
 
     public static void playLightningStrikeSounds(Entity soundEmissionTarget){
-        PlayerEntity player = getPlayerFrom(soundEmissionTarget);
+        Player player = getPlayerFrom(soundEmissionTarget);
         soundEmissionTarget.level.playSound(player,
                 soundEmissionTarget.getX(), soundEmissionTarget.getY(), soundEmissionTarget.getZ(),
                 SoundEvents.LIGHTNING_BOLT_THUNDER, soundEmissionTarget.getSoundSource(), volumeLimit, 0.8F + RNG.nextFloat() * 0.2F);
@@ -45,7 +45,7 @@ public class SoundHelper {
     }
 
     public static void playBellSound(Entity soundEmissionTarget){
-        PlayerEntity player = getPlayerFrom(soundEmissionTarget);
+        Player player = getPlayerFrom(soundEmissionTarget);
         soundEmissionTarget.level.playSound(player,
                 soundEmissionTarget.blockPosition(),
                 SoundEvents.BELL_BLOCK, soundEmissionTarget.getSoundSource(), volumeLimit, standardPitch);
@@ -80,7 +80,7 @@ public class SoundHelper {
     }
 
     @Nullable
-    private static PlayerEntity getPlayerFrom(Entity soundEmissionTarget) {
-        return soundEmissionTarget instanceof PlayerEntity ? (PlayerEntity) soundEmissionTarget : null;
+    private static Player getPlayerFrom(Entity soundEmissionTarget) {
+        return soundEmissionTarget instanceof Player ? (Player) soundEmissionTarget : null;
     }
 }

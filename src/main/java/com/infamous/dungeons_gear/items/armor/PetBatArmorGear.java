@@ -1,14 +1,13 @@
 package com.infamous.dungeons_gear.items.armor;
 
 import com.infamous.dungeons_libraries.items.gearconfig.ArmorGear;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
 
 public class PetBatArmorGear extends ArmorGear {
 
-    public PetBatArmorGear(EquipmentSlotType slotType, Properties properties, ResourceLocation texture) {
-        super(slotType, properties, texture);
+    public PetBatArmorGear(EquipmentSlot slotType, Properties properties, ResourceLocation texture) {
+        super(slotType, properties, texture, texture, texture);
     }
 
     public boolean doGivesYouAPetBat() {

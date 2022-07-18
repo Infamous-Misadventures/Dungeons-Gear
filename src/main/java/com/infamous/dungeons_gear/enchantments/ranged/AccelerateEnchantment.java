@@ -1,27 +1,27 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_gear.capabilities.bow.IBow;
+import com.infamous.dungeons_gear.capabilities.bow.RangedAbilities;
+import com.infamous.dungeons_gear.capabilities.bow.RangedAbilitiesHelper;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
-import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_libraries.event.BowEvent;
 import com.infamous.dungeons_libraries.event.CrossbowEvent;
 import com.infamous.dungeons_libraries.items.gearconfig.BowGear;
 import com.infamous.dungeons_libraries.items.gearconfig.CrossbowGear;
 import com.infamous.dungeons_libraries.utils.RangedAttackHelper;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.BowItem;
-import net.minecraft.item.CrossbowItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -31,8 +31,8 @@ import net.minecraftforge.fml.common.Mod;
 public class AccelerateEnchantment extends DungeonsEnchantment {
 
     public AccelerateEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.RANGED, new EquipmentSlotType[]{
-                EquipmentSlotType.MAINHAND});
+        super(Rarity.RARE, ModEnchantmentTypes.RANGED, new EquipmentSlot[]{
+                EquipmentSlot.MAINHAND});
     }
 
     public int getMaxLevel() {
@@ -47,12 +47,12 @@ public class AccelerateEnchantment extends DungeonsEnchantment {
     @SubscribeEvent
     public static void onAccelerateBowFired(ArrowLooseEvent event){
         LivingEntity livingEntity = event.getEntityLiving();
-        World world = livingEntity.getCommandSenderWorld();
+        Level world = livingEntity.getCommandSenderWorld();
         long worldTime = world.getGameTime();
         int charge = event.getCharge();
         ItemStack stack = event.getBow();
         if(stack.getItem() instanceof BowItem){
-            IBow weaponCapability = CapabilityHelper.getWeaponCapability(stack);
+            RangedAbilities weaponCapability = RangedAbilitiesHelper.getRangedAbilitiesCapability(stack);
             if(weaponCapability == null) return;
             long lastFiredTime = weaponCapability.getLastFiredTime();
             float bowChargeTime = weaponCapability.getBowChargeTime();
@@ -83,12 +83,12 @@ public class AccelerateEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onAccelerateCrossbowFired(PlayerInteractEvent.RightClickItem event) {
-        PlayerEntity playerEntity = event.getPlayer();
-        World world = playerEntity.getCommandSenderWorld();
+        Player playerEntity = event.getPlayer();
+        Level world = playerEntity.getCommandSenderWorld();
         long worldTime = world.getGameTime();
         ItemStack stack = event.getItemStack();
         if (stack.getItem() instanceof CrossbowItem & CrossbowItem.isCharged(stack)) {
-            IBow weaponCap = CapabilityHelper.getWeaponCapability(stack);
+            RangedAbilities weaponCap = RangedAbilitiesHelper.getRangedAbilitiesCapability(stack);
             if (weaponCap == null) return;
             long lastFiredTime = weaponCap.getLastFiredTime();
             int crossbowChargeTime = weaponCap.getCrossbowChargeTime();
@@ -119,7 +119,7 @@ public class AccelerateEnchantment extends DungeonsEnchantment {
     public static void onBowChargeTime(BowEvent.ChargeTime event){
         ItemStack itemStack = event.getItemStack();
         int accelerateLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.ACCELERATE, itemStack);
-        IBow weaponCapability = CapabilityHelper.getWeaponCapability(itemStack);
+        RangedAbilities weaponCapability = RangedAbilitiesHelper.getRangedAbilitiesCapability(itemStack);
         if(weaponCapability == null) return;
         float bowChargeTime = weaponCapability.getBowChargeTime();
         long lastFiredTime = weaponCapability.getLastFiredTime();
@@ -132,7 +132,7 @@ public class AccelerateEnchantment extends DungeonsEnchantment {
     public static void onCrossbowChargeTime(CrossbowEvent.ChargeTime event){
         ItemStack itemStack = event.getItemStack();
         int accelerateLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.ACCELERATE, itemStack);
-        IBow weaponCapability = CapabilityHelper.getWeaponCapability(itemStack);
+        RangedAbilities weaponCapability = RangedAbilitiesHelper.getRangedAbilitiesCapability(itemStack);
         if(weaponCapability == null) return;
         float bowChargeTime = weaponCapability.getBowChargeTime();
         long lastFiredTime = weaponCapability.getLastFiredTime();

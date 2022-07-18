@@ -3,18 +3,18 @@ package com.infamous.dungeons_gear.effects;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.utilties.*;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.EffectType;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
-public class PartyStarterEffect extends Effect {
-    public PartyStarterEffect(EffectType effectType, int liquidColorIn) {
+public class PartyStarterEffect extends MobEffect {
+    public PartyStarterEffect(MobEffectCategory effectType, int liquidColorIn) {
         super(effectType, liquidColorIn);
     }
 
@@ -26,7 +26,7 @@ public class PartyStarterEffect extends Effect {
         Entity trueSource = event.getSource().getEntity();
         if(trueSource instanceof LivingEntity) {
             LivingEntity attacker = (LivingEntity) trueSource;
-            EffectInstance partyStarter = attacker.getEffect(CustomEffects.PARTY_STARTER);
+            MobEffectInstance partyStarter = attacker.getEffect(CustomEffects.PARTY_STARTER);
             if (partyStarter != null) {
                 int partyStarterLevel = partyStarter.getAmplifier();
 

@@ -6,17 +6,17 @@ import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DropsEnchantment;
 import com.infamous.dungeons_gear.utilties.LootTableHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -27,8 +27,8 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 public class ProspectorEnchantment extends DropsEnchantment {
 
     public ProspectorEnchantment() {
-        super(Enchantment.Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlotType[]{
-                EquipmentSlotType.MAINHAND});
+        super(Enchantment.Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlot[]{
+                EquipmentSlot.MAINHAND});
     }
 
     public int getMaxLevel() {
@@ -37,7 +37,7 @@ public class ProspectorEnchantment extends DropsEnchantment {
 
     @SubscribeEvent
     public static void onProspectiveKill(LivingDropsEvent event){
-        if(event.getSource().getDirectEntity() instanceof AbstractArrowEntity) return;
+        if(event.getSource().getDirectEntity() instanceof AbstractArrow) return;
         if(event.getSource().getEntity() instanceof LivingEntity){
             LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
             ItemStack mainhand = attacker.getMainHandItem();
@@ -48,7 +48,7 @@ public class ProspectorEnchantment extends DropsEnchantment {
                 prospectorChance = (float) (DungeonsGearConfig.PROSPECTOR_CHANCE_PER_LEVEL.get() * prospectorLevel);
                 float prospectorRand = attacker.getRandom().nextFloat();
                 if(prospectorRand <= prospectorChance){
-                    if(victim instanceof MonsterEntity){
+                    if(victim instanceof Monster){
                         ItemEntity drop = getProspectorDrop(attacker, victim);
                         event.getDrops().add(drop);
                     }
@@ -59,13 +59,13 @@ public class ProspectorEnchantment extends DropsEnchantment {
 
     private static ItemEntity getProspectorDrop(LivingEntity attacker, LivingEntity victim) {
         ResourceLocation prospectorLootTable = getProspectorLootTable(victim.getCommandSenderWorld());
-        ItemStack itemStack = LootTableHelper.generateItemStack((ServerWorld) victim.level, victim.blockPosition(), prospectorLootTable, attacker.getRandom());
+        ItemStack itemStack = LootTableHelper.generateItemStack((ServerLevel) victim.level, victim.blockPosition(), prospectorLootTable, attacker.getRandom());
         return new ItemEntity(victim.level, victim.getX(), victim.getY(), victim.getZ(), itemStack);
     }
 
-    private static ResourceLocation getProspectorLootTable(World world) {
+    private static ResourceLocation getProspectorLootTable(Level world) {
         ResourceLocation resourceLocation = new ResourceLocation(MODID, "enchantments/prospector/" + world.dimension().location().getPath());
-        if(LootTableHelper.lootTableExists((ServerWorld) world, resourceLocation)){
+        if(LootTableHelper.lootTableExists((ServerLevel) world, resourceLocation)){
             return resourceLocation;
         }else{
             return new ResourceLocation(MODID, "enchantments/prospector/overworld");

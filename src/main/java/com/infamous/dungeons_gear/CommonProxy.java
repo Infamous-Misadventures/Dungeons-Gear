@@ -1,11 +1,11 @@
 package com.infamous.dungeons_gear;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.particles.BasicParticleType;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.core.particles.SimpleParticleType;
 
 public class CommonProxy {
 
-    public void spawnParticles(Entity entity, BasicParticleType particleType)
+    public void spawnParticles(Entity entity, SimpleParticleType particleType)
     {
     }
 }

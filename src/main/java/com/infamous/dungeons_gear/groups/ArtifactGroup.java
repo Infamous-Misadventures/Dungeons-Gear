@@ -1,10 +1,10 @@
 package com.infamous.dungeons_gear.groups;
 
 import com.infamous.dungeons_gear.registry.ItemRegistry;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 
-public class ArtifactGroup extends ItemGroup
+public class ArtifactGroup extends CreativeModeTab
 {
     public ArtifactGroup()
     {

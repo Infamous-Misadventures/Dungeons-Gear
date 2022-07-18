@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.damagesources;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.util.EntityDamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.damagesource.EntityDamageSource;
 
 public class OffhandAttackDamageSource extends EntityDamageSource {
 

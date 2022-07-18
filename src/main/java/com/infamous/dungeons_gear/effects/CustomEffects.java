@@ -1,14 +1,14 @@
 package com.infamous.dungeons_gear.effects;
 
-import net.minecraft.potion.Effect;
+import net.minecraft.world.effect.MobEffect;
 
 public class CustomEffects {
-    public static Effect PARTY_STARTER;
-    public static Effect SHIELDING;
-    public static Effect SOUL_PROTECTION;
-    public static Effect STUNNED;
-    public static Effect SHADOW_FORM;
-    public static Effect DYNAMO;
-    public static Effect LIFE_STEAL;
-    public static Effect BOW_CHARGE;
+    public static MobEffect PARTY_STARTER;
+    public static MobEffect SHIELDING;
+    public static MobEffect SOUL_PROTECTION;
+    public static MobEffect STUNNED;
+    public static MobEffect SHADOW_FORM;
+    public static MobEffect DYNAMO;
+    public static MobEffect LIFE_STEAL;
+    public static MobEffect BOW_CHARGE;
 }

@@ -4,38 +4,40 @@ import com.infamous.dungeons_gear.network.NetworkHandler;
 import com.infamous.dungeons_gear.network.PacketBreakItem;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.network.PacketDistributor;
 
 import java.util.List;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class ShockPowderItem extends ArtifactItem {
     public ShockPowderItem(Properties properties) {
         super(properties);
     }
 
-    public ActionResult<ItemStack> procArtifact(ArtifactUseContext c) {
-        PlayerEntity playerIn = c.getPlayer();
+    public InteractionResultHolder<ItemStack> procArtifact(ArtifactUseContext c) {
+        Player playerIn = c.getPlayer();
         ItemStack itemstack = c.getItemStack();
 
         AreaOfEffectHelper.stunNearbyEnemies(c.getLevel(), playerIn, 5);
         itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemstack)));
 
         ArtifactItem.putArtifactOnCooldown(playerIn, itemstack.getItem());
-        return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
+        return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
+    public void appendHoverText(ItemStack stack, Level world, List<Component> list, TooltipFlag flag)
     {
         super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);

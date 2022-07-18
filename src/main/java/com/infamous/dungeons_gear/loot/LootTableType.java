@@ -2,7 +2,7 @@ package com.infamous.dungeons_gear.loot;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 import static com.infamous.dungeons_gear.utilties.GeneralHelper.modLoc;
 

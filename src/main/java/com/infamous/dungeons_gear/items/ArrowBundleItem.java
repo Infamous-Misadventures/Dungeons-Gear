@@ -1,17 +1,17 @@
 package com.infamous.dungeons_gear.items;
 
 import com.infamous.dungeons_gear.utilties.LootTableHelper;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Level;
 
 import java.util.stream.StreamSupport;
 
@@ -33,26 +33,26 @@ public class ArrowBundleItem  extends Item {
         return itemIn;
     }
 
-    public ActionResult use(World world, PlayerEntity playerIn, Hand handIn) {
+    public InteractionResultHolder use(Level world, Player playerIn, InteractionHand handIn) {
         ItemStack bundleItemStack = playerIn.getItemInHand(handIn);
         if (!world.isClientSide) {
-            PlayerEntity player = playerIn;
+            Player player = playerIn;
             int numberOfArrows = getNumberOfArrows(player, bundleItemStack);
             for (int i = 0; i < numberOfArrows; i++) {
-                ItemStack itemStack = LootTableHelper.generateItemStack((ServerWorld) player.level, player.blockPosition(), new ResourceLocation(MODID, "items/arrow_bundle"), player.getRandom());
+                ItemStack itemStack = LootTableHelper.generateItemStack((ServerLevel) player.level, player.blockPosition(), new ResourceLocation(MODID, "items/arrow_bundle"), player.getRandom());
                 ItemEntity arrow = new ItemEntity(world, player.getX(), player.getY(), player.getZ(), itemStack);
                 world.addFreshEntity(arrow);
             }
             playerIn.awardStat(Stats.ITEM_USED.get(this));
-            if (!playerIn.abilities.instabuild) {
+            if (!playerIn.getAbilities().instabuild) {
                 bundleItemStack.shrink(1);
             }
         }
 
-        return ActionResult.sidedSuccess(bundleItemStack, world.isClientSide());
+        return InteractionResultHolder.sidedSuccess(bundleItemStack, world.isClientSide());
     }
 
-    private int getNumberOfArrows(PlayerEntity player, ItemStack bundleItemStack) {
+    private int getNumberOfArrows(Player player, ItemStack bundleItemStack) {
         int baseArrows = DEFAULT_NUMBER_OF_ARROWS;
         if(bundleItemStack.hasTag() && bundleItemStack.getTag().contains(NUMBER_OF_ARROWS_FIELD)){
             baseArrows = bundleItemStack.getTag().getInt(NUMBER_OF_ARROWS_FIELD);

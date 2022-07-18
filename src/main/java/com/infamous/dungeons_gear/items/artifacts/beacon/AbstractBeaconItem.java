@@ -1,17 +1,19 @@
 package com.infamous.dungeons_gear.items.artifacts.beacon;
 
+import com.infamous.dungeons_gear.capabilities.artifact.ArtifactUsage;
 import com.infamous.dungeons_gear.capabilities.artifact.ArtifactUsageHelper;
-import com.infamous.dungeons_gear.capabilities.artifact.IArtifactUsage;
 import com.infamous.dungeons_gear.entities.BeamEntity;
 import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_gear.items.artifacts.ArtifactUseContext;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 
@@ -27,19 +29,19 @@ public abstract class AbstractBeaconItem extends ArtifactItem{
         super(properties);
     }
 
-    public abstract boolean canFire(PlayerEntity playerEntity, ItemStack stack);
+    public abstract boolean canFire(Player playerEntity, ItemStack stack);
 
     public abstract BeamColor getBeamColor();
 
     @Override
-    public ActionResult<ItemStack> procArtifact(ArtifactUseContext iuc) {
+    public InteractionResultHolder<ItemStack> procArtifact(ArtifactUseContext iuc) {
         ItemStack itemstack = iuc.getItemStack();
-        PlayerEntity playerIn = iuc.getPlayer();
-        World worldIn = iuc.getLevel();
+        Player playerIn = iuc.getPlayer();
+        Level worldIn = iuc.getLevel();
 
-        IArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(playerIn);
+        ArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(playerIn);
         if(!canFire(playerIn, itemstack) || cap.isUsingArtifact()){
-            return new ActionResult<>(ActionResultType.FAIL, itemstack);
+            return new InteractionResultHolder<>(InteractionResult.FAIL, itemstack);
         }
 
         SoundHelper.playBeaconSound(playerIn, true);
@@ -47,11 +49,11 @@ public abstract class AbstractBeaconItem extends ArtifactItem{
         if (!worldIn.isClientSide) {
             ArtifactItem.triggerSynergy(playerIn, itemstack);
             BeamEntity beamEntity = new BeamEntity(BEAM_ENTITY.get(), this.getBeamColor(), worldIn, playerIn);
-            beamEntity.moveTo(playerIn.position().x, playerIn.position().y + 0.7D, playerIn.position().z, playerIn.yRot, playerIn.xRot);
+            beamEntity.moveTo(playerIn.position().x, playerIn.position().y + 0.7D, playerIn.position().z, playerIn.getYRot(), playerIn.getXRot());
             beamEntity.setOwner(playerIn);
             worldIn.addFreshEntity(beamEntity);
         }
-        return new ActionResult<>(ActionResultType.PASS, itemstack);
+        return new InteractionResultHolder<>(InteractionResult.PASS, itemstack);
     }
 
     @Override
@@ -60,19 +62,19 @@ public abstract class AbstractBeaconItem extends ArtifactItem{
     }
 
     @Override
-    public UseAction getUseAnimation(ItemStack stack) {
-        return UseAction.NONE;
+    public UseAnim getUseAnimation(ItemStack stack) {
+        return UseAnim.NONE;
     }
 
     @Override
-    public void releaseUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft) {
+    public void releaseUsing(ItemStack stack, Level worldIn, LivingEntity entityLiving, int timeLeft) {
         SoundHelper.playBeaconSound(entityLiving, false);
     }
 
     @Override
-    public void onUseTick(World world, LivingEntity livingEntity, ItemStack stack, int count) {
-        if (livingEntity instanceof PlayerEntity) {
-            PlayerEntity playerEntity = (PlayerEntity) livingEntity;
+    public void onUseTick(Level world, LivingEntity livingEntity, ItemStack stack, int count) {
+        if (livingEntity instanceof Player) {
+            Player playerEntity = (Player) livingEntity;
             if(playerEntity.isCreative()) return;
 
             if (this.consumeTick(playerEntity, stack)) {
@@ -80,7 +82,7 @@ public abstract class AbstractBeaconItem extends ArtifactItem{
                     stack.hurtAndBreak(1, playerEntity, entity -> entity.broadcastBreakEvent(playerEntity.getUsedItemHand()));
                 }
             }else{
-                IArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(livingEntity);
+                ArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(livingEntity);
                 if(cap != null && cap.isUsingArtifact()){
                     this.stopUsingArtifact(livingEntity);
                     cap.stopUsingArtifact();
@@ -93,11 +95,11 @@ public abstract class AbstractBeaconItem extends ArtifactItem{
     public void stopUsingArtifact(LivingEntity livingEntity) {
         super.stopUsingArtifact(livingEntity);
         List<BeamEntity> beams = livingEntity.level.getEntitiesOfClass(BeamEntity.class, livingEntity.getBoundingBox().inflate(1), beamEntity -> beamEntity.getOwner() == livingEntity);
-        beams.forEach(Entity::remove);
+        beams.forEach(beamEntity -> beamEntity.remove(Entity.RemovalReason.DISCARDED));
     }
 
 
-    protected abstract boolean consumeTick(PlayerEntity playerEntity, ItemStack stack);
+    protected abstract boolean consumeTick(Player playerEntity, ItemStack stack);
 
     @Override
     public int getCooldownInSeconds() {

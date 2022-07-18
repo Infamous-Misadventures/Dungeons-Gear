@@ -1,35 +1,28 @@
 package com.infamous.dungeons_gear.enchantments.melee;
 
-import com.infamous.dungeons_gear.capabilities.combo.ICombo;
+import com.infamous.dungeons_gear.capabilities.combo.Combo;
+import com.infamous.dungeons_gear.capabilities.combo.ComboHelper;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
-import com.infamous.dungeons_libraries.items.interfaces.IMeleeWeapon;
-import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
-import net.minecraft.enchantment.DamageEnchantment;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.enchantment.DamageEnchantment;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
-import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-
-import net.minecraft.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class EchoEnchantment extends AOEDamageEnchantment {
@@ -37,14 +30,14 @@ public class EchoEnchantment extends AOEDamageEnchantment {
     private static boolean echoing = false;
 
     public EchoEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlotType[]{
-                EquipmentSlotType.MAINHAND});
+        super(Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlot[]{
+                EquipmentSlot.MAINHAND});
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onVanillaCriticalHit(CriticalHitEvent event) {
         if(event.getTarget() instanceof LivingEntity) {
-            PlayerEntity attacker = (PlayerEntity) event.getPlayer();
+            Player attacker = (Player) event.getPlayer();
             LivingEntity victim = (LivingEntity) event.getTarget();
             ItemStack mainhand = attacker.getMainHandItem();
             if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.ECHO)) {
@@ -64,8 +57,8 @@ public class EchoEnchantment extends AOEDamageEnchantment {
         }
     }
 
-    private static void echo(PlayerEntity user, LivingEntity target, int cooldown) {
-        final ICombo comboCap = CapabilityHelper.getComboCapability(user);
+    private static void echo(Player user, LivingEntity target, int cooldown) {
+        final Combo comboCap = ComboHelper.getComboCapability(user);
         if (user.level.isClientSide) return;
         if (echoing) return;
         if (comboCap.getEchoCooldown() == 0 || comboCap.getEchoCooldown() == cooldown) {
@@ -81,11 +74,11 @@ public class EchoEnchantment extends AOEDamageEnchantment {
 
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        PlayerEntity player = event.player;
+        Player player = event.player;
         if (player == null) return;
         if (event.phase == TickEvent.Phase.START) return;
         if (player.isAlive()) {
-            ICombo comboCap = CapabilityHelper.getComboCapability(player);
+            Combo comboCap = ComboHelper.getComboCapability(player);
             if (comboCap == null) return;
             comboCap.setEchoCooldown(Math.max(0, comboCap.getEchoCooldown() - 1));
         }

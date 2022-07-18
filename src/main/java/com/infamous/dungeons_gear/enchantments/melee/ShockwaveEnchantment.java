@@ -1,22 +1,25 @@
 package com.infamous.dungeons_gear.enchantments.melee;
 
-import com.infamous.dungeons_gear.capabilities.combo.ICombo;
+import com.infamous.dungeons_gear.capabilities.combo.Combo;
+import com.infamous.dungeons_gear.capabilities.combo.ComboHelper;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
-import com.infamous.dungeons_libraries.items.interfaces.IComboWeapon;
-import com.infamous.dungeons_libraries.items.interfaces.IMeleeWeapon;
-import com.infamous.dungeons_gear.utilties.*;
-import net.minecraft.enchantment.DamageEnchantment;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
+import com.infamous.dungeons_gear.items.interfaces.IDualWieldWeapon;
+import com.infamous.dungeons_gear.utilties.AOECloudHelper;
+import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
+import com.infamous.dungeons_gear.utilties.SoundHelper;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.DamageEnchantment;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -25,16 +28,14 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
-import net.minecraft.enchantment.Enchantment.Rarity;
-
 @Mod.EventBusSubscriber(modid= MODID)
 public class ShockwaveEnchantment extends AOEDamageEnchantment {
 
     public static final float SHOCKWAVE_DAMAGE_MULTIPLIER = 0.25F;
 
     public ShockwaveEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlotType[]{
-                EquipmentSlotType.MAINHAND});
+        super(Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlot[]{
+                EquipmentSlot.MAINHAND});
     }
 
     @Override
@@ -53,16 +54,16 @@ public class ShockwaveEnchantment extends AOEDamageEnchantment {
         if(event.getPlayer() != null && event.getTarget() instanceof LivingEntity
                 && (event.getResult() == Event.Result.ALLOW || (event.getResult() == Event.Result.DEFAULT && event.isVanillaCritical()))
         ){
-            PlayerEntity attacker = (PlayerEntity) event.getPlayer();
+            Player attacker = (Player) event.getPlayer();
             LivingEntity victim = (LivingEntity) event.getTarget();
             ItemStack mainhand = attacker.getMainHandItem();
-            if (event.getResult() != Event.Result.ALLOW && mainhand.getItem() instanceof IComboWeapon) return;
+            if (event.getResult() != Event.Result.ALLOW && mainhand.getItem() instanceof IDualWieldWeapon) return;
             if(attacker.getLastHurtMobTimestamp()==attacker.tickCount)return;
             if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.SHOCKWAVE)){
                 int shockwaveLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.SHOCKWAVE, mainhand);
                 // gets the attack damage of the original attack before any enchantment modifiers are added
                 float attackDamage = (float)attacker.getAttributeValue(Attributes.ATTACK_DAMAGE);
-                ICombo ic = CapabilityHelper.getComboCapability(attacker);
+                Combo ic = ComboHelper.getComboCapability(attacker);
                 float cooledAttackStrength = ic == null ? 1 : ic.getCachedCooldown();
                 attackDamage *= 0.2F + cooledAttackStrength * cooledAttackStrength * 0.8F;
 

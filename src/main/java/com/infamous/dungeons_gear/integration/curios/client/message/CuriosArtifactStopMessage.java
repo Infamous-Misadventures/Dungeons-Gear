@@ -1,12 +1,12 @@
 package com.infamous.dungeons_gear.integration.curios.client.message;
 
 import com.infamous.dungeons_gear.capabilities.artifact.ArtifactUsageHelper;
-import com.infamous.dungeons_gear.capabilities.artifact.IArtifactUsage;
+import com.infamous.dungeons_gear.capabilities.artifact.ArtifactUsage;
 import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.network.NetworkEvent;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 
@@ -20,11 +20,11 @@ public class CuriosArtifactStopMessage {
         this.slot = slot;
     }
 
-    public static void encode(CuriosArtifactStopMessage packet, PacketBuffer buf) {
+    public static void encode(CuriosArtifactStopMessage packet, FriendlyByteBuf buf) {
         buf.writeInt(packet.slot);
     }
 
-    public static CuriosArtifactStopMessage decode(PacketBuffer buf) {
+    public static CuriosArtifactStopMessage decode(FriendlyByteBuf buf) {
         return new CuriosArtifactStopMessage(buf.readInt());
     }
 
@@ -33,13 +33,13 @@ public class CuriosArtifactStopMessage {
             if (packet != null) {
                 ctx.get().setPacketHandled(true);
                 ctx.get().enqueueWork(() -> {
-                    ServerPlayerEntity player = ctx.get().getSender();
+                    ServerPlayer player = ctx.get().getSender();
                     if (player != null) {
                         CuriosApi.getCuriosHelper().getCuriosHandler(player).ifPresent(iCuriosItemHandler -> {
                             Optional<ICurioStacksHandler> artifactStackHandler = iCuriosItemHandler.getStacksHandler("artifact");
                             if(artifactStackHandler.isPresent()) {
                                 ItemStack artifact = artifactStackHandler.get().getStacks().getStackInSlot(packet.slot);
-                                IArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(player);
+                                ArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(player);
                                 if (!artifact.isEmpty() && artifact.getItem() instanceof ArtifactItem && cap.isSameUsingArtifact(artifact)) {
                                     ((ArtifactItem) cap.getUsingArtifact().getItem()).stopUsingArtifact(player);
                                     cap.stopUsingArtifact();

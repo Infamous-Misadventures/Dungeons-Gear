@@ -1,10 +1,10 @@
 package com.infamous.dungeons_gear.network.entity;
 
 import com.infamous.dungeons_gear.entities.BeamEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -24,8 +24,8 @@ public class PlayerBeamMessage {
         this.positionX = beamEntity.position().x;
         this.positionY = beamEntity.position().y;
         this.positionZ = beamEntity.position().z;
-        this.xRot = beamEntity.xRot;
-        this.yRot = beamEntity.yRot;
+        this.xRot = beamEntity.getXRot();
+        this.yRot = beamEntity.getYRot();
         this.xRotO = beamEntity.xRotO;
         this.yRotO = beamEntity.yRotO;
     }
@@ -41,7 +41,7 @@ public class PlayerBeamMessage {
         this.yRotO = yRotO;
     }
 
-    public static void encode(PlayerBeamMessage packet, PacketBuffer buf) {
+    public static void encode(PlayerBeamMessage packet, FriendlyByteBuf buf) {
         buf.writeInt(packet.beamEntityID);
         buf.writeDouble(packet.positionX);
         buf.writeDouble(packet.positionY);
@@ -52,7 +52,7 @@ public class PlayerBeamMessage {
         buf.writeFloat(packet.yRotO);
     }
 
-    public static PlayerBeamMessage decode(PacketBuffer buf) {
+    public static PlayerBeamMessage decode(FriendlyByteBuf buf) {
         return new PlayerBeamMessage(
                 buf.readInt(),
                 buf.readDouble(),
@@ -70,15 +70,15 @@ public class PlayerBeamMessage {
             if (packet != null) {
                 ctx.get().setPacketHandled(true);
                 ctx.get().enqueueWork(() -> {
-                    ServerPlayerEntity player = ctx.get().getSender();
+                    ServerPlayer player = ctx.get().getSender();
                     if (player != null) {
                         Entity entity = player.level.getEntity(packet.beamEntityID);
                         if(entity instanceof BeamEntity) {
                             BeamEntity beamEntity = (BeamEntity) entity;
                             if(beamEntity.getOwner() != player) return;
                             beamEntity.setPos(packet.positionX, packet.positionY, packet.positionZ);
-                            beamEntity.xRot = packet.xRot;
-                            beamEntity.yRot = packet.yRot;
+                            beamEntity.setXRot(packet.xRot);
+                            beamEntity.setYRot(packet.yRot);
                             beamEntity.xRotO = packet.xRotO;
                             beamEntity.yRotO = packet.yRotO;
                         }

@@ -4,9 +4,9 @@ import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.integration.curios.client.message.CuriosArtifactStartMessage;
 import com.infamous.dungeons_gear.integration.curios.client.message.CuriosArtifactStopMessage;
 import com.infamous.dungeons_gear.network.entity.PlayerBeamMessage;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.simple.SimpleChannel;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.simple.SimpleChannel;
 
 public class NetworkHandler {
     private static final String PROTOCOL_VERSION = "1";

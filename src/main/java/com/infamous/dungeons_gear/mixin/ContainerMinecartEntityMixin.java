@@ -1,22 +1,22 @@
 package com.infamous.dungeons_gear.mixin;
 
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
-import net.minecraft.entity.item.minecart.ContainerMinecartEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameterSets;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.LootTable;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.vehicle.AbstractMinecart;
+import net.minecraft.world.entity.vehicle.AbstractMinecartContainer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Container;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,8 +26,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import javax.annotation.Nullable;
 
-@Mixin(ContainerMinecartEntity.class)
-public abstract class ContainerMinecartEntityMixin extends AbstractMinecartEntity implements IInventory, INamedContainerProvider {
+@Mixin(AbstractMinecartContainer.class)
+public abstract class ContainerMinecartEntityMixin extends AbstractMinecart implements Container, MenuProvider {
 
     @Shadow
     @Nullable
@@ -41,27 +41,27 @@ public abstract class ContainerMinecartEntityMixin extends AbstractMinecartEntit
 
     private boolean isApplyingModifier = false;
 
-    protected ContainerMinecartEntityMixin(EntityType<?> typeIn, World world) {
+    protected ContainerMinecartEntityMixin(EntityType<?> typeIn, Level world) {
         super(typeIn, world);
     }
 
     @Inject(at = @At("HEAD"), method = "unpackLootTable", cancellable = true)
-    private void addLoot(@Nullable PlayerEntity player, CallbackInfo callbackInfo){
+    private void addLoot(@Nullable Player player, CallbackInfo callbackInfo){
         if (this.lootTable != null && this.level.getServer() != null) {
             LootTable lootTable = this.level.getServer().getLootTables().get(this.lootTable);
-            if (player instanceof ServerPlayerEntity) {
-                CriteriaTriggers.GENERATE_LOOT.trigger((ServerPlayerEntity)player, this.lootTable);
+            if (player instanceof ServerPlayer) {
+                CriteriaTriggers.GENERATE_LOOT.trigger((ServerPlayer)player, this.lootTable);
             }
 
-            LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld)this.level)).withParameter(LootParameters.ORIGIN, this.position()).withOptionalRandomSeed(this.lootTableSeed);
+            LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerLevel)this.level)).withParameter(LootContextParams.ORIGIN, this.position()).withOptionalRandomSeed(this.lootTableSeed);
             // Forge: add this entity to loot context, however, currently Vanilla uses 'this' for the player creating the chests. So we take over 'killer_entity' for this.
-            lootcontext$builder.withParameter(LootParameters.KILLER_ENTITY, this);
+            lootcontext$builder.withParameter(LootContextParams.KILLER_ENTITY, this);
             if (player != null) {
-                lootcontext$builder.withLuck(player.getLuck()).withParameter(LootParameters.THIS_ENTITY, player);
+                lootcontext$builder.withLuck(player.getLuck()).withParameter(LootContextParams.THIS_ENTITY, player);
             }
 
             this.isApplyingModifier = true;
-            lootTable.fill(this, lootcontext$builder.create(LootParameterSets.CHEST));
+            lootTable.fill(this, lootcontext$builder.create(LootContextParamSets.CHEST));
             this.isApplyingModifier = false;
 
             // Moved to the bottom of the method instead of being in the middle, with an if-check to see if it was already set to null during the loot modifier's doApply call

@@ -2,24 +2,23 @@ package com.infamous.dungeons_gear.enchantments.melee_ranged;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
 import com.infamous.dungeons_gear.integration.curios.CuriosIntegration;
-import com.infamous.dungeons_libraries.items.interfaces.IComboWeapon;
+import com.infamous.dungeons_gear.items.interfaces.IDualWieldWeapon;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
-import com.infamous.dungeons_libraries.capabilities.soulcaster.ISoulCaster;
+import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCaster;
 import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
-import net.minecraft.enchantment.DamageEnchantment;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.DamageEnchantment;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -41,13 +40,13 @@ import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_G
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class EnigmaResonatorEnchantment extends DamageBoostEnchantment {
-    private final static Map<EquipmentSlotType, UUID> EQUIPMENT_ATTRIBUTE_UUID_MAP = Stream.of(
-                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlotType.HEAD, UUID.fromString("6fadac3e-ef1a-4c88-a593-74685498fc16")),
-                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlotType.CHEST, UUID.fromString("4eace47f-6086-4ed4-8a4f-f8577523dea7")),
-                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlotType.LEGS, UUID.fromString("27b6a679-6a8f-4997-bae6-cc595f4e9832")),
-                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlotType.FEET, UUID.fromString("de4bf7dd-3478-4129-9714-1a1224816af8")),
-                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlotType.MAINHAND, UUID.fromString("8c81122c-d471-4ac1-aede-b94da2a5b10f")),
-                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlotType.OFFHAND, UUID.fromString("7fdbd2ed-445a-476b-9bab-1665bcfa6d5a"))
+    private final static Map<EquipmentSlot, UUID> EQUIPMENT_ATTRIBUTE_UUID_MAP = Stream.of(
+                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlot.HEAD, UUID.fromString("6fadac3e-ef1a-4c88-a593-74685498fc16")),
+                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlot.CHEST, UUID.fromString("4eace47f-6086-4ed4-8a4f-f8577523dea7")),
+                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlot.LEGS, UUID.fromString("27b6a679-6a8f-4997-bae6-cc595f4e9832")),
+                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlot.FEET, UUID.fromString("de4bf7dd-3478-4129-9714-1a1224816af8")),
+                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlot.MAINHAND, UUID.fromString("8c81122c-d471-4ac1-aede-b94da2a5b10f")),
+                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlot.OFFHAND, UUID.fromString("7fdbd2ed-445a-476b-9bab-1665bcfa6d5a"))
             )
             .collect(Collectors.toMap(AbstractMap.SimpleImmutableEntry::getKey, AbstractMap.SimpleImmutableEntry::getValue));
     private final static Map<Integer, UUID> CURIO_ATTRIBUTE_UUID_MAP = Stream.of(
@@ -58,16 +57,16 @@ public class EnigmaResonatorEnchantment extends DamageBoostEnchantment {
             .collect(Collectors.toMap(AbstractMap.SimpleImmutableEntry::getKey, AbstractMap.SimpleImmutableEntry::getValue));
 
     public EnigmaResonatorEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.MELEE_RANGED, new EquipmentSlotType[]{
-                EquipmentSlotType.MAINHAND});
+        super(Rarity.RARE, ModEnchantmentTypes.MELEE_RANGED, new EquipmentSlot[]{
+                EquipmentSlot.MAINHAND});
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onVanillaNonCriticalHit(CriticalHitEvent event) {
         if (event.getPlayer() == null) return;
-        PlayerEntity attacker = event.getPlayer();
+        Player attacker = event.getPlayer();
         ItemStack mainhand = attacker.getMainHandItem();
-        ISoulCaster soulCasterCapability = SoulCasterHelper.getSoulCasterCapability(attacker);
+        SoulCaster soulCasterCapability = SoulCasterHelper.getSoulCasterCapability(attacker);
         if(soulCasterCapability == null)  return;
 
         int numSouls = (int) soulCasterCapability.getSouls();
@@ -84,7 +83,7 @@ public class EnigmaResonatorEnchantment extends DamageBoostEnchantment {
             }
             if (success) {
                 event.setResult(Event.Result.ALLOW);
-                float newDamageModifier = event.getDamageModifier() == event.getOldDamageModifier() && !(mainhand.getItem() instanceof IComboWeapon) ? event.getDamageModifier() + 1.5F : event.getDamageModifier() * 3.0F;
+                float newDamageModifier = event.getDamageModifier() == event.getOldDamageModifier() && !(mainhand.getItem() instanceof IDualWieldWeapon) ? event.getDamageModifier() + 1.5F : event.getDamageModifier() * 3.0F;
                 event.setDamageModifier(newDamageModifier);
                 // soul particles
                 PROXY.spawnParticles(attacker, ParticleTypes.SOUL);
@@ -118,7 +117,7 @@ public class EnigmaResonatorEnchantment extends DamageBoostEnchantment {
 
     private static void removeAttribute(ItemStack itemStack, LivingEntity livingEntity, UUID attributeModifierUUID) {
         if (EnchantmentHelper.getItemEnchantmentLevel(ENIGMA_RESONATOR, itemStack) > 0) {
-            ModifiableAttributeInstance attributeInstance = livingEntity.getAttribute(SOUL_GATHERING.get());
+            AttributeInstance attributeInstance = livingEntity.getAttribute(SOUL_GATHERING.get());
             if (attributeInstance != null && attributeInstance.getModifier(attributeModifierUUID) != null) {
                 attributeInstance.removeModifier(attributeModifierUUID);
             }
@@ -128,7 +127,7 @@ public class EnigmaResonatorEnchantment extends DamageBoostEnchantment {
     private static void addAttribute(ItemStack itemStack, LivingEntity livingEntity, UUID attributeModifierUUID) {
         int itemEnchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(ENIGMA_RESONATOR, itemStack);
         if (itemEnchantmentLevel > 0) {
-            ModifiableAttributeInstance attributeInstance = livingEntity.getAttribute(SOUL_GATHERING.get());
+            AttributeInstance attributeInstance = livingEntity.getAttribute(SOUL_GATHERING.get());
             if (attributeInstance != null && attributeInstance.getModifier(attributeModifierUUID) == null) {
                 attributeInstance.addTransientModifier(new AttributeModifier(attributeModifierUUID, "Enchantment enigma resonator", 1, AttributeModifier.Operation.ADDITION));
             }

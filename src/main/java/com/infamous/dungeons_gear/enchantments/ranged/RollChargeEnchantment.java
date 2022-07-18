@@ -3,13 +3,12 @@ package com.infamous.dungeons_gear.enchantments.ranged;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_libraries.event.BowEvent;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.entity.projectile.ArrowEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.potion.EffectInstance;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -22,8 +21,8 @@ import static com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentLis
 public class RollChargeEnchantment extends DungeonsEnchantment {
 
     public RollChargeEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.RANGED, new EquipmentSlotType[]{
-                EquipmentSlotType.MAINHAND});
+        super(Rarity.RARE, ModEnchantmentTypes.RANGED, new EquipmentSlot[]{
+                EquipmentSlot.MAINHAND});
     }
 
     public int getMaxLevel() {
@@ -34,7 +33,7 @@ public class RollChargeEnchantment extends DungeonsEnchantment {
         int rollChargeLevel = EnchantmentHelper.getEnchantmentLevel(ROLL_CHARGE, livingEntity);
 
         if (rollChargeLevel > 0) {
-            EffectInstance effectInstance = new EffectInstance(BOW_CHARGE, 30 * rollChargeLevel, 1);
+            MobEffectInstance effectInstance = new MobEffectInstance(BOW_CHARGE, 30 * rollChargeLevel, 1);
             livingEntity.addEffect(effectInstance);
         }
     }
@@ -50,8 +49,8 @@ public class RollChargeEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onArrowJoinWorld(EntityJoinWorldEvent event) {
-        if (event.getEntity() instanceof AbstractArrowEntity) {
-            AbstractArrowEntity arrowEntity = (AbstractArrowEntity) event.getEntity();
+        if (event.getEntity() instanceof AbstractArrow) {
+            AbstractArrow arrowEntity = (AbstractArrow) event.getEntity();
             Entity owner = arrowEntity.getOwner();
             if (owner instanceof LivingEntity) {
                 LivingEntity livingEntity = (LivingEntity) owner;

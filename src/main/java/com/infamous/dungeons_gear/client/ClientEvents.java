@@ -1,18 +1,18 @@
 package com.infamous.dungeons_gear.client;
 
 import com.infamous.dungeons_gear.DungeonsGear;
+import com.infamous.dungeons_gear.capabilities.artifact.ArtifactUsage;
 import com.infamous.dungeons_gear.capabilities.artifact.ArtifactUsageHelper;
-import com.infamous.dungeons_gear.capabilities.artifact.IArtifactUsage;
 import com.infamous.dungeons_gear.items.armor.FreezingResistanceArmorGear;
 import com.infamous.dungeons_gear.items.artifacts.beacon.AbstractBeaconItem;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -26,34 +26,34 @@ public class ClientEvents {
 
     @SubscribeEvent
     public static void handleToolTip(ItemTooltipEvent event) {
-        List<ITextComponent> tooltip = event.getToolTip();
+        List<Component> tooltip = event.getToolTip();
         int index = 0;
         Item item = event.getItemStack().getItem();
         if (item instanceof FreezingResistanceArmorGear) {
             FreezingResistanceArmorGear armor = (FreezingResistanceArmorGear)item;
             // DOUBLE OR INT
             if(armor.getFreezingResistance() > 0){
-                tooltip.add(index + 1, new TranslationTextComponent(
+                tooltip.add(index + 1, new TranslatableComponent(
                         "+" + armor.getFreezingResistance() + "% ")
-                        .append(new TranslationTextComponent(
+                        .append(new TranslatableComponent(
                                 "attribute.name.freezingResistance"))
-                        .withStyle(TextFormatting.GREEN));
+                        .withStyle(ChatFormatting.GREEN));
             }
         }
     }
 
     @SubscribeEvent
     public static void renderPlayerHandEvent(RenderHandEvent event) {
-        AbstractClientPlayerEntity player = Minecraft.getInstance().player;
+        AbstractClientPlayer player = Minecraft.getInstance().player;
         if(player == null) return;
-        IArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(player);
+        ArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(player);
         if(cap == null) return;
         if(cap.isUsingArtifact() && cap.getUsingArtifact().getItem() instanceof AbstractBeaconItem){
             event.setCanceled(true);
-            if(event.getHand() == Hand.MAIN_HAND) {
+            if(event.getHand() == InteractionHand.MAIN_HAND) {
                 float partialTicks = event.getPartialTicks();
-                float f1 = MathHelper.lerp(partialTicks, player.xRotO, player.xRot);
-                Minecraft.getInstance().getItemInHandRenderer().renderArmWithItem(player, partialTicks, f1, event.getHand(), 0.0f, cap.getUsingArtifact(), 0.0f, event.getMatrixStack(), event.getBuffers(), event.getLight());
+                float f1 = Mth.lerp(partialTicks, player.xRotO, player.getXRot());
+                Minecraft.getInstance().getItemInHandRenderer().renderArmWithItem(player, partialTicks, f1, event.getHand(), 0.0f, cap.getUsingArtifact(), 0.0f, event.getPoseStack(), event.getMultiBufferSource(), event.getPackedLight());
             }
         }
     }
@@ -71,7 +71,7 @@ public class ClientEvents {
 //                    if (player.distanceToSqr(myplayer) > 500)
 //                        continue;
 //
-//                    IArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(player);
+//                    ArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(player);
 //                    if(cap.isUsingArtifact() && cap.getUsingArtifact().getItem() instanceof AbstractBeaconItem){
 //                        BeaconBeamRenderer.renderBeam(event, player, Minecraft.getInstance().getFrameTime(), cap.getUsingArtifact());
 //                    }
@@ -86,7 +86,7 @@ public class ClientEvents {
 //        if (myplayer != null) {
 //                if (event.getEntity().distanceToSqr(myplayer) > 500) return;
 //
-//                IArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(event.getEntity());
+//                ArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(event.getEntity());
 //                if (cap != null && cap.isUsingArtifact() && cap.getUsingArtifact().getItem() instanceof AbstractBeaconItem) {
 //                    BeaconBeamRenderer.renderBeam(event, event.getEntity(), Minecraft.getInstance().getFrameTime(), cap.getUsingArtifact());
 //                }

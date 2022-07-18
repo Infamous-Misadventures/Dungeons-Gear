@@ -3,8 +3,8 @@ package com.infamous.dungeons_gear.items.melee;
 import com.infamous.dungeons_libraries.items.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.registry.ItemRegistry;
 import com.infamous.dungeons_libraries.items.interfaces.IUniqueGear;
-import net.minecraft.item.Item;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.world.item.Item;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.List;
 import java.util.stream.Collectors;

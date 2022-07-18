@@ -3,16 +3,18 @@ package com.infamous.dungeons_gear.items.artifacts.beacon;
 import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_gear.items.interfaces.IChargeableItem;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class EyeOfTheGuardianItem extends AbstractBeaconItem implements IChargeableItem {
 
@@ -24,7 +26,7 @@ public class EyeOfTheGuardianItem extends AbstractBeaconItem implements IChargea
     }
 
     @Override
-    public void onUseTick(World world, LivingEntity livingEntity, ItemStack stack, int count) {
+    public void onUseTick(Level world, LivingEntity livingEntity, ItemStack stack, int count) {
         if(IChargeableItem.isCharged(stack)){
             super.onUseTick(world, livingEntity, stack, count);
         } else{
@@ -36,23 +38,23 @@ public class EyeOfTheGuardianItem extends AbstractBeaconItem implements IChargea
     }
 
     @Override
-    public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityLiving) {
+    public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
         entityLiving.releaseUsingItem();
         return super.finishUsingItem(stack, worldIn, entityLiving);
     }
 
     @Override
-    public void releaseUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft) {
+    public void releaseUsing(ItemStack stack, Level worldIn, LivingEntity entityLiving, int timeLeft) {
         super.releaseUsing(stack, worldIn, entityLiving, timeLeft);
         IChargeableItem.setCharged(stack, false);
-        if (entityLiving instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity)entityLiving;
+        if (entityLiving instanceof Player) {
+            Player player = (Player)entityLiving;
             ArtifactItem.putArtifactOnCooldown(player, stack.getItem());
         }
     }
 
     @Override
-    public boolean canFire(PlayerEntity playerEntity, ItemStack stack) {
+    public boolean canFire(Player playerEntity, ItemStack stack) {
         return true;
     }
 
@@ -63,7 +65,7 @@ public class EyeOfTheGuardianItem extends AbstractBeaconItem implements IChargea
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
+    public void appendHoverText(ItemStack stack, Level world, List<Component> list, TooltipFlag flag)
     {
         super.appendHoverText(stack, world, list, flag);
         DescriptionHelper.addFullDescription(list, stack);
@@ -80,7 +82,7 @@ public class EyeOfTheGuardianItem extends AbstractBeaconItem implements IChargea
     }
 
     @Override
-    protected boolean consumeTick(PlayerEntity playerEntity, ItemStack stack) {
+    protected boolean consumeTick(Player playerEntity, ItemStack stack) {
         return true;
     }
 

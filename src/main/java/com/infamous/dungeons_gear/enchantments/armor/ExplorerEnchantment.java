@@ -1,46 +1,40 @@
 package com.infamous.dungeons_gear.enchantments.armor;
 
-import com.infamous.dungeons_gear.capabilities.combo.ICombo;
+import com.infamous.dungeons_gear.capabilities.combo.Combo;
+import com.infamous.dungeons_gear.capabilities.combo.ComboHelper;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.HealthAbilityEnchantment;
-import com.infamous.dungeons_gear.utilties.CapabilityHelper;
-import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.UUID;
-
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-
-import net.minecraft.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class ExplorerEnchantment extends HealthAbilityEnchantment {
 
     public ExplorerEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlotType[]{
-                EquipmentSlotType.HEAD,
-                EquipmentSlotType.CHEST,
-                EquipmentSlotType.LEGS,
-                EquipmentSlotType.FEET});
+        super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlot[]{
+                EquipmentSlot.HEAD,
+                EquipmentSlot.CHEST,
+                EquipmentSlot.LEGS,
+                EquipmentSlot.FEET});
     }
 
     @SubscribeEvent
     public static void onPlayerSpawn(PlayerEvent.PlayerRespawnEvent event){
-        PlayerEntity player = event.getPlayer();
+        Player player = event.getPlayer();
         if(!player.level.isClientSide){
-            ICombo comboCap = CapabilityHelper.getComboCapability(player);
+            Combo comboCap = ComboHelper.getComboCapability(player);
             if (comboCap != null) {
                 comboCap.setLastExplorerCheckpoint(player.blockPosition());
             }
@@ -49,15 +43,15 @@ public class ExplorerEnchantment extends HealthAbilityEnchantment {
 
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        PlayerEntity player = event.player;
+        Player player = event.player;
         if (player == null) return;
         if (event.phase == TickEvent.Phase.START) return;
         if (player.isAlive() && !player.level.isClientSide) {
-            ICombo comboCap = CapabilityHelper.getComboCapability(player);
+            Combo comboCap = ComboHelper.getComboCapability(player);
             if (comboCap != null) {
                 BlockPos lastExplorerCheckpoint = comboCap.getLastExplorerCheckpoint();
                 BlockPos currentPos = player.blockPosition();
-                if(currentPos.distSqr(lastExplorerCheckpoint.getX(), lastExplorerCheckpoint.getY(), lastExplorerCheckpoint.getZ(), true) >= 10000){
+                if(currentPos.distSqr(lastExplorerCheckpoint) >= 10000){
                     comboCap.setLastExplorerCheckpoint(currentPos);
                     int explorerLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.EXPLORER, player);
                     if(explorerLevel > 0){

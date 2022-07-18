@@ -1,11 +1,11 @@
 package com.infamous.dungeons_gear.entities;
 
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
@@ -14,7 +14,7 @@ public final class ModEntityTypes {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, MODID);
 
     public static final RegistryObject<EntityType<IceCloudEntity>> ICE_CLOUD = ENTITY_TYPES.register("ice_cloud", () ->
-            EntityType.Builder.<IceCloudEntity>of(IceCloudEntity::new, EntityClassification.MISC)
+            EntityType.Builder.<IceCloudEntity>of(IceCloudEntity::new, MobCategory.MISC)
                     .fireImmune()
                     .sized(2.0F, 1.0F)
                     .clientTrackingRange(6)
@@ -24,7 +24,7 @@ public final class ModEntityTypes {
     );
 
     public static final RegistryObject<EntityType<BuzzyNestEntity>> BUZZY_NEST = ENTITY_TYPES.register("buzzy_nest", () ->
-            EntityType.Builder.of(BuzzyNestEntity::new, EntityClassification.MISC)
+            EntityType.Builder.of(BuzzyNestEntity::new, MobCategory.MISC)
                     .fireImmune()
                     .sized(2.0F, 1.0F)
                     .clientTrackingRange(6)
@@ -33,7 +33,7 @@ public final class ModEntityTypes {
     );
 
     public static final RegistryObject<EntityType<TotemOfShieldingEntity>> TOTEM_OF_SHIELDING = ENTITY_TYPES.register("totem_of_shielding", () ->
-            EntityType.Builder.of(TotemOfShieldingEntity::new, EntityClassification.MISC)
+            EntityType.Builder.of(TotemOfShieldingEntity::new, MobCategory.MISC)
                     .fireImmune()
                     .sized(2.0F, 1.0F)
                     .clientTrackingRange(6)
@@ -42,7 +42,7 @@ public final class ModEntityTypes {
     );
 
     public static final RegistryObject<EntityType<TotemOfRegenerationEntity>> TOTEM_OF_REGENERATION = ENTITY_TYPES.register("totem_of_regeneration", () ->
-            EntityType.Builder.of(TotemOfRegenerationEntity::new, EntityClassification.MISC)
+            EntityType.Builder.of(TotemOfRegenerationEntity::new, MobCategory.MISC)
                     .fireImmune()
                     .sized(2.0F, 1.0F)
                     .clientTrackingRange(6)
@@ -51,7 +51,7 @@ public final class ModEntityTypes {
     );
 
     public static final RegistryObject<EntityType<BeamEntity>> BEAM_ENTITY = ENTITY_TYPES.register("beam_entity", () ->
-            EntityType.Builder.<BeamEntity>of(BeamEntity::new, EntityClassification.MISC)
+            EntityType.Builder.<BeamEntity>of(BeamEntity::new, MobCategory.MISC)
                     .fireImmune()
                     .setShouldReceiveVelocityUpdates(false)
                     .sized(2.0F, 1.0F)
@@ -61,7 +61,7 @@ public final class ModEntityTypes {
     );
 
     public static final RegistryObject<EntityType<FireworksDisplayEntity>> FIREWORKS_DISPLAY = ENTITY_TYPES.register("fireworks_display", () ->
-            EntityType.Builder.of(FireworksDisplayEntity::new, EntityClassification.MISC)
+            EntityType.Builder.of(FireworksDisplayEntity::new, MobCategory.MISC)
                     .fireImmune()
                     .setShouldReceiveVelocityUpdates(false)
                     .sized(2.0F, 1.0F)

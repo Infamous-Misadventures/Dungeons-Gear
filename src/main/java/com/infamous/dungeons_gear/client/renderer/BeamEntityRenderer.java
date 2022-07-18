@@ -4,16 +4,19 @@ import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.entities.BeamEntity;
 import com.infamous.dungeons_gear.items.artifacts.beacon.BeamColor;
 import com.infamous.dungeons_gear.items.artifacts.beacon.MyRenderType;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Matrix3f;
+import com.mojang.math.Matrix4f;
+import com.mojang.math.Vector3f;
+import com.mojang.math.Vector4f;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.*;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -24,11 +27,11 @@ public class BeamEntityRenderer<T extends BeamEntity> extends EntityRenderer<T> 
       return new ResourceLocation(DungeonsGear.MODID + ":textures/misc/beacon_beam_core.png");
    }
 
-   public BeamEntityRenderer(EntityRendererManager p_i46193_1_) {
-      super(p_i46193_1_);
+   public BeamEntityRenderer(EntityRendererProvider.Context p_174008_) {
+      super(p_174008_);
    }
 
-   public void render(T pEntity, float pEntityYaw, float pPartialTicks, MatrixStack pMatrixStack, IRenderTypeBuffer pBuffer, int pPackedLight) {
+   public void render(T pEntity, float pEntityYaw, float pPartialTicks, PoseStack pMatrixStack, MultiBufferSource pBuffer, int pPackedLight) {
       double distance = pEntity.beamTraceDistance(BeamEntity.MAX_RAYTRACE_DISTANCE, 1.0f, false);
 
       float speedModifier = -0.02f;
@@ -36,8 +39,8 @@ public class BeamEntityRenderer<T extends BeamEntity> extends EntityRenderer<T> 
       drawBeams(distance, pEntity, pPartialTicks, speedModifier, pMatrixStack);
    }
 
-   private static void drawBeams(double distance, BeamEntity entity, float ticks, float speedModifier, MatrixStack pMatrixStack) {
-      IVertexBuilder builder;
+   private static void drawBeams(double distance, BeamEntity entity, float ticks, float speedModifier, PoseStack pMatrixStack) {
+      VertexConsumer builder;
       long gameTime = entity.level.getGameTime();
       double v = gameTime * speedModifier;
       float additiveThickness = (entity.getBeamWidth() * 1.75f) * calculateLaserFlickerModifier(gameTime);
@@ -49,13 +52,13 @@ public class BeamEntityRenderer<T extends BeamEntity> extends EntityRenderer<T> 
       float beam2r = beamColor.getInnerRedValue() / 255f;
       float beam2g = beamColor.getInnerGreenValue() / 255f;
       float beam2b = beamColor.getInnerBlueValue() / 255f;
-      IRenderTypeBuffer.Impl buffer = Minecraft.getInstance().renderBuffers().bufferSource();
+      MultiBufferSource.BufferSource buffer = Minecraft.getInstance().renderBuffers().bufferSource();
 
       pMatrixStack.pushPose();
-      pMatrixStack.mulPose(Vector3f.YP.rotationDegrees((MathHelper.lerp(ticks, boundDegrees(-entity.yRot), boundDegrees(-entity.yRotO)))));
-      pMatrixStack.mulPose(Vector3f.XP.rotationDegrees(MathHelper.lerp(ticks, boundDegrees(entity.xRot), boundDegrees(entity.xRotO))));
+      pMatrixStack.mulPose(Vector3f.YP.rotationDegrees((Mth.lerp(ticks, boundDegrees(-entity.getYRot()), boundDegrees(-entity.yRotO)))));
+      pMatrixStack.mulPose(Vector3f.XP.rotationDegrees(Mth.lerp(ticks, boundDegrees(entity.getXRot()), boundDegrees(entity.xRotO))));
 
-      MatrixStack.Entry matrixstack$entry = pMatrixStack.last();
+      PoseStack.Pose matrixstack$entry = pMatrixStack.last();
       Matrix3f matrixNormal = matrixstack$entry.normal();
       Matrix4f positionMatrix = matrixstack$entry.pose();
 
@@ -80,10 +83,10 @@ public class BeamEntityRenderer<T extends BeamEntity> extends EntityRenderer<T> 
    }
 
    private static float calculateLaserFlickerModifier(long gameTime) {
-      return 0.9f + 0.1f * MathHelper.sin(gameTime * 0.99f) * MathHelper.sin(gameTime * 0.3f) * MathHelper.sin(gameTime * 0.1f);
+      return 0.9f + 0.1f * Mth.sin(gameTime * 0.99f) * Mth.sin(gameTime * 0.3f) * Mth.sin(gameTime * 0.1f);
    }
 
-   private static void drawBeam(IVertexBuilder builder, Matrix4f positionMatrix, Matrix3f matrixNormalIn, float thickness, double distance, double v1, double v2, float ticks, float r, float g, float b, float alpha) {
+   private static void drawBeam(VertexConsumer builder, Matrix4f positionMatrix, Matrix3f matrixNormalIn, float thickness, double distance, double v1, double v2, float ticks, float r, float g, float b, float alpha) {
       Vector3f vector3f = new Vector3f(0.0f, 1.0f, 0.0f);
       vector3f.transform(matrixNormalIn);
       float xMin = -thickness;
@@ -134,7 +137,7 @@ public class BeamEntityRenderer<T extends BeamEntity> extends EntityRenderer<T> 
       drawQuad(builder, (float) v1, (float) v2, r, g, b, alpha, vector3f, vec1, vec2, vec3, vec4);
    }
 
-   private static void drawClosingBeam(IVertexBuilder builder, Matrix4f positionMatrix, Matrix3f matrixNormalIn, float thickness, double distance, double v1, double v2, float ticks, float r, float g, float b, float alpha) {
+   private static void drawClosingBeam(VertexConsumer builder, Matrix4f positionMatrix, Matrix3f matrixNormalIn, float thickness, double distance, double v1, double v2, float ticks, float r, float g, float b, float alpha) {
       Vector3f vector3f = new Vector3f(0.0f, 1.0f, 0.0f);
       vector3f.transform(matrixNormalIn);
 
@@ -186,7 +189,7 @@ public class BeamEntityRenderer<T extends BeamEntity> extends EntityRenderer<T> 
       drawQuad(builder, (float) v1, (float) v2, r, g, b, alpha, vector3f, vec1, vec2, vec3, vec4);
    }
 
-   private static void drawQuad(IVertexBuilder builder, float v1, float v2, float r, float g, float b, float alpha, Vector3f vector3f, Vector4f vec1, Vector4f vec2, Vector4f vec3, Vector4f vec4) {
+   private static void drawQuad(VertexConsumer builder, float v1, float v2, float r, float g, float b, float alpha, Vector3f vector3f, Vector4f vec1, Vector4f vec2, Vector4f vec3, Vector4f vec4) {
       builder.vertex(vec4.x(), vec4.y(), vec4.z(), r, g, b, alpha, 0, v1, OverlayTexture.NO_OVERLAY, 15728880, vector3f.x(), vector3f.y(), vector3f.z());
       builder.vertex(vec3.x(), vec3.y(), vec3.z(), r, g, b, alpha, 0, v2, OverlayTexture.NO_OVERLAY, 15728880, vector3f.x(), vector3f.y(), vector3f.z());
       builder.vertex(vec2.x(), vec2.y(), vec2.z(), r, g, b, alpha, 1, v2, OverlayTexture.NO_OVERLAY, 15728880, vector3f.x(), vector3f.y(), vector3f.z());

@@ -1,17 +1,17 @@
 package com.infamous.dungeons_gear.items.interfaces;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 
 public interface IChargeableItem {
 
     static boolean isCharged(ItemStack stack) {
-        CompoundNBT compoundnbt = stack.getTag();
+        CompoundTag compoundnbt = stack.getTag();
         return compoundnbt != null && compoundnbt.getBoolean("Charged");
     }
 
     static void setCharged(ItemStack stack, boolean chargedIn) {
-        CompoundNBT compoundnbt = stack.getOrCreateTag();
+        CompoundTag compoundnbt = stack.getOrCreateTag();
         compoundnbt.putBoolean("Charged", chargedIn);
     }
 

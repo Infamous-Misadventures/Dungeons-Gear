@@ -1,14 +1,11 @@
 package com.infamous.dungeons_gear.enchantments.types;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.inventory.EquipmentSlotType;
-
-import net.minecraft.enchantment.Enchantment.Rarity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 public class FocusEnchantment extends DungeonsEnchantment{
 
-    protected FocusEnchantment(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType[] slots) {
+    protected FocusEnchantment(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot[] slots) {
         super(rarityIn, typeIn, slots);
     }
 }

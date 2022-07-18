@@ -4,15 +4,15 @@ import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.JumpingEnchantment;
 import com.infamous.dungeons_gear.integration.curios.CuriosIntegration;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.EquipmentSlot;
 
-import net.minecraft.enchantment.Enchantment.Rarity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -32,13 +32,13 @@ import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SUMMON
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class TumblebeeEnchantment extends JumpingEnchantment {
-    private final static Map<EquipmentSlotType, UUID> EQUIPMENT_ATTRIBUTE_UUID_MAP = Stream.of(
-                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlotType.HEAD, UUID.fromString("350050cf-ab03-4320-8792-21592e61ef6b")),
-                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlotType.CHEST, UUID.fromString("55f68b68-139a-4d92-b8d3-54e0d6988f83")),
-                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlotType.LEGS, UUID.fromString("d161bb99-0405-4546-a3ae-0e56076071d4")),
-                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlotType.FEET, UUID.fromString("f8b6b2a9-77b5-4105-8e94-9d8d9f15670b")),
-                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlotType.MAINHAND, UUID.fromString("fe856449-11ee-45f0-98a9-e2aa41796fe3")),
-                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlotType.OFFHAND, UUID.fromString("5c4b8b7d-5252-40d4-a263-4f485512b734"))
+    private final static Map<EquipmentSlot, UUID> EQUIPMENT_ATTRIBUTE_UUID_MAP = Stream.of(
+                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlot.HEAD, UUID.fromString("350050cf-ab03-4320-8792-21592e61ef6b")),
+                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlot.CHEST, UUID.fromString("55f68b68-139a-4d92-b8d3-54e0d6988f83")),
+                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlot.LEGS, UUID.fromString("d161bb99-0405-4546-a3ae-0e56076071d4")),
+                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlot.FEET, UUID.fromString("f8b6b2a9-77b5-4105-8e94-9d8d9f15670b")),
+                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlot.MAINHAND, UUID.fromString("fe856449-11ee-45f0-98a9-e2aa41796fe3")),
+                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlot.OFFHAND, UUID.fromString("5c4b8b7d-5252-40d4-a263-4f485512b734"))
             )
             .collect(Collectors.toMap(AbstractMap.SimpleImmutableEntry::getKey, AbstractMap.SimpleImmutableEntry::getValue));
     private final static Map<Integer, UUID> CURIO_ATTRIBUTE_UUID_MAP = Stream.of(
@@ -49,11 +49,11 @@ public class TumblebeeEnchantment extends JumpingEnchantment {
             .collect(Collectors.toMap(AbstractMap.SimpleImmutableEntry::getKey, AbstractMap.SimpleImmutableEntry::getValue));
 
     public TumblebeeEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlotType[]{
-                EquipmentSlotType.HEAD,
-                EquipmentSlotType.CHEST,
-                EquipmentSlotType.LEGS,
-                EquipmentSlotType.FEET});
+        super(Rarity.RARE, ModEnchantmentTypes.ARMOR, new EquipmentSlot[]{
+                EquipmentSlot.HEAD,
+                EquipmentSlot.CHEST,
+                EquipmentSlot.LEGS,
+                EquipmentSlot.FEET});
     }
 
     public int getMaxLevel() {
@@ -80,7 +80,7 @@ public class TumblebeeEnchantment extends JumpingEnchantment {
 
     private static void removeAttribute(ItemStack itemStack, LivingEntity livingEntity, UUID attributeModifierUUID) {
         if (EnchantmentHelper.getItemEnchantmentLevel(TUMBLEBEE, itemStack) > 0) {
-            ModifiableAttributeInstance attributeInstance = livingEntity.getAttribute(SUMMON_CAP.get());
+            AttributeInstance attributeInstance = livingEntity.getAttribute(SUMMON_CAP.get());
             if (attributeInstance != null && attributeInstance.getModifier(attributeModifierUUID) != null) {
                 attributeInstance.removeModifier(attributeModifierUUID);
             }
@@ -90,7 +90,7 @@ public class TumblebeeEnchantment extends JumpingEnchantment {
     private static void addAttribute(ItemStack itemStack, LivingEntity livingEntity, UUID attributeModifierUUID) {
         int itemEnchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(TUMBLEBEE, itemStack);
         if (itemEnchantmentLevel > 0) {
-            ModifiableAttributeInstance attributeInstance = livingEntity.getAttribute(SUMMON_CAP.get());
+            AttributeInstance attributeInstance = livingEntity.getAttribute(SUMMON_CAP.get());
             if (attributeInstance != null && attributeInstance.getModifier(attributeModifierUUID) == null) {
                 attributeInstance.addTransientModifier(new AttributeModifier(attributeModifierUUID, "Enchantment tumblebee", 3, AttributeModifier.Operation.ADDITION));
             }

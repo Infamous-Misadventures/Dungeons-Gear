@@ -5,14 +5,15 @@ import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
-import com.infamous.dungeons_libraries.items.interfaces.IComboWeapon;
+import com.infamous.dungeons_gear.items.interfaces.IDualWieldWeapon;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
-import net.minecraft.enchantment.DamageEnchantment;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
+import com.infamous.dungeons_libraries.items.interfaces.IComboWeapon;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.DamageEnchantment;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -26,14 +27,14 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 public class CriticalHitEnchantment extends DamageBoostEnchantment {
 
     public CriticalHitEnchantment() {
-        super(Enchantment.Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlotType[]{
-                EquipmentSlotType.MAINHAND});
+        super(Enchantment.Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlot[]{
+                EquipmentSlot.MAINHAND});
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onVanillaNonCriticalHit(CriticalHitEvent event) {
         if (event.getPlayer() != null && !event.isVanillaCritical()) {
-            PlayerEntity attacker = event.getPlayer();
+            Player attacker = event.getPlayer();
             ItemStack mainhand = attacker.getMainHandItem();
             boolean success = false;
             if (event.getResult() != Event.Result.ALLOW && mainhand.getItem() instanceof IComboWeapon) return;
@@ -48,7 +49,7 @@ public class CriticalHitEnchantment extends DamageBoostEnchantment {
             }
             if (success) {
                 event.setResult(Event.Result.ALLOW);
-                float newDamageModifier = event.getDamageModifier() == event.getOldDamageModifier() && !(mainhand.getItem() instanceof IComboWeapon) ? event.getDamageModifier() + 1.5F : event.getDamageModifier() * 3.0F;
+                float newDamageModifier = event.getDamageModifier() == event.getOldDamageModifier() && !(mainhand.getItem() instanceof IDualWieldWeapon) ? event.getDamageModifier() + 1.5F : event.getDamageModifier() * 3.0F;
                 event.setDamageModifier(newDamageModifier);
             }
         }

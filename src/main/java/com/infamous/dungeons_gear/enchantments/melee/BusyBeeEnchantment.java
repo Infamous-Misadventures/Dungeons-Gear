@@ -7,15 +7,15 @@ import com.infamous.dungeons_gear.integration.curios.CuriosIntegration;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
 import com.infamous.dungeons_libraries.summon.SummonHelper;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -32,15 +32,17 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList.BUSY_BEE;
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SUMMON_CAP;
 
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class BusyBeeEnchantment extends DungeonsEnchantment {
-    private final static Map<EquipmentSlotType, UUID> EQUIPMENT_ATTRIBUTE_UUID_MAP = Stream.of(
-                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlotType.HEAD, UUID.fromString("3d8f6614-0db6-4031-a057-2bd0f4ffdc16")),
-                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlotType.CHEST, UUID.fromString("fdb79435-0efc-45ac-8035-6481f00461e7")),
-                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlotType.LEGS, UUID.fromString("2393bf96-e3c3-4d6d-9951-f50fb0585f3c")),
-                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlotType.FEET, UUID.fromString("fdd1db94-38e8-48c5-b5dc-b8ac647f457a")),
-                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlotType.MAINHAND, UUID.fromString("0581a4fc-4037-4cbb-aaf5-c43ba5213963")),
-                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlotType.OFFHAND, UUID.fromString("ce6681fb-6613-40fa-a0f6-5c552141f45b"))
+    private final static Map<EquipmentSlot, UUID> EQUIPMENT_ATTRIBUTE_UUID_MAP = Stream.of(
+                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlot.HEAD, UUID.fromString("3d8f6614-0db6-4031-a057-2bd0f4ffdc16")),
+                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlot.CHEST, UUID.fromString("fdb79435-0efc-45ac-8035-6481f00461e7")),
+                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlot.LEGS, UUID.fromString("2393bf96-e3c3-4d6d-9951-f50fb0585f3c")),
+                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlot.FEET, UUID.fromString("fdd1db94-38e8-48c5-b5dc-b8ac647f457a")),
+                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlot.MAINHAND, UUID.fromString("0581a4fc-4037-4cbb-aaf5-c43ba5213963")),
+                    new AbstractMap.SimpleImmutableEntry<>(EquipmentSlot.OFFHAND, UUID.fromString("ce6681fb-6613-40fa-a0f6-5c552141f45b"))
             )
             .collect(Collectors.toMap(AbstractMap.SimpleImmutableEntry::getKey, AbstractMap.SimpleImmutableEntry::getValue));
     private final static Map<Integer, UUID> CURIO_ATTRIBUTE_UUID_MAP = Stream.of(
@@ -51,8 +53,8 @@ public class BusyBeeEnchantment extends DungeonsEnchantment {
             .collect(Collectors.toMap(AbstractMap.SimpleImmutableEntry::getKey, AbstractMap.SimpleImmutableEntry::getValue));
 
     public BusyBeeEnchantment() {
-        super(Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlotType[]{
-                EquipmentSlotType.MAINHAND});
+        super(Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlot[]{
+                EquipmentSlot.MAINHAND});
     }
 
     public int getMaxLevel() {
@@ -61,7 +63,7 @@ public class BusyBeeEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onBusyBeeKill(LivingDeathEvent event){
-        if(event.getSource().getDirectEntity() instanceof AbstractArrowEntity) return;
+        if(event.getSource().getDirectEntity() instanceof AbstractArrow) return;
         if(event.getSource().getEntity() instanceof LivingEntity){
             LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
             LivingEntity victim = event.getEntityLiving();
@@ -96,7 +98,7 @@ public class BusyBeeEnchantment extends DungeonsEnchantment {
 
     private static void removeAttribute(ItemStack itemStack, LivingEntity livingEntity, UUID attributeModifierUUID) {
         if (EnchantmentHelper.getItemEnchantmentLevel(BUSY_BEE, itemStack) > 0) {
-            ModifiableAttributeInstance attributeInstance = livingEntity.getAttribute(SUMMON_CAP.get());
+            AttributeInstance attributeInstance = livingEntity.getAttribute(SUMMON_CAP.get());
             if (attributeInstance != null && attributeInstance.getModifier(attributeModifierUUID) != null) {
                 attributeInstance.removeModifier(attributeModifierUUID);
             }
@@ -106,7 +108,7 @@ public class BusyBeeEnchantment extends DungeonsEnchantment {
     private static void addAttribute(ItemStack itemStack, LivingEntity livingEntity, UUID attributeModifierUUID) {
         int itemEnchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(BUSY_BEE, itemStack);
         if (itemEnchantmentLevel > 0) {
-            ModifiableAttributeInstance attributeInstance = livingEntity.getAttribute(SUMMON_CAP.get());
+            AttributeInstance attributeInstance = livingEntity.getAttribute(SUMMON_CAP.get());
             if (attributeInstance != null && attributeInstance.getModifier(attributeModifierUUID) == null) {
                 attributeInstance.addTransientModifier(new AttributeModifier(attributeModifierUUID, "Enchantment busy bee", 3, AttributeModifier.Operation.ADDITION));
             }
