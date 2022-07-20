@@ -62,7 +62,7 @@ public class PoisonCloudEnchantment extends DungeonsEnchantment {
             int level = EnchantmentHelper.getItemEnchantmentLevel(POISON_CLOUD, mainhand);
             if (chance <= DungeonsGearConfig.POISON_CLOUD_CHANCE.get() && !PlayerAttackHelper.isProbablyNotMeleeDamage(event.getSource())) {
                 checkForPlayer(attacker);
-                AOECloudHelper.spawnPoisonCloud(attacker, victim, level - 1);
+                AOECloudHelper.spawnPoisonCloud(attacker, victim, level);
             }
         }
     }

@@ -47,10 +47,12 @@ public class HarpoonShotEnchantment extends DungeonsEnchantment {
             AbstractArrowEntity arrowEntity = (AbstractArrowEntity) event.getEntity();
             if(arrowEntity.getOwner() instanceof LivingEntity){
                 LivingEntity livingEntity = (LivingEntity) arrowEntity.getOwner();
-                EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.HARPOON_SHOT, livingEntity);
-                arrowEntity.addTag(HarpoonQuiverItem.HARPOON_QUIVER);
-                arrowEntity.setDeltaMovement(arrowEntity.getDeltaMovement().scale(1.5D));
-                arrowEntity.setPierceLevel((byte) (arrowEntity.getPierceLevel() + 1));
+                int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.HARPOON_SHOT, livingEntity);
+                if(enchantmentLevel > 0) {
+                    arrowEntity.addTag(HarpoonQuiverItem.HARPOON_QUIVER);
+                    arrowEntity.setDeltaMovement(arrowEntity.getDeltaMovement().scale(1.5D));
+                    arrowEntity.setPierceLevel((byte) (arrowEntity.getPierceLevel() + enchantmentLevel));
+                }
             }
         }
     }

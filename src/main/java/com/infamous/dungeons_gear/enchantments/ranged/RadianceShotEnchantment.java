@@ -6,7 +6,6 @@ import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_libraries.utils.ArrowHelper;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -18,8 +17,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-
-import net.minecraft.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class RadianceShotEnchantment extends DungeonsEnchantment {
@@ -36,7 +33,7 @@ public class RadianceShotEnchantment extends DungeonsEnchantment {
     }
 
     @SubscribeEvent
-    public static void onSabrewingImpact(ProjectileImpactEvent.Arrow event){
+    public static void onArrowImpact(ProjectileImpactEvent.Arrow event){
         RayTraceResult rayTraceResult = event.getRayTraceResult();
         AbstractArrowEntity arrow = event.getArrow();
         if(!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
