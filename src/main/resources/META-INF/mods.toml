@@ -51,19 +51,13 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mollis lacinia magn
     versionRange="[1.16.5-4.0.5.3,)"
     ordering="NONE"
     side="BOTH"
-[[dependencies.dungeons_mobs]]
-    modId="geckolib3"
-    mandatory=true
-    versionRange="[3.0.65,)"
-    ordering="NONE"
-    side="CLIENT"
 [[dependencies.dungeons_gear]] #optional
     # the modid of the dependency
     modId="dungeons_libraries" #mandatory
     # Does this dependency have to exist - if not, ordering below must be specified
     mandatory=true #mandatory
     # The version range of the dependency
-    versionRange="[1.16.5-0.0.14-beta,)" #mandatory
+    versionRange="[1.16.5-0.0.15-beta,)" #mandatory
     # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
     ordering="NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
