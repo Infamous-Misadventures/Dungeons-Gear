@@ -22,6 +22,9 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
 
+import static com.infamous.dungeons_gear.registry.ItemRegistry.CHAMPIONS_ARMOR;
+import static com.infamous.dungeons_gear.registry.ItemRegistry.HEROS_ARMOR;
+
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class ArmorEvents {
 
@@ -72,33 +75,35 @@ public class ArmorEvents {
         }
     }
 
-//    @SubscribeEvent
-//    public static void onHealthPotionConsumed(LivingEntityUseItemEvent.Finish event) {
-//        if (!(event.getEntityLiving() instanceof Player)) return;
-//        Player player = (Player) event.getEntityLiving();
-//        if (player.isAlive()) {
-//            List<MobEffectInstance> potionEffects = PotionUtils.getMobEffects(event.getItem());
-//            if (potionEffects.isEmpty()) return;
-//            ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
-//            ItemStack chestplate = player.getItemBySlot(EquipmentSlot.CHEST);
-//
-//            if (potionEffects.get(0).getEffect() == MobEffects.HEAL) {
-//                handleHealthPotionBoost(player, helmet, chestplate);
-//            }
-//        }
-//    }
+    @SubscribeEvent
+    public static void onHealthPotionConsumed(LivingEntityUseItemEvent.Finish event) {
+        if (!(event.getEntityLiving() instanceof Player)) return;
+        Player player = (Player) event.getEntityLiving();
+        if (player.isAlive()) {
+            List<MobEffectInstance> potionEffects = PotionUtils.getMobEffects(event.getItem());
+            if (potionEffects.isEmpty()) return;
+            ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
+            ItemStack chestplate = player.getItemBySlot(EquipmentSlot.CHEST);
+            ItemStack leggings = player.getItemBySlot(EquipmentSlot.LEGS);
+            ItemStack feet = player.getItemBySlot(EquipmentSlot.FEET);
 
-//    private static void handleHealthPotionBoost(Player player, ItemStack helmet, ItemStack chestplate) {
-//        float healthPotionBoost = helmet.getItem() == CHAMPIONS_ARMOR_HELMET.get() ? 1 : 0;
-//        float healthPotionBoost2 = chestplate.getItem() == CHAMPIONS_ARMOR.get() ? 1 : 0;
-//        float totalhealthPotionBoost = (healthPotionBoost + healthPotionBoost2);
-//
-//        if (totalhealthPotionBoost > 0) {
-//            //player.addPotionEffect(new EffectInstance(Effects.INSTANT_HEALTH, 1, (int) totalhealthPotionBoost - 1));
-//            //nerf hammer!
-//            player.heal(totalhealthPotionBoost * 2);
-//        }
-//    }
+            if (potionEffects.get(0).getEffect() == MobEffects.HEAL) {
+                float healthPotionBoost = 0;
+                healthPotionBoost += helmet.getItem() == CHAMPIONS_ARMOR.getHead().get() ? 1 : 0;
+                healthPotionBoost += chestplate.getItem() == CHAMPIONS_ARMOR.getChest().get() ? 1 : 0;
+                healthPotionBoost += leggings.getItem() == CHAMPIONS_ARMOR.getLegs().get() ? 1 : 0;
+                healthPotionBoost += feet.getItem() == CHAMPIONS_ARMOR.getFeet().get() ? 1 : 0;
+                healthPotionBoost += helmet.getItem() == HEROS_ARMOR.getHead().get() ? 1 : 0;
+                healthPotionBoost += chestplate.getItem() == HEROS_ARMOR.getChest().get() ? 1 : 0;
+                healthPotionBoost += leggings.getItem() == HEROS_ARMOR.getLegs().get() ? 1 : 0;
+                healthPotionBoost += feet.getItem() == HEROS_ARMOR.getFeet().get() ? 1 : 0;
+
+                if (healthPotionBoost > 0) {
+                    player.heal(healthPotionBoost);
+                }
+            }
+        }
+    }
 
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {

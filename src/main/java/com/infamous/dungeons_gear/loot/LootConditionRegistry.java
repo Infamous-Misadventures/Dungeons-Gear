@@ -8,6 +8,6 @@ public class LootConditionRegistry {
 
 
     public static void init() {
-//        Registry.register(Registry.LOOT_CONDITION_TYPE, "dungeons_gear:experimental_condition", DUNGEONS_GEAR_EXPERIMENTAL_CONDITION);
+        Registry.register(Registry.LOOT_CONDITION_TYPE, "dungeons_gear:experimental_condition", DUNGEONS_GEAR_EXPERIMENTAL_CONDITION);
     }
 }

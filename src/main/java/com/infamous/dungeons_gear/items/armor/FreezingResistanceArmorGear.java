@@ -8,8 +8,8 @@ import net.minecraft.world.item.Item.Properties;
 
 public class FreezingResistanceArmorGear extends ArmorGear {
 
-    public FreezingResistanceArmorGear(EquipmentSlot slotType, Properties properties, ResourceLocation texture) {
-        super(slotType, properties, texture, texture, texture);
+    public FreezingResistanceArmorGear(EquipmentSlot slotType, Properties properties, ResourceLocation armorSet, ResourceLocation modelLocation, ResourceLocation textureLocation, ResourceLocation animationFileLocation) {
+        super(slotType, properties, armorSet, modelLocation, textureLocation, animationFileLocation);
     }
 
     public double getFreezingResistance() {

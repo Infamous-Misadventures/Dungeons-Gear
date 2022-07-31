@@ -18,7 +18,9 @@ import com.infamous.dungeons_gear.registry.AttributeRegistry;
 import com.infamous.dungeons_gear.registry.ItemRegistry;
 import com.infamous.dungeons_gear.registry.ParticleInit;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
@@ -28,6 +30,8 @@ import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.function.Consumer;
 
 import static com.infamous.dungeons_gear.integration.curios.client.CuriosKeyBindings.setupCuriosKeybindings;
 
@@ -62,7 +66,11 @@ public class DungeonsGear
         AttributeRegistry.ATTRIBUTES.register(modEventBus);
         ItemRegistry.ITEMS.register(modEventBus);
         PROXY = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
-        LootConditionRegistry.init();
+        FMLJavaModLoadingContext.get()
+                .getModEventBus()
+                .addGenericListener(Block.class, (Consumer<RegistryEvent.Register<Block>>) blockRegister ->
+                        LootConditionRegistry.init()
+                );
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
