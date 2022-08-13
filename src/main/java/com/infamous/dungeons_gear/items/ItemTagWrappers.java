@@ -19,6 +19,8 @@ public class ItemTagWrappers {
     public static final TagKey<Item> FOOD = ItemTags.create(new ResourceLocation(MOD_ID, "food"));
     public static final TagKey<Item> FOOD_PROCESSED = ItemTags.create(new ResourceLocation(MOD_ID, "food/processed"));
     public static final TagKey<Item> FOOD_RAW = ItemTags.create(new ResourceLocation(MOD_ID, "food/raw"));
+    public static final TagKey<Item> WEAPONS = ItemTags.create(new ResourceLocation(MOD_ID, "weapons"));
+    public static final TagKey<Item> ARMOR = ItemTags.create(new ResourceLocation(MOD_ID, "armor"));
 
     public static final TagKey<Item> CURIOS_ARTIFACTS = ItemTags.create(new ResourceLocation("curios", "artifact"));
 }

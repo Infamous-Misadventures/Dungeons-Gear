@@ -25,6 +25,9 @@ public class ModItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvide
         curiosArtifactTags();
         foodTags();
         this.tag(Tags.Items.SHEARS).add(SHEAR_DAGGER.get());
+        ItemRegistry.MELEE_WEAPONS.values().forEach(item -> this.tag(ItemTagWrappers.WEAPONS).add(item.get()));
+        ItemRegistry.RANGED_WEAPONS.values().forEach(item -> this.tag(ItemTagWrappers.WEAPONS).add(item.get()));
+        ItemRegistry.ARMORS.values().forEach(item -> this.tag(ItemTagWrappers.ARMOR).add(item.get()));
     }
 
     private void curiosArtifactTags() {
