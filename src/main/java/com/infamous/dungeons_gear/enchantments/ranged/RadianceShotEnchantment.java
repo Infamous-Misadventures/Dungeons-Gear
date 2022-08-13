@@ -21,8 +21,6 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 @Mod.EventBusSubscriber(modid= MODID)
 public class RadianceShotEnchantment extends DungeonsEnchantment {
 
-    public static final String INTRINSIC_RADIANCE_SHOT_TAG = "IntrinsicRadianceShot";
-
     public RadianceShotEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.RANGED, new EquipmentSlot[]{
                 EquipmentSlot.MAINHAND});
@@ -33,7 +31,7 @@ public class RadianceShotEnchantment extends DungeonsEnchantment {
     }
 
     @SubscribeEvent
-    public static void onSabrewingImpact(ProjectileImpactEvent event) {
+    public static void onArrowImpact(ProjectileImpactEvent event) {
         HitResult rayTraceResult = event.getRayTraceResult();
         if (event.getProjectile() instanceof AbstractArrow arrow) {
             if (!ModEnchantmentHelper.shooterIsLiving(arrow)) return;

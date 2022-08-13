@@ -60,8 +60,8 @@ public class FreezingShotEnchantment extends DungeonsEnchantment {
     }
 
     private static void applyFreezing(LivingEntity target, int level) {
-        MobEffectInstance freezing = new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, FREEZING_DURATION.get(), level -1);
-        MobEffectInstance miningFatigue = new MobEffectInstance(MobEffects.DIG_SLOWDOWN, FREEZING_DURATION.get(), level -1);
+        MobEffectInstance freezing = new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, FREEZING_DURATION.get(), level);
+        MobEffectInstance miningFatigue = new MobEffectInstance(MobEffects.DIG_SLOWDOWN, FREEZING_DURATION.get(), level);
         target.addEffect(freezing);
         target.addEffect(miningFatigue);
         PROXY.spawnParticles(target, ParticleTypes.ITEM_SNOWBALL);

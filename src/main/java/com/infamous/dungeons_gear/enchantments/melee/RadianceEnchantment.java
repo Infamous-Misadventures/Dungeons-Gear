@@ -37,7 +37,7 @@ public class RadianceEnchantment extends DungeonsEnchantment {
         if( user.getLastHurtMobTimestamp()==user.tickCount)return;
         float chance = user.getRandom().nextFloat();
         if(chance <=  RADIANCE_CHANCE.get()){
-            AOECloudHelper.spawnRegenCloud(user, level - 1);
+            AOECloudHelper.spawnRegenCloud(user, level);
         }
     }
 }

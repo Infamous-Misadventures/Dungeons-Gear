@@ -85,7 +85,7 @@ public class PoisonCloudEnchantment extends DungeonsEnchantment {
                     float poisonRand = shooter.getRandom().nextFloat();
                     if (poisonRand <= 0.3F) {
                         checkForPlayer(shooter);
-                        AOECloudHelper.spawnPoisonCloudAtPos(shooter, true, blockPos, poisonLevel - 1);
+                        AOECloudHelper.spawnPoisonCloudAtPos(shooter, true, blockPos, poisonLevel);
                     }
                 }
             }
