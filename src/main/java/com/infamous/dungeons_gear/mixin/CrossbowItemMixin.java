@@ -19,7 +19,7 @@ public abstract class CrossbowItemMixin {
     public static void performShooting(Level worldIn, LivingEntity shooter, InteractionHand handIn, ItemStack stack, float velocityIn, float inaccuracyIn) {
     }
 
-    @Inject(at = @At("RETURN"), method = "getChargeDuration(Lnet/minecraft/item/ItemStack;)I", cancellable = true)
+    @Inject(at = @At("RETURN"), method = "Lnet/minecraft/world/item/CrossbowItem;getChargeDuration(Lnet/minecraft/world/item/ItemStack;)I", cancellable = true)
     private static void getChargeDuration(ItemStack stack, CallbackInfoReturnable<Integer> cir){
         cir.setReturnValue((int) RangedAttackHelper.getVanillaCrossbowChargeTime(null, stack)); // TODO: Should take in a LivingEntity to be able to check for Roll Charge
     }

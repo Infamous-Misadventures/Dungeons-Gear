@@ -19,13 +19,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class HeldItemLayerMixin<T extends LivingEntity, M extends EntityModel<T> & ArmedModel> {
     private T entity;
 
-    @Inject(method = "render(Lcom/mojang/blaze3d/matrix/MatrixStack;Lnet/minecraft/client/renderer/IRenderTypeBuffer;ILnet/minecraft/entity/LivingEntity;FFFFFF)V",
+    @Inject(method = "Lnet/minecraft/client/renderer/entity/layers/ItemInHandLayer;render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/LivingEntity;FFFFFF)V",
             at = @At("HEAD"))
     public void dungeons_renderGetEntity(PoseStack p_225628_1_, MultiBufferSource p_225628_2_, int p_225628_3_, T p_225628_4_, float p_225628_5_, float p_225628_6_, float p_225628_7_, float p_225628_8_, float p_225628_9_, float p_225628_10_, CallbackInfo ci){
         entity = p_225628_4_;
     }
 
-    @ModifyVariable(method = "render(Lcom/mojang/blaze3d/matrix/MatrixStack;Lnet/minecraft/client/renderer/IRenderTypeBuffer;ILnet/minecraft/entity/LivingEntity;FFFFFF)V",
+    @ModifyVariable(method = "Lnet/minecraft/client/renderer/entity/layers/ItemInHandLayer;render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/LivingEntity;FFFFFF)V",
             at = @At("STORE"),
             ordinal = 0)
     private ItemStack dungeons_renderOverwriteFirst(ItemStack original) {
@@ -36,7 +36,7 @@ public class HeldItemLayerMixin<T extends LivingEntity, M extends EntityModel<T>
         return original;
     }
 
-    @ModifyVariable(method = "render(Lcom/mojang/blaze3d/matrix/MatrixStack;Lnet/minecraft/client/renderer/IRenderTypeBuffer;ILnet/minecraft/entity/LivingEntity;FFFFFF)V",
+    @ModifyVariable(method = "Lnet/minecraft/client/renderer/entity/layers/ItemInHandLayer;render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/LivingEntity;FFFFFF)V",
             at = @At("STORE"),
             ordinal = 1)
     private ItemStack dungeons_renderOverwriteSecond(ItemStack original) {

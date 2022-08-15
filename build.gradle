@@ -116,11 +116,8 @@ repositories {
 }
 
 dependencies {
-    // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
-    // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
-    // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
-    //compileOnly fg.deobf("curse.maven:elenaidodge2-442962:3221492")
+    annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
 
     //Library
     implementation fg.deobf("dungeons_libraries:dungeons_libraries:1.18.2-1.0.0-alpha")

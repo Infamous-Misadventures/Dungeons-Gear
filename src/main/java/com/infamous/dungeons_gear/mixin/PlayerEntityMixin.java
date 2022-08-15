@@ -23,7 +23,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     }
 
     @Inject(
-            method = "createAttributes",
+            method = "Lnet/minecraft/world/entity/player/Player;createAttributes()Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;",
             at = @At("RETURN")
     )
     private static void initAttributes(CallbackInfoReturnable<AttributeSupplier.Builder> ci) {
@@ -47,7 +47,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 //    }
 
     @Inject(
-            method = "attack",
+            method = "Lnet/minecraft/world/entity/player/Player;attack(Lnet/minecraft/world/entity/Entity;)V",
             at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;getFireAspect(Lnet/minecraft/world/entity/LivingEntity;)I")
     )
     private void kindOfAddDualWield(CallbackInfo ci) {
@@ -58,7 +58,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     }
 
     @Inject(
-            method = "resetAttackStrengthTicker",
+            method = "Lnet/minecraft/world/entity/player/Player;resetAttackStrengthTicker()V",
             at = @At("HEAD")
     )
     private void addDualWield(CallbackInfo ci) {

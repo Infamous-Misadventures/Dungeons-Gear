@@ -22,7 +22,7 @@ public abstract class AreaEffectCloudEntityMixin {
     @Nullable
     public abstract LivingEntity getOwner();
 
-    @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/potion/Effect;applyInstantenousEffect(Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/LivingEntity;ID)V"), method = "tick", require = 0)
+    @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/effect/MobEffect;applyInstantenousEffect(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/LivingEntity;ID)V"), method = "tick", require = 0)
     private void instantHack(MobEffect effect, Entity source, Entity indirectSource, LivingEntity entityLivingBaseIn, int amplifier, double health) {
         if (indirectSource instanceof LivingEntity) {
             final boolean isEnemy = effect.isBeneficial() == AbilityHelper.isAlly((LivingEntity) indirectSource, entityLivingBaseIn);
@@ -33,8 +33,8 @@ public abstract class AreaEffectCloudEntityMixin {
         } else effect.applyInstantenousEffect(source, indirectSource, entityLivingBaseIn, amplifier, health);
     }
 
-    @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;addEffect(Lnet/minecraft/potion/EffectInstance;)Z"), method = "tick", require = 0)
-    private boolean extendedHack(LivingEntity livingEntity, MobEffectInstance effectInstanceIn) {
+    @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;addEffect(Lnet/minecraft/world/effect/MobEffectInstance;Lnet/minecraft/world/entity/Entity;)Z"), method = "tick", require = 0)
+    private boolean extendedHack(LivingEntity livingEntity, MobEffectInstance effectInstanceIn, Entity entity) {
         if (getOwner() != null) {
             final boolean isEnemy = effectInstanceIn.getEffect().isBeneficial() == AbilityHelper.isAlly(getOwner(), livingEntity);
             final boolean isSelf = effectInstanceIn.getEffect().isBeneficial() && (getOwner() == livingEntity);
