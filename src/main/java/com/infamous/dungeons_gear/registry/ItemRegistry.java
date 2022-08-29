@@ -496,8 +496,8 @@ public class ItemRegistry {
     public static final ArmorSet SOUL_ROBES = registerArmorSet("soul_robes", BASIC, "soul_hood", "soul_robe", "soul_pants", "soul_boots");
     public static final ArmorSet SOULDANCER_ROBES = registerArmorSet("souldancer_robes", BASIC, "souldancer_hood", "souldancer_robe", "souldancer_pants", "souldancer_boots");
 
-    public static final ArmorSet SPELUNKER_ARMOR = registePetBatArmorSet("spelunker_armor", BASIC, "spelunker_helmet", "spelunker_chestplate", "spelunker_leggings", "spelunker_boots");
-    public static final ArmorSet CAVE_CRAWLER = registePetBatArmorSet("cave_crawler", BASIC, "cave_crawler_helmet", "cave_crawler_chestplate", "cave_crawler_leggings", "cave_crawler_boots");
+    public static final ArmorSet SPELUNKER_ARMOR = registePetBatArmorSet("spelunker_armor", BASIC, "spelunker_helmet", "spelunker_chestplate", "spelunker_leggings", "spelunker_boots", true);
+    public static final ArmorSet CAVE_CRAWLER = registePetBatArmorSet("cave_crawler", BASIC, "cave_crawler_helmet", "cave_crawler_chestplate", "cave_crawler_leggings", "cave_crawler_boots", true);
 
     public static final ArmorSet THIEF_ARMOR = registerArmorSet("thief_armor", BASIC, "thief_helmet", "thief_chestplate", "thief_leggings", "thief_boots");
     public static final ArmorSet SPIDER_ARMOR = registerArmorSet("spider_armor", BASIC, "spider_helmet", "spider_chestplate", "spider_leggings", "spider_boots");
@@ -517,18 +517,22 @@ public class ItemRegistry {
     public static final RegistryObject<Item> ARROW_BUNDLE = ITEMS.register("arrow_bundle",
             () -> new ArrowBundleItem(new Item.Properties().tab(RANGED_WEAPON_GROUP)));
 
-    private static ArmorSet registerArmorSet(String armorSetId, LootTableType lootTableType, String helmetId, String chestId, String legsId, String bootsId) {
+    private static ArmorSet registerArmorSet(String armorSetId, LootTableType lootTableType, String helmetId, String chestId, String legsId, String bootsId, boolean animated) {
         ResourceLocation armorSet = new ResourceLocation(MODID, armorSetId);
         ResourceLocation modelLocation = new ResourceLocation(MODID, "geo/armor/"+armorSetId+".geo.json");
         ResourceLocation textureLocation = new ResourceLocation(MODID, "textures/models/armor/"+armorSetId+".png");
-        ResourceLocation animationFileLocation = new ResourceLocation(MODID, "animations/armor_default.animation.json");
+        ResourceLocation animationFileLocation = animated ? new ResourceLocation(MODID, "animations/armor/" + armorSetId + ".animation.json") : new ResourceLocation(MODID, "animations/armor/armor_default.animation.json");
         return new ArmorSet(
-            armorSetId,
-            registerArmor(helmetId, () -> new ArmorGear(EquipmentSlot.HEAD, ARMOR_PROPERTIES, armorSet, modelLocation, textureLocation, animationFileLocation), lootTableType),
-            registerArmor(chestId, () -> new ArmorGear(EquipmentSlot.CHEST, ARMOR_PROPERTIES, armorSet, modelLocation, textureLocation, animationFileLocation), lootTableType),
-            registerArmor(legsId, () -> new ArmorGear(EquipmentSlot.LEGS, ARMOR_PROPERTIES, armorSet, modelLocation, textureLocation, animationFileLocation), lootTableType),
-            registerArmor(bootsId, () -> new ArmorGear(EquipmentSlot.FEET, ARMOR_PROPERTIES, armorSet, modelLocation, textureLocation, animationFileLocation), lootTableType)
+                armorSetId,
+                registerArmor(helmetId, () -> new ArmorGear(EquipmentSlot.HEAD, ARMOR_PROPERTIES, armorSet, modelLocation, textureLocation, animationFileLocation), lootTableType),
+                registerArmor(chestId, () -> new ArmorGear(EquipmentSlot.CHEST, ARMOR_PROPERTIES, armorSet, modelLocation, textureLocation, animationFileLocation), lootTableType),
+                registerArmor(legsId, () -> new ArmorGear(EquipmentSlot.LEGS, ARMOR_PROPERTIES, armorSet, modelLocation, textureLocation, animationFileLocation), lootTableType),
+                registerArmor(bootsId, () -> new ArmorGear(EquipmentSlot.FEET, ARMOR_PROPERTIES, armorSet, modelLocation, textureLocation, animationFileLocation), lootTableType)
         );
+    }
+
+    private static ArmorSet registerArmorSet(String armorSetId, LootTableType lootTableType, String helmetId, String chestId, String legsId, String bootsId) {
+        return registerArmorSet(armorSetId, lootTableType, helmetId, chestId, legsId, bootsId, false);
     }
 
     private static ArmorSet registerFreezingResistanceArmorSet(String armorSetId, LootTableType lootTableType, String helmetId, String chestId, String legsId, String bootsId) {
@@ -545,11 +549,11 @@ public class ItemRegistry {
         );
     }
 
-    private static ArmorSet registePetBatArmorSet(String armorSetId, LootTableType lootTableType, String helmetId, String chestId, String legsId, String bootsId) {
+    private static ArmorSet registePetBatArmorSet(String armorSetId, LootTableType lootTableType, String helmetId, String chestId, String legsId, String bootsId, boolean animated) {
         ResourceLocation armorSet = new ResourceLocation(MODID, armorSetId);
         ResourceLocation modelLocation = new ResourceLocation(MODID, "geo/armor/"+armorSetId+".geo.json");
         ResourceLocation textureLocation = new ResourceLocation(MODID, "textures/models/armor/"+armorSetId+".png");
-        ResourceLocation animationFileLocation = new ResourceLocation(MODID, "animations/armor_default.animation.json");
+        ResourceLocation animationFileLocation = animated ? new ResourceLocation(MODID, "animations/armor/" + armorSetId + ".animation.json") : new ResourceLocation(MODID, "animations/armor/armor_default.animation.json");
         return new ArmorSet(
                 armorSetId,
                 registerArmor(helmetId, () -> new PetBatArmorGear(EquipmentSlot.HEAD, ARMOR_PROPERTIES, armorSet, modelLocation, textureLocation, animationFileLocation), lootTableType),

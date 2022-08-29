@@ -125,7 +125,7 @@ dependencies {
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
     //runtimeOnly fg.deobf("curse.maven:neat-238372:3182258")
 //    runtimeOnly fg.deobf("curse.maven:epicfight-405076:3888643")
-    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.18:3.0.28')
+    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.18:3.0.34')
 
     //compat tests
 //    runtimeOnly fg.deobf("curse.maven:cofhcore-69162:3407019")
