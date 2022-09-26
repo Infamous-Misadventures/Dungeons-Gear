@@ -71,7 +71,7 @@ public class LifeStealAuraEnchantment extends PulseEnchantment {
                     (nearbyEntity) -> {
                         return AbilityHelper.isAlly(entity, nearbyEntity);
                     }, (LivingEntity nearbyEntity) -> {
-                        MobEffectInstance speedBoost = new MobEffectInstance(CustomEffects.LIFE_STEAL, 20, enchantmentLevel);
+                        MobEffectInstance speedBoost = new MobEffectInstance(CustomEffects.LIFE_STEAL, 20, enchantmentLevel - 1);
                         nearbyEntity.addEffect(speedBoost);
 //                        PROXY.spawnParticles(nearbyEntity, ParticleTypes.FLAME);
                     }

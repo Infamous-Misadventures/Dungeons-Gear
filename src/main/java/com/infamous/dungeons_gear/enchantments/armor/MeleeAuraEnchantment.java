@@ -74,7 +74,7 @@ public class MeleeAuraEnchantment extends PulseEnchantment {
                     (nearbyEntity) -> {
                         return AbilityHelper.isAlly(entity, nearbyEntity);
                     }, (LivingEntity nearbyEntity) -> {
-                        MobEffectInstance speedBoost = new MobEffectInstance(MobEffects.DAMAGE_BOOST, 20, enchantmentLevel);
+                        MobEffectInstance speedBoost = new MobEffectInstance(MobEffects.DAMAGE_BOOST, 20, enchantmentLevel - 1);
                         nearbyEntity.addEffect(speedBoost);
 //                        PROXY.spawnParticles(nearbyEntity, ParticleTypes.FLAME);
                     }
