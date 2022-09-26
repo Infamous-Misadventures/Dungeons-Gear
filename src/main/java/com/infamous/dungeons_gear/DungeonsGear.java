@@ -29,12 +29,16 @@ import com.infamous.dungeons_gear.groups.MeleeWeaponGroup;
 import com.infamous.dungeons_gear.groups.RangedWeaponGroup;
 import com.infamous.dungeons_gear.items.DualWieldItemProperties;
 import com.infamous.dungeons_gear.items.GearRangedItemModelProperties;
+import com.infamous.dungeons_gear.items.armor.FreezingResistanceArmorGear;
+import com.infamous.dungeons_gear.items.armor.PetBatArmorGear;
 import com.infamous.dungeons_gear.loot.LootConditionRegistry;
 import com.infamous.dungeons_gear.loot.ModLootFunctionTypes;
 import com.infamous.dungeons_gear.network.NetworkHandler;
 import com.infamous.dungeons_gear.registry.AttributeRegistry;
 import com.infamous.dungeons_gear.registry.ItemRegistry;
 import com.infamous.dungeons_gear.registry.ParticleInit;
+import com.infamous.dungeons_libraries.client.renderer.ArmorGearRenderer;
+import com.infamous.dungeons_libraries.items.gearconfig.ArmorGear;
 import net.minecraft.item.ItemGroup;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -48,6 +52,7 @@ import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 
 import static com.infamous.dungeons_gear.integration.curios.client.CuriosKeyBindings.setupCuriosKeybindings;
 
@@ -117,5 +122,8 @@ public class DungeonsGear
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BEAM_ENTITY.get(), BeamEntityRenderer::new);
 
         setupCuriosKeybindings();
+
+        GeoArmorRenderer.registerArmorRenderer(FreezingResistanceArmorGear.class, ArmorGearRenderer::new);
+        GeoArmorRenderer.registerArmorRenderer(PetBatArmorGear.class, ArmorGearRenderer::new);
     }
 }
