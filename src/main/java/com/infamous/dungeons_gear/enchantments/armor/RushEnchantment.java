@@ -39,7 +39,7 @@ public class RushEnchantment extends DungeonsEnchantment {
         LivingEntity livingEntity = event.getEntityLiving();
         int rushLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.RUSH, livingEntity);
         if(rushLevel > 0 && !livingEntity.level.isClientSide){
-            EffectInstance speedBoost = new EffectInstance(Effects.MOVEMENT_SPEED, 20, rushLevel + 1);
+            EffectInstance speedBoost = new EffectInstance(Effects.MOVEMENT_SPEED, 20, rushLevel - 1);
             livingEntity.addEffect(speedBoost);
         }
     }

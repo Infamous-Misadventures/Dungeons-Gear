@@ -51,7 +51,7 @@ public class DynamoEnchantment extends DamageBoostEnchantment {
                 i += currentEffectInstance.getAmplifier();
             }
             i = MathHelper.clamp(i, 0, DYNAMO_MAX_STACKS.get());
-            EffectInstance effectinstance = new EffectInstance(CustomEffects.DYNAMO, 120000, i);
+            EffectInstance effectinstance = new EffectInstance(CustomEffects.DYNAMO, 120000, i - 1);
             playerEntity.addEffect(effectinstance);
         }
     }

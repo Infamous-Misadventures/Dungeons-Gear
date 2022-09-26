@@ -71,7 +71,7 @@ public class SpeedAuraEnchantment extends PulseEnchantment {
                     (nearbyEntity) -> {
                         return AbilityHelper.isAlly(entity, nearbyEntity);
                     }, (LivingEntity nearbyEntity) -> {
-                        EffectInstance speedBoost = new EffectInstance(Effects.MOVEMENT_SPEED, 20, enchantmentLevel);
+                        EffectInstance speedBoost = new EffectInstance(Effects.MOVEMENT_SPEED, 20, enchantmentLevel - 1);
                         nearbyEntity.addEffect(speedBoost);
 //                        PROXY.spawnParticles(nearbyEntity, ParticleTypes.FLAME);
                     }

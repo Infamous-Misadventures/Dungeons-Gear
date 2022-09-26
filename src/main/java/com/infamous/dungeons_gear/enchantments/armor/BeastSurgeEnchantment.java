@@ -55,7 +55,7 @@ public class BeastSurgeEnchantment extends BeastEnchantment {
                     for(Entity summonedMob : summonerCap.getSummonedMobs()){
                         if(summonedMob instanceof LivingEntity){
                             LivingEntity summonedMobAsLiving = (LivingEntity) summonedMob;
-                            EffectInstance surgeSpeed = new EffectInstance(Effects.MOVEMENT_SPEED, DungeonsGearConfig.BEAST_SURGE_DURATION.get(), beastSurgeLevel);
+                            EffectInstance surgeSpeed = new EffectInstance(Effects.MOVEMENT_SPEED, DungeonsGearConfig.BEAST_SURGE_DURATION.get(), beastSurgeLevel - 1);
                             summonedMobAsLiving.addEffect(surgeSpeed);
                         }
                     }

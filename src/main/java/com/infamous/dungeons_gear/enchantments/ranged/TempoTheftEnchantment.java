@@ -47,8 +47,8 @@ public class TempoTheftEnchantment extends DungeonsEnchantment {
         if(tempoTheftLevel > 0 || uniqueWeaponFlag){
             if(uniqueWeaponFlag) tempoTheftLevel++;
             if (shooter == victim) return;
-            EffectInstance speed = new EffectInstance(Effects.MOVEMENT_SPEED, 80, tempoTheftLevel);
-            EffectInstance slowness = new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 80, tempoTheftLevel);
+            EffectInstance speed = new EffectInstance(Effects.MOVEMENT_SPEED, 80, tempoTheftLevel-1);
+            EffectInstance slowness = new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 80, tempoTheftLevel-1);
             shooter.addEffect(speed);
             victim.addEffect(slowness);
         }
