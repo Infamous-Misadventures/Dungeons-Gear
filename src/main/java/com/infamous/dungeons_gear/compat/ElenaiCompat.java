@@ -7,16 +7,14 @@ import com.infamous.dungeons_gear.enchantments.ranged.BurstBowstringEnchantment;
 import com.infamous.dungeons_gear.enchantments.ranged.RollChargeEnchantment;
 import com.infamous.dungeons_gear.utilties.ArmorEffectHelper;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import static com.infamous.dungeons_gear.registry.AttributeRegistry.ROLL_COOLDOWN;
-import static com.infamous.dungeons_gear.registry.ItemRegistry.*;
-import static com.infamous.dungeons_gear.registry.ItemRegistry.SHADOW_WALKER;
+import static com.infamous.dungeons_gear.registry.ItemRegistry.OCELOT_ARMOR;
+import static com.infamous.dungeons_gear.registry.ItemRegistry.SHADOW_WALKER_ARMOR;
 
 public class ElenaiCompat {
     @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -30,8 +28,8 @@ public class ElenaiCompat {
             int jumpCooldownTimer = comboCap.getJumpCooldownTimer();
 
             if (jumpCooldownTimer <= 0) {
-                float jumpBoost = helmet.getItem() == OCELOT_ARMOR_HOOD.get() || helmet.getItem() == SHADOW_WALKER_HOOD.get() ? 25 : 0;
-                float jumpBoost2 = chestplate.getItem() == OCELOT_ARMOR.get() || chestplate.getItem() == SHADOW_WALKER.get() ? 25 : 0;
+                float jumpBoost = helmet.getItem() == OCELOT_ARMOR.getHead().get() || helmet.getItem() == SHADOW_WALKER_ARMOR.getHead().get() ? 25 : 0;
+                float jumpBoost2 = chestplate.getItem() == OCELOT_ARMOR.getChest().get() || chestplate.getItem() == SHADOW_WALKER_ARMOR.getChest().get() ? 25 : 0;
                 float totalJumpBoost = jumpBoost * 0.02F + jumpBoost2 * 0.02F;
 
                 if (totalJumpBoost > 0) {

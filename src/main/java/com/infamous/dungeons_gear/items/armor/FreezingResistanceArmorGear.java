@@ -6,8 +6,9 @@ import net.minecraft.util.ResourceLocation;
 
 public class FreezingResistanceArmorGear extends ArmorGear {
 
-    public FreezingResistanceArmorGear(EquipmentSlotType slotType, Properties properties, ResourceLocation texture) {
-        super(slotType, properties, texture);
+
+    public FreezingResistanceArmorGear(EquipmentSlotType slotType, Properties properties, ResourceLocation armorSet, ResourceLocation modelLocation, ResourceLocation textureLocation, ResourceLocation animationFileLocation) {
+        super(slotType, properties, armorSet, modelLocation, textureLocation, animationFileLocation);
     }
 
     public double getFreezingResistance() {

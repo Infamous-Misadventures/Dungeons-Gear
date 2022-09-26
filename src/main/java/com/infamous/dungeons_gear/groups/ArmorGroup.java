@@ -14,6 +14,6 @@ public class ArmorGroup extends ItemGroup
     @Override
     public ItemStack makeIcon()
     {
-        return new ItemStack(ItemRegistry.FULL_METAL_ARMOR.get());
+        return new ItemStack(ItemRegistry.FULL_METAL_ARMOR.getChest().get());
     }
 }

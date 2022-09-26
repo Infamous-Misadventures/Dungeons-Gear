@@ -64,8 +64,8 @@ public class ArmorEffectHelper {
     }
 
     public static void handleInvulnerableJump(PlayerEntity playerEntity, ItemStack helmet, ItemStack chestplate) {
-        boolean invulnerableJump = helmet.getItem() == SHADOW_WALKER_HOOD.get();
-        boolean invulnerableJump2 = chestplate.getItem() == SHADOW_WALKER.get();
+        boolean invulnerableJump = helmet.getItem() == SHADOW_WALKER_ARMOR.getHead().get();
+        boolean invulnerableJump2 = chestplate.getItem() == SHADOW_WALKER_ARMOR.getChest().get();
         boolean doInvulnerableJump = invulnerableJump || invulnerableJump2;
 
         if (doInvulnerableJump) {
@@ -75,8 +75,8 @@ public class ArmorEffectHelper {
     }
 
     public static void handleJumpBoost(PlayerEntity playerEntity, ItemStack helmet, ItemStack chestplate) {
-        float jumpBoost = helmet.getItem() == OCELOT_ARMOR_HOOD.get() || helmet.getItem() == SHADOW_WALKER_HOOD.get() ? 25 : 0;
-        float jumpBoost2 = chestplate.getItem() == OCELOT_ARMOR.get() || chestplate.getItem() == SHADOW_WALKER.get() ? 25 : 0;
+        float jumpBoost = helmet.getItem() == OCELOT_ARMOR.getHead().get() || helmet.getItem() == SHADOW_WALKER_ARMOR.getHead().get() ? 25 : 0;
+        float jumpBoost2 = chestplate.getItem() == OCELOT_ARMOR.getChest().get() || chestplate.getItem() == SHADOW_WALKER_ARMOR.getChest().get() ? 25 : 0;
         float totalJumpBoost = jumpBoost * 0.002F + jumpBoost2 * 0.002F;
 
         if (totalJumpBoost > 0) {

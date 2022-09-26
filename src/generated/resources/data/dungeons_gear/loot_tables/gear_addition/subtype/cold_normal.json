@@ -59,35 +59,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:phantom_chestplate"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:phantom_helmet"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:frost_bite_chestplate"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:frost_bite_helmet"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:snow_chestplate"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:snow_helmet"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:frost_chestplate"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:frost_helmet"
+          "name": "dungeons_gear:arctic_fox_hood"
         },
         {
           "type": "minecraft:item",
@@ -95,7 +67,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:arctic_fox_hood"
+          "name": "dungeons_gear:climbing_hood"
         },
         {
           "type": "minecraft:item",
@@ -103,7 +75,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:climbing_hood"
+          "name": "dungeons_gear:rugged_climbing_hood"
         },
         {
           "type": "minecraft:item",
@@ -111,7 +83,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:rugged_climbing_hood"
+          "name": "dungeons_gear:goat_hood"
         },
         {
           "type": "minecraft:item",
@@ -119,7 +91,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:goat_hood"
+          "name": "dungeons_gear:emerald_helmet"
         },
         {
           "type": "minecraft:item",
@@ -127,7 +99,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:emerald_helmet"
+          "name": "dungeons_gear:gilded_glory_helmet"
         },
         {
           "type": "minecraft:item",
@@ -135,15 +107,11 @@
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:gilded_glory_helmet"
+          "name": "dungeons_gear:opulent_helmet"
         },
         {
           "type": "minecraft:item",
           "name": "dungeons_gear:opulent_chestplate"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:opulent_helmet"
         }
       ]
     }

@@ -95,8 +95,8 @@ public class ArmorEvents {
     }
 
     private static void handleHealthPotionBoost(PlayerEntity player, ItemStack helmet, ItemStack chestplate) {
-        float healthPotionBoost = helmet.getItem() == CHAMPIONS_ARMOR_HELMET.get() ? 1 : 0;
-        float healthPotionBoost2 = chestplate.getItem() == CHAMPIONS_ARMOR.get() ? 1 : 0;
+        float healthPotionBoost = helmet.getItem() == CHAMPIONS_ARMOR.getHead().get() ? 1 : 0;
+        float healthPotionBoost2 = chestplate.getItem() == CHAMPIONS_ARMOR.getChest().get() ? 1 : 0;
         float totalhealthPotionBoost = (healthPotionBoost + healthPotionBoost2);
 
         if (totalhealthPotionBoost > 0) {

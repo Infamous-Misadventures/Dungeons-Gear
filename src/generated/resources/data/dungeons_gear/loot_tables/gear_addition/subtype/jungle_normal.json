@@ -24,22 +24,6 @@
         {
           "type": "minecraft:item",
           "name": "dungeons_gear:feral_soul_crossbow"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:ocelot_vest"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:ocelot_hood"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:shadow_walker_vest"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:shadow_walker_hood"
         }
       ]
     }

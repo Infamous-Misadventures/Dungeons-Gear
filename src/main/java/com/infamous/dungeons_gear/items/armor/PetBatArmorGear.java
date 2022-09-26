@@ -7,8 +7,9 @@ import net.minecraft.util.ResourceLocation;
 
 public class PetBatArmorGear extends ArmorGear {
 
-    public PetBatArmorGear(EquipmentSlotType slotType, Properties properties, ResourceLocation texture) {
-        super(slotType, properties, texture);
+
+    public PetBatArmorGear(EquipmentSlotType slotType, Properties properties, ResourceLocation armorSet, ResourceLocation modelLocation, ResourceLocation textureLocation, ResourceLocation animationFileLocation) {
+        super(slotType, properties, armorSet, modelLocation, textureLocation, animationFileLocation);
     }
 
     public boolean doGivesYouAPetBat() {
