@@ -15,6 +15,7 @@ import com.infamous.dungeons_gear.items.melee.StaffGear;
 import com.infamous.dungeons_gear.items.ranged.crossbows.DualCrossbowGear;
 import com.infamous.dungeons_gear.loot.LootTableType;
 import com.infamous.dungeons_gear.utilties.GeneralHelper;
+import com.infamous.dungeons_libraries.DungeonsLibraries;
 import com.infamous.dungeons_libraries.items.gearconfig.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -510,7 +511,7 @@ public class ItemRegistry {
     public static final ArmorSet RUGGED_CLIMBING_GEAR = registerFreezingResistanceArmorSet("rugged_climbing_gear", BASIC, "rugged_climbing_helmet", "rugged_climbing_chestplate", "rugged_climbing_leggings", "rugged_climbing_boots");
     public static final ArmorSet GOAT_GEAR = registerArmorSet("goat_gear", BASIC, "goat_helmet", "goat_chestplate", "goat_leggings", "goat_boots");
 
-    public static final ArmorSet EMERALD_GEAR = registerArmorSet("emerald_gear", BASIC, "emerald_helmet", "emerald_chestplate", "emerald_leggings", "emerald_boots");
+    public static final ArmorSet EMERALD_ARMOR = registerArmorSet("emerald_armor", BASIC, "emerald_helmet", "emerald_chestplate", "emerald_leggings", "emerald_boots");
     public static final ArmorSet GILDED_GLORY = registerArmorSet("gilded_glory", BASIC, "gilded_glory_helmet", "gilded_glory_chestplate", "gilded_glory_leggings", "gilded_glory_boots");
     public static final ArmorSet OPULENT_ARMOR = registerArmorSet("opulent_armor", BASIC, "opulent_helmet", "opulent_chestplate", "opulent_leggings", "opulent_boots");
 
@@ -521,7 +522,7 @@ public class ItemRegistry {
         ResourceLocation armorSet = new ResourceLocation(MODID, armorSetId);
         ResourceLocation modelLocation = new ResourceLocation(MODID, "geo/armor/"+armorSetId+".geo.json");
         ResourceLocation textureLocation = new ResourceLocation(MODID, "textures/models/armor/"+armorSetId+".png");
-        ResourceLocation animationFileLocation = animated ? new ResourceLocation(MODID, "animations/armor/" + armorSetId + ".animation.json") : new ResourceLocation(MODID, "animations/armor/armor_default.animation.json");
+        ResourceLocation animationFileLocation = animated ? new ResourceLocation(MODID, "animations/armor/" + armorSetId + ".animation.json") : new ResourceLocation(DungeonsLibraries.MODID, "animations/armor/armor_default.animation.json");
         return new ArmorSet(
                 armorSetId,
                 registerArmor(helmetId, () -> new ArmorGear(EquipmentSlot.HEAD, ARMOR_PROPERTIES, armorSet, modelLocation, textureLocation, animationFileLocation), lootTableType),
@@ -539,7 +540,7 @@ public class ItemRegistry {
         ResourceLocation armorSet = new ResourceLocation(MODID, armorSetId);
         ResourceLocation modelLocation = new ResourceLocation(MODID, "geo/armor/"+armorSetId+".geo.json");
         ResourceLocation textureLocation = new ResourceLocation(MODID, "textures/models/armor/"+armorSetId+".png");
-        ResourceLocation animationFileLocation = new ResourceLocation(MODID, "animations/armor_default.animation.json");
+        ResourceLocation animationFileLocation = new ResourceLocation(DungeonsLibraries.MODID, "animations/armor_default.animation.json");
         return new ArmorSet(
                 armorSetId,
                 registerArmor(helmetId, () -> new FreezingResistanceArmorGear(EquipmentSlot.HEAD, ARMOR_PROPERTIES, armorSet, modelLocation, textureLocation, animationFileLocation), lootTableType),
@@ -553,7 +554,7 @@ public class ItemRegistry {
         ResourceLocation armorSet = new ResourceLocation(MODID, armorSetId);
         ResourceLocation modelLocation = new ResourceLocation(MODID, "geo/armor/"+armorSetId+".geo.json");
         ResourceLocation textureLocation = new ResourceLocation(MODID, "textures/models/armor/"+armorSetId+".png");
-        ResourceLocation animationFileLocation = animated ? new ResourceLocation(MODID, "animations/armor/" + armorSetId + ".animation.json") : new ResourceLocation(MODID, "animations/armor/armor_default.animation.json");
+        ResourceLocation animationFileLocation = animated ? new ResourceLocation(MODID, "animations/armor/" + armorSetId + ".animation.json") : new ResourceLocation(DungeonsLibraries.MODID, "animations/armor/armor_default.animation.json");
         return new ArmorSet(
                 armorSetId,
                 registerArmor(helmetId, () -> new PetBatArmorGear(EquipmentSlot.HEAD, ARMOR_PROPERTIES, armorSet, modelLocation, textureLocation, animationFileLocation), lootTableType),
