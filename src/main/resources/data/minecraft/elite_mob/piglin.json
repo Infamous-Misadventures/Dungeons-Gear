@@ -1,0 +1,112 @@
+{
+  "configs": [
+    {
+      "headItem": {
+        "id": "dungeons_mobs:gold_piglin_helmet",
+        "Count": 1
+      },
+      "chestItem": {
+        "id": "minecraft:empty",
+        "Count": 1
+      },
+      "legsItem": {
+        "id": "minecraft:empty",
+        "Count": 1
+      },
+      "feetItem": {
+        "id": "minecraft:empty",
+        "Count": 1
+      },
+      "handItem": {
+        "id": "minecraft:crossbow",
+        "Count": 1
+      },
+      "offhandItem": {
+        "id": "minecraft:empty",
+        "Count": 1
+      },
+      "weight": 100
+    },
+    {
+      "headItem": {
+        "id": "dungeons_mobs:gold_piglin_helmet",
+        "Count": 1
+      },
+      "chestItem": {
+        "id": "minecraft:empty",
+        "Count": 1
+      },
+      "legsItem": {
+        "id": "minecraft:empty",
+        "Count": 1
+      },
+      "feetItem": {
+        "id": "minecraft:empty",
+        "Count": 1
+      },
+      "handItem": {
+        "id": "dungeons_gear:gold_axe",
+        "Count": 1
+      },
+      "offhandItem": {
+        "id": "minecraft:empty",
+        "Count": 1
+      },
+      "weight": 100
+    },
+    {
+      "headItem": {
+        "id": "dungeons_mobs:netherite_piglin_helmet",
+        "Count": 1
+      },
+      "chestItem": {
+        "id": "minecraft:empty",
+        "Count": 1
+      },
+      "legsItem": {
+        "id": "minecraft:empty",
+        "Count": 1
+      },
+      "feetItem": {
+        "id": "minecraft:empty",
+        "Count": 1
+      },
+      "handItem": {
+        "id": "minecraft:crossbow",
+        "Count": 1
+      },
+      "offhandItem": {
+        "id": "minecraft:empty",
+        "Count": 1
+      },
+      "weight": 25
+    },
+    {
+      "headItem": {
+        "id": "dungeons_mobs:netherite_piglin_helmet",
+        "Count": 1
+      },
+      "chestItem": {
+        "id": "minecraft:empty",
+        "Count": 1
+      },
+      "legsItem": {
+        "id": "minecraft:empty",
+        "Count": 1
+      },
+      "feetItem": {
+        "id": "minecraft:empty",
+        "Count": 1
+      },
+      "handItem": {
+        "id": "dungeons_gear:firebrand",
+        "Count": 1
+      },
+      "offhandItem": {
+        "id": "minecraft:empty",
+        "Count": 1
+      },
+      "weight": 25
+    }
+  ]
+}

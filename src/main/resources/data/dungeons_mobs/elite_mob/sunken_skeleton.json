@@ -1,0 +1,18 @@
+{
+  "configs": [
+    {
+      "handItem": {
+        "id": "dungeons_gear:elite_power_bow",
+        "Count": 1
+      },
+      "weight": 100
+    },
+    {
+      "handItem": {
+        "id": "dungeons_gear:heavy_crossbow",
+        "Count": 1
+      },
+      "weight": 100
+    }
+  ]
+}

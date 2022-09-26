@@ -1,0 +1,8 @@
+{
+  "attributes": [
+  ],
+  "built_in_enchantments": [{"enchantment": "dungeons_gear:speed_synergy", "level": 1}],
+  "material": "dungeons_gear:pelt",
+  "unique": false,
+  "rarity": "UNCOMMON"
+}
