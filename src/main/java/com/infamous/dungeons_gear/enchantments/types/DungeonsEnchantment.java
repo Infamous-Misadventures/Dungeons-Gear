@@ -1,14 +1,12 @@
 package com.infamous.dungeons_gear.enchantments.types;
 
-import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import com.infamous.dungeons_libraries.items.gearconfig.ArmorGear;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
-
-import net.minecraft.world.item.enchantment.Enchantment.Rarity;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 public class DungeonsEnchantment extends Enchantment {
     protected DungeonsEnchantment(Rarity rarityIn, EnchantmentCategory typeIn, EquipmentSlot[] slots) {
@@ -32,6 +30,7 @@ public class DungeonsEnchantment extends Enchantment {
     @Override
     public boolean canEnchant(ItemStack stack) {
         return ModEnchantmentHelper.isNotBlacklistedEnchant(this)
+                && (DungeonsGearConfig.ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR.get() || (stack.getItem() instanceof ArmorGear))
                 && super.canEnchant(stack);
     }
 
@@ -39,9 +38,7 @@ public class DungeonsEnchantment extends Enchantment {
     public boolean canApplyAtEnchantingTable(ItemStack stack) {
         return ModEnchantmentHelper.isNotBlacklistedEnchant(this)
                 && super.canApplyAtEnchantingTable(stack)
-                && ((stack.getItem().getRegistryName() != null
-                && stack.getItem().getRegistryName().getNamespace().equals(DungeonsGear.MODID))
-                || DungeonsGearConfig.ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR.get());
+                && (DungeonsGearConfig.ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR.get() || (stack.getItem() instanceof ArmorGear));
     }
 
     @Override

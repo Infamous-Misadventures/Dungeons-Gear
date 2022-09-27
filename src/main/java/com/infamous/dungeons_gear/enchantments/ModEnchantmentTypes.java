@@ -36,12 +36,6 @@ public class ModEnchantmentTypes {
                     (item instanceof BowItem) : (item instanceof BowItem && item instanceof IRangedWeapon));
 
 
-    public static final EnchantmentCategory ARMOR = addEnchantment("dungeons_gear_armor", item ->
-            DungeonsGearConfig.ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR.get() ?
-                    (item instanceof ArmorItem) :
-                    (item instanceof ArmorGear)
-    );
-
     public static final EnchantmentCategory ARMOR_RANGED = addEnchantment("dungeons_gear_armor_ranged", item ->
                     DungeonsGearConfig.ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR.get() ?
                             (item instanceof BowItem || item instanceof CrossbowItem || item instanceof ArmorItem) :

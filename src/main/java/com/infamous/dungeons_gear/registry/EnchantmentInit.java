@@ -1,21 +1,23 @@
 package com.infamous.dungeons_gear.registry;
 
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_gear.enchantments.armor.*;
-import com.infamous.dungeons_gear.enchantments.melee_ranged.*;
+import com.infamous.dungeons_gear.enchantments.armor.chest.*;
+import com.infamous.dungeons_gear.enchantments.armor.feet.*;
+import com.infamous.dungeons_gear.enchantments.armor.head.*;
+import com.infamous.dungeons_gear.enchantments.armor.legs.*;
 import com.infamous.dungeons_gear.enchantments.melee.*;
+import com.infamous.dungeons_gear.enchantments.melee_ranged.*;
 import com.infamous.dungeons_gear.enchantments.ranged.*;
-import com.infamous.dungeons_gear.enchantments.melee.IllagersBaneEnchantment;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import static com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList.*;
-import static com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList.*;
-import static com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList.*;
 import static com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList.*;
+import static com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList.*;
+import static com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList.*;
+import static com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList.*;
 public class EnchantmentInit {
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
