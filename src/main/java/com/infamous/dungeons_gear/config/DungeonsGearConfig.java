@@ -111,6 +111,8 @@ public class DungeonsGearConfig {
     public static ForgeConfigSpec.ConfigValue<Double> EXPLODING_MULTIPLIER_PER_LEVEL;
     public static ForgeConfigSpec.ConfigValue<Double> PROSPECTOR_CHANCE_PER_LEVEL;
     public static ForgeConfigSpec.ConfigValue<Double> POISON_CLOUD_CHANCE;
+    public static ForgeConfigSpec.ConfigValue<Double> DODGE_CHANCE_PER_LEVEL;
+    public static ForgeConfigSpec.ConfigValue<Double> VOID_DODGE_CHANCE_PER_LEVEL;
 
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> LOVE_MEDALLION_BLACKLIST;
 
@@ -612,6 +614,12 @@ public class DungeonsGearConfig {
         POISON_CLOUD_CHANCE = builder
                 .comment("The chance for Poison Cloud to trigger [-5.0-5.0, default: 0.3]")
                 .defineInRange("prospectorChancePerLevel", 0.3, -5.0, 5.0);
+        DODGE_CHANCE_PER_LEVEL = builder
+                .comment("The chance per level for dodge to trigger [-5.0-5.0, default: 0.25]")
+                .defineInRange("dodgeChancePerLevel", 0.01, -5.0, 5.0);
+        VOID_DODGE_CHANCE_PER_LEVEL = builder
+                .comment("The chance per level for void dodge to trigger [-5.0-5.0, default: 0.25]")
+                .defineInRange("voidDodgeChancePerLevel", 0.05, -5.0, 5.0);
         builder.pop();
 
         builder.comment("Artifact Specific Configuration").push("artifact_specific_configuration");

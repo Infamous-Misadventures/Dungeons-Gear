@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.enchantments.armor.feet;
 
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.types.JumpingEnchantment;
 import com.infamous.dungeons_gear.utilties.ArmorEffectHelper;
 import net.minecraft.world.entity.LivingEntity;
@@ -28,7 +29,7 @@ public class VoidDodgeEnchantment extends JumpingEnchantment {
     public static void onLivingDamageEvent(LivingDamageEvent event) {
         LivingEntity victim = event.getEntityLiving();
         int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(VOID_DODGE, victim);
-        float totalTeleportChance = 0.05F*enchantmentLevel;
+        float totalTeleportChance = (float) (DungeonsGearConfig.VOID_DODGE_CHANCE_PER_LEVEL.get() * enchantmentLevel);
 
         float teleportRand = victim.getRandom().nextFloat();
         if (teleportRand <= totalTeleportChance) {

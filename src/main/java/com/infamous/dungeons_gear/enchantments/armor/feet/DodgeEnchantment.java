@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.enchantments.armor.feet;
 
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.types.JumpingEnchantment;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -27,7 +28,7 @@ public class DodgeEnchantment extends JumpingEnchantment {
     public static void onLivingDamageEvent(LivingDamageEvent event) {
         LivingEntity victim = event.getEntityLiving();
         int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(DODGE, victim);
-        float negateHitChance = 0.025F*enchantmentLevel;
+        float negateHitChance = (float) (DungeonsGearConfig.DODGE_CHANCE_PER_LEVEL.get() * enchantmentLevel);
 
         float negateHitRand = victim.getRandom().nextFloat();
         if (negateHitRand <= negateHitChance) {
