@@ -1,0 +1,27 @@
+package com.infamous.dungeons_gear.enchantments.armor.chest;
+
+import com.infamous.dungeons_gear.config.DungeonsGearConfig;
+import com.infamous.dungeons_gear.enchantments.types.ArtifactEnchantment;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentType;
+import net.minecraftforge.fml.common.Mod;
+
+import static com.infamous.dungeons_gear.DungeonsGear.MODID;
+import static com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes.ARMOR_SLOT;
+
+@Mod.EventBusSubscriber(modid= MODID)
+public class HealthSynergyEnchantment extends ArtifactEnchantment {
+
+    public HealthSynergyEnchantment() {
+        super(Rarity.RARE, EnchantmentType.ARMOR_CHEST, ARMOR_SLOT);
+    }
+
+    public int getMaxLevel() {
+        return 3;
+    }
+
+    @Override
+    public boolean checkCompatibility(Enchantment enchantment) {
+        return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() || !(enchantment instanceof ArtifactEnchantment);
+    }
+}
