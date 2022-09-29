@@ -4,8 +4,6 @@ import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.LanguageProvider;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-import static com.infamous.dungeons_gear.registry.ItemRegistry.ARMORS;
-import static com.infamous.dungeons_gear.registry.ItemRegistry.ARMOR_SETS;
 
 public class ModLanguageProvider extends LanguageProvider {
     public ModLanguageProvider(DataGenerator gen, String locale) {

@@ -39,7 +39,6 @@ public class ItemRegistry {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
 
     public static final Map<ResourceLocation, RegistryObject<Item>> ARMORS = new HashMap<>();
-    public static final Map<ResourceLocation, ArmorSet> ARMOR_SETS = new HashMap<>();
     public static final Map<ResourceLocation, RegistryObject<Item>> MELEE_WEAPONS = new HashMap<>();
     public static final Map<ResourceLocation, RegistryObject<Item>> RANGED_WEAPONS = new HashMap<>();
     public static final Map<ResourceLocation, RegistryObject<Item>> ARTIFACTS = new HashMap<>();
@@ -512,7 +511,6 @@ public class ItemRegistry {
                 registerArmor(armorSetName+"_leggings", () -> new ArmorGear(EquipmentSlotType.LEGS, ARMOR_PROPERTIES, armorSetResource, modelLocation, textureLocation, animationFileLocation), lootTableType),
                 registerArmor(armorSetName+"_boots", () -> new ArmorGear(EquipmentSlotType.FEET, ARMOR_PROPERTIES, armorSetResource, modelLocation, textureLocation, animationFileLocation), lootTableType)
         );
-        ARMOR_SETS.put(armorSetResource, armorSet);
         return armorSet;
     }
 
@@ -533,7 +531,6 @@ public class ItemRegistry {
                 registerArmor(armorSetName+"_leggings", () -> new FreezingResistanceArmorGear(EquipmentSlotType.LEGS, ARMOR_PROPERTIES, armorSetResource, modelLocation, textureLocation, animationFileLocation), lootTableType),
                 registerArmor(armorSetName+"_boots", () -> new FreezingResistanceArmorGear(EquipmentSlotType.FEET, ARMOR_PROPERTIES, armorSetResource, modelLocation, textureLocation, animationFileLocation), lootTableType)
         );
-        ARMOR_SETS.put(armorSetResource, armorSet);
         return armorSet;
     }
 
@@ -550,7 +547,6 @@ public class ItemRegistry {
                 registerArmor(armorSetName+"_leggings", () -> new PetBatArmorGear(EquipmentSlotType.LEGS, ARMOR_PROPERTIES, armorSetResource, modelLocation, textureLocation, animationFileLocation), lootTableType),
                 registerArmor(armorSetName+"_boots", () -> new PetBatArmorGear(EquipmentSlotType.FEET, ARMOR_PROPERTIES, armorSetResource, modelLocation, textureLocation, animationFileLocation), lootTableType)
         );
-        ARMOR_SETS.put(armorSetResource, armorSet);
         return armorSet;
     }
 
