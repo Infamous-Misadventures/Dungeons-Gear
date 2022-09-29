@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "dungeons_gear:item/frost_bite_helmet"
+    "layer0": "dungeons_gear:item/armor/frost_bite_helmet"
   }
 }

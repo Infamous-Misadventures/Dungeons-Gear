@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "dungeons_gear:item/royal_guard_chestplate"
+    "layer0": "dungeons_gear:item/armor/royal_guard_chestplate"
   }
 }

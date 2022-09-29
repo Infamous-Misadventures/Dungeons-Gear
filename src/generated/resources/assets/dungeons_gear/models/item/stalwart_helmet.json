@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "dungeons_gear:item/stalwart_helmet"
+    "layer0": "dungeons_gear:item/armor/stalwart_helmet"
   }
 }

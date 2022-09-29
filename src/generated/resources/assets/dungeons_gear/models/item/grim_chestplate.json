@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "dungeons_gear:item/grim_chestplate"
+    "layer0": "dungeons_gear:item/armor/grim_chestplate"
   }
 }

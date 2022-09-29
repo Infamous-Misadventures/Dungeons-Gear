@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "dungeons_gear:item/hungry_horror_helmet"
+    "layer0": "dungeons_gear:item/armor/hungry_horror_helmet"
   }
 }
