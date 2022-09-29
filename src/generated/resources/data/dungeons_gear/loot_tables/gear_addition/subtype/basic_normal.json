@@ -383,7 +383,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:battle_robe"
+          "name": "dungeons_gear:battle_robes_chestplate"
         },
         {
           "type": "minecraft:item",
@@ -475,35 +475,35 @@
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:evocation_helmet"
+          "name": "dungeons_gear:evocation_robes_helmet"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:evocation_robe"
+          "name": "dungeons_gear:evocation_robes_chestplate"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:evocation_pants"
+          "name": "dungeons_gear:evocation_robes_leggings"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:evocation_boots"
+          "name": "dungeons_gear:evocation_robes_boots"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:ember_helmet"
+          "name": "dungeons_gear:ember_robes_helmet"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:ember_robe"
+          "name": "dungeons_gear:ember_robes_chestplate"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:ember_pants"
+          "name": "dungeons_gear:ember_robes_leggings"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:ember_boots"
+          "name": "dungeons_gear:ember_robes_boots"
         },
         {
           "type": "minecraft:item",
@@ -815,11 +815,11 @@
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:soul_robe"
+          "name": "dungeons_gear:soul_chestplate"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:soul_pants"
+          "name": "dungeons_gear:soul_leggings"
         },
         {
           "type": "minecraft:item",
@@ -831,11 +831,11 @@
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:souldancer_robe"
+          "name": "dungeons_gear:souldancer_chestplate"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:souldancer_pants"
+          "name": "dungeons_gear:souldancer_leggings"
         },
         {
           "type": "minecraft:item",
