@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.datagen;
 
+import com.infamous.dungeons_libraries.datagen.ModLanguageProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -12,7 +13,7 @@ public class DataGenerators {
     public static void gatherData(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
         if (event.includeClient()) {
-            //generator.addProvider(new ModLanguageProvider(generator, "en_us"));
+//            generator.addProvider(new ModLanguageProvider(generator, "en_us"));
             generator.addProvider(new ModItemModelProvider(generator, event.getExistingFileHelper()));
         }
         if (event.includeServer()) {

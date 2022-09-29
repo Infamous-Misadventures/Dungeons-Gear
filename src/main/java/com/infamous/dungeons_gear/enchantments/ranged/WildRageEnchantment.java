@@ -23,8 +23,6 @@ import net.minecraftforge.fml.common.Mod;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 
-import net.minecraft.enchantment.Enchantment.Rarity;
-
 @Mod.EventBusSubscriber(modid= MODID)
 public class WildRageEnchantment extends DungeonsEnchantment {
 
@@ -44,7 +42,7 @@ public class WildRageEnchantment extends DungeonsEnchantment {
     }
 
     @SubscribeEvent
-    public static void onPinkScoundrelImpact(ProjectileImpactEvent.Arrow event){
+    public static void onArrowImpact(ProjectileImpactEvent.Arrow event){
         RayTraceResult rayTraceResult = event.getRayTraceResult();
         if(!ModEnchantmentHelper.arrowHitMob(rayTraceResult)) return;
         AbstractArrowEntity arrow = event.getArrow();
