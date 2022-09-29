@@ -2,7 +2,7 @@
   "attributes": [
     {
       "attribute": "dungeons_libraries:ranged_damage_multiplier",
-      "amount": 0.075,
+      "amount": 0.15,
       "operation": 0
     }
   ],

@@ -449,99 +449,105 @@ public class ItemRegistry {
     public static final RegistryObject<Item> FIREWORKS_DISPLAY = registerArtifact("fireworks_display",
             () -> new FireworksDisplayItem(ARTIFACT_PROPERTIES), GIFT);
 
-
-    public static final ArmorSet HUNTERS_ARMOR = registerArmorSet("hunters_armor", BASIC, "hunters_helmet", "hunters_vest", "hunters_leggings", "hunters_boots");
-    public static final ArmorSet ARCHERS_ARMOR = registerArmorSet("archers_armor", BASIC, "archers_hood", "archers_vest", "archers_leggings", "archers_boots");
-    public static final ArmorSet BATTLE_ROBES = registerArmorSet("battle_robes", BASIC, "battle_hood", "battle_robe", "battle_pants", "battle_boots");
-    public static final ArmorSet CHAMPIONS_ARMOR = registerArmorSet("champions_armor", BASIC, "champions_helmet", "champions_chestplate", "champions_leggings", "champions_boots");
-    public static final ArmorSet HEROS_ARMOR = registerArmorSet("heros_armor", BASIC, "heros_helmet", "heros_chestplate", "heros_leggings", "heros_boots");
-    public static final ArmorSet DARK_ARMOR = registerArmorSet("dark_armor", BASIC, "dark_helmet", "dark_chestplate", "dark_leggings", "dark_boots");
-    public static final ArmorSet TITANS_SHROUD = registerArmorSet("titans_shroud", BASIC, "titans_shroud_helmet", "titans_shroud_chestplate", "titans_shroud_leggings", "titans_shroud_boots");
-    public static final ArmorSet ROYAL_GUARD_ARMOR = registerArmorSet("royal_guard_armor", BASIC, "royal_guard_helmet", "royal_guard_chestplate", "royal_guard_leggings", "royal_guard_boots");
-    public static final ArmorSet EVOCATION_ROBES = registerArmorSet("evocation_robes", BASIC, "evocation_hat", "evocation_robe", "evocation_pants", "evocation_boots");
-    public static final ArmorSet EMBER_ROBES = registerArmorSet("ember_robes", BASIC, "ember_hat", "ember_robe", "ember_pants", "ember_boots");
-    public static final ArmorSet GRIM_ARMOR = registerArmorSet("grim_armor", BASIC, "grim_helmet", "grim_chestplate", "grim_leggings", "grim_boots");
-    public static final ArmorSet WITHER_ARMOR = registerArmorSet("wither_armor", BASIC, "wither_helmet", "wither_chestplate", "wither_leggings", "wither_boots");
-    public static final ArmorSet GUARDS_ARMOR = registerArmorSet("guards_armor", BASIC, "guards_helmet", "guards_chestplate", "guards_leggings", "guards_boots");
-    public static final ArmorSet CURIOUS_ARMOR = registerArmorSet("curious_armor", BASIC, "curious_helmet", "curious_chestplate", "curious_leggings", "curious_boots");
-    public static final ArmorSet MERCENARY_ARMOR = registerArmorSet("mercenary_armor", BASIC, "mercenary_helmet", "mercenary_chestplate", "mercenary_leggings", "mercenary_boots");
-    public static final ArmorSet RENEGADE_ARMOR = registerArmorSet("renegade_armor", BASIC, "renegade_helmet", "renegade_chestplate", "renegade_leggings", "renegade_boots");
-    public static final ArmorSet HUNGRY_HORROR = registerArmorSet("hungry_horror", BASIC, "hungry_horror_helmet", "hungry_horror_chestplate", "hungry_horror_leggings", "hungry_horror_boots");
-    public static final ArmorSet OCELOT_ARMOR = registerArmorSet("ocelot_armor", BASIC, "ocelot_helmet", "ocelot_chestplate", "ocelot_leggings", "ocelot_boots");
-    public static final ArmorSet SHADOW_WALKER_ARMOR = registerArmorSet("shadow_walker_armor", BASIC, "shadow_walker_helmet", "shadow_walker_chestplate", "shadow_walker_leggings", "shadow_walker_boots");
-    public static final ArmorSet PHANTOM_ARMOR = registerArmorSet("phantom_armor", BASIC, "phantom_helmet", "phantom_chestplate", "phantom_leggings", "phantom_boots");
-    public static final ArmorSet FROST_BITE = registerArmorSet("frost_bite", BASIC, "frost_bite_helmet", "frost_bite_chestplate", "frost_bite_leggings", "frost_bite_boots");
-    public static final ArmorSet PLATE_ARMOR = registerArmorSet("plate_armor", BASIC, "plate_helmet", "plate_chestplate", "plate_leggings", "plate_boots");
-    public static final ArmorSet FULL_METAL_ARMOR = registerArmorSet("full_metal_armor", BASIC, "full_metal_helmet", "full_metal_chestplate", "full_metal_leggings", "full_metal_boots");
-    public static final ArmorSet REINFORCED_MAIL = registerArmorSet("reinforced_mail", BASIC, "reinforced_mail_helmet", "reinforced_mail_chestplate", "reinforced_mail_leggings", "reinforced_mail_boots");
-    public static final ArmorSet STALWART_ARMOR = registerArmorSet("stalwart_armor", BASIC, "stalwart_helmet", "stalwart_chestplate", "stalwart_leggings", "stalwart_boots");
-    public static final ArmorSet SCALE_MAIL = registerArmorSet("scale_mail", BASIC, "scale_mail_helmet", "scale_mail_chestplate", "scale_mail_leggings", "scale_mail_boots");
-    public static final ArmorSet HIGHLAND_ARMOR = registerArmorSet("highland_armor", BASIC, "highland_helmet", "highland_chestplate", "highland_leggings", "highland_boots");
-    public static final ArmorSet SNOW_ARMOR = registerFreezingResistanceArmorSet("snow_armor", BASIC, "snow_helmet", "snow_chestplate", "snow_leggings", "snow_boots");
-    public static final ArmorSet FROST_ARMOR = registerFreezingResistanceArmorSet("frost_armor", BASIC, "frost_helmet", "frost_chestplate", "frost_leggings", "frost_boots");
-    public static final ArmorSet SOUL_ROBES = registerArmorSet("soul_robes", BASIC, "soul_hood", "soul_robe", "soul_pants", "soul_boots");
-    public static final ArmorSet SOULDANCER_ROBES = registerArmorSet("souldancer_robes", BASIC, "souldancer_hood", "souldancer_robe", "souldancer_pants", "souldancer_boots");
-    public static final ArmorSet SPELUNKER_ARMOR = registePetBatArmorSet("spelunker_armor", BASIC, "spelunker_helmet", "spelunker_chestplate", "spelunker_leggings", "spelunker_boots", true);
-    public static final ArmorSet CAVE_CRAWLER = registePetBatArmorSet("cave_crawler", BASIC, "cave_crawler_helmet", "cave_crawler_chestplate", "cave_crawler_leggings", "cave_crawler_boots", true);
-    public static final ArmorSet THIEF_ARMOR = registerArmorSet("thief_armor", BASIC, "thief_helmet", "thief_chestplate", "thief_leggings", "thief_boots");
-    public static final ArmorSet SPIDER_ARMOR = registerArmorSet("spider_armor", BASIC, "spider_helmet", "spider_chestplate", "spider_leggings", "spider_boots");
-    public static final ArmorSet WOLF_ARMOR = registerArmorSet("wolf_armor", BASIC, "wolf_helmet", "wolf_chestplate", "wolf_leggings", "wolf_boots");
-    public static final ArmorSet FOX_ARMOR = registerArmorSet("fox_armor", BASIC, "fox_helmet", "fox_chestplate", "fox_leggings", "fox_boots");
-    public static final ArmorSet ARCTIC_FOX_ARMOR = registerArmorSet("arctic_fox_armor", BASIC, "arctic_fox_helmet", "arctic_fox_chestplate", "arctic_fox_leggings", "arctic_fox_boots");
-    public static final ArmorSet CLIMBING_GEAR = registerArmorSet("climbing_gear", BASIC, "climbing_helmet", "climbing_chestplate", "climbing_leggings", "climbing_boots");
-    public static final ArmorSet RUGGED_CLIMBING_GEAR = registerFreezingResistanceArmorSet("rugged_climbing_gear", BASIC, "rugged_climbing_helmet", "rugged_climbing_chestplate", "rugged_climbing_leggings", "rugged_climbing_boots");
-    public static final ArmorSet GOAT_GEAR = registerArmorSet("goat_gear", BASIC, "goat_helmet", "goat_chestplate", "goat_leggings", "goat_boots");
-    public static final ArmorSet EMERALD_ARMOR = registerArmorSet("emerald_armor", BASIC, "emerald_helmet", "emerald_chestplate", "emerald_leggings", "emerald_boots");
-    public static final ArmorSet GILDED_GLORY = registerArmorSet("gilded_glory", BASIC, "gilded_glory_helmet", "gilded_glory_chestplate", "gilded_glory_leggings", "gilded_glory_boots");
-    public static final ArmorSet OPULENT_ARMOR = registerArmorSet("opulent_armor", BASIC, "opulent_helmet", "opulent_chestplate", "opulent_leggings", "opulent_boots");
+    public static final ArmorSet HUNTERS_ARMOR = registerArmorSet("hunters", BASIC);
+    public static final ArmorSet ARCHERS_ARMOR = registerArmorSet("archers", BASIC);
+    public static final ArmorSet BATTLE_ROBES = registerArmorSet("battle_robes", BASIC);
+    public static final ArmorSet CHAMPIONS_ARMOR = registerArmorSet("champions", BASIC);
+    public static final ArmorSet HEROS_ARMOR = registerArmorSet("heros", BASIC);
+    public static final ArmorSet DARK_ARMOR = registerArmorSet("dark", BASIC);
+    public static final ArmorSet TITANS_SHROUD = registerArmorSet("titans_shroud", BASIC);
+    public static final ArmorSet ROYAL_GUARD_ARMOR = registerArmorSet("royal_guard", BASIC);
+    public static final ArmorSet EVOCATION_ROBES = registerArmorSet("evocation_robes", BASIC);
+    public static final ArmorSet EMBER_ROBES = registerArmorSet("ember_robes", BASIC);
+    public static final ArmorSet GRIM_ARMOR = registerArmorSet("grim", BASIC);
+    public static final ArmorSet WITHER_ARMOR = registerArmorSet("wither", BASIC);
+    public static final ArmorSet GUARDS_ARMOR = registerArmorSet("guards", BASIC);
+    public static final ArmorSet CURIOUS_ARMOR = registerArmorSet("curious", BASIC);
+    public static final ArmorSet MERCENARY_ARMOR = registerArmorSet("mercenary", BASIC);
+    public static final ArmorSet RENEGADE_ARMOR = registerArmorSet("renegade", BASIC);
+    public static final ArmorSet HUNGRY_HORROR = registerArmorSet("hungry_horror", BASIC);
+    public static final ArmorSet OCELOT_ARMOR = registerArmorSet("ocelot", BASIC);
+    public static final ArmorSet SHADOW_WALKER_ARMOR = registerArmorSet("shadow_walker", BASIC);
+    public static final ArmorSet PHANTOM_ARMOR = registerArmorSet("phantom", BASIC);
+    public static final ArmorSet FROST_BITE = registerArmorSet("frost_bite", BASIC);
+    public static final ArmorSet PLATE_ARMOR = registerArmorSet("plate", BASIC);
+    public static final ArmorSet FULL_METAL_ARMOR = registerArmorSet("full_metal", BASIC);
+    public static final ArmorSet REINFORCED_MAIL = registerArmorSet("reinforced_mail", BASIC);
+    public static final ArmorSet STALWART_ARMOR = registerArmorSet("stalwart", BASIC);
+    public static final ArmorSet SCALE_MAIL = registerArmorSet("scale_mail", BASIC);
+    public static final ArmorSet HIGHLAND_ARMOR = registerArmorSet("highland", BASIC);
+    public static final ArmorSet SNOW_ARMOR = registerFreezingResistanceArmorSet("snow", BASIC);
+    public static final ArmorSet FROST_ARMOR = registerFreezingResistanceArmorSet("frost", BASIC);
+    public static final ArmorSet SOUL_ROBES = registerArmorSet("soul", BASIC);
+    public static final ArmorSet SOULDANCER_ROBES = registerArmorSet("souldancer", BASIC);
+    public static final ArmorSet SPELUNKER_ARMOR = registePetBatArmorSet("spelunker", BASIC);
+    public static final ArmorSet CAVE_CRAWLER = registePetBatArmorSet("cave_crawler", BASIC);
+    public static final ArmorSet THIEF_ARMOR = registerArmorSet("thief", BASIC);
+    public static final ArmorSet SPIDER_ARMOR = registerArmorSet("spider", BASIC);
+    public static final ArmorSet WOLF_ARMOR = registerArmorSet("wolf", BASIC);
+    public static final ArmorSet FOX_ARMOR = registerArmorSet("fox", BASIC);
+    public static final ArmorSet ARCTIC_FOX_ARMOR = registerArmorSet("arctic_fox", COLD);
+    public static final ArmorSet CLIMBING_GEAR = registerArmorSet("climbing", COLD);
+    public static final ArmorSet RUGGED_CLIMBING_GEAR = registerFreezingResistanceArmorSet("rugged_climbing", COLD);
+    public static final ArmorSet GOAT_GEAR = registerArmorSet("goat", COLD);
+    public static final ArmorSet EMERALD_ARMOR = registerArmorSet("emerald", COLD);
+    public static final ArmorSet GILDED_GLORY = registerArmorSet("gilded_glory", COLD);
+    public static final ArmorSet OPULENT_ARMOR = registerArmorSet("opulent", COLD);
 
     public static final RegistryObject<Item> ARROW_BUNDLE = ITEMS.register("arrow_bundle",
             () -> new ArrowBundleItem(new Item.Properties().tab(RANGED_WEAPON_GROUP)));
 
-    private static ArmorSet registerArmorSet(String armorSetId, LootTableType lootTableType, String helmetId, String chestId, String legsId, String bootsId, boolean animated) {
-        ResourceLocation armorSet = new ResourceLocation(MODID, armorSetId);
+
+    private static ArmorSet registerArmorSet(String armorSetName, LootTableType lootTableType, boolean animated) {
+        String armorSetId = armorSetName+"_armor";
+        ResourceLocation armorSetResource = new ResourceLocation(MODID, armorSetId+"_armor");
         ResourceLocation modelLocation = new ResourceLocation(MODID, "geo/armor/"+armorSetId+".geo.json");
         ResourceLocation textureLocation = new ResourceLocation(MODID, "textures/models/armor/"+armorSetId+".png");
         ResourceLocation animationFileLocation = animated ? new ResourceLocation(MODID, "animations/armor/" + armorSetId + ".animation.json") : new ResourceLocation(DungeonsLibraries.MODID, "animations/armor/armor_default.animation.json");
-        return new ArmorSet(
+        ArmorSet armorSet = new ArmorSet(
                 armorSetId,
-                registerArmor(helmetId, () -> new ArmorGear(EquipmentSlot.HEAD, ARMOR_PROPERTIES, armorSet, modelLocation, textureLocation, animationFileLocation), lootTableType),
-                registerArmor(chestId, () -> new ArmorGear(EquipmentSlot.CHEST, ARMOR_PROPERTIES, armorSet, modelLocation, textureLocation, animationFileLocation), lootTableType),
-                registerArmor(legsId, () -> new ArmorGear(EquipmentSlot.LEGS, ARMOR_PROPERTIES, armorSet, modelLocation, textureLocation, animationFileLocation), lootTableType),
-                registerArmor(bootsId, () -> new ArmorGear(EquipmentSlot.FEET, ARMOR_PROPERTIES, armorSet, modelLocation, textureLocation, animationFileLocation), lootTableType)
+                registerArmor(armorSetName+"_helmet", () -> new ArmorGear(EquipmentSlot.HEAD, ARMOR_PROPERTIES, armorSetResource, modelLocation, textureLocation, animationFileLocation), lootTableType),
+                registerArmor(armorSetName+"_chestplate", () -> new ArmorGear(EquipmentSlot.CHEST, ARMOR_PROPERTIES, armorSetResource, modelLocation, textureLocation, animationFileLocation), lootTableType),
+                registerArmor(armorSetName+"_leggings", () -> new ArmorGear(EquipmentSlot.LEGS, ARMOR_PROPERTIES, armorSetResource, modelLocation, textureLocation, animationFileLocation), lootTableType),
+                registerArmor(armorSetName+"_boots", () -> new ArmorGear(EquipmentSlot.FEET, ARMOR_PROPERTIES, armorSetResource, modelLocation, textureLocation, animationFileLocation), lootTableType)
         );
+        return armorSet;
     }
 
-    private static ArmorSet registerArmorSet(String armorSetId, LootTableType lootTableType, String helmetId, String chestId, String legsId, String bootsId) {
-        return registerArmorSet(armorSetId, lootTableType, helmetId, chestId, legsId, bootsId, false);
+    private static ArmorSet registerArmorSet(String armorSetId, LootTableType lootTableType) {
+        return registerArmorSet(armorSetId, lootTableType, false);
     }
 
-    private static ArmorSet registerFreezingResistanceArmorSet(String armorSetId, LootTableType lootTableType, String helmetId, String chestId, String legsId, String bootsId) {
-        ResourceLocation armorSet = new ResourceLocation(MODID, armorSetId);
+    private static ArmorSet registerFreezingResistanceArmorSet(String armorSetName, LootTableType lootTableType) {
+        String armorSetId = armorSetName+"_armor";
+        ResourceLocation armorSetResource = new ResourceLocation(MODID, armorSetId+"_armor");
         ResourceLocation modelLocation = new ResourceLocation(MODID, "geo/armor/"+armorSetId+".geo.json");
         ResourceLocation textureLocation = new ResourceLocation(MODID, "textures/models/armor/"+armorSetId+".png");
-        ResourceLocation animationFileLocation = new ResourceLocation(DungeonsLibraries.MODID, "animations/armor_default.animation.json");
-        return new ArmorSet(
+        ResourceLocation animationFileLocation = new ResourceLocation(DungeonsLibraries.MODID, "animations/armor/armor_default.animation.json");
+        ArmorSet armorSet = new ArmorSet(
                 armorSetId,
-                registerArmor(helmetId, () -> new FreezingResistanceArmorGear(EquipmentSlot.HEAD, ARMOR_PROPERTIES, armorSet, modelLocation, textureLocation, animationFileLocation), lootTableType),
-                registerArmor(chestId, () -> new FreezingResistanceArmorGear(EquipmentSlot.CHEST, ARMOR_PROPERTIES, armorSet, modelLocation, textureLocation, animationFileLocation), lootTableType),
-                registerArmor(legsId, () -> new FreezingResistanceArmorGear(EquipmentSlot.LEGS, ARMOR_PROPERTIES, armorSet, modelLocation, textureLocation, animationFileLocation), lootTableType),
-                registerArmor(bootsId, () -> new FreezingResistanceArmorGear(EquipmentSlot.FEET, ARMOR_PROPERTIES, armorSet, modelLocation, textureLocation, animationFileLocation), lootTableType)
+                registerArmor(armorSetName+"_helmet", () -> new FreezingResistanceArmorGear(EquipmentSlot.HEAD, ARMOR_PROPERTIES, armorSetResource, modelLocation, textureLocation, animationFileLocation), lootTableType),
+                registerArmor(armorSetName+"_chestplate", () -> new FreezingResistanceArmorGear(EquipmentSlot.CHEST, ARMOR_PROPERTIES, armorSetResource, modelLocation, textureLocation, animationFileLocation), lootTableType),
+                registerArmor(armorSetName+"_leggings", () -> new FreezingResistanceArmorGear(EquipmentSlot.LEGS, ARMOR_PROPERTIES, armorSetResource, modelLocation, textureLocation, animationFileLocation), lootTableType),
+                registerArmor(armorSetName+"_boots", () -> new FreezingResistanceArmorGear(EquipmentSlot.FEET, ARMOR_PROPERTIES, armorSetResource, modelLocation, textureLocation, animationFileLocation), lootTableType)
         );
+        return armorSet;
     }
 
-    private static ArmorSet registePetBatArmorSet(String armorSetId, LootTableType lootTableType, String helmetId, String chestId, String legsId, String bootsId, boolean animated) {
-        ResourceLocation armorSet = new ResourceLocation(MODID, armorSetId);
+    private static ArmorSet registePetBatArmorSet(String armorSetName, LootTableType lootTableType) {
+        String armorSetId = armorSetName+"_armor";
+        ResourceLocation armorSetResource = new ResourceLocation(MODID, armorSetId);
         ResourceLocation modelLocation = new ResourceLocation(MODID, "geo/armor/"+armorSetId+".geo.json");
         ResourceLocation textureLocation = new ResourceLocation(MODID, "textures/models/armor/"+armorSetId+".png");
-        ResourceLocation animationFileLocation = animated ? new ResourceLocation(MODID, "animations/armor/" + armorSetId + ".animation.json") : new ResourceLocation(DungeonsLibraries.MODID, "animations/armor/armor_default.animation.json");
-        return new ArmorSet(
+        ResourceLocation animationFileLocation = new ResourceLocation(MODID, "animations/armor/" + armorSetId + ".animation.json");
+        ArmorSet armorSet = new ArmorSet(
                 armorSetId,
-                registerArmor(helmetId, () -> new PetBatArmorGear(EquipmentSlot.HEAD, ARMOR_PROPERTIES, armorSet, modelLocation, textureLocation, animationFileLocation), lootTableType),
-                registerArmor(chestId, () -> new PetBatArmorGear(EquipmentSlot.CHEST, ARMOR_PROPERTIES, armorSet, modelLocation, textureLocation, animationFileLocation), lootTableType),
-                registerArmor(legsId, () -> new PetBatArmorGear(EquipmentSlot.LEGS, ARMOR_PROPERTIES, armorSet, modelLocation, textureLocation, animationFileLocation), lootTableType),
-                registerArmor(bootsId, () -> new PetBatArmorGear(EquipmentSlot.FEET, ARMOR_PROPERTIES, armorSet, modelLocation, textureLocation, animationFileLocation), lootTableType)
+                registerArmor(armorSetName+"_helmet", () -> new PetBatArmorGear(EquipmentSlot.HEAD, ARMOR_PROPERTIES, armorSetResource, modelLocation, textureLocation, animationFileLocation), lootTableType),
+                registerArmor(armorSetName+"_chestplate", () -> new PetBatArmorGear(EquipmentSlot.CHEST, ARMOR_PROPERTIES, armorSetResource, modelLocation, textureLocation, animationFileLocation), lootTableType),
+                registerArmor(armorSetName+"_leggings", () -> new PetBatArmorGear(EquipmentSlot.LEGS, ARMOR_PROPERTIES, armorSetResource, modelLocation, textureLocation, animationFileLocation), lootTableType),
+                registerArmor(armorSetName+"_boots", () -> new PetBatArmorGear(EquipmentSlot.FEET, ARMOR_PROPERTIES, armorSetResource, modelLocation, textureLocation, animationFileLocation), lootTableType)
         );
+        return armorSet;
     }
 
     private static RegistryObject<Item> registerArmor(String armorId, Supplier<Item> itemSupplier, LootTableType lootTableType) {
