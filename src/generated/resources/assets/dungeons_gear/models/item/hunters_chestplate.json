@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "dungeons_gear:item/hunters_vest"
+    "layer0": "dungeons_gear:item/armor/hunters_chestplate"
   }
 }
