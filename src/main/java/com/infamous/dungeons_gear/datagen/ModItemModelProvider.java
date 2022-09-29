@@ -5,6 +5,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.client.model.generators.ModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import static com.infamous.dungeons_gear.registry.ItemRegistry.ARMORS;
@@ -21,8 +22,14 @@ public class ModItemModelProvider extends ItemModelProvider {
     }
 
     private void registerArmors() {
-        ARMORS.forEach((resourceLocation, itemRegistryObject) ->
-                generated(resourceLocation.getPath(), itemLoc(resourceLocation)));
+        ARMORS.forEach((resourceLocation, itemRegistryObject) -> {
+            if(existingFileHelper.exists(itemLoc(resourceLocation), ModelProvider.TEXTURE)) {
+                generated(resourceLocation.getPath(), itemLoc(resourceLocation));
+            }else{
+                DungeonsGear.LOGGER.info("Missing texture for " + resourceLocation);
+            }
+
+        });
     }
 
     private void generated(String path, ResourceLocation texture) {
