@@ -31,6 +31,7 @@ public class ArmorEnchantmentList {
     public static Enchantment OPULENT_SHIELD;
     public static Enchantment RECKLESS;
     public static Enchantment RECYCLER;
+    public static Enchantment BEEHIVE;
 
     //LEGS
     public static Enchantment ACROBAT;

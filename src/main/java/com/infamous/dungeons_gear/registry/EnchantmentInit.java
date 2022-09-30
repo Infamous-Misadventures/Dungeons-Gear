@@ -15,6 +15,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList.*;
+import static com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList.BEEHIVE;
 import static com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList.*;
 import static com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList.*;
 import static com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList.*;
@@ -125,6 +126,7 @@ public class EnchantmentInit {
                     ARROW_HOARDER = new ArrowHoarderEnchantment().setRegistryName(location("arrow_hoarder")),
                     VOID_DODGE = new VoidDodgeEnchantment().setRegistryName(location("void_dodge")),
                     DODGE = new DodgeEnchantment().setRegistryName(location("dodge"))
+                    BEEHIVE = new BeehiveEnchantment().setRegistryName(location("beehive"))
                     );
 
         }
