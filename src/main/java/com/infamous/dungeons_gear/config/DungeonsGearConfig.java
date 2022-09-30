@@ -113,6 +113,7 @@ public class DungeonsGearConfig {
     public static ForgeConfigSpec.ConfigValue<Double> POISON_CLOUD_CHANCE;
     public static ForgeConfigSpec.ConfigValue<Double> DODGE_CHANCE_PER_LEVEL;
     public static ForgeConfigSpec.ConfigValue<Double> VOID_DODGE_CHANCE_PER_LEVEL;
+    public static ForgeConfigSpec.ConfigValue<Double> BEEHIVE_CHANCE_PER_LEVEL;
 
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> LOVE_MEDALLION_BLACKLIST;
 
@@ -620,6 +621,9 @@ public class DungeonsGearConfig {
         VOID_DODGE_CHANCE_PER_LEVEL = builder
                 .comment("The chance per level for void dodge to trigger [-5.0-5.0, default: 0.25]")
                 .defineInRange("voidDodgeChancePerLevel", 0.05, -5.0, 5.0);
+        BEEHIVE_CHANCE_PER_LEVEL = builder
+                .comment("The chance per level for beehive to trigger [-5.0-5.0, default: 0.25]")
+                .defineInRange("beehiveChancePerLevel", 0.1, -5.0, 5.0);
         builder.pop();
 
         builder.comment("Artifact Specific Configuration").push("artifact_specific_configuration");

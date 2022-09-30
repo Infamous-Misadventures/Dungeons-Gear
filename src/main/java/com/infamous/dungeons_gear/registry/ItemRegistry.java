@@ -493,6 +493,8 @@ public class ItemRegistry {
     public static final ArmorSet EMERALD_ARMOR = registerArmorSet("emerald", COLD);
     public static final ArmorSet GILDED_GLORY = registerArmorSet("gilded_glory", COLD);
     public static final ArmorSet OPULENT_ARMOR = registerArmorSet("opulent", COLD);
+    public static final ArmorSet BEENEST = registerArmorSet("beenest", JUNGLE);
+    public static final ArmorSet BEEHIVE = registerArmorSet("beehive", JUNGLE);
 
     public static final RegistryObject<Item> ARROW_BUNDLE = ITEMS.register("arrow_bundle",
             () -> new ArrowBundleItem(new Item.Properties().tab(RANGED_WEAPON_GROUP)));
@@ -500,7 +502,7 @@ public class ItemRegistry {
 
     private static ArmorSet registerArmorSet(String armorSetName, LootTableType lootTableType, boolean animated) {
         String armorSetId = armorSetName+"_armor";
-        ResourceLocation armorSetResource = new ResourceLocation(MODID, armorSetId+"_armor");
+        ResourceLocation armorSetResource = new ResourceLocation(MODID, armorSetId);
         ResourceLocation modelLocation = new ResourceLocation(MODID, "geo/armor/"+armorSetId+".geo.json");
         ResourceLocation textureLocation = new ResourceLocation(MODID, "textures/models/armor/"+armorSetId+".png");
         ResourceLocation animationFileLocation = animated ? new ResourceLocation(MODID, "animations/armor/" + armorSetId + ".animation.json") : new ResourceLocation(DungeonsLibraries.MODID, "animations/armor/armor_default.animation.json");
@@ -520,7 +522,7 @@ public class ItemRegistry {
 
     private static ArmorSet registerFreezingResistanceArmorSet(String armorSetName, LootTableType lootTableType) {
         String armorSetId = armorSetName+"_armor";
-        ResourceLocation armorSetResource = new ResourceLocation(MODID, armorSetId+"_armor");
+        ResourceLocation armorSetResource = new ResourceLocation(MODID, armorSetId);
         ResourceLocation modelLocation = new ResourceLocation(MODID, "geo/armor/"+armorSetId+".geo.json");
         ResourceLocation textureLocation = new ResourceLocation(MODID, "textures/models/armor/"+armorSetId+".png");
         ResourceLocation animationFileLocation = new ResourceLocation(DungeonsLibraries.MODID, "animations/armor/armor_default.animation.json");
