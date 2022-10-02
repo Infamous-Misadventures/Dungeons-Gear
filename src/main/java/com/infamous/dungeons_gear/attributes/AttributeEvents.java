@@ -10,9 +10,8 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.infamous.dungeons_gear.registry.AttributeRegistry.ROLL_COOLDOWN;
-import static com.infamous.dungeons_gear.registry.AttributeRegistry.ROLL_LIMIT;
-import static com.infamous.dungeons_libraries.DungeonsLibraries.MODID;
+import static com.infamous.dungeons_gear.DungeonsGear.MODID;
+import static com.infamous.dungeons_gear.registry.AttributeRegistry.*;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = MODID)
 public class AttributeEvents {
@@ -21,6 +20,7 @@ public class AttributeEvents {
     public static void onEntityAttributeModificationEvent(EntityAttributeModificationEvent event){
         addAttributeToPlayer(event, ROLL_COOLDOWN.get());
         addAttributeToPlayer(event, ROLL_LIMIT.get());
+        addAttributeToPlayer(event, ATTACK_REACH.get());
     }
 
     private static void addAttributeToAll(EntityAttributeModificationEvent event, Attribute attribute) {

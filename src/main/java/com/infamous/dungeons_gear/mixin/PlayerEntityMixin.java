@@ -20,14 +20,6 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         super(entityType_1, world_1);
     }
 
-    @Inject(
-            method = "createAttributes",
-            at = @At("RETURN")
-    )
-    private static void initAttributes(CallbackInfoReturnable<AttributeModifierMap.MutableAttribute> ci) {
-        ci.getReturnValue().add(AttributeRegistry.ATTACK_REACH.get());
-    }
-
 //    @ModifyConstant(
 //            method = "attackTargetEntityWithCurrentItem",
 //            constant = @Constant(doubleValue = 9.0D)
