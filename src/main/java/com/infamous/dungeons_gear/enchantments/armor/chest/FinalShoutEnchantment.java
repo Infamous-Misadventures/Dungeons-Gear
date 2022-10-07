@@ -2,9 +2,9 @@ package com.infamous.dungeons_gear.enchantments.armor.chest;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.types.HealthAbilityEnchantment;
-import com.infamous.dungeons_gear.integration.curios.CuriosIntegration;
-import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
-import com.infamous.dungeons_gear.items.artifacts.ArtifactUseContext;
+import com.infamous.dungeons_libraries.integration.curios.CuriosIntegration;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
 import com.infamous.dungeons_gear.items.artifacts.beacon.AbstractBeaconItem;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_libraries.capabilities.timers.ITimers;

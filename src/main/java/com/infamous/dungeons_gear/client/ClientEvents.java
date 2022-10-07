@@ -1,10 +1,10 @@
 package com.infamous.dungeons_gear.client;
 
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_gear.capabilities.artifact.ArtifactUsageHelper;
-import com.infamous.dungeons_gear.capabilities.artifact.IArtifactUsage;
 import com.infamous.dungeons_gear.items.armor.FreezingResistanceArmorGear;
 import com.infamous.dungeons_gear.items.artifacts.beacon.AbstractBeaconItem;
+import com.infamous.dungeons_libraries.capabilities.artifact.ArtifactUsageHelper;
+import com.infamous.dungeons_libraries.capabilities.artifact.IArtifactUsage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.item.Item;

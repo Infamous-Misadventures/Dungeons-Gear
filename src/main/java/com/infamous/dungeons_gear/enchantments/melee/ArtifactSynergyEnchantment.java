@@ -5,6 +5,7 @@ import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
+import com.infamous.dungeons_libraries.event.ArtifactEvent;
 import com.infamous.dungeons_libraries.items.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
@@ -55,6 +56,14 @@ public class ArtifactSynergyEnchantment extends DungeonsEnchantment {
                 event.setAmount(currentDamage * damageMultiplier);
             }
 
+        }
+    }
+
+    @SubscribeEvent
+    public static void onArtifactTriggered(ArtifactEvent.Activated event){
+        ICombo comboCap = CapabilityHelper.getComboCapability(event.getEntityLiving());
+        if(comboCap != null && !comboCap.hasArtifactSynergy()){
+            comboCap.setArtifactSynergy(true);
         }
     }
 }

@@ -1,8 +1,5 @@
 package com.infamous.dungeons_gear;
 
-import com.infamous.dungeons_gear.capabilities.artifact.ArtifactUsage;
-import com.infamous.dungeons_gear.capabilities.artifact.ArtifactUsageStorage;
-import com.infamous.dungeons_gear.capabilities.artifact.IArtifactUsage;
 import com.infamous.dungeons_gear.capabilities.bow.Bow;
 import com.infamous.dungeons_gear.capabilities.bow.BowStorage;
 import com.infamous.dungeons_gear.capabilities.bow.IBow;
@@ -38,7 +35,6 @@ import com.infamous.dungeons_gear.registry.AttributeRegistry;
 import com.infamous.dungeons_gear.registry.ItemRegistry;
 import com.infamous.dungeons_gear.registry.ParticleInit;
 import com.infamous.dungeons_libraries.client.renderer.ArmorGearRenderer;
-import com.infamous.dungeons_libraries.items.gearconfig.ArmorGear;
 import net.minecraft.item.ItemGroup;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -53,8 +49,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
-
-import static com.infamous.dungeons_gear.integration.curios.client.CuriosKeyBindings.setupCuriosKeybindings;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(DungeonsGear.MODID)
@@ -103,7 +97,6 @@ public class DungeonsGear
     {
         NetworkHandler.init();
         CapabilityManager.INSTANCE.register(ICombo.class, new ComboStorage(), Combo::new);
-        CapabilityManager.INSTANCE.register(IArtifactUsage.class, new ArtifactUsageStorage(), ArtifactUsage::new);
         CapabilityManager.INSTANCE.register(IBow.class, new BowStorage(), Bow::new);
         CapabilityManager.INSTANCE.register(IOffhand.class, new OffhandStorage(), Offhand::new);
         event.enqueueWork(ModLootFunctionTypes::register);
@@ -120,8 +113,6 @@ public class DungeonsGear
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.TOTEM_OF_REGENERATION.get(), TotemOfRegenerationRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.FIREWORKS_DISPLAY.get(), FireworksDisplayRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BEAM_ENTITY.get(), BeamEntityRenderer::new);
-
-        setupCuriosKeybindings();
 
         GeoArmorRenderer.registerArmorRenderer(FreezingResistanceArmorGear.class, ArmorGearRenderer::new);
         GeoArmorRenderer.registerArmorRenderer(PetBatArmorGear.class, ArmorGearRenderer::new);

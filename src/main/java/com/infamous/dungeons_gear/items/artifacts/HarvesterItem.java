@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.UUID;
 
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_GATHERING;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
 
 public class HarvesterItem extends ArtifactItem implements ISoulConsumer {
 
@@ -46,12 +48,7 @@ public class HarvesterItem extends ArtifactItem implements ISoulConsumer {
         return new ActionResult<>(ActionResultType.SUCCESS, itemStack);
     }
 
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
-        super.appendHoverText(stack, world, list, flag);
-        DescriptionHelper.addFullDescription(list, stack);
-    }
+
 
     @Override
     public int getCooldownInSeconds() {

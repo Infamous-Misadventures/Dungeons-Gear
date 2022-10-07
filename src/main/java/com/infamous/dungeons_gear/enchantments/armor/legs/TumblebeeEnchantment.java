@@ -2,7 +2,7 @@ package com.infamous.dungeons_gear.enchantments.armor.legs;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.types.JumpingEnchantment;
-import com.infamous.dungeons_gear.integration.curios.CuriosIntegration;
+import com.infamous.dungeons_libraries.integration.curios.CuriosIntegration;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;

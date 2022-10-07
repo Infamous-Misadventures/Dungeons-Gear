@@ -3,7 +3,7 @@ package com.infamous.dungeons_gear.enchantments.ranged;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
-import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_libraries.utils.RangedAttackHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;

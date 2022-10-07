@@ -1042,10 +1042,5 @@
   "item.dungeons_gear.arrow_bundle": "Arrow Bundle",
   "ability.dungeons_gear.arrow_hoarder": "+1 arrow per bundle (Arrow Hoarder I)",
 
-  "dungeons_gear.gilded": "Gilded",
-
-  "key.dungeons_gear.curiosintegration.category": "Dungeons Gear Curios",
-  "key.dungeons_gear.curiosintegration.description_slot1": "Artifact Slot 1",
-  "key.dungeons_gear.curiosintegration.description_slot2": "Artifact Slot 2",
-  "key.dungeons_gear.curiosintegration.description_slot3": "Artifact Slot 3"
+  "dungeons_gear.gilded": "Gilded"
 }

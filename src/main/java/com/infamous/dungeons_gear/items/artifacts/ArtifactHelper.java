@@ -9,6 +9,6 @@ import java.util.stream.Collectors;
 
 public class ArtifactHelper {
     public static List<Item> getArtifactList(){
-        return ItemRegistry.RANGED_WEAPONS.values().stream().map(RegistryObject::get).collect(Collectors.toList());
+        return ItemRegistry.ARTIFACTS.values().stream().map(RegistryObject::get).collect(Collectors.toList());
     }
 }

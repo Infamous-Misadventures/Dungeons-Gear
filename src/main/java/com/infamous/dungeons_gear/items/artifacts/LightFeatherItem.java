@@ -3,8 +3,6 @@ package com.infamous.dungeons_gear.items.artifacts;
 import com.infamous.dungeons_gear.network.NetworkHandler;
 import com.infamous.dungeons_gear.network.PacketBreakItem;
 import com.infamous.dungeons_gear.effects.CustomEffects;
-import com.infamous.dungeons_gear.utilties.DescriptionHelper;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -15,16 +13,15 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 import static com.infamous.dungeons_libraries.utils.PetHelper.isPetOf;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
 
 public class LightFeatherItem extends ArtifactItem {
     public LightFeatherItem(Properties properties) {
@@ -75,12 +72,7 @@ public class LightFeatherItem extends ArtifactItem {
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }
 
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
-        super.appendHoverText(stack, world, list, flag);
-        DescriptionHelper.addFullDescription(list, stack);
-    }
+
 
     @Override
     public int getCooldownInSeconds() {

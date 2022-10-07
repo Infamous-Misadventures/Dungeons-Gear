@@ -5,27 +5,22 @@ import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.network.NetworkHandler;
 import com.infamous.dungeons_gear.network.PacketBreakItem;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
-import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
 import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
 import com.infamous.dungeons_libraries.items.interfaces.ISoulConsumer;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.PacketDistributor;
 
-import java.util.List;
 import java.util.UUID;
 
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_GATHERING;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
 
 public class LightningRodItem extends ArtifactItem implements ISoulConsumer {
     public LightningRodItem(Properties properties) {
@@ -46,13 +41,7 @@ public class LightningRodItem extends ArtifactItem implements ISoulConsumer {
         return new ActionResult<>(ActionResultType.SUCCESS, itemStack);
     }
 
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
-    {
-        super.appendHoverText(stack, world, list, flag);
-        DescriptionHelper.addFullDescription(list, stack);
-    }
+
 
     @Override
     public int getCooldownInSeconds() {

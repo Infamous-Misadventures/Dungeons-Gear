@@ -2,7 +2,7 @@ package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
-import com.infamous.dungeons_gear.integration.curios.CuriosIntegration;
+import com.infamous.dungeons_libraries.integration.curios.CuriosIntegration;
 import com.infamous.dungeons_libraries.entities.SoulOrbEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;

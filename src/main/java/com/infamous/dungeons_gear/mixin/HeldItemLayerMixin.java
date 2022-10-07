@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.mixin;
 
-import com.infamous.dungeons_gear.capabilities.artifact.ArtifactUsageHelper;
-import com.infamous.dungeons_gear.capabilities.artifact.IArtifactUsage;
+import com.infamous.dungeons_libraries.capabilities.artifact.ArtifactUsageHelper;
+import com.infamous.dungeons_libraries.capabilities.artifact.IArtifactUsage;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.layers.HeldItemLayer;

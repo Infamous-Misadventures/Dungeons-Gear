@@ -4,12 +4,10 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.network.NetworkHandler;
 import com.infamous.dungeons_gear.network.PacketBreakItem;
-import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
 import com.infamous.dungeons_libraries.capabilities.minionmaster.IMaster;
 import com.infamous.dungeons_libraries.summon.SummonHelper;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.Attribute;
@@ -24,11 +22,8 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
@@ -37,6 +32,8 @@ import java.util.stream.Collectors;
 
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SUMMON_CAP;
 import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMasterCapability;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
 
 public class WonderfulWheatItem extends ArtifactItem {
     public WonderfulWheatItem(Properties p_i48487_1_) {
@@ -101,13 +98,7 @@ public class WonderfulWheatItem extends ArtifactItem {
         llamaEntity.inventory.setItem(1, new ItemStack(Items.RED_CARPET.asItem()));
     }
 
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag)
-    {
-        super.appendHoverText(stack, world, list, flag);
-        DescriptionHelper.addFullDescription(list, stack);
-    }
+
 
     @Override
     public int getCooldownInSeconds() {

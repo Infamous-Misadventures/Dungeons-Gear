@@ -1,16 +1,18 @@
 package com.infamous.dungeons_gear.items.artifacts.beacon;
 
-import com.infamous.dungeons_gear.capabilities.artifact.ArtifactUsageHelper;
-import com.infamous.dungeons_gear.capabilities.artifact.IArtifactUsage;
 import com.infamous.dungeons_gear.entities.BeamEntity;
-import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
-import com.infamous.dungeons_gear.items.artifacts.ArtifactUseContext;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
+import com.infamous.dungeons_libraries.capabilities.artifact.ArtifactUsageHelper;
+import com.infamous.dungeons_libraries.capabilities.artifact.IArtifactUsage;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.UseAction;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.world.World;
 
 import java.util.List;

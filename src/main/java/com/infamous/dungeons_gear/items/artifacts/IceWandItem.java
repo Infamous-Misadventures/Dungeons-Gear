@@ -3,8 +3,6 @@ package com.infamous.dungeons_gear.items.artifacts;
 import com.infamous.dungeons_gear.network.NetworkHandler;
 import com.infamous.dungeons_gear.network.PacketBreakItem;
 import com.infamous.dungeons_gear.entities.IceCloudEntity;
-import com.infamous.dungeons_gear.utilties.DescriptionHelper;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -12,17 +10,14 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.PacketDistributor;
 import org.apache.commons.lang3.tuple.MutablePair;
 
-import java.util.List;
-
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.applyToNearbyEntities;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.getCanApplyToEnemyPredicate;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
 
 public class IceWandItem extends ArtifactItem {
     public IceWandItem(Properties properties) {
@@ -63,12 +58,7 @@ public class IceWandItem extends ArtifactItem {
         return ActionResultType.PASS;
     }
 
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
-        super.appendHoverText(stack, world, list, flag);
-        DescriptionHelper.addFullDescription(list, stack);
-    }
+
 
     @Override
     public int getCooldownInSeconds() {

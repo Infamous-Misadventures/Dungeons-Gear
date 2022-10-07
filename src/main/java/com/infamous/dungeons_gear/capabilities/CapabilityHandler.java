@@ -1,12 +1,10 @@
 package com.infamous.dungeons_gear.capabilities;
 
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_gear.capabilities.artifact.ArtifactUsageProvider;
 import com.infamous.dungeons_gear.capabilities.bow.BowProvider;
 import com.infamous.dungeons_gear.capabilities.combo.ComboProvider;
 import com.infamous.dungeons_gear.capabilities.offhand.OffhandProvider;
 import com.infamous.dungeons_gear.items.interfaces.IDualWieldWeapon;
-import com.infamous.dungeons_libraries.DungeonsLibraries;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -22,7 +20,6 @@ public class CapabilityHandler {
     public static void onAttachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof PlayerEntity) {
             event.addCapability(new ResourceLocation(DungeonsGear.MODID, "combo"), new ComboProvider());
-            event.addCapability(new ResourceLocation(DungeonsLibraries.MODID, "artifact_usage"), new ArtifactUsageProvider());
         }
     }
 
