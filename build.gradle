@@ -8,7 +8,7 @@ buildscript {
         maven { url 'https://plugins.gradle.org/m2/' }
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
         classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
     }
 }
@@ -20,6 +20,7 @@ apply plugin: 'org.spongepowered.mixin'
 
 mixin {
     add sourceSets.main, "dungeons_gear.refmap.json"
+    config "dungeons_gear.mixins.json"
 }
 
 version = "${mc_version}-${mod_version}"
@@ -51,7 +52,8 @@ minecraft {
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
-            arg "-mixin.config=dungeons_gear.mixins.json"
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             mods {
                 dungeons_gear {
@@ -68,7 +70,8 @@ minecraft {
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
-            arg "-mixin.config=dungeons_gear.mixins.json"
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             mods {
                 dungeons_gear {
@@ -85,6 +88,8 @@ minecraft {
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
             args '--mod', 'dungeons_gear', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
@@ -116,11 +121,14 @@ dependencies {
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     compileOnly fg.deobf("curse.maven:elenaidodge2-442962:3221492")
 
     //Library
     implementation fg.deobf("dungeons_libraries:dungeons_libraries:1.16.5-0.0.16-beta")
     implementation fg.deobf("curse.maven:curios-309927:3456953")
+    runtimeOnly fg.deobf("curse.maven:yungs_api-421850:3494919")
+    runtimeOnly fg.deobf("curse.maven:better_strongholds-465575:3412586")
     runtimeOnly fg.deobf("curse.maven:neat-238372:3182258")
     implementation fg.deobf("software.bernie.geckolib:geckolib-forge-${mc_version}:${geckolib_version}")
 
@@ -130,7 +138,7 @@ dependencies {
 //    runtimeOnly fg.deobf("curse.maven:Environmental-388992:3561534")
 //    runtimeOnly fg.deobf("curse.maven:thermalfoundation-222880:3412300")
 
-    implementation fg.deobf("curse.maven:customraid-532546:3511267")
+//    implementation fg.deobf("curse.maven:customraid-532546:3511267")
 
 }
 
