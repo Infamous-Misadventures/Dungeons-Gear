@@ -401,7 +401,7 @@ public class DungeonsGearConfig {
                 .defineInRange("partyStarterDamage", 4, 0, 10000);
         builder.pop();
 
-        builder.comment("Enchantment Specific Configuration").push("enchantment_specific_configuration");
+        builder.comment("Enchantment Specific Configuration").push("enchantment_specific_configur<ation");
         BUSY_BEE_BASE_CHANCE = builder
                 .comment("The decimal base chance for a busy bee to spawn [0.0-1.0, default: 0.1]")
                 .defineInRange("busyBeeBaseChance", 0.1, 0, 1.0);
@@ -413,7 +413,7 @@ public class DungeonsGearConfig {
                 .defineInRange("tumbleBeeChancePerLevel", 0.1, 0, 1.0);
         RAMPAGING_CHANCE = builder
                 .comment("The decimal chance for rampaging to trigger [0.0-1.0, default: 0.1]")
-                .defineInRange("rampagingChance", 0.1, 0, 1.0);
+                .defineInRange("rampagingChance", 0.2, 0, 1.0);
         RAMPAGING_DURATION = builder
                 .comment("The duration in ticks (20ticks = 1 second) per level added for rampaging. [0-10000, default: 100]")
                 .defineInRange("rampagingDuration", 100, 0, 10000);
