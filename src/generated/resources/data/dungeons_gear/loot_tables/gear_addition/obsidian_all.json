@@ -4,51 +4,58 @@
     {
       "rolls": {
         "min": 1.0,
-        "max": 2.0,
+        "max": 3.0,
         "type": "minecraft:uniform"
       },
       "entries": [
         {
           "type": "minecraft:loot_table",
           "weight": 15,
-          "name": "dungeons_gear:gear_addition/subtype/basic_artifact"
+          "name": "dungeons_gear:gear_addition/subtype/all_artifact"
         },
         {
           "type": "minecraft:loot_table",
-          "weight": 12,
+          "weight": 17,
           "quality": -2,
-          "name": "dungeons_gear:gear_addition/subtype/basic_normal"
+          "functions": [
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": 15,
+              "treasure": true
+            }
+          ],
+          "name": "dungeons_gear:gear_addition/subtype/all_normal"
         },
         {
           "type": "minecraft:loot_table",
           "weight": 28,
-          "quality": 2,
+          "quality": 3,
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
-              "levels": 15,
+              "levels": 30,
               "treasure": true
             }
           ],
-          "name": "dungeons_gear:gear_addition/subtype/basic_normal"
+          "name": "dungeons_gear:gear_addition/subtype/all_normal"
         },
         {
           "type": "minecraft:loot_table",
           "weight": 5,
-          "quality": 2,
+          "quality": 3,
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
-              "levels": 15,
+              "levels": 30,
               "treasure": true
             }
           ],
-          "name": "dungeons_gear:gear_addition/subtype/basic_unique"
+          "name": "dungeons_gear:gear_addition/subtype/all_unique"
         },
         {
           "type": "minecraft:empty",
-          "weight": 40,
-          "quality": -2
+          "weight": 35,
+          "quality": -4
         }
       ]
     }

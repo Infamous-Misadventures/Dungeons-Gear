@@ -14,7 +14,8 @@ public enum LootTableType {
     JUNGLE("jungle"),
     NETHER("nether"),
     END("end"),
-    GIFT("gift");
+    GIFT("gift"),
+    ALL("all");
 
     public static final Codec<LootTableType> CODEC = Codec.STRING.flatComapMap((s) -> {
         return byName(s, (LootTableType)null);

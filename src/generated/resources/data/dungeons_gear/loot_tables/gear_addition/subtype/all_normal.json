@@ -1,0 +1,1311 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "dungeons_gear:experimental_condition"
+            }
+          ],
+          "name": "dungeons_gear:moon_dagger"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "dungeons_gear:experimental_condition"
+            }
+          ],
+          "name": "dungeons_gear:sickle"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "dungeons_gear:experimental_condition"
+            }
+          ],
+          "name": "dungeons_gear:nightmares_bite"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "dungeons_gear:experimental_condition"
+            }
+          ],
+          "name": "dungeons_gear:the_last_laugh"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:soul_scythe"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:jailors_scythe"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:battlestaff"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:battlestaff_of_terror"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:growing_staff"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:soul_knife"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:eternal_knife"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:truthseeker"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:glaive"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:grave_bane"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:venom_glaive"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "dungeons_gear:experimental_condition"
+            }
+          ],
+          "name": "dungeons_gear:dual_crossbow"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "dungeons_gear:experimental_condition"
+            }
+          ],
+          "name": "dungeons_gear:baby_crossbow"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "dungeons_gear:experimental_condition"
+            }
+          ],
+          "name": "dungeons_gear:mauler"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:whip"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:vine_whip"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:feral_soul_crossbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:beenest_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:beenest_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:beenest_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:beenest_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:beehive_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:beehive_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:beehive_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:beehive_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "dungeons_gear:experimental_condition"
+            }
+          ],
+          "name": "dungeons_gear:fang_of_frost"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:freezing_foil"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:frost_scythe"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:frost_slayer"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:tempest_knife"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:resolute_tempest_knife"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:chill_gale_knife"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:snow_bow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:winters_touch"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:wind_bow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:burst_gale_bow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:echo_of_the_valley"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:arctic_fox_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:arctic_fox_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:arctic_fox_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:arctic_fox_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:climbing_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:climbing_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:climbing_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:climbing_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:rugged_climbing_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:rugged_climbing_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:rugged_climbing_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:rugged_climbing_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:goat_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:goat_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:goat_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:goat_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:emerald_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:emerald_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:emerald_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:emerald_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:gilded_glory_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:gilded_glory_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:gilded_glory_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:gilded_glory_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:opulent_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:opulent_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:opulent_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:opulent_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "dungeons_gear:experimental_condition"
+            }
+          ],
+          "name": "dungeons_gear:dagger"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "dungeons_gear:experimental_condition"
+            }
+          ],
+          "name": "dungeons_gear:shear_dagger"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "dungeons_gear:experimental_condition"
+            }
+          ],
+          "name": "dungeons_gear:gauntlet"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "dungeons_gear:experimental_condition"
+            }
+          ],
+          "name": "dungeons_gear:fighters_binding"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "dungeons_gear:experimental_condition"
+            }
+          ],
+          "name": "dungeons_gear:soul_fist"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:rapier"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:bee_stinger"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:sword"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:stone_sword"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:gold_sword"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:diamond_sword"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:hawkbrand"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:sinister_sword"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:pickaxe"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:diamond_pickaxe"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:axe"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:gold_axe"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:firebrand"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:highland_axe"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:double_axe"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:cursed_axe"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:whirlwind"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:mace"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:flail"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:suns_grace"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:great_hammer"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:hammer_of_gravity"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:stormlander"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:katana"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:dark_katana"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:masters_katana"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:claymore"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:broadsword"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:heartstealer"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:great_axeblade"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:spear"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:fortune_spear"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:whispering_spear"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:bonebow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:twin_bow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:haunted_bow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:soul_bow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:nocturnal_bow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:shivering_bow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:power_bow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:elite_power_bow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:sabrewing"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:longbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:guardian_bow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:red_snake"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:hunting_bow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:hunters_promise"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:masters_bow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:ancient_bow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:shortbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:mechanical_shortbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:purple_storm"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:love_spell_bow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:trickbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:the_green_menace"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:the_pink_scoundrel"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:sugar_rush"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:rapid_crossbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:butterfly_crossbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:auto_crossbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:azure_seeker"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:the_slicer"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:heavy_crossbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:doom_crossbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:slayer_crossbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:scatter_crossbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:harp_crossbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:lightning_harp_crossbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:exploding_crossbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:firebolt_thrower"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:imploding_crossbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:burst_crossbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:corrupted_crossbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:soul_hunter_crossbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:hunters_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:hunters_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:hunters_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:hunters_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:archers_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:archers_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:archers_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:archers_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:battle_robes_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:battle_robes_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:battle_robes_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:battle_robes_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:champions_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:champions_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:champions_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:champions_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:heros_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:heros_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:heros_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:heros_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:dark_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:dark_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:dark_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:dark_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:titans_shroud_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:titans_shroud_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:titans_shroud_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:titans_shroud_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:royal_guard_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:royal_guard_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:royal_guard_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:royal_guard_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:evocation_robes_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:evocation_robes_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:evocation_robes_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:evocation_robes_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:ember_robes_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:ember_robes_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:ember_robes_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:ember_robes_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:grim_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:grim_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:grim_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:grim_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:wither_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:wither_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:wither_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:wither_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:guards_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:guards_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:guards_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:guards_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:curious_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:curious_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:curious_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:curious_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:mercenary_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:mercenary_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:mercenary_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:mercenary_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:renegade_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:renegade_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:renegade_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:renegade_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:hungry_horror_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:hungry_horror_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:hungry_horror_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:hungry_horror_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:ocelot_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:ocelot_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:ocelot_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:ocelot_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:shadow_walker_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:shadow_walker_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:shadow_walker_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:shadow_walker_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:phantom_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:phantom_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:phantom_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:phantom_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:frost_bite_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:frost_bite_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:frost_bite_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:frost_bite_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:plate_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:plate_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:plate_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:plate_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:full_metal_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:full_metal_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:full_metal_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:full_metal_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:reinforced_mail_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:reinforced_mail_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:reinforced_mail_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:reinforced_mail_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:stalwart_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:stalwart_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:stalwart_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:stalwart_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:scale_mail_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:scale_mail_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:scale_mail_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:scale_mail_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:highland_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:highland_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:highland_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:highland_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:snow_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:snow_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:snow_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:snow_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:frost_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:frost_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:frost_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:frost_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:soul_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:soul_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:soul_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:soul_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:souldancer_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:souldancer_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:souldancer_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:souldancer_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:spelunker_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:spelunker_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:spelunker_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:spelunker_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:cave_crawler_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:cave_crawler_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:cave_crawler_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:cave_crawler_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:thief_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:thief_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:thief_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:thief_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:spider_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:spider_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:spider_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:spider_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:wolf_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:wolf_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:wolf_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:wolf_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:fox_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:fox_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:fox_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:fox_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:boneclub"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:bone_cudgel"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:bow_of_lost_souls"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:soul_crossbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:cutlass"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:dancers_sword"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:nameless_blade"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:sparkler"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:anchor"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:encrusted_anchor"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:harpoon_crossbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:nautical_crossbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:voidcaller"
+        }
+      ]
+    }
+  ]
+}

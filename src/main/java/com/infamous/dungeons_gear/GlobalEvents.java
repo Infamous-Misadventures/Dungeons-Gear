@@ -33,6 +33,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.PotionUtils;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
@@ -41,8 +43,11 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import static com.infamous.dungeons_gear.DungeonsGear.LOGGER;
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 import static com.infamous.dungeons_gear.config.DungeonsGearConfig.ENABLE_FRIENDLY_PET_FIRE;
 import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMinionCapability;
@@ -294,6 +299,14 @@ public class GlobalEvents {
 
     @SubscribeEvent
     public static void handleJumpAbilities(LivingEvent.LivingJumpEvent event) {
+//        if(event.getEntity().level instanceof ServerWorld){
+//            List<String> chests = ((ServerWorld) event.getEntity().level).getServer().getLootTables().getIds().stream()
+//                    .filter(resourceLocation -> resourceLocation.getPath().contains("chest"))
+//                    .map(ResourceLocation::toString)
+//                    .collect(Collectors.toList());
+//            LOGGER.info("chests loot tables:");
+//            chests.forEach(LOGGER::info);
+//        }
         LivingEntity jumper = event.getEntityLiving();
         if (jumper instanceof PlayerEntity && !DungeonsGearCompatibility.elenaiDodge) {
             PlayerEntity playerEntity = (PlayerEntity) jumper;

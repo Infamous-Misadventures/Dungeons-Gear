@@ -11,13 +11,13 @@
         {
           "type": "minecraft:loot_table",
           "weight": 15,
-          "name": "dungeons_gear:gear_addition/subtype/basic_artifact"
+          "name": "dungeons_gear:gear_addition/subtype/all_artifact"
         },
         {
           "type": "minecraft:loot_table",
           "weight": 12,
           "quality": -2,
-          "name": "dungeons_gear:gear_addition/subtype/basic_normal"
+          "name": "dungeons_gear:gear_addition/subtype/all_normal"
         },
         {
           "type": "minecraft:loot_table",
@@ -30,7 +30,7 @@
               "treasure": true
             }
           ],
-          "name": "dungeons_gear:gear_addition/subtype/basic_normal"
+          "name": "dungeons_gear:gear_addition/subtype/all_normal"
         },
         {
           "type": "minecraft:loot_table",
@@ -43,7 +43,7 @@
               "treasure": true
             }
           ],
-          "name": "dungeons_gear:gear_addition/subtype/basic_unique"
+          "name": "dungeons_gear:gear_addition/subtype/all_unique"
         },
         {
           "type": "minecraft:empty",
