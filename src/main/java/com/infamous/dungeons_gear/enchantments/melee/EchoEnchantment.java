@@ -43,7 +43,8 @@ public class EchoEnchantment extends AOEDamageEnchantment {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onVanillaCriticalHit(CriticalHitEvent event) {
-        if(event.getTarget() instanceof LivingEntity) {
+        if(event.getTarget() instanceof LivingEntity && !event.getPlayer().level.isClientSide()
+                && (event.getResult() == Event.Result.ALLOW || (event.getResult() == Event.Result.DEFAULT && event.isVanillaCritical()))) {
             PlayerEntity attacker = (PlayerEntity) event.getPlayer();
             LivingEntity victim = (LivingEntity) event.getTarget();
             ItemStack mainhand = attacker.getMainHandItem();
