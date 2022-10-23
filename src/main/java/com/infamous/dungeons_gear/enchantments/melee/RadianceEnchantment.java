@@ -48,7 +48,6 @@ public class RadianceEnchantment extends DungeonsEnchantment {
     @Override
     public void doPostAttack(LivingEntity user, Entity target, int level) {
         if(!(target instanceof LivingEntity)) return;
-        if( user.getLastHurtMobTimestamp()==user.tickCount)return;
         float chance = user.getRandom().nextFloat();
         if(chance <=  RADIANCE_CHANCE.get()){
             AOECloudHelper.spawnRegenCloud(user, level);
