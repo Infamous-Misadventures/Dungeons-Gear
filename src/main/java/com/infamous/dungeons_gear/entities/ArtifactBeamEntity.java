@@ -1,9 +1,12 @@
 package com.infamous.dungeons_gear.entities;
 
+import com.infamous.dungeons_gear.items.artifacts.beacon.AbstractBeaconItem;
 import com.infamous.dungeons_gear.items.artifacts.beacon.BeamColor;
+import com.infamous.dungeons_gear.items.artifacts.beacon.CorruptedBeaconItem;
 import com.infamous.dungeons_gear.network.NetworkHandler;
 import com.infamous.dungeons_gear.network.entity.PlayerBeamMessage;
-import net.minecraft.client.Minecraft;
+import com.infamous.dungeons_libraries.capabilities.artifact.ArtifactUsageHelper;
+import com.infamous.dungeons_libraries.capabilities.artifact.IArtifactUsage;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -26,7 +29,7 @@ import java.util.UUID;
 
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.getCanApplyToEnemyPredicate;
 
-public class BeamEntity extends Entity implements IEntityAdditionalSpawnData {
+public class ArtifactBeamEntity extends Entity implements IEntityAdditionalSpawnData {
     public static final double MAX_RAYTRACE_DISTANCE = 256;
     public static final float BEAM_DAMAGE_PER_TICK = 0.5F; // 10.0F damage per second
     private LivingEntity owner;
@@ -35,12 +38,12 @@ public class BeamEntity extends Entity implements IEntityAdditionalSpawnData {
     private float beamWidth = 0.2f;
 
 
-    public BeamEntity(EntityType<?> p_i48580_1_, World p_i48580_2_) {
+    public ArtifactBeamEntity(EntityType<?> p_i48580_1_, World p_i48580_2_) {
         super(p_i48580_1_, p_i48580_2_);
     }
 
 
-    public BeamEntity(EntityType<?> p_i48580_1_, BeamColor beamColor, World p_i48580_2_, LivingEntity owner) {
+    public ArtifactBeamEntity(EntityType<?> p_i48580_1_, BeamColor beamColor, World p_i48580_2_, LivingEntity owner) {
         super(p_i48580_1_, p_i48580_2_);
         this.setOwner(owner);
         this.beamColor = beamColor;
@@ -63,11 +66,12 @@ public class BeamEntity extends Entity implements IEntityAdditionalSpawnData {
     public void tick() {
         LivingEntity owner = getOwner();
         if(!this.level.isClientSide) {
-            if (owner == null) {
+            if (owner == null || !owner.isAlive()) {
                 this.remove();
                 return;
             }
-            if (!owner.isAlive()) {
+            IArtifactUsage artifactUsage = ArtifactUsageHelper.getArtifactUsageCapability(owner);
+            if(artifactUsage != null && (!artifactUsage.isUsingArtifact() || !(artifactUsage.getUsingArtifact().getItem() instanceof AbstractBeaconItem) )){
                 this.remove();
                 return;
             }

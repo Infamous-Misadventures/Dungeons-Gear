@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.items.artifacts.beacon;
 
-import com.infamous.dungeons_gear.entities.BeamEntity;
+import com.infamous.dungeons_gear.entities.ArtifactBeamEntity;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
 import com.infamous.dungeons_libraries.capabilities.artifact.ArtifactUsageHelper;
 import com.infamous.dungeons_libraries.capabilities.artifact.IArtifactUsage;
@@ -48,10 +48,10 @@ public abstract class AbstractBeaconItem extends ArtifactItem{
         ArtifactUsageHelper.startUsingArtifact(playerIn, cap, itemstack);
         if (!worldIn.isClientSide) {
             ArtifactItem.triggerSynergy(playerIn, itemstack);
-            BeamEntity beamEntity = new BeamEntity(BEAM_ENTITY.get(), this.getBeamColor(), worldIn, playerIn);
-            beamEntity.moveTo(playerIn.position().x, playerIn.position().y + 0.7D, playerIn.position().z, playerIn.yRot, playerIn.xRot);
-            beamEntity.setOwner(playerIn);
-            worldIn.addFreshEntity(beamEntity);
+            ArtifactBeamEntity artifactBeamEntity = new ArtifactBeamEntity(BEAM_ENTITY.get(), this.getBeamColor(), worldIn, playerIn);
+            artifactBeamEntity.moveTo(playerIn.position().x, playerIn.position().y + 0.7D, playerIn.position().z, playerIn.yRot, playerIn.xRot);
+            artifactBeamEntity.setOwner(playerIn);
+            worldIn.addFreshEntity(artifactBeamEntity);
         }
         return new ActionResult<>(ActionResultType.PASS, itemstack);
     }
@@ -94,7 +94,7 @@ public abstract class AbstractBeaconItem extends ArtifactItem{
     @Override
     public void stopUsingArtifact(LivingEntity livingEntity) {
         super.stopUsingArtifact(livingEntity);
-        List<BeamEntity> beams = livingEntity.level.getEntitiesOfClass(BeamEntity.class, livingEntity.getBoundingBox().inflate(1), beamEntity -> beamEntity.getOwner() == livingEntity);
+        List<ArtifactBeamEntity> beams = livingEntity.level.getEntitiesOfClass(ArtifactBeamEntity.class, livingEntity.getBoundingBox().inflate(1), artifactBeamEntity -> artifactBeamEntity.getOwner() == livingEntity);
         beams.forEach(Entity::remove);
     }
 
