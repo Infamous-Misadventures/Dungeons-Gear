@@ -4,6 +4,7 @@ import com.infamous.dungeons_gear.DungeonsGear;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
+import net.minecraftforge.client.model.generators.ModelBuilder;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -27,6 +28,7 @@ public class ModItemModelProvider extends ItemModelProvider {
                     generated(resourceLocation.getPath(), itemLoc(resourceLocation));
                 }else{
                     DungeonsGear.LOGGER.info("Missing texture for " + resourceLocation);
+                    generated(resourceLocation.getPath(), modLoc(ITEM_FOLDER + "/armor/missing"));
                 }
 
         });
