@@ -11,6 +11,59 @@
               "condition": "dungeons_gear:experimental_condition"
             }
           ],
+          "name": "dungeons_gear:mauler"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:whip"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:vine_whip"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:feral_soul_crossbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:beenest_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:beenest_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:beenest_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:beenest_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:beehive_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:beehive_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:beehive_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:beehive_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "dungeons_gear:experimental_condition"
+            }
+          ],
           "name": "dungeons_gear:moon_dagger"
         },
         {
@@ -101,59 +154,6 @@
             }
           ],
           "name": "dungeons_gear:baby_crossbow"
-        },
-        {
-          "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "dungeons_gear:experimental_condition"
-            }
-          ],
-          "name": "dungeons_gear:mauler"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:whip"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:vine_whip"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:feral_soul_crossbow"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:beenest_helmet"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:beenest_chestplate"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:beenest_leggings"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:beenest_boots"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:beehive_helmet"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:beehive_chestplate"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:beehive_leggings"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:beehive_boots"
         },
         {
           "type": "minecraft:item",
@@ -319,6 +319,26 @@
         {
           "type": "minecraft:item",
           "name": "dungeons_gear:opulent_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:boneclub"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:bone_cudgel"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:bow_of_lost_souls"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:soul_crossbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:voidcaller"
         },
         {
           "type": "minecraft:item",
@@ -1255,22 +1275,6 @@
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:boneclub"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:bone_cudgel"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:bow_of_lost_souls"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:soul_crossbow"
-        },
-        {
-          "type": "minecraft:item",
           "name": "dungeons_gear:cutlass"
         },
         {
@@ -1300,10 +1304,6 @@
         {
           "type": "minecraft:item",
           "name": "dungeons_gear:nautical_crossbow"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:voidcaller"
         }
       ]
     }
