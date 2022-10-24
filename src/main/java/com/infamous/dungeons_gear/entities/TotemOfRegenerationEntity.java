@@ -60,7 +60,7 @@ public class TotemOfRegenerationEntity extends TotemBaseEntity implements IAnima
     }
 
     private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.totem_of_regeneration", true));
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.totem_of_regeneration.idle", true));
         return PlayState.CONTINUE;
     }
 

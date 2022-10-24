@@ -1,0 +1,31 @@
+{
+  "configs": [
+    {
+      "headItem": {
+        "id": "dungeons_gear:reinforced_mail_helmet",
+        "Count": 1
+      },
+      "chestItem": {
+        "id": "dungeons_gear:reinforced_mail_chestplate",
+        "Count": 1
+      },
+      "legsItem": {
+        "id": "minecraft:empty",
+        "Count": 1
+      },
+      "feetItem": {
+        "id": "minecraft:empty",
+        "Count": 1
+      },
+      "handItem": {
+        "id": "dungeons_gear:power_bow",
+        "Count": 1
+      },
+      "offhandItem": {
+        "id": "minecraft:empty",
+        "Count": 1
+      },
+      "weight": 100
+    }
+  ]
+}

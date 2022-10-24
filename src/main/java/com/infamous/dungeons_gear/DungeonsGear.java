@@ -1,5 +1,8 @@
 package com.infamous.dungeons_gear;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.infamous.dungeons_gear.capabilities.bow.Bow;
 import com.infamous.dungeons_gear.capabilities.bow.BowStorage;
 import com.infamous.dungeons_gear.capabilities.bow.IBow;
@@ -11,7 +14,9 @@ import com.infamous.dungeons_gear.capabilities.offhand.Offhand;
 import com.infamous.dungeons_gear.capabilities.offhand.OffhandStorage;
 import com.infamous.dungeons_gear.client.ClientProxy;
 import com.infamous.dungeons_gear.client.renderer.BeamEntityRenderer;
-import com.infamous.dungeons_gear.client.renderer.IceCloudRenderer;
+import com.infamous.dungeons_gear.client.renderer.ghosts.SoulWizardRenderer;
+import com.infamous.dungeons_gear.client.renderer.projectiles.SoulWizardOrbRenderer;
+import com.infamous.dungeons_gear.client.renderer.summonables.IceCloudRenderer;
 import com.infamous.dungeons_gear.client.renderer.totem.BuzzyNestRenderer;
 import com.infamous.dungeons_gear.client.renderer.totem.FireworksDisplayRenderer;
 import com.infamous.dungeons_gear.client.renderer.totem.TotemOfRegenerationRenderer;
@@ -19,7 +24,7 @@ import com.infamous.dungeons_gear.client.renderer.totem.TotemOfShieldingRenderer
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
 import com.infamous.dungeons_gear.compat.ElenaiCompat;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.entities.ModEntityTypes;
+import com.infamous.dungeons_gear.entities.SoulWizardEntity;
 import com.infamous.dungeons_gear.groups.ArmorGroup;
 import com.infamous.dungeons_gear.groups.ArtifactGroup;
 import com.infamous.dungeons_gear.groups.MeleeWeaponGroup;
@@ -33,12 +38,17 @@ import com.infamous.dungeons_gear.loot.ModLootFunctionTypes;
 import com.infamous.dungeons_gear.network.NetworkHandler;
 import com.infamous.dungeons_gear.registry.AttributeRegistry;
 import com.infamous.dungeons_gear.registry.ItemRegistry;
+import com.infamous.dungeons_gear.registry.ModEntityTypes;
 import com.infamous.dungeons_gear.registry.ParticleInit;
+import com.infamous.dungeons_gear.registry.SoundEventInit;
 import com.infamous.dungeons_libraries.client.renderer.ArmorGearRenderer;
+
 import net.minecraft.item.ItemGroup;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -46,8 +56,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -69,6 +77,8 @@ public class DungeonsGear
         new DungeonsGearConfig();
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        // Register the initEntityTypeAttributes method for modloading
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::initEntityTypeAttributes);
         // Register the doClientStuff method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
         // Register the processIMC method for modloading
@@ -76,6 +86,7 @@ public class DungeonsGear
 
 
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+    	SoundEventInit.SOUNDS.register(modEventBus);
         ModEntityTypes.ENTITY_TYPES.register(modEventBus);
         ParticleInit.PARTICLES.register(modEventBus);
         AttributeRegistry.ATTRIBUTES.register(modEventBus);
@@ -102,11 +113,17 @@ public class DungeonsGear
         event.enqueueWork(ModLootFunctionTypes::register);
     }
 
+    public void initEntityTypeAttributes(EntityAttributeCreationEvent event) {
+        event.put(ModEntityTypes.SOUL_WIZARD.get(), SoulWizardEntity.setCustomAttributes().build());
+    }
+    
     private void doClientStuff(final FMLClientSetupEvent event) {
 
         MinecraftForge.EVENT_BUS.register(new DualWieldItemProperties());
         GearRangedItemModelProperties.init();
 
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SOUL_WIZARD.get(), SoulWizardRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SOUL_WIZARD_ORB.get(), SoulWizardOrbRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ICE_CLOUD.get(), IceCloudRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BUZZY_NEST.get(), BuzzyNestRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.TOTEM_OF_SHIELDING.get(), TotemOfShieldingRenderer::new);

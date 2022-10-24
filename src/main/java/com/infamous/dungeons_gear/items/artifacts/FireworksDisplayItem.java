@@ -1,7 +1,8 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
 import com.infamous.dungeons_gear.entities.FireworksDisplayEntity;
-import com.infamous.dungeons_gear.entities.ModEntityTypes;
+import com.infamous.dungeons_gear.registry.ModEntityTypes;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
