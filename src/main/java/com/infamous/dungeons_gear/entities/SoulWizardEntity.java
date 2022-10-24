@@ -184,29 +184,13 @@ public class SoulWizardEntity extends GolemEntity implements IAnimatable {
         data.addAnimationController(new AnimationController(this, "controller", 2, this::predicate));
     }
     
-    private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
-    	
-    	boolean moving = false;
-    	if (this.getDeltaMovement().x < -0.05) {
-    		moving = true;
-    	} else if (this.getDeltaMovement().x <= -0.05) {
-    		moving = true;
-    	} else if (this.getDeltaMovement().x >= 0.05) {
-    		moving = true;
-    	} else if (this.getDeltaMovement().z <= -0.05) {
-    		moving = true;
-    	} else if (this.getDeltaMovement().z >= 0.05) {
-    		moving = true;
-    	} else {
-    		moving = false;
-    	}
-    	
+    private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {   	
         if (this.appearAnimationTick > 0) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("soul_wizard_appear", true));
         } else if (this.shootAnimationTick > 0) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("soul_wizard_attack", true));
-        } else if (moving) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("soul_wizard_walk", true));
+        } else if (!(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F)) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("soul_wizard_fly", true));
         } else {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("soul_wizard_idle", true));
         }

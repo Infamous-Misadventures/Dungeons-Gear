@@ -17,7 +17,7 @@ public class SoulWizardRenderer extends GeoEntityRenderer<SoulWizardEntity> {
 	
     public SoulWizardRenderer(EntityRendererManager renderManager) {
         super(renderManager, new SoulWizardModel());
-        this.addLayer(new PulsatingGlowLayer<>(this, new ResourceLocation(DungeonsGear.MODID, "textures/entity/ghosts/soul_wizard_glow.png"), 0.1F, 1.0F, 0.25F));
+        this.addLayer(new PulsatingGlowLayer<>(this, new ResourceLocation(DungeonsGear.MODID, "textures/entity/ghosts/soul_wizard_glow.png"), 0.2F, 1.0F, 0.25F));
     }
 
     @Override
