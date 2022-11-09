@@ -1,26 +1,41 @@
-package com.infamous.dungeons_gear.entities;
+package com.infamous.dungeons_gear.registry;
+
+import static com.infamous.dungeons_gear.DungeonsGear.MODID;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Supplier;
+
+import com.infamous.dungeons_gear.entities.ArtifactBeamEntity;
+import com.infamous.dungeons_gear.entities.BuzzyNestEntity;
+import com.infamous.dungeons_gear.entities.FireworksDisplayEntity;
+import com.infamous.dungeons_gear.entities.IceCloudEntity;
+import com.infamous.dungeons_gear.entities.SoulWizardEntity;
+import com.infamous.dungeons_gear.entities.SoulWizardOrbEntity;
+import com.infamous.dungeons_gear.entities.TotemOfRegenerationEntity;
+import com.infamous.dungeons_gear.entities.TotemOfShieldingEntity;
 
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-
 public final class ModEntityTypes {
 
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, MODID);
-
+    
     public static final RegistryObject<EntityType<IceCloudEntity>> ICE_CLOUD = ENTITY_TYPES.register("ice_cloud", () ->
-            EntityType.Builder.<IceCloudEntity>of(IceCloudEntity::new, EntityClassification.MISC)
-                    .fireImmune()
-                    .sized(2.0F, 1.0F)
-                    .clientTrackingRange(6)
-                    .updateInterval(2)
-                    .setCustomClientFactory((spawnEntity,world) -> new IceCloudEntity(world))
-                    .build(new ResourceLocation(MODID, "ice_cloud").toString())
+    		EntityType.Builder.<IceCloudEntity>of(IceCloudEntity::new, EntityClassification.MISC)
+            		.fireImmune()
+            		.sized(2.0F, 1.0F)
+            		.clientTrackingRange(6)
+            		.updateInterval(1)
+            		.build(new ResourceLocation(MODID, "ice_cloud").toString())
     );
 
     public static final RegistryObject<EntityType<BuzzyNestEntity>> BUZZY_NEST = ENTITY_TYPES.register("buzzy_nest", () ->
@@ -70,4 +85,18 @@ public final class ModEntityTypes {
                     .build(new ResourceLocation(MODID, "fireworks_display").toString())
     );
 
+    public static final RegistryObject<EntityType<SoulWizardOrbEntity>> SOUL_WIZARD_ORB = ENTITY_TYPES.register("soul_wizard_orb", () ->
+    EntityType.Builder.<SoulWizardOrbEntity>of(SoulWizardOrbEntity::new, EntityClassification.MISC)
+            .fireImmune()
+            .sized(0.3F, 0.3F)
+            .updateInterval(1)
+            .build(new ResourceLocation(MODID, "soul_wizard_orb").toString())
+    );
+    
+    public static final RegistryObject<EntityType<SoulWizardEntity>> SOUL_WIZARD = ENTITY_TYPES.register("soul_wizard", () ->
+    EntityType.Builder.<SoulWizardEntity>of(SoulWizardEntity::new, EntityClassification.MONSTER)
+            .sized(0.25F, 1.0F)
+            .clientTrackingRange(8)
+            .build(new ResourceLocation(MODID, "soul_wizard").toString())
+    );
 }

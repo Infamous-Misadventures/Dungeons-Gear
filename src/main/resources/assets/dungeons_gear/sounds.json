@@ -1,0 +1,132 @@
+{
+		"entity.ice_chunk.idle_loop": {
+		"category": "entity",
+		"subtitle": "subtitles.entity.ice_chunk.idle_loop",
+		"sounds": [
+			{
+				"name": "dungeons_gear:entities/ice_chunk/idle_loop",
+				"stream": true
+			}
+		]
+	},
+			"entity.ice_chunk.summoned": {
+		"category": "entity",
+		"subtitle": "subtitles.entity.ice_chunk.summoned",
+		"sounds": [
+			{
+				"name": "dungeons_gear:entities/ice_chunk/summoned",
+				"stream": true
+			}
+		]
+	},
+			"entity.ice_chunk.fall": {
+		"category": "entity",
+		"subtitle": "subtitles.entity.ice_chunk.fall",
+		"sounds": [
+			{
+				"name": "dungeons_gear:entities/ice_chunk/fall",
+				"stream": true
+			}
+		]
+	},
+			"entity.ice_chunk.land": {
+		"category": "entity",
+		"subtitle": "subtitles.entity.ice_chunk.land",
+		"sounds": [
+			{
+				"name": "dungeons_gear:entities/ice_chunk/land",
+				"stream": true
+			}
+		]
+	},
+	
+	
+	
+	
+	
+	
+	
+	
+	
+			"entity.soul_wizard.appear": {
+		"category": "entity",
+		"subtitle": "subtitles.entity.soul_wizard.appear",
+		"sounds": [
+			{
+				"name": "dungeons_gear:entities/soul_wizard/appear1",
+				"stream": true
+			},
+			{
+				"name": "dungeons_gear:entities/soul_wizard/appear2",
+				"stream": true
+			},
+			{
+				"name": "dungeons_gear:entities/soul_wizard/appear3",
+				"stream": true
+			}
+		]
+	},
+		"entity.soul_wizard.hurt": {
+		"category": "entity",
+		"subtitle": "subtitles.entity.soul_wizard.hurt",
+		"sounds": [
+			{
+				"name": "dungeons_gear:entities/soul_wizard/hurt1",
+				"stream": true
+			},
+			{
+				"name": "dungeons_gear:entities/soul_wizard/hurt2",
+				"stream": true
+			},
+			{
+				"name": "dungeons_gear:entities/soul_wizard/hurt3",
+				"stream": true
+			}
+		]
+	},
+		"entity.soul_wizard.shoot": {
+		"category": "entity",
+		"subtitle": "subtitles.entity.soul_wizard.shoot",
+		"sounds": [
+			{
+				"name": "dungeons_gear:entities/soul_wizard/shoot1",
+				"stream": true
+			},
+			{
+				"name": "dungeons_gear:entities/soul_wizard/shoot2",
+				"stream": true
+			},
+			{
+				"name": "dungeons_gear:entities/soul_wizard/shoot3",
+				"stream": true
+			}
+		]
+	},
+		"entity.soul_wizard.projectile_impact": {
+		"category": "entity",
+		"subtitle": "subtitles.entity.soul_wizard.projectile_impact",
+		"sounds": [
+			{
+				"name": "dungeons_gear:entities/soul_wizard/projectile_impact1",
+				"stream": true
+			},
+			{
+				"name": "dungeons_gear:entities/soul_wizard/projectile_impact2",
+				"stream": true
+			},
+			{
+				"name": "dungeons_gear:entities/soul_wizard/projectile_impact3",
+				"stream": true
+			}
+		]
+	},
+		"entity.soul_wizard.fly_loop": {
+		"category": "entity",
+		"sounds": [
+			{
+				"name": "dungeons_gear:entities/soul_wizard/fly_loop",
+				"stream": true
+			}
+		]
+	}
+}

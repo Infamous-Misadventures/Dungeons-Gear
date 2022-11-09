@@ -1,4 +1,4 @@
-package com.infamous.dungeons_gear.registry;
+package com.infamous.dungeons_gear.client.particles;
 
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
@@ -61,14 +61,16 @@ public class ElectricShockParticle extends SpriteTexturedParticle {
     public static class Factory implements IParticleFactory<BasicParticleType> {
         private final IAnimatedSprite spriteSet;
 
-        Factory(IAnimatedSprite sprite){
+        public Factory(IAnimatedSprite sprite){
             this.spriteSet = sprite;
         }
 
         @Nullable
         @Override
-        public Particle createParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            ElectricShockParticle shockParticle = new ElectricShockParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed);
+        public Particle createParticle(BasicParticleType particleType, ClientWorld level,
+                double x, double y, double z,
+                double dx, double dy, double dz) {
+            ElectricShockParticle shockParticle = new ElectricShockParticle(level, x, y, z, dx, dy, dz);
             shockParticle.setColor(1.0f, 1.0f, 1.0f);
             shockParticle.pickSprite(this.spriteSet);
             return shockParticle;

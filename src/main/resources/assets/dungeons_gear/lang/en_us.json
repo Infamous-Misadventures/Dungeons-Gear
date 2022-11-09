@@ -20,6 +20,8 @@
   "effect.dungeons_gear.stunned": "Stunned",
   "effect.dungeons_gear.party_starter": "Party Starter",
   "effect.dungeons_gear.dynamo": "Dynamo",
+  "effect.dungeons_gear.life_steal": "Lifesteal",
+  "effect.dungeons_gear.bow_charge": "Charged Up",
 
   "curios.identifier.artifact": "Artifact",
 
@@ -822,6 +824,10 @@
   "item.dungeons_gear.eye_of_the_guardian": "Eye of the Guardian",
   "lore.dungeons_gear.eye_of_the_guardian": "The Eye of the Guardian holds a power that awakens in the hands of a worthy hero.",
   "ability.dungeons_gear.eye_of_the_guardian": "Fires a beam of energy that locks you into place as it deals damage to enemies in its path.",
+  
+  "item.dungeons_gear.fireworks_display": "Fireworks Display",
+  "lore.dungeons_gear.fireworks_display": "The Fireworks Display is often used by Villagers to celebrate a successful defense against an Illager raid, it is also quite handy as a flare for lost travellers.",
+  "ability.dungeons_gear.fireworks_display": "Shoots a display of fireworks into the sky.",
 
   "artifact.dungeons_gear.charge_time": "%d Seconds Charge-Up",
   "artifact.dungeons_gear.duration": "%d Seconds Duration",
@@ -1042,5 +1048,13 @@
   "item.dungeons_gear.arrow_bundle": "Arrow Bundle",
   "ability.dungeons_gear.arrow_hoarder": "+1 arrow per bundle (Arrow Hoarder I)",
 
-  "dungeons_gear.gilded": "Gilded"
+  "dungeons_gear.gilded": "Gilded",
+  
+  "death.ice_chunk": "%1$s was crushed by an Ice Chunk",
+  "death.attack.ice_chunk": "%1$s was crushed by an Ice Chunk from %2$s",
+  
+  "subtitles.entity.soul_wizard.appear": "Soul Wizard forms",
+  "subtitles.entity.soul_wizard.hurt": "Soul Wizard hurts",
+  "subtitles.entity.soul_wizard.shoot": "Soul Wizard shoots",
+  "subtitles.entity.soul_wizard.projectile_impact": "Soul Wizard Orb impacts"
 }

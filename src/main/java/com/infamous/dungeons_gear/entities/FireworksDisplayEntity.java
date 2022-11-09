@@ -1,6 +1,7 @@
 package com.infamous.dungeons_gear.entities;
 
 import com.google.common.collect.Lists;
+import com.infamous.dungeons_gear.registry.ModEntityTypes;
 import com.infamous.dungeons_libraries.entities.TotemBaseEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;

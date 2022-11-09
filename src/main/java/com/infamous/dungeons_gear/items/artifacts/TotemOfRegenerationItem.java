@@ -2,7 +2,7 @@ package com.infamous.dungeons_gear.items.artifacts;
 
 import com.infamous.dungeons_gear.network.NetworkHandler;
 import com.infamous.dungeons_gear.network.PacketBreakItem;
-import com.infamous.dungeons_gear.entities.ModEntityTypes;
+import com.infamous.dungeons_gear.registry.ModEntityTypes;
 import com.infamous.dungeons_gear.entities.TotemOfRegenerationEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;

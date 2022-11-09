@@ -15,9 +15,9 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.world.World;
 
-import java.util.List;
+import static com.infamous.dungeons_gear.registry.ModEntityTypes.BEAM_ENTITY;
 
-import static com.infamous.dungeons_gear.entities.ModEntityTypes.BEAM_ENTITY;
+import java.util.List;
 
 public abstract class AbstractBeaconItem extends ArtifactItem{
 
