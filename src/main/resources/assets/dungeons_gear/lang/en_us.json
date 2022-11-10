@@ -829,6 +829,10 @@
   "lore.dungeons_gear.fireworks_display": "The Fireworks Display is often used by Villagers to celebrate a successful defense against an Illager raid, it is also quite handy as a flare for lost travellers.",
   "ability.dungeons_gear.fireworks_display": "Shoots a display of fireworks into the sky.",
 
+  "item.dungeons_gear.soul_lantern": "Soul Lantern",
+  "lore.dungeons_gear.soul_lantern": "This lantern, still covered in the sands of a far-flung place, allows those who hold it to summon a creature formed from bound souls.",
+  "ability.dungeons_gear.soul_lantern": "Summons a Soul Wizard to aid you in battle.",
+
   "artifact.dungeons_gear.charge_time": "%d Seconds Charge-Up",
   "artifact.dungeons_gear.duration": "%d Seconds Duration",
   "artifact.dungeons_gear.cooldown": "%d Seconds Cooldown",
@@ -1044,6 +1048,8 @@
   "ability.dungeons_gear.thundering": "Fires Lightning Bolts (Thundering I)",
   "ability.dungeons_gear.weakening": "Weakens Enemy Attacks (Weakening I)",
   "ability.dungeons_gear.wind_up_attack": "Wind-Up Attack",
+
+  "entity.dungeons_gear.soul_wizard": "Soul Wizard",
 
   "item.dungeons_gear.arrow_bundle": "Arrow Bundle",
   "ability.dungeons_gear.arrow_hoarder": "+1 arrow per bundle (Arrow Hoarder I)",

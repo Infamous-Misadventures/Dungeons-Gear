@@ -126,7 +126,7 @@ dependencies {
 
     //Library
     implementation fg.deobf("dungeons_libraries:dungeons_libraries:1.16.5-0.0.16-beta")
-    implementation fg.deobf("curse.maven:curios-309927:3456953")
+    implementation fg.deobf("curse.maven:curios-309927:3725386")
     runtimeOnly fg.deobf("curse.maven:neat-238372:3182258")
     implementation fg.deobf("software.bernie.geckolib:geckolib-forge-${mc_version}:${geckolib_version}")
 

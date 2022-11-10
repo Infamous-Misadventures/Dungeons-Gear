@@ -75,6 +75,10 @@
         {
           "type": "minecraft:item",
           "name": "dungeons_gear:thundering_quiver"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:soul_lantern"
         }
       ]
     }

@@ -448,6 +448,8 @@ public class ItemRegistry {
             () -> new EyeOfTheGuardianItem(ARTIFACT_PROPERTIES), OCEAN);
     public static final RegistryObject<Item> FIREWORKS_DISPLAY = registerArtifact("fireworks_display",
             () -> new FireworksDisplayItem(ARTIFACT_PROPERTIES), GIFT);
+    public static final RegistryObject<Item> SOUL_LANTERN = registerArtifact("soul_lantern",
+            () -> new SoulLanternItem(ARTIFACT_PROPERTIES), BASIC);
 
     public static final ArmorSet HUNTERS_ARMOR = registerArmorSet("hunters", BASIC);
     public static final ArmorSet ARCHERS_ARMOR = registerArmorSet("archers", BASIC);
