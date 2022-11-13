@@ -6,6 +6,38 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "name": "dungeons_gear:corrupted_seeds"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:gong_of_weakening"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:soul_healer"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:totem_of_regeneration"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:totem_of_shielding"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:totem_of_soul_protection"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:corrupted_beacon"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:fireworks_display"
+        },
+        {
+          "type": "minecraft:item",
           "name": "dungeons_gear:boots_of_swiftness"
         },
         {
@@ -82,42 +114,6 @@
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:gong_of_weakening"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:soul_healer"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:totem_of_regeneration"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:totem_of_shielding"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:totem_of_soul_protection"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:corrupted_beacon"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:fireworks_display"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:powershaker"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:corrupted_seeds"
-        },
-        {
-          "type": "minecraft:item",
           "name": "dungeons_gear:harpoon_quiver"
         },
         {
@@ -131,6 +127,10 @@
         {
           "type": "minecraft:item",
           "name": "dungeons_gear:eye_of_the_guardian"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:powershaker"
         },
         {
           "type": "minecraft:item",

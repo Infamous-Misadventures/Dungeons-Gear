@@ -458,7 +458,6 @@ public class ItemRegistry {
     public static final ArmorSet HEROS_ARMOR = registerArmorSet("heros", BASIC);
     public static final ArmorSet DARK_ARMOR = registerArmorSet("dark", BASIC);
     public static final ArmorSet TITANS_SHROUD = registerArmorSet("titans_shroud", BASIC);
-    public static final ArmorSet ROYAL_GUARD_ARMOR = registerArmorSet("royal_guard", BASIC);
     public static final ArmorSet EVOCATION_ROBES = registerArmorSet("evocation_robes", BASIC);
     public static final ArmorSet EMBER_ROBES = registerArmorSet("ember_robes", BASIC);
     public static final ArmorSet GRIM_ARMOR = registerArmorSet("grim", BASIC);

@@ -459,22 +459,6 @@
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:royal_guard_helmet"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:royal_guard_chestplate"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:royal_guard_leggings"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:royal_guard_boots"
-        },
-        {
-          "type": "minecraft:item",
           "name": "dungeons_gear:evocation_robes_helmet"
         },
         {

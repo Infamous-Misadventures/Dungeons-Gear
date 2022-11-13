@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "dungeons_gear:item/armor/missing"
+    "layer0": "dungeons_gear:item/armor/soul_leggings"
   }
 }
