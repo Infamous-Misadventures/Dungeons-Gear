@@ -42,7 +42,7 @@ public class EnchantedGrassItem extends ArtifactItem {
 
     public ActionResult<ItemStack> procArtifact(ArtifactUseContext itemUseContext) {
         World world = itemUseContext.getLevel();
-        if (world.isClientSide) {
+        if (world.isClientSide || itemUseContext.isHitMiss()) {
             return ActionResult.success(itemUseContext.getItemStack());
         } else {
             ItemStack itemUseContextItem = itemUseContext.getItemStack();

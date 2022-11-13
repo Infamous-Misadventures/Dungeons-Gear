@@ -6,6 +6,10 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "name": "dungeons_gear:fireworks_display"
+        },
+        {
+          "type": "minecraft:item",
           "name": "dungeons_gear:powershaker"
         },
         {
@@ -23,6 +27,26 @@
         {
           "type": "minecraft:item",
           "name": "dungeons_gear:eye_of_the_guardian"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:corrupted_seeds"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:ice_wand"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:wind_horn"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:satchel_of_elements"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:updraft_tome"
         },
         {
           "type": "minecraft:item",
@@ -47,30 +71,6 @@
         {
           "type": "minecraft:item",
           "name": "dungeons_gear:corrupted_beacon"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:corrupted_seeds"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:fireworks_display"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:ice_wand"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:wind_horn"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:satchel_of_elements"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:updraft_tome"
         },
         {
           "type": "minecraft:item",

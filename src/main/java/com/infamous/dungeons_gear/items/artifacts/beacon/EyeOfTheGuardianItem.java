@@ -1,5 +1,7 @@
 package com.infamous.dungeons_gear.items.artifacts.beacon;
 
+import com.infamous.dungeons_libraries.capabilities.artifact.ArtifactUsageHelper;
+import com.infamous.dungeons_libraries.capabilities.artifact.IArtifactUsage;
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_gear.items.interfaces.IChargeableItem;
 import net.minecraft.entity.LivingEntity;
@@ -68,7 +70,12 @@ public class EyeOfTheGuardianItem extends AbstractBeaconItem implements IChargea
 
     @Override
     protected boolean consumeTick(PlayerEntity playerEntity, ItemStack stack) {
-        return true;
+        IArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(playerEntity);
+        if(cap.getUsingArtifactRemaining() <= 0){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     @Override
