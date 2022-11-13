@@ -42,7 +42,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mollis lacinia magn
 [[dependencies.dungeons_gear]]
     modId="geckolib3"
     mandatory=true
-    versionRange="[3.0.89,)"
+    versionRange="[3.0.103,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.dungeons_gear]]
