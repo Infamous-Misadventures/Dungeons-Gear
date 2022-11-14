@@ -68,7 +68,7 @@ public class ModChestLootTables extends ChestLootTables {
     }
 
     private void createAllLootTables(BiConsumer<ResourceLocation, LootTable.Builder> consumer) {
-        List<Item> lootItems = LOOT_TABLES.values().stream().flatMap(Collection::stream).map(RegistryObject::get).collect(Collectors.toList());
+        List<Item> lootItems = LOOT_TABLES.entrySet().stream().filter(entry -> !LootTableType.GIFT.equals(entry.getKey())).flatMap(entry -> entry.getValue().stream()).map(RegistryObject::get).collect(Collectors.toList());
         LootTableType lootTableType = ALL;
         createTableForSubtype(consumer, lootItems.stream().filter(this::isNormalItem).collect(Collectors.toList()), lootTableType.normalTable());
         createTableForSubtype(consumer, lootItems.stream().filter(this::isUniqueItem).collect(Collectors.toList()), lootTableType.uniqueTable());

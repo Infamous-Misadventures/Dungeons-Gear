@@ -47,6 +47,7 @@ public class GlobalLootModifier{
         @Override
         public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
             List<ItemStack> modifiedLoot = generatedLoot;
+            LOGGER.info("DungeonsLootAdditions: " + context.getQueriedLootTableId());
             // return early if the user has disabled this feature
             if(!DungeonsGearConfig.ENABLE_DUNGEONS_GEAR_LOOT.get()){
                 return generatedLoot;
@@ -56,6 +57,7 @@ public class GlobalLootModifier{
             }
             modifiedLoot = modExceptions(modifiedLoot, context);
             ResourceLocation lootTable = determineTable(context.getQueriedLootTableId());
+            LOGGER.info("DungeonsLootAdditions: " + lootTable);
             if(lootTable == null) return generatedLoot;
             List<ItemStack> itemStacks = LootTableHelper.generateItemStacks(context.getLevel(), context, lootTable);
             itemStacks.stream().map(itemStack -> itemStack.getItem().getRegistryName()).collect(Collectors.toList()).forEach(LOGGER::info);
@@ -126,7 +128,12 @@ public class GlobalLootModifier{
         }
 
         private boolean partialMatch(ResourceLocation lootTable, String configItem) {
-            return false;
+            ResourceLocation configAsResourceLocation = new ResourceLocation(configItem);
+            if(configAsResourceLocation.getNamespace().equals("minecraft")){
+                return lootTable.getPath().contains(configAsResourceLocation.getPath());
+            }else{
+                return lootTable.getNamespace().contains(configAsResourceLocation.getNamespace()) && lootTable.getPath().contains(configAsResourceLocation.getPath());
+            }
         }
 
         public static class Serializer extends GlobalLootModifierSerializer<DungeonsLootAdditions> {
