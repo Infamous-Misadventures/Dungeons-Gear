@@ -17,7 +17,7 @@ public class MissingMappings {
 
     private static Map<String, Item> toRemapItems = new HashMap<>();
 
-    static {
+    private static void init() {
         toRemapItems.put("dungeons_gear:archers_hood", ItemRegistry.ARCHERS_ARMOR.getHead().get());
         toRemapItems.put("dungeons_gear:archers_vest", ItemRegistry.ARCHERS_ARMOR.getChest().get());
         toRemapItems.put("dungeons_gear:battle_robe", ItemRegistry.BATTLE_ROBES.getChest().get());
@@ -46,6 +46,7 @@ public class MissingMappings {
 
     @SubscribeEvent
     public static void MissingMappingsItem(RegistryEvent.MissingMappings<Item> event){
+        if(toRemapItems.isEmpty()) init();
         ImmutableList<RegistryEvent.MissingMappings.Mapping<Item>> allMappings = event.getAllMappings();
         for(RegistryEvent.MissingMappings.Mapping<Item> mapping : allMappings){
             String name = mapping.key.toString().toUpperCase();

@@ -15,7 +15,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderTooltipEvent;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -29,15 +28,12 @@ public class GildedItemHelper {
     public static final ResourceLocation GILDED_ITEM_RESOURCELOCATION = new ResourceLocation(DungeonsGear.MODID, "gilded_item");
 
     public static ItemStack getGildedItem(Random random, ItemStack itemStack){
-        LazyOptional<IBuiltInEnchantments> lazyCap = BuiltInEnchantmentsHelper.getBuiltInEnchantmentsCapabilityLazy(itemStack);
-        lazyCap.ifPresent(cap -> {
-            List<EnchantmentData> list1 = getAvailableEnchantmentResults(1, 1, itemStack, true);
-            EnchantmentData randomEnchantment = WeightedRandom.getRandomItem(random, list1);
-            cap.addBuiltInEnchantment(GILDED_ITEM_RESOURCELOCATION, randomEnchantment);
+        IBuiltInEnchantments cap = BuiltInEnchantmentsHelper.getBuiltInEnchantmentsCapability(itemStack);
+        List<EnchantmentData> list1 = getAvailableEnchantmentResults(1, 1, itemStack, true);
+        EnchantmentData randomEnchantment = WeightedRandom.getRandomItem(random, list1);
+        cap.addBuiltInEnchantment(GILDED_ITEM_RESOURCELOCATION, randomEnchantment);
 
-            itemStack.setHoverName(new TranslationTextComponent("dungeons_gear.gilded").append(" ").append(itemStack.getHoverName()));
-
-        });
+        itemStack.setHoverName(new TranslationTextComponent("dungeons_gear.gilded").append(" ").append(itemStack.getHoverName()));
         return itemStack;
     }
 
@@ -58,26 +54,22 @@ public class GildedItemHelper {
 
     @SubscribeEvent
     public static void onItemTooltip(ItemTooltipEvent event){
-        LazyOptional<IBuiltInEnchantments> lazyCap = BuiltInEnchantmentsHelper.getBuiltInEnchantmentsCapabilityLazy(event.getItemStack());
-        lazyCap.ifPresent(cap -> {
-            List<EnchantmentData> builtInEnchantments = cap.getBuiltInEnchantments(GILDED_ITEM_RESOURCELOCATION);
-            builtInEnchantments.forEach(enchantmentData -> {
-                event.getToolTip().add(enchantmentData.enchantment.getFullname(enchantmentData.level).copy().withStyle(TextFormatting.GOLD));
-            });
+        IBuiltInEnchantments cap = BuiltInEnchantmentsHelper.getBuiltInEnchantmentsCapability(event.getItemStack());
+        List<EnchantmentData> builtInEnchantments = cap.getBuiltInEnchantments(GILDED_ITEM_RESOURCELOCATION);
+        builtInEnchantments.forEach(enchantmentData -> {
+            event.getToolTip().add(enchantmentData.enchantment.getFullname(enchantmentData.level).copy().withStyle(TextFormatting.GOLD));
         });
     }
 
     @SubscribeEvent
     public static void onRenderTooltip(RenderTooltipEvent.Color event){
-        LazyOptional<IBuiltInEnchantments> lazyCap = BuiltInEnchantmentsHelper.getBuiltInEnchantmentsCapabilityLazy(event.getStack());
-        lazyCap.ifPresent(cap -> {
-            List<EnchantmentData> builtInEnchantments = cap.getBuiltInEnchantments(GILDED_ITEM_RESOURCELOCATION);
-            if(!builtInEnchantments.isEmpty()){
-                event.setBorderStart(0xF0FFD700);
-                event.setBorderEnd(0x50F5CC27);
-                event.setBackground(0xF0AF7923);
-            }
-        });
+        IBuiltInEnchantments cap = BuiltInEnchantmentsHelper.getBuiltInEnchantmentsCapability(event.getStack());
+        List<EnchantmentData> builtInEnchantments = cap.getBuiltInEnchantments(GILDED_ITEM_RESOURCELOCATION);
+        if(!builtInEnchantments.isEmpty()){
+            event.setBorderStart(0xF0FFD700);
+            event.setBorderEnd(0x50F5CC27);
+            event.setBackground(0xF0AF7923);
+        }
     }
 
 }
