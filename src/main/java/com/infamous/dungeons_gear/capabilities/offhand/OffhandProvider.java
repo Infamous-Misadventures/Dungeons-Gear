@@ -1,6 +1,5 @@
 package com.infamous.dungeons_gear.capabilities.offhand;
 
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;

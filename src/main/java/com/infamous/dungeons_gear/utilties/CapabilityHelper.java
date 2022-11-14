@@ -1,7 +1,9 @@
 package com.infamous.dungeons_gear.utilties;
 
+import com.infamous.dungeons_gear.capabilities.bow.Bow;
 import com.infamous.dungeons_gear.capabilities.bow.BowProvider;
 import com.infamous.dungeons_gear.capabilities.bow.IBow;
+import com.infamous.dungeons_gear.capabilities.combo.Combo;
 import com.infamous.dungeons_gear.capabilities.combo.ComboProvider;
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import net.minecraft.entity.Entity;
@@ -16,19 +18,13 @@ public class CapabilityHelper {
     public static ICombo getComboCapability(Entity entity)
     {
         LazyOptional<ICombo> lazyCap = entity.getCapability(ComboProvider.COMBO_CAPABILITY);
-        if (lazyCap.isPresent()) {
-            return lazyCap.orElseThrow(() -> new IllegalStateException("Couldn't get the combo capability from the Entity!"));
-        }
-        return null;
+        return lazyCap.orElse(new Combo());
     }
 
     @Nullable
     public static IBow getWeaponCapability(ItemStack stack)
     {
         LazyOptional<IBow> lazyCap = stack.getCapability(BowProvider.WEAPON_CAPABILITY);
-        if (lazyCap.isPresent()) {
-            return lazyCap.orElseThrow(() -> new IllegalStateException("Couldn't get the weapon capability from the ItemStack!"));
-        }
-        return null;
+        return lazyCap.orElse(new Bow());
     }
 }
