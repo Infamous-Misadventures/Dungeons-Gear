@@ -21,12 +21,14 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.items.ItemTagWrappers.FOOD_PROCESSED;
+import static com.infamous.dungeons_gear.loot.LootTableType.ALL;
 import static com.infamous.dungeons_gear.registry.ItemRegistry.*;
 import static net.minecraft.tags.ItemTags.ARROWS;
 import static net.minecraft.world.item.Items.*;
@@ -66,12 +68,23 @@ public class ModChestLootTables extends ChestLoot {
 
     private void chestAdditionsLootTables(BiConsumer<ResourceLocation, LootTable.Builder> consumer) {
         for (LootTableType lootTableType : LootTableType.values()) {
+            if(lootTableType == ALL) continue;
             createTypeLootTables(consumer, lootTableType);
         }
+        createAllLootTables(consumer);
+    }
+
+    private void createAllLootTables(BiConsumer<ResourceLocation, LootTable.Builder> consumer) {
+        List<Item> lootItems = LOOT_TABLES.entrySet().stream().filter(entry -> !LootTableType.GIFT.equals(entry.getKey())).flatMap(entry -> entry.getValue().stream()).map(RegistryObject::get).toList();
+        LootTableType lootTableType = ALL;
+        createTableForSubtype(consumer, lootItems.stream().filter(this::isNormalItem).collect(Collectors.toList()), lootTableType.normalTable());
+        createTableForSubtype(consumer, lootItems.stream().filter(this::isUniqueItem).collect(Collectors.toList()), lootTableType.uniqueTable());
+        createTableForSubtype(consumer, lootItems.stream().filter(this::isArtifactItem).collect(Collectors.toList()), lootTableType.artifactTable());
+        createItemLootTables(consumer, lootTableType);
     }
 
     private void createTypeLootTables(BiConsumer<ResourceLocation, LootTable.Builder> consumer, LootTableType lootTableType) {
-        List<Item> lootItems = LOOT_TABLES.getOrDefault(lootTableType, new ArrayList<>()).stream().map(RegistryObject::get).collect(Collectors.toList());
+        List<Item> lootItems = LOOT_TABLES.getOrDefault(lootTableType, new ArrayList<>()).stream().map(RegistryObject::get).toList();
         createTableForSubtype(consumer, lootItems.stream().filter(this::isNormalItem).collect(Collectors.toList()), lootTableType.normalTable());
         createTableForSubtype(consumer, lootItems.stream().filter(this::isUniqueItem).collect(Collectors.toList()), lootTableType.uniqueTable());
         createTableForSubtype(consumer, lootItems.stream().filter(this::isArtifactItem).collect(Collectors.toList()), lootTableType.artifactTable());

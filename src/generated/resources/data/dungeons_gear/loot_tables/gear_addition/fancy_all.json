@@ -1,0 +1,61 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 1.0,
+        "max": 3.0
+      },
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "min": 0.0,
+        "max": 2.0
+      },
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "weight": 15,
+          "name": "dungeons_gear:gear_addition/subtype/all_artifact"
+        },
+        {
+          "type": "minecraft:loot_table",
+          "weight": 12,
+          "quality": -2,
+          "name": "dungeons_gear:gear_addition/subtype/all_normal"
+        },
+        {
+          "type": "minecraft:loot_table",
+          "weight": 28,
+          "quality": 2,
+          "functions": [
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": 15.0,
+              "treasure": true
+            }
+          ],
+          "name": "dungeons_gear:gear_addition/subtype/all_normal"
+        },
+        {
+          "type": "minecraft:loot_table",
+          "weight": 5,
+          "quality": 2,
+          "functions": [
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": 15.0,
+              "treasure": true
+            }
+          ],
+          "name": "dungeons_gear:gear_addition/subtype/all_unique"
+        },
+        {
+          "type": "minecraft:empty",
+          "weight": 40,
+          "quality": -2
+        }
+      ]
+    }
+  ]
+}
