@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_gear.network.BreakItemMessage;
+import com.infamous.dungeons_libraries.network.BreakItemMessage;
 import com.infamous.dungeons_gear.effects.CustomEffects;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;

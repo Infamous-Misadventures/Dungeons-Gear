@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_gear.network.BreakItemMessage;
+import com.infamous.dungeons_libraries.network.BreakItemMessage;
 import com.infamous.dungeons_libraries.capabilities.minionmaster.IMaster;
 import com.infamous.dungeons_libraries.capabilities.minionmaster.IMinion;
 import com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper;

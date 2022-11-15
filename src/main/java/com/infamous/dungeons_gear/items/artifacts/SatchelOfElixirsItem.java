@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_gear.network.BreakItemMessage;
+import com.infamous.dungeons_libraries.network.BreakItemMessage;
 import com.infamous.dungeons_gear.utilties.LootTableHelper;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;

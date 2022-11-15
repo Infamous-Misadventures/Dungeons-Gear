@@ -1,8 +1,10 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
-import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_gear.network.BreakItemMessage;
 import com.infamous.dungeons_gear.entities.IceCloudEntity;
+import com.infamous.dungeons_gear.network.NetworkHandler;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
+import com.infamous.dungeons_libraries.network.BreakItemMessage;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -10,14 +12,11 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.network.PacketDistributor;
 import org.apache.commons.lang3.tuple.MutablePair;
 
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.applyToNearbyEntities;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.getCanApplyToEnemyPredicate;
-import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
-import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
 
 public class IceWandItem extends ArtifactItem {
     public IceWandItem(Properties properties) {

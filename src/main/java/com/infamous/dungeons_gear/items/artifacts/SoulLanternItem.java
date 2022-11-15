@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.entities.SoulWizardEntity;
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_gear.network.BreakItemMessage;
+import com.infamous.dungeons_libraries.network.BreakItemMessage;
 import com.infamous.dungeons_gear.registry.ModEntityTypes;
 import com.infamous.dungeons_gear.registry.SoundEventInit;
 import com.infamous.dungeons_gear.utilties.SoundHelper;

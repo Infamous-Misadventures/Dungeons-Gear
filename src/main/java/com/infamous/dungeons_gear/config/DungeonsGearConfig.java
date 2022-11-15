@@ -402,7 +402,7 @@ public class DungeonsGearConfig {
                 .defineInRange("partyStarterDamage", 4, 0, 10000);
         builder.pop();
 
-        builder.comment("Enchantment Specific Configuration").push("enchantment_specific_configur<ation");
+        builder.comment("Enchantment Specific Configuration").push("enchantment_specific_configuration");
         BUSY_BEE_BASE_CHANCE = builder
                 .comment("The decimal base chance for a busy bee to spawn [0.0-1.0, default: 0.1]")
                 .defineInRange("busyBeeBaseChance", 0.1, 0, 1.0);

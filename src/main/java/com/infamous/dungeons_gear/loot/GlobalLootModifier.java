@@ -18,7 +18,6 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.infamous.dungeons_gear.DungeonsGear.LOGGER;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.loot.LootTableType.*;
 import static net.minecraft.loot.LootTables.SPAWN_BONUS_CHEST;
@@ -47,7 +46,6 @@ public class GlobalLootModifier{
         @Override
         public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
             List<ItemStack> modifiedLoot = generatedLoot;
-            LOGGER.info("DungeonsLootAdditions: " + context.getQueriedLootTableId());
             // return early if the user has disabled this feature
             if(!DungeonsGearConfig.ENABLE_DUNGEONS_GEAR_LOOT.get()){
                 return generatedLoot;
@@ -57,10 +55,8 @@ public class GlobalLootModifier{
             }
             modifiedLoot = modExceptions(modifiedLoot, context);
             ResourceLocation lootTable = determineTable(context.getQueriedLootTableId());
-            LOGGER.info("DungeonsLootAdditions: " + lootTable);
             if(lootTable == null) return generatedLoot;
             List<ItemStack> itemStacks = LootTableHelper.generateItemStacks(context.getLevel(), context, lootTable);
-            itemStacks.stream().map(itemStack -> itemStack.getItem().getRegistryName()).collect(Collectors.toList()).forEach(LOGGER::info);
             modifiedLoot.addAll(itemStacks);
             return modifiedLoot;
         }

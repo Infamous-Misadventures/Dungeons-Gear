@@ -22,7 +22,6 @@ import net.minecraft.world.World;
 import java.util.List;
 import java.util.Random;
 
-import static com.infamous.dungeons_gear.DungeonsGear.LOGGER;
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 import static com.infamous.dungeons_libraries.utils.AbilityHelper.isFacingEntity;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.*;

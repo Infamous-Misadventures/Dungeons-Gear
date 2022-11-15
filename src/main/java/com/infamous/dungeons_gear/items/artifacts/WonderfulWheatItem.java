@@ -3,9 +3,11 @@ package com.infamous.dungeons_gear.items.artifacts;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_gear.network.BreakItemMessage;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
 import com.infamous.dungeons_libraries.capabilities.minionmaster.IMaster;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
+import com.infamous.dungeons_libraries.network.BreakItemMessage;
 import com.infamous.dungeons_libraries.summon.SummonHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -32,8 +34,6 @@ import java.util.stream.Collectors;
 
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SUMMON_CAP;
 import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMasterCapability;
-import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
-import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
 
 public class WonderfulWheatItem extends ArtifactItem {
     public WonderfulWheatItem(Properties p_i48487_1_) {
