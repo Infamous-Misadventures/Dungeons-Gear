@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.entities.SoulWizardEntity;
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_gear.network.PacketBreakItem;
+import com.infamous.dungeons_gear.network.BreakItemMessage;
 import com.infamous.dungeons_gear.registry.ModEntityTypes;
 import com.infamous.dungeons_gear.registry.SoundEventInit;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
@@ -63,7 +63,7 @@ public class SoulLanternItem extends ArtifactItem {
                     Entity summoned = SummonHelper.summonEntity(itemUseContextPlayer, itemUseContextPlayer.blockPosition(), ModEntityTypes.SOUL_WIZARD.get());
                     if(summoned != null) {
                         SoundHelper.playCreatureSound(itemUseContextPlayer, SoundEventInit.SOUL_WIZARD_APPEAR.get());
-                        itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemUseContextItem)));
+                        itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new BreakItemMessage(entity.getId(), itemUseContextItem)));
                         ArtifactItem.putArtifactOnCooldown(itemUseContextPlayer, itemUseContextItem.getItem());
                     } else{
                         if(world instanceof ServerWorld) {

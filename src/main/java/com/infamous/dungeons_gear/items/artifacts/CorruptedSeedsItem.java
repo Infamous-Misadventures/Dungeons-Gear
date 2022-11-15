@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_gear.network.PacketBreakItem;
+import com.infamous.dungeons_gear.network.BreakItemMessage;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -22,7 +22,7 @@ public class CorruptedSeedsItem extends ArtifactItem {
 
         AreaOfEffectHelper.poisonAndSlowNearbyEnemies(c.getLevel(), playerIn, 5);
 
-        itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemstack)));
+        itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new BreakItemMessage(entity.getId(), itemstack)));
 
         ArtifactItem.putArtifactOnCooldown(playerIn, itemstack.getItem());
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);

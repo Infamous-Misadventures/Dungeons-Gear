@@ -3,7 +3,7 @@ package com.infamous.dungeons_gear.items.artifacts;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_gear.network.PacketBreakItem;
+import com.infamous.dungeons_gear.network.BreakItemMessage;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
 import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
@@ -34,7 +34,7 @@ public class LightningRodItem extends ArtifactItem implements ISoulConsumer {
         if(SoulCasterHelper.consumeSouls(playerIn, this.getActivationCost(itemStack))){
             AreaOfEffectHelper.electrifyNearbyEnemies(playerIn, 5, 5, Integer.MAX_VALUE); //ToDo Rewrite to be only 1 bolt?
             SoundHelper.playLightningStrikeSounds(playerIn);
-            itemStack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemStack)));
+            itemStack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new BreakItemMessage(entity.getId(), itemStack)));
             ArtifactItem.putArtifactOnCooldown(playerIn, itemStack.getItem());
         }
 

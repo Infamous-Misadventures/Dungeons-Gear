@@ -2,7 +2,7 @@ package com.infamous.dungeons_gear.items.artifacts;
 
 import com.infamous.dungeons_gear.capabilities.combo.ICombo;
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_gear.network.PacketBreakItem;
+import com.infamous.dungeons_gear.network.BreakItemMessage;
 import com.infamous.dungeons_gear.utilties.CapabilityHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -25,7 +25,7 @@ public class FlamingQuiverItem extends ArtifactItem {
         if (comboCap == null) return new ActionResult<>(ActionResultType.FAIL, itemstack);
         comboCap.setFlamingArrowsCount(7);
 
-        itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemstack)));
+        itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new BreakItemMessage(entity.getId(), itemstack)));
         ArtifactItem.putArtifactOnCooldown(playerIn, itemstack.getItem());
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }

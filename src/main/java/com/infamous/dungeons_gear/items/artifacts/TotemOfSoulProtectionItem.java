@@ -3,7 +3,7 @@ package com.infamous.dungeons_gear.items.artifacts;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_gear.network.PacketBreakItem;
+import com.infamous.dungeons_gear.network.BreakItemMessage;
 import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
 import com.infamous.dungeons_libraries.items.interfaces.ISoulConsumer;
 import net.minecraft.block.BlockState;
@@ -50,7 +50,7 @@ public class TotemOfSoulProtectionItem extends ArtifactItem implements ISoulCons
             if(itemUseContextPlayer != null) {
                 if(SoulCasterHelper.consumeSouls(itemUseContextPlayer, this.getActivationCost(itemUseContextItem))){
                     spawnSoulProtectionCloudAtPos(itemUseContextPlayer, blockPos, 100);
-                    itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemUseContextItem)));
+                    itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new BreakItemMessage(entity.getId(), itemUseContextItem)));
 
                     ArtifactItem.putArtifactOnCooldown(itemUseContextPlayer, itemUseContextItem.getItem());
                 }

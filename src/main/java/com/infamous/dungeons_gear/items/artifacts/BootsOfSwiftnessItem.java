@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_gear.network.PacketBreakItem;
+import com.infamous.dungeons_gear.network.BreakItemMessage;
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,7 +23,7 @@ public class BootsOfSwiftnessItem extends ArtifactItem {
 
         EffectInstance swiftness = new EffectInstance(Effects.MOVEMENT_SPEED, this.getDurationInSeconds() * 20, 2);
         playerIn.addEffect(swiftness);
-        itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemstack)));
+        itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new BreakItemMessage(entity.getId(), itemstack)));
         ArtifactItem.putArtifactOnCooldown(playerIn, itemstack.getItem());
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
     }

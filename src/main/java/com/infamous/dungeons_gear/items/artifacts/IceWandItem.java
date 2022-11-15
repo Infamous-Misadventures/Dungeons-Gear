@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_gear.network.PacketBreakItem;
+import com.infamous.dungeons_gear.network.BreakItemMessage;
 import com.infamous.dungeons_gear.entities.IceCloudEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -49,7 +49,7 @@ public class IceWandItem extends ArtifactItem {
     private ActionResultType freezeEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity target) {
         if (target != null) {
             IceCloudEntity.spawn(playerIn, target);
-            stack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), stack)));
+            stack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new BreakItemMessage(entity.getId(), stack)));
             ArtifactItem.putArtifactOnCooldown(playerIn, stack.getItem());
             return ActionResultType.SUCCESS;
         }

@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_gear.network.PacketBreakItem;
+import com.infamous.dungeons_gear.network.BreakItemMessage;
 import com.infamous.dungeons_libraries.capabilities.minionmaster.IMaster;
 import com.infamous.dungeons_libraries.capabilities.minionmaster.IMinion;
 import com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper;
@@ -38,7 +38,7 @@ public class LoveMedallionItem extends ArtifactItem {
                         && !LOVE_MEDALLION_BLACKLIST.get().contains(nearbyEntity.getType().getRegistryName().toString()),
                 (LivingEntity nearbyEntity) -> makeMinionOf(playerIn, nearbyEntity));
 
-        itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemstack)));
+        itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new BreakItemMessage(entity.getId(), itemstack)));
 
         ArtifactItem.putArtifactOnCooldown(playerIn, itemstack.getItem());
         return new ActionResult<>(ActionResultType.SUCCESS, itemstack);

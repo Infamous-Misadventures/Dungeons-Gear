@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_gear.network.PacketBreakItem;
+import com.infamous.dungeons_gear.network.BreakItemMessage;
 import com.infamous.dungeons_gear.registry.ModEntityTypes;
 import com.infamous.dungeons_gear.entities.TotemOfShieldingEntity;
 import net.minecraft.block.BlockState;
@@ -45,7 +45,7 @@ public class TotemOfShieldingItem extends ArtifactItem {
                     totemOfShieldingEntity.moveTo(blockPos, 0, 0);
                     totemOfShieldingEntity.setOwner(itemUseContextPlayer);
                     itemUseContextPlayer.level.addFreshEntity(totemOfShieldingEntity);
-                    itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemUseContextItem)));
+                    itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new BreakItemMessage(entity.getId(), itemUseContextItem)));
                     ArtifactItem.putArtifactOnCooldown(itemUseContextPlayer, itemUseContextItem.getItem());
                 }
             }
