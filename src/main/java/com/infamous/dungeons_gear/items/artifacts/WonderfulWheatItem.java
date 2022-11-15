@@ -50,7 +50,7 @@ public class WonderfulWheatItem extends ArtifactItem {
 
     public InteractionResultHolder<ItemStack> procArtifact(ArtifactUseContext itemUseContext) {
         Level world = itemUseContext.getLevel();
-        if (world.isClientSide) {
+        if (world.isClientSide || itemUseContext.isHitMiss()) {
             return InteractionResultHolder.success(itemUseContext.getItemStack());
         } else {
             ItemStack itemUseContextItem = itemUseContext.getItemStack();

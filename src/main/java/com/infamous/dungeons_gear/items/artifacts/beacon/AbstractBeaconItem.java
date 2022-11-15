@@ -1,19 +1,24 @@
 package com.infamous.dungeons_gear.items.artifacts.beacon;
 
-import com.infamous.dungeons_gear.entities.BeamEntity;
+import com.infamous.dungeons_gear.entities.ArtifactBeamEntity;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
 import com.infamous.dungeons_libraries.capabilities.artifact.ArtifactUsage;
 import com.infamous.dungeons_libraries.capabilities.artifact.ArtifactUsageHelper;
+import com.infamous.dungeons_libraries.integration.curios.client.message.CuriosArtifactStopMessage;
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
+import com.infamous.dungeons_libraries.network.NetworkHandler;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.network.PacketDistributor;
 
 import java.util.List;
 
@@ -40,18 +45,21 @@ public abstract class AbstractBeaconItem extends ArtifactItem {
         Level worldIn = iuc.getLevel();
 
         ArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(playerIn);
-        if(!canFire(playerIn, itemstack) || cap.isUsingArtifact()){
-            return new InteractionResultHolder<>(InteractionResult.FAIL, itemstack);
+        if(!canFire(playerIn, itemstack) || (!worldIn.isClientSide && cap.isUsingArtifact() && cap.getUsingArtifact().getItem().equals(itemstack.getItem()))){
+            stopUsingArtifact(playerIn);
+            return new InteractionResultHolder<>(InteractionResult.PASS, itemstack);
         }
 
         SoundHelper.playBeaconSound(playerIn, true);
         ArtifactUsageHelper.startUsingArtifact(playerIn, cap, itemstack);
         if (!worldIn.isClientSide) {
             ArtifactItem.triggerSynergy(playerIn, itemstack);
-            BeamEntity beamEntity = new BeamEntity(BEAM_ENTITY.get(), this.getBeamColor(), worldIn, playerIn);
-            beamEntity.moveTo(playerIn.position().x, playerIn.position().y + 0.7D, playerIn.position().z, playerIn.getYRot(), playerIn.getXRot());
-            beamEntity.setOwner(playerIn);
-            worldIn.addFreshEntity(beamEntity);
+            ArtifactBeamEntity artifactBeamEntity = new ArtifactBeamEntity(BEAM_ENTITY.get(), this.getBeamColor(), worldIn, playerIn);
+            artifactBeamEntity.moveTo(playerIn.position().x, playerIn.position().y + 0.7D, playerIn.position().z, playerIn.getYRot(), playerIn.getXRot());
+            artifactBeamEntity.setOwner(playerIn);
+            MobEffectInstance slowdown = new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 20);
+            playerIn.addEffect(slowdown);
+            worldIn.addFreshEntity(artifactBeamEntity);
         }
         return new InteractionResultHolder<>(InteractionResult.PASS, itemstack);
     }
@@ -62,24 +70,18 @@ public abstract class AbstractBeaconItem extends ArtifactItem {
     }
 
     @Override
-    public UseAnim getUseAnimation(ItemStack stack) {
-        return UseAnim.NONE;
-    }
-
-    @Override
-    public void releaseUsing(ItemStack stack, Level worldIn, LivingEntity entityLiving, int timeLeft) {
-        SoundHelper.playBeaconSound(entityLiving, false);
-    }
-
-    @Override
     public void onUseTick(Level world, LivingEntity livingEntity, ItemStack stack, int count) {
-        if (livingEntity instanceof Player) {
-            Player playerEntity = (Player) livingEntity;
-            if(playerEntity.isCreative()) return;
+        if (!world.isClientSide() && livingEntity instanceof Player player) {
+            if(player.isCreative()) return;
 
-            if (this.consumeTick(playerEntity, stack)) {
+            if (this.consumeTick(player, stack)) {
+                MobEffectInstance slowdown = new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 20);
+                player.addEffect(slowdown);
                 if(count % 20 == 0){ // damage the stack every second used, not every tick used
-                    stack.hurtAndBreak(1, playerEntity, entity -> entity.broadcastBreakEvent(playerEntity.getUsedItemHand()));
+                    stack.hurtAndBreak(1, player, entity -> entity.broadcastBreakEvent(player.getUsedItemHand()));
+                }
+                if(stack.getDamageValue() >= stack.getMaxDamage()){
+                    stopUsingArtifact(player);
                 }
             }else{
                 ArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(livingEntity);
@@ -94,8 +96,17 @@ public abstract class AbstractBeaconItem extends ArtifactItem {
     @Override
     public void stopUsingArtifact(LivingEntity livingEntity) {
         super.stopUsingArtifact(livingEntity);
-        List<BeamEntity> beams = livingEntity.level.getEntitiesOfClass(BeamEntity.class, livingEntity.getBoundingBox().inflate(1), beamEntity -> beamEntity.getOwner() == livingEntity);
-        beams.forEach(beamEntity -> beamEntity.remove(Entity.RemovalReason.DISCARDED));
+        if(!livingEntity.level.isClientSide()) {
+            ArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(livingEntity);
+            cap.stopUsingArtifact();
+            List<ArtifactBeamEntity> beams = livingEntity.level.getEntitiesOfClass(ArtifactBeamEntity.class, livingEntity.getBoundingBox().inflate(1), artifactBeamEntity -> artifactBeamEntity.getOwner() == livingEntity);
+            beams.forEach(artifactBeamEntity -> artifactBeamEntity.remove(Entity.RemovalReason.DISCARDED));
+            SoundHelper.playBeaconSound(livingEntity, false);
+            if (livingEntity.hasEffect(MobEffects.MOVEMENT_SLOWDOWN)) {
+                livingEntity.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
+            }
+            NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> livingEntity), new CuriosArtifactStopMessage());
+        }
     }
 
 

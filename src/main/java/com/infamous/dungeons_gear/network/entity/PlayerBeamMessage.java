@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.network.entity;
 
-import com.infamous.dungeons_gear.entities.BeamEntity;
+import com.infamous.dungeons_gear.entities.ArtifactBeamEntity;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -19,15 +19,15 @@ public class PlayerBeamMessage {
     private final float xRotO;
     private final float yRotO;
 
-    public PlayerBeamMessage(BeamEntity beamEntity) {
-        this.beamEntityID = beamEntity.getId();
-        this.positionX = beamEntity.position().x;
-        this.positionY = beamEntity.position().y;
-        this.positionZ = beamEntity.position().z;
-        this.xRot = beamEntity.getXRot();
-        this.yRot = beamEntity.getYRot();
-        this.xRotO = beamEntity.xRotO;
-        this.yRotO = beamEntity.yRotO;
+    public PlayerBeamMessage(ArtifactBeamEntity artifactBeamEntity) {
+        this.beamEntityID = artifactBeamEntity.getId();
+        this.positionX = artifactBeamEntity.position().x;
+        this.positionY = artifactBeamEntity.position().y;
+        this.positionZ = artifactBeamEntity.position().z;
+        this.xRot = artifactBeamEntity.getXRot();
+        this.yRot = artifactBeamEntity.getYRot();
+        this.xRotO = artifactBeamEntity.xRotO;
+        this.yRotO = artifactBeamEntity.yRotO;
     }
 
     public PlayerBeamMessage(int beamEntityID, double positionX, double positionY, double positionZ, float xRot, float yRot, float xRotO, float yRotO) {
@@ -73,14 +73,14 @@ public class PlayerBeamMessage {
                     ServerPlayer player = ctx.get().getSender();
                     if (player != null) {
                         Entity entity = player.level.getEntity(packet.beamEntityID);
-                        if(entity instanceof BeamEntity) {
-                            BeamEntity beamEntity = (BeamEntity) entity;
-                            if(beamEntity.getOwner() != player) return;
-                            beamEntity.setPos(packet.positionX, packet.positionY, packet.positionZ);
-                            beamEntity.setXRot(packet.xRot);
-                            beamEntity.setYRot(packet.yRot);
-                            beamEntity.xRotO = packet.xRotO;
-                            beamEntity.yRotO = packet.yRotO;
+                        if(entity instanceof ArtifactBeamEntity) {
+                            ArtifactBeamEntity artifactBeamEntity = (ArtifactBeamEntity) entity;
+                            if(artifactBeamEntity.getOwner() != player) return;
+                            artifactBeamEntity.setPos(packet.positionX, packet.positionY, packet.positionZ);
+                            artifactBeamEntity.setXRot(packet.xRot);
+                            artifactBeamEntity.setYRot(packet.yRot);
+                            artifactBeamEntity.xRotO = packet.xRotO;
+                            artifactBeamEntity.yRotO = packet.yRotO;
                         }
                     }
                 });

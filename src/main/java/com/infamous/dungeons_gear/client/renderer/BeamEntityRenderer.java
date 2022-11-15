@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.client.renderer;
 
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_gear.entities.BeamEntity;
+import com.infamous.dungeons_gear.entities.ArtifactBeamEntity;
 import com.infamous.dungeons_gear.items.artifacts.beacon.BeamColor;
 import com.infamous.dungeons_gear.items.artifacts.beacon.MyRenderType;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -21,7 +21,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class BeamEntityRenderer<T extends BeamEntity> extends EntityRenderer<T> {
+public class BeamEntityRenderer<T extends ArtifactBeamEntity> extends EntityRenderer<T> {
    @Override
    public ResourceLocation getTextureLocation(T p_110775_1_) {
       return new ResourceLocation(DungeonsGear.MODID + ":textures/misc/beacon_beam_core.png");
@@ -32,14 +32,14 @@ public class BeamEntityRenderer<T extends BeamEntity> extends EntityRenderer<T> 
    }
 
    public void render(T pEntity, float pEntityYaw, float pPartialTicks, PoseStack pMatrixStack, MultiBufferSource pBuffer, int pPackedLight) {
-      double distance = pEntity.beamTraceDistance(BeamEntity.MAX_RAYTRACE_DISTANCE, 1.0f, false);
+      double distance = pEntity.beamTraceDistance(ArtifactBeamEntity.MAX_RAYTRACE_DISTANCE, 1.0f, false);
 
       float speedModifier = -0.02f;
 
       drawBeams(distance, pEntity, pPartialTicks, speedModifier, pMatrixStack);
    }
 
-   private static void drawBeams(double distance, BeamEntity entity, float ticks, float speedModifier, PoseStack pMatrixStack) {
+   private static void drawBeams(double distance, ArtifactBeamEntity entity, float ticks, float speedModifier, PoseStack pMatrixStack) {
       VertexConsumer builder;
       long gameTime = entity.level.getGameTime();
       double v = gameTime * speedModifier;
