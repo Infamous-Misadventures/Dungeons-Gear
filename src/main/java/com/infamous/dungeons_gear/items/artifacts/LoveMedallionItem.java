@@ -56,6 +56,8 @@ public class LoveMedallionItem extends ArtifactItem {
                 minionCapability.setTemporary(true);
                 minionCapability.setRevertsOnExpiration(true);
                 minionCapability.setMinionTimer(200);
+                minionCapability.setGoalsAdded(false);
+                ((MonsterEntity) nearbyEntity).setTarget(null);
                 MinionMasterHelper.addMinionGoals(mobEntity);
             }
         }
