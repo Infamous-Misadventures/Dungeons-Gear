@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.armor.chest;
 
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
-import com.infamous.dungeons_gear.integration.curios.CuriosIntegration;
+import com.infamous.dungeons_libraries.integration.curios.CuriosIntegration;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;

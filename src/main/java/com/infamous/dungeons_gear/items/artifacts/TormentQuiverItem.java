@@ -5,7 +5,9 @@ import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.capabilities.combo.Combo;
 import com.infamous.dungeons_gear.capabilities.combo.ComboHelper;
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_gear.network.PacketBreakItem;
+import com.infamous.dungeons_libraries.network.BreakItemMessage;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
 import com.infamous.dungeons_libraries.items.interfaces.ISoulConsumer;
@@ -45,19 +47,11 @@ public class TormentQuiverItem extends ArtifactItem implements ISoulConsumer {
 
             comboCap.setTormentArrowCount(3);
 
-            itemStack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemStack)));
+            itemStack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new BreakItemMessage(entity.getId(), itemStack)));
 
             ArtifactItem.putArtifactOnCooldown(playerIn, itemStack.getItem());
         }
         return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemStack);
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public void appendHoverText(ItemStack stack, Level world, List<Component> list, TooltipFlag flag)
-    {
-        super.appendHoverText(stack, world, list, flag);
-        DescriptionHelper.addFullDescription(list, stack);
     }
 
     @Override

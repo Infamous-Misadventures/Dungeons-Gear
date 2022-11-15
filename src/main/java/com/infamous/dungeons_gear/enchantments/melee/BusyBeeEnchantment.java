@@ -3,7 +3,7 @@ package com.infamous.dungeons_gear.enchantments.melee;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
-import com.infamous.dungeons_gear.integration.curios.CuriosIntegration;
+import com.infamous.dungeons_libraries.integration.curios.CuriosIntegration;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
 import com.infamous.dungeons_libraries.summon.SummonHelper;

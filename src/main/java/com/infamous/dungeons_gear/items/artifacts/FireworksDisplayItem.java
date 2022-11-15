@@ -3,6 +3,8 @@ package com.infamous.dungeons_gear.items.artifacts;
 import com.infamous.dungeons_gear.entities.FireworksDisplayEntity;
 import com.infamous.dungeons_gear.entities.ModEntityTypes;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.player.Player;
@@ -49,20 +51,12 @@ public class FireworksDisplayItem extends ArtifactItem {
                     totemEntity.moveTo(blockPos, 0, 0);
                     totemEntity.setOwner(itemUseContextPlayer);
                     itemUseContextPlayer.level.addFreshEntity(totemEntity);
-//                    itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemUseContextItem)));
+//                    itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new BreakItemMessage(entity.getId(), itemUseContextItem)));
                     ArtifactItem.putArtifactOnCooldown(itemUseContextPlayer, itemUseContextItem.getItem());
                 }
             }
         }
         return InteractionResultHolder.consume(itemUseContext.getItemStack());
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public void appendHoverText(ItemStack stack, Level world, List<Component> list, TooltipFlag flag)
-    {
-        super.appendHoverText(stack, world, list, flag);
-        DescriptionHelper.addFullDescription(list, stack);
     }
 
     @Override

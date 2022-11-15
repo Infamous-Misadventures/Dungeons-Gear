@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.utilties;
 
-import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_gear.items.interfaces.*;
 import com.infamous.dungeons_libraries.items.interfaces.ISoulConsumer;
 import net.minecraft.world.item.ItemStack;

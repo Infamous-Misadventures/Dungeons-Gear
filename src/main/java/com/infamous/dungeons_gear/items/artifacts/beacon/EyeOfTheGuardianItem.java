@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.items.artifacts.beacon;
 
-import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_gear.items.interfaces.IChargeableItem;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.world.item.TooltipFlag;
@@ -61,14 +61,6 @@ public class EyeOfTheGuardianItem extends AbstractBeaconItem implements IChargea
     @Override
     public BeamColor getBeamColor() {
         return EYE_OF_THE_GUARDIAN_BEACON_BEAM_COLOR;
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public void appendHoverText(ItemStack stack, Level world, List<Component> list, TooltipFlag flag)
-    {
-        super.appendHoverText(stack, world, list, flag);
-        DescriptionHelper.addFullDescription(list, stack);
     }
 
     @Override

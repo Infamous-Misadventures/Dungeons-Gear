@@ -1,11 +1,11 @@
 package com.infamous.dungeons_gear.items.artifacts.beacon;
 
-import com.infamous.dungeons_gear.capabilities.artifact.ArtifactUsage;
-import com.infamous.dungeons_gear.capabilities.artifact.ArtifactUsageHelper;
 import com.infamous.dungeons_gear.entities.BeamEntity;
-import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
-import com.infamous.dungeons_gear.items.artifacts.ArtifactUseContext;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
+import com.infamous.dungeons_libraries.capabilities.artifact.ArtifactUsage;
+import com.infamous.dungeons_libraries.capabilities.artifact.ArtifactUsageHelper;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
@@ -19,7 +19,7 @@ import java.util.List;
 
 import static com.infamous.dungeons_gear.entities.ModEntityTypes.BEAM_ENTITY;
 
-public abstract class AbstractBeaconItem extends ArtifactItem{
+public abstract class AbstractBeaconItem extends ArtifactItem {
 
     public static final double RAYTRACE_DISTANCE = 256;
     public static final float BEAM_DAMAGE_PER_TICK = 0.5F; // 10.0F damage per second

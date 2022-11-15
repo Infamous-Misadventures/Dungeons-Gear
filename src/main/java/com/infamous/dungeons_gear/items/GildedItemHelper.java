@@ -29,16 +29,13 @@ public class GildedItemHelper {
 
     public static final ResourceLocation GILDED_ITEM_RESOURCELOCATION = new ResourceLocation(DungeonsGear.MODID, "gilded_item");
 
-    public static ItemStack getGildedItem(Random random, ItemStack itemStack){
-        LazyOptional<BuiltInEnchantments> lazyCap = BuiltInEnchantmentsHelper.getBuiltInEnchantmentsCapabilityLazy(itemStack);
-        lazyCap.ifPresent(cap -> {
-            List<EnchantmentInstance> list1 = getAvailableEnchantmentResults(1, 1, itemStack, true);
-            Optional<EnchantmentInstance> randomItem = WeightedRandom.getRandomItem(random, list1, list1.size());
-            randomItem.ifPresent(randomEnchantment -> {
-                cap.addBuiltInEnchantment(GILDED_ITEM_RESOURCELOCATION, randomEnchantment);
-                itemStack.setHoverName(new TranslatableComponent("dungeons_gear.gilded").append(" ").append(itemStack.getHoverName()));
-            });
-
+    public static ItemStack getGildedItem(Random random, ItemStack itemStack) {
+        BuiltInEnchantments cap = BuiltInEnchantmentsHelper.getBuiltInEnchantmentsCapability(itemStack);
+        List<EnchantmentInstance> list1 = getAvailableEnchantmentResults(1, 1, itemStack, true);
+        Optional<EnchantmentInstance> randomItem = WeightedRandom.getRandomItem(random, list1, list1.size());
+        randomItem.ifPresent(randomEnchantment -> {
+            cap.addBuiltInEnchantment(GILDED_ITEM_RESOURCELOCATION, randomEnchantment);
+            itemStack.setHoverName(new TranslatableComponent("dungeons_gear.gilded").append(" ").append(itemStack.getHoverName()));
         });
         return itemStack;
     }
@@ -47,9 +44,9 @@ public class GildedItemHelper {
         List<EnchantmentInstance> list = Lists.newArrayList();
         boolean flag = itemStack.getItem() == Items.BOOK;
 
-        for(Enchantment enchantment : Registry.ENCHANTMENT) {
+        for (Enchantment enchantment : Registry.ENCHANTMENT) {
             if ((!enchantment.isTreasureOnly() || includeTreasures) && enchantment.isDiscoverable() && (enchantment.canApplyAtEnchantingTable(itemStack) || (flag && enchantment.isAllowedOnBooks()))) {
-                for(int i = Math.min(enchantment.getMaxLevel(), maxLevel); i > Math.min(enchantment.getMinLevel(), minLevel) - 1; --i) {
+                for (int i = Math.min(enchantment.getMaxLevel(), maxLevel); i > Math.min(enchantment.getMinLevel(), minLevel) - 1; --i) {
                     list.add(new EnchantmentInstance(enchantment, i));
                 }
             }
@@ -59,27 +56,23 @@ public class GildedItemHelper {
     }
 
     @SubscribeEvent
-    public static void onItemTooltip(ItemTooltipEvent event){
-        LazyOptional<BuiltInEnchantments> lazyCap = BuiltInEnchantmentsHelper.getBuiltInEnchantmentsCapabilityLazy(event.getItemStack());
-        lazyCap.ifPresent(cap -> {
-            List<EnchantmentInstance> builtInEnchantments = cap.getBuiltInEnchantments(GILDED_ITEM_RESOURCELOCATION);
-            builtInEnchantments.forEach(enchantmentData -> {
-                event.getToolTip().add(enchantmentData.enchantment.getFullname(enchantmentData.level).copy().withStyle(ChatFormatting.GOLD));
-            });
+    public static void onItemTooltip(ItemTooltipEvent event) {
+        BuiltInEnchantments cap = BuiltInEnchantmentsHelper.getBuiltInEnchantmentsCapability(event.getItemStack());
+        List<EnchantmentInstance> builtInEnchantments = cap.getBuiltInEnchantments(GILDED_ITEM_RESOURCELOCATION);
+        builtInEnchantments.forEach(enchantmentData -> {
+            event.getToolTip().add(enchantmentData.enchantment.getFullname(enchantmentData.level).copy().withStyle(ChatFormatting.GOLD));
         });
     }
 
     @SubscribeEvent
-    public static void onRenderTooltip(RenderTooltipEvent.Color event){
-        LazyOptional<BuiltInEnchantments> lazyCap = BuiltInEnchantmentsHelper.getBuiltInEnchantmentsCapabilityLazy(event.getItemStack());
-        lazyCap.ifPresent(cap -> {
-            List<EnchantmentInstance> builtInEnchantments = cap.getBuiltInEnchantments(GILDED_ITEM_RESOURCELOCATION);
-            if(!builtInEnchantments.isEmpty()){
-                event.setBorderStart(0xF0FFD700);
-                event.setBorderEnd(0x50F5CC27);
-                event.setBackground(0xF0AF7923);
-            }
-        });
+    public static void onRenderTooltip(RenderTooltipEvent.Color event) {
+        BuiltInEnchantments cap = BuiltInEnchantmentsHelper.getBuiltInEnchantmentsCapability(event.getItemStack());
+        List<EnchantmentInstance> builtInEnchantments = cap.getBuiltInEnchantments(GILDED_ITEM_RESOURCELOCATION);
+        if (!builtInEnchantments.isEmpty()) {
+            event.setBorderStart(0xF0FFD700);
+            event.setBorderEnd(0x50F5CC27);
+            event.setBackground(0xF0AF7923);
+        }
     }
 
 }

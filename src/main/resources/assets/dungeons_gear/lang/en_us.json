@@ -20,6 +20,10 @@
   "effect.dungeons_gear.stunned": "Stunned",
   "effect.dungeons_gear.party_starter": "Party Starter",
   "effect.dungeons_gear.dynamo": "Dynamo",
+  "effect.dungeons_gear.life_steal": "Lifesteal",
+  "effect.dungeons_gear.bow_charge": "Charged Up",
+
+  "curios.identifier.artifact": "Artifact",
 
   "item.minecraft.potion.effect.shadow_brew": "Potion of Shadow Form",
   "item.minecraft.potion.effect.oakwood_brew": "Potion of Oakwood Armor",
@@ -74,7 +78,7 @@
   "enchantment.dungeons_gear.radiance": "Radiance",
   "enchantment.dungeons_gear.radiance.desc": "Has a 20% chance to spawn a circular area that heals all allies within it.",
   "enchantment.dungeons_gear.rampaging": "Rampaging",
-  "enchantment.dungeons_gear.rampaging.desc": "After defeating a mob, there is a 10% chance to increase your attack speed by 50% for a short time.",
+  "enchantment.dungeons_gear.rampaging.desc": "After defeating a mob, there is a small chance to increase your attack speed by 50% for a short time.",
   "enchantment.dungeons_gear.rushdown": "Rushdown",
   "enchantment.dungeons_gear.rushdown.desc": "After defeating a mob, increase your speed by 100% for a short time.",
   "enchantment.dungeons_gear.shockwave": "Shockwave",
@@ -210,7 +214,7 @@
   "enchantment.dungeons_gear.surprise_gift": "Surprise Gift",
   "enchantment.dungeons_gear.surprise_gift.desc": "Whenever you use a healing potion, you sometimes create random consumables.",
   "enchantment.dungeons_gear.tumblebee": "Tumblebee",
-  "enchantment.dungeons_gear.tumblebee.desc": "Chance to summon a bee when you jump or dodge",
+  "enchantment.dungeons_gear.tumblebee.desc": "Chance to summon a bee when you jump or dodge.",
   "enchantment.dungeons_gear.arrow_hoarder": "Arrow Hoarder",
   "enchantment.dungeons_gear.arrow_hoarder.desc": "Gives you a chance to find Arrow Bundles. +1/2/3 arrow(s) per bundle.",
   "enchantment.dungeons_gear.melee_aura": "Melee Aura",
@@ -821,7 +825,17 @@
   "lore.dungeons_gear.eye_of_the_guardian": "The Eye of the Guardian holds a power that awakens in the hands of a worthy hero.",
   "ability.dungeons_gear.eye_of_the_guardian": "Fires a beam of energy that locks you into place as it deals damage to enemies in its path.",
 
+  "item.dungeons_gear.fireworks_display": "Fireworks Display",
+  "lore.dungeons_gear.fireworks_display": "The Fireworks Display is often used by Villagers to celebrate a successful defense against an Illager raid, it is also quite handy as a flare for lost travellers.",
+  "ability.dungeons_gear.fireworks_display": "Shoots a display of fireworks into the sky.",
+
+  "item.dungeons_gear.soul_lantern": "Soul Lantern",
+  "lore.dungeons_gear.soul_lantern": "This lantern, still covered in the sands of a far-flung place, allows those who hold it to summon a creature formed from bound souls.",
+  "ability.dungeons_gear.soul_lantern": "Summons a Soul Wizard to aid you in battle.",
+
   "artifact.dungeons_gear.charge_time": "%d Seconds Charge-Up",
+  "artifact.dungeons_gear.duration": "%d Seconds Duration",
+  "artifact.dungeons_gear.cooldown": "%d Seconds Cooldown",
   "artifact.dungeons_gear.activation": "Requires %d Souls",
 
   "item.dungeons_gear.broadsword": "Broadsword",
@@ -1004,7 +1018,7 @@
   "ability.dungeons_gear.committed": "Increased Damage To Wounded Mobs (Committed I)",
   "ability.dungeons_gear.continuous_attacks": "Continuous Attacks",
   "ability.dungeons_gear.critical_hit": "Increased Critical Hit Chance (Critical Hit I)",
-  "ability.dungeons_gear.deals_absorbed_damage_during_attack_combo": "Deals Absorbed Damage During Attack DualWield",
+  "ability.dungeons_gear.deals_absorbed_damage_during_attack_combo": "Deals Absorbed Damage During Attack Combo",
   "ability.dungeons_gear.echo": "Sometimes Strikes Twice (Echo I)",
   "ability.dungeons_gear.exploding": "Defeated Mobs Explode (Exploding I)",
   "ability.dungeons_gear.fast_thrusts": "Fast Thrusts",
@@ -1019,8 +1033,8 @@
   "ability.dungeons_gear.radiance": "Heals Allies In Area (Radiance I)",
   "ability.dungeons_gear.rampaging": "Increases Attack Speed (Rampaging I)",
   "ability.dungeons_gear.rapid_slashes": "Rapid Slashes",
-  "ability.dungeons_gear.relentless_combo": "Relentless DualWield",
-  "ability.dungeons_gear.reliable_combo": "Reliable DualWield",
+  "ability.dungeons_gear.relentless_combo": "Relentless Combo",
+  "ability.dungeons_gear.reliable_combo": "Reliable Combo",
   "ability.dungeons_gear.rushdown": "Speed Burst After Mob Defeated (Rushdown I)",
   "ability.dungeons_gear.sharpness": "Extra Damage (Sharpness I)",
   "ability.dungeons_gear.shockwave": "Casts Shockwaves (Shockwave I)",
@@ -1028,15 +1042,25 @@
   "ability.dungeons_gear.soul_siphon": "Chance To Gain Souls (Soul Siphon I)",
   "ability.dungeons_gear.spin_attack": "Spin Attack",
   "ability.dungeons_gear.stunning": "Stuns Mobs (Stunning I)",
-  "ability.dungeons_gear.stylish_combo": "Increased Damage on Third, Sixth, Eighth, and Final Hit of a DualWield",
+  "ability.dungeons_gear.stylish_combo": "Increased Damage on Third, Sixth, Eighth, and Final Hit of a Combo",
   "ability.dungeons_gear.swirling": "Chance To Spawn Area Damage (Swirling I)",
   "ability.dungeons_gear.thrust_attack": "Thrust Attack",
   "ability.dungeons_gear.thundering": "Fires Lightning Bolts (Thundering I)",
   "ability.dungeons_gear.weakening": "Weakens Enemy Attacks (Weakening I)",
   "ability.dungeons_gear.wind_up_attack": "Wind-Up Attack",
 
+  "entity.dungeons_gear.soul_wizard": "Soul Wizard",
+
   "item.dungeons_gear.arrow_bundle": "Arrow Bundle",
   "ability.dungeons_gear.arrow_hoarder": "+1 arrow per bundle (Arrow Hoarder I)",
 
-  "dungeons_gear.gilded": "Gilded"
+  "dungeons_gear.gilded": "Gilded",
+
+  "death.ice_chunk": "%1$s was crushed by an Ice Chunk",
+  "death.attack.ice_chunk": "%1$s was crushed by an Ice Chunk from %2$s",
+
+  "subtitles.entity.soul_wizard.appear": "Soul Wizard forms",
+  "subtitles.entity.soul_wizard.hurt": "Soul Wizard hurts",
+  "subtitles.entity.soul_wizard.shoot": "Soul Wizard shoots",
+  "subtitles.entity.soul_wizard.projectile_impact": "Soul Wizard Orb impacts"
 }

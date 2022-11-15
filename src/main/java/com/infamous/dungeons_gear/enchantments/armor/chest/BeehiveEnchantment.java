@@ -2,20 +2,15 @@ package com.infamous.dungeons_gear.enchantments.armor.chest;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
-import com.infamous.dungeons_gear.integration.curios.CuriosIntegration;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
+import com.infamous.dungeons_libraries.integration.curios.CuriosIntegration;
 import com.infamous.dungeons_libraries.summon.SummonHelper;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
-import net.minecraft.inventory.EquipmentSlot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
@@ -34,6 +29,7 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes.ARMOR_SLOT;
 import static com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList.BEEHIVE;
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SUMMON_CAP;
+import static net.minecraft.world.entity.EntityType.BEE;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class BeehiveEnchantment extends DungeonsEnchantment {
@@ -70,7 +66,7 @@ public class BeehiveEnchantment extends DungeonsEnchantment {
 
         float beehiveHitRand = victim.getRandom().nextFloat();
         if (beehiveHitRand <= beehiveChance) {
-            if(SummonHelper.summonEntity(victim, victim.blockPosition(), EntityType.BEE) != null) {
+            if(SummonHelper.summonEntity(victim, victim.blockPosition(), BEE) != null) {
                 SoundHelper.playCreatureSound(victim, SoundEvents.BEE_LOOP);
             }
         }
@@ -91,7 +87,7 @@ public class BeehiveEnchantment extends DungeonsEnchantment {
 
     private static void removeAttribute(ItemStack itemStack, LivingEntity livingEntity, UUID attributeModifierUUID) {
         if (EnchantmentHelper.getItemEnchantmentLevel(BEEHIVE, itemStack) > 0) {
-            ModifiableAttributeInstance attributeInstance = livingEntity.getAttribute(SUMMON_CAP.get());
+            AttributeInstance attributeInstance = livingEntity.getAttribute(SUMMON_CAP.get());
             if (attributeInstance != null && attributeInstance.getModifier(attributeModifierUUID) != null) {
                 attributeInstance.removeModifier(attributeModifierUUID);
             }
@@ -101,7 +97,7 @@ public class BeehiveEnchantment extends DungeonsEnchantment {
     private static void addAttribute(ItemStack itemStack, LivingEntity livingEntity, UUID attributeModifierUUID) {
         int itemEnchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(BEEHIVE, itemStack);
         if (itemEnchantmentLevel > 0) {
-            ModifiableAttributeInstance attributeInstance = livingEntity.getAttribute(SUMMON_CAP.get());
+            AttributeInstance attributeInstance = livingEntity.getAttribute(SUMMON_CAP.get());
             if (attributeInstance != null && attributeInstance.getModifier(attributeModifierUUID) == null) {
                 attributeInstance.addTransientModifier(new AttributeModifier(attributeModifierUUID, "Enchantment busy bee", 3, AttributeModifier.Operation.ADDITION));
             }

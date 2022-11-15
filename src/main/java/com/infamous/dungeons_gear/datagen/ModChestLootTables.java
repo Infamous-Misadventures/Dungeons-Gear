@@ -1,10 +1,10 @@
 package com.infamous.dungeons_gear.datagen;
 
-import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_gear.loot.AddPotionLootFunction;
 import com.infamous.dungeons_gear.loot.ExperimentalCondition;
 import com.infamous.dungeons_gear.loot.LootTableRarity;
 import com.infamous.dungeons_gear.loot.LootTableType;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_libraries.items.interfaces.IArmor;
 import com.infamous.dungeons_libraries.items.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_libraries.items.interfaces.IRangedWeapon;

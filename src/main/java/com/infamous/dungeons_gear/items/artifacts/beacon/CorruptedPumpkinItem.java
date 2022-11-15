@@ -30,12 +30,4 @@ public class CorruptedPumpkinItem extends SoulBeaconItem {
     public Rarity getRarity(ItemStack itemStack){
         return Rarity.RARE;
     }
-
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public void appendHoverText(ItemStack stack, Level world, List<Component> list, TooltipFlag flag)
-    {
-        super.appendHoverText(stack, world, list, flag);
-        DescriptionHelper.addFullDescription(list, stack);
-    }
 }

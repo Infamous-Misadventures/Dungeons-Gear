@@ -5,8 +5,12 @@ import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.entities.BuzzyNestEntity;
 import com.infamous.dungeons_gear.entities.ModEntityTypes;
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_gear.network.PacketBreakItem;
+import com.infamous.dungeons_libraries.network.BreakItemMessage;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -58,7 +62,7 @@ public class BuzzyNestItem extends ArtifactItem {
                     buzzyNestEntity.moveTo(blockPos, 0, 0);
                     buzzyNestEntity.setOwner(itemUseContextPlayer);
                     itemUseContextPlayer.level.addFreshEntity(buzzyNestEntity);
-                    itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemUseContextItem)));
+                    itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new BreakItemMessage(entity.getId(), itemUseContextItem)));
                     ArtifactItem.putArtifactOnCooldown(itemUseContextPlayer, itemUseContextItem.getItem());
                 }
             }
@@ -66,12 +70,6 @@ public class BuzzyNestItem extends ArtifactItem {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public void appendHoverText(ItemStack stack, Level world, List<Component> list, TooltipFlag flag) {
-        super.appendHoverText(stack, world, list, flag);
-        DescriptionHelper.addFullDescription(list, stack);
-    }
 
     @Override
     public int getCooldownInSeconds() {

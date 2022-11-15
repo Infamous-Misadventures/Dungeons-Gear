@@ -25,12 +25,4 @@ public class CorruptedBeaconItem extends SoulBeaconItem {
     public BeamColor getBeamColor() {
         return CORRUPTED_BEACON_BEAM_COLOR;
     }
-
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public void appendHoverText(ItemStack stack, Level world, List<Component> list, TooltipFlag flag)
-    {
-        super.appendHoverText(stack, world, list, flag);
-        DescriptionHelper.addFullDescription(list, stack);
-    }
 }

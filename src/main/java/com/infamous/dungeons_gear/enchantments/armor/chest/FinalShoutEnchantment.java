@@ -2,13 +2,13 @@ package com.infamous.dungeons_gear.enchantments.armor.chest;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.types.HealthAbilityEnchantment;
-import com.infamous.dungeons_gear.integration.curios.CuriosIntegration;
-import com.infamous.dungeons_gear.items.artifacts.ArtifactItem;
-import com.infamous.dungeons_gear.items.artifacts.ArtifactUseContext;
 import com.infamous.dungeons_gear.items.artifacts.beacon.AbstractBeaconItem;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_libraries.capabilities.timers.Timers;
 import com.infamous.dungeons_libraries.capabilities.timers.TimersHelper;
+import com.infamous.dungeons_libraries.integration.curios.CuriosIntegration;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;

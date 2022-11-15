@@ -1,7 +1,9 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_gear.network.PacketBreakItem;
+import com.infamous.dungeons_libraries.network.BreakItemMessage;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
 import com.infamous.dungeons_gear.entities.IceCloudEntity;
 import com.infamous.dungeons_gear.utilties.DescriptionHelper;
 import net.minecraft.world.item.TooltipFlag;
@@ -58,19 +60,13 @@ public class IceWandItem extends ArtifactItem {
             Level world = playerIn.getCommandSenderWorld();
             IceCloudEntity iceCloudEntity = new IceCloudEntity(world, playerIn, target);
             world.addFreshEntity(iceCloudEntity);
-            stack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), stack)));
+            stack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new BreakItemMessage(entity.getId(), stack)));
             ArtifactItem.putArtifactOnCooldown(playerIn, stack.getItem());
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
     }
 
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public void appendHoverText(ItemStack stack, Level world, List<Component> list, TooltipFlag flag) {
-        super.appendHoverText(stack, world, list, flag);
-        DescriptionHelper.addFullDescription(list, stack);
-    }
 
     @Override
     public int getCooldownInSeconds() {

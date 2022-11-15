@@ -3,18 +3,23 @@ package com.infamous.dungeons_gear.items.artifacts;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_gear.network.PacketBreakItem;
-import com.infamous.dungeons_gear.utilties.*;
+import com.infamous.dungeons_gear.utilties.AOECloudHelper;
+import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
+import com.infamous.dungeons_gear.utilties.DescriptionHelper;
+import com.infamous.dungeons_gear.utilties.SoundHelper;
 import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
 import com.infamous.dungeons_libraries.items.interfaces.ISoulConsumer;
-import net.minecraft.world.item.TooltipFlag;
+import com.infamous.dungeons_libraries.network.BreakItemMessage;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -24,8 +29,6 @@ import java.util.List;
 import java.util.UUID;
 
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_GATHERING;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class HarvesterItem extends ArtifactItem implements ISoulConsumer {
 
@@ -41,19 +44,13 @@ public class HarvesterItem extends ArtifactItem implements ISoulConsumer {
             SoundHelper.playGenericExplodeSound(playerIn);
             AOECloudHelper.spawnExplosionCloud(playerIn, playerIn, 3.0F);
             AreaOfEffectHelper.causeMagicExplosionAttack(playerIn, playerIn, 15, 3.0F);
-            itemStack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new PacketBreakItem(entity.getId(), itemStack)));
+            itemStack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new BreakItemMessage(entity.getId(), itemStack)));
             ArtifactItem.putArtifactOnCooldown(playerIn, itemStack.getItem());
         }
 
         return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemStack);
     }
 
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public void appendHoverText(ItemStack stack, Level world, List<Component> list, TooltipFlag flag) {
-        super.appendHoverText(stack, world, list, flag);
-        DescriptionHelper.addFullDescription(list, stack);
-    }
 
     @Override
     public int getCooldownInSeconds() {

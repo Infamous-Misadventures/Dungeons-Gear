@@ -1,10 +1,11 @@
 package com.infamous.dungeons_gear.client;
 
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_gear.capabilities.artifact.ArtifactUsage;
-import com.infamous.dungeons_gear.capabilities.artifact.ArtifactUsageHelper;
+import com.infamous.dungeons_libraries.capabilities.artifact.ArtifactUsageHelper;
 import com.infamous.dungeons_gear.items.armor.FreezingResistanceArmorGear;
 import com.infamous.dungeons_gear.items.artifacts.beacon.AbstractBeaconItem;
+import com.infamous.dungeons_libraries.capabilities.artifact.ArtifactUsage;
+import com.infamous.dungeons_libraries.capabilities.artifact.ArtifactUsageHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -47,7 +48,6 @@ public class ClientEvents {
         AbstractClientPlayer player = Minecraft.getInstance().player;
         if(player == null) return;
         ArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(player);
-        if(cap == null) return;
         if(cap.isUsingArtifact() && cap.getUsingArtifact().getItem() instanceof AbstractBeaconItem){
             event.setCanceled(true);
             if(event.getHand() == InteractionHand.MAIN_HAND) {
