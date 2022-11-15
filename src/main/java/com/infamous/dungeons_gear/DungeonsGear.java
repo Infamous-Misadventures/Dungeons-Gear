@@ -37,8 +37,6 @@ import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 
 import java.util.function.Consumer;
 
-import static com.infamous.dungeons_gear.integration.curios.client.CuriosKeyBindings.setupCuriosKeybindings;
-
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(DungeonsGear.MODID)
 public class DungeonsGear
@@ -96,8 +94,6 @@ public class DungeonsGear
 
         MinecraftForge.EVENT_BUS.register(new DualWieldItemProperties());
         GearRangedItemModelProperties.init();
-
-        setupCuriosKeybindings();
 
         GeoArmorRenderer.registerArmorRenderer(FreezingResistanceArmorGear.class, ArmorGearRenderer::new);
         GeoArmorRenderer.registerArmorRenderer(PetBatArmorGear.class, ArmorGearRenderer::new);

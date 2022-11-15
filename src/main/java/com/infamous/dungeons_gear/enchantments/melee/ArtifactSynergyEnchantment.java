@@ -7,6 +7,7 @@ import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.PlayerAttackHelper;
+import com.infamous.dungeons_libraries.event.ArtifactEvent;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -48,6 +49,14 @@ public class ArtifactSynergyEnchantment extends DungeonsEnchantment {
                 event.setAmount(currentDamage * damageMultiplier);
             }
 
+        }
+    }
+
+    @SubscribeEvent
+    public static void onArtifactTriggered(ArtifactEvent.Activated event){
+        Combo comboCap = ComboHelper.getComboCapability(event.getEntityLiving());
+        if(comboCap != null && !comboCap.hasArtifactSynergy()){
+            comboCap.setArtifactSynergy(true);
         }
     }
 }

@@ -125,7 +125,7 @@ public class EnchantmentInit {
                     OPULENT_SHIELD = new OpulentShieldEnchantment().setRegistryName(location("opulent_shield")),
                     ARROW_HOARDER = new ArrowHoarderEnchantment().setRegistryName(location("arrow_hoarder")),
                     VOID_DODGE = new VoidDodgeEnchantment().setRegistryName(location("void_dodge")),
-                    DODGE = new DodgeEnchantment().setRegistryName(location("dodge"))
+                    DODGE = new DodgeEnchantment().setRegistryName(location("dodge")),
                     BEEHIVE = new BeehiveEnchantment().setRegistryName(location("beehive"))
                     );
 

@@ -2,8 +2,8 @@
   "attributes": [
     {
       "attribute": "dungeons_libraries:artifact_cooldown_multiplier",
-      "amount": -0.10,
-      "operation": 0
+      "amount": -0.1,
+      "operation": 1
     }
   ],
   "built_in_enchantments": [{"enchantment": "dungeons_gear:arrow_hoarder", "level": 1}],

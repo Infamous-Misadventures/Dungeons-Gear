@@ -3,7 +3,6 @@ package com.infamous.dungeons_gear.capabilities.bow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
 
-import static com.infamous.dungeons_gear.capabilities.ModCapabilities.ARTIFACT_USAGE_CAPABILITY;
 import static com.infamous.dungeons_gear.capabilities.ModCapabilities.RANGED_ABILITIES_CAPABILITY;
 
 

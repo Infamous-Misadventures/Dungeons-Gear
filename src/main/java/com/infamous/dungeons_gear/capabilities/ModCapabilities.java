@@ -1,7 +1,5 @@
 package com.infamous.dungeons_gear.capabilities;
 
-import com.infamous.dungeons_gear.capabilities.artifact.ArtifactUsage;
-import com.infamous.dungeons_gear.capabilities.artifact.AttacherArtifactUsage;
 import com.infamous.dungeons_gear.capabilities.bow.AttacherRangedAbilities;
 import com.infamous.dungeons_gear.capabilities.bow.RangedAbilities;
 import com.infamous.dungeons_gear.capabilities.combo.AttacherCombo;
@@ -24,7 +22,6 @@ import static com.infamous.dungeons_libraries.DungeonsLibraries.MODID;
 @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModCapabilities {
 
-    public static final Capability<ArtifactUsage> ARTIFACT_USAGE_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
     public static final Capability<RangedAbilities> RANGED_ABILITIES_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
     public static final Capability<Combo> COMBO_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
     public static final Capability<DualWield> DUAL_WIELD_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
@@ -32,7 +29,6 @@ public class ModCapabilities {
 
     public static void setupCapabilities() {
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
-        forgeBus.addGenericListener(Entity.class, AttacherArtifactUsage::attach);
         forgeBus.addGenericListener(ItemStack.class, AttacherRangedAbilities::attach);
         forgeBus.addGenericListener(Entity.class, AttacherCombo::attach);
         forgeBus.addGenericListener(ItemStack.class, AttacherDualWield::attach);
@@ -40,7 +36,6 @@ public class ModCapabilities {
 
     @SubscribeEvent
     public static void registerCaps(RegisterCapabilitiesEvent event) {
-        event.register(ArtifactUsage.class);
         event.register(RangedAbilities.class);
         event.register(Combo.class);
         event.register(Combo.class);

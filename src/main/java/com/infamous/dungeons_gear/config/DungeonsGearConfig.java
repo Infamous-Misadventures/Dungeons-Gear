@@ -14,7 +14,6 @@ import java.util.List;
 public class DungeonsGearConfig {
     private static final ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
     public static ForgeConfigSpec.ConfigValue<Integer> METAL_MELEE_WEAPON_DURABILITY;
-    public static ForgeConfigSpec.ConfigValue<Integer> ARTIFACT_DURABILITY;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_DUNGEONS_GEAR_LOOT;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_EXPERIMENTAL;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_SALVAGING;
@@ -245,9 +244,6 @@ public class DungeonsGearConfig {
         METAL_MELEE_WEAPON_DURABILITY = builder
                 .comment("Set the durability for melee weapons. [0-1024, default: 250")
                 .defineInRange("meleeWeaponDurability", 250, 0, 1024);
-        ARTIFACT_DURABILITY = builder
-                .comment("Set the durability for artifacts. [0-1024, default: 64")
-                .defineInRange("artifactDurability", 64, 0, 1024);
         builder.pop();
 
         builder.comment("Combat Configuration").push("combat_configuration");

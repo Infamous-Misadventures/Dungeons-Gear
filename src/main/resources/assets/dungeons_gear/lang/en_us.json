@@ -21,8 +21,6 @@
   "effect.dungeons_gear.party_starter": "Party Starter",
   "effect.dungeons_gear.dynamo": "Dynamo",
 
-  "curios.identifier.artifact": "Artifact",
-
   "item.minecraft.potion.effect.shadow_brew": "Potion of Shadow Form",
   "item.minecraft.potion.effect.oakwood_brew": "Potion of Oakwood Armor",
   "item.minecraft.splash_potion.effect.shadow_brew": "Splash Potion of Shadow Form",
@@ -824,8 +822,6 @@
   "ability.dungeons_gear.eye_of_the_guardian": "Fires a beam of energy that locks you into place as it deals damage to enemies in its path.",
 
   "artifact.dungeons_gear.charge_time": "%d Seconds Charge-Up",
-  "artifact.dungeons_gear.duration": "%d Seconds Duration",
-  "artifact.dungeons_gear.cooldown": "%d Seconds Cooldown",
   "artifact.dungeons_gear.activation": "Requires %d Souls",
 
   "item.dungeons_gear.broadsword": "Broadsword",
@@ -1042,10 +1038,5 @@
   "item.dungeons_gear.arrow_bundle": "Arrow Bundle",
   "ability.dungeons_gear.arrow_hoarder": "+1 arrow per bundle (Arrow Hoarder I)",
 
-  "dungeons_gear.gilded": "Gilded",
-
-  "key.dungeons_gear.curiosintegration.category": "Dungeons Gear Curios",
-  "key.dungeons_gear.curiosintegration.description_slot1": "Artifact Slot 1",
-  "key.dungeons_gear.curiosintegration.description_slot2": "Artifact Slot 2",
-  "key.dungeons_gear.curiosintegration.description_slot3": "Artifact Slot 3"
+  "dungeons_gear.gilded": "Gilded"
 }
