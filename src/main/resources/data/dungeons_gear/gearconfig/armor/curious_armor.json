@@ -2,7 +2,7 @@
   "attributes": [
     {
       "attribute": "dungeons_libraries:artifact_cooldown_multiplier",
-      "amount": -0.1,
+      "amount": -0.10,
       "operation": 1
     }
   ],

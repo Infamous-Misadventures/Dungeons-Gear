@@ -2,7 +2,8 @@
   "type": "minecraft:chest",
   "pools": [
     {
-      "rolls": 1,
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
@@ -59,71 +60,67 @@
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:phantom_chestplate"
+          "name": "dungeons_gear:arctic_fox_helmet"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:phantom_helmet"
+          "name": "dungeons_gear:arctic_fox_chestplate"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:frost_bite_chestplate"
+          "name": "dungeons_gear:arctic_fox_leggings"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:frost_bite_helmet"
+          "name": "dungeons_gear:arctic_fox_boots"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:snow_chestplate"
+          "name": "dungeons_gear:climbing_helmet"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:snow_helmet"
+          "name": "dungeons_gear:climbing_chestplate"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:frost_chestplate"
+          "name": "dungeons_gear:climbing_leggings"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:frost_helmet"
+          "name": "dungeons_gear:climbing_boots"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:arctic_fox_vest"
+          "name": "dungeons_gear:rugged_climbing_helmet"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:arctic_fox_hood"
+          "name": "dungeons_gear:rugged_climbing_chestplate"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:climbing_vest"
+          "name": "dungeons_gear:rugged_climbing_leggings"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:climbing_hood"
+          "name": "dungeons_gear:rugged_climbing_boots"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:rugged_climbing_vest"
+          "name": "dungeons_gear:goat_helmet"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:rugged_climbing_hood"
+          "name": "dungeons_gear:goat_chestplate"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:goat_vest"
+          "name": "dungeons_gear:goat_leggings"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:goat_hood"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:emerald_chestplate"
+          "name": "dungeons_gear:goat_boots"
         },
         {
           "type": "minecraft:item",
@@ -131,7 +128,15 @@
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:gilded_glory_chestplate"
+          "name": "dungeons_gear:emerald_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:emerald_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:emerald_boots"
         },
         {
           "type": "minecraft:item",
@@ -139,11 +144,31 @@
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:opulent_chestplate"
+          "name": "dungeons_gear:gilded_glory_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:gilded_glory_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:gilded_glory_boots"
         },
         {
           "type": "minecraft:item",
           "name": "dungeons_gear:opulent_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:opulent_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:opulent_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:opulent_boots"
         }
       ]
     }

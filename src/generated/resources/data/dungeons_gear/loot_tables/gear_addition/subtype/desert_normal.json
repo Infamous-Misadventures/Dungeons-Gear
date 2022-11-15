@@ -2,7 +2,8 @@
   "type": "minecraft:chest",
   "pools": [
     {
-      "rolls": 1,
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
@@ -101,38 +102,6 @@
             }
           ],
           "name": "dungeons_gear:baby_crossbow"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:grim_chestplate"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:grim_helmet"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:wither_chestplate"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:wither_helmet"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:soul_robe"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:soul_hood"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:souldancer_robe"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:souldancer_hood"
         }
       ]
     }

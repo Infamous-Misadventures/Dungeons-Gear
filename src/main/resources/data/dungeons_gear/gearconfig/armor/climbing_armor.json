@@ -7,8 +7,8 @@
     },
     {
       "attribute": "minecraft:generic.knockback_resistance",
-      "amount": 0.35,
-      "operation": 0
+      "amount": 0.10,
+      "operation": 1
     }
   ],
   "built_in_enchantments": [{"enchantment": "dungeons_gear:melee_aura", "level": 1}],

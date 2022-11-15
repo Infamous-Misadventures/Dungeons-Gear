@@ -14,6 +14,6 @@ public class ArmorGroup extends CreativeModeTab
     @Override
     public ItemStack makeIcon()
     {
-        return new ItemStack(ItemRegistry.ROYAL_GUARD_ARMOR.getChest().get());
+        return new ItemStack(ItemRegistry.FULL_METAL_ARMOR.getChest().get());
     }
 }

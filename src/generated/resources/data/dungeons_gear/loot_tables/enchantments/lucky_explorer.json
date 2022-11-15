@@ -2,16 +2,12 @@
   "type": "minecraft:chest",
   "pools": [
     {
-      "rolls": 1,
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:emerald",
-          "weight": 1
-        },
-        {
-          "type": "minecraft:empty",
-          "weight": 49
+          "name": "minecraft:emerald"
         }
       ]
     }

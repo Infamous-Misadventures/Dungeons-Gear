@@ -2,7 +2,8 @@
   "type": "minecraft:chest",
   "pools": [
     {
-      "rolls": 1,
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
@@ -27,19 +28,35 @@
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:ocelot_vest"
+          "name": "dungeons_gear:beenest_helmet"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:ocelot_hood"
+          "name": "dungeons_gear:beenest_chestplate"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:shadow_walker_vest"
+          "name": "dungeons_gear:beenest_leggings"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:shadow_walker_hood"
+          "name": "dungeons_gear:beenest_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:beehive_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:beehive_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:beehive_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:beehive_boots"
         }
       ]
     }

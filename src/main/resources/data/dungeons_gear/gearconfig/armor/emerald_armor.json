@@ -2,8 +2,8 @@
   "attributes": [
     {
       "attribute": "minecraft:generic.attack_speed",
-      "amount": -0.125,
-      "operation": 2
+      "amount": 0.075,
+      "operation": 1
     }
   ],
   "built_in_enchantments": [{"enchantment": "dungeons_gear:lucky_explorer", "level": 1}],

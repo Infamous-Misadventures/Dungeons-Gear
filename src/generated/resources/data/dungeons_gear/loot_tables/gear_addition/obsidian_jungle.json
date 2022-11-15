@@ -3,9 +3,14 @@
   "pools": [
     {
       "rolls": {
+        "type": "minecraft:uniform",
         "min": 1.0,
-        "max": 4.0,
-        "type": "minecraft:uniform"
+        "max": 4.0
+      },
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "min": 0.0,
+        "max": 2.0
       },
       "entries": [
         {
@@ -20,7 +25,7 @@
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
-              "levels": 15,
+              "levels": 15.0,
               "treasure": true
             }
           ],
@@ -33,7 +38,7 @@
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
-              "levels": 30,
+              "levels": 30.0,
               "treasure": true
             }
           ],
@@ -46,7 +51,7 @@
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
-              "levels": 30,
+              "levels": 30.0,
               "treasure": true
             }
           ],

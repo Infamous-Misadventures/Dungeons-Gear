@@ -2,8 +2,8 @@
   "attributes": [
     {
       "attribute": "dungeons_libraries:soul_gathering",
-      "amount": 0.25,
-      "operation": 2
+      "amount": 0.125,
+      "operation": 1
     }
   ],
   "built_in_enchantments": [{"enchantment": "dungeons_gear:life_steal_aura", "level": 1}],

@@ -2,12 +2,12 @@
   "attributes": [
     {
       "attribute": "dungeons_libraries:soul_gathering",
-      "amount": 0.25,
+      "amount": 0.125,
       "operation": 1
     },
     {
       "attribute": "dungeons_libraries:magic_damage_multiplier",
-      "amount": 0.25,
+      "amount": 0.125,
       "operation": 1
     }
   ],

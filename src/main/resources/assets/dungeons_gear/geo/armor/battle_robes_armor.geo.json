@@ -84,7 +84,6 @@
 				},
 				{
 					"name": "bipedRightLeg",
-					"parent": "armorLeftBoot",
 					"pivot": [-2, 12, 0]
 				},
 				{

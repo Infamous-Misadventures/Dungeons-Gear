@@ -27,6 +27,7 @@ public class ModItemModelProvider extends ItemModelProvider {
                 generated(resourceLocation.getPath(), itemLoc(resourceLocation));
             }else{
                 DungeonsGear.LOGGER.info("Missing texture for " + resourceLocation);
+                generated(resourceLocation.getPath(), modLoc(ITEM_FOLDER + "/armor/missing"));
             }
 
         });
