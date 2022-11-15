@@ -11,7 +11,19 @@
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:corrupted_seeds"
+          "name": "dungeons_gear:harpoon_quiver"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:satchel_of_elixirs"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:satchel_of_snacks"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:eye_of_the_guardian"
         },
         {
           "type": "minecraft:item",
@@ -39,19 +51,23 @@
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:harpoon_quiver"
+          "name": "dungeons_gear:ice_wand"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:satchel_of_elixirs"
+          "name": "dungeons_gear:wind_horn"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:satchel_of_snacks"
+          "name": "dungeons_gear:satchel_of_elements"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:eye_of_the_guardian"
+          "name": "dungeons_gear:updraft_tome"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:corrupted_seeds"
         },
         {
           "type": "minecraft:item",
@@ -127,19 +143,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:ice_wand"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:wind_horn"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:satchel_of_elements"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:updraft_tome"
+          "name": "dungeons_gear:soul_lantern"
         }
       ]
     }

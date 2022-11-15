@@ -1,5 +1,6 @@
-package com.infamous.dungeons_gear.entities;
+package com.infamous.dungeons_gear.registry;
 
+import com.infamous.dungeons_gear.entities.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -18,8 +19,7 @@ public final class ModEntityTypes {
                     .fireImmune()
                     .sized(2.0F, 1.0F)
                     .clientTrackingRange(6)
-                    .updateInterval(2)
-                    .setCustomClientFactory((spawnEntity,world) -> new IceCloudEntity(world))
+                    .updateInterval(1)
                     .build(new ResourceLocation(MODID, "ice_cloud").toString())
     );
 
@@ -68,6 +68,21 @@ public final class ModEntityTypes {
                     .clientTrackingRange(6)
                     .updateInterval(2)
                     .build(new ResourceLocation(MODID, "fireworks_display").toString())
+    );
+
+    public static final RegistryObject<EntityType<SoulWizardOrbEntity>> SOUL_WIZARD_ORB = ENTITY_TYPES.register("soul_wizard_orb", () ->
+            EntityType.Builder.<SoulWizardOrbEntity>of(SoulWizardOrbEntity::new, MobCategory.MISC)
+                    .fireImmune()
+                    .sized(0.3F, 0.3F)
+                    .updateInterval(1)
+                    .build(new ResourceLocation(MODID, "soul_wizard_orb").toString())
+    );
+
+    public static final RegistryObject<EntityType<SoulWizardEntity>> SOUL_WIZARD = ENTITY_TYPES.register("soul_wizard", () ->
+            EntityType.Builder.<SoulWizardEntity>of(SoulWizardEntity::new, MobCategory.MONSTER)
+                    .sized(0.25F, 1.0F)
+                    .clientTrackingRange(8)
+                    .build(new ResourceLocation(MODID, "soul_wizard").toString())
     );
 
 }

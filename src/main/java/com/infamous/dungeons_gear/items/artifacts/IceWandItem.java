@@ -57,9 +57,7 @@ public class IceWandItem extends ArtifactItem {
 
     private InteractionResult freezeEntity(ItemStack stack, Player playerIn, LivingEntity target) {
         if (target != null) {
-            Level world = playerIn.getCommandSenderWorld();
-            IceCloudEntity iceCloudEntity = new IceCloudEntity(world, playerIn, target);
-            world.addFreshEntity(iceCloudEntity);
+            IceCloudEntity.spawn(playerIn, target);
             stack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new BreakItemMessage(entity.getId(), stack)));
             ArtifactItem.putArtifactOnCooldown(playerIn, stack.getItem());
             return InteractionResult.SUCCESS;

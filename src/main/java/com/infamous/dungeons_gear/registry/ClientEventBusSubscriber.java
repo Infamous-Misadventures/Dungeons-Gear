@@ -6,7 +6,6 @@ import com.infamous.dungeons_gear.client.renderer.totem.BuzzyNestRenderer;
 import com.infamous.dungeons_gear.client.renderer.totem.FireworksDisplayRenderer;
 import com.infamous.dungeons_gear.client.renderer.totem.TotemOfRegenerationRenderer;
 import com.infamous.dungeons_gear.client.renderer.totem.TotemOfShieldingRenderer;
-import com.infamous.dungeons_gear.entities.ModEntityTypes;
 import com.infamous.dungeons_gear.items.armor.FreezingResistanceArmorGear;
 import com.infamous.dungeons_gear.items.armor.PetBatArmorGear;
 import com.infamous.dungeons_libraries.items.gearconfig.client.ArmorGearRenderer;

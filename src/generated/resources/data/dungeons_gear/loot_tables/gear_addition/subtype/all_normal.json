@@ -23,56 +23,35 @@
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "dungeons_gear:experimental_condition"
-            }
-          ],
-          "name": "dungeons_gear:mauler"
+          "name": "dungeons_gear:cutlass"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:whip"
+          "name": "dungeons_gear:dancers_sword"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:vine_whip"
+          "name": "dungeons_gear:nameless_blade"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:feral_soul_crossbow"
+          "name": "dungeons_gear:sparkler"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:beenest_helmet"
+          "name": "dungeons_gear:anchor"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:beenest_chestplate"
+          "name": "dungeons_gear:encrusted_anchor"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:beenest_leggings"
+          "name": "dungeons_gear:harpoon_crossbow"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:beenest_boots"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:beehive_helmet"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:beehive_chestplate"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:beehive_leggings"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:beehive_boots"
+          "name": "dungeons_gear:nautical_crossbow"
         },
         {
           "type": "minecraft:item",
@@ -178,35 +157,221 @@
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:cutlass"
+          "conditions": [
+            {
+              "condition": "dungeons_gear:experimental_condition"
+            }
+          ],
+          "name": "dungeons_gear:fang_of_frost"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:dancers_sword"
+          "name": "dungeons_gear:freezing_foil"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:nameless_blade"
+          "name": "dungeons_gear:frost_scythe"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:sparkler"
+          "name": "dungeons_gear:frost_slayer"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:anchor"
+          "name": "dungeons_gear:tempest_knife"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:encrusted_anchor"
+          "name": "dungeons_gear:resolute_tempest_knife"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:harpoon_crossbow"
+          "name": "dungeons_gear:chill_gale_knife"
         },
         {
           "type": "minecraft:item",
-          "name": "dungeons_gear:nautical_crossbow"
+          "name": "dungeons_gear:snow_bow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:winters_touch"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:wind_bow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:burst_gale_bow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:echo_of_the_valley"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:arctic_fox_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:arctic_fox_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:arctic_fox_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:arctic_fox_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:climbing_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:climbing_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:climbing_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:climbing_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:rugged_climbing_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:rugged_climbing_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:rugged_climbing_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:rugged_climbing_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:goat_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:goat_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:goat_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:goat_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:emerald_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:emerald_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:emerald_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:emerald_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:gilded_glory_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:gilded_glory_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:gilded_glory_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:gilded_glory_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:opulent_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:opulent_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:opulent_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:opulent_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "dungeons_gear:experimental_condition"
+            }
+          ],
+          "name": "dungeons_gear:mauler"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:whip"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:vine_whip"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:feral_soul_crossbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:beenest_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:beenest_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:beenest_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:beenest_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:beehive_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:beehive_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:beehive_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "dungeons_gear:beehive_boots"
         },
         {
           "type": "minecraft:item",
@@ -1124,171 +1289,6 @@
         {
           "type": "minecraft:item",
           "name": "dungeons_gear:fox_boots"
-        },
-        {
-          "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "dungeons_gear:experimental_condition"
-            }
-          ],
-          "name": "dungeons_gear:fang_of_frost"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:freezing_foil"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:frost_scythe"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:frost_slayer"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:tempest_knife"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:resolute_tempest_knife"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:chill_gale_knife"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:snow_bow"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:winters_touch"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:wind_bow"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:burst_gale_bow"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:echo_of_the_valley"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:arctic_fox_helmet"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:arctic_fox_chestplate"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:arctic_fox_leggings"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:arctic_fox_boots"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:climbing_helmet"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:climbing_chestplate"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:climbing_leggings"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:climbing_boots"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:rugged_climbing_helmet"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:rugged_climbing_chestplate"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:rugged_climbing_leggings"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:rugged_climbing_boots"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:goat_helmet"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:goat_chestplate"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:goat_leggings"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:goat_boots"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:emerald_helmet"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:emerald_chestplate"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:emerald_leggings"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:emerald_boots"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:gilded_glory_helmet"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:gilded_glory_chestplate"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:gilded_glory_leggings"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:gilded_glory_boots"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:opulent_helmet"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:opulent_chestplate"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:opulent_leggings"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "dungeons_gear:opulent_boots"
         }
       ]
     }

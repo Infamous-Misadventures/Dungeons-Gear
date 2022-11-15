@@ -1,4 +1,4 @@
-package com.infamous.dungeons_gear.registry;
+package com.infamous.dungeons_gear.client.particles;
 
 import net.minecraft.client.particle.*;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -61,7 +61,7 @@ public class ElectricShockParticle extends TextureSheetParticle {
     public static class Factory implements ParticleProvider<SimpleParticleType> {
         private final SpriteSet spriteSet;
 
-        Factory(SpriteSet sprite){
+        public Factory(SpriteSet sprite){
             this.spriteSet = sprite;
         }
 

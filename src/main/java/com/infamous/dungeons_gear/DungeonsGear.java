@@ -4,7 +4,7 @@ import com.infamous.dungeons_gear.capabilities.ModCapabilities;
 import com.infamous.dungeons_gear.client.ClientProxy;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.entities.ModEntityTypes;
+import com.infamous.dungeons_gear.registry.ModEntityTypes;
 import com.infamous.dungeons_gear.groups.ArmorGroup;
 import com.infamous.dungeons_gear.groups.ArtifactGroup;
 import com.infamous.dungeons_gear.groups.MeleeWeaponGroup;

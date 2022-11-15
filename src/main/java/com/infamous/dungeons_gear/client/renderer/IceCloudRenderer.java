@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.client.renderer;
 
-import com.infamous.dungeons_gear.client.models.totem.IceCloudModel;
+import com.infamous.dungeons_gear.client.models.summonables.IceCloudModel;
 import com.infamous.dungeons_gear.entities.IceCloudEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
