@@ -8,22 +8,9 @@ import static com.infamous.dungeons_gear.capabilities.ModCapabilities.RANGED_ABI
 
 public class RangedAbilitiesHelper {
 
-    public static LazyOptional<RangedAbilities> getRangedAbilitiesCapabilityLazy(ItemStack itemStack)
-    {
-        if(RANGED_ABILITIES_CAPABILITY == null) {
-            return LazyOptional.empty();
-        }
-        LazyOptional<RangedAbilities> lazyCap = itemStack.getCapability(RANGED_ABILITIES_CAPABILITY);
-        return lazyCap;
-    }
-
     public static RangedAbilities getRangedAbilitiesCapability(ItemStack itemStack)
     {
-        LazyOptional<RangedAbilities> lazyCap = itemStack.getCapability(RANGED_ABILITIES_CAPABILITY);
-        if (lazyCap.isPresent()) {
-            return lazyCap.orElseThrow(() -> new IllegalStateException("Couldn't get the Artifact Usage capability from the Entity!"));
-        }
-        return null;
+        return itemStack.getCapability(RANGED_ABILITIES_CAPABILITY).orElse(new RangedAbilities());
     }
 
 }

@@ -81,7 +81,6 @@ public class EchoEnchantment extends AOEDamageEnchantment {
         if (event.phase == TickEvent.Phase.START) return;
         if (player.isAlive()) {
             Combo comboCap = ComboHelper.getComboCapability(player);
-            if (comboCap == null) return;
             comboCap.setEchoCooldown(Math.max(0, comboCap.getEchoCooldown() - 1));
         }
     }

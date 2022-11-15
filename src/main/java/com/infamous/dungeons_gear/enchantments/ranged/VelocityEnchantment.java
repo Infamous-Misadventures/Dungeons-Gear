@@ -47,7 +47,6 @@ public class VelocityEnchantment extends DungeonsEnchantment {
         ItemStack itemStack = event.getItemStack();
         int accelerateLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.ACCELERATE, itemStack);
         RangedAbilities weaponCapability = RangedAbilitiesHelper.getRangedAbilitiesCapability(itemStack);
-        if(weaponCapability == null) return;
         float bowChargeTime = weaponCapability.getBowChargeTime();
         long lastFiredTime = weaponCapability.getLastFiredTime();
         if(accelerateLevel > 0 && lastFiredTime > 0){

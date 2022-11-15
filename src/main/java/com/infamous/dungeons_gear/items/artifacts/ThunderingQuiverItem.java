@@ -32,7 +32,6 @@ public class ThunderingQuiverItem extends ArtifactItem {
         ItemStack itemstack = c.getItemStack();
 
         Combo comboCap = ComboHelper.getComboCapability(playerIn);
-        if (comboCap == null) return new InteractionResultHolder<>(InteractionResult.FAIL, itemstack);
         comboCap.setThunderingArrowsCount(5);
 
         itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new BreakItemMessage(entity.getId(), itemstack)));

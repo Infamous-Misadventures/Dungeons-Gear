@@ -35,21 +35,19 @@ public class PainCycleEnchantment extends DungeonsEnchantment {
             ItemStack mainhand = attacker.getMainHandItem();
             if (attacker.getLastHurtMobTimestamp() == attacker.tickCount) return;
             Combo comboCap = ComboHelper.getComboCapability(attacker);
-            if (comboCap != null) {
-                int painCycleLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.PAIN_CYCLE, mainhand);
-                int painDamage = 2;
-                if (painCycleLevel > 0 && attacker.getHealth() > painDamage) {
-                    attacker.hurt(DamageSource.MAGIC, painDamage); // 1 heart of damage
-                    comboCap.setPainCycleStacks(comboCap.getPainCycleStacks() + 1);
-                    if (comboCap.getPainCycleStacks() >= 5) {
-                        int painCycleMultiplier = 2 + painCycleLevel;
-                        comboCap.setPainCycleStacks(0);
-                        float currentDamage = event.getAmount();
-                        event.setAmount(currentDamage * painCycleMultiplier);
-                    }
-                } else {
+            int painCycleLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.PAIN_CYCLE, mainhand);
+            int painDamage = 2;
+            if (painCycleLevel > 0 && attacker.getHealth() > painDamage) {
+                attacker.hurt(DamageSource.MAGIC, painDamage); // 1 heart of damage
+                comboCap.setPainCycleStacks(comboCap.getPainCycleStacks() + 1);
+                if (comboCap.getPainCycleStacks() >= 5) {
+                    int painCycleMultiplier = 2 + painCycleLevel;
                     comboCap.setPainCycleStacks(0);
+                    float currentDamage = event.getAmount();
+                    event.setAmount(currentDamage * painCycleMultiplier);
                 }
+            } else {
+                comboCap.setPainCycleStacks(0);
             }
         }
     }

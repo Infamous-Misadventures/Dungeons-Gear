@@ -43,7 +43,6 @@ public class TormentQuiverItem extends ArtifactItem implements ISoulConsumer {
         if(SoulCasterHelper.consumeSouls(playerIn, this.getActivationCost(itemStack))){
 
             Combo comboCap = ComboHelper.getComboCapability(playerIn);
-            if(comboCap == null) return new InteractionResultHolder<>(InteractionResult.FAIL, itemStack);
 
             comboCap.setTormentArrowCount(3);
 

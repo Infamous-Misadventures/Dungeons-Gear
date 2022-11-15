@@ -72,7 +72,7 @@ public class RefreshmentEnchantment extends DropsEnchantment {
 
     private static void updateRefreshment(Player player, int refreshmentLevel){
         Combo comboCap = ComboHelper.getComboCapability(player);
-        if(comboCap == null || refreshmentLevel <= 0) return;
+        if(refreshmentLevel <= 0) return;
         comboCap.setRefreshmentCounter(comboCap.getRefreshmentCounter() + refreshmentLevel);
 
         if(comboCap.getRefreshmentCounter() >= REFRESHMENT_GOAL){

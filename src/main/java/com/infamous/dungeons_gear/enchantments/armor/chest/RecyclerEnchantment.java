@@ -45,7 +45,6 @@ public class RecyclerEnchantment extends DropsEnchantment {
         if(player.isAlive()){
             if(event.getSource().getDirectEntity() instanceof AbstractArrow){
                 Combo comboCap = ComboHelper.getComboCapability(player);
-                if(comboCap == null) return;
                 if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.RECYCLER)){
                     int arrowsInCounter = comboCap.getArrowsInCounter();
                     arrowsInCounter++;

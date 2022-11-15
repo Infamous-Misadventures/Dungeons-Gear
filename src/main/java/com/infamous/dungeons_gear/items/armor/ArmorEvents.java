@@ -112,7 +112,6 @@ public class ArmorEvents {
         if (event.phase == TickEvent.Phase.START) return;
         if (player.isAlive()) {
             Combo comboCap = ComboHelper.getComboCapability(player);
-            if (comboCap == null) return;
 
             if (comboCap.getJumpCooldownTimer() > 0) {
                 comboCap.setJumpCooldownTimer(comboCap.getJumpCooldownTimer() - 1);

@@ -201,8 +201,6 @@ public class ProjectileEffectHelper {
 
     public static boolean soulsCriticalBoost(Player attacker, ItemStack mainhand) {
         SoulCaster soulCasterCapability = SoulCasterHelper.getSoulCasterCapability(attacker);
-        if(soulCasterCapability == null) return false;
-
 
         float soulsLimit = 50.0F;
         float numSouls = Math.min(soulCasterCapability.getSouls(), soulsLimit);

@@ -44,7 +44,7 @@ public class EnchantedGrassItem extends ArtifactItem {
 
     public EnchantedGrassItem(Properties properties) {
         super(properties);
-        procOnItemUse=true;
+        procOnItemUse = true;
     }
 
     public InteractionResultHolder<ItemStack> procArtifact(ArtifactUseContext itemUseContext) {
@@ -65,27 +65,25 @@ public class EnchantedGrassItem extends ArtifactItem {
                 blockPos = itemUseContextPos.relative(itemUseContextFace);
             }
 
-            if(itemUseContextPlayer != null){
+            if (itemUseContextPlayer != null) {
                 Master summonerCap = getMasterCapability(itemUseContextPlayer);
-                if (summonerCap != null) {
-                    Entity summoned = SummonHelper.summonEntity(itemUseContextPlayer, itemUseContextPlayer.blockPosition(), EntityType.SHEEP);
-                    if(summoned != null) {
-                        if(summoned instanceof Sheep) {
-                            setSheepEnchantment((Sheep) summoned);
-                        }
-                        SoundHelper.playCreatureSound(itemUseContextPlayer, SoundEvents.SHEEP_AMBIENT);
-                        itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new BreakItemMessage(entity.getId(), itemUseContextItem)));
-                        ArtifactItem.putArtifactOnCooldown(itemUseContextPlayer, itemUseContextItem.getItem());
-                    } else{
-                        if(world instanceof ServerLevel){
-                            List<Entity> sheepEntities = summonerCap.getSummonedMobs().stream().filter(entity -> entity.getType() == EntityType.SHEEP).collect(Collectors.toList());
-                            sheepEntities.forEach(entity -> {
-                                if (entity instanceof Sheep) {
-                                    Sheep sheepEntity = (Sheep) entity;
-                                    sheepEntity.teleportToWithTicket((double) blockPos.getX() + 0.5D, (double) blockPos.getY() + 0.05D, (double) blockPos.getZ() + 0.5D);
-                                }
-                            });
-                        }
+                Entity summoned = SummonHelper.summonEntity(itemUseContextPlayer, itemUseContextPlayer.blockPosition(), EntityType.SHEEP);
+                if (summoned != null) {
+                    if (summoned instanceof Sheep) {
+                        setSheepEnchantment((Sheep) summoned);
+                    }
+                    SoundHelper.playCreatureSound(itemUseContextPlayer, SoundEvents.SHEEP_AMBIENT);
+                    itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new BreakItemMessage(entity.getId(), itemUseContextItem)));
+                    ArtifactItem.putArtifactOnCooldown(itemUseContextPlayer, itemUseContextItem.getItem());
+                } else {
+                    if (world instanceof ServerLevel) {
+                        List<Entity> sheepEntities = summonerCap.getSummonedMobs().stream().filter(entity -> entity.getType() == EntityType.SHEEP).collect(Collectors.toList());
+                        sheepEntities.forEach(entity -> {
+                            if (entity instanceof Sheep) {
+                                Sheep sheepEntity = (Sheep) entity;
+                                sheepEntity.teleportToWithTicket((double) blockPos.getX() + 0.5D, (double) blockPos.getY() + 0.05D, (double) blockPos.getZ() + 0.5D);
+                            }
+                        });
                     }
                 }
             }
@@ -93,15 +91,15 @@ public class EnchantedGrassItem extends ArtifactItem {
         }
     }
 
-    private void setSheepEnchantment(Sheep sheepEntity){
+    private void setSheepEnchantment(Sheep sheepEntity) {
         int sheepEnchantment = sheepEntity.getRandom().nextInt(3);
-        if(sheepEnchantment == 0) {
+        if (sheepEnchantment == 0) {
             sheepEntity.setColor(DyeColor.RED);
             sheepEntity.addTag("Fire");
-        }else if(sheepEnchantment == 1){
+        } else if (sheepEnchantment == 1) {
             sheepEntity.setColor(DyeColor.GREEN);
             sheepEntity.addTag("Poison");
-        } else{
+        } else {
             sheepEntity.setColor(DyeColor.BLUE);
             sheepEntity.addTag("Speed");
         }

@@ -84,7 +84,7 @@ public abstract class AbstractBeaconItem extends ArtifactItem {
                 }
             }else{
                 ArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(livingEntity);
-                if(cap != null && cap.isUsingArtifact()){
+                if(cap.isUsingArtifact()){
                     this.stopUsingArtifact(livingEntity);
                     cap.stopUsingArtifact();
                 }

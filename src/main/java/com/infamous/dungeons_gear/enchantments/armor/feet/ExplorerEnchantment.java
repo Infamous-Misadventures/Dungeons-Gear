@@ -30,9 +30,7 @@ public class ExplorerEnchantment extends HealthAbilityEnchantment {
         Player player = event.getPlayer();
         if(!player.level.isClientSide){
             Combo comboCap = ComboHelper.getComboCapability(player);
-            if (comboCap != null) {
-                comboCap.setLastExplorerCheckpoint(player.blockPosition());
-            }
+            comboCap.setLastExplorerCheckpoint(player.blockPosition());
         }
     }
 
@@ -43,18 +41,16 @@ public class ExplorerEnchantment extends HealthAbilityEnchantment {
         if (event.phase == TickEvent.Phase.START) return;
         if (player.isAlive() && !player.level.isClientSide) {
             Combo comboCap = ComboHelper.getComboCapability(player);
-            if (comboCap != null) {
-                BlockPos lastExplorerCheckpoint = comboCap.getLastExplorerCheckpoint();
-                BlockPos currentPos = player.blockPosition();
-                if(currentPos.distSqr(lastExplorerCheckpoint) >= 10000){
-                    comboCap.setLastExplorerCheckpoint(currentPos);
-                    int explorerLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.EXPLORER, player);
-                    if(explorerLevel > 0){
-                        float maxHealth = player.getMaxHealth();
-                        float multiplier = explorerLevel / 3.0F;
-                        float healAmount = maxHealth * (0.01F * multiplier);
-                        player.heal(healAmount);
-                    }
+            BlockPos lastExplorerCheckpoint = comboCap.getLastExplorerCheckpoint();
+            BlockPos currentPos = player.blockPosition();
+            if(currentPos.distSqr(lastExplorerCheckpoint) >= 10000){
+                comboCap.setLastExplorerCheckpoint(currentPos);
+                int explorerLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.EXPLORER, player);
+                if(explorerLevel > 0){
+                    float maxHealth = player.getMaxHealth();
+                    float multiplier = explorerLevel / 3.0F;
+                    float healAmount = maxHealth * (0.01F * multiplier);
+                    player.heal(healAmount);
                 }
             }
         }

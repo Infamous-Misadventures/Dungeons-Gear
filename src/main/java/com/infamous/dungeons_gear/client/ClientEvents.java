@@ -1,7 +1,6 @@
 package com.infamous.dungeons_gear.client;
 
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_libraries.capabilities.artifact.ArtifactUsageHelper;
 import com.infamous.dungeons_gear.items.armor.FreezingResistanceArmorGear;
 import com.infamous.dungeons_gear.items.artifacts.beacon.AbstractBeaconItem;
 import com.infamous.dungeons_libraries.capabilities.artifact.ArtifactUsage;
@@ -31,9 +30,9 @@ public class ClientEvents {
         int index = 0;
         Item item = event.getItemStack().getItem();
         if (item instanceof FreezingResistanceArmorGear) {
-            FreezingResistanceArmorGear armor = (FreezingResistanceArmorGear)item;
+            FreezingResistanceArmorGear armor = (FreezingResistanceArmorGear) item;
             // DOUBLE OR INT
-            if(armor.getFreezingResistance() > 0){
+            if (armor.getFreezingResistance() > 0) {
                 tooltip.add(index + 1, new TranslatableComponent(
                         "+" + armor.getFreezingResistance() + "% ")
                         .append(new TranslatableComponent(
@@ -46,50 +45,15 @@ public class ClientEvents {
     @SubscribeEvent
     public static void renderPlayerHandEvent(RenderHandEvent event) {
         AbstractClientPlayer player = Minecraft.getInstance().player;
-        if(player == null) return;
+        if (player == null) return;
         ArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(player);
-        if(cap.isUsingArtifact() && cap.getUsingArtifact().getItem() instanceof AbstractBeaconItem){
+        if (cap.isUsingArtifact() && cap.getUsingArtifact().getItem() instanceof AbstractBeaconItem) {
             event.setCanceled(true);
-            if(event.getHand() == InteractionHand.MAIN_HAND) {
+            if (event.getHand() == InteractionHand.MAIN_HAND) {
                 float partialTicks = event.getPartialTicks();
                 float f1 = Mth.lerp(partialTicks, player.xRotO, player.getXRot());
                 Minecraft.getInstance().getItemInHandRenderer().renderArmWithItem(player, partialTicks, f1, event.getHand(), 0.0f, cap.getUsingArtifact(), 0.0f, event.getPoseStack(), event.getMultiBufferSource(), event.getPackedLight());
             }
         }
     }
-
-// borrowed from direwolf20's MiningGadget mod
-//    @SubscribeEvent
-//    public static void renderWorldLastEvent(RenderWorldLastEvent event) {
-//        List<AbstractClientPlayerEntity> players = null;
-//        if (Minecraft.getInstance().level != null) {
-//            players = Minecraft.getInstance().level.players();
-//
-//            PlayerEntity myplayer = Minecraft.getInstance().player;
-//            if(myplayer != null){
-//                for (PlayerEntity player : players) {
-//                    if (player.distanceToSqr(myplayer) > 500)
-//                        continue;
-//
-//                    ArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(player);
-//                    if(cap.isUsingArtifact() && cap.getUsingArtifact().getItem() instanceof AbstractBeaconItem){
-//                        BeaconBeamRenderer.renderBeam(event, player, Minecraft.getInstance().getFrameTime(), cap.getUsingArtifact());
-//                    }
-//                }
-//            }
-//        }
-//    }
-
-//    @SubscribeEvent
-//    public static void renderLivingEvent(RenderLivingEvent.Post event) {
-//        PlayerEntity myplayer = Minecraft.getInstance().player;
-//        if (myplayer != null) {
-//                if (event.getEntity().distanceToSqr(myplayer) > 500) return;
-//
-//                ArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(event.getEntity());
-//                if (cap != null && cap.isUsingArtifact() && cap.getUsingArtifact().getItem() instanceof AbstractBeaconItem) {
-//                    BeaconBeamRenderer.renderBeam(event, event.getEntity(), Minecraft.getInstance().getFrameTime(), cap.getUsingArtifact());
-//                }
-//        }
-//    }
 }

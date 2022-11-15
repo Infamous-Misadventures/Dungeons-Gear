@@ -30,11 +30,8 @@ public class BuzzyNestEntity extends TotemBaseEntity implements IAnimatable {
     @Override
     protected void applyTotemEffect() {
         if(!this.level.isClientSide() && this.lifeTicks % 20 == 0 && this.getOwner() != null) {
-            Master summonerCap = getMasterCapability(this.getOwner());
-            if (summonerCap != null) {
-                SummonHelper.summonEntity(this.getOwner(), this.blockPosition(), EntityType.BEE);
-                this.level.playSound(null, this.blockPosition(), SoundEvents.BEEHIVE_EXIT, SoundSource.BLOCKS, 1.0F, 1.0F);
-            }
+            SummonHelper.summonEntity(this.getOwner(), this.blockPosition(), EntityType.BEE);
+            this.level.playSound(null, this.blockPosition(), SoundEvents.BEEHIVE_EXIT, SoundSource.BLOCKS, 1.0F, 1.0F);
         }
     }
 

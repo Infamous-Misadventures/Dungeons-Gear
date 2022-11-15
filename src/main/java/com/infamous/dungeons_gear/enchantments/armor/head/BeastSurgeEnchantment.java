@@ -46,7 +46,6 @@ public class BeastSurgeEnchantment extends BeastEnchantment {
                 int beastSurgeLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.BEAST_SURGE, player);
                 if(beastSurgeLevel > 0){
                     Master summonerCap = MinionMasterHelper.getMasterCapability(player);
-                    if(summonerCap == null) return;
 
                     for(Entity summonedMob : summonerCap.getSummonedMobs()){
                         if(summonedMob instanceof LivingEntity){

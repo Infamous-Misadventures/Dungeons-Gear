@@ -38,7 +38,6 @@ public class ArtifactSynergyEnchantment extends DungeonsEnchantment {
         LivingEntity attacker = (LivingEntity)event.getSource().getEntity();
         ItemStack mainhand = attacker.getMainHandItem();
         Combo comboCap = ComboHelper.getComboCapability(attacker);
-        if(comboCap == null) return;
 
         if(comboCap.hasArtifactSynergy() && !attacker.level.isClientSide){
             comboCap.setArtifactSynergy(false);
@@ -55,7 +54,7 @@ public class ArtifactSynergyEnchantment extends DungeonsEnchantment {
     @SubscribeEvent
     public static void onArtifactTriggered(ArtifactEvent.Activated event){
         Combo comboCap = ComboHelper.getComboCapability(event.getEntityLiving());
-        if(comboCap != null && !comboCap.hasArtifactSynergy()){
+        if(!comboCap.hasArtifactSynergy()){
             comboCap.setArtifactSynergy(true);
         }
     }

@@ -7,21 +7,8 @@ import static com.infamous.dungeons_gear.capabilities.ModCapabilities.COMBO_CAPA
 
 public class ComboHelper {
 
-    public static LazyOptional<Combo> getComboCapabilityLazy(Entity entity)
-    {
-        if(COMBO_CAPABILITY == null) {
-            return LazyOptional.empty();
-        }
-        LazyOptional<Combo> lazyCap = entity.getCapability(COMBO_CAPABILITY);
-        return lazyCap;
-    }
-
     public static Combo getComboCapability(Entity entity)
     {
-        LazyOptional<Combo> lazyCap = entity.getCapability(COMBO_CAPABILITY);
-        if (lazyCap.isPresent()) {
-            return lazyCap.orElseThrow(() -> new IllegalStateException("Couldn't get the Combo capability from the Entity!"));
-        }
-        return null;
+        return entity.getCapability(COMBO_CAPABILITY).orElse(new Combo());
     }
 }

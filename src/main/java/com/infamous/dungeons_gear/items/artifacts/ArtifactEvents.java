@@ -39,7 +39,6 @@ public class ArtifactEvents {
         if(event.getSource().getEntity() instanceof Sheep){
             Sheep sheepEntity = (Sheep)event.getSource().getEntity();
             Minion summonableCap = getMinionCapability(sheepEntity);
-            if(summonableCap == null) return;
             if(summonableCap.getMaster() != null){
                 if(sheepEntity.getTags().contains(FIRE_SHEEP_TAG)){
                     event.getEntityLiving().setSecondsOnFire(5);
@@ -57,7 +56,6 @@ public class ArtifactEvents {
         if(event.getEntityLiving() instanceof Sheep){
             Sheep sheepEntity = (Sheep)event.getEntityLiving();
             Minion summonableCap = getMinionCapability(sheepEntity);
-            if(summonableCap == null) return;
             LivingEntity summoner = summonableCap.getMaster();
             if(summoner != null){
                 if(sheepEntity.level instanceof ServerLevel){
@@ -90,7 +88,6 @@ public class ArtifactEvents {
             if(shooter instanceof Player){
                 Player playerEntity = (Player) shooter;
                 Combo comboCap = ComboHelper.getComboCapability(playerEntity);
-                if(comboCap == null) return;
                 if(comboCap.getFlamingArrowsCount() > 0){
                     int count = comboCap.getFlamingArrowsCount();
                     arrowEntity.setSecondsOnFire(100);

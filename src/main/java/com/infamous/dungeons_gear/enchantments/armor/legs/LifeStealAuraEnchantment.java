@@ -56,9 +56,6 @@ public class LifeStealAuraEnchantment extends PulseEnchantment {
     }
 
     private static void apply(LivingEntity entity) {
-//        DualWield comboCap = DualWieldHelper.getDualWieldCapability(entity);
-//        if(comboCap == null) return;
-//        int burnNearbyTimer = comboCap.getBurnNearbyTimer();
 
         int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(LIFE_STEAL_AURA, entity);
         if(enchantmentLevel > 0){

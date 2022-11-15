@@ -60,14 +60,12 @@ public class LoveMedallionItem extends ArtifactItem {
             PROXY.spawnParticles(nearbyEntity, ParticleTypes.HEART);
             Master masterCapability = MinionMasterHelper.getMasterCapability(playerIn);
             Minion minionCapability = MinionMasterHelper.getMinionCapability(nearbyEntity);
-            if(masterCapability != null && minionCapability != null){
-                masterCapability.addMinion(mobEntity);
-                minionCapability.setMaster(playerIn);
-                minionCapability.setTemporary(true);
-                minionCapability.setRevertsOnExpiration(true);
-                minionCapability.setMinionTimer(200);
-                MinionMasterHelper.addMinionGoals(mobEntity);
-            }
+            masterCapability.addMinion(mobEntity);
+            minionCapability.setMaster(playerIn);
+            minionCapability.setTemporary(true);
+            minionCapability.setRevertsOnExpiration(true);
+            minionCapability.setMinionTimer(200);
+            MinionMasterHelper.addMinionGoals(mobEntity);
         }
     }
 

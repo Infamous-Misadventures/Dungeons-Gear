@@ -36,9 +36,7 @@ public class LuckyExplorerEnchantment extends DropsEnchantment implements IEmera
         Player player = event.getPlayer();
         if(!player.level.isClientSide){
             Combo comboCap = ComboHelper.getComboCapability(player);
-            if (comboCap != null) {
-                comboCap.setLastLuckyExplorerCheckpoint(player.blockPosition());
-            }
+            comboCap.setLastLuckyExplorerCheckpoint(player.blockPosition());
         }
     }
 
@@ -51,17 +49,15 @@ public class LuckyExplorerEnchantment extends DropsEnchantment implements IEmera
             int luckyExplorerLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.LUCKY_EXPLORER, player);
             if (luckyExplorerLevel > 0) {
                 Combo comboCap = ComboHelper.getComboCapability(player);
-                if (comboCap != null) {
-                    BlockPos lastLuckyExplorerCheckpoint = comboCap.getLastLuckyExplorerCheckpoint();
-                    BlockPos currentPos = player.blockPosition();
-                    if (currentPos.distSqr(lastLuckyExplorerCheckpoint) >= 36) {
-                        comboCap.setLastLuckyExplorerCheckpoint(currentPos);
-                        int rollCount = 1 + (luckyExplorerLevel - 1) * 2;
-                        for (int i = 0; i < rollCount; i++) {
-                            ItemStack itemStack = LootTableHelper.generateItemStack((ServerLevel) player.level, player.blockPosition(), new ResourceLocation(MODID, "enchantments/lucky_explorer"), player.getRandom());
-                            ItemEntity luckyExplorerDrop = new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), itemStack);
-                            player.level.addFreshEntity(luckyExplorerDrop);
-                        }
+                BlockPos lastLuckyExplorerCheckpoint = comboCap.getLastLuckyExplorerCheckpoint();
+                BlockPos currentPos = player.blockPosition();
+                if (currentPos.distSqr(lastLuckyExplorerCheckpoint) >= 36) {
+                    comboCap.setLastLuckyExplorerCheckpoint(currentPos);
+                    int rollCount = 1 + (luckyExplorerLevel - 1) * 2;
+                    for (int i = 0; i < rollCount; i++) {
+                        ItemStack itemStack = LootTableHelper.generateItemStack((ServerLevel) player.level, player.blockPosition(), new ResourceLocation(MODID, "enchantments/lucky_explorer"), player.getRandom());
+                        ItemEntity luckyExplorerDrop = new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), itemStack);
+                        player.level.addFreshEntity(luckyExplorerDrop);
                     }
                 }
             }

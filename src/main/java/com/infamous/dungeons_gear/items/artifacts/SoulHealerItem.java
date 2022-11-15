@@ -67,7 +67,6 @@ public class SoulHealerItem extends ArtifactItem implements ISoulConsumer {
 
     private InteractionResultHolder<ItemStack> healAlly(Player playerEntity, float lostHealth, LivingEntity target, ItemStack itemStack) {
         SoulCaster soulCasterCapability = SoulCasterHelper.getSoulCasterCapability(playerEntity);
-        if(soulCasterCapability == null) return new InteractionResultHolder<>(InteractionResult.FAIL, itemStack);
         float toHeal = Math.min(lostHealth, Math.min(target.getMaxHealth() / 5, soulCasterCapability.getSouls() * 0.1f));
         if (toHeal > 0 && SoulCasterHelper.consumeSouls(playerEntity, toHeal*10)) {
             target.heal(toHeal);

@@ -88,7 +88,6 @@ public class GlobalEvents {
         int fuseShotLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.FUSE_SHOT, stack);
         if (fuseShotLevel > 0) {
             RangedAbilities weaponCap = RangedAbilitiesHelper.getRangedAbilitiesCapability(stack);
-            if (weaponCap == null) return;
             int fuseShotCounter = weaponCap.getFuseShotCounter();
             // 6 - 1, 6 - 2, 6 - 3
             // zero indexing, so subtract 1 as well
@@ -127,7 +126,7 @@ public class GlobalEvents {
             ItemStack is = p.getMainHandItem();
             IComboWeapon ic = (IComboWeapon) is.getItem();
             Combo cap = ComboHelper.getComboCapability(p);
-            if (cap != null && ic.shouldProcSpecialEffects(is, p, cap.getComboCount())) {
+            if (ic.shouldProcSpecialEffects(is, p, cap.getComboCount())) {
                 event.setResult(Event.Result.ALLOW);
                 event.setDamageModifier(ic.damageMultiplier(is, p, cap.getComboCount()));
                 cap.setComboCount(cap.getComboCount() % ic.getComboLength(is, p));
@@ -166,7 +165,6 @@ public class GlobalEvents {
             Player playerEntity = (Player) event.getSource().getEntity();
 
             Combo comboCap = ComboHelper.getComboCapability(playerEntity);
-            if (comboCap == null) return;
             if (comboCap.getShadowForm()) {
                 float originalDamage = event.getAmount();
                 event.setAmount(originalDamage * 2.0F);
@@ -182,7 +180,6 @@ public class GlobalEvents {
             if (event.getEntityLiving() instanceof Player) {
                 Player playerEntity = (Player) event.getEntityLiving();
                 Combo comboCap = ComboHelper.getComboCapability(playerEntity);
-                if (comboCap == null) return;
                 comboCap.setShadowForm(true);
             }
         }
@@ -194,7 +191,6 @@ public class GlobalEvents {
             if (event.getEntityLiving() instanceof Player) {
                 Player playerEntity = (Player) event.getEntityLiving();
                 Combo comboCap = ComboHelper.getComboCapability(playerEntity);
-                if (comboCap == null) return;
                 comboCap.setShadowForm(false);
             }
         }
@@ -231,7 +227,6 @@ public class GlobalEvents {
             ItemStack helmet = playerEntity.getItemBySlot(EquipmentSlot.HEAD);
             ItemStack chestplate = playerEntity.getItemBySlot(EquipmentSlot.CHEST);
             Combo comboCap = ComboHelper.getComboCapability(playerEntity);
-            if (comboCap == null) return;
             int jumpCooldownTimer = comboCap.getJumpCooldownTimer();
 
             if (jumpCooldownTimer <= 0) {

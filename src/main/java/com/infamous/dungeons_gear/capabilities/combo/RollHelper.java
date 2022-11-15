@@ -9,7 +9,6 @@ import static com.infamous.dungeons_gear.registry.AttributeRegistry.ROLL_LIMIT;
 public class RollHelper {
     public static void incrementJumpCounter(LivingEntity livingEntity){
         Combo comboCap = ComboHelper.getComboCapability(livingEntity);
-        if(comboCap == null) return;
 
         comboCap.setJumpCounter(comboCap.getJumpCounter() + 1);
     }
@@ -22,7 +21,6 @@ public class RollHelper {
 
     public static boolean hasReachedJumpLimit(LivingEntity jumper){
         Combo comboCap = ComboHelper.getComboCapability(jumper);
-        if(comboCap == null) return false;
 
         AttributeInstance attribute = jumper.getAttribute(ROLL_LIMIT.get());
         int jumpLimit = attribute != null ? (int) attribute.getValue() : 1;

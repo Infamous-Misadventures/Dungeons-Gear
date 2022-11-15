@@ -49,7 +49,6 @@ public class BeastBurstEnchantment extends BeastEnchantment {
                 int beastBurstLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.BEAST_BURST, player);
                 if(beastBurstLevel > 0){
                     Master summonerCap = MinionMasterHelper.getMasterCapability(player);
-                    if(summonerCap == null) return;
 
                     for(Entity summonedMob : summonerCap.getSummonedMobs()){
                         if(summonedMob instanceof LivingEntity){

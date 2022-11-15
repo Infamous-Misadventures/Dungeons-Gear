@@ -29,7 +29,6 @@ import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMa
 public class ArmorEffectHelper {
     public static void summonOrTeleportBat(Player playerEntity, Level world) {
         Master summonerCap = getMasterCapability(playerEntity);
-        if(summonerCap == null) return;
         Optional<Entity> batPet = summonerCap.getSummonedMobs().stream().filter(entity -> entity.getType() == EntityType.BAT).findFirst();
         if(!batPet.isPresent()){
             SummonHelper.summonEntity(playerEntity, playerEntity.blockPosition(), EntityType.BAT);

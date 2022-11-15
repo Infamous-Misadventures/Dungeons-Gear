@@ -67,7 +67,6 @@ public class EnigmaResonatorEnchantment extends DamageBoostEnchantment {
         Player attacker = event.getPlayer();
         ItemStack mainhand = attacker.getMainHandItem();
         SoulCaster soulCasterCapability = SoulCasterHelper.getSoulCasterCapability(attacker);
-        if(soulCasterCapability == null)  return;
 
         int numSouls = (int) soulCasterCapability.getSouls();
         if (!event.isVanillaCritical()) {

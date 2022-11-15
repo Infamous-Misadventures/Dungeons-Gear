@@ -30,7 +30,7 @@ public class HeldItemLayerMixin<T extends LivingEntity, M extends EntityModel<T>
             ordinal = 0)
     private ItemStack dungeons_renderOverwriteFirst(ItemStack original) {
         ArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(entity);
-        if(cap != null && cap.isUsingArtifact()){
+        if(cap.isUsingArtifact()){
             return cap.getUsingArtifact();
         }
         return original;
@@ -41,7 +41,7 @@ public class HeldItemLayerMixin<T extends LivingEntity, M extends EntityModel<T>
             ordinal = 1)
     private ItemStack dungeons_renderOverwriteSecond(ItemStack original) {
         ArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(entity);
-        if(cap != null && cap.isUsingArtifact()){
+        if(cap.isUsingArtifact()){
             return ItemStack.EMPTY;
         }
         return original;

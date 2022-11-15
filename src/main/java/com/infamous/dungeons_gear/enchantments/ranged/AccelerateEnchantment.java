@@ -53,7 +53,6 @@ public class AccelerateEnchantment extends DungeonsEnchantment {
         ItemStack stack = event.getBow();
         if(stack.getItem() instanceof BowItem){
             RangedAbilities weaponCapability = RangedAbilitiesHelper.getRangedAbilitiesCapability(stack);
-            if(weaponCapability == null) return;
             long lastFiredTime = weaponCapability.getLastFiredTime();
             float bowChargeTime = weaponCapability.getBowChargeTime();
 
@@ -89,7 +88,6 @@ public class AccelerateEnchantment extends DungeonsEnchantment {
         ItemStack stack = event.getItemStack();
         if (stack.getItem() instanceof CrossbowItem & CrossbowItem.isCharged(stack)) {
             RangedAbilities weaponCap = RangedAbilitiesHelper.getRangedAbilitiesCapability(stack);
-            if (weaponCap == null) return;
             long lastFiredTime = weaponCap.getLastFiredTime();
             int crossbowChargeTime = weaponCap.getCrossbowChargeTime();
 
@@ -120,7 +118,6 @@ public class AccelerateEnchantment extends DungeonsEnchantment {
         ItemStack itemStack = event.getItemStack();
         int accelerateLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.ACCELERATE, itemStack);
         RangedAbilities weaponCapability = RangedAbilitiesHelper.getRangedAbilitiesCapability(itemStack);
-        if(weaponCapability == null) return;
         float bowChargeTime = weaponCapability.getBowChargeTime();
         long lastFiredTime = weaponCapability.getLastFiredTime();
         if(accelerateLevel > 0 && lastFiredTime > 0){
@@ -133,7 +130,6 @@ public class AccelerateEnchantment extends DungeonsEnchantment {
         ItemStack itemStack = event.getItemStack();
         int accelerateLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.ACCELERATE, itemStack);
         RangedAbilities weaponCapability = RangedAbilitiesHelper.getRangedAbilitiesCapability(itemStack);
-        if(weaponCapability == null) return;
         float bowChargeTime = weaponCapability.getBowChargeTime();
         long lastFiredTime = weaponCapability.getLastFiredTime();
         if(accelerateLevel > 0 && lastFiredTime > 0){

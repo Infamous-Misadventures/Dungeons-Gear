@@ -44,7 +44,7 @@ import net.minecraft.world.item.Item.Properties;
 public class TastyBoneItem extends ArtifactItem {
     public TastyBoneItem(Properties p_i48487_1_) {
         super(p_i48487_1_);
-        procOnItemUse=true;
+        procOnItemUse = true;
     }
 
     public InteractionResultHolder<ItemStack> procArtifact(ArtifactUseContext itemUseContext) {
@@ -65,27 +65,25 @@ public class TastyBoneItem extends ArtifactItem {
                 blockPos = itemUseContextPos.relative(itemUseContextFace);
             }
 
-            if(itemUseContextPlayer != null){
+            if (itemUseContextPlayer != null) {
                 Master summonerCap = getMasterCapability(itemUseContextPlayer);
-                if (summonerCap != null) {
-                    Entity summoned = SummonHelper.summonEntity(itemUseContextPlayer, itemUseContextPlayer.blockPosition(), EntityType.WOLF);
-                    if(summoned != null) {
-                        if(summoned instanceof Wolf) {
-                            updateWolf(itemUseContextPlayer, (Wolf) summoned);
-                        }
-                        SoundHelper.playCreatureSound(itemUseContextPlayer, SoundEvents.WOLF_AMBIENT);
-                        itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new BreakItemMessage(entity.getId(), itemUseContextItem)));
-                        ArtifactItem.putArtifactOnCooldown(itemUseContextPlayer, itemUseContextItem.getItem());
-                    } else{
-                        if(world instanceof ServerLevel) {
-                            List<Entity> wolfEntities = summonerCap.getSummonedMobs().stream().filter(entity -> entity.getType() == EntityType.WOLF).collect(Collectors.toList());
-                            wolfEntities.forEach(entity -> {
-                                if (entity instanceof Wolf) {
-                                    Wolf wolfEntity = (Wolf) entity;
-                                    wolfEntity.teleportToWithTicket((double) blockPos.getX() + 0.5D, (double) blockPos.getY() + 0.05D, (double) blockPos.getZ() + 0.5D);
-                                }
-                            });
-                        }
+                Entity summoned = SummonHelper.summonEntity(itemUseContextPlayer, itemUseContextPlayer.blockPosition(), EntityType.WOLF);
+                if (summoned != null) {
+                    if (summoned instanceof Wolf) {
+                        updateWolf(itemUseContextPlayer, (Wolf) summoned);
+                    }
+                    SoundHelper.playCreatureSound(itemUseContextPlayer, SoundEvents.WOLF_AMBIENT);
+                    itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new BreakItemMessage(entity.getId(), itemUseContextItem)));
+                    ArtifactItem.putArtifactOnCooldown(itemUseContextPlayer, itemUseContextItem.getItem());
+                } else {
+                    if (world instanceof ServerLevel) {
+                        List<Entity> wolfEntities = summonerCap.getSummonedMobs().stream().filter(entity -> entity.getType() == EntityType.WOLF).collect(Collectors.toList());
+                        wolfEntities.forEach(entity -> {
+                            if (entity instanceof Wolf) {
+                                Wolf wolfEntity = (Wolf) entity;
+                                wolfEntity.teleportToWithTicket((double) blockPos.getX() + 0.5D, (double) blockPos.getY() + 0.05D, (double) blockPos.getZ() + 0.5D);
+                            }
+                        });
                     }
                 }
             }
