@@ -2,6 +2,8 @@ package com.infamous.dungeons_gear.registry;
 
 import com.infamous.dungeons_gear.client.renderer.BeamEntityRenderer;
 import com.infamous.dungeons_gear.client.renderer.IceCloudRenderer;
+import com.infamous.dungeons_gear.client.renderer.ghosts.SoulWizardRenderer;
+import com.infamous.dungeons_gear.client.renderer.projectiles.SoulWizardOrbRenderer;
 import com.infamous.dungeons_gear.client.renderer.totem.BuzzyNestRenderer;
 import com.infamous.dungeons_gear.client.renderer.totem.FireworksDisplayRenderer;
 import com.infamous.dungeons_gear.client.renderer.totem.TotemOfRegenerationRenderer;
@@ -28,6 +30,8 @@ public class ClientEventBusSubscriber {
         event.registerEntityRenderer(ModEntityTypes.TOTEM_OF_REGENERATION.get(), TotemOfRegenerationRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.FIREWORKS_DISPLAY.get(), FireworksDisplayRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.BEAM_ENTITY.get(), BeamEntityRenderer::new);
+        event.registerEntityRenderer(ModEntityTypes.SOUL_WIZARD.get(), SoulWizardRenderer::new);
+        event.registerEntityRenderer(ModEntityTypes.SOUL_WIZARD_ORB.get(), SoulWizardOrbRenderer::new);
     }
 
     @SubscribeEvent

@@ -4,6 +4,7 @@ import com.infamous.dungeons_gear.capabilities.ModCapabilities;
 import com.infamous.dungeons_gear.client.ClientProxy;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
+import com.infamous.dungeons_gear.entities.SoulWizardEntity;
 import com.infamous.dungeons_gear.registry.ModEntityTypes;
 import com.infamous.dungeons_gear.groups.ArmorGroup;
 import com.infamous.dungeons_gear.groups.ArtifactGroup;
@@ -24,6 +25,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
@@ -60,6 +62,8 @@ public class DungeonsGear
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
         // Register the processIMC method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
+        // Register the initEntityTypeAttributes method for modloading
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::initEntityTypeAttributes);
 
 
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -90,12 +94,13 @@ public class DungeonsGear
         event.enqueueWork(ModLootFunctionTypes::register);
     }
 
+    public void initEntityTypeAttributes(EntityAttributeCreationEvent event) {
+        event.put(ModEntityTypes.SOUL_WIZARD.get(), SoulWizardEntity.setCustomAttributes().build());
+    }
+
     private void doClientStuff(final FMLClientSetupEvent event) {
 
         MinecraftForge.EVENT_BUS.register(new DualWieldItemProperties());
         GearRangedItemModelProperties.init();
-
-        GeoArmorRenderer.registerArmorRenderer(FreezingResistanceArmorGear.class, ArmorGearRenderer::new);
-        GeoArmorRenderer.registerArmorRenderer(PetBatArmorGear.class, ArmorGearRenderer::new);
     }
 }

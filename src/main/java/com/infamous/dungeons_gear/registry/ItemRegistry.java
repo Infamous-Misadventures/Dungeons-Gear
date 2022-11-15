@@ -503,7 +503,7 @@ public class ItemRegistry {
 
     private static ArmorSet registerArmorSet(String armorSetName, LootTableType lootTableType, boolean animated) {
         String armorSetId = armorSetName+"_armor";
-        ResourceLocation armorSetResource = new ResourceLocation(MODID, armorSetId+"_armor");
+        ResourceLocation armorSetResource = new ResourceLocation(MODID, armorSetId);
         ResourceLocation modelLocation = new ResourceLocation(MODID, "geo/armor/"+armorSetId+".geo.json");
         ResourceLocation textureLocation = new ResourceLocation(MODID, "textures/models/armor/"+armorSetId+".png");
         ResourceLocation animationFileLocation = animated ? new ResourceLocation(MODID, "animations/armor/" + armorSetId + ".animation.json") : new ResourceLocation(DungeonsLibraries.MODID, "animations/armor/armor_default.animation.json");

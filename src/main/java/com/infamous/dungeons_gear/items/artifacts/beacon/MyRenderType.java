@@ -28,6 +28,7 @@ public class MyRenderType extends RenderType {
                     .setCullState(NO_CULL)
                     .setLightmapState(NO_LIGHTMAP)
                     .setWriteMaskState(COLOR_WRITE)
+                    .setShaderState(RENDERTYPE_ENERGY_SWIRL_SHADER)
                     .createCompositeState(false));
 
     public static final RenderType BEACON_BEAM_GLOW = create("BeaconBeamGlow",
@@ -39,6 +40,7 @@ public class MyRenderType extends RenderType {
                     .setCullState(NO_CULL)
                     .setLightmapState(NO_LIGHTMAP)
                     .setWriteMaskState(COLOR_WRITE)
+                    .setShaderState(RENDERTYPE_ENERGY_SWIRL_SHADER)
                     .createCompositeState(false));
 
     public static final RenderType BEACON_BEAM_CORE = create("BeaconBeamCore",
@@ -50,5 +52,6 @@ public class MyRenderType extends RenderType {
                     .setCullState(NO_CULL)
                     .setLightmapState(NO_LIGHTMAP)
                     .setWriteMaskState(COLOR_WRITE)
+                    .setShaderState(RENDERTYPE_ENERGY_SWIRL_SHADER)
                     .createCompositeState(false));
 }
