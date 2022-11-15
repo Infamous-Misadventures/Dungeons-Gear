@@ -117,6 +117,7 @@ public class DungeonsGearConfig {
     public static ForgeConfigSpec.ConfigValue<Double> DODGE_CHANCE_PER_LEVEL;
     public static ForgeConfigSpec.ConfigValue<Double> VOID_DODGE_CHANCE_PER_LEVEL;
     public static ForgeConfigSpec.ConfigValue<Double> BEEHIVE_CHANCE_PER_LEVEL;
+    public static ForgeConfigSpec.ConfigValue<Double> STUNNING_CHANCE_PER_LEVEL;
 
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> LOVE_MEDALLION_BLACKLIST;
 
@@ -414,7 +415,7 @@ public class DungeonsGearConfig {
                 .defineInRange("tumbleBeeChancePerLevel", 0.1, 0, 1.0);
         RAMPAGING_CHANCE = builder
                 .comment("The decimal chance for rampaging to trigger [0.0-1.0, default: 0.1]")
-                .defineInRange("rampagingChance", 0.1, 0, 1.0);
+                .defineInRange("rampagingChance", 0.2, 0, 1.0);
         RAMPAGING_DURATION = builder
                 .comment("The duration in ticks (20ticks = 1 second) per level added for rampaging. [0-10000, default: 100]")
                 .defineInRange("rampagingDuration", 100, 0, 10000);
@@ -538,6 +539,9 @@ public class DungeonsGearConfig {
         BEEHIVE_CHANCE_PER_LEVEL = builder
                 .comment("The chance per level for beehive to trigger [-5.0-5.0, default: 0.25]")
                 .defineInRange("beehiveChancePerLevel", 0.1, -5.0, 5.0);
+        STUNNING_CHANCE_PER_LEVEL = builder
+                .comment("The chance per level for Stunning to trigger [-5.0-5.0, default: 0.25]")
+                .defineInRange("stunningChancePerLevel", 0.1, -5.0, 5.0);
         builder.pop();
 
         builder.comment("Artifact Specific Configuration").push("artifact_specific_configuration");

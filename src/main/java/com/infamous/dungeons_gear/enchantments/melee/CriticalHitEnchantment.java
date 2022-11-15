@@ -37,7 +37,6 @@ public class CriticalHitEnchantment extends DamageBoostEnchantment {
             Player attacker = event.getPlayer();
             ItemStack mainhand = attacker.getMainHandItem();
             boolean success = false;
-            if (event.getResult() != Event.Result.ALLOW && mainhand.getItem() instanceof IComboWeapon) return;
             if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.CRITICAL_HIT)) {
                 int criticalHitLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.CRITICAL_HIT, mainhand);
                 float criticalHitChance;

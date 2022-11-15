@@ -27,7 +27,6 @@ public class GravityEnchantment extends DungeonsEnchantment {
     @Override
     public void doPostAttack(LivingEntity user, Entity target, int level) {
         if(!(target instanceof LivingEntity)) return;
-        if( user.getLastHurtMobTimestamp()==user.tickCount)return;
         AreaOfEffectHelper.pullInNearbyEntities(user, (LivingEntity)target, level * 3, ParticleTypes.PORTAL);
     }
 }

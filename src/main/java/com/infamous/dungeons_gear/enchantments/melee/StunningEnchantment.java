@@ -11,6 +11,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
+import static com.infamous.dungeons_gear.config.DungeonsGearConfig.STUNNING_CHANCE_PER_LEVEL;
 
 import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 
@@ -30,7 +31,7 @@ public class StunningEnchantment extends DungeonsEnchantment {
     public void doPostAttack(LivingEntity user, Entity target, int level) {
         if(!(target instanceof LivingEntity)) return;
         float chance = user.getRandom().nextFloat();
-        if(chance <=  level * 0.05){
+        if(chance <=  level * STUNNING_CHANCE_PER_LEVEL.get()){
             MobEffectInstance stunned = new MobEffectInstance(CustomEffects.STUNNED, 60);
             MobEffectInstance nausea = new MobEffectInstance(MobEffects.CONFUSION, 60);
             MobEffectInstance slowness = new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 5);

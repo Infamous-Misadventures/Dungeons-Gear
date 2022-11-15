@@ -28,7 +28,6 @@ public class ChainsEnchantment extends DungeonsEnchantment {
     @Override
     public void doPostAttack(LivingEntity user, Entity target, int level) {
         if(!(target instanceof LivingEntity)) return;
-        if( user.getLastHurtMobTimestamp()==user.tickCount)return;
         float chance = user.getRandom().nextFloat();
         if(chance <=  CHAINS_CHANCE.get()){
             AreaOfEffectHelper.chainNearbyEntities(user, (LivingEntity)target, 1.5F, level);
