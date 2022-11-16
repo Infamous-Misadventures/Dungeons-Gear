@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear.enchantments.armor.head;
 
+import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_libraries.integration.curios.CuriosIntegration;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -11,6 +12,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import top.theillusivec4.curios.api.event.CurioChangeEvent;
 
 import java.util.AbstractMap;
@@ -23,6 +25,7 @@ import static com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes.ARMOR_
 import static com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList.COOLDOWN;
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.*;
 
+@Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class CooldownEnchantment extends DungeonsEnchantment {
     private final static Map<EquipmentSlotType, UUID> EQUIPMENT_ATTRIBUTE_UUID_MAP = Stream.of(
                     new AbstractMap.SimpleImmutableEntry<>(EquipmentSlotType.HEAD, UUID.fromString("bf62ed9a-6c97-4ecd-a5be-230c788b1569")),
