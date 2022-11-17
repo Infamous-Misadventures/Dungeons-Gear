@@ -1,5 +1,6 @@
 package com.infamous.dungeons_gear;
 
+import com.infamous.dungeons_gear.client.renderer.totem.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,10 +18,6 @@ import com.infamous.dungeons_gear.client.renderer.BeamEntityRenderer;
 import com.infamous.dungeons_gear.client.renderer.ghosts.SoulWizardRenderer;
 import com.infamous.dungeons_gear.client.renderer.projectiles.SoulWizardOrbRenderer;
 import com.infamous.dungeons_gear.client.renderer.summonables.IceCloudRenderer;
-import com.infamous.dungeons_gear.client.renderer.totem.BuzzyNestRenderer;
-import com.infamous.dungeons_gear.client.renderer.totem.FireworksDisplayRenderer;
-import com.infamous.dungeons_gear.client.renderer.totem.TotemOfRegenerationRenderer;
-import com.infamous.dungeons_gear.client.renderer.totem.TotemOfShieldingRenderer;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
 import com.infamous.dungeons_gear.compat.ElenaiCompat;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
@@ -128,6 +125,7 @@ public class DungeonsGear
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BUZZY_NEST.get(), BuzzyNestRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.TOTEM_OF_SHIELDING.get(), TotemOfShieldingRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.TOTEM_OF_REGENERATION.get(), TotemOfRegenerationRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.TOTEM_OF_SOUL_PROTECTION.get(), TotemOfSoulProtectionRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.FIREWORKS_DISPLAY.get(), FireworksDisplayRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BEAM_ENTITY.get(), BeamEntityRenderer::new);
 

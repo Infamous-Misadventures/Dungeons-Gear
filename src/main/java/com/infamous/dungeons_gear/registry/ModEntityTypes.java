@@ -6,15 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-import com.infamous.dungeons_gear.entities.ArtifactBeamEntity;
-import com.infamous.dungeons_gear.entities.BuzzyNestEntity;
-import com.infamous.dungeons_gear.entities.FireworksDisplayEntity;
-import com.infamous.dungeons_gear.entities.IceCloudEntity;
-import com.infamous.dungeons_gear.entities.SoulWizardEntity;
-import com.infamous.dungeons_gear.entities.SoulWizardOrbEntity;
-import com.infamous.dungeons_gear.entities.TotemOfRegenerationEntity;
-import com.infamous.dungeons_gear.entities.TotemOfShieldingEntity;
+import com.infamous.dungeons_gear.entities.*;
 
+import com.infamous.dungeons_gear.items.artifacts.TotemOfSoulProtectionItem;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
@@ -63,6 +57,15 @@ public final class ModEntityTypes {
                     .clientTrackingRange(6)
                     .updateInterval(2)
                     .build(new ResourceLocation(MODID, "totem_of_shielding").toString())
+    );
+
+    public static final RegistryObject<EntityType<TotemOfSoulProtectionEntity>> TOTEM_OF_SOUL_PROTECTION = ENTITY_TYPES.register("totem_of_soul_protection", () ->
+            EntityType.Builder.of(TotemOfSoulProtectionEntity::new, EntityClassification.MISC)
+                    .fireImmune()
+                    .sized(2.0F, 1.0F)
+                    .clientTrackingRange(6)
+                    .updateInterval(2)
+                    .build(new ResourceLocation(MODID, "totem_of_soul_protection").toString())
     );
 
     public static final RegistryObject<EntityType<ArtifactBeamEntity>> BEAM_ENTITY = ENTITY_TYPES.register("beam_entity", () ->

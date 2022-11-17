@@ -2,7 +2,10 @@ package com.infamous.dungeons_gear.items.artifacts;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import com.infamous.dungeons_gear.entities.TotemOfRegenerationEntity;
+import com.infamous.dungeons_gear.entities.TotemOfSoulProtectionEntity;
 import com.infamous.dungeons_gear.network.NetworkHandler;
+import com.infamous.dungeons_gear.registry.ModEntityTypes;
 import com.infamous.dungeons_libraries.network.BreakItemMessage;
 import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
 import com.infamous.dungeons_libraries.items.interfaces.ISoulConsumer;
@@ -49,10 +52,14 @@ public class TotemOfSoulProtectionItem extends ArtifactItem implements ISoulCons
             }
             if(itemUseContextPlayer != null) {
                 if(SoulCasterHelper.consumeSouls(itemUseContextPlayer, this.getActivationCost(itemUseContextItem))){
-                    spawnSoulProtectionCloudAtPos(itemUseContextPlayer, blockPos, 100);
-                    itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new BreakItemMessage(entity.getId(), itemUseContextItem)));
-
-                    ArtifactItem.putArtifactOnCooldown(itemUseContextPlayer, itemUseContextItem.getItem());
+                    TotemOfSoulProtectionEntity totemOfSoulProtectionEntity = ModEntityTypes.TOTEM_OF_SOUL_PROTECTION.get().create(itemUseContextPlayer.level);
+                    if(totemOfSoulProtectionEntity != null) {
+                        totemOfSoulProtectionEntity.moveTo(blockPos, 0, 0);
+                        totemOfSoulProtectionEntity.setOwner(itemUseContextPlayer);
+                        itemUseContextPlayer.level.addFreshEntity(totemOfSoulProtectionEntity);
+                        itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new BreakItemMessage(entity.getId(), itemUseContextItem)));
+                        ArtifactItem.putArtifactOnCooldown(itemUseContextPlayer, itemUseContextItem.getItem());
+                    }
                 }
             }
         }
