@@ -10,7 +10,7 @@ import com.infamous.dungeons_gear.client.renderer.totem.TotemOfRegenerationRende
 import com.infamous.dungeons_gear.client.renderer.totem.TotemOfShieldingRenderer;
 import com.infamous.dungeons_gear.items.armor.FreezingResistanceArmorGear;
 import com.infamous.dungeons_gear.items.armor.PetBatArmorGear;
-import com.infamous.dungeons_libraries.items.gearconfig.client.ArmorGearRenderer;
+import com.infamous.dungeons_libraries.client.renderer.gearconfig.ArmorGearRenderer;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
