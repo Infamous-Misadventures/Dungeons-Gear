@@ -10,7 +10,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ShearsGear extends DualWieldMeleeGear {
+public class ShearsGear extends MeleeGear {
 
     public ShearsGear(Properties properties) {
         super(properties);

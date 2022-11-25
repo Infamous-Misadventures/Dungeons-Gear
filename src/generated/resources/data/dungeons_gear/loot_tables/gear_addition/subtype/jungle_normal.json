@@ -6,11 +6,6 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "dungeons_gear:experimental_condition"
-            }
-          ],
           "name": "dungeons_gear:mauler"
         },
         {

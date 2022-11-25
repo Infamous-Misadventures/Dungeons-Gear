@@ -13,6 +13,7 @@
   ],
   "material": "minecraft:iron",
   "built_in_enchantments": [{"enchantment": "dungeons_gear:prospector", "level": 1}],
+  "light": true,
   "unique": true,
   "rarity": "RARE",
   "combo": 6

@@ -6,47 +6,22 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "dungeons_gear:experimental_condition"
-            }
-          ],
           "name": "dungeons_gear:dagger"
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "dungeons_gear:experimental_condition"
-            }
-          ],
           "name": "dungeons_gear:shear_dagger"
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "dungeons_gear:experimental_condition"
-            }
-          ],
           "name": "dungeons_gear:gauntlet"
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "dungeons_gear:experimental_condition"
-            }
-          ],
           "name": "dungeons_gear:fighters_binding"
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "dungeons_gear:experimental_condition"
-            }
-          ],
           "name": "dungeons_gear:soul_fist"
         },
         {

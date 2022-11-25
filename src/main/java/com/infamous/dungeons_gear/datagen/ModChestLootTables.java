@@ -29,17 +29,6 @@ import static net.minecraft.tags.ItemTags.ARROWS;
 public class ModChestLootTables extends ChestLootTables {
 
     private List<Item> EXPERIMENTAL_ITEMS = Arrays.asList(
-            DAGGER.get(),
-            FANG_OF_FROST.get(),
-            MOON_DAGGER.get(),
-            SHEAR_DAGGER.get(),
-            SICKLE.get(),
-            NIGHTMARES_BITE.get(),
-            THE_LAST_LAUGH.get(),
-            GAUNTLET.get(),
-            FIGHTERS_BINDING.get(),
-            MAULER.get(),
-            SOUL_FIST.get(),
             DUAL_CROSSBOW.get(),
             BABY_CROSSBOW.get()
     );

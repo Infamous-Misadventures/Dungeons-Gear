@@ -1,6 +1,5 @@
 package com.infamous.dungeons_gear.datagen;
 
-import com.infamous.dungeons_libraries.datagen.ModLanguageProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
