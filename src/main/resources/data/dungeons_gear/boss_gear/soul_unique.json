@@ -1,0 +1,50 @@
+{
+	"weight": 7,
+	"mainhands": [{
+			"weight": 4,
+			"stack": {
+				"item": "dungeons_gear:eternal_knife"
+			}
+		},
+		{
+			"weight": 4,
+			"stack": {
+				"item": "dungeons_gear:jailors_scythe"
+			}
+		},
+		{
+			"weight": 4,
+			"stack": {
+				"item": "dungeons_gear:dancers_sword"
+			}
+		}
+	],
+	"offhands": [],
+	"boots": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:souldancer_boots"
+		}
+	}],
+	"leggings": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:souldancer_leggings"
+		}
+	}],
+	"chestplates": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:souldancer_chestplate"
+		}
+	}],
+	"helmets": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:souldancer_helmet"
+		}
+	}],
+	"tags": [
+		"standard"
+	]
+}

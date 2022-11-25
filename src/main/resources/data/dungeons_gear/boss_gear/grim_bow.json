@@ -1,0 +1,43 @@
+{
+	"weight": 9,
+	"mainhands": [{
+			"weight": 4,
+			"stack": {
+				"item": "dungeons_gear:bonebow"
+			}
+		}
+	],
+	"offhands": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_mobs:vanguard_shield"
+		}
+	}],
+	"boots": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:grim_boots"
+		}
+	}],
+	"leggings": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:grim_leggings"
+		}
+	}],
+	"chestplates": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:grim_chestplate"
+		}
+	}],
+	"helmets": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:grim_helmet"
+		}
+	}],
+	"tags": [
+		"skeleton"
+	]
+}

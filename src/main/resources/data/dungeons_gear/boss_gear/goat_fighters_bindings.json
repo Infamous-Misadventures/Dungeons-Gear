@@ -1,0 +1,43 @@
+{
+	"weight": 5,
+	"mainhands": [{
+			"weight": 4,
+			"stack": {
+				"item": "dungeons_gear:fighters_binding"
+			}
+		}
+	],
+	"offhands": [{
+		"weight": 3,
+		"stack": {
+			"item": "minecraft:shield"
+		}
+	}],
+	"boots": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:goat_boots"
+		}
+	}],
+	"leggings": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:goat_leggings"
+		}
+	}],
+	"chestplates": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:goat_chestplate"
+		}
+	}],
+	"helmets": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:goat_helmet"
+		}
+	}],
+	"tags": [
+		"standard"
+	]
+}

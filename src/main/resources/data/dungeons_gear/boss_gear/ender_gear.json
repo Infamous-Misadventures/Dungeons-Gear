@@ -1,0 +1,66 @@
+{
+	"weight": 10,
+	"mainhands": [{
+			"weight": 4,
+			"stack": {
+				"item": "dungeons_gear:hammer_of_gravity"
+			}
+		},
+		{
+			"weight": 4,
+			"stack": {
+				"item": "dungeons_gear:eternal_knife"
+			}
+		},
+		{
+			"weight": 4,
+			"stack": {
+				"item": "dungeons_gear:dark_katana"
+			}
+		},
+		{
+			"weight": 4,
+			"stack": {
+				"item": "dungeons_gear:nameless_blade"
+			}
+		}
+	],
+	"offhands": [{
+		"weight": 3,
+		"stack": {
+			"item": "minecraft:air"
+		}
+	},{
+		"weight": 3,
+		"stack": {
+			"item": "minecraft:shield"
+		}
+	}],
+	"boots": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:curious_boots"
+		}
+	}],
+	"leggings": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:curious_leggings"
+		}
+	}],
+	"chestplates": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:curious_chestplate"
+		}
+	}],
+	"helmets": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:curious_helmet"
+		}
+	}],
+	"tags": [
+		"enderman"
+	]
+}

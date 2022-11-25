@@ -1,0 +1,151 @@
+{
+	"weight": 15,
+	"mainhands": [{
+			"weight": 4,
+			"stack": {
+				"item": "dungeons_gear:fang_of_frost"
+			}
+		},
+		{
+			"weight": 4,
+			"stack": {
+				"item": "dungeons_gear:frost_scythe"
+			}
+		},
+		{
+			"weight": 3,
+			"stack": {
+				"item": "dungeons_gear:frost_slayer"
+			}
+		},
+		{
+			"weight": 3,
+			"stack": {
+				"item": "dungeons_gear:freezing_foil"
+			}
+		},
+		{
+			"weight": 4,
+			"stack": {
+				"item": "dungeons_gear:chill_gale_knife"
+			}
+		},
+		{
+			"weight": 4,
+			"stack": {
+				"item": "dungeons_gear:shivering_bow"
+			}
+		},
+		{
+			"weight": 4,
+			"stack": {
+				"item": "dungeons_gear:snow_bow"
+			}
+		},
+		{
+			"weight": 3,
+			"stack": {
+				"item": "dungeons_gear:winters_touch"
+			}
+		}
+	],
+	"offhands": [{
+		"weight": 3,
+		"stack": {
+			"item": "minecraft:air"
+		}
+	},{
+		"weight": 3,
+		"stack": {
+			"item": "minecraft:shield"
+		}
+	}],
+	"boots": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:frost_bite_boots"
+		}
+	},{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:snow_boots"
+		}
+	},{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:frost_boots"
+		}
+	},{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:arctic_fox_boots"
+		}
+	}],
+	"leggings": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:frost_bite_leggings"
+		}
+	},{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:snow_leggings"
+		}
+	},{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:frost_leggings"
+		}
+	},{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:arctic_fox_leggings"
+		}
+	}],
+	"chestplates": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:frost_bite_chestplate"
+		}
+	},{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:snow_chestplate"
+		}
+	},{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:frost_chestplate"
+		}
+	},{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:arctic_fox_chestplate"
+		}
+	}],
+	"helmets": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:frost_bite_helmet"
+		}
+	},{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:snow_helmet"
+		}
+	},{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:frost_helmet"
+		}
+	},{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:arctic_fox_helmet"
+		}
+	}],
+	"tags": [
+		"standard",
+		"skeleton"
+	]
+}

@@ -1,0 +1,58 @@
+{
+	"weight": 4,
+	"mainhands": [{
+			"weight": 4,
+			"stack": {
+				"item": "dungeons_gear:sparkler"
+			}
+		}
+	],
+	"offhands": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:satchel_of_elixirs"
+		}
+	},{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:satchel_of_snacks"
+		}
+	},{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:fireworks_display"
+		}
+	},{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:powershaker"
+		}
+	}],
+	"boots": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:gilded_glory_boots"
+		}
+	}],
+	"leggings": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:gilded_glory_leggings"
+		}
+	}],
+	"chestplates": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:gilded_glory_chestplate"
+		}
+	}],
+	"helmets": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:gilded_glory_helmet"
+		}
+	}],
+	"tags": [
+		"standard"
+	]
+}

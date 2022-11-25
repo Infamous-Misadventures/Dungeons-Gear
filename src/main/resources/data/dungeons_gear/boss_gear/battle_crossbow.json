@@ -1,0 +1,43 @@
+{
+	"weight": 9,
+	"mainhands": [{
+			"weight": 1,
+			"stack": {
+				"item": "dungeons_gear:lightning_harp_crossbow"
+			}
+		}
+	],
+	"offhands": [{
+		"weight": 1,
+		"stack": {
+			"item": "minecraft:shield"
+		}
+	}],
+	"boots": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:battle_robes_boots"
+		}
+	}],
+	"leggings": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:battle_robes_leggings"
+		}
+	}],
+	"chestplates": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:battle_robes_chestplate"
+		}
+	}],
+	"helmets": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:battle_robes_helmet"
+		}
+	}],
+	"tags": [
+		"pillager"
+	]
+}

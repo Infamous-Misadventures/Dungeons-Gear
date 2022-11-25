@@ -1,0 +1,55 @@
+{
+	"weight": 10,
+	"mainhands": [{
+			"weight": 4,
+			"stack": {
+				"item": "dungeons_gear:dagger"
+			}
+		},
+		{
+			"weight": 4,
+			"stack": {
+				"item": "dungeons_gear:sickle"
+			}
+		},
+		{
+			"weight": 3,
+			"stack": {
+				"item": "dungeons_gear:katana"
+			}
+		}
+	],
+	"offhands": [{
+		"weight": 3,
+		"stack": {
+			"item": "minecraft:shield"
+		}
+	}],
+	"boots": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:thief_boots"
+		}
+	}],
+	"leggings": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:thief_leggings"
+		}
+	}],
+	"chestplates": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:thief_chestplate"
+		}
+	}],
+	"helmets": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:thief_helmet"
+		}
+	}],
+	"tags": [
+		"standard"
+	]
+}

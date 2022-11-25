@@ -1,0 +1,53 @@
+{
+	"weight": 9,
+	"mainhands": [{
+			"weight": 4,
+			"stack": {
+				"item": "dungeons_gear:heavy_crossbow"
+			}
+		},{
+			"weight": 2,
+			"stack": {
+				"item": "dungeons_gear:doom_crossbow"
+			}
+		},{
+			"weight": 2,
+			"stack": {
+				"item": "dungeons_gear:slayer_crossbow"
+			}
+		}
+	],
+	"offhands": [{
+		"weight": 1,
+		"stack": {
+			"item": "minecraft:shield"
+		}
+	}],
+	"boots": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:dark_boots"
+		}
+	}],
+	"leggings": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:dark_leggings"
+		}
+	}],
+	"chestplates": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:dark_chestplate"
+		}
+	}],
+	"helmets": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:dark_helmet"
+		}
+	}],
+	"tags": [
+		"pillager"
+	]
+}

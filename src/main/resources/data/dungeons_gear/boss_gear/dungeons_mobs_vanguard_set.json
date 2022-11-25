@@ -1,0 +1,44 @@
+{
+	"weight": 10,
+	"mainhands": [{
+			"weight": 4,
+			"stack": {
+				"item": "dungeons_gear:glaive"
+			}
+		},
+		{
+			"weight": 4,
+			"stack": {
+				"item": "dungeons_gear:longbow"
+			}
+		}
+	],
+	"offhands": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_mobs:vanguard_shield"
+		}
+	}],
+	"boots": [],
+	"leggings": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_mobs:vanguard_leggings"
+		}
+	}],
+	"chestplates": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_mobs:vanguard_chestplate"
+		}
+	}],
+	"helmets": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_mobs:vanguard_helmet"
+		}
+	}],
+	"tags": [
+		"skeleton"
+	]
+}

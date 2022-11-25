@@ -1,0 +1,33 @@
+{
+	"weight": 5,
+	"mainhands": [{
+			"weight": 4,
+			"stack": {
+				"item": "dungeons_mobs:wooden_ladle"
+			}
+		}
+	],
+	"offhands": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:satchel_of_snacks"
+		}
+	}],
+	"boots": [],
+	"leggings": [],
+	"chestplates": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_mobs:chef_chestplate"
+		}
+	}],
+	"helmets": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_mobs:chef_helmet"
+		}
+	}],
+	"tags": [
+		"standard"
+	]
+}

@@ -1,0 +1,44 @@
+{
+	"weight": 10,
+	"mainhands": [{
+			"weight": 4,
+			"stack": {
+				"item": "dungeons_gear:mace"
+			}
+		},
+		{
+			"weight": 2,
+			"stack": {
+				"item": "dungeons_gear:axe"
+			}
+		}
+	],
+	"offhands": [],
+	"boots": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:mercenary_boots"
+		}
+	}],
+	"leggings": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:mercenary_leggings"
+		}
+	}],
+	"chestplates": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:mercenary_chestplate"
+		}
+	}],
+	"helmets": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:mercenary_helmet"
+		}
+	}],
+	"tags": [
+		"standard"
+	]
+}
