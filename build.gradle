@@ -120,7 +120,7 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
 
     //Library
-    implementation fg.deobf("dungeons_libraries:dungeons_libraries:1.18.2-1.0.3-alpha")
+    implementation fg.deobf("dungeons_libraries:dungeons_libraries:1.18.2-2.0.0-alpha")
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
     //runtimeOnly fg.deobf("curse.maven:neat-238372:3182258")
