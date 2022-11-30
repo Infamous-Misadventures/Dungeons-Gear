@@ -32,6 +32,7 @@ import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import software.bernie.example.registry.SoundRegistry;
 
 import java.util.function.Consumer;
 
@@ -67,6 +68,7 @@ public class DungeonsGear
         ParticleInit.PARTICLES.register(modEventBus);
         AttributeRegistry.ATTRIBUTES.register(modEventBus);
         ItemRegistry.ITEMS.register(modEventBus);
+        SoundRegistry.SOUNDS.register(modEventBus);
         PROXY = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
         FMLJavaModLoadingContext.get()
                 .getModEventBus()
