@@ -31,9 +31,9 @@
 				{
 					"name": "totem_rhomb",
 					"parent": "Totem_of_Shielding",
-					"pivot": [-0.5, 0, -0.75],
+					"pivot": [-0.5, 0.03, -0.75],
 					"cubes": [
-						{"origin": [-48, 0, -48.75], "size": [95, 0, 96], "uv": [57, 0]}
+						{"origin": [-48, 0.03, -48.75], "size": [95, 0, 96], "uv": [57, 0]}
 					]
 				},
 				{

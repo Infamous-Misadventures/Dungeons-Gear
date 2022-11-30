@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.client.renderer.totem;
 
-import com.infamous.dungeons_gear.client.models.totem.TotemOfRegernationModel;
+import com.infamous.dungeons_gear.client.models.totem.TotemOfRegenerationModel;
 import com.infamous.dungeons_gear.entities.TotemOfRegenerationEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -12,7 +12,7 @@ import software.bernie.geckolib3.renderers.geo.GeoProjectilesRenderer;
 
 public class TotemOfRegenerationRenderer extends GeoProjectilesRenderer<TotemOfRegenerationEntity> {
 	public TotemOfRegenerationRenderer(EntityRendererProvider.Context renderManager) {
-		super(renderManager, new TotemOfRegernationModel());
+		super(renderManager, new TotemOfRegenerationModel());
 	}
 	
 

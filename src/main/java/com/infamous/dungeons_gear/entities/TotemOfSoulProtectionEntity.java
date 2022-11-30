@@ -19,11 +19,11 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.applyToNearbyEntities;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.getCanHealPredicate;
 
-public class TotemOfShieldingEntity extends TotemBaseEntity implements IAnimatable {
+public class TotemOfSoulProtectionEntity extends TotemBaseEntity implements IAnimatable {
 
     AnimationFactory factory = new AnimationFactory(this);
 
-    public TotemOfShieldingEntity(EntityType<?> p_i48580_1_, Level p_i48580_2_) {
+    public TotemOfSoulProtectionEntity(EntityType<?> p_i48580_1_, Level p_i48580_2_) {
         super(p_i48580_1_, p_i48580_2_, 240, 2);
     }
 
@@ -33,11 +33,11 @@ public class TotemOfShieldingEntity extends TotemBaseEntity implements IAnimatab
         if(owner == null) return;
         applyToNearbyEntities(getOwner(), 8,
                 getCanHealPredicate(getOwner()), (LivingEntity nearbyEntity) -> {
-                    MobEffectInstance effectInstance = new MobEffectInstance(CustomEffects.SHIELDING, 21);
-                    nearbyEntity.addEffect(effectInstance);
+                    MobEffectInstance MobEffectInstance = new MobEffectInstance(CustomEffects.SOUL_PROTECTION, 21);
+                    nearbyEntity.addEffect(MobEffectInstance);
                 }
         );
-        MobEffectInstance resistance = new MobEffectInstance(CustomEffects.SHIELDING, 21);
+        MobEffectInstance resistance = new MobEffectInstance(CustomEffects.SOUL_PROTECTION, 21);
         owner.addEffect(resistance);
     }
 
@@ -52,7 +52,7 @@ public class TotemOfShieldingEntity extends TotemBaseEntity implements IAnimatab
     }
 
     private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.totem_of_shielding.idle", true));
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.totem_of_soul_protection.idle", true));
         return PlayState.CONTINUE;
     }
 

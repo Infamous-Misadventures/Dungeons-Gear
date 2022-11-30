@@ -1,0 +1,53 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.unknown",
+				"texture_width": 352,
+				"texture_height": 352,
+				"visible_bounds_width": 13,
+				"visible_bounds_height": 1.5,
+				"visible_bounds_offset": [0, 0.25, 0]
+			},
+			"bones": [
+				{
+					"name": "Totem_of_Protection",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "totem",
+					"parent": "Totem_of_Protection",
+					"pivot": [0, -0.08333, 0.11667],
+					"cubes": [
+						{"origin": [-5.5, 10, -2], "size": [11, 10, 6], "uv": [9, 280], "mirror": true},
+						{"origin": [-3.5, 0, -2], "size": [7, 10, 4], "uv": [9, 296]},
+						{"origin": [3.5, 4, -1], "size": [5, 4, 2], "uv": [9, 310]},
+						{"origin": [-8.5, 4, -1], "size": [5, 4, 2], "uv": [23, 310]},
+						{"origin": [3.5, 8, -1.65], "size": [6, 7, 6], "uv": [43, 280]},
+						{"origin": [-9.5, 8, -1.65], "size": [6, 7, 6], "uv": [43, 293]}
+					]
+				},
+				{
+					"name": "square",
+					"parent": "Totem_of_Protection",
+					"pivot": [0, 0.1, 0],
+					"cubes": [
+						{"origin": [-88, 0.1, -88], "size": [176, 0, 176], "uv": [-176, 0]}
+					]
+				},
+				{
+					"name": "aura",
+					"parent": "Totem_of_Protection",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{"origin": [-88, 0.1, -88], "size": [176, 64, 0], "uv": [0, 204]},
+						{"origin": [0, 0.1, -176], "size": [176, 64, 0], "pivot": [0, 32.1, -88], "rotation": [0, -90, 0], "uv": [0, 204]},
+						{"origin": [-88, 0.1, 88], "size": [176, 64, 0], "uv": [0, 204]},
+						{"origin": [0, 0.1, 0], "size": [176, 64, 0], "pivot": [0, 32.1, -88], "rotation": [0, -90, 0], "uv": [0, 204]}
+					]
+				}
+			]
+		}
+	]
+}

@@ -2,26 +2,27 @@ package com.infamous.dungeons_gear.items.artifacts;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import com.infamous.dungeons_gear.entities.TotemOfSoulProtectionEntity;
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_libraries.network.BreakItemMessage;
+import com.infamous.dungeons_gear.registry.ModEntityTypes;
+import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
-import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
 import com.infamous.dungeons_libraries.items.interfaces.ISoulConsumer;
-import net.minecraft.world.level.block.state.BlockState;
+import com.infamous.dungeons_libraries.network.BreakItemMessage;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.network.PacketDistributor;
 
 import java.util.UUID;
 
-import static com.infamous.dungeons_gear.utilties.AOECloudHelper.spawnSoulProtectionCloudAtPos;
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_GATHERING;
 
 public class TotemOfSoulProtectionItem extends ArtifactItem implements ISoulConsumer {
@@ -49,10 +50,14 @@ public class TotemOfSoulProtectionItem extends ArtifactItem implements ISoulCons
             }
             if(itemUseContextPlayer != null) {
                 if(SoulCasterHelper.consumeSouls(itemUseContextPlayer, this.getActivationCost(itemUseContextItem))){
-                    spawnSoulProtectionCloudAtPos(itemUseContextPlayer, blockPos, 100);
-                    itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new BreakItemMessage(entity.getId(), itemUseContextItem)));
-
-                    ArtifactItem.putArtifactOnCooldown(itemUseContextPlayer, itemUseContextItem.getItem());
+                    TotemOfSoulProtectionEntity totemOfSoulProtectionEntity = ModEntityTypes.TOTEM_OF_SOUL_PROTECTION.get().create(itemUseContextPlayer.level);
+                    if(totemOfSoulProtectionEntity != null) {
+                        totemOfSoulProtectionEntity.moveTo(blockPos, 0, 0);
+                        totemOfSoulProtectionEntity.setOwner(itemUseContextPlayer);
+                        itemUseContextPlayer.level.addFreshEntity(totemOfSoulProtectionEntity);
+                        itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new BreakItemMessage(entity.getId(), itemUseContextItem)));
+                        ArtifactItem.putArtifactOnCooldown(itemUseContextPlayer, itemUseContextItem.getItem());
+                    }
                 }
             }
         }
