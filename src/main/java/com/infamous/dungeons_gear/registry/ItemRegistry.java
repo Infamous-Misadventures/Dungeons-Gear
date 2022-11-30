@@ -9,7 +9,6 @@ import com.infamous.dungeons_gear.items.artifacts.*;
 import com.infamous.dungeons_gear.items.artifacts.beacon.CorruptedBeaconItem;
 import com.infamous.dungeons_gear.items.artifacts.beacon.CorruptedPumpkinItem;
 import com.infamous.dungeons_gear.items.artifacts.beacon.EyeOfTheGuardianItem;
-import com.infamous.dungeons_gear.items.melee.DualWieldMeleeGear;
 import com.infamous.dungeons_gear.items.melee.ShearsGear;
 import com.infamous.dungeons_gear.items.melee.StaffGear;
 import com.infamous.dungeons_gear.items.ranged.crossbows.DualCrossbowGear;
@@ -56,29 +55,29 @@ public class ItemRegistry {
 
     //DPS 9.6 (19.2), crits once per 2.5 (1.25) seconds
     public static final RegistryObject<Item> DAGGER = registerMeleeWeapon("dagger",
-            () -> new DualWieldMeleeGear(MELEE_WEAPON_PROPERTIES), BASIC);
+            () -> new MeleeGear(MELEE_WEAPON_PROPERTIES), BASIC);
     public static final RegistryObject<Item> FANG_OF_FROST = registerMeleeWeapon("fang_of_frost",
-            () -> new DualWieldMeleeGear(MELEE_WEAPON_PROPERTIES), COLD);
+            () -> new MeleeGear(MELEE_WEAPON_PROPERTIES), COLD);
     public static final RegistryObject<Item> MOON_DAGGER = registerMeleeWeapon("moon_dagger",
-            () -> new DualWieldMeleeGear(MELEE_WEAPON_PROPERTIES), DESERT);
+            () -> new MeleeGear(MELEE_WEAPON_PROPERTIES), DESERT);
     public static final RegistryObject<Item> SHEAR_DAGGER = registerMeleeWeapon("shear_dagger",
             () -> new ShearsGear(MELEE_WEAPON_PROPERTIES), BASIC);
     //DPS 10 (20), crits once per 3 (1.5) seconds
     public static final RegistryObject<Item> SICKLE = registerMeleeWeapon("sickle",
-            () -> new DualWieldMeleeGear(MELEE_WEAPON_PROPERTIES), DESERT);
+            () -> new MeleeGear(MELEE_WEAPON_PROPERTIES), DESERT);
     public static final RegistryObject<Item> NIGHTMARES_BITE = registerMeleeWeapon("nightmares_bite",
-            () -> new DualWieldMeleeGear(MELEE_WEAPON_PROPERTIES), DESERT);
+            () -> new MeleeGear(MELEE_WEAPON_PROPERTIES), DESERT);
     public static final RegistryObject<Item> THE_LAST_LAUGH = registerMeleeWeapon("the_last_laugh",
-            () -> new DualWieldMeleeGear(MELEE_WEAPON_PROPERTIES), DESERT);
+            () -> new MeleeGear(MELEE_WEAPON_PROPERTIES), DESERT);
     //DPS 9.6/8 (19.2/16), crits once per 2.92/1 (1.46/0.5) seconds
     public static final RegistryObject<Item> GAUNTLET = registerMeleeWeapon("gauntlet",
-            () -> new DualWieldMeleeGear(MELEE_WEAPON_PROPERTIES), BASIC);
+            () -> new MeleeGear(MELEE_WEAPON_PROPERTIES), BASIC);
     public static final RegistryObject<Item> FIGHTERS_BINDING = registerMeleeWeapon("fighters_binding",
-            () -> new DualWieldMeleeGear(MELEE_WEAPON_PROPERTIES), BASIC);
+            () -> new MeleeGear(MELEE_WEAPON_PROPERTIES), BASIC);
     public static final RegistryObject<Item> MAULER = registerMeleeWeapon("mauler",
-            () -> new DualWieldMeleeGear(MELEE_WEAPON_PROPERTIES), JUNGLE);
+            () -> new MeleeGear(MELEE_WEAPON_PROPERTIES), JUNGLE);
     public static final RegistryObject<Item> SOUL_FIST = registerMeleeWeapon("soul_fist",
-            () -> new DualWieldMeleeGear(MELEE_WEAPON_PROPERTIES), BASIC);
+            () -> new MeleeGear(MELEE_WEAPON_PROPERTIES), BASIC);
 
     //DPS 8, crits once per 3.5 seconds
     public static final RegistryObject<Item> RAPIER = registerMeleeWeapon("rapier",

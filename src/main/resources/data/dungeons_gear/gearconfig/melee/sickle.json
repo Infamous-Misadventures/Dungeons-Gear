@@ -13,6 +13,7 @@
   ],
   "material": "minecraft:iron",
   "built_in_enchantments": [],
+  "light": true,
   "unique": false,
   "rarity": "UNCOMMON",
   "combo": 6

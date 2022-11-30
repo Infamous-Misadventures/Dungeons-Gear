@@ -7,38 +7,18 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "dungeons_gear:experimental_condition"
-            }
-          ],
           "name": "dungeons_gear:moon_dagger"
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "dungeons_gear:experimental_condition"
-            }
-          ],
           "name": "dungeons_gear:sickle"
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "dungeons_gear:experimental_condition"
-            }
-          ],
           "name": "dungeons_gear:nightmares_bite"
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "dungeons_gear:experimental_condition"
-            }
-          ],
           "name": "dungeons_gear:the_last_laugh"
         },
         {

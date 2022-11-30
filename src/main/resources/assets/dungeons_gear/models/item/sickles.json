@@ -1,6 +1,0 @@
-{
-    "parent": "dungeons_gear:item/sickle",
-    "textures": {
-        "layer0": "dungeons_gear:item/sickles"
-    }
-}
