@@ -1,0 +1,48 @@
+{
+	"weight": 7,
+	"mainhands": [{
+			"weight": 4,
+			"stack": {
+				"item": "dungeons_gear:love_spell_bow"
+			}
+		}
+	],
+	"offhands": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:love_medallion"
+		}
+	},{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:totem_of_regeneration"
+		}
+	}],
+	"boots": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:fox_boots"
+		}
+	}],
+	"leggings": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:fox_leggings"
+		}
+	}],
+	"chestplates": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:fox_chestplate"
+		}
+	}],
+	"helmets": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:fox_helmet"
+		}
+	}],
+	"tags": [
+		"skeleton"
+	]
+}

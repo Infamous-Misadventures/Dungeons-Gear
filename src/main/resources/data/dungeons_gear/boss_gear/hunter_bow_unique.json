@@ -1,0 +1,54 @@
+{
+	"weight": 7,
+	"mainhands": [{
+			"weight": 1,
+			"stack": {
+				"item": "dungeons_gear:hunters_promise"
+			}
+		},
+		{
+			"weight": 1,
+			"stack": {
+				"item": "dungeons_gear:masters_bow"
+			}
+		}
+	],
+	"offhands": [{
+		"weight": 3,
+		"stack": {
+			"item": "minecraft:air"
+		}
+	},{
+		"weight": 1,
+		"stack": {
+			"item": "minecraft:shield"
+		}
+	}],
+	"boots": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:archers_boots"
+		}
+	}],
+	"leggings": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:archers_leggings"
+		}
+	}],
+	"chestplates": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:archers_chestplate"
+		}
+	}],
+	"helmets": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:archers_helmet"
+		}
+	}],
+	"tags": [
+		"skeleton"
+	]
+}

@@ -1,0 +1,66 @@
+{
+	"weight": 15,
+	"mainhands": [{
+			"weight": 4,
+			"stack": {
+				"item": "dungeons_gear:elite_power_bow"
+			}
+		},
+		{
+			"weight": 2,
+			"stack": {
+				"item": "dungeons_gear:purple_storm"
+			}
+		},
+		{
+			"weight": 1,
+			"stack": {
+				"item": "dungeons_gear:hammer_of_gravity"
+			}
+		},
+		{
+			"weight": 1,
+			"stack": {
+				"item": "dungeons_gear:stormlander"
+			}
+		}
+	],
+	"offhands": [{
+		"weight": 3,
+		"stack": {
+			"item": "minecraft:air"
+		}
+	},{
+		"weight": 1,
+		"stack": {
+			"item": "minecraft:shield"
+		}
+	}],
+	"boots": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:full_metal_boots"
+		}
+	}],
+	"leggings": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:full_metal_leggings"
+		}
+	}],
+	"chestfull_metals": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:full_metal_chestplate"
+		}
+	}],
+	"helmets": [{
+		"weight": 3,
+		"stack": {
+			"item": "dungeons_gear:full_metal_helmet"
+		}
+	}],
+	"tags": [
+		"skeleton"
+	]
+}
