@@ -3,8 +3,8 @@ package com.infamous.dungeons_gear.capabilities.combo;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 
-import static com.infamous.dungeons_gear.registry.AttributeRegistry.ROLL_COOLDOWN;
-import static com.infamous.dungeons_gear.registry.AttributeRegistry.ROLL_LIMIT;
+import static com.infamous.dungeons_gear.registry.AttributeInit.ROLL_COOLDOWN;
+import static com.infamous.dungeons_gear.registry.AttributeInit.ROLL_LIMIT;
 
 public class RollHelper {
     public static void incrementJumpCounter(LivingEntity livingEntity){

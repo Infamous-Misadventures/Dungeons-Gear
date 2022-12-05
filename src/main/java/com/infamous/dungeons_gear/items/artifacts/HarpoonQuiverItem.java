@@ -12,6 +12,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.PacketDistributor;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class HarpoonQuiverItem extends ArtifactItem {
     public static final String HARPOON_QUIVER = "HarpoonQuiver";
 

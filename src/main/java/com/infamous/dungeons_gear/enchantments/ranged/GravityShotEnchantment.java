@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -38,7 +38,7 @@ public class GravityShotEnchantment extends DungeonsEnchantment {
         if (event.getProjectile() instanceof AbstractArrow arrow) {
             if (!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
             LivingEntity shooter = (LivingEntity) arrow.getOwner();
-            int gravityLevel = ArrowHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.GRAVITY_SHOT);
+            int gravityLevel = ArrowHelper.enchantmentTagToLevel(arrow, EnchantmentInit.GRAVITY_SHOT.get());
             if (gravityLevel > 0) {
                 if (rayTraceResult instanceof BlockHitResult) {
                     BlockHitResult blockRayTraceResult = (BlockHitResult) rayTraceResult;

@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.entities.TotemOfSoulProtectionEntity;
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_gear.registry.ModEntityTypes;
+import com.infamous.dungeons_gear.registry.EntityTypeInit;
 import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
@@ -50,7 +50,7 @@ public class TotemOfSoulProtectionItem extends ArtifactItem implements ISoulCons
             }
             if(itemUseContextPlayer != null) {
                 if(SoulCasterHelper.consumeSouls(itemUseContextPlayer, this.getActivationCost(itemUseContextItem))){
-                    TotemOfSoulProtectionEntity totemOfSoulProtectionEntity = ModEntityTypes.TOTEM_OF_SOUL_PROTECTION.get().create(itemUseContextPlayer.level);
+                    TotemOfSoulProtectionEntity totemOfSoulProtectionEntity = EntityTypeInit.TOTEM_OF_SOUL_PROTECTION.get().create(itemUseContextPlayer.level);
                     if(totemOfSoulProtectionEntity != null) {
                         totemOfSoulProtectionEntity.moveTo(blockPos, 0, 0);
                         totemOfSoulProtectionEntity.setOwner(itemUseContextPlayer);

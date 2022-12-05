@@ -1,23 +1,23 @@
 package com.infamous.dungeons_gear.utilties;
 
 import com.infamous.dungeons_gear.damagesources.ElectricShockDamageSource;
-import com.infamous.dungeons_gear.effects.CustomEffects;
+import com.infamous.dungeons_gear.registry.MobEffectInit;
 import com.infamous.dungeons_gear.registry.ParticleInit;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.LightningBolt;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.core.BlockPos;
-import net.minecraft.util.Mth;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 import java.util.Random;
@@ -316,7 +316,7 @@ public class AreaOfEffectHelper {
         applyToNearbyEntities(playerIn, distance,
                 getCanApplyToEnemyPredicate(playerIn),
                 (LivingEntity nearbyEntity) -> {
-                    MobEffectInstance stunned = new MobEffectInstance(CustomEffects.STUNNED, 100);
+                    MobEffectInstance stunned = new MobEffectInstance(MobEffectInit.STUNNED.get(), 100);
                     MobEffectInstance nausea = new MobEffectInstance(MobEffects.CONFUSION, 100);
                     MobEffectInstance slowness = new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 4);
                     nearbyEntity.addEffect(slowness);

@@ -9,6 +9,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModEnchantmentHelper {
 
@@ -55,7 +56,7 @@ public class ModEnchantmentHelper {
     }
 
     public static boolean isBlacklistedEnchant(Enchantment enchantment) {
-        return DungeonsGearConfig.ENCHANTMENT_BLACKLIST.get().contains(enchantment.getRegistryName().toString());
+        return DungeonsGearConfig.ENCHANTMENT_BLACKLIST.get().contains(ForgeRegistries.ENCHANTMENTS.getKey(enchantment).toString());
     }
 
     public static boolean isNotTreasureEnchant(Enchantment enchantment) {
@@ -63,6 +64,6 @@ public class ModEnchantmentHelper {
     }
 
     public static boolean isTreasureEnchant(Enchantment enchantment) {
-        return DungeonsGearConfig.TREASURE_ONLY_ENCHANTMENTS.get().contains(enchantment.getRegistryName().toString());
+        return DungeonsGearConfig.TREASURE_ONLY_ENCHANTMENTS.get().contains(ForgeRegistries.ENCHANTMENTS.getKey(enchantment).toString());
     }
 }

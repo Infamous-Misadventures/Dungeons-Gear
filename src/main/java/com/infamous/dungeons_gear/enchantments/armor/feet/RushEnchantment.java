@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.enchantments.armor.feet;
 
-import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -27,8 +27,8 @@ public class RushEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onDamage(LivingDamageEvent event) {
-        LivingEntity livingEntity = event.getEntityLiving();
-        int rushLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.RUSH, livingEntity);
+        LivingEntity livingEntity = event.getEntity();
+        int rushLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.RUSH.get(), livingEntity);
         if(rushLevel > 0 && !livingEntity.level.isClientSide){
             MobEffectInstance speedBoost = new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 20, rushLevel - 1);
             livingEntity.addEffect(speedBoost);

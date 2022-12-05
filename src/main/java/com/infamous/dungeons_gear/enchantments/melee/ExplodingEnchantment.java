@@ -2,10 +2,9 @@ package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
-import com.infamous.dungeons_libraries.items.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -22,8 +21,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-
-import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class ExplodingEnchantment extends AOEDamageEnchantment {
@@ -48,10 +45,10 @@ public class ExplodingEnchantment extends AOEDamageEnchantment {
         if(event.getSource().getDirectEntity() instanceof AbstractArrow) return;
         if(event.getSource().getEntity() instanceof LivingEntity){
             LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
-            LivingEntity victim = event.getEntityLiving();
+            LivingEntity victim = event.getEntity();
             ItemStack mainhand = attacker.getMainHandItem();
-            if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.EXPLODING)){
-                int explodingLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.EXPLODING, mainhand);
+            if(ModEnchantmentHelper.hasEnchantment(mainhand, EnchantmentInit.EXPLODING.get())){
+                int explodingLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.EXPLODING.get(), mainhand);
                 float explosionDamage;
                 explosionDamage = victim.getMaxHealth() * (float) (DungeonsGearConfig.EXPLODING_MULTIPLIER_PER_LEVEL.get() * explodingLevel);
                 SoundHelper.playGenericExplodeSound(victim);

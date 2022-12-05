@@ -20,6 +20,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid= MODID)
 public class FuseShotEnchantment extends DungeonsEnchantment {
 
@@ -66,7 +68,7 @@ public class FuseShotEnchantment extends DungeonsEnchantment {
             if(indirectEntityDamageSource.getDirectEntity() instanceof AbstractArrow) {
                 AbstractArrow arrowEntity = (AbstractArrow) indirectEntityDamageSource.getDirectEntity();
 
-                LivingEntity victim = event.getEntityLiving();
+                LivingEntity victim = event.getEntity();
                 if (indirectEntityDamageSource.getEntity() instanceof LivingEntity) {
                     LivingEntity archer = (LivingEntity) indirectEntityDamageSource.getEntity();
                     if(arrowEntity.getTags().contains(FUSE_SHOT_TAG)) {

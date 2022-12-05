@@ -4,7 +4,7 @@ import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_libraries.utils.ArrowHelper;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -18,8 +18,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-
-import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class GrowingEnchantment extends DungeonsEnchantment {
@@ -47,7 +45,7 @@ public class GrowingEnchantment extends DungeonsEnchantment {
             if (!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
             LivingEntity shooter = (LivingEntity) arrow.getOwner();
             LivingEntity victim = (LivingEntity) ((EntityHitResult) rayTraceResult).getEntity();
-            int growingLevel = ArrowHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.GROWING);
+            int growingLevel = ArrowHelper.enchantmentTagToLevel(arrow, EnchantmentInit.GROWING.get());
             if (growingLevel > 0) {
                 double originalDamage = arrow.getBaseDamage();
                 double damageModifierCap = 1 + (growingLevel * 0.25D);

@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.armor.chest;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.HealthAbilityEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -37,8 +37,8 @@ public class FrenziedEnchantment extends HealthAbilityEnchantment {
             float currentHealth = player.getHealth();
             player.getAttribute(Attributes.ATTACK_SPEED).removeModifier(FRENZY);
             if (currentHealth <= maxHealth / 2) {
-                if (ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.FRENZIED)) {
-                    int frenziedLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.FRENZIED, player);
+                if (ModEnchantmentHelper.hasEnchantment(player, EnchantmentInit.FRENZIED.get())) {
+                    int frenziedLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.FRENZIED.get(), player);
                     player.getAttribute(Attributes.ATTACK_SPEED).addTransientModifier(new AttributeModifier(FRENZY, "frenzy multiplier", DungeonsGearConfig.FRENZIED_MULTIPLIER_PER_LEVEL.get() * frenziedLevel, AttributeModifier.Operation.MULTIPLY_TOTAL));
                 }
             }

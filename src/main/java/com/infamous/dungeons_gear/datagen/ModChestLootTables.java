@@ -21,7 +21,6 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
@@ -29,7 +28,7 @@ import java.util.stream.Collectors;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.items.ItemTagWrappers.FOOD_PROCESSED;
 import static com.infamous.dungeons_gear.loot.LootTableType.ALL;
-import static com.infamous.dungeons_gear.registry.ItemRegistry.*;
+import static com.infamous.dungeons_gear.registry.ItemInit.*;
 import static net.minecraft.tags.ItemTags.ARROWS;
 import static net.minecraft.world.item.Items.*;
 

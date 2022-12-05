@@ -14,6 +14,8 @@ import net.minecraftforge.network.PacketDistributor;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class GongOfWeakeningItem extends ArtifactItem {
     public GongOfWeakeningItem(Properties properties) {
         super(properties);

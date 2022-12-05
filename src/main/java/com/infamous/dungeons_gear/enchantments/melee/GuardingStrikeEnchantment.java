@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.utilties.PlayerAttackHelper;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -15,8 +15,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-
-import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class GuardingStrikeEnchantment extends AOEDamageEnchantment {
@@ -36,7 +34,7 @@ public class GuardingStrikeEnchantment extends AOEDamageEnchantment {
         if(event.getSource().getEntity() instanceof LivingEntity){
             LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
             ItemStack mainhand = attacker.getMainHandItem();
-            int guardingStrikeLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.GUARDING_STRIKE, mainhand);
+            int guardingStrikeLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.GUARDING_STRIKE.get(), mainhand);
             if(guardingStrikeLevel > 0){
                 int duration = 20 + 20 * guardingStrikeLevel;
                 MobEffectInstance shield = new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, duration, 2);

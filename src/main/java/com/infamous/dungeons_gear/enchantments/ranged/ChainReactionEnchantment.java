@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
 import com.infamous.dungeons_libraries.utils.ArrowHelper;
@@ -32,11 +32,11 @@ public class ChainReactionEnchantment extends DungeonsEnchantment {
             if (indirectEntityDamageSource.getDirectEntity() instanceof AbstractArrow) {
                 AbstractArrow arrowEntity = (AbstractArrow) indirectEntityDamageSource.getDirectEntity();
 
-                LivingEntity victim = event.getEntityLiving();
+                LivingEntity victim = event.getEntity();
                 if (indirectEntityDamageSource.getEntity() instanceof LivingEntity) {
                     if (!(indirectEntityDamageSource.getEntity() instanceof LivingEntity)) return;
                     LivingEntity attacker = (LivingEntity) indirectEntityDamageSource.getEntity();
-                    int chainReactionLevel = ArrowHelper.enchantmentTagToLevel(arrowEntity, RangedEnchantmentList.CHAIN_REACTION);
+                    int chainReactionLevel = ArrowHelper.enchantmentTagToLevel(arrowEntity, EnchantmentInit.CHAIN_REACTION.get());
                     if (chainReactionLevel > 0) {
                         float chainReactionChance = chainReactionLevel * 0.1f;
                         float chainReactionRand = attacker.getRandom().nextFloat();

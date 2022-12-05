@@ -7,7 +7,6 @@ import com.infamous.dungeons_gear.client.renderer.projectiles.SoulWizardOrbRende
 import com.infamous.dungeons_gear.client.renderer.totem.*;
 import com.infamous.dungeons_gear.items.armor.FreezingResistanceArmorGear;
 import com.infamous.dungeons_gear.items.armor.PetBatArmorGear;
-import com.infamous.dungeons_gear.items.artifacts.TotemOfSoulProtectionItem;
 import com.infamous.dungeons_libraries.client.renderer.gearconfig.ArmorGearRenderer;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -22,15 +21,15 @@ public class ClientEventBusSubscriber {
 
     @SubscribeEvent
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(ModEntityTypes.ICE_CLOUD.get(), IceCloudRenderer::new);
-        event.registerEntityRenderer(ModEntityTypes.BUZZY_NEST.get(), BuzzyNestRenderer::new);
-        event.registerEntityRenderer(ModEntityTypes.TOTEM_OF_SHIELDING.get(), TotemOfShieldingRenderer::new);
-        event.registerEntityRenderer(ModEntityTypes.TOTEM_OF_REGENERATION.get(), TotemOfRegenerationRenderer::new);
-        event.registerEntityRenderer(ModEntityTypes.TOTEM_OF_SOUL_PROTECTION.get(), TotemOfSoulProtectionRenderer::new);
-        event.registerEntityRenderer(ModEntityTypes.FIREWORKS_DISPLAY.get(), FireworksDisplayRenderer::new);
-        event.registerEntityRenderer(ModEntityTypes.BEAM_ENTITY.get(), BeamEntityRenderer::new);
-        event.registerEntityRenderer(ModEntityTypes.SOUL_WIZARD.get(), SoulWizardRenderer::new);
-        event.registerEntityRenderer(ModEntityTypes.SOUL_WIZARD_ORB.get(), SoulWizardOrbRenderer::new);
+        event.registerEntityRenderer(EntityTypeInit.ICE_CLOUD.get(), IceCloudRenderer::new);
+        event.registerEntityRenderer(EntityTypeInit.BUZZY_NEST.get(), BuzzyNestRenderer::new);
+        event.registerEntityRenderer(EntityTypeInit.TOTEM_OF_SHIELDING.get(), TotemOfShieldingRenderer::new);
+        event.registerEntityRenderer(EntityTypeInit.TOTEM_OF_REGENERATION.get(), TotemOfRegenerationRenderer::new);
+        event.registerEntityRenderer(EntityTypeInit.TOTEM_OF_SOUL_PROTECTION.get(), TotemOfSoulProtectionRenderer::new);
+        event.registerEntityRenderer(EntityTypeInit.FIREWORKS_DISPLAY.get(), FireworksDisplayRenderer::new);
+        event.registerEntityRenderer(EntityTypeInit.BEAM_ENTITY.get(), BeamEntityRenderer::new);
+        event.registerEntityRenderer(EntityTypeInit.SOUL_WIZARD.get(), SoulWizardRenderer::new);
+        event.registerEntityRenderer(EntityTypeInit.SOUL_WIZARD_ORB.get(), SoulWizardOrbRenderer::new);
     }
 
     @SubscribeEvent

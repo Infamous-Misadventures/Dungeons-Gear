@@ -35,7 +35,7 @@ import java.util.stream.Stream;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
-import static com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList.ENIGMA_RESONATOR;
+import static com.infamous.dungeons_gear.registry.EnchantmentInit.ENIGMA_RESONATOR;
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_GATHERING;
 
 @Mod.EventBusSubscriber(modid = MODID)
@@ -63,16 +63,16 @@ public class EnigmaResonatorEnchantment extends DamageBoostEnchantment {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onVanillaNonCriticalHit(CriticalHitEvent event) {
-        if (event.getPlayer() == null) return;
-        Player attacker = event.getPlayer();
+        if (event.getEntity() == null) return;
+        Player attacker = event.getEntity();
         ItemStack mainhand = attacker.getMainHandItem();
         SoulCaster soulCasterCapability = SoulCasterHelper.getSoulCasterCapability(attacker);
 
         int numSouls = (int) soulCasterCapability.getSouls();
         if (!event.isVanillaCritical()) {
             boolean success = false;
-            if (ModEnchantmentHelper.hasEnchantment(mainhand, ENIGMA_RESONATOR)) {
-                int enigmaResonatorLevel = EnchantmentHelper.getItemEnchantmentLevel(ENIGMA_RESONATOR, mainhand);
+            if (ModEnchantmentHelper.hasEnchantment(mainhand, ENIGMA_RESONATOR.get())) {
+                int enigmaResonatorLevel = EnchantmentHelper.getItemEnchantmentLevel(ENIGMA_RESONATOR.get(), mainhand);
                 float soulsCriticalBoostChanceCap;
                 soulsCriticalBoostChanceCap = 0.1F + 0.05F * enigmaResonatorLevel;
                 float soulsCriticalBoostRand = attacker.getRandom().nextFloat();
@@ -103,19 +103,19 @@ public class EnigmaResonatorEnchantment extends DamageBoostEnchantment {
 
     @SubscribeEvent
     public static void onLivingEquipmentChange(LivingEquipmentChangeEvent event) {
-        removeAttribute(event.getFrom(), event.getEntityLiving(), EQUIPMENT_ATTRIBUTE_UUID_MAP.get(event.getSlot()));
-        addAttribute(event.getTo(), event.getEntityLiving(), EQUIPMENT_ATTRIBUTE_UUID_MAP.get(event.getSlot()));
+        removeAttribute(event.getFrom(), event.getEntity(), EQUIPMENT_ATTRIBUTE_UUID_MAP.get(event.getSlot()));
+        addAttribute(event.getTo(), event.getEntity(), EQUIPMENT_ATTRIBUTE_UUID_MAP.get(event.getSlot()));
     }
 
     @SubscribeEvent
     public static void onCurioChange(CurioChangeEvent event) {
         if(!event.getIdentifier().equals(CuriosIntegration.ARTIFACT_IDENTIFIER)) return;
-        removeAttribute(event.getFrom(), event.getEntityLiving(), CURIO_ATTRIBUTE_UUID_MAP.get(event.getSlotIndex()));
-        addAttribute(event.getTo(), event.getEntityLiving(), CURIO_ATTRIBUTE_UUID_MAP.get(event.getSlotIndex()));
+        removeAttribute(event.getFrom(), event.getEntity(), CURIO_ATTRIBUTE_UUID_MAP.get(event.getSlotIndex()));
+        addAttribute(event.getTo(), event.getEntity(), CURIO_ATTRIBUTE_UUID_MAP.get(event.getSlotIndex()));
     }
 
     private static void removeAttribute(ItemStack itemStack, LivingEntity livingEntity, UUID attributeModifierUUID) {
-        if (EnchantmentHelper.getItemEnchantmentLevel(ENIGMA_RESONATOR, itemStack) > 0) {
+        if (EnchantmentHelper.getItemEnchantmentLevel(ENIGMA_RESONATOR.get(), itemStack) > 0) {
             AttributeInstance attributeInstance = livingEntity.getAttribute(SOUL_GATHERING.get());
             if (attributeInstance != null && attributeInstance.getModifier(attributeModifierUUID) != null) {
                 attributeInstance.removeModifier(attributeModifierUUID);
@@ -124,7 +124,7 @@ public class EnigmaResonatorEnchantment extends DamageBoostEnchantment {
     }
 
     private static void addAttribute(ItemStack itemStack, LivingEntity livingEntity, UUID attributeModifierUUID) {
-        int itemEnchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(ENIGMA_RESONATOR, itemStack);
+        int itemEnchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(ENIGMA_RESONATOR.get(), itemStack);
         if (itemEnchantmentLevel > 0) {
             AttributeInstance attributeInstance = livingEntity.getAttribute(SOUL_GATHERING.get());
             if (attributeInstance != null && attributeInstance.getModifier(attributeModifierUUID) == null) {

@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
 import com.infamous.dungeons_gear.entities.FireworksDisplayEntity;
-import com.infamous.dungeons_gear.registry.ModEntityTypes;
+import com.infamous.dungeons_gear.registry.EntityTypeInit;
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
 import net.minecraft.world.level.block.state.BlockState;
@@ -37,7 +37,7 @@ public class FireworksDisplayItem extends ArtifactItem {
                 blockPos = itemUseContextPos.relative(itemUseContextFace);
             }
             if(itemUseContextPlayer != null) {
-                FireworksDisplayEntity totemEntity = ModEntityTypes.FIREWORKS_DISPLAY.get().create(itemUseContextPlayer.level);
+                FireworksDisplayEntity totemEntity = EntityTypeInit.FIREWORKS_DISPLAY.get().create(itemUseContextPlayer.level);
                 if(totemEntity != null) {
                     totemEntity.moveTo(blockPos, 0, 0);
                     totemEntity.setOwner(itemUseContextPlayer);

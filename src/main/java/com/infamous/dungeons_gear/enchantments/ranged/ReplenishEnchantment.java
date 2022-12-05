@@ -2,7 +2,7 @@ package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_libraries.utils.ArrowHelper;
@@ -48,7 +48,7 @@ public class ReplenishEnchantment extends DungeonsEnchantment {
             LivingEntity shooter = (LivingEntity) arrow.getOwner();
             if (shooter instanceof Player) {
                 Player player = (Player) shooter;
-                int replenishLevel = ArrowHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.REPLENISH);
+                int replenishLevel = ArrowHelper.enchantmentTagToLevel(arrow, EnchantmentInit.REPLENISH.get());
                 LivingEntity victim = (LivingEntity) ((EntityHitResult) rayTraceResult).getEntity();
                 if (replenishLevel > 0) {
                     float replenishRand = shooter.getRandom().nextFloat();

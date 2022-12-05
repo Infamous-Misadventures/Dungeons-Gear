@@ -2,7 +2,7 @@ package com.infamous.dungeons_gear.datagen;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.items.ItemTagWrappers;
-import com.infamous.dungeons_gear.registry.ItemRegistry;
+import com.infamous.dungeons_gear.registry.ItemInit;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.world.item.Item;
@@ -11,7 +11,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 
 import javax.annotation.Nullable;
 
-import static com.infamous.dungeons_gear.registry.ItemRegistry.SHEAR_DAGGER;
+import static com.infamous.dungeons_gear.registry.ItemInit.SHEAR_DAGGER;
 import static net.minecraft.world.item.Items.*;
 
 public class ModItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
@@ -25,13 +25,13 @@ public class ModItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvide
         curiosArtifactTags();
         foodTags();
         this.tag(Tags.Items.SHEARS).add(SHEAR_DAGGER.get());
-        ItemRegistry.MELEE_WEAPONS.values().forEach(item -> this.tag(ItemTagWrappers.WEAPONS).add(item.get()));
-        ItemRegistry.RANGED_WEAPONS.values().forEach(item -> this.tag(ItemTagWrappers.WEAPONS).add(item.get()));
-        ItemRegistry.ARMORS.values().forEach(item -> this.tag(ItemTagWrappers.ARMOR).add(item.get()));
+        ItemInit.MELEE_WEAPONS.values().forEach(item -> this.tag(ItemTagWrappers.WEAPONS).add(item.get()));
+        ItemInit.RANGED_WEAPONS.values().forEach(item -> this.tag(ItemTagWrappers.WEAPONS).add(item.get()));
+        ItemInit.ARMORS.values().forEach(item -> this.tag(ItemTagWrappers.ARMOR).add(item.get()));
     }
 
     private void curiosArtifactTags() {
-        ItemRegistry.ARTIFACTS.forEach((resourceLocation, itemRegistryObject) -> this.tag(ItemTagWrappers.CURIOS_ARTIFACTS).add(itemRegistryObject.get()));
+        ItemInit.ARTIFACTS.forEach((resourceLocation, itemRegistryObject) -> this.tag(ItemTagWrappers.CURIOS_ARTIFACTS).add(itemRegistryObject.get()));
     }
 
     private void foodTags() {

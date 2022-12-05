@@ -19,7 +19,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
-apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
+apply from: 'https://raw.githubusercontent.com/SizableShrimp/ForgeUpdatesRemapper/main/remapper.gradle'
 
 mixin {
     add sourceSets.main, "dungeons_gear.refmap.json"
@@ -120,12 +120,12 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
 
     //Library
-    implementation fg.deobf("dungeons_libraries:dungeons_libraries:1.18.2-2.0.0-alpha")
+    implementation fg.deobf("dungeons_libraries:dungeons_libraries:1.19.2-3.0.0-alpha")
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
     //runtimeOnly fg.deobf("curse.maven:neat-238372:3182258")
 //    runtimeOnly fg.deobf("curse.maven:epicfight-405076:3888643")
-    implementation fg.deobf("software.bernie.geckolib:geckolib-forge-1.18:${geckolib_version}")
+    implementation fg.deobf("software.bernie.geckolib:geckolib-forge-1.19:${geckolib_version}")
 
     //compat tests
 //    runtimeOnly fg.deobf("curse.maven:cofhcore-69162:3407019")

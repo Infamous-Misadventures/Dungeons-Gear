@@ -25,7 +25,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes.ARMOR_SLOT;
-import static com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList.FINAL_SHOUT;
+import static com.infamous.dungeons_gear.registry.EnchantmentInit.FINAL_SHOUT;
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class FinalShoutEnchantment extends HealthAbilityEnchantment {
@@ -36,7 +36,7 @@ public class FinalShoutEnchantment extends HealthAbilityEnchantment {
 
     @SubscribeEvent
     public static void onPlayerHurt(LivingDamageEvent event) {
-        LivingEntity victim = event.getEntityLiving();
+        LivingEntity victim = event.getEntity();
         if (victim != null && victim.isAlive() && victim instanceof Player) {
             Player player = (Player) victim;
             float currentHealth = player.getHealth();
@@ -44,7 +44,8 @@ public class FinalShoutEnchantment extends HealthAbilityEnchantment {
             float damageDealt = event.getAmount();
             Timers timers = TimersHelper.getTimersCapability(player);
             if (currentHealth - damageDealt <= (0.25F * maxHealth)) {
-                if (timers != null && timers.getEnchantmentTimer(FINAL_SHOUT) == 0 && ModEnchantmentHelper.hasEnchantment(player, FINAL_SHOUT)) {
+                if(!ModEnchantmentHelper.hasEnchantment(player, FINAL_SHOUT.get())) return;
+                if (timers != null && timers.getEnchantmentTimer(FINAL_SHOUT.get()) == 0) {
                     int proc = 0;
                     for(ItemStack is : CuriosIntegration.getArtifacts(player))
                         if (is.getItem() instanceof ArtifactItem && !(is.getItem() instanceof AbstractBeaconItem)) {
@@ -53,10 +54,10 @@ public class FinalShoutEnchantment extends HealthAbilityEnchantment {
                             proc++;
                         }
                     if (proc > 0) {
-                        timers.setEnchantmentTimer(FINAL_SHOUT, 240 - 40 * Math.min(EnchantmentHelper.getEnchantmentLevel(FINAL_SHOUT, player), 6));
+                        timers.setEnchantmentTimer(FINAL_SHOUT.get(), 240 - 40 * Math.min(EnchantmentHelper.getEnchantmentLevel(FINAL_SHOUT.get(), player), 6));
                     }
-                }else if(timers != null && timers.getEnchantmentTimer(FINAL_SHOUT) < 0 && ModEnchantmentHelper.hasEnchantment(player, FINAL_SHOUT)){
-                    timers.setEnchantmentTimer(FINAL_SHOUT, 0);
+                }else if(timers != null && timers.getEnchantmentTimer(FINAL_SHOUT.get()) < 0){
+                    timers.setEnchantmentTimer(FINAL_SHOUT.get(), 0);
                 }
             }
         }

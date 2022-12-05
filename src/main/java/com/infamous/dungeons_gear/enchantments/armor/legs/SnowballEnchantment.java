@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.armor.legs;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.PulseEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
@@ -38,21 +38,21 @@ public class SnowballEnchantment extends PulseEnchantment {
     }
 
     @SubscribeEvent
-    public static void onLivingUpdate(LivingEvent.LivingUpdateEvent event){
-        triggerEffect(event.getEntityLiving());
+    public static void onLivingUpdate(LivingEvent.LivingTickEvent event){
+        triggerEffect(event.getEntity());
     }
 
     public static void triggerEffect(LivingEntity livingEntity){
-        if(ModEnchantmentHelper.hasEnchantment(livingEntity, ArmorEnchantmentList.SNOWBALL)){
-            int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.SNOWBALL, livingEntity);
+        if(ModEnchantmentHelper.hasEnchantment(livingEntity, EnchantmentInit.SNOWBALL.get())){
+            int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.SNOWBALL.get(), livingEntity);
             Timers timers = TimersHelper.getTimersCapability(livingEntity);
             if(timers == null) return;
-            int currentTimer = timers.getEnchantmentTimer(ArmorEnchantmentList.SNOWBALL);
+            int currentTimer = timers.getEnchantmentTimer(EnchantmentInit.SNOWBALL.get());
             if(currentTimer < 0) {
-                timers.setEnchantmentTimer(ArmorEnchantmentList.SNOWBALL, Math.max(100 - (enchantmentLevel - 1) * 40, 20));
+                timers.setEnchantmentTimer(EnchantmentInit.SNOWBALL.get(), Math.max(100 - (enchantmentLevel - 1) * 40, 20));
             }else if(currentTimer == 0){
                 ProjectileEffectHelper.fireSnowballAtNearbyEnemy(livingEntity, 10);
-                timers.setEnchantmentTimer(ArmorEnchantmentList.SNOWBALL, Math.max(100 - (enchantmentLevel - 1) * 40, 20));
+                timers.setEnchantmentTimer(EnchantmentInit.SNOWBALL.get(), Math.max(100 - (enchantmentLevel - 1) * 40, 20));
             }
         }
     }

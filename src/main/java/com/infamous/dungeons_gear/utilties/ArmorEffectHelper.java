@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.utilties;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.melee_ranged.DynamoEnchantment;
 import com.infamous.dungeons_libraries.capabilities.minionmaster.Master;
 import com.infamous.dungeons_libraries.summon.SummonHelper;
@@ -23,7 +23,6 @@ import net.minecraft.server.level.ServerLevel;
 
 import java.util.Optional;
 
-import static com.infamous.dungeons_gear.registry.ItemRegistry.*;
 import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMasterCapability;
 
 public class ArmorEffectHelper {
@@ -84,19 +83,19 @@ public class ArmorEffectHelper {
 //    }
 
     public static void handleJumpEnchantments(Player playerEntity, ItemStack helmet, ItemStack chestplate) {
-        if (ModEnchantmentHelper.hasEnchantment(playerEntity, ArmorEnchantmentList.ELECTRIFIED)) {
+        if (ModEnchantmentHelper.hasEnchantment(playerEntity, EnchantmentInit.ELECTRIFIED.get())) {
             SoundHelper.playLightningStrikeSounds(playerEntity);
             AreaOfEffectHelper.electrifyNearbyEnemies(playerEntity, 5, 5, 3);
         }
 
-        if (ModEnchantmentHelper.hasEnchantment(playerEntity, ArmorEnchantmentList.FIRE_TRAIL)) {
-            int fireTrailLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.FIRE_TRAIL, playerEntity);
+        if (ModEnchantmentHelper.hasEnchantment(playerEntity, EnchantmentInit.FIRE_TRAIL.get())) {
+            int fireTrailLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.FIRE_TRAIL.get(), playerEntity);
             AreaOfEffectHelper.burnNearbyEnemies(playerEntity, 1.0F * fireTrailLevel, 1.5F);
         }
 
         // TODO: Beenest Armor and Buzzynest Armor
-        if (ModEnchantmentHelper.hasEnchantment(playerEntity, ArmorEnchantmentList.TUMBLEBEE)) {
-            int tumblebeeLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.TUMBLEBEE, playerEntity);
+        if (ModEnchantmentHelper.hasEnchantment(playerEntity, EnchantmentInit.TUMBLEBEE.get())) {
+            int tumblebeeLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.TUMBLEBEE.get(), playerEntity);
 
             float tumblebeeRand = playerEntity.getRandom().nextFloat();
             if (tumblebeeRand <= DungeonsGearConfig.TUMBLE_BEE_CHANCE_PER_LEVEL.get() * tumblebeeLevel) {
@@ -106,8 +105,8 @@ public class ArmorEffectHelper {
             }
         }
 
-        if (ModEnchantmentHelper.hasEnchantment(playerEntity, ArmorEnchantmentList.SWIFTFOOTED)) {
-            int swiftfootedLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.SWIFTFOOTED, playerEntity);
+        if (ModEnchantmentHelper.hasEnchantment(playerEntity, EnchantmentInit.SWIFTFOOTED.get())) {
+            int swiftfootedLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.SWIFTFOOTED.get(), playerEntity);
             MobEffectInstance speedBoost = new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 60, swiftfootedLevel - 1);
             playerEntity.addEffect(speedBoost);
         }

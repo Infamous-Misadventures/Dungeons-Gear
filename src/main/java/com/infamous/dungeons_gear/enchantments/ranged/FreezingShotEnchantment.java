@@ -2,7 +2,7 @@ package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_libraries.utils.ArrowHelper;
@@ -46,7 +46,7 @@ public class FreezingShotEnchantment extends DungeonsEnchantment {
         HitResult rayTraceResult = event.getRayTraceResult();
         if(event.getProjectile() instanceof AbstractArrow arrow) {
             if (!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
-            int freezingLevel = ArrowHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.FREEZING_SHOT);
+            int freezingLevel = ArrowHelper.enchantmentTagToLevel(arrow, EnchantmentInit.FREEZING_SHOT.get());
             if (freezingLevel > 0) {
                 if (rayTraceResult instanceof EntityHitResult) {
                     EntityHitResult entityRayTraceResult = (EntityHitResult) rayTraceResult;

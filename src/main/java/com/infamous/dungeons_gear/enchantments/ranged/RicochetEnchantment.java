@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
@@ -51,7 +51,7 @@ public class RicochetEnchantment extends DungeonsEnchantment {
             EntityHitResult entityRayTraceResult = (EntityHitResult) rayTraceResult;
             LivingEntity victim = (LivingEntity) entityRayTraceResult.getEntity();
 
-            int ricochetLevel = ArrowHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.RICOCHET);
+            int ricochetLevel = ArrowHelper.enchantmentTagToLevel(arrow, EnchantmentInit.RICOCHET.get());
             boolean uniqueWeaponFlag = arrow.getTags().contains(INTRINSIC_RICOCHET_TAG);
             if (ricochetLevel > 0) {
                 float chainReactionRand = shooter.getRandom().nextFloat();

@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes.ARMOR_SLOT;
-import static com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList.SPEED_AURA;
+import static com.infamous.dungeons_gear.registry.EnchantmentInit.SPEED_AURA;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.applyToNearbyEntities;
 
 @Mod.EventBusSubscriber(modid= MODID)
@@ -47,8 +47,8 @@ public class SpeedAuraEnchantment extends PulseEnchantment {
     }
 
     @SubscribeEvent
-    public static void onLivingEntityTick(LivingEvent.LivingUpdateEvent event){
-        LivingEntity livingEntity = event.getEntityLiving();
+    public static void onLivingEntityTick(LivingEvent.LivingTickEvent event){
+        LivingEntity livingEntity = event.getEntity();
         if(livingEntity == null || livingEntity instanceof Player) return;
         if(livingEntity.isAlive() && livingEntity.isEffectiveAi()){
             apply(livingEntity);
@@ -57,7 +57,7 @@ public class SpeedAuraEnchantment extends PulseEnchantment {
 
     private static void apply(LivingEntity entity) {
 
-        int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(SPEED_AURA, entity);
+        int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(SPEED_AURA.get(), entity);
         if(enchantmentLevel > 0){
 //            if(burnNearbyTimer <= 0){
             applyToNearbyEntities(entity, 5,

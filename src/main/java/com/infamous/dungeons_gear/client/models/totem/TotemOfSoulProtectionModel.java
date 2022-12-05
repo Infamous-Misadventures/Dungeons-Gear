@@ -9,17 +9,17 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 public class TotemOfSoulProtectionModel extends AnimatedGeoModel<TotemOfSoulProtectionEntity> {
 	   
 		@Override
-		public ResourceLocation getAnimationFileLocation(TotemOfSoulProtectionEntity entity) {
+		public ResourceLocation getAnimationResource(TotemOfSoulProtectionEntity entity) {
 			return new ResourceLocation(MODID, "animations/totem_of_soul_protection.animation.json");
 		}
 
 		@Override
-		public ResourceLocation getModelLocation(TotemOfSoulProtectionEntity entity) {
+		public ResourceLocation getModelResource(TotemOfSoulProtectionEntity entity) {
 			return new ResourceLocation(MODID, "geo/totem_of_soul_protection.geo.json");
 		}
 
 		@Override
-		public ResourceLocation getTextureLocation(TotemOfSoulProtectionEntity entity) {
+		public ResourceLocation getTextureResource(TotemOfSoulProtectionEntity entity) {
 			return new ResourceLocation(MODID, "textures/entity/totem_of_soul_protection.png");
 		}
 }

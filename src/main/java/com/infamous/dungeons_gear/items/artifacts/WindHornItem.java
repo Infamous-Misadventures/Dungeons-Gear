@@ -14,6 +14,8 @@ import net.minecraftforge.network.PacketDistributor;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class WindHornItem extends ArtifactItem {
     public WindHornItem(Properties properties) {
         super(properties);

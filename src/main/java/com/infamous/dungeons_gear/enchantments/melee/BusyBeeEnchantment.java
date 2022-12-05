@@ -29,10 +29,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-import static com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList.BUSY_BEE;
+import static com.infamous.dungeons_gear.registry.EnchantmentInit.BUSY_BEE;
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SUMMON_CAP;
-
-import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class BusyBeeEnchantment extends DungeonsEnchantment {
@@ -66,11 +64,11 @@ public class BusyBeeEnchantment extends DungeonsEnchantment {
         if(event.getSource().getDirectEntity() instanceof AbstractArrow) return;
         if(event.getSource().getEntity() instanceof LivingEntity){
             LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
-            LivingEntity victim = event.getEntityLiving();
+            LivingEntity victim = event.getEntity();
             if(attacker != null){
                 ItemStack mainhand = attacker.getMainHandItem();
-                if(ModEnchantmentHelper.hasEnchantment(mainhand, BUSY_BEE)){
-                    int busyBeeLevel = EnchantmentHelper.getItemEnchantmentLevel(BUSY_BEE, mainhand);
+                if(ModEnchantmentHelper.hasEnchantment(mainhand, BUSY_BEE.get())){
+                    int busyBeeLevel = EnchantmentHelper.getItemEnchantmentLevel(BUSY_BEE.get(), mainhand);
                     float busyBeeRand = attacker.getRandom().nextFloat();
                     float busyBeeChance = (float) (DungeonsGearConfig.BUSY_BEE_BASE_CHANCE.get() + busyBeeLevel * DungeonsGearConfig.BUSY_BEE_CHANCE_PER_LEVEL.get());
                     if(busyBeeRand <= busyBeeChance) {
@@ -85,19 +83,19 @@ public class BusyBeeEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onLivingEquipmentChange(LivingEquipmentChangeEvent event) {
-        removeAttribute(event.getFrom(), event.getEntityLiving(), EQUIPMENT_ATTRIBUTE_UUID_MAP.get(event.getSlot()));
-        addAttribute(event.getTo(), event.getEntityLiving(), EQUIPMENT_ATTRIBUTE_UUID_MAP.get(event.getSlot()));
+        removeAttribute(event.getFrom(), event.getEntity(), EQUIPMENT_ATTRIBUTE_UUID_MAP.get(event.getSlot()));
+        addAttribute(event.getTo(), event.getEntity(), EQUIPMENT_ATTRIBUTE_UUID_MAP.get(event.getSlot()));
     }
 
     @SubscribeEvent
     public static void onCurioChange(CurioChangeEvent event) {
         if(!event.getIdentifier().equals(CuriosIntegration.ARTIFACT_IDENTIFIER)) return;
-        removeAttribute(event.getFrom(), event.getEntityLiving(), CURIO_ATTRIBUTE_UUID_MAP.get(event.getSlotIndex()));
-        addAttribute(event.getTo(), event.getEntityLiving(), CURIO_ATTRIBUTE_UUID_MAP.get(event.getSlotIndex()));
+        removeAttribute(event.getFrom(), event.getEntity(), CURIO_ATTRIBUTE_UUID_MAP.get(event.getSlotIndex()));
+        addAttribute(event.getTo(), event.getEntity(), CURIO_ATTRIBUTE_UUID_MAP.get(event.getSlotIndex()));
     }
 
     private static void removeAttribute(ItemStack itemStack, LivingEntity livingEntity, UUID attributeModifierUUID) {
-        if (EnchantmentHelper.getItemEnchantmentLevel(BUSY_BEE, itemStack) > 0) {
+        if (EnchantmentHelper.getItemEnchantmentLevel(BUSY_BEE.get(), itemStack) > 0) {
             AttributeInstance attributeInstance = livingEntity.getAttribute(SUMMON_CAP.get());
             if (attributeInstance != null && attributeInstance.getModifier(attributeModifierUUID) != null) {
                 attributeInstance.removeModifier(attributeModifierUUID);
@@ -106,7 +104,7 @@ public class BusyBeeEnchantment extends DungeonsEnchantment {
     }
 
     private static void addAttribute(ItemStack itemStack, LivingEntity livingEntity, UUID attributeModifierUUID) {
-        int itemEnchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(BUSY_BEE, itemStack);
+        int itemEnchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(BUSY_BEE.get(), itemStack);
         if (itemEnchantmentLevel > 0) {
             AttributeInstance attributeInstance = livingEntity.getAttribute(SUMMON_CAP.get());
             if (attributeInstance != null && attributeInstance.getModifier(attributeModifierUUID) == null) {

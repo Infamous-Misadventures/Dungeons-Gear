@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.armor.chest;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.world.entity.LivingEntity;
@@ -45,8 +45,8 @@ public class DeflectEnchantment extends DungeonsEnchantment {
             if (!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
             if (arrow.getPierceLevel() > 0) return;
             LivingEntity victim = (LivingEntity) ((EntityHitResult) rayTraceResult).getEntity();
-            if (ModEnchantmentHelper.hasEnchantment(victim, ArmorEnchantmentList.DEFLECT)) {
-                int deflectLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.DEFLECT, victim);
+            if (ModEnchantmentHelper.hasEnchantment(victim, EnchantmentInit.DEFLECT.get())) {
+                int deflectLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.DEFLECT.get(), victim);
                 double originalDamage = arrow.getBaseDamage();
                 double deflectChance;
                 deflectChance = deflectLevel * DungeonsGearConfig.DEFLECT_CHANCE_PER_LEVEL.get();

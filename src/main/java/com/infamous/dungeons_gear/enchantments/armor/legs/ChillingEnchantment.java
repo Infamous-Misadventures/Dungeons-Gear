@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.armor.legs;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.PulseEnchantment;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -47,21 +47,21 @@ public class ChillingEnchantment extends PulseEnchantment {
     }
 
     @SubscribeEvent
-    public static void onLivingUpdate(LivingEvent.LivingUpdateEvent event){
-        triggerEffect(event.getEntityLiving());
+    public static void onLivingUpdate(LivingEvent.LivingTickEvent event){
+        triggerEffect(event.getEntity());
     }
 
     public static void triggerEffect(LivingEntity livingEntity){
-        if(ModEnchantmentHelper.hasEnchantment(livingEntity, ArmorEnchantmentList.CHILLING)){
+        if(ModEnchantmentHelper.hasEnchantment(livingEntity, EnchantmentInit.CHILLING.get())){
             Timers timers = TimersHelper.getTimersCapability(livingEntity);
             if(timers == null) return;
-            int currentTimer = timers.getEnchantmentTimer(ArmorEnchantmentList.CHILLING);
+            int currentTimer = timers.getEnchantmentTimer(EnchantmentInit.CHILLING.get());
             if(currentTimer < 0) {
-                timers.setEnchantmentTimer(ArmorEnchantmentList.CHILLING, 40);
+                timers.setEnchantmentTimer(EnchantmentInit.CHILLING.get(), 40);
             }else if(currentTimer == 0){
-                int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.BURNING, livingEntity);
+                int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.CHILLING.get(), livingEntity);
                 AreaOfEffectHelper.freezeNearbyEnemies(livingEntity, enchantmentLevel - 1, 1.5F, 1);
-                timers.setEnchantmentTimer(ArmorEnchantmentList.CHILLING, 40);
+                timers.setEnchantmentTimer(EnchantmentInit.CHILLING.get(), 40);
             }
         }
     }

@@ -2,9 +2,8 @@ package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.HealingEnchantment;
-import com.infamous.dungeons_libraries.items.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -17,8 +16,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-
-import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class LeechingEnchantment extends HealingEnchantment {
@@ -42,10 +39,10 @@ public class LeechingEnchantment extends HealingEnchantment {
         if(event.getSource().getDirectEntity() instanceof AbstractArrow) return;
         if(event.getSource().getEntity() instanceof LivingEntity){
             LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
-            LivingEntity victim = event.getEntityLiving();
+            LivingEntity victim = event.getEntity();
             ItemStack mainhand = attacker.getMainHandItem();
-            if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.LEECHING)){
-                int leechingLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.LEECHING, mainhand);
+            if(ModEnchantmentHelper.hasEnchantment(mainhand, EnchantmentInit.LEECHING.get())){
+                int leechingLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.LEECHING.get(), mainhand);
                 float victimMaxHealth = victim.getMaxHealth();
                 attacker.heal((0.02F + 0.02F * leechingLevel) * victimMaxHealth);
             }

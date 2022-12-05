@@ -40,6 +40,8 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 
+import net.minecraft.world.entity.Entity.RemovalReason;
+
 public class SoulWizardEntity extends AbstractGolem implements IAnimatable {
 
 	private static final EntityDataAccessor<Boolean> DELAYED_FORM = SynchedEntityData.defineId(SoulWizardEntity.class,

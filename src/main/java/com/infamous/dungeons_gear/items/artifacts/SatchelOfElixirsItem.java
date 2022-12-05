@@ -16,6 +16,8 @@ import net.minecraftforge.network.PacketDistributor;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class SatchelOfElixirsItem extends ArtifactItem{
 
     public SatchelOfElixirsItem(Properties properties) {

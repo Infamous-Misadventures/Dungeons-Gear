@@ -5,7 +5,7 @@ import com.infamous.dungeons_gear.capabilities.combo.Combo;
 import com.infamous.dungeons_gear.capabilities.combo.ComboHelper;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DropsEnchantment;
 import com.infamous.dungeons_gear.utilties.PlayerAttackHelper;
 import com.infamous.dungeons_libraries.utils.ArrowHelper;
@@ -53,7 +53,7 @@ public class RefreshmentEnchantment extends DropsEnchantment {
             Player killerPlayer = (Player) damageSource.getEntity();
             if(!PlayerAttackHelper.isProbablyNotMeleeDamage(damageSource)){
                 ItemStack mainhand = killerPlayer.getMainHandItem();
-                int refreshmentLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeRangedEnchantmentList.REFRESHMENT, mainhand);
+                int refreshmentLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.REFRESHMENT.get(), mainhand);
                 if(refreshmentLevel > 0){
                     updateRefreshment(killerPlayer, refreshmentLevel);
                 }
@@ -61,7 +61,7 @@ public class RefreshmentEnchantment extends DropsEnchantment {
                 Entity immediateSource = damageSource.getDirectEntity();
                 if(immediateSource instanceof AbstractArrow){
                     AbstractArrow arrowEntity = (AbstractArrow) immediateSource;
-                    int refreshmentLevel = ArrowHelper.enchantmentTagToLevel(arrowEntity, MeleeRangedEnchantmentList.REFRESHMENT);
+                    int refreshmentLevel = ArrowHelper.enchantmentTagToLevel(arrowEntity, EnchantmentInit.REFRESHMENT.get());
                     if(refreshmentLevel > 0){
                         updateRefreshment(killerPlayer, refreshmentLevel);
                     }

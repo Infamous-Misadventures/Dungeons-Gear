@@ -1,10 +1,10 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
 import com.infamous.dungeons_gear.network.NetworkHandler;
+import com.infamous.dungeons_gear.registry.EntityTypeInit;
 import com.infamous.dungeons_libraries.network.BreakItemMessage;
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
-import com.infamous.dungeons_gear.registry.ModEntityTypes;
 import com.infamous.dungeons_gear.entities.TotemOfShieldingEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
@@ -40,7 +40,7 @@ public class TotemOfShieldingItem extends ArtifactItem {
             }
             if(itemUseContextPlayer != null) {
 
-                TotemOfShieldingEntity totemOfShieldingEntity = ModEntityTypes.TOTEM_OF_SHIELDING.get().create(itemUseContextPlayer.level);
+                TotemOfShieldingEntity totemOfShieldingEntity = EntityTypeInit.TOTEM_OF_SHIELDING.get().create(itemUseContextPlayer.level);
                 if(totemOfShieldingEntity != null) {
                     totemOfShieldingEntity.moveTo(blockPos, 0, 0);
                     totemOfShieldingEntity.setOwner(itemUseContextPlayer);

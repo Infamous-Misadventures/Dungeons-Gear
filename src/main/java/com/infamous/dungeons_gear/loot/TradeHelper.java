@@ -1,15 +1,13 @@
 package com.infamous.dungeons_gear.loot;
 
-import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.trading.MerchantOffer;
-
-import java.util.Random;
 
 public class TradeHelper {
     static class EnchantedItemForEmeraldsTrade implements VillagerTrades.ItemListing {
@@ -31,7 +29,7 @@ public class TradeHelper {
             this.priceMultiplier = priceMultiplier;
         }
 
-        public MerchantOffer getOffer(Entity entity, Random random) {
+        public MerchantOffer getOffer(Entity entity, RandomSource random) {
             int lvt_3_1_ = 5 + random.nextInt(15);
             ItemStack lvt_4_1_ = EnchantmentHelper.enchantItem(random, new ItemStack(this.sellingStack.getItem()), lvt_3_1_, false);
             int lvt_5_1_ = Math.min(this.emeraldCount + lvt_3_1_, 64);

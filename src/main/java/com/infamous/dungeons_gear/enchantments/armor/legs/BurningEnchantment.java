@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.armor.legs;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.PulseEnchantment;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -47,21 +47,21 @@ public class BurningEnchantment extends PulseEnchantment {
     }
 
     @SubscribeEvent
-    public static void onLivingUpdate(LivingEvent.LivingUpdateEvent event){
-        triggerEffect(event.getEntityLiving());
+    public static void onLivingUpdate(LivingEvent.LivingTickEvent event){
+        triggerEffect(event.getEntity());
     }
 
     public static void triggerEffect(LivingEntity livingEntity){
-        if(ModEnchantmentHelper.hasEnchantment(livingEntity, ArmorEnchantmentList.BURNING)){
+        if(ModEnchantmentHelper.hasEnchantment(livingEntity, EnchantmentInit.BURNING.get())){
             Timers timers = TimersHelper.getTimersCapability(livingEntity);
             if(timers == null) return;
-            int currentTimer = timers.getEnchantmentTimer(ArmorEnchantmentList.BURNING);
+            int currentTimer = timers.getEnchantmentTimer(EnchantmentInit.BURNING.get());
             if(currentTimer < 0) {
-                timers.setEnchantmentTimer(ArmorEnchantmentList.BURNING, 10);
+                timers.setEnchantmentTimer(EnchantmentInit.BURNING.get(), 10);
             }else if(currentTimer == 0){
-                int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.BURNING, livingEntity);
+                int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.BURNING.get(), livingEntity);
                 AreaOfEffectHelper.burnNearbyEnemies(livingEntity, 1.0F * enchantmentLevel, 1.5F);
-                timers.setEnchantmentTimer(ArmorEnchantmentList.BURNING, 10);
+                timers.setEnchantmentTimer(EnchantmentInit.BURNING.get(), 10);
             }
         }
     }

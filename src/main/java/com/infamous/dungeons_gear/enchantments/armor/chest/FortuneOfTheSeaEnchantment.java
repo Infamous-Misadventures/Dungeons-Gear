@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes.ARMOR_SLOT;
-import static com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList.FORTUNE_OF_THE_SEA;
+import static com.infamous.dungeons_gear.registry.EnchantmentInit.FORTUNE_OF_THE_SEA;
 import static net.minecraft.world.entity.ai.attributes.Attributes.LUCK;
 
 public class FortuneOfTheSeaEnchantment extends DungeonsEnchantment {
@@ -41,12 +41,12 @@ public class FortuneOfTheSeaEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onLivingEquipmentChange(LivingEquipmentChangeEvent event) {
-        removeAttribute(event.getFrom(), event.getEntityLiving(), EQUIPMENT_ATTRIBUTE_UUID_MAP.get(event.getSlot()));
-        addAttribute(event.getTo(), event.getEntityLiving(), EQUIPMENT_ATTRIBUTE_UUID_MAP.get(event.getSlot()));
+        removeAttribute(event.getFrom(), event.getEntity(), EQUIPMENT_ATTRIBUTE_UUID_MAP.get(event.getSlot()));
+        addAttribute(event.getTo(), event.getEntity(), EQUIPMENT_ATTRIBUTE_UUID_MAP.get(event.getSlot()));
     }
 
     private static void removeAttribute(ItemStack itemStack, LivingEntity livingEntity, UUID attributeModifierUUID) {
-        if (EnchantmentHelper.getItemEnchantmentLevel(FORTUNE_OF_THE_SEA, itemStack) > 0) {
+        if (EnchantmentHelper.getItemEnchantmentLevel(FORTUNE_OF_THE_SEA.get(), itemStack) > 0) {
             AttributeInstance attributeInstance = livingEntity.getAttribute(LUCK);
             if (attributeInstance != null && attributeInstance.getModifier(attributeModifierUUID) != null) {
                 attributeInstance.removeModifier(attributeModifierUUID);
@@ -55,7 +55,7 @@ public class FortuneOfTheSeaEnchantment extends DungeonsEnchantment {
     }
 
     private static void addAttribute(ItemStack itemStack, LivingEntity livingEntity, UUID attributeModifierUUID) {
-        int itemEnchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(FORTUNE_OF_THE_SEA, itemStack);
+        int itemEnchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(FORTUNE_OF_THE_SEA.get(), itemStack);
         if (itemEnchantmentLevel > 0) {
             AttributeInstance attributeInstance = livingEntity.getAttribute(LUCK);
             if (attributeInstance != null && attributeInstance.getModifier(attributeModifierUUID) == null) {

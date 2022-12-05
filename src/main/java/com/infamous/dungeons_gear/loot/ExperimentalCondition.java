@@ -9,7 +9,7 @@ import net.minecraft.world.level.storage.loot.Serializer;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 
-import static com.infamous.dungeons_gear.loot.LootConditionRegistry.DUNGEONS_GEAR_EXPERIMENTAL_CONDITION;
+import static com.infamous.dungeons_gear.registry.LootConditionInit.DUNGEONS_GEAR_EXPERIMENTAL_CONDITION;
 
 public class ExperimentalCondition implements LootItemCondition {
 
@@ -28,7 +28,7 @@ public class ExperimentalCondition implements LootItemCondition {
 
     @Override
     public LootItemConditionType getType() {
-        return DUNGEONS_GEAR_EXPERIMENTAL_CONDITION;
+        return DUNGEONS_GEAR_EXPERIMENTAL_CONDITION.get();
     }
 
     @Override

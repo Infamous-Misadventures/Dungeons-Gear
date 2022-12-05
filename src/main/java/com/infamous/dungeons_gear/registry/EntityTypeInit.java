@@ -10,9 +10,9 @@ import net.minecraftforge.registries.RegistryObject;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
-public final class ModEntityTypes {
+public final class EntityTypeInit {
 
-    public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, MODID);
+    public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, MODID);
 
     public static final RegistryObject<EntityType<IceCloudEntity>> ICE_CLOUD = ENTITY_TYPES.register("ice_cloud", () ->
             EntityType.Builder.<IceCloudEntity>of(IceCloudEntity::new, MobCategory.MISC)

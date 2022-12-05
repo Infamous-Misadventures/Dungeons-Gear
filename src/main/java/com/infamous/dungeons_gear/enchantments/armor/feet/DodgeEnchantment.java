@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes.ARMOR_SLOT;
-import static com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList.DODGE;
+import static com.infamous.dungeons_gear.registry.EnchantmentInit.DODGE;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class DodgeEnchantment extends JumpingEnchantment {
@@ -26,8 +26,8 @@ public class DodgeEnchantment extends JumpingEnchantment {
 
     @SubscribeEvent
     public static void onLivingDamageEvent(LivingDamageEvent event) {
-        LivingEntity victim = event.getEntityLiving();
-        int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(DODGE, victim);
+        LivingEntity victim = event.getEntity();
+        int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(DODGE.get(), victim);
         float negateHitChance = (float) (DungeonsGearConfig.DODGE_CHANCE_PER_LEVEL.get() * enchantmentLevel);
 
         float negateHitRand = victim.getRandom().nextFloat();

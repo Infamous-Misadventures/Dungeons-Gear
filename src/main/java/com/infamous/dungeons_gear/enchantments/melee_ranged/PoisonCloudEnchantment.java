@@ -23,13 +23,13 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.PotionEvent;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-import static com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList.POISON_CLOUD;
+import static com.infamous.dungeons_gear.registry.EnchantmentInit.POISON_CLOUD;
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class PoisonCloudEnchantment extends DungeonsEnchantment {
@@ -46,11 +46,11 @@ public class PoisonCloudEnchantment extends DungeonsEnchantment {
         if (!(event.getSource().getEntity() instanceof LivingEntity)) return;
         LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
         if (attacker.getLastHurtMobTimestamp() == attacker.tickCount) return;
-        LivingEntity victim = event.getEntityLiving();
+        LivingEntity victim = event.getEntity();
         ItemStack mainhand = attacker.getMainHandItem();
-        if (ModEnchantmentHelper.hasEnchantment(mainhand, POISON_CLOUD)) {
+        if (ModEnchantmentHelper.hasEnchantment(mainhand, POISON_CLOUD.get())) {
             float chance = attacker.getRandom().nextFloat();
-            int level = EnchantmentHelper.getItemEnchantmentLevel(POISON_CLOUD, mainhand);
+            int level = EnchantmentHelper.getItemEnchantmentLevel(POISON_CLOUD.get(), mainhand);
             if (chance <= DungeonsGearConfig.POISON_CLOUD_CHANCE.get() && !PlayerAttackHelper.isProbablyNotMeleeDamage(event.getSource())) {
                 checkForPlayer(attacker);
                 AOECloudHelper.spawnPoisonCloud(attacker, victim, level - 1);
@@ -65,7 +65,7 @@ public class PoisonCloudEnchantment extends DungeonsEnchantment {
             if (!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
             LivingEntity shooter = (LivingEntity) arrow.getOwner();
 
-            int poisonLevel = ArrowHelper.enchantmentTagToLevel(arrow, POISON_CLOUD);
+            int poisonLevel = ArrowHelper.enchantmentTagToLevel(arrow, POISON_CLOUD.get());
 
             if (poisonLevel > 0) {
                 if (rayTraceResult instanceof EntityHitResult) {
@@ -93,12 +93,12 @@ public class PoisonCloudEnchantment extends DungeonsEnchantment {
     }
 
     @SubscribeEvent
-    public static void onPoisonEvent(PotionEvent.PotionApplicableEvent event) {
-        if (event.getPotionEffect().getEffect() == MobEffects.POISON) {
-            if (event.getEntityLiving() instanceof Player) {
-                Player playerEntity = (Player) event.getEntityLiving();
+    public static void onPoisonEvent(MobEffectEvent.Applicable event) {
+        if (event.getEffectInstance().getEffect() == MobEffects.POISON) {
+            if (event.getEntity() instanceof Player) {
+                Player playerEntity = (Player) event.getEntity();
                 Timers timersCapability = TimersHelper.getTimersCapability(playerEntity);
-                int enchantmentTimer = timersCapability.getEnchantmentTimer(POISON_CLOUD);
+                int enchantmentTimer = timersCapability.getEnchantmentTimer(POISON_CLOUD.get());
                 if (enchantmentTimer > 0) {
                     event.setResult(Event.Result.DENY);
                 }
@@ -110,9 +110,9 @@ public class PoisonCloudEnchantment extends DungeonsEnchantment {
         if (livingEntity instanceof Player) {
             Player playerEntity = (Player) livingEntity;
             Timers timersCapability = TimersHelper.getTimersCapability(playerEntity);
-            int enchantmentTimer = timersCapability.getEnchantmentTimer(POISON_CLOUD);
+            int enchantmentTimer = timersCapability.getEnchantmentTimer(POISON_CLOUD.get());
             if(enchantmentTimer <= 0) {
-                timersCapability.setEnchantmentTimer(POISON_CLOUD, 60);
+                timersCapability.setEnchantmentTimer(POISON_CLOUD.get(), 60);
             }
         }
     }

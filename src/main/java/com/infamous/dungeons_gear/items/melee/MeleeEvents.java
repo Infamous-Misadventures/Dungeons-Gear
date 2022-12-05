@@ -15,13 +15,13 @@ public class MeleeEvents {
     public static void dualWield(LivingEquipmentChangeEvent event) {
         if (event.getSlot() == EquipmentSlot.OFFHAND) {
             final ItemStack outgoing = event.getTo();
-            if (outgoing.getItem() instanceof IDualWieldWeapon && event.getEntityLiving().getOffhandItem().getItem() instanceof IDualWieldWeapon) {
-                ((IDualWieldWeapon) event.getEntityLiving().getOffhandItem().getItem()).updateOff(event.getEntityLiving(), event.getEntityLiving().getOffhandItem());
+            if (outgoing.getItem() instanceof IDualWieldWeapon && event.getEntity().getOffhandItem().getItem() instanceof IDualWieldWeapon) {
+                ((IDualWieldWeapon) event.getEntity().getOffhandItem().getItem()).updateOff(event.getEntity(), event.getEntity().getOffhandItem());
             }
         }else if (event.getSlot() == EquipmentSlot.MAINHAND) {
             final ItemStack incoming = event.getTo();
             if (incoming.getItem() instanceof IDualWieldWeapon) {
-                ((IDualWieldWeapon) incoming.getItem()).updateMain(event.getEntityLiving(), incoming);
+                ((IDualWieldWeapon) incoming.getItem()).updateMain(event.getEntity(), incoming);
             }
         }
     }

@@ -7,10 +7,7 @@
   "mixins": [
     "AbstractArrowEntityMixin",
     "AreaEffectCloudEntityMixin",
-    "ContainerMinecartEntityMixin",
-    "CooldownAccessor",
-    "CrossbowItemMixin",
-    "WorldStemMixin",
+    "CrossbowItemMixin", "ReloadableServerResourcesMixin",
     "HurtByTargetGoalMixin",
     "LockableLootTileEntityMixin",
     "LootContextAccessor",

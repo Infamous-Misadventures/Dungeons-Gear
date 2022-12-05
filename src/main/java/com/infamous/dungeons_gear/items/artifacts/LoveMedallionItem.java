@@ -21,6 +21,9 @@ import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 import static com.infamous.dungeons_gear.config.DungeonsGearConfig.LOVE_MEDALLION_BLACKLIST;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.applyToNearbyEntities;
 
+import net.minecraft.world.item.Item.Properties;
+import net.minecraftforge.registries.ForgeRegistries;
+
 public class LoveMedallionItem extends ArtifactItem {
     public LoveMedallionItem(Properties properties) {
         super(properties);
@@ -35,7 +38,7 @@ public class LoveMedallionItem extends ArtifactItem {
                         && !MinionMasterHelper.isMinionEntity(nearbyEntity)
                         && nearbyEntity.isAlive()
                         && nearbyEntity.canChangeDimensions()
-                        && !LOVE_MEDALLION_BLACKLIST.get().contains(nearbyEntity.getType().getRegistryName().toString()),
+                        && !LOVE_MEDALLION_BLACKLIST.get().contains(ForgeRegistries.ENTITY_TYPES.getKey(nearbyEntity.getType()).toString()),
                 (LivingEntity nearbyEntity) -> makeMinionOf(playerIn, nearbyEntity));
 
         itemstack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new BreakItemMessage(entity.getId(), itemstack)));

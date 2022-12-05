@@ -11,17 +11,17 @@ import software.bernie.geckolib3.model.AnimatedGeoModel;
 public class SoulWizardOrbModel extends AnimatedGeoModel<SoulWizardOrbEntity> {
 
 	@Override
-	public ResourceLocation getAnimationFileLocation(SoulWizardOrbEntity entity) {
+	public ResourceLocation getAnimationResource(SoulWizardOrbEntity entity) {
 		return new ResourceLocation(DungeonsGear.MODID, "animations/soul_wizard_orb.animation.json");
 	}
 
 	@Override
-	public ResourceLocation getModelLocation(SoulWizardOrbEntity entity) {
+	public ResourceLocation getModelResource(SoulWizardOrbEntity entity) {
 		return new ResourceLocation(DungeonsGear.MODID, "geo/soul_wizard_orb.geo.json");
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(SoulWizardOrbEntity entity) {
+	public ResourceLocation getTextureResource(SoulWizardOrbEntity entity) {
 		return new ResourceLocation(DungeonsGear.MODID, "textures/entity/projectile/soul_wizard_orb_" + entity.textureChange % 2 + ".png");
 	}
 

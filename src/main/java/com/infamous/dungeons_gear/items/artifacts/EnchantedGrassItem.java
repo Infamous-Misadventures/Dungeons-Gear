@@ -33,6 +33,8 @@ import java.util.stream.Collectors;
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_GATHERING;
 import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMasterCapability;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class EnchantedGrassItem extends ArtifactItem {
 
     public EnchantedGrassItem(Properties properties) {

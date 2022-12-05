@@ -3,6 +3,8 @@ package com.infamous.dungeons_gear.items.artifacts.beacon;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class CorruptedPumpkinItem extends SoulBeaconItem {
 
     public static final BeamColor CORRUPTED_PUMPKIN_BEAM_COLOR =

@@ -3,7 +3,7 @@ package com.infamous.dungeons_gear.enchantments.armor.feet;
 import com.infamous.dungeons_gear.capabilities.combo.Combo;
 import com.infamous.dungeons_gear.capabilities.combo.ComboHelper;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DropsEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.IEmeraldsEnchantment;
 import com.infamous.dungeons_gear.utilties.LootTableHelper;
@@ -33,7 +33,7 @@ public class LuckyExplorerEnchantment extends DropsEnchantment implements IEmera
 
     @SubscribeEvent
     public static void onPlayerSpawn(PlayerEvent.PlayerRespawnEvent event){
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         if(!player.level.isClientSide){
             Combo comboCap = ComboHelper.getComboCapability(player);
             comboCap.setLastLuckyExplorerCheckpoint(player.blockPosition());
@@ -46,7 +46,7 @@ public class LuckyExplorerEnchantment extends DropsEnchantment implements IEmera
         if (player == null || player.isSpectator()) return;
         if (event.phase == TickEvent.Phase.START) return;
         if (player.isAlive() && !player.level.isClientSide) {
-            int luckyExplorerLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.LUCKY_EXPLORER, player);
+            int luckyExplorerLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.LUCKY_EXPLORER.get(), player);
             if (luckyExplorerLevel > 0) {
                 Combo comboCap = ComboHelper.getComboCapability(player);
                 BlockPos lastLuckyExplorerCheckpoint = comboCap.getLastLuckyExplorerCheckpoint();

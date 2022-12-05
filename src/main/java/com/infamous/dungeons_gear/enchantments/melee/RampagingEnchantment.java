@@ -1,9 +1,8 @@
 package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
-import com.infamous.dungeons_libraries.items.interfaces.IMeleeWeapon;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.entity.LivingEntity;
@@ -13,15 +12,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.config.DungeonsGearConfig.RAMPAGING_CHANCE;
 import static com.infamous.dungeons_gear.config.DungeonsGearConfig.RAMPAGING_DURATION;
-
-import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class RampagingEnchantment extends DungeonsEnchantment {
@@ -51,8 +48,8 @@ public class RampagingEnchantment extends DungeonsEnchantment {
 
     private static void applyEnchantment(LivingEntity attacker) {
         ItemStack mainhand = attacker.getMainHandItem();
-        if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.RAMPAGING)){
-            int rampagingLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.RAMPAGING, mainhand);
+        if(ModEnchantmentHelper.hasEnchantment(mainhand, EnchantmentInit.RAMPAGING.get())){
+            int rampagingLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.RAMPAGING.get(), mainhand);
             applyEffect(attacker, rampagingLevel);
         }
     }

@@ -8,7 +8,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
-public class AttributeRegistry {
+public class AttributeInit {
 
     public static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, MODID);
 

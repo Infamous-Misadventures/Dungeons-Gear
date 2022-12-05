@@ -22,6 +22,8 @@ import java.util.UUID;
 
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_GATHERING;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class LightningRodItem extends ArtifactItem implements ISoulConsumer {
     public LightningRodItem(Properties properties) {
         super(properties);

@@ -180,12 +180,12 @@ public class AddPotionLootFunction extends LootItemConditionalFunction
                     Pair<Potion, Float> pair = lootFunction.weightedPotionOptions.get(i);
                     if (useStrings)
                     {
-                        potions.add(pair.getFirst().getRegistryName().toString());
+                        potions.add(ForgeRegistries.POTIONS.getKey(pair.getFirst()).toString());
                     }
                     else
                     {
                         JsonObject entry = new JsonObject();
-                        entry.addProperty("potion", pair.getFirst().getRegistryName().toString());
+                        entry.addProperty("potion", ForgeRegistries.POTIONS.getKey(pair.getFirst()).toString());
                         entry.addProperty("weight", pair.getSecond());
                         potions.add(entry);
                     }

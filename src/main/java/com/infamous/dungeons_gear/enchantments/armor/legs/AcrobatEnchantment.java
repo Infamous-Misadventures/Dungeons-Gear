@@ -20,8 +20,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes.ARMOR_SLOT;
-import static com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList.ACROBAT;
-import static com.infamous.dungeons_gear.registry.AttributeRegistry.ROLL_COOLDOWN;
+import static com.infamous.dungeons_gear.registry.EnchantmentInit.ACROBAT;
+import static com.infamous.dungeons_gear.registry.AttributeInit.ROLL_COOLDOWN;
 
 public class AcrobatEnchantment extends JumpingEnchantment {
     private final static Map<EquipmentSlot, UUID> EQUIPMENT_ATTRIBUTE_UUID_MAP = Stream.of(
@@ -47,12 +47,12 @@ public class AcrobatEnchantment extends JumpingEnchantment {
 
     @SubscribeEvent
     public static void onLivingEquipmentChange(LivingEquipmentChangeEvent event) {
-        removeAttribute(event.getFrom(), event.getEntityLiving(), EQUIPMENT_ATTRIBUTE_UUID_MAP.get(event.getSlot()));
-        addAttribute(event.getTo(), event.getEntityLiving(), EQUIPMENT_ATTRIBUTE_UUID_MAP.get(event.getSlot()));
+        removeAttribute(event.getFrom(), event.getEntity(), EQUIPMENT_ATTRIBUTE_UUID_MAP.get(event.getSlot()));
+        addAttribute(event.getTo(), event.getEntity(), EQUIPMENT_ATTRIBUTE_UUID_MAP.get(event.getSlot()));
     }
 
     private static void removeAttribute(ItemStack itemStack, LivingEntity livingEntity, UUID attributeModifierUUID) {
-        if (EnchantmentHelper.getItemEnchantmentLevel(ACROBAT, itemStack) > 0) {
+        if (EnchantmentHelper.getItemEnchantmentLevel(ACROBAT.get(), itemStack) > 0) {
             AttributeInstance attributeInstance = livingEntity.getAttribute(ROLL_COOLDOWN.get());
             if (attributeInstance != null && attributeInstance.getModifier(attributeModifierUUID) != null) {
                 attributeInstance.removeModifier(attributeModifierUUID);
@@ -61,7 +61,7 @@ public class AcrobatEnchantment extends JumpingEnchantment {
     }
 
     private static void addAttribute(ItemStack itemStack, LivingEntity livingEntity, UUID attributeModifierUUID) {
-        int itemEnchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(ACROBAT, itemStack);
+        int itemEnchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(ACROBAT.get(), itemStack);
         if (itemEnchantmentLevel > 0) {
             AttributeInstance attributeInstance = livingEntity.getAttribute(ROLL_COOLDOWN.get());
             if (attributeInstance != null && attributeInstance.getModifier(attributeModifierUUID) == null) {

@@ -16,7 +16,7 @@ import net.minecraft.world.level.Level;
 import java.util.stream.StreamSupport;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-import static com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList.ARROW_HOARDER;
+import static com.infamous.dungeons_gear.registry.EnchantmentInit.ARROW_HOARDER;
 
 public class ArrowBundleItem  extends Item {
 
@@ -61,7 +61,7 @@ public class ArrowBundleItem  extends Item {
     }
 
     private int arrowAmount(ItemStack stack) {
-        return EnchantmentHelper.getItemEnchantmentLevel(ARROW_HOARDER, stack);
+        return EnchantmentHelper.getItemEnchantmentLevel(ARROW_HOARDER.get(), stack);
     }
 
 

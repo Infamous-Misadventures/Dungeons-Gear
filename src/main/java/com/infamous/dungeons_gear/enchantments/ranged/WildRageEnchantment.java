@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.goals.WildRageAttackGoal;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -48,7 +48,7 @@ public class WildRageEnchantment extends DungeonsEnchantment {
         if (event.getProjectile() instanceof AbstractArrow arrow) {
             if (!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
             LivingEntity shooter = (LivingEntity) arrow.getOwner();
-            int wildRageLevel = ArrowHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.WILD_RAGE);
+            int wildRageLevel = ArrowHelper.enchantmentTagToLevel(arrow, EnchantmentInit.WILD_RAGE.get());
             Mob victim = (Mob) ((EntityHitResult) rayTraceResult).getEntity();
             if (!(victim instanceof Enemy) || !(victim.canChangeDimensions())) return;
             if (wildRageLevel > 0) {
@@ -67,11 +67,11 @@ public class WildRageEnchantment extends DungeonsEnchantment {
     public static void onWildRageAttack(LivingAttackEvent event){
         if(!(event.getSource().getEntity() instanceof LivingEntity)) return;
         LivingEntity attacker = (LivingEntity)event.getSource().getEntity();
-        LivingEntity victim = event.getEntityLiving();
+        LivingEntity victim = event.getEntity();
         if(!(victim instanceof Enemy) || !(victim.canChangeDimensions())) return;
         Mob enemy = (Mob) victim;
-            if((ModEnchantmentHelper.hasEnchantment(attacker, RangedEnchantmentList.WILD_RAGE))){
-                int wildRageLevel = EnchantmentHelper.getEnchantmentLevel(RangedEnchantmentList.WILD_RAGE, attacker);
+            if((ModEnchantmentHelper.hasEnchantment(attacker, EnchantmentInit.WILD_RAGE.get()))){
+                int wildRageLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.WILD_RAGE.get(), attacker);
                 float wildRageChance = 0.1F;
                 wildRageChance += wildRageLevel * 0.1F;
 

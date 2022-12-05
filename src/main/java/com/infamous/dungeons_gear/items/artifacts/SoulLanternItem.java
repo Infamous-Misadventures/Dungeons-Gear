@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.entities.SoulWizardEntity;
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_gear.registry.ModEntityTypes;
+import com.infamous.dungeons_gear.registry.EntityTypeInit;
 import com.infamous.dungeons_gear.registry.SoundEventInit;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
 import com.infamous.dungeons_libraries.capabilities.minionmaster.Master;
@@ -59,14 +59,14 @@ public class SoulLanternItem extends ArtifactItem {
 
             if (itemUseContextPlayer != null) {
                 Master summonerCap = getMasterCapability(itemUseContextPlayer);
-                Entity summoned = SummonHelper.summonEntity(itemUseContextPlayer, itemUseContextPlayer.blockPosition(), ModEntityTypes.SOUL_WIZARD.get());
+                Entity summoned = SummonHelper.summonEntity(itemUseContextPlayer, itemUseContextPlayer.blockPosition(), EntityTypeInit.SOUL_WIZARD.get());
                 if (summoned != null) {
                     SoundHelper.playCreatureSound(itemUseContextPlayer, SoundEventInit.SOUL_WIZARD_APPEAR.get());
                     itemUseContextItem.hurtAndBreak(1, itemUseContextPlayer, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new BreakItemMessage(entity.getId(), itemUseContextItem)));
                     ArtifactItem.putArtifactOnCooldown(itemUseContextPlayer, itemUseContextItem.getItem());
                 } else {
                     if (world instanceof ServerLevel) {
-                        List<Entity> soulWizardEntities = summonerCap.getSummonedMobs().stream().filter(entity -> entity.getType() == ModEntityTypes.SOUL_WIZARD.get()).collect(Collectors.toList());
+                        List<Entity> soulWizardEntities = summonerCap.getSummonedMobs().stream().filter(entity -> entity.getType() == EntityTypeInit.SOUL_WIZARD.get()).collect(Collectors.toList());
                         soulWizardEntities.forEach(entity -> {
                             if (entity instanceof SoulWizardEntity) {
                                 SoulWizardEntity soulWizardEntity = (SoulWizardEntity) entity;

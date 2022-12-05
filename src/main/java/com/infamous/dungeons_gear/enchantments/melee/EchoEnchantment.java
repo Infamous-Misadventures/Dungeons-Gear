@@ -4,7 +4,7 @@ import com.infamous.dungeons_gear.capabilities.combo.Combo;
 import com.infamous.dungeons_gear.capabilities.combo.ComboHelper;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -37,13 +37,13 @@ public class EchoEnchantment extends AOEDamageEnchantment {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onVanillaCriticalHit(CriticalHitEvent event) {
-        if(event.getTarget() instanceof LivingEntity && !event.getPlayer().level.isClientSide()
+        if(event.getTarget() instanceof LivingEntity && !event.getEntity().level.isClientSide()
                 && (event.getResult() == Event.Result.ALLOW || (event.getResult() == Event.Result.DEFAULT && event.isVanillaCritical()))) {
-            Player attacker = (Player) event.getPlayer();
+            Player attacker = (Player) event.getEntity();
             LivingEntity victim = (LivingEntity) event.getTarget();
             ItemStack mainhand = attacker.getMainHandItem();
-            if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.ECHO)) {
-                int echoLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.ECHO, mainhand);
+            if (ModEnchantmentHelper.hasEnchantment(mainhand, EnchantmentInit.ECHO.get())) {
+                int echoLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.ECHO.get(), mainhand);
                 float cooldown = Math.max(3, 6 - echoLevel);
                 if (echoLevel > 3) {
                     echoLevel -= 3;

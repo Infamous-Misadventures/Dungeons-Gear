@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.armor.chest;
 
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.FocusEnchantment;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -26,9 +26,9 @@ public class OpulentShieldEnchantment extends FocusEnchantment {
 
     @SubscribeEvent
     public static void onPickupXp(PlayerXpEvent.PickupXp event){
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         if(player.level.isClientSide) return;
-        int opulentShieldLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.OPULENT_SHIELD, player);
+        int opulentShieldLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.OPULENT_SHIELD.get(), player);
         int invulnerableTime = 20 * opulentShieldLevel;
         if(player.invulnerableTime >= invulnerableTime) return;
         player.invulnerableTime = invulnerableTime;

@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.armor.head;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DropsEnchantment;
 import com.infamous.dungeons_gear.items.ArrowBundleItem;
 import com.infamous.dungeons_gear.utilties.LootTableHelper;
@@ -25,7 +25,7 @@ import java.util.List;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes.ARMOR_SLOT;
-import static com.infamous.dungeons_gear.registry.ItemRegistry.ARROW_BUNDLE;
+import static com.infamous.dungeons_gear.registry.ItemInit.ARROW_BUNDLE;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class SurpriseGiftEnchantment extends DropsEnchantment {
@@ -45,14 +45,14 @@ public class SurpriseGiftEnchantment extends DropsEnchantment {
 
     @SubscribeEvent
     public static void onPotionConsumed(LivingEntityUseItemEvent.Finish event){
-        if(!(event.getEntityLiving() instanceof Player)) return;
-        Player player = (Player) event.getEntityLiving();
+        if(!(event.getEntity() instanceof Player)) return;
+        Player player = (Player) event.getEntity();
         if(player.isAlive() && player.isEffectiveAi()){
             List<MobEffectInstance> potionEffects = PotionUtils.getMobEffects(event.getItem());
             if(potionEffects.isEmpty()) return;
             if(potionEffects.get(0).getEffect() == MobEffects.HEAL){
-                if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.SURPRISE_GIFT)){
-                    int surpriseGiftLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.SURPRISE_GIFT, player);
+                if(ModEnchantmentHelper.hasEnchantment(player, EnchantmentInit.SURPRISE_GIFT.get())){
+                    int surpriseGiftLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.SURPRISE_GIFT.get(), player);
                     float surpriseGiftChance = 0.5F * surpriseGiftLevel;
 
                     while(surpriseGiftChance > 0){

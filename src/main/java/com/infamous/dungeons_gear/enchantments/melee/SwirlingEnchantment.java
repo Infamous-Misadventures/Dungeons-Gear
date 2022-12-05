@@ -4,7 +4,7 @@ import com.infamous.dungeons_gear.capabilities.combo.Combo;
 import com.infamous.dungeons_gear.capabilities.combo.ComboHelper;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
@@ -40,16 +40,16 @@ public class SwirlingEnchantment extends AOEDamageEnchantment {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onVanillaCriticalHit(CriticalHitEvent event) {
-        if (event.getPlayer() != null && !event.getPlayer().level.isClientSide() &&  event.getTarget() instanceof LivingEntity
+        if (event.getEntity() != null && !event.getEntity().level.isClientSide() &&  event.getTarget() instanceof LivingEntity
                 && (event.getResult() == Event.Result.ALLOW || (event.getResult() == Event.Result.DEFAULT && event.isVanillaCritical()))
         ) {
-            Player attacker = (Player) event.getPlayer();
+            Player attacker = (Player) event.getEntity();
             LivingEntity victim = (LivingEntity) event.getTarget();
             if (attacker.getLastHurtMobTimestamp() == attacker.tickCount) return;
             ItemStack mainhand = attacker.getMainHandItem();
             if (event.getResult() != Event.Result.ALLOW && mainhand.getItem() instanceof IComboWeapon) return;
-            if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.SWIRLING)) {
-                int swirlingLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.SWIRLING, mainhand);
+            if (ModEnchantmentHelper.hasEnchantment(mainhand, EnchantmentInit.SWIRLING.get())) {
+                int swirlingLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.SWIRLING.get(), mainhand);
                 // gets the attack damage of the original attack before any enchantment modifiers are added
                 float attackDamage = (float) attacker.getAttributeValue(Attributes.ATTACK_DAMAGE);
                 Combo ic = ComboHelper.getComboCapability(attacker);

@@ -1,10 +1,10 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
-import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_libraries.network.BreakItemMessage;
+import com.infamous.dungeons_gear.registry.MobEffectInit;
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
+import com.infamous.dungeons_libraries.network.BreakItemMessage;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
@@ -58,7 +58,7 @@ public class LightFeatherItem extends ArtifactItem {
             PROXY.spawnParticles(nearbyEntity, ParticleTypes.CLOUD);
 
 
-            MobEffectInstance stunned = new MobEffectInstance(CustomEffects.STUNNED, this.getDurationInSeconds() * 20);
+            MobEffectInstance stunned = new MobEffectInstance(MobEffectInit.STUNNED.get(), this.getDurationInSeconds() * 20);
             MobEffectInstance nausea = new MobEffectInstance(MobEffects.CONFUSION, this.getDurationInSeconds() * 20);
             MobEffectInstance slowness = new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, this.getDurationInSeconds() * 20, 4);
             nearbyEntity.addEffect(slowness);

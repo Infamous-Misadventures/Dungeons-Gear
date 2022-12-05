@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.armor.legs;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.PulseEnchantment;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -48,21 +48,21 @@ public class GravityPulseEnchantment extends PulseEnchantment {
     }
 
     @SubscribeEvent
-    public static void onLivingUpdate(LivingEvent.LivingUpdateEvent event){
-        triggerEffect(event.getEntityLiving());
+    public static void onLivingUpdate(LivingEvent.LivingTickEvent event){
+        triggerEffect(event.getEntity());
     }
 
     public static void triggerEffect(LivingEntity livingEntity){
-        if(ModEnchantmentHelper.hasEnchantment(livingEntity, ArmorEnchantmentList.GRAVITY_PULSE)){
+        if(ModEnchantmentHelper.hasEnchantment(livingEntity, EnchantmentInit.GRAVITY_PULSE.get())){
             Timers timers = TimersHelper.getTimersCapability(livingEntity);
             if(timers == null) return;
-            int currentTimer = timers.getEnchantmentTimer(ArmorEnchantmentList.GRAVITY_PULSE);
+            int currentTimer = timers.getEnchantmentTimer(EnchantmentInit.GRAVITY_PULSE.get());
             if(currentTimer < 0) {
-                timers.setEnchantmentTimer(ArmorEnchantmentList.GRAVITY_PULSE, 100);
+                timers.setEnchantmentTimer(EnchantmentInit.GRAVITY_PULSE.get(), 100);
             }else if(currentTimer == 0){
-                int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.GRAVITY_PULSE, livingEntity);
+                int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.GRAVITY_PULSE.get(), livingEntity);
                 AreaOfEffectHelper.pullInNearbyEntities(livingEntity, livingEntity, (float) (DungeonsGearConfig.GRAVITY_PULSE_BASE_STRENGTH.get() + DungeonsGearConfig.GRAVITY_PULSE_STRENGTH_PER_LEVEL.get() * enchantmentLevel), ParticleTypes.PORTAL);
-                timers.setEnchantmentTimer(ArmorEnchantmentList.GRAVITY_PULSE, 100);
+                timers.setEnchantmentTimer(EnchantmentInit.GRAVITY_PULSE.get(), 100);
             }
         }
     }

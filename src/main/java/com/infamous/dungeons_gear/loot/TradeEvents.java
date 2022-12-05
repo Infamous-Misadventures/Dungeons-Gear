@@ -31,7 +31,7 @@ import static com.infamous.dungeons_gear.items.armor.ArmorHelper.getArmorList;
 import static com.infamous.dungeons_gear.items.artifacts.ArtifactHelper.getArtifactList;
 import static com.infamous.dungeons_gear.items.melee.MeleeWeaponHelper.getMeleeWeaponList;
 import static com.infamous.dungeons_gear.items.ranged.RangedWeaponHelper.getRangedWeaponList;
-import static com.infamous.dungeons_gear.registry.ItemRegistry.SHEAR_DAGGER;
+import static com.infamous.dungeons_gear.registry.ItemInit.SHEAR_DAGGER;
 import static com.infamous.dungeons_libraries.items.materials.armor.ArmorMaterialBaseType.BONE;
 import static com.infamous.dungeons_libraries.items.materials.armor.ArmorMaterialBaseType.LEATHER;
 import static com.infamous.dungeons_libraries.items.materials.armor.ArmorMaterialBaseType.*;
@@ -54,8 +54,7 @@ public class TradeEvents {
 //        moveTradesToDifferentGroup(rareTrades, genericTrades);
 
         for(Item item : getArtifactList()){
-            Item artifact = ForgeRegistries.ITEMS.getValue(item.getRegistryName());
-            ItemStack artifactStack = new ItemStack(artifact);
+            ItemStack artifactStack = new ItemStack(item);
             BasicItemListing trade = new BasicItemListing(DungeonsGearConfig.ARTIFACT_VALUE.get(), artifactStack, 3, 30);
             rareTrades.add(trade);
         }
@@ -198,7 +197,7 @@ public class TradeEvents {
     public static void onSalvageItem(PlayerInteractEvent.EntityInteract event){
         if(!DungeonsGearConfig.ENABLE_SALVAGING.get()) return;
         Entity entity = event.getTarget();
-        Player playerEntity = event.getPlayer();
+        Player playerEntity = event.getEntity();
         if(entity instanceof Villager){
             Villager villagerEntity = (Villager) entity;
             if(villagerEntity.getVillagerData().getProfession() == VillagerProfession.WEAPONSMITH){

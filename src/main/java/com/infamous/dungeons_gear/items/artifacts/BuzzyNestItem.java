@@ -3,7 +3,7 @@ package com.infamous.dungeons_gear.items.artifacts;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.entities.BuzzyNestEntity;
-import com.infamous.dungeons_gear.registry.ModEntityTypes;
+import com.infamous.dungeons_gear.registry.EntityTypeInit;
 import com.infamous.dungeons_gear.network.NetworkHandler;
 import com.infamous.dungeons_libraries.network.BreakItemMessage;
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
@@ -49,7 +49,7 @@ public class BuzzyNestItem extends ArtifactItem {
             }
 
             if (itemUseContextPlayer != null) {
-                BuzzyNestEntity buzzyNestEntity = ModEntityTypes.BUZZY_NEST.get().create(itemUseContextPlayer.level);
+                BuzzyNestEntity buzzyNestEntity = EntityTypeInit.BUZZY_NEST.get().create(itemUseContextPlayer.level);
                 if(buzzyNestEntity != null) {
                     buzzyNestEntity.moveTo(blockPos, 0, 0);
                     buzzyNestEntity.setOwner(itemUseContextPlayer);

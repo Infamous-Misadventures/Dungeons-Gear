@@ -3,7 +3,7 @@ package com.infamous.dungeons_gear.combat;
 import com.infamous.dungeons_gear.items.interfaces.IDualWieldWeapon;
 import com.infamous.dungeons_gear.network.NetworkHandler;
 import com.infamous.dungeons_gear.network.PacketOffhandAttack;
-import com.infamous.dungeons_gear.registry.AttributeRegistry;
+import com.infamous.dungeons_gear.registry.AttributeInit;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -23,7 +23,7 @@ public class CombatEventHandler {
             if (offhand.getItem() instanceof IDualWieldWeapon && ((IDualWieldWeapon<?>) offhand.getItem()).canAttack(player, offhand)) {
                 float reach = (float) 3.0D;
                 if (mc.player != null) {
-                    reach = (float) mc.player.getAttributeBaseValue(AttributeRegistry.ATTACK_REACH.get());
+                    reach = (float) mc.player.getAttributeBaseValue(AttributeInit.ATTACK_REACH.get());
                 }
                 if (player.isCreative()) reach += 2.0;
                 HitResult rayTrace = getEntityMouseOverExtended(reach);

@@ -14,6 +14,8 @@ import net.minecraftforge.fml.common.Mod;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.config.DungeonsGearConfig.RADIANCE_CHANCE;
 
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
+
 @Mod.EventBusSubscriber(modid = MODID)
 public class RadianceEnchantment extends DungeonsEnchantment {
 

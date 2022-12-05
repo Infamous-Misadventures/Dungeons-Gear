@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.armor.feet;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.ArtifactEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_libraries.event.ArtifactEvent;
@@ -35,9 +35,9 @@ public class SpeedSynergyEnchantment extends ArtifactEnchantment {
 
     @SubscribeEvent
     public static void onArtifactTriggered(ArtifactEvent.Activated event){
-        LivingEntity livingEntity = event.getEntityLiving();
-        if(ModEnchantmentHelper.hasEnchantment(livingEntity, ArmorEnchantmentList.SPEED_SYNERGY)){
-            int speedSynergyLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.SPEED_SYNERGY, livingEntity);
+        LivingEntity livingEntity = event.getEntity();
+        if(ModEnchantmentHelper.hasEnchantment(livingEntity, EnchantmentInit.SPEED_SYNERGY.get())){
+            int speedSynergyLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.SPEED_SYNERGY.get(), livingEntity);
             MobEffectInstance speedBoost = new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 20 * speedSynergyLevel);
             livingEntity.addEffect(speedBoost);
         }

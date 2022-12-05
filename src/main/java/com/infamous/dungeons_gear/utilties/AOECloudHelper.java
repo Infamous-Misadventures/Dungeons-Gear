@@ -1,12 +1,12 @@
 package com.infamous.dungeons_gear.utilties;
 
-import com.infamous.dungeons_gear.effects.CustomEffects;
-import net.minecraft.world.entity.AreaEffectCloud;
-import net.minecraft.world.entity.LivingEntity;
+import com.infamous.dungeons_gear.registry.MobEffectInit;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.AreaEffectCloud;
+import net.minecraft.world.entity.LivingEntity;
 
 public class AOECloudHelper {
     public static void spawnExplosionCloud(LivingEntity attacker, LivingEntity victim, float radius){
@@ -69,7 +69,7 @@ public class AOECloudHelper {
         areaeffectcloudentity.setRadiusOnUse(-0.5F);
         areaeffectcloudentity.setWaitTime(10);
         areaeffectcloudentity.setDuration(duration);
-        MobEffectInstance shielding = new MobEffectInstance(CustomEffects.SOUL_PROTECTION, duration);
+        MobEffectInstance shielding = new MobEffectInstance(MobEffectInit.SOUL_PROTECTION.get(), duration);
         areaeffectcloudentity.addEffect(shielding);
         attacker.level.addFreshEntity(areaeffectcloudentity);
     }

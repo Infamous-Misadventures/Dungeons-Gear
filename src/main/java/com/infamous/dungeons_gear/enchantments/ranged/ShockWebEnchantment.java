@@ -4,9 +4,8 @@ import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.damagesources.ElectricShockDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
-import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
 import com.infamous.dungeons_libraries.utils.ArrowHelper;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -27,8 +26,6 @@ import java.util.List;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.getCanApplyToEnemyPredicate;
-
-import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class ShockWebEnchantment extends DungeonsEnchantment {
@@ -74,7 +71,7 @@ public class ShockWebEnchantment extends DungeonsEnchantment {
         if (!ENABLED) return;
         DungeonsGear.LOGGER.info("Firing shock web impact");
         if (event.getProjectile() instanceof AbstractArrow arrow) {
-            int shockWebLevel = ArrowHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.SHOCK_WEB);
+            int shockWebLevel = ArrowHelper.enchantmentTagToLevel(arrow, EnchantmentInit.SHOCK_WEB.get());
             DungeonsGear.LOGGER.info("Shock web level is {}!", shockWebLevel);
             Entity shooter = arrow.getOwner();
             DungeonsGear.LOGGER.info("Shooter is {}!", shooter);

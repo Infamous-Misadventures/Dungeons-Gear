@@ -1,14 +1,9 @@
 package com.infamous.dungeons_gear.mixin;
 
-import com.infamous.dungeons_gear.registry.AttributeRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(GameRenderer.class)
 public abstract class GameRendererMixin {

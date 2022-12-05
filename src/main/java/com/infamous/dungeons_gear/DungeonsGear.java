@@ -11,17 +11,12 @@ import com.infamous.dungeons_gear.groups.MeleeWeaponGroup;
 import com.infamous.dungeons_gear.groups.RangedWeaponGroup;
 import com.infamous.dungeons_gear.items.DualWieldItemProperties;
 import com.infamous.dungeons_gear.items.GearRangedItemModelProperties;
-import com.infamous.dungeons_gear.loot.LootConditionRegistry;
+import com.infamous.dungeons_gear.registry.*;
+import com.infamous.dungeons_gear.registry.GlobalLootModifierInit;
 import com.infamous.dungeons_gear.loot.ModLootFunctionTypes;
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_gear.registry.AttributeRegistry;
-import com.infamous.dungeons_gear.registry.ItemRegistry;
-import com.infamous.dungeons_gear.registry.ModEntityTypes;
-import com.infamous.dungeons_gear.registry.ParticleInit;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
@@ -33,8 +28,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import software.bernie.example.registry.SoundRegistry;
-
-import java.util.function.Consumer;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(DungeonsGear.MODID)
@@ -64,17 +57,17 @@ public class DungeonsGear
 
 
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        ModEntityTypes.ENTITY_TYPES.register(modEventBus);
+        EntityTypeInit.ENTITY_TYPES.register(modEventBus);
         ParticleInit.PARTICLES.register(modEventBus);
-        AttributeRegistry.ATTRIBUTES.register(modEventBus);
-        ItemRegistry.ITEMS.register(modEventBus);
+        AttributeInit.ATTRIBUTES.register(modEventBus);
+        ItemInit.ITEMS.register(modEventBus);
         SoundRegistry.SOUNDS.register(modEventBus);
+        GlobalLootModifierInit.LOOT_MODIFIER_SERIALIZERS.register(modEventBus);
+        LootConditionInit.LOOT_ITEM_CONDITION_TYPES.register(modEventBus);
+        MobEffectInit.MOB_EFFECTS.register(modEventBus);
+        PotionInit.POTIONS.register(modEventBus);
+        EnchantmentInit.ENCHANTMENTS.register(modEventBus);
         PROXY = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
-        FMLJavaModLoadingContext.get()
-                .getModEventBus()
-                .addGenericListener(Block.class, (Consumer<RegistryEvent.Register<Block>>) blockRegister ->
-                        LootConditionRegistry.init()
-                );
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
@@ -93,7 +86,7 @@ public class DungeonsGear
     }
 
     public void initEntityTypeAttributes(EntityAttributeCreationEvent event) {
-        event.put(ModEntityTypes.SOUL_WIZARD.get(), SoulWizardEntity.setCustomAttributes().build());
+        event.put(EntityTypeInit.SOUL_WIZARD.get(), SoulWizardEntity.setCustomAttributes().build());
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {

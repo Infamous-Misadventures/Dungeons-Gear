@@ -1,20 +1,20 @@
 package com.infamous.dungeons_gear.enchantments.melee_ranged;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.effects.CustomEffects;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
+import com.infamous.dungeons_gear.registry.MobEffectInit;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
+import net.minecraft.util.Mth;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.DamageEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.util.Mth;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -43,15 +43,15 @@ public class DynamoEnchantment extends DamageBoostEnchantment {
 
     public static void handleAddDynamoEnchantment(Player playerEntity) {
         ItemStack mainhand = playerEntity.getMainHandItem();
-        if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.DYNAMO)) {
-            int dynamoLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeRangedEnchantmentList.DYNAMO, mainhand);
-            MobEffectInstance currentEffectInstance = playerEntity.getEffect(CustomEffects.DYNAMO);
+        if (ModEnchantmentHelper.hasEnchantment(mainhand, EnchantmentInit.DYNAMO.get())) {
+            int dynamoLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.DYNAMO.get(), mainhand);
+            MobEffectInstance currentEffectInstance = playerEntity.getEffect(MobEffectInit.DYNAMO.get());
             int i = dynamoLevel;
             if (currentEffectInstance != null) {
                 i += currentEffectInstance.getAmplifier();
             }
             i = Mth.clamp(i, 0, DYNAMO_MAX_STACKS.get());
-            MobEffectInstance effectinstance = new MobEffectInstance(CustomEffects.DYNAMO, 120000, i - 1);
+            MobEffectInstance effectinstance = new MobEffectInstance(MobEffectInit.DYNAMO.get(), 120000, i - 1);
             playerEntity.addEffect(effectinstance);
         }
     }
@@ -61,12 +61,12 @@ public class DynamoEnchantment extends DamageBoostEnchantment {
         if (event.getSource().getEntity() instanceof Player) {
             Player playerEntity = (Player) event.getSource().getEntity();
             ItemStack mainhand = playerEntity.getMainHandItem();
-            if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.DYNAMO)) {
-                MobEffectInstance effectinstance = playerEntity.getEffect(CustomEffects.DYNAMO);
+            if (ModEnchantmentHelper.hasEnchantment(mainhand, EnchantmentInit.DYNAMO.get())) {
+                MobEffectInstance effectinstance = playerEntity.getEffect(MobEffectInit.DYNAMO.get());
                 if (effectinstance != null) {
                     int dynamoAmplifier = effectinstance.getAmplifier() + 1;
                     event.setAmount((float) (event.getAmount() * (1 + dynamoAmplifier * DYNAMO_DAMAGE_MULTIPLIER_PER_STACK.get())));
-                    playerEntity.removeEffect(CustomEffects.DYNAMO);
+                    playerEntity.removeEffect(MobEffectInit.DYNAMO.get());
                 }
             }
         }

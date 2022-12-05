@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.armor.chest;
 
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -47,8 +47,8 @@ public class LifeBoostEnchantment extends DungeonsEnchantment {
             }
         }
 
-        Player newPlayer = event.getPlayer();
-        int lifeBoostLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.LIFE_BOOST, oldPlayer);
+        Player newPlayer = event.getEntity();
+        int lifeBoostLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.LIFE_BOOST.get(), oldPlayer);
         if(lifeBoostLevel > 0){
             AttributeInstance newMaxHealth = newPlayer.getAttribute(Attributes.MAX_HEALTH);
             if (newMaxHealth != null) {

@@ -8,7 +8,7 @@ import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-import static com.infamous.dungeons_gear.registry.ItemRegistry.ARMORS;
+import static com.infamous.dungeons_gear.registry.ItemInit.ARMORS;
 
 public class ModItemModelProvider extends ItemModelProvider {
 

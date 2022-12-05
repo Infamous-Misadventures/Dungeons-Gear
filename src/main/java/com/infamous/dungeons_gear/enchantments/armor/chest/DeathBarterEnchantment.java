@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.armor.chest;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.IEmeraldsEnchantment;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -37,10 +37,10 @@ public class DeathBarterEnchantment extends DungeonsEnchantment implements IEmer
 
     @SubscribeEvent
     public static void onDeathBarter(LivingDeathEvent event){
-        LivingEntity living = event.getEntityLiving();
+        LivingEntity living = event.getEntity();
         Player player = null;
         if(living instanceof Player){
-            player = (Player) event.getEntityLiving();
+            player = (Player) event.getEntity();
         } else{
             return;
         }
@@ -56,7 +56,7 @@ public class DeathBarterEnchantment extends DungeonsEnchantment implements IEmer
             }
         }
 
-        int deathBarterLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.DEATH_BARTER, player);
+        int deathBarterLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.DEATH_BARTER.get(), player);
         int emeraldRequirement = 150 - Math.min(100, 50 * (deathBarterLevel - 1)); // will always need at least 50 emeralds even if the level exceeds 3
         if(deathBarterLevel > 0 && totalEmeraldCount >= emeraldRequirement){
 
@@ -77,11 +77,11 @@ public class DeathBarterEnchantment extends DungeonsEnchantment implements IEmer
             }
 
             event.setCanceled(true);
-            event.getEntityLiving().setHealth(1.0F);
-            event.getEntityLiving().removeAllEffects();
-            event.getEntityLiving().addEffect(new MobEffectInstance(MobEffects.REGENERATION, 900, 1));
-            event.getEntityLiving().addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 900, 1));
-            event.getEntityLiving().addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 1));
+            event.getEntity().setHealth(1.0F);
+            event.getEntity().removeAllEffects();
+            event.getEntity().addEffect(new MobEffectInstance(MobEffects.REGENERATION, 900, 1));
+            event.getEntity().addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 900, 1));
+            event.getEntity().addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 1));
         }
     }
 

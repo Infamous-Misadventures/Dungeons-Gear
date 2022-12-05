@@ -3,7 +3,7 @@ package com.infamous.dungeons_gear.items.artifacts;
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.capabilities.combo.Combo;
 import com.infamous.dungeons_gear.capabilities.combo.ComboHelper;
-import com.infamous.dungeons_gear.effects.CustomEffects;
+import com.infamous.dungeons_gear.registry.MobEffectInit;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
 import com.infamous.dungeons_libraries.capabilities.minionmaster.Minion;
@@ -17,7 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -41,20 +41,20 @@ public class ArtifactEvents {
             Minion summonableCap = getMinionCapability(sheepEntity);
             if(summonableCap.getMaster() != null){
                 if(sheepEntity.getTags().contains(FIRE_SHEEP_TAG)){
-                    event.getEntityLiving().setSecondsOnFire(5);
+                    event.getEntity().setSecondsOnFire(5);
                 }
                 else if(sheepEntity.getTags().contains(POISON_SHEEP_TAG)){
                     MobEffectInstance poison = new MobEffectInstance(MobEffects.POISON, 100);
-                    event.getEntityLiving().addEffect(poison);
+                    event.getEntity().addEffect(poison);
                 }
             }
         }
     }
 
     @SubscribeEvent
-    public static void updateBlueEnchantedSheep(LivingEvent.LivingUpdateEvent event){
-        if(event.getEntityLiving() instanceof Sheep){
-            Sheep sheepEntity = (Sheep)event.getEntityLiving();
+    public static void updateBlueEnchantedSheep(LivingEvent.LivingTickEvent event){
+        if(event.getEntity() instanceof Sheep){
+            Sheep sheepEntity = (Sheep)event.getEntity();
             Minion summonableCap = getMinionCapability(sheepEntity);
             LivingEntity summoner = summonableCap.getMaster();
             if(summoner != null){
@@ -70,18 +70,18 @@ public class ArtifactEvents {
 
     @SubscribeEvent
     public static void onSoulProtection(LivingDeathEvent event){
-        if(event.getEntityLiving().getEffect(CustomEffects.SOUL_PROTECTION) != null){
+        if(event.getEntity().getEffect(MobEffectInit.SOUL_PROTECTION.get()) != null){
             event.setCanceled(true);
-            event.getEntityLiving().setHealth(1.0F);
-            event.getEntityLiving().removeAllEffects();
-            event.getEntityLiving().addEffect(new MobEffectInstance(MobEffects.REGENERATION, 900, 1));
-            event.getEntityLiving().addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 900, 1));
-            event.getEntityLiving().addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 1));
+            event.getEntity().setHealth(1.0F);
+            event.getEntity().removeAllEffects();
+            event.getEntity().addEffect(new MobEffectInstance(MobEffects.REGENERATION, 900, 1));
+            event.getEntity().addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 900, 1));
+            event.getEntity().addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 1));
         }
     }
 
     @SubscribeEvent
-    public static void onArrowJoinWorld(EntityJoinWorldEvent event){
+    public static void onArrowJoinWorld(EntityJoinLevelEvent event){
         if(event.getEntity() instanceof AbstractArrow){
             AbstractArrow arrowEntity = (AbstractArrow) event.getEntity();
             Entity shooter = arrowEntity.getOwner();

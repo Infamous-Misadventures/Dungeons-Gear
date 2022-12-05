@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.entities;
 
-import com.infamous.dungeons_gear.effects.CustomEffects;
+import com.infamous.dungeons_gear.registry.MobEffectInit;
 import com.infamous.dungeons_libraries.entities.TotemBaseEntity;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -18,6 +18,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.applyToNearbyEntities;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.getCanHealPredicate;
+import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes.LOOP;
 
 public class TotemOfShieldingEntity extends TotemBaseEntity implements IAnimatable {
 
@@ -33,11 +34,11 @@ public class TotemOfShieldingEntity extends TotemBaseEntity implements IAnimatab
         if(owner == null) return;
         applyToNearbyEntities(getOwner(), 8,
                 getCanHealPredicate(getOwner()), (LivingEntity nearbyEntity) -> {
-                    MobEffectInstance effectInstance = new MobEffectInstance(CustomEffects.SHIELDING, 21);
+                    MobEffectInstance effectInstance = new MobEffectInstance(MobEffectInit.SHIELDING.get(), 21);
                     nearbyEntity.addEffect(effectInstance);
                 }
         );
-        MobEffectInstance resistance = new MobEffectInstance(CustomEffects.SHIELDING, 21);
+        MobEffectInstance resistance = new MobEffectInstance(MobEffectInit.SHIELDING.get(), 21);
         owner.addEffect(resistance);
     }
 
@@ -52,7 +53,7 @@ public class TotemOfShieldingEntity extends TotemBaseEntity implements IAnimatab
     }
 
     private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.totem_of_shielding.idle", true));
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.totem_of_shielding.idle", LOOP));
         return PlayState.CONTINUE;
     }
 

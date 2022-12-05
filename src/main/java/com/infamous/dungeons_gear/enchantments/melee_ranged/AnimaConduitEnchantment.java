@@ -26,10 +26,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-import static com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList.ANIMA_CONDUIT;
+import static com.infamous.dungeons_gear.registry.EnchantmentInit.ANIMA_CONDUIT;
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_GATHERING;
-
-import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class AnimaConduitEnchantment extends HealingEnchantment {
@@ -56,9 +54,9 @@ public class AnimaConduitEnchantment extends HealingEnchantment {
 
     @SubscribeEvent
     public static void onPickupSoulOrb(PlayerSoulEvent.PickupSoul event){
-        Player playerEntity = event.getPlayer();
-        if(!playerEntity.level.isClientSide() && ModEnchantmentHelper.hasEnchantment(playerEntity, ANIMA_CONDUIT)) {
-            int level = EnchantmentHelper.getEnchantmentLevel(ANIMA_CONDUIT, playerEntity);
+        Player playerEntity = event.getEntity();
+        if(!playerEntity.level.isClientSide() && ModEnchantmentHelper.hasEnchantment(playerEntity, ANIMA_CONDUIT.get())) {
+            int level = EnchantmentHelper.getEnchantmentLevel(ANIMA_CONDUIT.get(), playerEntity);
             playerEntity.heal(level);
         }
     }
@@ -74,19 +72,19 @@ public class AnimaConduitEnchantment extends HealingEnchantment {
 
     @SubscribeEvent
     public static void onLivingEquipmentChange(LivingEquipmentChangeEvent event) {
-        removeAttribute(event.getFrom(), event.getEntityLiving(), EQUIPMENT_ATTRIBUTE_UUID_MAP.get(event.getSlot()));
-        addAttribute(event.getTo(), event.getEntityLiving(), EQUIPMENT_ATTRIBUTE_UUID_MAP.get(event.getSlot()));
+        removeAttribute(event.getFrom(), event.getEntity(), EQUIPMENT_ATTRIBUTE_UUID_MAP.get(event.getSlot()));
+        addAttribute(event.getTo(), event.getEntity(), EQUIPMENT_ATTRIBUTE_UUID_MAP.get(event.getSlot()));
     }
 
     @SubscribeEvent
     public static void onCurioChange(CurioChangeEvent event) {
         if(!event.getIdentifier().equals(CuriosIntegration.ARTIFACT_IDENTIFIER)) return;
-        removeAttribute(event.getFrom(), event.getEntityLiving(), CURIO_ATTRIBUTE_UUID_MAP.get(event.getSlotIndex()));
-        addAttribute(event.getTo(), event.getEntityLiving(), CURIO_ATTRIBUTE_UUID_MAP.get(event.getSlotIndex()));
+        removeAttribute(event.getFrom(), event.getEntity(), CURIO_ATTRIBUTE_UUID_MAP.get(event.getSlotIndex()));
+        addAttribute(event.getTo(), event.getEntity(), CURIO_ATTRIBUTE_UUID_MAP.get(event.getSlotIndex()));
     }
 
     private static void removeAttribute(ItemStack itemStack, LivingEntity livingEntity, UUID attributeModifierUUID) {
-        if (EnchantmentHelper.getItemEnchantmentLevel(ANIMA_CONDUIT, itemStack) > 0) {
+        if (EnchantmentHelper.getItemEnchantmentLevel(ANIMA_CONDUIT.get(), itemStack) > 0) {
             AttributeInstance attributeInstance = livingEntity.getAttribute(SOUL_GATHERING.get());
             if (attributeInstance != null && attributeInstance.getModifier(attributeModifierUUID) != null) {
                 attributeInstance.removeModifier(attributeModifierUUID);
@@ -95,7 +93,7 @@ public class AnimaConduitEnchantment extends HealingEnchantment {
     }
 
     private static void addAttribute(ItemStack itemStack, LivingEntity livingEntity, UUID attributeModifierUUID) {
-        int itemEnchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(ANIMA_CONDUIT, itemStack);
+        int itemEnchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(ANIMA_CONDUIT.get(), itemStack);
         if (itemEnchantmentLevel > 0) {
             AttributeInstance attributeInstance = livingEntity.getAttribute(SOUL_GATHERING.get());
             if (attributeInstance != null && attributeInstance.getModifier(attributeModifierUUID) == null) {

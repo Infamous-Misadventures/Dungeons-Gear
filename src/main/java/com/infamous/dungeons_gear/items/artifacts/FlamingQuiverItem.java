@@ -12,6 +12,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.PacketDistributor;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class FlamingQuiverItem extends ArtifactItem {
     public FlamingQuiverItem(Properties properties) {
         super(properties);

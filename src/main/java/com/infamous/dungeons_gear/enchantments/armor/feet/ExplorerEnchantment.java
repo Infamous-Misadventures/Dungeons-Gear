@@ -3,7 +3,7 @@ package com.infamous.dungeons_gear.enchantments.armor.feet;
 import com.infamous.dungeons_gear.capabilities.combo.Combo;
 import com.infamous.dungeons_gear.capabilities.combo.ComboHelper;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.HealthAbilityEnchantment;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
@@ -27,7 +27,7 @@ public class ExplorerEnchantment extends HealthAbilityEnchantment {
 
     @SubscribeEvent
     public static void onPlayerSpawn(PlayerEvent.PlayerRespawnEvent event){
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         if(!player.level.isClientSide){
             Combo comboCap = ComboHelper.getComboCapability(player);
             comboCap.setLastExplorerCheckpoint(player.blockPosition());
@@ -45,7 +45,7 @@ public class ExplorerEnchantment extends HealthAbilityEnchantment {
             BlockPos currentPos = player.blockPosition();
             if(currentPos.distSqr(lastExplorerCheckpoint) >= 10000){
                 comboCap.setLastExplorerCheckpoint(currentPos);
-                int explorerLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.EXPLORER, player);
+                int explorerLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.EXPLORER.get(), player);
                 if(explorerLevel > 0){
                     float maxHealth = player.getMaxHealth();
                     float multiplier = explorerLevel / 3.0F;

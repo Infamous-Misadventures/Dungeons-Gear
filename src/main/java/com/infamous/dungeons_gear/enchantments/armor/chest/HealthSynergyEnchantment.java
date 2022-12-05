@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.armor.chest;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.ArtifactEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_libraries.event.ArtifactEvent;
@@ -33,9 +33,9 @@ public class HealthSynergyEnchantment extends ArtifactEnchantment {
 
     @SubscribeEvent
     public static void onArtifactTriggered(ArtifactEvent.Activated event){
-        LivingEntity livingEntity = event.getEntityLiving();
-        if(ModEnchantmentHelper.hasEnchantment(livingEntity, ArmorEnchantmentList.HEALTH_SYNERGY)){
-            int healthSynergyLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.HEALTH_SYNERGY, livingEntity);
+        LivingEntity livingEntity = event.getEntity();
+        if(ModEnchantmentHelper.hasEnchantment(livingEntity, EnchantmentInit.HEALTH_SYNERGY.get())){
+            int healthSynergyLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.HEALTH_SYNERGY.get(), livingEntity);
             livingEntity.heal(0.2F + (0.1F * healthSynergyLevel));
         }
     }

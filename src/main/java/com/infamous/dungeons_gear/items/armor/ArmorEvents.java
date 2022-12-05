@@ -16,22 +16,22 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
-import net.minecraftforge.event.entity.living.PotionEvent;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
 
-import static com.infamous.dungeons_gear.registry.ItemRegistry.CHAMPIONS_ARMOR;
-import static com.infamous.dungeons_gear.registry.ItemRegistry.HEROS_ARMOR;
+import static com.infamous.dungeons_gear.registry.ItemInit.CHAMPIONS_ARMOR;
+import static com.infamous.dungeons_gear.registry.ItemInit.HEROS_ARMOR;
 
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class ArmorEvents {
 
     @SubscribeEvent
     public static void onSpelunkerArmorEquipped(LivingEquipmentChangeEvent event) {
-        if (event.getEntityLiving() instanceof Player && event.getSlot() != EquipmentSlot.OFFHAND && event.getSlot() != EquipmentSlot.MAINHAND) {
-            Player playerEntity = (Player) event.getEntityLiving();
+        if (event.getEntity() instanceof Player && event.getSlot() != EquipmentSlot.OFFHAND && event.getSlot() != EquipmentSlot.MAINHAND) {
+            Player playerEntity = (Player) event.getEntity();
             Level world = playerEntity.getCommandSenderWorld();
             if (event.getTo().getItem() instanceof PetBatArmorGear) {
                 if (((PetBatArmorGear) event.getTo().getItem()).doGivesYouAPetBat()) {
@@ -53,22 +53,22 @@ public class ArmorEvents {
     }
 
     @SubscribeEvent
-    public static void onFreezingApplied(PotionEvent.PotionAddedEvent event) {
-        MobEffectInstance effectInstance = event.getPotionEffect();
-        LivingEntity livingEntity = event.getEntityLiving();
+    public static void onFreezingApplied(MobEffectEvent.Added event) {
+        MobEffectInstance effectInstance = event.getEffectInstance();
+        LivingEntity livingEntity = event.getEntity();
         ItemStack helmet = livingEntity.getItemBySlot(EquipmentSlot.HEAD);
         ItemStack chestplate = livingEntity.getItemBySlot(EquipmentSlot.CHEST);
         reduceFreezingEffect(event, effectInstance, helmet, chestplate);
     }
 
-    private static void reduceFreezingEffect(PotionEvent.PotionAddedEvent event, MobEffectInstance effectInstance, ItemStack helmet, ItemStack chestplate) {
+    private static void reduceFreezingEffect(MobEffectEvent.Added event, MobEffectInstance effectInstance, ItemStack helmet, ItemStack chestplate) {
         float freezingResistance = helmet.getItem() instanceof FreezingResistanceArmorGear ? (float) ((FreezingResistanceArmorGear) helmet.getItem()).getFreezingResistance() : 0;
         float freezingResistance2 = chestplate.getItem() instanceof FreezingResistanceArmorGear ? (float) ((FreezingResistanceArmorGear) chestplate.getItem()).getFreezingResistance() : 0;
 
         float freezingMultiplier = freezingResistance * 0.01F + freezingResistance2 * 0.01F;
 
         if (freezingMultiplier > 0) {
-            if (event.getPotionEffect().getEffect() == MobEffects.MOVEMENT_SLOWDOWN || event.getPotionEffect().getEffect() == MobEffects.DIG_SLOWDOWN) {
+            if (event.getEffectInstance().getEffect() == MobEffects.MOVEMENT_SLOWDOWN || event.getEffectInstance().getEffect() == MobEffects.DIG_SLOWDOWN) {
                 int oldDuration = effectInstance.getDuration();
                 effectInstance.duration = (int) (oldDuration * freezingMultiplier);
             }
@@ -77,8 +77,8 @@ public class ArmorEvents {
 
     @SubscribeEvent
     public static void onHealthPotionConsumed(LivingEntityUseItemEvent.Finish event) {
-        if (!(event.getEntityLiving() instanceof Player)) return;
-        Player player = (Player) event.getEntityLiving();
+        if (!(event.getEntity() instanceof Player)) return;
+        Player player = (Player) event.getEntity();
         if (player.isAlive()) {
             List<MobEffectInstance> potionEffects = PotionUtils.getMobEffects(event.getItem());
             if (potionEffects.isEmpty()) return;

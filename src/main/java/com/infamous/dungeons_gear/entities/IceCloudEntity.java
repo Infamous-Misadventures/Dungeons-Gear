@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.entities;
 
 import com.infamous.dungeons_gear.registry.DamageSourceInit;
-import com.infamous.dungeons_gear.registry.ModEntityTypes;
+import com.infamous.dungeons_gear.registry.EntityTypeInit;
 import com.infamous.dungeons_gear.registry.ParticleInit;
 import com.infamous.dungeons_gear.registry.SoundEventInit;
 import net.minecraft.core.BlockPos;
@@ -64,7 +64,7 @@ public class IceCloudEntity extends Entity implements IAnimatable {
 	public int soundLoopTick;
 	
     public IceCloudEntity(Level world){
-        super(ModEntityTypes.ICE_CLOUD.get(), world);
+        super(EntityTypeInit.ICE_CLOUD.get(), world);
         this.blocksBuilding = true;
     }
     
@@ -122,7 +122,7 @@ public class IceCloudEntity extends Entity implements IAnimatable {
 	}
 	
 	public static void spawn(Entity summoningEntity, LivingEntity target) {
-	        IceCloudEntity iceChunk = ModEntityTypes.ICE_CLOUD.get().create(summoningEntity.level);
+	        IceCloudEntity iceChunk = EntityTypeInit.ICE_CLOUD.get().create(summoningEntity.level);
 	        iceChunk.moveTo(target.getX(), target.getY() + target.getBbHeight() + 3, target.getZ());
 	        iceChunk.target = target;
 	        iceChunk.owner = summoningEntity;

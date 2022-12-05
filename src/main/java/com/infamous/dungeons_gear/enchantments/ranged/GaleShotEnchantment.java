@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -17,8 +17,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-
-import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class GaleShotEnchantment extends DungeonsEnchantment {
@@ -38,7 +36,7 @@ public class GaleShotEnchantment extends DungeonsEnchantment {
         if (event.getProjectile() instanceof AbstractArrow arrow) {
             if (!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
             LivingEntity shooter = (LivingEntity) arrow.getOwner();
-            int enchantmentLevel = ArrowHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.GALE_SHOT);
+            int enchantmentLevel = ArrowHelper.enchantmentTagToLevel(arrow, EnchantmentInit.GALE_SHOT.get());
             if (enchantmentLevel > 0) {
                 if (rayTraceResult instanceof EntityHitResult) {
                     EntityHitResult entityRayTraceResult = (EntityHitResult) rayTraceResult;

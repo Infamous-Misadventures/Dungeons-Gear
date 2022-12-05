@@ -1,6 +1,7 @@
 package com.infamous.dungeons_gear.effects;
 
 import com.infamous.dungeons_gear.DungeonsGear;
+import com.infamous.dungeons_gear.registry.MobEffectInit;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -25,7 +26,7 @@ public class ShieldingEffect extends MobEffect {
             Entity entity = entityRayTraceResult.getEntity();
             if(entity instanceof LivingEntity){
                 LivingEntity livingEntity = (LivingEntity) entity;
-                MobEffect shielding = CustomEffects.SHIELDING;
+                MobEffect shielding = MobEffectInit.SHIELDING.get();
                 if(livingEntity.getEffect(shielding) != null){
                     if(event.isCancelable()){
                         event.setCanceled(true);

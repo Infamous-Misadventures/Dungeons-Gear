@@ -5,7 +5,7 @@ import com.infamous.dungeons_gear.capabilities.bow.RangedAbilities;
 import com.infamous.dungeons_gear.capabilities.bow.RangedAbilitiesHelper;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_libraries.event.BowEvent;
 import com.infamous.dungeons_libraries.event.CrossbowEvent;
@@ -36,7 +36,7 @@ public class VelocityEnchantment extends DungeonsEnchantment {
     @SubscribeEvent
     public static void onBowVelocity(BowEvent.Velocity event){
         ItemStack itemStack = event.getItemStack();
-        int velocityLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.VELOCITY, itemStack);
+        int velocityLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.VELOCITY.get(), itemStack);
         if(velocityLevel > 0){
             event.setVelocity(event.getVelocity() + 0.8F*velocityLevel);
         }
@@ -45,7 +45,7 @@ public class VelocityEnchantment extends DungeonsEnchantment {
     @SubscribeEvent
     public static void onCrossbowChargeTime(CrossbowEvent.ChargeTime event){
         ItemStack itemStack = event.getItemStack();
-        int accelerateLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.ACCELERATE, itemStack);
+        int accelerateLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.ACCELERATE.get(), itemStack);
         RangedAbilities weaponCapability = RangedAbilitiesHelper.getRangedAbilitiesCapability(itemStack);
         float bowChargeTime = weaponCapability.getBowChargeTime();
         long lastFiredTime = weaponCapability.getLastFiredTime();

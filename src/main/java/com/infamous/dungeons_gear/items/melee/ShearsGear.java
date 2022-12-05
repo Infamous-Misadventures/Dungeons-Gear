@@ -20,6 +20,8 @@ import net.minecraft.world.level.block.GrowingPlantHeadBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class ShearsGear extends MeleeGear {
 
     public ShearsGear(Properties properties) {

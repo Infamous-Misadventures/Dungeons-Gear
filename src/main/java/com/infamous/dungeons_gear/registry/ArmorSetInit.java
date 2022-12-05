@@ -3,14 +3,14 @@ package com.infamous.dungeons_gear.registry;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.RegistryObject;
 
-public class ArmorSet {
+public class ArmorSetInit {
     private final String armorSetId;
     private final RegistryObject<Item> head;
     private final RegistryObject<Item> chest;
     private final RegistryObject<Item> legs;
     private final RegistryObject<Item> feet;
 
-    public ArmorSet(String armorSetId, RegistryObject<Item> head, RegistryObject<Item> chest, RegistryObject<Item> legs, RegistryObject<Item> feet) {
+    public ArmorSetInit(String armorSetId, RegistryObject<Item> head, RegistryObject<Item> chest, RegistryObject<Item> legs, RegistryObject<Item> feet) {
         this.armorSetId = armorSetId;
         this.head = head;
         this.chest = chest;

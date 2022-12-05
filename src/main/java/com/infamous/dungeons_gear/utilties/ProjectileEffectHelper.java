@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.utilties;
 
-import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCaster;
 import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
 import com.infamous.dungeons_libraries.items.gearconfig.CrossbowGear;
@@ -204,8 +204,8 @@ public class ProjectileEffectHelper {
 
         float soulsLimit = 50.0F;
         float numSouls = Math.min(soulCasterCapability.getSouls(), soulsLimit);
-        if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.ENIGMA_RESONATOR)) {
-            int enigmaResonatorLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeRangedEnchantmentList.ENIGMA_RESONATOR, mainhand);
+        if (ModEnchantmentHelper.hasEnchantment(mainhand, EnchantmentInit.ENIGMA_RESONATOR.get())) {
+            int enigmaResonatorLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.ENIGMA_RESONATOR.get(), mainhand);
             float soulsCriticalBoostChanceCap;
             soulsCriticalBoostChanceCap = 0.1F + 0.05F * enigmaResonatorLevel;
             float soulsCriticalBoostRand = attacker.getRandom().nextFloat();

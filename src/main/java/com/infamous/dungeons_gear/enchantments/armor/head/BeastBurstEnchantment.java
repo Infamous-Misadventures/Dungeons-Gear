@@ -2,7 +2,7 @@ package com.infamous.dungeons_gear.enchantments.armor.head;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.BeastEnchantment;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
@@ -39,14 +39,14 @@ public class BeastBurstEnchantment extends BeastEnchantment {
 
     @SubscribeEvent
     public static void onPlayerUsedHealthPotion(LivingEntityUseItemEvent.Finish event){
-        if(!(event.getEntityLiving() instanceof Player)) return;
-        Player player = (Player) event.getEntityLiving();
+        if(!(event.getEntity() instanceof Player)) return;
+        Player player = (Player) event.getEntity();
         if(player.isAlive() && player.level instanceof ServerLevel){
             ServerLevel serverWorld = (ServerLevel) player.level;
             List<MobEffectInstance> potionEffects = PotionUtils.getMobEffects(event.getItem());
             if(potionEffects.isEmpty()) return;
             if(potionEffects.get(0).getEffect() == MobEffects.HEAL){
-                int beastBurstLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.BEAST_BURST, player);
+                int beastBurstLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.BEAST_BURST.get(), player);
                 if(beastBurstLevel > 0){
                     Master summonerCap = MinionMasterHelper.getMasterCapability(player);
 

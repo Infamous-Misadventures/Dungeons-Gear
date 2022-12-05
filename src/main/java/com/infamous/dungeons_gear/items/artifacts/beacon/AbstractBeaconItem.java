@@ -21,7 +21,7 @@ import net.minecraftforge.network.PacketDistributor;
 
 import java.util.List;
 
-import static com.infamous.dungeons_gear.registry.ModEntityTypes.BEAM_ENTITY;
+import static com.infamous.dungeons_gear.registry.EntityTypeInit.BEAM_ENTITY;
 
 public abstract class AbstractBeaconItem extends ArtifactItem {
 

@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.entities;
 
-import com.infamous.dungeons_gear.registry.ModEntityTypes;
+import com.infamous.dungeons_gear.registry.EntityTypeInit;
 import com.infamous.dungeons_gear.registry.ParticleInit;
 import com.infamous.dungeons_gear.registry.SoundEventInit;
 import net.minecraft.core.particles.ParticleOptions;
@@ -29,7 +29,7 @@ public class SoulWizardOrbEntity extends StraightMovingProjectileEntity implemen
 	AnimationFactory factory = new AnimationFactory(this);
 		   
 	public SoulWizardOrbEntity(Level worldIn) {
-		super(ModEntityTypes.SOUL_WIZARD_ORB.get(), worldIn);
+		super(EntityTypeInit.SOUL_WIZARD_ORB.get(), worldIn);
 	}
 
 	public SoulWizardOrbEntity(EntityType<? extends SoulWizardOrbEntity> p_i50147_1_, Level p_i50147_2_) {
@@ -38,13 +38,13 @@ public class SoulWizardOrbEntity extends StraightMovingProjectileEntity implemen
 
 	public SoulWizardOrbEntity(Level p_i1794_1_, LivingEntity p_i1794_2_, double p_i1794_3_, double p_i1794_5_,
 							   double p_i1794_7_) {
-		super(ModEntityTypes.SOUL_WIZARD_ORB.get(), p_i1794_2_, p_i1794_3_, p_i1794_5_, p_i1794_7_, p_i1794_1_);
+		super(EntityTypeInit.SOUL_WIZARD_ORB.get(), p_i1794_2_, p_i1794_3_, p_i1794_5_, p_i1794_7_, p_i1794_1_);
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	public SoulWizardOrbEntity(Level p_i1795_1_, double p_i1795_2_, double p_i1795_4_, double p_i1795_6_,
 			double p_i1795_8_, double p_i1795_10_, double p_i1795_12_) {
-		super(ModEntityTypes.SOUL_WIZARD_ORB.get(), p_i1795_2_, p_i1795_4_, p_i1795_6_, p_i1795_8_, p_i1795_10_,
+		super(EntityTypeInit.SOUL_WIZARD_ORB.get(), p_i1795_2_, p_i1795_4_, p_i1795_6_, p_i1795_8_, p_i1795_10_,
 				p_i1795_12_, p_i1795_1_);
 	}
 	

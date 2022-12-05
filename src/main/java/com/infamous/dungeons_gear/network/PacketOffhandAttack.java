@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.network;
 
 import com.infamous.dungeons_gear.items.interfaces.IDualWieldWeapon;
-import com.infamous.dungeons_gear.registry.AttributeRegistry;
+import com.infamous.dungeons_gear.registry.AttributeInit;
 import com.infamous.dungeons_gear.utilties.PlayerAttackHelper;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -46,7 +46,7 @@ public class PacketOffhandAttack {
                                 ItemStack offhand = player.getOffhandItem();
                                 if (!offhand.isEmpty()) {
                                     if (offhand.getItem() instanceof IDualWieldWeapon) {
-                                        float reach = (float) player.getAttributeBaseValue(AttributeRegistry.ATTACK_REACH.get());
+                                        float reach = (float) player.getAttributeBaseValue(AttributeInit.ATTACK_REACH.get());
                                         if(player.isCreative()) reach *= 2.0D;
 
                                         // This is done to mitigate the difference between the render view entity's position

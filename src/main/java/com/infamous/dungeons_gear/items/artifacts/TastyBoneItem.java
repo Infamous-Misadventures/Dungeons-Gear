@@ -34,6 +34,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionResultHolder;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class TastyBoneItem extends ArtifactItem {
     public TastyBoneItem(Properties p_i48487_1_) {
         super(p_i48487_1_);

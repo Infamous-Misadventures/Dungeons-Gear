@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
@@ -20,8 +20,6 @@ import net.minecraftforge.fml.common.Mod;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_libraries.utils.RangedAttackHelper.getVanillaOrModdedCrossbowArrowVelocity;
 
-import net.minecraft.world.item.enchantment.Enchantment.Rarity;
-
 @Mod.EventBusSubscriber(modid= MODID)
 public class BonusShotEnchantment extends DungeonsEnchantment {
 
@@ -36,12 +34,12 @@ public class BonusShotEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onCrossbowFired(PlayerInteractEvent.RightClickItem event){
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         ItemStack stack = event.getItemStack();
         if(stack.getItem() instanceof CrossbowItem){
             if(CrossbowItem.isCharged(stack)){
-                if(ModEnchantmentHelper.hasEnchantment(stack, RangedEnchantmentList.BONUS_SHOT)){
-                    int bonusShotLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.BONUS_SHOT, stack);
+                if(ModEnchantmentHelper.hasEnchantment(stack, EnchantmentInit.BONUS_SHOT.get())){
+                    int bonusShotLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.BONUS_SHOT.get(), stack);
                     float damageMultiplier;
                     damageMultiplier = 0.1F + (bonusShotLevel-1 * 0.07F);
                     float arrowVelocity = getVanillaOrModdedCrossbowArrowVelocity(player, stack);
@@ -54,11 +52,11 @@ public class BonusShotEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onBowFired(ArrowLooseEvent event){
-        LivingEntity livingEntity = event.getEntityLiving();
+        LivingEntity livingEntity = event.getEntity();
         ItemStack stack = event.getBow();
         int charge = event.getCharge();
-        if(ModEnchantmentHelper.hasEnchantment(stack, RangedEnchantmentList.BONUS_SHOT)){
-            int bonusShotLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.BONUS_SHOT, stack);
+        if(ModEnchantmentHelper.hasEnchantment(stack, EnchantmentInit.BONUS_SHOT.get())){
+            int bonusShotLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.BONUS_SHOT.get(), stack);
             float damageMultiplier;
             damageMultiplier = 0.1F + (bonusShotLevel-1 * 0.07F);
             float arrowVelocity = RangedAttackHelper.getArrowVelocity(livingEntity, stack, charge);

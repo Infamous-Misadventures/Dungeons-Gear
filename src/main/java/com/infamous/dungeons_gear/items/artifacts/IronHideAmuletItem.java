@@ -16,6 +16,8 @@ import net.minecraftforge.network.PacketDistributor;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.applyToNearbyEntities;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.getCanHealPredicate;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class IronHideAmuletItem extends ArtifactItem {
     public IronHideAmuletItem(Properties properties) {
         super(properties);

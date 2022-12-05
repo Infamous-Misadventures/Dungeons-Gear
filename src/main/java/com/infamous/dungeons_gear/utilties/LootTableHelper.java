@@ -1,21 +1,21 @@
 package com.infamous.dungeons_gear.utilties;
 
 import com.infamous.dungeons_gear.mixin.LootContextAccessor;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.server.level.ServerLevel;
 
 import java.util.List;
-import java.util.Random;
 
 public class LootTableHelper {
-    public static ItemStack generateItemStack(ServerLevel world, BlockPos pos, ResourceLocation lootTable, Random random)
+    public static ItemStack generateItemStack(ServerLevel world, BlockPos pos, ResourceLocation lootTable, RandomSource random)
     {
         LootContext context = new LootContext.Builder(world)
                 .withRandom(random)
@@ -30,7 +30,7 @@ public class LootTableHelper {
                 ? stacks.get(0)
                 : ItemStack.EMPTY;
     }
-    public static List<ItemStack> generateItemStacks(ServerLevel world, Vec3 pos, ResourceLocation lootTable, Random random)
+    public static List<ItemStack> generateItemStacks(ServerLevel world, Vec3 pos, ResourceLocation lootTable, RandomSource random)
     {
         LootContext context = new LootContext.Builder(world)
                 .withRandom(random)

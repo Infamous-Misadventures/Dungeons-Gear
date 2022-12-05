@@ -2,7 +2,7 @@ package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DropsEnchantment;
 import com.infamous.dungeons_gear.utilties.LootTableHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -41,9 +41,9 @@ public class ProspectorEnchantment extends DropsEnchantment {
         if(event.getSource().getEntity() instanceof LivingEntity){
             LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
             ItemStack mainhand = attacker.getMainHandItem();
-            LivingEntity victim = event.getEntityLiving();
-            if(ModEnchantmentHelper.hasEnchantment(mainhand, MeleeEnchantmentList.PROSPECTOR)){
-                int prospectorLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.PROSPECTOR, mainhand);
+            LivingEntity victim = event.getEntity();
+            if(ModEnchantmentHelper.hasEnchantment(mainhand, EnchantmentInit.PROSPECTOR.get())){
+                int prospectorLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.PROSPECTOR.get(), mainhand);
                 float prospectorChance;
                 prospectorChance = (float) (DungeonsGearConfig.PROSPECTOR_CHANCE_PER_LEVEL.get() * prospectorLevel);
                 float prospectorRand = attacker.getRandom().nextFloat();

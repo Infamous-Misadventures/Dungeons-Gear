@@ -9,7 +9,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.Item;
@@ -33,9 +32,9 @@ public class ClientEvents {
             FreezingResistanceArmorGear armor = (FreezingResistanceArmorGear) item;
             // DOUBLE OR INT
             if (armor.getFreezingResistance() > 0) {
-                tooltip.add(index + 1, new TranslatableComponent(
+                tooltip.add(index + 1, Component.translatable(
                         "+" + armor.getFreezingResistance() + "% ")
-                        .append(new TranslatableComponent(
+                        .append(Component.translatable(
                                 "attribute.name.freezingResistance"))
                         .withStyle(ChatFormatting.GREEN));
             }
@@ -50,9 +49,10 @@ public class ClientEvents {
         if (cap.isUsingArtifact() && cap.getUsingArtifact().getItem() instanceof AbstractBeaconItem) {
             event.setCanceled(true);
             if (event.getHand() == InteractionHand.MAIN_HAND) {
-                float partialTicks = event.getPartialTicks();
+                float partialTicks = event.getPartialTick();
                 float f1 = Mth.lerp(partialTicks, player.xRotO, player.getXRot());
-                Minecraft.getInstance().getItemInHandRenderer().renderArmWithItem(player, partialTicks, f1, event.getHand(), 0.0f, cap.getUsingArtifact(), 0.0f, event.getPoseStack(), event.getMultiBufferSource(), event.getPackedLight());
+
+                Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderArmWithItem(player, partialTicks, f1, event.getHand(), 0.0f, cap.getUsingArtifact(), 0.0f, event.getPoseStack(), event.getMultiBufferSource(), event.getPackedLight());
             }
         }
     }

@@ -20,8 +20,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes.ARMOR_SLOT;
-import static com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList.BAG_OF_SOULS;
-import static com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList.COOLDOWN;
+import static com.infamous.dungeons_gear.registry.EnchantmentInit.COOLDOWN;
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.*;
 
 public class CooldownEnchantment extends DungeonsEnchantment {
@@ -51,19 +50,19 @@ public class CooldownEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onLivingEquipmentChange(LivingEquipmentChangeEvent event) {
-        removeAttribute(event.getFrom(), event.getEntityLiving(), EQUIPMENT_ATTRIBUTE_UUID_MAP.get(event.getSlot()));
-        addAttribute(event.getTo(), event.getEntityLiving(), EQUIPMENT_ATTRIBUTE_UUID_MAP.get(event.getSlot()));
+        removeAttribute(event.getFrom(), event.getEntity(), EQUIPMENT_ATTRIBUTE_UUID_MAP.get(event.getSlot()));
+        addAttribute(event.getTo(), event.getEntity(), EQUIPMENT_ATTRIBUTE_UUID_MAP.get(event.getSlot()));
     }
 
     @SubscribeEvent
     public static void onCurioChange(CurioChangeEvent event) {
         if(!event.getIdentifier().equals(CuriosIntegration.ARTIFACT_IDENTIFIER)) return;
-        removeAttribute(event.getFrom(), event.getEntityLiving(), CURIO_ATTRIBUTE_UUID_MAP.get(event.getSlotIndex()));
-        addAttribute(event.getTo(), event.getEntityLiving(), CURIO_ATTRIBUTE_UUID_MAP.get(event.getSlotIndex()));
+        removeAttribute(event.getFrom(), event.getEntity(), CURIO_ATTRIBUTE_UUID_MAP.get(event.getSlotIndex()));
+        addAttribute(event.getTo(), event.getEntity(), CURIO_ATTRIBUTE_UUID_MAP.get(event.getSlotIndex()));
     }
 
     private static void removeAttribute(ItemStack itemStack, LivingEntity livingEntity, UUID attributeModifierUUID) {
-        if (EnchantmentHelper.getItemEnchantmentLevel(COOLDOWN, itemStack) > 0) {
+        if (EnchantmentHelper.getItemEnchantmentLevel(COOLDOWN.get(), itemStack) > 0) {
             AttributeInstance attributeInstance = livingEntity.getAttribute(ARTIFACT_COOLDOWN_MULTIPLIER.get());
             if (attributeInstance != null && attributeInstance.getModifier(attributeModifierUUID) != null) {
                 attributeInstance.removeModifier(attributeModifierUUID);
@@ -72,7 +71,7 @@ public class CooldownEnchantment extends DungeonsEnchantment {
     }
 
     private static void addAttribute(ItemStack itemStack, LivingEntity livingEntity, UUID attributeModifierUUID) {
-        int itemEnchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(COOLDOWN, itemStack);
+        int itemEnchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(COOLDOWN.get(), itemStack);
         if (itemEnchantmentLevel > 0) {
             AttributeInstance attributeInstance = livingEntity.getAttribute(ARTIFACT_COOLDOWN_MULTIPLIER.get());
             if (attributeInstance != null && attributeInstance.getModifier(attributeModifierUUID) == null) {

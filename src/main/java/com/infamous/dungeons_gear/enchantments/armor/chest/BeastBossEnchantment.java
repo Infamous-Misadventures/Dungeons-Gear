@@ -2,7 +2,7 @@ package com.infamous.dungeons_gear.enchantments.armor.chest;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.BeastEnchantment;
 import com.infamous.dungeons_libraries.capabilities.minionmaster.Minion;
 import com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper;
@@ -31,7 +31,7 @@ public class BeastBossEnchantment extends BeastEnchantment {
 
     @SubscribeEvent
     public static void onBeastDamage(LivingDamageEvent event){
-        LivingEntity target = event.getEntityLiving();
+        LivingEntity target = event.getEntity();
         DamageSource source = event.getSource();
         Entity trueSource = source.getEntity();
         if(trueSource == null) return;
@@ -43,7 +43,7 @@ public class BeastBossEnchantment extends BeastEnchantment {
             LivingEntity beastOwner = attackerSummonableCap.getMaster();
             if(beastOwner != null){
                 if(!MinionMasterHelper.isMinionOf(target, beastOwner)){
-                    int beastBossLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.BEAST_BOSS, beastOwner);
+                    int beastBossLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.BEAST_BOSS.get(), beastOwner);
                     if(beastBossLevel > 0){
                         float beastBossFactor = (float) (DungeonsGearConfig.BEAST_BOSS_BASE_MULTIPLIER.get() + (DungeonsGearConfig.BEAST_BOSS_MULTIPLIER_PER_LEVEL.get()  * beastBossLevel));
                         float currentDamage = event.getAmount();

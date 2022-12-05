@@ -25,6 +25,8 @@ import java.util.UUID;
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_GATHERING;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class SoulHealerItem extends ArtifactItem implements ISoulConsumer {
     public SoulHealerItem(Properties properties) {
         super(properties);

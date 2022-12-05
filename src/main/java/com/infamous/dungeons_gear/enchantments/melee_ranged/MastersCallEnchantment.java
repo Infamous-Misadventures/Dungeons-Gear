@@ -2,7 +2,7 @@ package com.infamous.dungeons_gear.enchantments.melee_ranged;
 
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.lists.MeleeRangedEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_libraries.utils.PetHelper;
@@ -36,9 +36,9 @@ public class MastersCallEnchantment extends DungeonsEnchantment {
         if (!(event.getSource().getEntity() instanceof LivingEntity)) return;
         LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
         if (attacker.getLastHurtMobTimestamp() == attacker.tickCount) return;
-        LivingEntity victim = event.getEntityLiving();
+        LivingEntity victim = event.getEntity();
         ItemStack mainhand = attacker.getMainHandItem();
-        if (ModEnchantmentHelper.hasEnchantment(mainhand, MeleeRangedEnchantmentList.MASTERS_CALL)) {
+        if (ModEnchantmentHelper.hasEnchantment(mainhand, EnchantmentInit.MASTERS_CALL.get())) {
             PetHelper.makeNearbyPetsAttackTarget(victim, attacker);
         }
     }
@@ -50,7 +50,7 @@ public class MastersCallEnchantment extends DungeonsEnchantment {
             if (!shooterIsLiving(arrow)) return;
             LivingEntity shooter = (LivingEntity) arrow.getOwner();
 
-            int enchantLevel = enchantmentTagToLevel(arrow, MeleeRangedEnchantmentList.MASTERS_CALL);
+            int enchantLevel = enchantmentTagToLevel(arrow, EnchantmentInit.MASTERS_CALL.get());
 
             if (enchantLevel > 0) {
                 if (rayTraceResult instanceof EntityHitResult) {

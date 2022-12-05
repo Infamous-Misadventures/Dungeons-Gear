@@ -7,14 +7,14 @@ import com.infamous.dungeons_gear.capabilities.combo.Combo;
 import com.infamous.dungeons_gear.capabilities.combo.ComboHelper;
 import com.infamous.dungeons_gear.capabilities.combo.RollHelper;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
-import com.infamous.dungeons_gear.effects.CustomEffects;
-import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.ranged.BurstBowstringEnchantment;
 import com.infamous.dungeons_gear.enchantments.ranged.FuseShotEnchantment;
 import com.infamous.dungeons_gear.enchantments.ranged.RollChargeEnchantment;
 import com.infamous.dungeons_gear.items.GildedItemHelper;
 import com.infamous.dungeons_gear.items.interfaces.IDualWieldWeapon;
-import com.infamous.dungeons_gear.registry.PotionList;
+import com.infamous.dungeons_gear.registry.MobEffectInit;
+import com.infamous.dungeons_gear.registry.PotionInit;
 import com.infamous.dungeons_gear.utilties.ArmorEffectHelper;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
 import com.infamous.dungeons_libraries.items.interfaces.IComboWeapon;
@@ -35,7 +35,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -56,7 +56,7 @@ public class GlobalEvents {
     public static final String STUNNED_TAG = "Stunned";
 
     @SubscribeEvent
-    public static void onArrowJoinWorld(EntityJoinWorldEvent event) {
+    public static void onArrowJoinWorld(EntityJoinLevelEvent event) {
         if (event.getEntity() instanceof AbstractArrow) {
             AbstractArrow arrowEntity = (AbstractArrow) event.getEntity();
             //if(arrowEntity.getTags().contains("BonusProjectile") || arrowEntity.getTags().contains("ChainReactionProjectile")) return;
@@ -85,7 +85,7 @@ public class GlobalEvents {
     }
 
     private static void handleRangedEnchantments(AbstractArrow arrowEntity, LivingEntity shooter, ItemStack stack) {
-        int fuseShotLevel = EnchantmentHelper.getItemEnchantmentLevel(RangedEnchantmentList.FUSE_SHOT, stack);
+        int fuseShotLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.FUSE_SHOT.get(), stack);
         if (fuseShotLevel > 0) {
             RangedAbilities weaponCap = RangedAbilitiesHelper.getRangedAbilitiesCapability(stack);
             int fuseShotCounter = weaponCap.getFuseShotCounter();
@@ -114,15 +114,15 @@ public class GlobalEvents {
     public static void onCancelAttackBecauseStunned(LivingAttackEvent event) {
         if (event.getSource().getEntity() instanceof Player) {
             Player attacker = (Player) event.getSource().getEntity();
-            if (attacker.getEffect(CustomEffects.STUNNED) != null)
+            if (attacker.getEffect(MobEffectInit.STUNNED.get()) != null)
                 event.setCanceled(true);
         }
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void comboForceCrit(CriticalHitEvent event) {
-        if (event.getPlayer().getMainHandItem().getItem() instanceof IDualWieldWeapon) {
-            Player p = event.getPlayer();
+        if (event.getEntity().getMainHandItem().getItem() instanceof IDualWieldWeapon) {
+            Player p = event.getEntity();
             ItemStack is = p.getMainHandItem();
             IComboWeapon ic = (IComboWeapon) is.getItem();
             Combo cap = ComboHelper.getComboCapability(p);
@@ -137,17 +137,17 @@ public class GlobalEvents {
     @SubscribeEvent
     public static void resetCombo(LivingEquipmentChangeEvent event) {
         if (event.getSlot() == EquipmentSlot.MAINHAND) {
-            Optional.ofNullable(ComboHelper.getComboCapability(event.getEntityLiving())).ifPresent((a) -> a.setComboCount(0));
+            Optional.ofNullable(ComboHelper.getComboCapability(event.getEntity())).ifPresent((a) -> a.setComboCount(0));
         }
     }
 
     @SubscribeEvent
-    public static void onLivingTick(LivingEvent.LivingUpdateEvent event) {
-        LivingEntity living = event.getEntityLiving();
+    public static void onLivingTick(LivingEvent.LivingTickEvent event) {
+        LivingEntity living = event.getEntity();
 
         if (living instanceof Mob) {
             Mob mobEntity = (Mob) living;
-            if (mobEntity.getEffect(CustomEffects.STUNNED) != null && !mobEntity.getTags().contains(STUNNED_TAG)) {
+            if (mobEntity.getEffect(MobEffectInit.STUNNED.get()) != null && !mobEntity.getTags().contains(STUNNED_TAG)) {
                 if (!mobEntity.isNoAi()) {
                     mobEntity.setNoAi(true);
                     mobEntity.addTag(STUNNED_TAG);
@@ -176,9 +176,9 @@ public class GlobalEvents {
 
     @SubscribeEvent
     public static void onShadowFormAdded(LivingEntityUseItemEvent.Finish event) {
-        if (PotionUtils.getPotion(event.getItem()) == PotionList.SHADOW_BREW) {
-            if (event.getEntityLiving() instanceof Player) {
-                Player playerEntity = (Player) event.getEntityLiving();
+        if (PotionUtils.getPotion(event.getItem()) == PotionInit.SHADOW_BREW.get()) {
+            if (event.getEntity() instanceof Player) {
+                Player playerEntity = (Player) event.getEntity();
                 Combo comboCap = ComboHelper.getComboCapability(playerEntity);
                 comboCap.setShadowForm(true);
             }
@@ -186,10 +186,10 @@ public class GlobalEvents {
     }
 
     @SubscribeEvent
-    public static void onShadowFormRemoved(PotionEvent.PotionRemoveEvent event) {
-        if (event.getPotion() == MobEffects.INVISIBILITY) {
-            if (event.getEntityLiving() instanceof Player) {
-                Player playerEntity = (Player) event.getEntityLiving();
+    public static void onShadowFormRemoved(MobEffectEvent.Remove event) {
+        if (event.getEffect() == MobEffects.INVISIBILITY) {
+            if (event.getEntity() instanceof Player) {
+                Player playerEntity = (Player) event.getEntity();
                 Combo comboCap = ComboHelper.getComboCapability(playerEntity);
                 comboCap.setShadowForm(false);
             }
@@ -199,7 +199,7 @@ public class GlobalEvents {
     @SubscribeEvent
     public static void petDeath(LivingDamageEvent event) {
         //cancel friendly fire
-        LivingEntity ouch = event.getEntityLiving();
+        LivingEntity ouch = event.getEntity();
         if (!ENABLE_FRIENDLY_PET_FIRE.get() && event.getSource().getEntity() instanceof LivingEntity) {
             LivingEntity bonk = (LivingEntity) event.getSource().getEntity();
             if (PetHelper.isPetOrColleagueRelation(ouch, bonk)) {
@@ -213,15 +213,15 @@ public class GlobalEvents {
             }
         }
         if (DungeonsGearCompatibility.saveYourPets) {
-            if (getMinionCapability(event.getEntityLiving()) != null && event.getAmount() > event.getEntityLiving().getMaxHealth()) {
-                event.getEntityLiving().remove(Entity.RemovalReason.DISCARDED);
+            if (getMinionCapability(event.getEntity()) != null && event.getAmount() > event.getEntity().getMaxHealth()) {
+                event.getEntity().remove(Entity.RemovalReason.DISCARDED);
                 //so summoned wolves and llamas are disposable
             }
         }
     }
     @SubscribeEvent
     public static void handleJumpAbilities(LivingEvent.LivingJumpEvent event) {
-        LivingEntity jumper = event.getEntityLiving();
+        LivingEntity jumper = event.getEntity();
         if (jumper instanceof Player) {
             Player playerEntity = (Player) jumper;
             ItemStack helmet = playerEntity.getItemBySlot(EquipmentSlot.HEAD);

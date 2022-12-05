@@ -9,6 +9,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class EyeOfTheGuardianItem extends AbstractBeaconItem implements IChargeableItem {
 
     public static final BeamColor EYE_OF_THE_GUARDIAN_BEACON_BEAM_COLOR =

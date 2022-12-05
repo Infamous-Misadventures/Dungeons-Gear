@@ -16,8 +16,8 @@ import java.util.Collection;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes.ARMOR_SLOT;
-import static com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList.ARROW_HOARDER;
-import static com.infamous.dungeons_gear.registry.ItemRegistry.ARROW_BUNDLE;
+import static com.infamous.dungeons_gear.registry.EnchantmentInit.ARROW_HOARDER;
+import static com.infamous.dungeons_gear.registry.ItemInit.ARROW_BUNDLE;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class ArrowHoarderEnchantment extends JumpingEnchantment {
@@ -34,8 +34,8 @@ public class ArrowHoarderEnchantment extends JumpingEnchantment {
     public static void onArrowDrop(LivingDropsEvent event) {
         if (event.getSource().getEntity() instanceof LivingEntity) {
             LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
-            LivingEntity victim = event.getEntityLiving();
-            int maxLevel = EnchantmentHelper.getEnchantmentLevel(ARROW_HOARDER, attacker);
+            LivingEntity victim = event.getEntity();
+            int maxLevel = EnchantmentHelper.getEnchantmentLevel(ARROW_HOARDER.get(), attacker);
             int drops = (maxLevel / 4);
             drops += attacker.getRandom().nextFloat() <= (maxLevel % 4) / 4.0F ? 1 : 0;
             Collection<ItemEntity> itemEntities = event.getDrops();

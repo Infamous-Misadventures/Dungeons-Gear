@@ -33,6 +33,8 @@ import java.util.UUID;
 
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.getCanApplyToEnemyPredicate;
 
+import net.minecraft.world.entity.Entity.RemovalReason;
+
 public class ArtifactBeamEntity extends Entity implements IEntityAdditionalSpawnData {
     public static final double MAX_RAYTRACE_DISTANCE = 256;
     public static final float BEAM_DAMAGE_PER_TICK = 0.5F; // 10.0F damage per second

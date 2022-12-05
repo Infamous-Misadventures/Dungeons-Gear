@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.armor.chest;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.HealthAbilityEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_libraries.attribute.AttributeRegistry;
@@ -39,8 +39,8 @@ public class CowardiceEnchantment extends HealthAbilityEnchantment {
         triggerEffect(player);
     }
     @SubscribeEvent
-    public static void onLivingUpdate(LivingEvent.LivingUpdateEvent event){
-        triggerEffect(event.getEntityLiving());
+    public static void onLivingUpdate(LivingEvent.LivingTickEvent event){
+        triggerEffect(event.getEntity());
     }
 
     private static void triggerEffect(LivingEntity livingEntity) {
@@ -56,8 +56,8 @@ public class CowardiceEnchantment extends HealthAbilityEnchantment {
                 rangedDamage.removeModifier(COWARD);
             }
             if (currentHealth >= maxHealth) {
-                if (ModEnchantmentHelper.hasEnchantment(livingEntity, ArmorEnchantmentList.COWARDICE)) {
-                    int cowardiceLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.COWARDICE, livingEntity);
+                if (ModEnchantmentHelper.hasEnchantment(livingEntity, EnchantmentInit.COWARDICE.get())) {
+                    int cowardiceLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.COWARDICE.get(), livingEntity);
                     if(attackDamage != null){
                         livingEntity.getAttribute(Attributes.ATTACK_DAMAGE).addTransientModifier(new AttributeModifier(COWARD, "cowardice multiplier", DungeonsGearConfig.COWARDICE_BASE_MULTIPLIER.get() + DungeonsGearConfig.COWARDICE_MULTIPLIER_PER_LEVEL.get() * cowardiceLevel, AttributeModifier.Operation.MULTIPLY_TOTAL));
                     }

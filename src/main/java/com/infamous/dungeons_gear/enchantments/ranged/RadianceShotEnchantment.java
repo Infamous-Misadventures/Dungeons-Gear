@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -36,7 +36,7 @@ public class RadianceShotEnchantment extends DungeonsEnchantment {
         if (event.getProjectile() instanceof AbstractArrow arrow) {
             if (!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
             LivingEntity shooter = (LivingEntity) arrow.getOwner();
-            int radianceShotLevel = ArrowHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.RADIANCE_SHOT);
+            int radianceShotLevel = ArrowHelper.enchantmentTagToLevel(arrow, EnchantmentInit.RADIANCE_SHOT.get());
             if (radianceShotLevel > 0) {
                 float radianceShotRand = shooter.getRandom().nextFloat();
                 if (radianceShotRand <= 0.2F) {

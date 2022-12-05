@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.enchantments.armor.head;
 
-import com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -31,14 +31,14 @@ public class PotionBarrierEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onDrinkPotion(LivingEntityUseItemEvent.Finish event){
-        if(!(event.getEntityLiving() instanceof Player)) return;
-        Player player = (Player) event.getEntityLiving();
+        if(!(event.getEntity() instanceof Player)) return;
+        Player player = (Player) event.getEntity();
         if(player.isAlive()){
             List<MobEffectInstance> potionEffects = PotionUtils.getMobEffects(event.getItem());
             if(potionEffects.isEmpty()) return;
             if(potionEffects.get(0).getEffect() == MobEffects.HEAL){
-                if(ModEnchantmentHelper.hasEnchantment(player, ArmorEnchantmentList.POTION_BARRIER)){
-                    int potionBarrierLevel = EnchantmentHelper.getEnchantmentLevel(ArmorEnchantmentList.POTION_BARRIER, player);
+                if(ModEnchantmentHelper.hasEnchantment(player, EnchantmentInit.POTION_BARRIER.get())){
+                    int potionBarrierLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.POTION_BARRIER.get(), player);
                     int duration = 60 + 20*potionBarrierLevel;
                     MobEffectInstance resistance = new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, duration, 3);
                     player.addEffect(resistance);

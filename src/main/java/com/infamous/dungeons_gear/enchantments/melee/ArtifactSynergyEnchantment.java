@@ -4,7 +4,7 @@ import com.infamous.dungeons_gear.capabilities.combo.Combo;
 import com.infamous.dungeons_gear.capabilities.combo.ComboHelper;
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.lists.MeleeEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.PlayerAttackHelper;
 import com.infamous.dungeons_libraries.event.ArtifactEvent;
@@ -41,7 +41,7 @@ public class ArtifactSynergyEnchantment extends DungeonsEnchantment {
 
         if(comboCap.hasArtifactSynergy() && !attacker.level.isClientSide){
             comboCap.setArtifactSynergy(false);
-            int artifactSynergyLevel = EnchantmentHelper.getItemEnchantmentLevel(MeleeEnchantmentList.ARTIFACT_SYNERGY, mainhand);
+            int artifactSynergyLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.ARTIFACT_SYNERGY.get(), mainhand);
             if(artifactSynergyLevel > 0){
                 float damageMultiplier = 1.2F + artifactSynergyLevel * 0.2F;
                 float currentDamage = event.getAmount();
@@ -53,7 +53,7 @@ public class ArtifactSynergyEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onArtifactTriggered(ArtifactEvent.Activated event){
-        Combo comboCap = ComboHelper.getComboCapability(event.getEntityLiving());
+        Combo comboCap = ComboHelper.getComboCapability(event.getEntity());
         if(!comboCap.hasArtifactSynergy()){
             comboCap.setArtifactSynergy(true);
         }

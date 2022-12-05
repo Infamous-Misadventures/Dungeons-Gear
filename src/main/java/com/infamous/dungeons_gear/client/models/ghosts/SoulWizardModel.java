@@ -11,17 +11,17 @@ import software.bernie.geckolib3.model.provider.data.EntityModelData;
 public class SoulWizardModel extends AnimatedGeoModel<SoulWizardEntity> {
 
 	@Override
-	public ResourceLocation getAnimationFileLocation(SoulWizardEntity entity) {
+	public ResourceLocation getAnimationResource(SoulWizardEntity entity) {
 		return new ResourceLocation(DungeonsGear.MODID, "animations/soul_wizard.animation.json");
 	}
 
 	@Override
-	public ResourceLocation getModelLocation(SoulWizardEntity entity) {
+	public ResourceLocation getModelResource(SoulWizardEntity entity) {
 		return new ResourceLocation(DungeonsGear.MODID, "geo/soul_wizard.geo.json");
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(SoulWizardEntity entity) {
+	public ResourceLocation getTextureResource(SoulWizardEntity entity) {
 		return new ResourceLocation(DungeonsGear.MODID, "textures/entity/ghosts/soul_wizard.png");
 	}
 

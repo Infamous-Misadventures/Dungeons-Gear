@@ -10,8 +10,8 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.infamous.dungeons_gear.registry.AttributeRegistry.ROLL_COOLDOWN;
-import static com.infamous.dungeons_gear.registry.AttributeRegistry.ROLL_LIMIT;
+import static com.infamous.dungeons_gear.registry.AttributeInit.ROLL_COOLDOWN;
+import static com.infamous.dungeons_gear.registry.AttributeInit.ROLL_LIMIT;
 import static com.infamous.dungeons_libraries.DungeonsLibraries.MODID;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = MODID)

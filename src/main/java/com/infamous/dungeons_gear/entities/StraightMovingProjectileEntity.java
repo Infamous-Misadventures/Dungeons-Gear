@@ -25,6 +25,8 @@ import net.minecraftforge.network.NetworkHooks;
 import java.util.List;
 import java.util.function.Predicate;
 
+import net.minecraft.world.entity.Entity.RemovalReason;
+
 public abstract class StraightMovingProjectileEntity extends Projectile {
     public double xPower;
     public double yPower;

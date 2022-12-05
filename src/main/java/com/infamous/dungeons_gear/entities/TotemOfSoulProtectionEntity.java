@@ -1,6 +1,6 @@
 package com.infamous.dungeons_gear.entities;
 
-import com.infamous.dungeons_gear.effects.CustomEffects;
+import com.infamous.dungeons_gear.registry.MobEffectInit;
 import com.infamous.dungeons_libraries.entities.TotemBaseEntity;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -33,11 +33,11 @@ public class TotemOfSoulProtectionEntity extends TotemBaseEntity implements IAni
         if(owner == null) return;
         applyToNearbyEntities(getOwner(), 8,
                 getCanHealPredicate(getOwner()), (LivingEntity nearbyEntity) -> {
-                    MobEffectInstance MobEffectInstance = new MobEffectInstance(CustomEffects.SOUL_PROTECTION, 21);
+                    MobEffectInstance MobEffectInstance = new MobEffectInstance(MobEffectInit.SOUL_PROTECTION.get(), 21);
                     nearbyEntity.addEffect(MobEffectInstance);
                 }
         );
-        MobEffectInstance resistance = new MobEffectInstance(CustomEffects.SOUL_PROTECTION, 21);
+        MobEffectInstance resistance = new MobEffectInstance(MobEffectInit.SOUL_PROTECTION.get(), 21);
         owner.addEffect(resistance);
     }
 

@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.enchantments.lists.RangedEnchantmentList;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
@@ -42,7 +42,7 @@ public class ExplodingShotEnchantment extends DungeonsEnchantment {
         if (event.getProjectile() instanceof AbstractArrow arrow) {
             if (!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
             LivingEntity shooter = (LivingEntity) arrow.getOwner();
-            int gravityLevel = ArrowHelper.enchantmentTagToLevel(arrow, RangedEnchantmentList.EXPLODING_SHOT);
+            int gravityLevel = ArrowHelper.enchantmentTagToLevel(arrow, EnchantmentInit.EXPLODING_SHOT.get());
             if (gravityLevel > 0) {
                 if (event.getRayTraceResult() instanceof BlockHitResult) {
                     BlockHitResult blockRayTraceResult = (BlockHitResult) event.getRayTraceResult();
@@ -71,9 +71,9 @@ public class ExplodingShotEnchantment extends DungeonsEnchantment {
                 AbstractArrow arrowEntity = (AbstractArrow) event.getSource().getDirectEntity();
                 if (arrowEntity.getOwner() instanceof LivingEntity) {
                     LivingEntity shooter = (LivingEntity) arrowEntity.getOwner();
-                    int gravityLevel = ArrowHelper.enchantmentTagToLevel(arrowEntity, RangedEnchantmentList.EXPLODING_SHOT);
+                    int gravityLevel = ArrowHelper.enchantmentTagToLevel(arrowEntity, EnchantmentInit.EXPLODING_SHOT.get());
                     if(gravityLevel > 0){
-                        LivingEntity victim = event.getEntityLiving();
+                        LivingEntity victim = event.getEntity();
                         SoundHelper.playGenericExplodeSound(victim);
                         AOECloudHelper.spawnExplosionCloud(shooter, victim, 3.0F);
                         AreaOfEffectHelper.causeExplosionAttack(shooter, victim, event.getAmount(), 3.0F);

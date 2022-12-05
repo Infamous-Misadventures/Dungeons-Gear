@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes.ARMOR_SLOT;
-import static com.infamous.dungeons_gear.enchantments.lists.ArmorEnchantmentList.VOID_DODGE;
+import static com.infamous.dungeons_gear.registry.EnchantmentInit.VOID_DODGE;
 
 @Mod.EventBusSubscriber(modid= MODID)
 public class VoidDodgeEnchantment extends JumpingEnchantment {
@@ -27,8 +27,8 @@ public class VoidDodgeEnchantment extends JumpingEnchantment {
 
     @SubscribeEvent
     public static void onLivingDamageEvent(LivingDamageEvent event) {
-        LivingEntity victim = event.getEntityLiving();
-        int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(VOID_DODGE, victim);
+        LivingEntity victim = event.getEntity();
+        int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(VOID_DODGE.get(), victim);
         float totalTeleportChance = (float) (DungeonsGearConfig.VOID_DODGE_CHANCE_PER_LEVEL.get() * enchantmentLevel);
 
         float teleportRand = victim.getRandom().nextFloat();
