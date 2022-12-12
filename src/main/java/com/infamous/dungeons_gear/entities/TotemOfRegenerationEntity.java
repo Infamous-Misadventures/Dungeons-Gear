@@ -18,6 +18,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.applyToNearbyEntities;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.getCanHealPredicate;
+import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes.LOOP;
 
 public class TotemOfRegenerationEntity extends TotemBaseEntity implements IAnimatable {
 
@@ -58,7 +59,7 @@ public class TotemOfRegenerationEntity extends TotemBaseEntity implements IAnima
     }
 
     private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.totem_of_regeneration", true));
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.totem_of_regeneration.idle", LOOP));
         return PlayState.CONTINUE;
     }
 
