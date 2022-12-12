@@ -8,6 +8,7 @@ import com.infamous.dungeons_libraries.integration.curios.client.message.CuriosA
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
 import com.infamous.dungeons_libraries.network.NetworkHandler;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -104,7 +105,9 @@ public abstract class AbstractBeaconItem extends ArtifactItem {
             if (livingEntity.hasEffect(MobEffects.MOVEMENT_SLOWDOWN)) {
                 livingEntity.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
             }
-            NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> livingEntity), new CuriosArtifactStopMessage());
+            if (livingEntity instanceof ServerPlayer serverPlayer){
+                NetworkHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new CuriosArtifactStopMessage());
+            }
         }
     }
 
