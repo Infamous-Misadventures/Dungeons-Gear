@@ -14,10 +14,7 @@ import com.infamous.dungeons_gear.items.GearRangedItemModelProperties;
 import com.infamous.dungeons_gear.loot.LootConditionRegistry;
 import com.infamous.dungeons_gear.loot.ModLootFunctionTypes;
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_gear.registry.AttributeRegistry;
-import com.infamous.dungeons_gear.registry.ItemRegistry;
-import com.infamous.dungeons_gear.registry.ModEntityTypes;
-import com.infamous.dungeons_gear.registry.ParticleInit;
+import com.infamous.dungeons_gear.registry.*;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.MinecraftForge;
@@ -68,7 +65,7 @@ public class DungeonsGear
         ParticleInit.PARTICLES.register(modEventBus);
         AttributeRegistry.ATTRIBUTES.register(modEventBus);
         ItemRegistry.ITEMS.register(modEventBus);
-        SoundRegistry.SOUNDS.register(modEventBus);
+        SoundEventInit.SOUNDS.register(modEventBus);
         PROXY = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
         FMLJavaModLoadingContext.get()
                 .getModEventBus()
