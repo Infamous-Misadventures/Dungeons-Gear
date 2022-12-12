@@ -25,7 +25,6 @@ public class DungeonsGearConfig {
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_FRIENDLY_PET_FIRE;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS;
-    public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_ELENAI_DODGE_COMPAT;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_WAR_DANCE_COMPAT;
 
     public static ForgeConfigSpec.ConfigValue<Integer> COMMON_ITEM_VALUE;
@@ -235,10 +234,6 @@ public class DungeonsGearConfig {
         builder.pop();
 
         builder.comment("Compatibility Configuration").push("compatibility_configuration");
-        ENABLE_ELENAI_DODGE_COMPAT = builder
-                .comment("Enable Elenai Dodge 2 compatibility. Effects that trigger on jump will now trigger on dodge. \n" +
-                        "Does nothing if Elenai Dodge is not installed. [true / false]")
-                .define("enableElenaiDodgeCompat", true);
         ENABLE_WAR_DANCE_COMPAT = builder
                 .comment("Enable Project: War Dance compatibility. \n" +
                         "Dual wield weapon offhand functions are suppressed in favor of using War Dance's offhand attacks. \n" +
