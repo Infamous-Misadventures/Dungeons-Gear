@@ -20,11 +20,23 @@
 		}
 	],
 	"offhands": [{
-		"weight": 3,
-		"stack": {
-			"item": "minecraft:shield"
-		}
-	}],
+			"weight": 4,
+			"stack": {
+				"item": "dungeons_gear:dagger"
+			}
+		},
+		{
+			"weight": 4,
+			"stack": {
+				"item": "dungeons_gear:sickle"
+			}
+		},
+		{
+			"weight": 3,
+			"stack": {
+				"item": "dungeons_gear:katana"
+			}
+		}],
 	"boots": [{
 		"weight": 3,
 		"stack": {
