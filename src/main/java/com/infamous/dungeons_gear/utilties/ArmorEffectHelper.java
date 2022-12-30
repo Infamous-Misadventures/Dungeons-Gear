@@ -21,21 +21,29 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.infamous.dungeons_gear.registry.ItemRegistry.*;
 import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMasterCapability;
 
 public class ArmorEffectHelper {
     public static void summonOrTeleportBat(Player playerEntity, Level world) {
-        Master summonerCap = getMasterCapability(playerEntity);
-        Optional<Entity> batPet = summonerCap.getSummonedMobs().stream().filter(entity -> entity.getType() == EntityType.BAT).findFirst();
-        if(!batPet.isPresent()){
-            SummonHelper.summonEntity(playerEntity, playerEntity.blockPosition(), EntityType.BAT);
-            SoundHelper.playCreatureSound(playerEntity, SoundEvents.BAT_AMBIENT);
-        } else{
-            if(world instanceof ServerLevel){
-                batPet.get().teleportToWithTicket(playerEntity.getX() + playerEntity.getEyeHeight(), playerEntity.getY() + playerEntity.getEyeHeight(), playerEntity.getZ() + playerEntity.getEyeHeight());
+        if(world instanceof ServerLevel){
+            Master summonerCap = getMasterCapability(playerEntity);
+            List<Entity> batSummons = summonerCap.getSummonedMobs().stream().filter(entity -> entity.getType() == EntityType.BAT).toList();
+            if(batSummons.isEmpty()){
+                SummonHelper.summonEntity(playerEntity, playerEntity.blockPosition(), EntityType.BAT);
+            } else{
+                Entity batPet = batSummons.get(0);
+                batPet.teleportToWithTicket(playerEntity.getX() + playerEntity.getEyeHeight(), playerEntity.getY() + playerEntity.getEyeHeight(), playerEntity.getZ() + playerEntity.getEyeHeight());
+            }
+            if(batSummons.size() > 1){
+                for(int i = 1; i < batSummons.size(); i++){
+                    batSummons.get(i).remove(Entity.RemovalReason.DISCARDED);
+                }
             }
         }
     }
