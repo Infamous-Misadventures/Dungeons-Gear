@@ -1,18 +1,15 @@
 package com.infamous.dungeons_gear.utilties;
 
+import com.google.common.collect.Sets;
 import com.infamous.dungeons_gear.mixin.LootContextAccessor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameterSets;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.LootTable;
+import net.minecraft.loot.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
 
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class LootTableHelper {
     public static ItemStack generateItemStack(ServerWorld world, BlockPos pos, ResourceLocation lootTable, Random random)
@@ -44,9 +41,15 @@ public class LootTableHelper {
     }
 
     public static List<ItemStack> generateItemStacks(ServerWorld world, LootContext originContext, ResourceLocation lootTable) {
+        if(!isCompleteParameterSet(originContext)) return new ArrayList<>();
         LootContext newContext = copyLootContextWithNewQueryID(originContext, lootTable);
-        List<ItemStack> newlyGeneratedLoot = originContext.getLootTable(lootTable).getRandomItems(newContext);
-        return newlyGeneratedLoot;
+        return originContext.getLootTable(lootTable).getRandomItems(newContext);
+    }
+
+    private static boolean isCompleteParameterSet(LootContext originContext) {
+        Map<LootParameter<?>, Object> originParams = ((LootContextAccessor) originContext).dungeonsgear_getParams();
+        Set<LootParameter<?>> set1 = Sets.difference(LootParameterSets.CHEST.getRequired(), originParams.keySet());
+        return set1.isEmpty();
     }
 
     public static boolean lootTableExists(ServerWorld world, ResourceLocation lootTable){
@@ -61,4 +64,5 @@ public class LootTableHelper {
         ((LootContextAccessor)newContext).dungeonsgear_setQueriedLootTableId(newQueryID);
         return newContext;
     }
+
 }
