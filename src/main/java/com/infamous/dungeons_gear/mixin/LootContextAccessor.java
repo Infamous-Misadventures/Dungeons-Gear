@@ -12,7 +12,4 @@ import java.util.Map;
 public interface LootContextAccessor {
     @Accessor(value = "queriedLootTableId", remap = false)
     void dungeonsgear_setQueriedLootTableId(ResourceLocation queriedLootTableId);
-
-    @Accessor(value = "params", remap = false)
-    Map<LootContextParam<?>, Object> dungeonsgear_getParams();
 }
