@@ -47,7 +47,7 @@ public class LootTableHelper {
     }
 
     private static boolean isCompleteParameterSet(LootContext originContext) {
-        Map<LootParameter<?>, Object> originParams = ((LootContextAccessor) originContext).dungeonsgear_getParams();
+        Map<LootParameter<?>, Object> originParams = originContext.params;
         Set<LootParameter<?>> set1 = Sets.difference(LootParameterSets.CHEST.getRequired(), originParams.keySet());
         return set1.isEmpty();
     }
