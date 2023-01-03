@@ -21,6 +21,8 @@ import java.util.stream.Collectors;
 import static com.infamous.dungeons_gear.DungeonsGear.LOGGER;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.loot.LootTableType.*;
+import static com.infamous.dungeons_gear.registry.ItemRegistry.*;
+import static com.infamous.dungeons_gear.registry.ItemRegistry.ARTIFACTS;
 import static net.minecraft.world.level.storage.loot.BuiltInLootTables.SPAWN_BONUS_CHEST;
 
 
@@ -58,6 +60,18 @@ public class GlobalLootModifier{
             ResourceLocation lootTable = determineTable(context.getQueriedLootTableId());
             if(lootTable == null) return generatedLoot;
             List<ItemStack> itemStacks = LootTableHelper.generateItemStacks(context.getLevel(), context, lootTable);
+            if(!ConfigurableLootHelper.isArmorLootEnabled()){
+                itemStacks = itemStacks.stream().filter(itemStack -> !ARMORS.containsValue(itemStack.getItem())).collect(Collectors.toList());
+            }
+            if(!ConfigurableLootHelper.isMeleeWeaponLootEnabled()){
+                itemStacks = itemStacks.stream().filter(itemStack -> !MELEE_WEAPONS.containsValue(itemStack.getItem())).collect(Collectors.toList());
+            }
+            if(ConfigurableLootHelper.isRangedWeaponLootEnabled()){
+                itemStacks = itemStacks.stream().filter(itemStack -> !RANGED_WEAPONS.containsValue(itemStack.getItem())).collect(Collectors.toList());
+            }
+            if(ConfigurableLootHelper.isArtifactLootEnabled()){
+                itemStacks = itemStacks.stream().filter(itemStack -> !ARTIFACTS.containsValue(itemStack.getItem())).collect(Collectors.toList());
+            }
             modifiedLoot.addAll(itemStacks);
             return modifiedLoot;
         }
