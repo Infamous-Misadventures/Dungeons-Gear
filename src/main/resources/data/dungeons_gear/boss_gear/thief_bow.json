@@ -28,7 +28,20 @@
 		"stack": {
 			"item": "minecraft:shield"
 		}
-	}],
+	},
+		{
+			"weight": 1,
+			"stack": {
+				"item": "dungeons_gear:dagger"
+			}
+		},
+		{
+			"weight": 1,
+			"stack": {
+				"item": "dungeons_gear:sickle"
+			}
+		}
+	],
 	"boots": [{
 		"weight": 3,
 		"stack": {

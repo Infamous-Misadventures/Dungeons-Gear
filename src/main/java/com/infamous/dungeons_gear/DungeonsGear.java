@@ -61,7 +61,7 @@ public class DungeonsGear
         ParticleInit.PARTICLES.register(modEventBus);
         AttributeInit.ATTRIBUTES.register(modEventBus);
         ItemInit.ITEMS.register(modEventBus);
-        SoundRegistry.SOUNDS.register(modEventBus);
+        SoundEventInit.SOUNDS.register(modEventBus);
         GlobalLootModifierInit.LOOT_MODIFIER_SERIALIZERS.register(modEventBus);
         LootConditionInit.LOOT_ITEM_CONDITION_TYPES.register(modEventBus);
         MobEffectInit.MOB_EFFECTS.register(modEventBus);

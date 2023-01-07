@@ -18,6 +18,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.applyToNearbyEntities;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.getCanHealPredicate;
+import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes.LOOP;
 
 public class TotemOfSoulProtectionEntity extends TotemBaseEntity implements IAnimatable {
 
@@ -52,7 +53,7 @@ public class TotemOfSoulProtectionEntity extends TotemBaseEntity implements IAni
     }
 
     private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.totem_of_soul_protection.idle", true));
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.totem_of_soul_protection.idle", LOOP));
         return PlayState.CONTINUE;
     }
 
