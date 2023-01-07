@@ -25,8 +25,6 @@ import net.minecraftforge.network.NetworkHooks;
 import java.util.List;
 import java.util.function.Predicate;
 
-import net.minecraft.world.entity.Entity.RemovalReason;
-
 public abstract class StraightMovingProjectileEntity extends Projectile {
     public double xPower;
     public double yPower;
@@ -65,7 +63,7 @@ public abstract class StraightMovingProjectileEntity extends Projectile {
     }
 
     public void setPower(double powerX, double powerY, double powerZ) {
-        double d0 = (double) Mth.sqrt((float) (powerX * powerX + powerY * powerY + powerZ * powerZ));
+        double d0 = Mth.sqrt((float) (powerX * powerX + powerY * powerY + powerZ * powerZ));
         if (d0 != 0.0D) {
             this.xPower = powerX / d0 * 0.1D;
             this.yPower = powerY / d0 * 0.1D;
@@ -127,7 +125,7 @@ public abstract class StraightMovingProjectileEntity extends Projectile {
             }
         }
 
-        if (this.level.isClientSide ) {
+        if (this.level.isClientSide) {
             if (this.lifeTime < this.vanishAfterTime() + this.getVanishAnimationLength()) {
                 this.lifeTime++;
             }
@@ -172,7 +170,7 @@ public abstract class StraightMovingProjectileEntity extends Projectile {
                 }
             }
 
-            this.setDeltaMovement(deltaMovement.add(this.xPower, this.yPower, this.zPower).scale((double) f));
+            this.setDeltaMovement(deltaMovement.add(this.xPower, this.yPower, this.zPower).scale(f));
             if (this.getTrailParticle() != null && this.shouldSpawnParticles()) {
                 this.spawnTrailParticle();
             }
@@ -262,7 +260,7 @@ public abstract class StraightMovingProjectileEntity extends Projectile {
                 }
             }
         }
-        return super.canHitEntity(p_230298_1_) && ((this.keepsHittingAfterStuck() && this.stuckInBlock) || !this.stuckInBlock) && !p_230298_1_.noPhysics && foundOwnerPartInEntity == false;
+        return super.canHitEntity(p_230298_1_) && (this.keepsHittingAfterStuck() || !this.stuckInBlock) && !p_230298_1_.noPhysics && foundOwnerPartInEntity == false;
     }
 
     protected boolean shouldBurn() {
@@ -283,7 +281,7 @@ public abstract class StraightMovingProjectileEntity extends Projectile {
 
     public void addAdditionalSaveData(CompoundTag p_213281_1_) {
         super.addAdditionalSaveData(p_213281_1_);
-        p_213281_1_.put("power", this.newDoubleList(new double[]{this.xPower, this.yPower, this.zPower}));
+        p_213281_1_.put("power", this.newDoubleList(this.xPower, this.yPower, this.zPower));
     }
 
     public void readAdditionalSaveData(CompoundTag p_70037_1_) {

@@ -3,11 +3,11 @@ package com.infamous.dungeons_gear.items.artifacts;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.entities.BuzzyNestEntity;
-import com.infamous.dungeons_gear.registry.EntityTypeInit;
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_libraries.network.BreakItemMessage;
+import com.infamous.dungeons_gear.registry.EntityTypeInit;
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
+import com.infamous.dungeons_libraries.network.BreakItemMessage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResultHolder;
@@ -50,7 +50,7 @@ public class BuzzyNestItem extends ArtifactItem {
 
             if (itemUseContextPlayer != null) {
                 BuzzyNestEntity buzzyNestEntity = EntityTypeInit.BUZZY_NEST.get().create(itemUseContextPlayer.level);
-                if(buzzyNestEntity != null) {
+                if (buzzyNestEntity != null) {
                     buzzyNestEntity.moveTo(blockPos, 0, 0);
                     buzzyNestEntity.setOwner(itemUseContextPlayer);
                     itemUseContextPlayer.level.addFreshEntity(buzzyNestEntity);

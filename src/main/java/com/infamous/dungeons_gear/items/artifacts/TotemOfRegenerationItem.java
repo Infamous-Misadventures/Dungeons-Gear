@@ -1,24 +1,24 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
+import com.infamous.dungeons_gear.entities.TotemOfRegenerationEntity;
 import com.infamous.dungeons_gear.network.NetworkHandler;
 import com.infamous.dungeons_gear.registry.EntityTypeInit;
-import com.infamous.dungeons_libraries.network.BreakItemMessage;
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
-import com.infamous.dungeons_gear.entities.TotemOfRegenerationEntity;
-import net.minecraft.world.level.block.state.BlockState;
+import com.infamous.dungeons_libraries.network.BreakItemMessage;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.network.PacketDistributor;
 
 public class TotemOfRegenerationItem extends ArtifactItem {
     public TotemOfRegenerationItem(Properties properties) {
         super(properties);
-        procOnItemUse=true;
+        procOnItemUse = true;
     }
 
     public InteractionResultHolder<ItemStack> procArtifact(ArtifactUseContext itemUseContext) {
@@ -38,9 +38,9 @@ public class TotemOfRegenerationItem extends ArtifactItem {
             } else {
                 blockPos = itemUseContextPos.relative(itemUseContextFace);
             }
-            if(itemUseContextPlayer != null) {
+            if (itemUseContextPlayer != null) {
                 TotemOfRegenerationEntity totemOfRegenerationEntity = EntityTypeInit.TOTEM_OF_REGENERATION.get().create(itemUseContextPlayer.level);
-                if(totemOfRegenerationEntity != null) {
+                if (totemOfRegenerationEntity != null) {
                     totemOfRegenerationEntity.moveTo(blockPos, 0, 0);
                     totemOfRegenerationEntity.setOwner(itemUseContextPlayer);
                     itemUseContextPlayer.level.addFreshEntity(totemOfRegenerationEntity);

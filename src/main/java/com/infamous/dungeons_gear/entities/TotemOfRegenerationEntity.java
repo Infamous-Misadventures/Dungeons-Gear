@@ -31,8 +31,8 @@ public class TotemOfRegenerationEntity extends TotemBaseEntity implements IAnima
     @Override
     protected void applyTotemEffect() {
         LivingEntity owner = getOwner();
-        if(owner == null) return;
-        if(this.lifeTicks % 20 == 0) {
+        if (owner == null) return;
+        if (this.lifeTicks % 20 == 0) {
             applyToNearbyEntities(owner, 8,
                     getCanHealPredicate(owner), (LivingEntity nearbyEntity) -> {
                         if (nearbyEntity.getHealth() < nearbyEntity.getMaxHealth()) {
@@ -41,7 +41,7 @@ public class TotemOfRegenerationEntity extends TotemBaseEntity implements IAnima
                         }
                     }
             );
-            if(owner.getHealth() < owner.getMaxHealth()){
+            if (owner.getHealth() < owner.getMaxHealth()) {
                 owner.heal(1F);
                 PROXY.spawnParticles(owner, ParticleTypes.HEART);
             }

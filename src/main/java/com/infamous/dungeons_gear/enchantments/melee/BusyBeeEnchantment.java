@@ -3,19 +3,19 @@ package com.infamous.dungeons_gear.enchantments.melee;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
-import com.infamous.dungeons_libraries.integration.curios.CuriosIntegration;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
+import com.infamous.dungeons_libraries.integration.curios.CuriosIntegration;
 import com.infamous.dungeons_libraries.summon.SummonHelper;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -32,7 +32,7 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.registry.EnchantmentInit.BUSY_BEE;
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SUMMON_CAP;
 
-@Mod.EventBusSubscriber(modid= MODID)
+@Mod.EventBusSubscriber(modid = MODID)
 public class BusyBeeEnchantment extends DungeonsEnchantment {
     private final static Map<EquipmentSlot, UUID> EQUIPMENT_ATTRIBUTE_UUID_MAP = Stream.of(
                     new AbstractMap.SimpleImmutableEntry<>(EquipmentSlot.HEAD, UUID.fromString("3d8f6614-0db6-4031-a057-2bd0f4ffdc16")),
@@ -60,19 +60,19 @@ public class BusyBeeEnchantment extends DungeonsEnchantment {
     }
 
     @SubscribeEvent
-    public static void onBusyBeeKill(LivingDeathEvent event){
-        if(event.getSource().getDirectEntity() instanceof AbstractArrow) return;
-        if(event.getSource().getEntity() instanceof LivingEntity){
+    public static void onBusyBeeKill(LivingDeathEvent event) {
+        if (event.getSource().getDirectEntity() instanceof AbstractArrow) return;
+        if (event.getSource().getEntity() instanceof LivingEntity) {
             LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
             LivingEntity victim = event.getEntity();
-            if(attacker != null){
+            if (attacker != null) {
                 ItemStack mainhand = attacker.getMainHandItem();
-                if(ModEnchantmentHelper.hasEnchantment(mainhand, BUSY_BEE.get())){
+                if (ModEnchantmentHelper.hasEnchantment(mainhand, BUSY_BEE.get())) {
                     int busyBeeLevel = EnchantmentHelper.getItemEnchantmentLevel(BUSY_BEE.get(), mainhand);
                     float busyBeeRand = attacker.getRandom().nextFloat();
                     float busyBeeChance = (float) (DungeonsGearConfig.BUSY_BEE_BASE_CHANCE.get() + busyBeeLevel * DungeonsGearConfig.BUSY_BEE_CHANCE_PER_LEVEL.get());
-                    if(busyBeeRand <= busyBeeChance) {
-                        if(SummonHelper.summonEntity(attacker, victim.blockPosition(), EntityType.BEE) != null) {
+                    if (busyBeeRand <= busyBeeChance) {
+                        if (SummonHelper.summonEntity(attacker, victim.blockPosition(), EntityType.BEE) != null) {
                             SoundHelper.playCreatureSound(attacker, SoundEvents.BEE_LOOP);
                         }
                     }
@@ -89,7 +89,7 @@ public class BusyBeeEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onCurioChange(CurioChangeEvent event) {
-        if(!event.getIdentifier().equals(CuriosIntegration.ARTIFACT_IDENTIFIER)) return;
+        if (!event.getIdentifier().equals(CuriosIntegration.ARTIFACT_IDENTIFIER)) return;
         removeAttribute(event.getFrom(), event.getEntity(), CURIO_ATTRIBUTE_UUID_MAP.get(event.getSlotIndex()));
         addAttribute(event.getTo(), event.getEntity(), CURIO_ATTRIBUTE_UUID_MAP.get(event.getSlotIndex()));
     }

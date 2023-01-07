@@ -61,7 +61,7 @@ public class PoisonCloudEnchantment extends DungeonsEnchantment {
     @SubscribeEvent
     public static void onPoisonBowImpact(ProjectileImpactEvent event) {
         HitResult rayTraceResult = event.getRayTraceResult();
-        if(event.getProjectile() instanceof AbstractArrow arrow) {
+        if (event.getProjectile() instanceof AbstractArrow arrow) {
             if (!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
             LivingEntity shooter = (LivingEntity) arrow.getOwner();
 
@@ -111,7 +111,7 @@ public class PoisonCloudEnchantment extends DungeonsEnchantment {
             Player playerEntity = (Player) livingEntity;
             Timers timersCapability = TimersHelper.getTimersCapability(playerEntity);
             int enchantmentTimer = timersCapability.getEnchantmentTimer(POISON_CLOUD.get());
-            if(enchantmentTimer <= 0) {
+            if (enchantmentTimer <= 0) {
                 timersCapability.setEnchantmentTimer(POISON_CLOUD.get(), 60);
             }
         }

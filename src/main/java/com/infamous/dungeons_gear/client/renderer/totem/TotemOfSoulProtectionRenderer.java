@@ -11,15 +11,15 @@ import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.renderers.geo.GeoProjectilesRenderer;
 
 public class TotemOfSoulProtectionRenderer extends GeoProjectilesRenderer<TotemOfSoulProtectionEntity> {
-	public TotemOfSoulProtectionRenderer(EntityRendererProvider.Context renderManager) {
-		super(renderManager, new TotemOfSoulProtectionModel());
-	}
-	
+    public TotemOfSoulProtectionRenderer(EntityRendererProvider.Context renderManager) {
+        super(renderManager, new TotemOfSoulProtectionModel());
+    }
 
-	@Override
-	public RenderType getRenderType(TotemOfSoulProtectionEntity animatable, float partialTicks, PoseStack stack,
-									MultiBufferSource renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn,
-									ResourceLocation textureLocation) {
-		return RenderType.entityTranslucent(getTextureLocation(animatable));
-	}
+
+    @Override
+    public RenderType getRenderType(TotemOfSoulProtectionEntity animatable, float partialTicks, PoseStack stack,
+                                    MultiBufferSource renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn,
+                                    ResourceLocation textureLocation) {
+        return RenderType.entityTranslucent(getTextureLocation(animatable));
+    }
 }

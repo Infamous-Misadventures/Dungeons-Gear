@@ -138,7 +138,7 @@ public class AreaOfEffectHelper {
 
     public static LivingEntity findMostInjuredAlly(LivingEntity healer, float distance) {
         Level world = healer.getCommandSenderWorld();
-        List<LivingEntity> nearbyEntities = getNearbyEnemies(healer,distance, world, getCanHealPredicate(healer));
+        List<LivingEntity> nearbyEntities = getNearbyEnemies(healer, distance, world, getCanHealPredicate(healer));
         if (!nearbyEntities.isEmpty()) {
             float lostHealth = 0;
             LivingEntity mostInjuredAlly = null;
@@ -214,7 +214,7 @@ public class AreaOfEffectHelper {
         Level world = attacker.getCommandSenderWorld();
         DamageSource explosion = DamageSource.explosion(attacker);
         BlockPos origin = blockPos;
-        if(inGround) {
+        if (inGround) {
             origin = origin.above();
         }
         applyToNearbyEntitiesAtPos(origin, world, distance,
@@ -281,7 +281,7 @@ public class AreaOfEffectHelper {
     public static void electrifyNearbyEnemies(AbstractArrow arrow, float distance, float damageAmount, int limit) {
         Level world = arrow.getCommandSenderWorld();
         Entity shooter = arrow.getOwner();
-        if(shooter instanceof LivingEntity){
+        if (shooter instanceof LivingEntity) {
             LivingEntity livingShooter = (LivingEntity) shooter;
             applyToNearbyEntities(arrow, world, distance, limit,
                     getCanApplyToEnemyPredicate(livingShooter),

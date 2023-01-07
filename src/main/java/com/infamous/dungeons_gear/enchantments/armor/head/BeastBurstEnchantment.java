@@ -2,8 +2,8 @@ package com.infamous.dungeons_gear.enchantments.armor.head;
 
 import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.BeastEnchantment;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
@@ -29,7 +29,7 @@ import static com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes.ARMOR_
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class BeastBurstEnchantment extends BeastEnchantment {
     public BeastBurstEnchantment() {
-        super(Rarity.RARE,  EnchantmentCategory.ARMOR_HEAD, ARMOR_SLOT);
+        super(Rarity.RARE, EnchantmentCategory.ARMOR_HEAD, ARMOR_SLOT);
     }
 
     @Override
@@ -38,20 +38,20 @@ public class BeastBurstEnchantment extends BeastEnchantment {
     }
 
     @SubscribeEvent
-    public static void onPlayerUsedHealthPotion(LivingEntityUseItemEvent.Finish event){
-        if(!(event.getEntity() instanceof Player)) return;
+    public static void onPlayerUsedHealthPotion(LivingEntityUseItemEvent.Finish event) {
+        if (!(event.getEntity() instanceof Player)) return;
         Player player = (Player) event.getEntity();
-        if(player.isAlive() && player.level instanceof ServerLevel){
+        if (player.isAlive() && player.level instanceof ServerLevel) {
             ServerLevel serverWorld = (ServerLevel) player.level;
             List<MobEffectInstance> potionEffects = PotionUtils.getMobEffects(event.getItem());
-            if(potionEffects.isEmpty()) return;
-            if(potionEffects.get(0).getEffect() == MobEffects.HEAL){
+            if (potionEffects.isEmpty()) return;
+            if (potionEffects.get(0).getEffect() == MobEffects.HEAL) {
                 int beastBurstLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.BEAST_BURST.get(), player);
-                if(beastBurstLevel > 0){
+                if (beastBurstLevel > 0) {
                     Master summonerCap = MinionMasterHelper.getMasterCapability(player);
 
-                    for(Entity summonedMob : summonerCap.getSummonedMobs()){
-                        if(summonedMob instanceof LivingEntity){
+                    for (Entity summonedMob : summonerCap.getSummonedMobs()) {
+                        if (summonedMob instanceof LivingEntity) {
                             LivingEntity summonedMobAsLiving = (LivingEntity) summonedMob;
                             SoundHelper.playGenericExplodeSound(summonedMobAsLiving);
                             AOECloudHelper.spawnExplosionCloud(summonedMobAsLiving, summonedMobAsLiving, 3.0F);

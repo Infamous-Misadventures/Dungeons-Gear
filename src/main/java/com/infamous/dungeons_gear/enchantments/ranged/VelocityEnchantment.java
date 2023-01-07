@@ -5,8 +5,8 @@ import com.infamous.dungeons_gear.capabilities.bow.RangedAbilities;
 import com.infamous.dungeons_gear.capabilities.bow.RangedAbilitiesHelper;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_libraries.event.BowEvent;
 import com.infamous.dungeons_libraries.event.CrossbowEvent;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -34,22 +34,22 @@ public class VelocityEnchantment extends DungeonsEnchantment {
     }
 
     @SubscribeEvent
-    public static void onBowVelocity(BowEvent.Velocity event){
+    public static void onBowVelocity(BowEvent.Velocity event) {
         ItemStack itemStack = event.getItemStack();
         int velocityLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.VELOCITY.get(), itemStack);
-        if(velocityLevel > 0){
-            event.setVelocity(event.getVelocity() + 0.8F*velocityLevel);
+        if (velocityLevel > 0) {
+            event.setVelocity(event.getVelocity() + 0.8F * velocityLevel);
         }
     }
 
     @SubscribeEvent
-    public static void onCrossbowChargeTime(CrossbowEvent.ChargeTime event){
+    public static void onCrossbowChargeTime(CrossbowEvent.ChargeTime event) {
         ItemStack itemStack = event.getItemStack();
         int accelerateLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.ACCELERATE.get(), itemStack);
         RangedAbilities weaponCapability = RangedAbilitiesHelper.getRangedAbilitiesCapability(itemStack);
         float bowChargeTime = weaponCapability.getBowChargeTime();
         long lastFiredTime = weaponCapability.getLastFiredTime();
-        if(accelerateLevel > 0 && lastFiredTime > 0){
+        if (accelerateLevel > 0 && lastFiredTime > 0) {
             event.setChargeTime(bowChargeTime);
         }
     }

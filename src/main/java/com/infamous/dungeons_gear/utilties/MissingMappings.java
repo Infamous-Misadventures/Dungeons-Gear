@@ -16,7 +16,7 @@ import java.util.Map;
 @Mod.EventBusSubscriber(modid = DungeonsGear.MODID)
 public class MissingMappings {
 
-    private static Map<String, Item> toRemapItems = new HashMap<>();
+    private static final Map<String, Item> toRemapItems = new HashMap<>();
 
     private static void init() {
         toRemapItems.put("dungeons_gear:archers_hood", ItemInit.ARCHERS_ARMOR.getHead().get());
@@ -46,12 +46,12 @@ public class MissingMappings {
     }
 
     @SubscribeEvent
-    public static void MissingMappingsItem(MissingMappingsEvent event){
-        if(toRemapItems.isEmpty()) init();
+    public static void MissingMappingsItem(MissingMappingsEvent event) {
+        if (toRemapItems.isEmpty()) init();
         List<MissingMappingsEvent.Mapping<Item>> allMappings = event.getAllMappings(ForgeRegistries.ITEMS.getRegistryKey());
-        for(MissingMappingsEvent.Mapping<Item> mapping : allMappings){
+        for (MissingMappingsEvent.Mapping<Item> mapping : allMappings) {
             String name = mapping.getKey().toString().toUpperCase();
-            if(toRemapItems.containsKey(name)){
+            if (toRemapItems.containsKey(name)) {
                 mapping.remap(toRemapItems.get(name));
             }
         }

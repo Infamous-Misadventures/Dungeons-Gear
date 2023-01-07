@@ -11,14 +11,12 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
-import net.minecraft.world.item.enchantment.Enchantment.Rarity;
-
 @Mod.EventBusSubscriber(modid = MODID)
 public class GravityEnchantment extends DungeonsEnchantment {
 
     public GravityEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.MELEE, new EquipmentSlot[]{
-            EquipmentSlot.MAINHAND});
+                EquipmentSlot.MAINHAND});
     }
 
     @Override
@@ -28,7 +26,7 @@ public class GravityEnchantment extends DungeonsEnchantment {
 
     @Override
     public void doPostAttack(LivingEntity user, Entity target, int level) {
-        if(!(target instanceof LivingEntity)) return;
-        AreaOfEffectHelper.pullInNearbyEntities(user, (LivingEntity)target, level * 3, ParticleTypes.PORTAL);
+        if (!(target instanceof LivingEntity)) return;
+        AreaOfEffectHelper.pullInNearbyEntities(user, (LivingEntity) target, level * 3, ParticleTypes.PORTAL);
     }
 }

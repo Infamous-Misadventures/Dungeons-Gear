@@ -20,7 +20,7 @@ import static com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes.ARMOR_
 import static com.infamous.dungeons_gear.registry.EnchantmentInit.LIFE_STEAL_AURA;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.applyToNearbyEntities;
 
-@Mod.EventBusSubscriber(modid= MODID)
+@Mod.EventBusSubscriber(modid = MODID)
 public class LifeStealAuraEnchantment extends PulseEnchantment {
 
     public LifeStealAuraEnchantment() {
@@ -37,20 +37,20 @@ public class LifeStealAuraEnchantment extends PulseEnchantment {
     }
 
     @SubscribeEvent
-    public static void onPlayerTick(TickEvent.PlayerTickEvent event){
+    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         Player player = event.player;
-        if(player == null || player.isSpectator()) return;
-        if(event.phase == TickEvent.Phase.START) return;
-        if(player.isAlive()&&player.isEffectiveAi()){
+        if (player == null || player.isSpectator()) return;
+        if (event.phase == TickEvent.Phase.START) return;
+        if (player.isAlive() && player.isEffectiveAi()) {
             apply(player);
         }
     }
 
     @SubscribeEvent
-    public static void onLivingEntityTick(LivingEvent.LivingTickEvent event){
+    public static void onLivingEntityTick(LivingEvent.LivingTickEvent event) {
         LivingEntity livingEntity = event.getEntity();
-        if(livingEntity == null || livingEntity instanceof Player) return;
-        if(livingEntity.isAlive() && livingEntity.isEffectiveAi()){
+        if (livingEntity == null || livingEntity instanceof Player) return;
+        if (livingEntity.isAlive() && livingEntity.isEffectiveAi()) {
             apply(livingEntity);
         }
     }
@@ -58,7 +58,7 @@ public class LifeStealAuraEnchantment extends PulseEnchantment {
     private static void apply(LivingEntity entity) {
 
         int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(LIFE_STEAL_AURA.get(), entity);
-        if(enchantmentLevel > 0){
+        if (enchantmentLevel > 0) {
 //            if(burnNearbyTimer <= 0){
             applyToNearbyEntities(entity, 5,
                     (nearbyEntity) -> {

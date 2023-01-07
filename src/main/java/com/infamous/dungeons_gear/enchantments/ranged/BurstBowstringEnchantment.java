@@ -1,16 +1,16 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
 import com.infamous.dungeons_libraries.utils.RangedAttackHelper;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 public class BurstBowstringEnchantment extends DungeonsEnchantment {
 
@@ -32,7 +32,7 @@ public class BurstBowstringEnchantment extends DungeonsEnchantment {
             arrowVelocity = RangedAttackHelper.getVanillaOrModdedCrossbowArrowVelocity(jumper, offhandStack);
         }
 
-        if(burstBowStringLevel > 0){
+        if (burstBowStringLevel > 0) {
             int arrowsToFire = burstBowStringLevel;
             ProjectileEffectHelper.fireBurstBowstringShots(jumper, 16, 0.4F, arrowVelocity, arrowsToFire);
         }

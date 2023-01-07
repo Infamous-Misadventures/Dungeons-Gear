@@ -24,124 +24,124 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 public class SoulWizardOrbEntity extends StraightMovingProjectileEntity implements IAnimatable {
 
-	public int textureChange = 0;
+    public int textureChange = 0;
 
-	AnimationFactory factory = new AnimationFactory(this);
-		   
-	public SoulWizardOrbEntity(Level worldIn) {
-		super(EntityTypeInit.SOUL_WIZARD_ORB.get(), worldIn);
-	}
+    AnimationFactory factory = new AnimationFactory(this);
 
-	public SoulWizardOrbEntity(EntityType<? extends SoulWizardOrbEntity> p_i50147_1_, Level p_i50147_2_) {
-		super(p_i50147_1_, p_i50147_2_);
-	}
+    public SoulWizardOrbEntity(Level worldIn) {
+        super(EntityTypeInit.SOUL_WIZARD_ORB.get(), worldIn);
+    }
 
-	public SoulWizardOrbEntity(Level p_i1794_1_, LivingEntity p_i1794_2_, double p_i1794_3_, double p_i1794_5_,
-							   double p_i1794_7_) {
-		super(EntityTypeInit.SOUL_WIZARD_ORB.get(), p_i1794_2_, p_i1794_3_, p_i1794_5_, p_i1794_7_, p_i1794_1_);
-	}
+    public SoulWizardOrbEntity(EntityType<? extends SoulWizardOrbEntity> p_i50147_1_, Level p_i50147_2_) {
+        super(p_i50147_1_, p_i50147_2_);
+    }
 
-	@OnlyIn(Dist.CLIENT)
-	public SoulWizardOrbEntity(Level p_i1795_1_, double p_i1795_2_, double p_i1795_4_, double p_i1795_6_,
-			double p_i1795_8_, double p_i1795_10_, double p_i1795_12_) {
-		super(EntityTypeInit.SOUL_WIZARD_ORB.get(), p_i1795_2_, p_i1795_4_, p_i1795_6_, p_i1795_8_, p_i1795_10_,
-				p_i1795_12_, p_i1795_1_);
-	}
-	
-	@Override
-	protected ParticleOptions getTrailParticle() {
-		return ParticleInit.SOUL_DUST.get();
-	}
-	
-	@Override
-	public double getSpawnParticlesY() {
-		return 0.2;
-	}
-	
-	@Override
-	protected float getInertia() {
-		return 1.0F;
-	}
+    public SoulWizardOrbEntity(Level p_i1794_1_, LivingEntity p_i1794_2_, double p_i1794_3_, double p_i1794_5_,
+                               double p_i1794_7_) {
+        super(EntityTypeInit.SOUL_WIZARD_ORB.get(), p_i1794_2_, p_i1794_3_, p_i1794_5_, p_i1794_7_, p_i1794_1_);
+    }
 
-	@Override
-	protected MovementEmission getMovementEmission() {
-		return Entity.MovementEmission.NONE;
-	}
+    @OnlyIn(Dist.CLIENT)
+    public SoulWizardOrbEntity(Level p_i1795_1_, double p_i1795_2_, double p_i1795_4_, double p_i1795_6_,
+                               double p_i1795_8_, double p_i1795_10_, double p_i1795_12_) {
+        super(EntityTypeInit.SOUL_WIZARD_ORB.get(), p_i1795_2_, p_i1795_4_, p_i1795_6_, p_i1795_8_, p_i1795_10_,
+                p_i1795_12_, p_i1795_1_);
+    }
 
-	@Override
-	public void baseTick() {
-		super.baseTick();
-		
-		if (this.tickCount % 2 == 0) {
-			textureChange ++;
-		}
-	}
+    @Override
+    protected ParticleOptions getTrailParticle() {
+        return ParticleInit.SOUL_DUST.get();
+    }
 
-	@Override
-	public void registerControllers(AnimationData data) {
-		data.addAnimationController(new AnimationController(this, "controller", 2, this::predicate));
-	}
+    @Override
+    public double getSpawnParticlesY() {
+        return 0.2;
+    }
 
-	private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
-		return PlayState.CONTINUE;
-	}
+    @Override
+    protected float getInertia() {
+        return 1.0F;
+    }
 
-	@Override
-	public AnimationFactory getFactory() {
-		return factory;
-	}
+    @Override
+    protected MovementEmission getMovementEmission() {
+        return Entity.MovementEmission.NONE;
+    }
 
-	public boolean isOnFire() {
-		return false;
-	}
+    @Override
+    public void baseTick() {
+        super.baseTick();
 
-	protected void onHitEntity(EntityHitResult p_213868_1_) {
-		super.onHitEntity(p_213868_1_);
-	}
-	
-	public void onHitEntity(Entity entity) {
-		if (!this.level.isClientSide) {
-			super.onHitEntity(entity);
-			Entity entity1 = this.getOwner();
-			boolean flag;
-			if (entity1 instanceof LivingEntity livingentity) {
-				flag = entity.hurt(DamageSource.indirectMagic(this, livingentity), 6.0F);
-				if (flag) {
-					if (entity.isAlive()) {
-						this.doEnchantDamageEffects(livingentity, entity);
-					}
-				}
-			} else {
-				flag = entity.hurt(DamageSource.MAGIC, 6.0F);
-			}
-	    	
-	    	entity.getRootVehicle().ejectPassengers();
-	    	
-		    entity.setDeltaMovement(entity.getDeltaMovement().add(this.getDeltaMovement().scale(0.1D)));
+        if (this.tickCount % 2 == 0) {
+            textureChange++;
+        }
+    }
 
-			this.remove(RemovalReason.DISCARDED);
-		}
-	}
+    @Override
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController(this, "controller", 2, this::predicate));
+    }
 
-	public boolean isPickable() {
-		return false;
-	}
+    private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
+        return PlayState.CONTINUE;
+    }
 
-	public boolean hurt(DamageSource p_70097_1_, float p_70097_2_) {
-		return false;
-	}
+    @Override
+    public AnimationFactory getFactory() {
+        return factory;
+    }
 
-	protected boolean shouldBurn() {
-		return false;
-	}
-	
-	@Override
-	public Packet<?> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
-	}
+    public boolean isOnFire() {
+        return false;
+    }
 
-	@Override
-	public SoundEvent getImpactSound() {
-		return SoundEventInit.SOUL_WIZARD_PROJECTILE_IMPACT.get();
-	}
+    protected void onHitEntity(EntityHitResult p_213868_1_) {
+        super.onHitEntity(p_213868_1_);
+    }
+
+    public void onHitEntity(Entity entity) {
+        if (!this.level.isClientSide) {
+            super.onHitEntity(entity);
+            Entity entity1 = this.getOwner();
+            boolean flag;
+            if (entity1 instanceof LivingEntity livingentity) {
+                flag = entity.hurt(DamageSource.indirectMagic(this, livingentity), 6.0F);
+                if (flag) {
+                    if (entity.isAlive()) {
+                        this.doEnchantDamageEffects(livingentity, entity);
+                    }
+                }
+            } else {
+                flag = entity.hurt(DamageSource.MAGIC, 6.0F);
+            }
+
+            entity.getRootVehicle().ejectPassengers();
+
+            entity.setDeltaMovement(entity.getDeltaMovement().add(this.getDeltaMovement().scale(0.1D)));
+
+            this.remove(RemovalReason.DISCARDED);
+        }
+    }
+
+    public boolean isPickable() {
+        return false;
+    }
+
+    public boolean hurt(DamageSource p_70097_1_, float p_70097_2_) {
+        return false;
+    }
+
+    protected boolean shouldBurn() {
+        return false;
+    }
+
+    @Override
+    public Packet<?> getAddEntityPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
+    }
+
+    @Override
+    public SoundEvent getImpactSound() {
+        return SoundEventInit.SOUL_WIZARD_PROJECTILE_IMPACT.get();
+    }
 }

@@ -20,8 +20,6 @@ import net.minecraft.world.level.block.GrowingPlantHeadBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import net.minecraft.world.item.Item.Properties;
-
 public class ShearsGear extends MeleeGear {
 
     public ShearsGear(Properties properties) {
@@ -36,7 +34,7 @@ public class ShearsGear extends MeleeGear {
             });
         }
 
-        return !p_179218_3_.is(BlockTags.LEAVES) && !p_179218_3_.is(Blocks.COBWEB) && !p_179218_3_.is(Blocks.GRASS) && !p_179218_3_.is(Blocks.FERN) && !p_179218_3_.is(Blocks.DEAD_BUSH) && !p_179218_3_.is(Blocks.VINE) && !p_179218_3_.is(Blocks.TRIPWIRE) && !p_179218_3_.is(BlockTags.WOOL) ? super.mineBlock(p_179218_1_, p_179218_2_, p_179218_3_, p_179218_4_, p_179218_5_) : true;
+        return p_179218_3_.is(BlockTags.LEAVES) || p_179218_3_.is(Blocks.COBWEB) || p_179218_3_.is(Blocks.GRASS) || p_179218_3_.is(Blocks.FERN) || p_179218_3_.is(Blocks.DEAD_BUSH) || p_179218_3_.is(Blocks.VINE) || p_179218_3_.is(Blocks.TRIPWIRE) || p_179218_3_.is(BlockTags.WOOL) || super.mineBlock(p_179218_1_, p_179218_2_, p_179218_3_, p_179218_4_, p_179218_5_);
     }
 
     @Override
@@ -57,7 +55,7 @@ public class ShearsGear extends MeleeGear {
     public net.minecraft.world.InteractionResult interactLivingEntity(ItemStack stack, net.minecraft.world.entity.player.Player playerIn, LivingEntity entity, net.minecraft.world.InteractionHand hand) {
         if (entity.level.isClientSide) return net.minecraft.world.InteractionResult.PASS;
         if (entity instanceof net.minecraftforge.common.IForgeShearable) {
-            net.minecraftforge.common.IForgeShearable target = (net.minecraftforge.common.IForgeShearable)entity;
+            net.minecraftforge.common.IForgeShearable target = (net.minecraftforge.common.IForgeShearable) entity;
             BlockPos pos = new BlockPos(entity.getX(), entity.getY(), entity.getZ());
             if (target.isShearable(stack, entity.level, pos)) {
                 java.util.List<ItemStack> drops = target.onSheared(playerIn, stack, entity.level, pos,
@@ -65,7 +63,7 @@ public class ShearsGear extends MeleeGear {
                 java.util.Random rand = new java.util.Random();
                 drops.forEach(d -> {
                     net.minecraft.world.entity.item.ItemEntity ent = entity.spawnAtLocation(d, 1.0F);
-                    ent.setDeltaMovement(ent.getDeltaMovement().add((double)((rand.nextFloat() - rand.nextFloat()) * 0.1F), (double)(rand.nextFloat() * 0.05F), (double)((rand.nextFloat() - rand.nextFloat()) * 0.1F)));
+                    ent.setDeltaMovement(ent.getDeltaMovement().add((rand.nextFloat() - rand.nextFloat()) * 0.1F, rand.nextFloat() * 0.05F, (rand.nextFloat() - rand.nextFloat()) * 0.1F));
                 });
                 stack.hurtAndBreak(1, entity, e -> e.broadcastBreakEvent(hand));
             }
@@ -86,12 +84,12 @@ public class ShearsGear extends MeleeGear {
         BlockState blockstate = level.getBlockState(blockpos);
         Block block = blockstate.getBlock();
         if (block instanceof GrowingPlantHeadBlock) {
-            GrowingPlantHeadBlock growingplantheadblock = (GrowingPlantHeadBlock)block;
+            GrowingPlantHeadBlock growingplantheadblock = (GrowingPlantHeadBlock) block;
             if (!growingplantheadblock.isMaxAge(blockstate)) {
                 Player player = p_186371_.getPlayer();
                 ItemStack itemstack = p_186371_.getItemInHand();
                 if (player instanceof ServerPlayer) {
-                    CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger((ServerPlayer)player, blockpos, itemstack);
+                    CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger((ServerPlayer) player, blockpos, itemstack);
                 }
 
                 level.playSound(player, blockpos, SoundEvents.GROWING_PLANT_CROP, SoundSource.BLOCKS, 1.0F, 1.0F);

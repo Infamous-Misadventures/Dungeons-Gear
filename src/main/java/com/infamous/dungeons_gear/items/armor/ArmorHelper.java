@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ArmorHelper {
-    public static List<Item> getArmorList(List<ArmorMaterialBaseType> baseTypes, boolean unique){
+    public static List<Item> getArmorList(List<ArmorMaterialBaseType> baseTypes, boolean unique) {
         List<ArmorMaterial> armorMaterials = baseTypes.stream().flatMap(baseType -> DungeonsArmorMaterials.getArmorMaterials(baseType).stream()).collect(Collectors.toList());
         return ItemInit.ARMORS.values().stream().map(RegistryObject::get).filter(entry -> entry instanceof ArmorGear && ((ArmorGear) entry).isUnique() == unique && armorMaterials.contains(((ArmorItem) entry).getMaterial())).collect(Collectors.toList());
     }

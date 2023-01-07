@@ -3,9 +3,9 @@ package com.infamous.dungeons_gear.enchantments.armor.feet;
 import com.infamous.dungeons_gear.capabilities.combo.Combo;
 import com.infamous.dungeons_gear.capabilities.combo.ComboHelper;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DropsEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.IEmeraldsEnchantment;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.utilties.LootTableHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -32,9 +32,9 @@ public class LuckyExplorerEnchantment extends DropsEnchantment implements IEmera
     }
 
     @SubscribeEvent
-    public static void onPlayerSpawn(PlayerEvent.PlayerRespawnEvent event){
+    public static void onPlayerSpawn(PlayerEvent.PlayerRespawnEvent event) {
         Player player = event.getEntity();
-        if(!player.level.isClientSide){
+        if (!player.level.isClientSide) {
             Combo comboCap = ComboHelper.getComboCapability(player);
             comboCap.setLastLuckyExplorerCheckpoint(player.blockPosition());
         }

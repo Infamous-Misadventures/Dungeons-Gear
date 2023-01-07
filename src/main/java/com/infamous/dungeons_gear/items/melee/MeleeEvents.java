@@ -18,7 +18,7 @@ public class MeleeEvents {
             if (outgoing.getItem() instanceof IDualWieldWeapon && event.getEntity().getOffhandItem().getItem() instanceof IDualWieldWeapon) {
                 ((IDualWieldWeapon) event.getEntity().getOffhandItem().getItem()).updateOff(event.getEntity(), event.getEntity().getOffhandItem());
             }
-        }else if (event.getSlot() == EquipmentSlot.MAINHAND) {
+        } else if (event.getSlot() == EquipmentSlot.MAINHAND) {
             final ItemStack incoming = event.getTo();
             if (incoming.getItem() instanceof IDualWieldWeapon) {
                 ((IDualWieldWeapon) incoming.getItem()).updateMain(event.getEntity(), incoming);

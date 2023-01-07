@@ -34,7 +34,7 @@ import static net.minecraft.world.item.Items.*;
 
 public class ModChestLootTables extends ChestLoot {
 
-    private List<Item> EXPERIMENTAL_ITEMS = Arrays.asList(
+    private final List<Item> EXPERIMENTAL_ITEMS = Arrays.asList(
             DUAL_CROSSBOW.get(),
             BABY_CROSSBOW.get()
     );
@@ -56,7 +56,7 @@ public class ModChestLootTables extends ChestLoot {
 
     private void chestAdditionsLootTables(BiConsumer<ResourceLocation, LootTable.Builder> consumer) {
         for (LootTableType lootTableType : LootTableType.values()) {
-            if(lootTableType == ALL) continue;
+            if (lootTableType == ALL) continue;
             createTypeLootTables(consumer, lootTableType);
         }
         createAllLootTables(consumer);
@@ -81,9 +81,9 @@ public class ModChestLootTables extends ChestLoot {
 
     private void createTableForSubtype(BiConsumer<ResourceLocation, LootTable.Builder> consumer, List<Item> items, ResourceLocation lootTable) {
         LootPool.Builder lootPool = LootPool.lootPool().setRolls(ConstantValue.exactly(1));
-        if(items.isEmpty()){
+        if (items.isEmpty()) {
             lootPool.add(EmptyLootItem.emptyItem());
-        }else{
+        } else {
             items.forEach(item -> lootPool.add(getItemLootEntry(item)));
         }
         consumer.accept(lootTable, LootTable.lootTable().withPool(lootPool));
@@ -91,7 +91,7 @@ public class ModChestLootTables extends ChestLoot {
 
     private LootPoolSingletonContainer.Builder<?> getItemLootEntry(Item item) {
         LootPoolSingletonContainer.Builder<?> builder = LootItem.lootTableItem(item);
-        if(EXPERIMENTAL_ITEMS.contains(item)){
+        if (EXPERIMENTAL_ITEMS.contains(item)) {
             builder.when(ExperimentalCondition::new);
         }
         return builder;
@@ -102,19 +102,19 @@ public class ModChestLootTables extends ChestLoot {
     }
 
     private boolean isNormalItem(Item item) {
-        if(item instanceof ArtifactItem){
-            return  false;
+        if (item instanceof ArtifactItem) {
+            return false;
         }
         return !isUniqueItem(item);
     }
 
     private boolean isUniqueItem(Item item) {
-        if(item instanceof IMeleeWeapon){
+        if (item instanceof IMeleeWeapon) {
             return ((IMeleeWeapon) item).isUnique();
-        }else if(item instanceof IArmor){
+        } else if (item instanceof IArmor) {
             return ((IArmor) item).isUnique();
-        }else if(item instanceof IRangedWeapon){
-            return ((IRangedWeapon)item).isUnique();
+        } else if (item instanceof IRangedWeapon) {
+            return ((IRangedWeapon) item).isUnique();
         }
         return false;
     }

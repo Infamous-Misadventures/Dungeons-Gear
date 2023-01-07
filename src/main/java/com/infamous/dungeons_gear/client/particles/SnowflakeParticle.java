@@ -8,7 +8,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 
 public class SnowflakeParticle extends TextureSheetParticle {
-	
+
     protected SnowflakeParticle(ClientLevel level, double xCoord, double yCoord, double zCoord, double xd, double yd, double zd) {
         super(level, xCoord, yCoord, zCoord, xd, yd, zd);
 
@@ -36,12 +36,12 @@ public class SnowflakeParticle extends TextureSheetParticle {
                 this.zd *= 1.1D;
             }
 
-            this.xd *= (double)0.75F;
-            this.yd *= (double)0.75F;
-            this.zd *= (double)0.75F;
+            this.xd *= 0.75F;
+            this.yd *= 0.75F;
+            this.zd *= 0.75F;
             if (this.onGround) {
-                this.xd *= (double)0.6F;
-                this.zd *= (double)0.6F;
+                this.xd *= 0.6F;
+                this.zd *= 0.6F;
             }
 
         }
@@ -51,7 +51,7 @@ public class SnowflakeParticle extends TextureSheetParticle {
     public static class Factory implements ParticleProvider<SimpleParticleType> {
         private final SpriteSet spriteSet;
 
-        public Factory(SpriteSet sprite){
+        public Factory(SpriteSet sprite) {
             this.spriteSet = sprite;
         }
 

@@ -1,16 +1,16 @@
 package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -20,7 +20,7 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.config.DungeonsGearConfig.RAMPAGING_CHANCE;
 import static com.infamous.dungeons_gear.config.DungeonsGearConfig.RAMPAGING_DURATION;
 
-@Mod.EventBusSubscriber(modid= MODID)
+@Mod.EventBusSubscriber(modid = MODID)
 public class RampagingEnchantment extends DungeonsEnchantment {
 
     public RampagingEnchantment() {
@@ -33,22 +33,22 @@ public class RampagingEnchantment extends DungeonsEnchantment {
     }
 
     @SubscribeEvent
-    public static void onRampagingKill(LivingDeathEvent event){
-        if(event.getSource().getDirectEntity() instanceof AbstractArrow) return;
-        if(event.getSource().getEntity() instanceof LivingEntity){
+    public static void onRampagingKill(LivingDeathEvent event) {
+        if (event.getSource().getDirectEntity() instanceof AbstractArrow) return;
+        if (event.getSource().getEntity() instanceof LivingEntity) {
             LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
             applyEnchantment(attacker);
         }
     }
 
     @SubscribeEvent
-    public static void onRampagingBreak(BlockEvent.BreakEvent event){
+    public static void onRampagingBreak(BlockEvent.BreakEvent event) {
         applyEnchantment(event.getPlayer());
     }
 
     private static void applyEnchantment(LivingEntity attacker) {
         ItemStack mainhand = attacker.getMainHandItem();
-        if(ModEnchantmentHelper.hasEnchantment(mainhand, EnchantmentInit.RAMPAGING.get())){
+        if (ModEnchantmentHelper.hasEnchantment(mainhand, EnchantmentInit.RAMPAGING.get())) {
             int rampagingLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.RAMPAGING.get(), mainhand);
             applyEffect(attacker, rampagingLevel);
         }
@@ -56,7 +56,7 @@ public class RampagingEnchantment extends DungeonsEnchantment {
 
     private static void applyEffect(LivingEntity entity, int rampagingLevel) {
         float rampagingRand = entity.getRandom().nextFloat();
-        if(rampagingRand <= RAMPAGING_CHANCE.get()) {
+        if (rampagingRand <= RAMPAGING_CHANCE.get()) {
             entity.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, rampagingLevel * RAMPAGING_DURATION.get(), 4));
         }
     }

@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.client.particles;
 
-import net.minecraft.client.particle.*;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.particle.*;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
@@ -30,7 +30,7 @@ public class ElectricShockParticle extends TextureSheetParticle {
     }
 
     public float getQuadSize(float scaleFactor) {
-        return this.quadSize * Mth.clamp(((float)this.age + scaleFactor) / (float)this.lifetime * 32.0F, 0.0F, 1.0F);
+        return this.quadSize * Mth.clamp(((float) this.age + scaleFactor) / (float) this.lifetime * 32.0F, 0.0F, 1.0F);
     }
 
     public void tick() {
@@ -61,7 +61,7 @@ public class ElectricShockParticle extends TextureSheetParticle {
     public static class Factory implements ParticleProvider<SimpleParticleType> {
         private final SpriteSet spriteSet;
 
-        public Factory(SpriteSet sprite){
+        public Factory(SpriteSet sprite) {
             this.spriteSet = sprite;
         }
 

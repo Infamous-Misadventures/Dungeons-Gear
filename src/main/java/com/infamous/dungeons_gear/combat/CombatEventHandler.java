@@ -44,7 +44,7 @@ public class CombatEventHandler {
         Minecraft mc = Minecraft.getInstance();
         Entity viewEntity = mc.cameraEntity;
         if (viewEntity != null && mc.level != null) {
-            double reachDistance = (double) reach;
+            double reachDistance = reach;
             HitResult rayTrace = viewEntity.pick(reachDistance, 0.0F, false);
             Vec3 eyePos = viewEntity.getEyePosition(0.0F);
             boolean hasExtendedReach = false;
@@ -77,6 +77,6 @@ public class CombatEventHandler {
             }
         }
 
-        return (HitResult) result;
+        return result;
     }
 }

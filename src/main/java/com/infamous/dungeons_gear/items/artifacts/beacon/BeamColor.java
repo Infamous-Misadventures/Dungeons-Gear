@@ -11,7 +11,7 @@ public class BeamColor {
     private final short innerGreenValue;
     private final short innerBlueValue;
 
-    public BeamColor(short redValue, short greenValue, short blueValue, short innerRedValue, short innerGreenValue, short innerBlueValue){
+    public BeamColor(short redValue, short greenValue, short blueValue, short innerRedValue, short innerGreenValue, short innerBlueValue) {
         this.redValue = redValue;
         this.greenValue = greenValue;
         this.blueValue = blueValue;

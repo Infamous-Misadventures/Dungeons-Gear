@@ -17,8 +17,6 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 import static com.infamous.dungeons_gear.config.DungeonsGearConfig.FREEZING_DURATION;
 
-import net.minecraft.world.item.enchantment.Enchantment.Rarity;
-
 @Mod.EventBusSubscriber(modid = MODID)
 public class FreezingEnchantment extends DungeonsEnchantment {
 
@@ -38,7 +36,7 @@ public class FreezingEnchantment extends DungeonsEnchantment {
 
     @Override
     public void doPostAttack(LivingEntity user, Entity target, int level) {
-        if(!(target instanceof LivingEntity)) return;
+        if (!(target instanceof LivingEntity)) return;
         applyFreezing((LivingEntity) target, level);
     }
 

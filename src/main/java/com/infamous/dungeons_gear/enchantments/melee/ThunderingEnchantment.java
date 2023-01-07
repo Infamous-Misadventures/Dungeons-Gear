@@ -5,15 +5,13 @@ import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.config.DungeonsGearConfig.THUNDERING_BASE_DAMAGE;
 import static com.infamous.dungeons_gear.config.DungeonsGearConfig.THUNDERING_CHANCE;
-
-import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class ThunderingEnchantment extends AOEDamageEnchantment {
@@ -29,9 +27,9 @@ public class ThunderingEnchantment extends AOEDamageEnchantment {
 
     @Override
     public void doPostAttack(LivingEntity user, Entity target, int level) {
-        if(!(target instanceof LivingEntity)) return;
+        if (!(target instanceof LivingEntity)) return;
         float chance = user.getRandom().nextFloat();
-        if(chance <=  THUNDERING_CHANCE.get()){
+        if (chance <= THUNDERING_CHANCE.get()) {
             SoundHelper.playLightningStrikeSounds(user);
             AreaOfEffectHelper.electrifyNearbyEnemies(user, 5, THUNDERING_BASE_DAMAGE.get(), Integer.MAX_VALUE);
             //AbilityUtils.castLightningBolt(user, (LivingEntity)target);

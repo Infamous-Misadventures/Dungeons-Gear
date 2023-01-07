@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 
 import static com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes.ARMOR_SLOT;
 import static com.infamous.dungeons_gear.registry.EnchantmentInit.COOLDOWN;
-import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.*;
+import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.ARTIFACT_COOLDOWN_MULTIPLIER;
 
 public class CooldownEnchantment extends DungeonsEnchantment {
     private final static Map<EquipmentSlot, UUID> EQUIPMENT_ATTRIBUTE_UUID_MAP = Stream.of(
@@ -41,7 +41,7 @@ public class CooldownEnchantment extends DungeonsEnchantment {
             .collect(Collectors.toMap(AbstractMap.SimpleImmutableEntry::getKey, AbstractMap.SimpleImmutableEntry::getValue));
 
     public CooldownEnchantment() {
-        super(Rarity.RARE,  EnchantmentCategory.ARMOR_HEAD, ARMOR_SLOT);
+        super(Rarity.RARE, EnchantmentCategory.ARMOR_HEAD, ARMOR_SLOT);
     }
 
     public int getMaxLevel() {
@@ -56,7 +56,7 @@ public class CooldownEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onCurioChange(CurioChangeEvent event) {
-        if(!event.getIdentifier().equals(CuriosIntegration.ARTIFACT_IDENTIFIER)) return;
+        if (!event.getIdentifier().equals(CuriosIntegration.ARTIFACT_IDENTIFIER)) return;
         removeAttribute(event.getFrom(), event.getEntity(), CURIO_ATTRIBUTE_UUID_MAP.get(event.getSlotIndex()));
         addAttribute(event.getTo(), event.getEntity(), CURIO_ATTRIBUTE_UUID_MAP.get(event.getSlotIndex()));
     }
@@ -75,7 +75,7 @@ public class CooldownEnchantment extends DungeonsEnchantment {
         if (itemEnchantmentLevel > 0) {
             AttributeInstance attributeInstance = livingEntity.getAttribute(ARTIFACT_COOLDOWN_MULTIPLIER.get());
             if (attributeInstance != null && attributeInstance.getModifier(attributeModifierUUID) == null) {
-                attributeInstance.addTransientModifier(new AttributeModifier(attributeModifierUUID, "Enchantment Cooldown", -0.1*itemEnchantmentLevel, AttributeModifier.Operation.MULTIPLY_BASE));
+                attributeInstance.addTransientModifier(new AttributeModifier(attributeModifierUUID, "Enchantment Cooldown", -0.1 * itemEnchantmentLevel, AttributeModifier.Operation.MULTIPLY_BASE));
             }
         }
     }

@@ -4,8 +4,8 @@ import com.infamous.dungeons_gear.capabilities.combo.Combo;
 import com.infamous.dungeons_gear.capabilities.combo.ComboHelper;
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.utilties.PlayerAttackHelper;
 import com.infamous.dungeons_libraries.event.ArtifactEvent;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -31,18 +31,18 @@ public class ArtifactSynergyEnchantment extends DungeonsEnchantment {
     }
 
     @SubscribeEvent
-    public static void onArtifactSynergyAttack(LivingDamageEvent event){
-        if(PlayerAttackHelper.isProbablyNotMeleeDamage(event.getSource())) return;
-        if(event.getSource() instanceof OffhandAttackDamageSource) return;
-        if(!(event.getSource().getEntity() instanceof LivingEntity)) return;
-        LivingEntity attacker = (LivingEntity)event.getSource().getEntity();
+    public static void onArtifactSynergyAttack(LivingDamageEvent event) {
+        if (PlayerAttackHelper.isProbablyNotMeleeDamage(event.getSource())) return;
+        if (event.getSource() instanceof OffhandAttackDamageSource) return;
+        if (!(event.getSource().getEntity() instanceof LivingEntity)) return;
+        LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
         ItemStack mainhand = attacker.getMainHandItem();
         Combo comboCap = ComboHelper.getComboCapability(attacker);
 
-        if(comboCap.hasArtifactSynergy() && !attacker.level.isClientSide){
+        if (comboCap.hasArtifactSynergy() && !attacker.level.isClientSide) {
             comboCap.setArtifactSynergy(false);
             int artifactSynergyLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.ARTIFACT_SYNERGY.get(), mainhand);
-            if(artifactSynergyLevel > 0){
+            if (artifactSynergyLevel > 0) {
                 float damageMultiplier = 1.2F + artifactSynergyLevel * 0.2F;
                 float currentDamage = event.getAmount();
                 event.setAmount(currentDamage * damageMultiplier);
@@ -52,9 +52,9 @@ public class ArtifactSynergyEnchantment extends DungeonsEnchantment {
     }
 
     @SubscribeEvent
-    public static void onArtifactTriggered(ArtifactEvent.Activated event){
+    public static void onArtifactTriggered(ArtifactEvent.Activated event) {
         Combo comboCap = ComboHelper.getComboCapability(event.getEntity());
-        if(!comboCap.hasArtifactSynergy()){
+        if (!comboCap.hasArtifactSynergy()) {
             comboCap.setArtifactSynergy(true);
         }
     }

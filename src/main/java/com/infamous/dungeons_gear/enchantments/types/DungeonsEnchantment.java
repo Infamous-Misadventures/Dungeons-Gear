@@ -2,13 +2,10 @@ package com.infamous.dungeons_gear.enchantments.types;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
-import com.infamous.dungeons_libraries.items.gearconfig.ArmorGear;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
-
-import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;

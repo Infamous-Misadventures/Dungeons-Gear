@@ -7,12 +7,12 @@ import com.infamous.dungeons_gear.capabilities.combo.Combo;
 import com.infamous.dungeons_gear.capabilities.combo.ComboHelper;
 import com.infamous.dungeons_gear.capabilities.combo.RollHelper;
 import com.infamous.dungeons_gear.compat.DungeonsGearCompatibility;
-import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.ranged.BurstBowstringEnchantment;
 import com.infamous.dungeons_gear.enchantments.ranged.FuseShotEnchantment;
 import com.infamous.dungeons_gear.enchantments.ranged.RollChargeEnchantment;
 import com.infamous.dungeons_gear.items.GildedItemHelper;
 import com.infamous.dungeons_gear.items.interfaces.IDualWieldWeapon;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.registry.MobEffectInit;
 import com.infamous.dungeons_gear.registry.PotionInit;
 import com.infamous.dungeons_gear.utilties.ArmorEffectHelper;
@@ -219,6 +219,7 @@ public class GlobalEvents {
             }
         }
     }
+
     @SubscribeEvent
     public static void handleJumpAbilities(LivingEvent.LivingJumpEvent event) {
         LivingEntity jumper = event.getEntity();
@@ -242,7 +243,7 @@ public class GlobalEvents {
             }
             RollHelper.incrementJumpCounter(playerEntity);
 
-            if(jumpCooldownTimer <= 0 && RollHelper.hasReachedJumpLimit(playerEntity)){
+            if (jumpCooldownTimer <= 0 && RollHelper.hasReachedJumpLimit(playerEntity)) {
                 RollHelper.startCooldown(jumper, comboCap);
             }
         }

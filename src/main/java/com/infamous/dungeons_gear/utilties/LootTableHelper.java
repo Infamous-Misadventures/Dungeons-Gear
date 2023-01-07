@@ -20,12 +20,11 @@ import java.util.Map;
 import java.util.Set;
 
 public class LootTableHelper {
-    public static ItemStack generateItemStack(ServerLevel world, BlockPos pos, ResourceLocation lootTable, RandomSource random)
-    {
+    public static ItemStack generateItemStack(ServerLevel world, BlockPos pos, ResourceLocation lootTable, RandomSource random) {
         LootContext context = new LootContext.Builder(world)
                 .withRandom(random)
                 .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(pos)) // positional context
-                .create(LootContextParamSets.CHEST);	// chest set requires positional context, has no other mandatory parameters
+                .create(LootContextParamSets.CHEST);    // chest set requires positional context, has no other mandatory parameters
 
         LootTable table = world.getServer()
                 .getLootTables()
@@ -35,12 +34,12 @@ public class LootTableHelper {
                 ? stacks.get(0)
                 : ItemStack.EMPTY;
     }
-    public static List<ItemStack> generateItemStacks(ServerLevel world, Vec3 pos, ResourceLocation lootTable, RandomSource random)
-    {
+
+    public static List<ItemStack> generateItemStacks(ServerLevel world, Vec3 pos, ResourceLocation lootTable, RandomSource random) {
         LootContext context = new LootContext.Builder(world)
                 .withRandom(random)
                 .withParameter(LootContextParams.ORIGIN, pos) // positional context
-                .create(LootContextParamSets.CHEST);	// chest set requires positional context, has no other mandatory parameters
+                .create(LootContextParamSets.CHEST);    // chest set requires positional context, has no other mandatory parameters
 
         LootTable table = world.getServer()
                 .getLootTables()
@@ -49,7 +48,7 @@ public class LootTableHelper {
     }
 
     public static List<ItemStack> generateItemStacks(ServerLevel world, LootContext originContext, ResourceLocation lootTable) {
-        if(!isCompleteParameterSet(originContext)) return new ArrayList<>();
+        if (!isCompleteParameterSet(originContext)) return new ArrayList<>();
         LootContext newContext = copyLootContextWithNewQueryID(originContext, lootTable);
         return originContext.getLootTable(lootTable).getRandomItems(newContext);
     }
@@ -60,16 +59,16 @@ public class LootTableHelper {
         return set1.isEmpty();
     }
 
-    public static boolean lootTableExists(ServerLevel world, ResourceLocation lootTable){
-        return ! world.getServer()
+    public static boolean lootTableExists(ServerLevel world, ResourceLocation lootTable) {
+        return !world.getServer()
                 .getLootTables()
                 .get(lootTable)
                 .equals(LootTable.EMPTY);
     }
 
-    protected static LootContext copyLootContextWithNewQueryID(LootContext oldLootContext, ResourceLocation newQueryID){
+    protected static LootContext copyLootContextWithNewQueryID(LootContext oldLootContext, ResourceLocation newQueryID) {
         LootContext newContext = new LootContext.Builder(oldLootContext).create(LootContextParamSets.CHEST);
-        ((LootContextAccessor)newContext).dungeonsgear_setQueriedLootTableId(newQueryID);
+        ((LootContextAccessor) newContext).dungeonsgear_setQueriedLootTableId(newQueryID);
         return newContext;
     }
 }

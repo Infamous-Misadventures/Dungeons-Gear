@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ArtifactHelper {
-    public static List<Item> getArtifactList(){
+    public static List<Item> getArtifactList() {
         return ItemInit.ARTIFACTS.values().stream().map(RegistryObject::get).collect(Collectors.toList());
     }
 }

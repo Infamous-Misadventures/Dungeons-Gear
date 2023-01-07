@@ -1,8 +1,8 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_libraries.utils.ArrowHelper;
@@ -24,7 +24,7 @@ public class GravityShotEnchantment extends DungeonsEnchantment {
 
     public GravityShotEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.RANGED, new EquipmentSlot[]{
-            EquipmentSlot.MAINHAND});
+                EquipmentSlot.MAINHAND});
     }
 
     @Override

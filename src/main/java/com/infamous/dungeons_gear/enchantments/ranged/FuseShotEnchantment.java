@@ -20,9 +20,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
-import net.minecraft.world.item.enchantment.Enchantment.Rarity;
-
-@Mod.EventBusSubscriber(modid= MODID)
+@Mod.EventBusSubscriber(modid = MODID)
 public class FuseShotEnchantment extends DungeonsEnchantment {
 
     public static final String FUSE_SHOT_TAG = "FuseShot";
@@ -49,7 +47,7 @@ public class FuseShotEnchantment extends DungeonsEnchantment {
                         float f = (float) arrow.getDeltaMovement().length();
                         int damage = Mth.ceil(Mth.clamp((double) f * arrow.getBaseDamage(), 0.0D, 2.147483647E9D));
                         if (arrow.isCritArrow()) {
-                            long criticalDamageBonus = (long) shooter.getRandom().nextInt(damage / 2 + 2);
+                            long criticalDamageBonus = shooter.getRandom().nextInt(damage / 2 + 2);
                             damage = (int) Math.min(criticalDamageBonus + (long) damage, 2147483647L);
                         }
                         SoundHelper.playGenericExplodeSound(arrow);
@@ -62,16 +60,16 @@ public class FuseShotEnchantment extends DungeonsEnchantment {
     }
 
     @SubscribeEvent
-    public static void onFuseShotDamage(LivingDamageEvent event){
-        if(event.getSource() instanceof IndirectEntityDamageSource){
+    public static void onFuseShotDamage(LivingDamageEvent event) {
+        if (event.getSource() instanceof IndirectEntityDamageSource) {
             IndirectEntityDamageSource indirectEntityDamageSource = (IndirectEntityDamageSource) event.getSource();
-            if(indirectEntityDamageSource.getDirectEntity() instanceof AbstractArrow) {
+            if (indirectEntityDamageSource.getDirectEntity() instanceof AbstractArrow) {
                 AbstractArrow arrowEntity = (AbstractArrow) indirectEntityDamageSource.getDirectEntity();
 
                 LivingEntity victim = event.getEntity();
                 if (indirectEntityDamageSource.getEntity() instanceof LivingEntity) {
                     LivingEntity archer = (LivingEntity) indirectEntityDamageSource.getEntity();
-                    if(arrowEntity.getTags().contains(FUSE_SHOT_TAG)) {
+                    if (arrowEntity.getTags().contains(FUSE_SHOT_TAG)) {
                         SoundHelper.playGenericExplodeSound(arrowEntity);
                         AOECloudHelper.spawnExplosionCloud(archer, victim, 3.0f);
                         AreaOfEffectHelper.causeExplosionAttack(archer, victim, event.getAmount(), 3.0f);

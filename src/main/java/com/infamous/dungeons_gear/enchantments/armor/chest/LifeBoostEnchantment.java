@@ -1,8 +1,8 @@
 package com.infamous.dungeons_gear.enchantments.armor.chest;
 
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -31,25 +31,25 @@ public class LifeBoostEnchantment extends DungeonsEnchantment {
     }
 
     @SubscribeEvent
-    public static void onRespawn(PlayerEvent.Clone event){
+    public static void onRespawn(PlayerEvent.Clone event) {
         Player oldPlayer = event.getOriginal();
         DamageSource lastDamageSource = oldPlayer.getLastDamageSource();
-        if(lastDamageSource != null
+        if (lastDamageSource != null
                 && (lastDamageSource.getEntity() == null || lastDamageSource.getEntity() == oldPlayer)) return;
         // must have been killed by another entity to receive the life boost
 
         AttributeInstance oldMaxHealth = oldPlayer.getAttribute(Attributes.MAX_HEALTH);
         double oldLifeBoostValue = 0;
-        if(oldMaxHealth != null){
+        if (oldMaxHealth != null) {
             AttributeModifier oldLifeBoost = oldMaxHealth.getModifier(LIFE_BOOST);
-            if(oldLifeBoost != null){
+            if (oldLifeBoost != null) {
                 oldLifeBoostValue = oldLifeBoost.getAmount();
             }
         }
 
         Player newPlayer = event.getEntity();
         int lifeBoostLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.LIFE_BOOST.get(), oldPlayer);
-        if(lifeBoostLevel > 0){
+        if (lifeBoostLevel > 0) {
             AttributeInstance newMaxHealth = newPlayer.getAttribute(Attributes.MAX_HEALTH);
             if (newMaxHealth != null) {
                 newMaxHealth.addPermanentModifier(new AttributeModifier(LIFE_BOOST, "life boost addition", (2.0D * lifeBoostLevel) + oldLifeBoostValue, AttributeModifier.Operation.ADDITION));

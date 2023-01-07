@@ -14,8 +14,6 @@ import net.minecraftforge.fml.common.Mod;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.config.DungeonsGearConfig.RADIANCE_CHANCE;
 
-import net.minecraft.world.item.enchantment.Enchantment.Rarity;
-
 @Mod.EventBusSubscriber(modid = MODID)
 public class RadianceEnchantment extends DungeonsEnchantment {
 
@@ -35,9 +33,9 @@ public class RadianceEnchantment extends DungeonsEnchantment {
 
     @Override
     public void doPostAttack(LivingEntity user, Entity target, int level) {
-        if(!(target instanceof LivingEntity)) return;
+        if (!(target instanceof LivingEntity)) return;
         float chance = user.getRandom().nextFloat();
-        if(chance <=  RADIANCE_CHANCE.get()){
+        if (chance <= RADIANCE_CHANCE.get()) {
             AOECloudHelper.spawnRegenCloud(user, level);
         }
     }

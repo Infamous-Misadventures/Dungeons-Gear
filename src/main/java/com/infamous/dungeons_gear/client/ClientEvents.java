@@ -33,7 +33,7 @@ public class ClientEvents {
             // DOUBLE OR INT
             if (armor.getFreezingResistance() > 0) {
                 tooltip.add(index + 1, Component.translatable(
-                        "+" + armor.getFreezingResistance() + "% ")
+                                "+" + armor.getFreezingResistance() + "% ")
                         .append(Component.translatable(
                                 "attribute.name.freezingResistance"))
                         .withStyle(ChatFormatting.GREEN));

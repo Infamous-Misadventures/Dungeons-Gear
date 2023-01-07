@@ -26,8 +26,8 @@ import static net.minecraft.world.level.storage.loot.BuiltInLootTables.SPAWN_BON
 
 public class DungeonsLootAdditions extends LootModifier {
 
-    public static final Supplier<Codec<DungeonsLootAdditions>> CODEC =  Suppliers.memoize(()
-            ->RecordCodecBuilder.create(instance -> codecStart(instance).apply(instance, DungeonsLootAdditions::new)));
+    public static final Supplier<Codec<DungeonsLootAdditions>> CODEC = Suppliers.memoize(()
+            -> RecordCodecBuilder.create(instance -> codecStart(instance).apply(instance, DungeonsLootAdditions::new)));
 
     public DungeonsLootAdditions(LootItemCondition[] conditionsIn) {
         super(conditionsIn);
@@ -48,16 +48,16 @@ public class DungeonsLootAdditions extends LootModifier {
         ResourceLocation lootTable = determineTable(context.getQueriedLootTableId());
         if (lootTable == null) return generatedLoot;
         List<ItemStack> itemStacks = LootTableHelper.generateItemStacks(context.getLevel(), context, lootTable);
-        if(!ConfigurableLootHelper.isArmorLootEnabled()){
+        if (!ConfigurableLootHelper.isArmorLootEnabled()) {
             itemStacks = itemStacks.stream().filter(itemStack -> !ARMORS.containsValue(itemStack.getItem())).collect(Collectors.toList());
         }
-        if(!ConfigurableLootHelper.isMeleeWeaponLootEnabled()){
+        if (!ConfigurableLootHelper.isMeleeWeaponLootEnabled()) {
             itemStacks = itemStacks.stream().filter(itemStack -> !MELEE_WEAPONS.containsValue(itemStack.getItem())).collect(Collectors.toList());
         }
-        if(ConfigurableLootHelper.isRangedWeaponLootEnabled()){
+        if (ConfigurableLootHelper.isRangedWeaponLootEnabled()) {
             itemStacks = itemStacks.stream().filter(itemStack -> !RANGED_WEAPONS.containsValue(itemStack.getItem())).collect(Collectors.toList());
         }
-        if(ConfigurableLootHelper.isArtifactLootEnabled()){
+        if (ConfigurableLootHelper.isArtifactLootEnabled()) {
             itemStacks = itemStacks.stream().filter(itemStack -> !ARTIFACTS.containsValue(itemStack.getItem())).collect(Collectors.toList());
         }
         modifiedLoot.addAll(itemStacks);

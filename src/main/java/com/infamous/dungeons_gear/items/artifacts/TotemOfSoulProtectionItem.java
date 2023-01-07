@@ -28,7 +28,7 @@ import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_G
 public class TotemOfSoulProtectionItem extends ArtifactItem implements ISoulConsumer {
     public TotemOfSoulProtectionItem(Properties properties) {
         super(properties);
-        procOnItemUse=true;
+        procOnItemUse = true;
     }
 
     public InteractionResultHolder<ItemStack> procArtifact(ArtifactUseContext itemUseContext) {
@@ -48,10 +48,10 @@ public class TotemOfSoulProtectionItem extends ArtifactItem implements ISoulCons
             } else {
                 blockPos = itemUseContextPos.relative(itemUseContextFace);
             }
-            if(itemUseContextPlayer != null) {
-                if(SoulCasterHelper.consumeSouls(itemUseContextPlayer, this.getActivationCost(itemUseContextItem))){
+            if (itemUseContextPlayer != null) {
+                if (SoulCasterHelper.consumeSouls(itemUseContextPlayer, this.getActivationCost(itemUseContextItem))) {
                     TotemOfSoulProtectionEntity totemOfSoulProtectionEntity = EntityTypeInit.TOTEM_OF_SOUL_PROTECTION.get().create(itemUseContextPlayer.level);
-                    if(totemOfSoulProtectionEntity != null) {
+                    if (totemOfSoulProtectionEntity != null) {
                         totemOfSoulProtectionEntity.moveTo(blockPos, 0, 0);
                         totemOfSoulProtectionEntity.setOwner(itemUseContextPlayer);
                         itemUseContextPlayer.level.addFreshEntity(totemOfSoulProtectionEntity);

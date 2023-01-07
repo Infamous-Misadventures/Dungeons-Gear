@@ -1,10 +1,10 @@
 package com.infamous.dungeons_gear.mixin;
 
 import com.infamous.dungeons_libraries.utils.RangedAttackHelper;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -20,7 +20,7 @@ public abstract class CrossbowItemMixin {
     }
 
     @Inject(at = @At("RETURN"), method = "Lnet/minecraft/world/item/CrossbowItem;getChargeDuration(Lnet/minecraft/world/item/ItemStack;)I", cancellable = true)
-    private static void getChargeDuration(ItemStack stack, CallbackInfoReturnable<Integer> cir){
+    private static void getChargeDuration(ItemStack stack, CallbackInfoReturnable<Integer> cir) {
         cir.setReturnValue((int) RangedAttackHelper.getVanillaCrossbowChargeTime(null, stack)); // TODO: Should take in a LivingEntity to be able to check for Roll Charge
     }
 

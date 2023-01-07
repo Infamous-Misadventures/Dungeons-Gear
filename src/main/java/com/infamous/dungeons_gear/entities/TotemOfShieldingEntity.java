@@ -31,7 +31,7 @@ public class TotemOfShieldingEntity extends TotemBaseEntity implements IAnimatab
     @Override
     protected void applyTotemEffect() {
         LivingEntity owner = getOwner();
-        if(owner == null) return;
+        if (owner == null) return;
         applyToNearbyEntities(getOwner(), 8,
                 getCanHealPredicate(getOwner()), (LivingEntity nearbyEntity) -> {
                     MobEffectInstance effectInstance = new MobEffectInstance(MobEffectInit.SHIELDING.get(), 21);

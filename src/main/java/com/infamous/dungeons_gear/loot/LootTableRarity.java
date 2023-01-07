@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import net.minecraft.resources.ResourceLocation;
 
-import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.utilties.GeneralHelper.modLoc;
 
 public enum LootTableRarity {
@@ -13,13 +12,13 @@ public enum LootTableRarity {
     OBSIDIAN("obsidian");
 
     public static final Codec<LootTableRarity> CODEC = Codec.STRING.flatComapMap((s) -> {
-        return byName(s, (LootTableRarity)null);
+        return byName(s, null);
     }, (d) -> {
         return DataResult.success(d.getName());
     });
     private final String name;
 
-    private LootTableRarity(String name) {
+    LootTableRarity(String name) {
         this.name = name;
     }
 
@@ -27,7 +26,7 @@ public enum LootTableRarity {
         LootTableRarity[] var2 = values();
         int var3 = var2.length;
 
-        for(int var4 = 0; var4 < var3; ++var4) {
+        for (int var4 = 0; var4 < var3; ++var4) {
             LootTableRarity factionRank = var2[var4];
             if (factionRank.name.equals(name)) {
                 return factionRank;

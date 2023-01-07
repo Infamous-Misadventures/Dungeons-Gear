@@ -2,8 +2,8 @@ package com.infamous.dungeons_gear.enchantments.melee_ranged;
 
 import com.infamous.dungeons_gear.damagesources.OffhandAttackDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_libraries.utils.PetHelper;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -46,7 +46,7 @@ public class MastersCallEnchantment extends DungeonsEnchantment {
     @SubscribeEvent
     public static void onArrowImpact(ProjectileImpactEvent event) {
         HitResult rayTraceResult = event.getRayTraceResult();
-        if(event.getProjectile() instanceof AbstractArrow arrow) {
+        if (event.getProjectile() instanceof AbstractArrow arrow) {
             if (!shooterIsLiving(arrow)) return;
             LivingEntity shooter = (LivingEntity) arrow.getOwner();
 

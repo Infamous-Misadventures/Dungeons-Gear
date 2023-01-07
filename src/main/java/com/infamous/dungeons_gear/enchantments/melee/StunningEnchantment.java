@@ -27,15 +27,15 @@ public class StunningEnchantment extends DungeonsEnchantment {
 
     @Override
     public void doPostAttack(LivingEntity user, Entity target, int level) {
-        if(!(target instanceof LivingEntity)) return;
+        if (!(target instanceof LivingEntity)) return;
         float chance = user.getRandom().nextFloat();
-        if(chance <=  level * STUNNING_CHANCE_PER_LEVEL.get()){
+        if (chance <= level * STUNNING_CHANCE_PER_LEVEL.get()) {
             MobEffectInstance stunned = new MobEffectInstance(MobEffectInit.STUNNED.get(), 60);
             MobEffectInstance nausea = new MobEffectInstance(MobEffects.CONFUSION, 60);
             MobEffectInstance slowness = new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 5);
-            ((LivingEntity)target).addEffect(stunned);
-            ((LivingEntity)target).addEffect(nausea);
-            ((LivingEntity)target).addEffect(slowness);
+            ((LivingEntity) target).addEffect(stunned);
+            ((LivingEntity) target).addEffect(nausea);
+            ((LivingEntity) target).addEffect(slowness);
         }
     }
 }

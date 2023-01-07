@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.Mod;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.registry.EnchantmentInit.ROLL_CHARGE;
 
-@Mod.EventBusSubscriber(modid= MODID)
+@Mod.EventBusSubscriber(modid = MODID)
 public class RollChargeEnchantment extends DungeonsEnchantment {
 
     public RollChargeEnchantment() {

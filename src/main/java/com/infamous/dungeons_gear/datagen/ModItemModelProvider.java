@@ -23,9 +23,9 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     private void registerArmors() {
         ARMORS.forEach((resourceLocation, itemRegistryObject) -> {
-            if(existingFileHelper.exists(itemLoc(resourceLocation), ModelProvider.TEXTURE)) {
+            if (existingFileHelper.exists(itemLoc(resourceLocation), ModelProvider.TEXTURE)) {
                 generated(resourceLocation.getPath(), itemLoc(resourceLocation));
-            }else{
+            } else {
                 DungeonsGear.LOGGER.info("Missing texture for " + resourceLocation);
                 generated(resourceLocation.getPath(), modLoc(ITEM_FOLDER + "/armor/missing"));
             }
@@ -37,7 +37,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         getBuilder(path).parent(new ModelFile.UncheckedModelFile(mcLoc("item/generated"))).texture("layer0", texture);
     }
 
-    private static ResourceLocation itemLoc(ResourceLocation resourceLocation){
+    private static ResourceLocation itemLoc(ResourceLocation resourceLocation) {
         return new ResourceLocation(resourceLocation.getNamespace(), ITEM_FOLDER + "/armor/" + resourceLocation.getPath());
     }
 }

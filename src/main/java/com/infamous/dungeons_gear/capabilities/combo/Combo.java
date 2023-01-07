@@ -28,7 +28,7 @@ public class Combo implements INBTSerializable<CompoundTag> {
     private BlockPos lastLuckyExplorerCheckpoint;
     private boolean artifactSynergy;
     private int painCycleStacks;
-    private int rollChargeTicks;
+    private final int rollChargeTicks;
     private int jumpCounter;
     private int refreshmentCounter;
     private int echoCooldown;
@@ -198,7 +198,7 @@ public class Combo implements INBTSerializable<CompoundTag> {
     }
 
     public void setEchoCooldown(int echoCooldown) {
-        this.echoCooldown=echoCooldown;
+        this.echoCooldown = echoCooldown;
     }
 
     @Override
@@ -267,10 +267,10 @@ public class Combo implements INBTSerializable<CompoundTag> {
         this.setEchoCooldown(tag.getInt("echoCooldown"));
     }
 
-    private ListTag newDoubleNBTList(double... numbers){
+    private ListTag newDoubleNBTList(double... numbers) {
         ListTag listnbt = new ListTag();
 
-        for(double d0 : numbers) {
+        for (double d0 : numbers) {
             listnbt.add(DoubleTag.valueOf(d0));
         }
 

@@ -18,18 +18,18 @@ import static com.infamous.dungeons_libraries.DungeonsLibraries.MODID;
 public class AttributeEvents {
 
     @SubscribeEvent
-    public static void onEntityAttributeModificationEvent(EntityAttributeModificationEvent event){
+    public static void onEntityAttributeModificationEvent(EntityAttributeModificationEvent event) {
         addAttributeToPlayer(event, ROLL_COOLDOWN.get());
         addAttributeToPlayer(event, ROLL_LIMIT.get());
     }
 
     private static void addAttributeToAll(EntityAttributeModificationEvent event, Attribute attribute) {
-        List<EntityType<? extends LivingEntity>> entitiesWithoutAttribute= event.getTypes().stream().filter(entityType -> !event.has(entityType, attribute)).collect(Collectors.toList());
+        List<EntityType<? extends LivingEntity>> entitiesWithoutAttribute = event.getTypes().stream().filter(entityType -> !event.has(entityType, attribute)).collect(Collectors.toList());
         entitiesWithoutAttribute.forEach(entityType -> event.add(entityType, attribute, attribute.getDefaultValue()));
     }
 
     private static void addAttributeToPlayer(EntityAttributeModificationEvent event, Attribute attribute) {
-        List<EntityType<? extends LivingEntity>> entitiesWithoutAttribute= event.getTypes().stream().filter(entityType -> !event.has(entityType, attribute) && entityType == EntityType.PLAYER).collect(Collectors.toList());
+        List<EntityType<? extends LivingEntity>> entitiesWithoutAttribute = event.getTypes().stream().filter(entityType -> !event.has(entityType, attribute) && entityType == EntityType.PLAYER).collect(Collectors.toList());
         entitiesWithoutAttribute.forEach(entityType -> event.add(entityType, attribute, attribute.getDefaultValue()));
     }
 }

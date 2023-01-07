@@ -3,29 +3,27 @@ package com.infamous.dungeons_gear.items.artifacts;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_libraries.network.BreakItemMessage;
-import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
-import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCaster;
 import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
 import com.infamous.dungeons_libraries.items.interfaces.ISoulConsumer;
+import com.infamous.dungeons_libraries.network.BreakItemMessage;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.InteractionResult;
 import net.minecraftforge.network.PacketDistributor;
 
 import java.util.UUID;
 
 import static com.infamous.dungeons_gear.DungeonsGear.PROXY;
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_GATHERING;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class SoulHealerItem extends ArtifactItem implements ISoulConsumer {
     public SoulHealerItem(Properties properties) {
@@ -36,13 +34,13 @@ public class SoulHealerItem extends ArtifactItem implements ISoulConsumer {
     public InteractionResultHolder<ItemStack> procArtifact(ArtifactUseContext c) {
         Player playerIn = c.getPlayer();
         ItemStack itemStack = c.getItemStack();
-        if(playerIn == null)  return new InteractionResultHolder<>(InteractionResult.FAIL, itemStack);
+        if (playerIn == null) return new InteractionResultHolder<>(InteractionResult.FAIL, itemStack);
 
         LivingEntity mostInjuredAlly = AreaOfEffectHelper.findMostInjuredAlly(playerIn, 12);
         float currentHealth = 0;
         float maxHealth = 0;
         float lostHealth = 0;
-        if(mostInjuredAlly != null) {
+        if (mostInjuredAlly != null) {
             currentHealth = mostInjuredAlly.getHealth();
             maxHealth = mostInjuredAlly.getMaxHealth();
             lostHealth = maxHealth - currentHealth;
@@ -51,9 +49,9 @@ public class SoulHealerItem extends ArtifactItem implements ISoulConsumer {
         float playerCurrentHealth = playerIn.getHealth();
         float playerMaxHealth = playerIn.getMaxHealth();
         float playerLostHealth = playerMaxHealth - playerCurrentHealth;
-        if(playerLostHealth >= lostHealth || mostInjuredAlly == null) {
+        if (playerLostHealth >= lostHealth || mostInjuredAlly == null) {
             return healAlly(playerIn, playerLostHealth, playerIn, itemStack);
-        }else{
+        } else {
             return healAlly(playerIn, lostHealth, mostInjuredAlly, itemStack);
         }
     }
@@ -61,7 +59,7 @@ public class SoulHealerItem extends ArtifactItem implements ISoulConsumer {
     private InteractionResultHolder<ItemStack> healAlly(Player playerEntity, float lostHealth, LivingEntity target, ItemStack itemStack) {
         SoulCaster soulCasterCapability = SoulCasterHelper.getSoulCasterCapability(playerEntity);
         float toHeal = Math.min(lostHealth, Math.min(target.getMaxHealth() / 5, soulCasterCapability.getSouls() * 0.1f));
-        if (toHeal > 0 && SoulCasterHelper.consumeSouls(playerEntity, toHeal*10)) {
+        if (toHeal > 0 && SoulCasterHelper.consumeSouls(playerEntity, toHeal * 10)) {
             target.heal(toHeal);
             itemStack.hurtAndBreak(1, playerEntity, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new BreakItemMessage(entity.getId(), itemStack)));
             ArtifactItem.putArtifactOnCooldown(playerEntity, itemStack.getItem());

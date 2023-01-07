@@ -4,9 +4,9 @@ import com.infamous.dungeons_gear.capabilities.combo.Combo;
 import com.infamous.dungeons_gear.capabilities.combo.ComboHelper;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -40,10 +40,10 @@ public class SwirlingEnchantment extends AOEDamageEnchantment {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onVanillaCriticalHit(CriticalHitEvent event) {
-        if (event.getEntity() != null && !event.getEntity().level.isClientSide() &&  event.getTarget() instanceof LivingEntity
+        if (event.getEntity() != null && !event.getEntity().level.isClientSide() && event.getTarget() instanceof LivingEntity
                 && (event.getResult() == Event.Result.ALLOW || (event.getResult() == Event.Result.DEFAULT && event.isVanillaCritical()))
         ) {
-            Player attacker = (Player) event.getEntity();
+            Player attacker = event.getEntity();
             LivingEntity victim = (LivingEntity) event.getTarget();
             if (attacker.getLastHurtMobTimestamp() == attacker.tickCount) return;
             ItemStack mainhand = attacker.getMainHandItem();

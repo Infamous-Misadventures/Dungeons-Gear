@@ -23,26 +23,26 @@ public class PartyStarterEffect extends MobEffect {
     }
 
     @SubscribeEvent
-    public static void onPartyStarterAttack(LivingAttackEvent event){
+    public static void onPartyStarterAttack(LivingAttackEvent event) {
         if (PlayerAttackHelper.isProbablyNotMeleeDamage(event.getSource())) return;
 
         LivingEntity victim = event.getEntity();
         Entity trueSource = event.getSource().getEntity();
-        if(trueSource instanceof LivingEntity) {
+        if (trueSource instanceof LivingEntity) {
             LivingEntity attacker = (LivingEntity) trueSource;
             MobEffectInstance partyStarter = attacker.getEffect(MobEffectInit.PARTY_STARTER.get());
             if (partyStarter != null) {
                 int partyStarterLevel = partyStarter.getAmplifier();
 
-                if(!attacker.level.isClientSide){
+                if (!attacker.level.isClientSide) {
                     AOECloudHelper.spawnExplosionCloud(attacker, victim, 3.0F);
                     AreaOfEffectHelper.causeExplosionAttack(attacker, victim, DungeonsGearConfig.PARTY_STARTER_DAMAGE.get(), 3.0F);
                     SoundHelper.playGenericExplodeSound(victim);
                 }
                 partyStarterLevel--;
-                if(partyStarterLevel <= 0){
+                if (partyStarterLevel <= 0) {
                     attacker.removeEffect(MobEffectInit.PARTY_STARTER.get());
-                } else{
+                } else {
                     partyStarter.amplifier = partyStarterLevel;
                 }
             }

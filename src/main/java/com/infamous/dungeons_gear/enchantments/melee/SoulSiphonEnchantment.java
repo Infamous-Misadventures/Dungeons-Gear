@@ -2,17 +2,17 @@ package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
-import com.infamous.dungeons_libraries.integration.curios.CuriosIntegration;
 import com.infamous.dungeons_libraries.entities.SoulOrbEntity;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ItemStack;
+import com.infamous.dungeons_libraries.integration.curios.CuriosIntegration;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -60,14 +60,14 @@ public class SoulSiphonEnchantment extends DungeonsEnchantment {
 
     @Override
     public void doPostAttack(LivingEntity user, Entity target, int level) {
-        if(!(user instanceof Player)) return;
-        if(!(target instanceof LivingEntity)) return;
+        if (!(user instanceof Player)) return;
+        if (!(target instanceof LivingEntity)) return;
         float chance = user.getRandom().nextFloat();
-        if(chance <= SOUL_SIPHON_CHANCE.get()){
+        if (chance <= SOUL_SIPHON_CHANCE.get()) {
             double souls = level * SOUL_SIPHON_SOULS_PER_LEVEL.get();
             for (int i = 0; i < souls; i++) {
-                double x = target.getX()+user.getRandom().nextFloat()-0.5D;
-                double z = target.getZ()+user.getRandom().nextFloat()-0.5D;
+                double x = target.getX() + user.getRandom().nextFloat() - 0.5D;
+                double z = target.getZ() + user.getRandom().nextFloat() - 0.5D;
                 target.level.addFreshEntity(new SoulOrbEntity((Player) user, target.level, x, target.getY() + 0.5D, z, (float) user.getAttributeValue(SOUL_GATHERING.get())));
             }
             // soul particles
@@ -83,7 +83,7 @@ public class SoulSiphonEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onCurioChange(CurioChangeEvent event) {
-        if(!event.getIdentifier().equals(CuriosIntegration.ARTIFACT_IDENTIFIER)) return;
+        if (!event.getIdentifier().equals(CuriosIntegration.ARTIFACT_IDENTIFIER)) return;
         removeAttribute(event.getFrom(), event.getEntity(), CURIO_ATTRIBUTE_UUID_MAP.get(event.getSlotIndex()));
         addAttribute(event.getTo(), event.getEntity(), CURIO_ATTRIBUTE_UUID_MAP.get(event.getSlotIndex()));
     }

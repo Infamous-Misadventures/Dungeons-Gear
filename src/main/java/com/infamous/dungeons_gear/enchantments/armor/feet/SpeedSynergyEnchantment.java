@@ -1,8 +1,8 @@
 package com.infamous.dungeons_gear.enchantments.armor.feet;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.ArtifactEnchantment;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_libraries.event.ArtifactEvent;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.Mod;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes.ARMOR_SLOT;
 
-@Mod.EventBusSubscriber(modid= MODID)
+@Mod.EventBusSubscriber(modid = MODID)
 public class SpeedSynergyEnchantment extends ArtifactEnchantment {
 
     public SpeedSynergyEnchantment() {
@@ -34,9 +34,9 @@ public class SpeedSynergyEnchantment extends ArtifactEnchantment {
     }
 
     @SubscribeEvent
-    public static void onArtifactTriggered(ArtifactEvent.Activated event){
+    public static void onArtifactTriggered(ArtifactEvent.Activated event) {
         LivingEntity livingEntity = event.getEntity();
-        if(ModEnchantmentHelper.hasEnchantment(livingEntity, EnchantmentInit.SPEED_SYNERGY.get())){
+        if (ModEnchantmentHelper.hasEnchantment(livingEntity, EnchantmentInit.SPEED_SYNERGY.get())) {
             int speedSynergyLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.SPEED_SYNERGY.get(), livingEntity);
             MobEffectInstance speedBoost = new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 20 * speedSynergyLevel);
             livingEntity.addEffect(speedBoost);

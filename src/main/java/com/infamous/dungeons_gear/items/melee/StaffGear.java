@@ -4,8 +4,6 @@ import com.infamous.dungeons_libraries.items.gearconfig.MeleeGear;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
-import net.minecraft.world.item.Item.Properties;
-
 public class StaffGear extends MeleeGear {
 
     public StaffGear(Properties properties) {

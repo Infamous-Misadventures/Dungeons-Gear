@@ -115,13 +115,13 @@ public class ArmorEvents {
 
             if (comboCap.getJumpCooldownTimer() > 0) {
                 comboCap.setJumpCooldownTimer(comboCap.getJumpCooldownTimer() - 1);
-            } else if(comboCap.getJumpCooldownTimer() < 0){
+            } else if (comboCap.getJumpCooldownTimer() < 0) {
                 comboCap.setJumpCooldownTimer(0);
             }
 
             if (comboCap.getDualWieldTimer() > 0) {
                 comboCap.setDualWieldTimer(comboCap.getDualWieldTimer() - 1);
-            } else if (comboCap.getComboCount() < 0){
+            } else if (comboCap.getComboCount() < 0) {
                 comboCap.setComboCount(0);
             }
             comboCap.setOffhandCooldown(comboCap.getOffhandCooldown() + 1);

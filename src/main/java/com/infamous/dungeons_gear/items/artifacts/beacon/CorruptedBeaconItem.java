@@ -1,7 +1,5 @@
 package com.infamous.dungeons_gear.items.artifacts.beacon;
 
-import net.minecraft.world.item.Item.Properties;
-
 public class CorruptedBeaconItem extends SoulBeaconItem {
 
     public static final BeamColor CORRUPTED_BEACON_BEAM_COLOR =

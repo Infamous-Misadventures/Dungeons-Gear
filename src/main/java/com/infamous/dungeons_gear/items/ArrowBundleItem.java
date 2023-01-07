@@ -18,7 +18,7 @@ import java.util.stream.StreamSupport;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.registry.EnchantmentInit.ARROW_HOARDER;
 
-public class ArrowBundleItem  extends Item {
+public class ArrowBundleItem extends Item {
 
     private static final String NUMBER_OF_ARROWS_FIELD = "NumberOfArrows";
 
@@ -28,7 +28,7 @@ public class ArrowBundleItem  extends Item {
         super(properties);
     }
 
-    public static ItemStack changeNumberOfArrows(ItemStack itemIn, int number){
+    public static ItemStack changeNumberOfArrows(ItemStack itemIn, int number) {
         itemIn.getOrCreateTag().putInt(NUMBER_OF_ARROWS_FIELD, number);
         return itemIn;
     }
@@ -54,7 +54,7 @@ public class ArrowBundleItem  extends Item {
 
     private int getNumberOfArrows(Player player, ItemStack bundleItemStack) {
         int baseArrows = DEFAULT_NUMBER_OF_ARROWS;
-        if(bundleItemStack.hasTag() && bundleItemStack.getTag().contains(NUMBER_OF_ARROWS_FIELD)){
+        if (bundleItemStack.hasTag() && bundleItemStack.getTag().contains(NUMBER_OF_ARROWS_FIELD)) {
             baseArrows = bundleItemStack.getTag().getInt(NUMBER_OF_ARROWS_FIELD);
         }
         return baseArrows + StreamSupport.stream(player.getArmorSlots().spliterator(), false).map(this::arrowAmount).reduce(0, (a, b) -> a + b, Integer::sum);

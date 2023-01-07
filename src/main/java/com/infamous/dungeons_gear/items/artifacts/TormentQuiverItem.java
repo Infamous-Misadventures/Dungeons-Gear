@@ -5,11 +5,11 @@ import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.capabilities.combo.Combo;
 import com.infamous.dungeons_gear.capabilities.combo.ComboHelper;
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_libraries.network.BreakItemMessage;
+import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
-import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
 import com.infamous.dungeons_libraries.items.interfaces.ISoulConsumer;
+import com.infamous.dungeons_libraries.network.BreakItemMessage;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -22,8 +22,6 @@ import java.util.UUID;
 
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_GATHERING;
 
-import net.minecraft.world.item.Item.Properties;
-
 public class TormentQuiverItem extends ArtifactItem implements ISoulConsumer {
     public static final String TORMENT_ARROW = "TormentArrow";
 
@@ -35,7 +33,7 @@ public class TormentQuiverItem extends ArtifactItem implements ISoulConsumer {
         Player playerIn = c.getPlayer();
         ItemStack itemStack = c.getItemStack();
 
-        if(SoulCasterHelper.consumeSouls(playerIn, this.getActivationCost(itemStack))){
+        if (SoulCasterHelper.consumeSouls(playerIn, this.getActivationCost(itemStack))) {
 
             Combo comboCap = ComboHelper.getComboCapability(playerIn);
 

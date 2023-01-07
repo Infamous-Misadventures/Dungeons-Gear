@@ -35,15 +35,14 @@ public class ArtifactEvents {
     public static final String SPEED_SHEEP_TAG = "SpeedSheep";
 
     @SubscribeEvent
-    public static void onEnchantedSheepAttack(LivingDamageEvent event){
-        if(event.getSource().getEntity() instanceof Sheep){
-            Sheep sheepEntity = (Sheep)event.getSource().getEntity();
+    public static void onEnchantedSheepAttack(LivingDamageEvent event) {
+        if (event.getSource().getEntity() instanceof Sheep) {
+            Sheep sheepEntity = (Sheep) event.getSource().getEntity();
             Minion summonableCap = getMinionCapability(sheepEntity);
-            if(summonableCap.getMaster() != null){
-                if(sheepEntity.getTags().contains(FIRE_SHEEP_TAG)){
+            if (summonableCap.getMaster() != null) {
+                if (sheepEntity.getTags().contains(FIRE_SHEEP_TAG)) {
                     event.getEntity().setSecondsOnFire(5);
-                }
-                else if(sheepEntity.getTags().contains(POISON_SHEEP_TAG)){
+                } else if (sheepEntity.getTags().contains(POISON_SHEEP_TAG)) {
                     MobEffectInstance poison = new MobEffectInstance(MobEffects.POISON, 100);
                     event.getEntity().addEffect(poison);
                 }
@@ -52,14 +51,14 @@ public class ArtifactEvents {
     }
 
     @SubscribeEvent
-    public static void updateBlueEnchantedSheep(LivingEvent.LivingTickEvent event){
-        if(event.getEntity() instanceof Sheep){
-            Sheep sheepEntity = (Sheep)event.getEntity();
+    public static void updateBlueEnchantedSheep(LivingEvent.LivingTickEvent event) {
+        if (event.getEntity() instanceof Sheep) {
+            Sheep sheepEntity = (Sheep) event.getEntity();
             Minion summonableCap = getMinionCapability(sheepEntity);
             LivingEntity summoner = summonableCap.getMaster();
-            if(summoner != null){
-                if(sheepEntity.level instanceof ServerLevel){
-                    if(!summoner.hasEffect(MobEffects.MOVEMENT_SPEED) && sheepEntity.getTags().contains(SPEED_SHEEP_TAG)){
+            if (summoner != null) {
+                if (sheepEntity.level instanceof ServerLevel) {
+                    if (!summoner.hasEffect(MobEffects.MOVEMENT_SPEED) && sheepEntity.getTags().contains(SPEED_SHEEP_TAG)) {
                         MobEffectInstance speed = new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 100);
                         summoner.addEffect(speed);
                     }
@@ -69,8 +68,8 @@ public class ArtifactEvents {
     }
 
     @SubscribeEvent
-    public static void onSoulProtection(LivingDeathEvent event){
-        if(event.getEntity().getEffect(MobEffectInit.SOUL_PROTECTION.get()) != null){
+    public static void onSoulProtection(LivingDeathEvent event) {
+        if (event.getEntity().getEffect(MobEffectInit.SOUL_PROTECTION.get()) != null) {
             event.setCanceled(true);
             event.getEntity().setHealth(1.0F);
             event.getEntity().removeAllEffects();
@@ -81,20 +80,20 @@ public class ArtifactEvents {
     }
 
     @SubscribeEvent
-    public static void onArrowJoinWorld(EntityJoinLevelEvent event){
-        if(event.getEntity() instanceof AbstractArrow){
+    public static void onArrowJoinWorld(EntityJoinLevelEvent event) {
+        if (event.getEntity() instanceof AbstractArrow) {
             AbstractArrow arrowEntity = (AbstractArrow) event.getEntity();
             Entity shooter = arrowEntity.getOwner();
-            if(shooter instanceof Player){
+            if (shooter instanceof Player) {
                 Player playerEntity = (Player) shooter;
                 Combo comboCap = ComboHelper.getComboCapability(playerEntity);
-                if(comboCap.getFlamingArrowsCount() > 0){
+                if (comboCap.getFlamingArrowsCount() > 0) {
                     int count = comboCap.getFlamingArrowsCount();
                     arrowEntity.setSecondsOnFire(100);
                     count--;
                     comboCap.setFlamingArrowsCount(count);
                 }
-                if(comboCap.getTormentArrowsCount() > 0){
+                if (comboCap.getTormentArrowsCount() > 0) {
                     arrowEntity.addTag(TormentQuiverItem.TORMENT_ARROW);
                     int count = comboCap.getTormentArrowsCount();
                     arrowEntity.setNoGravity(true);
@@ -102,13 +101,13 @@ public class ArtifactEvents {
                     count--;
                     comboCap.setTormentArrowCount(count);
                 }
-                if(comboCap.getThunderingArrowsCount() > 0){
+                if (comboCap.getThunderingArrowsCount() > 0) {
                     arrowEntity.addTag(ThunderingQuiverItem.THUNDERING_ARROW);
                     int count = comboCap.getThunderingArrowsCount();
                     count--;
                     comboCap.setThunderingArrowsCount(count);
                 }
-                if(comboCap.getHarpoonCount() > 0){
+                if (comboCap.getHarpoonCount() > 0) {
                     arrowEntity.addTag(HarpoonQuiverItem.HARPOON_QUIVER);
                     int count = comboCap.getHarpoonCount();
                     count--;

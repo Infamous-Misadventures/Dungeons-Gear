@@ -4,20 +4,20 @@ import com.infamous.dungeons_gear.DungeonsGear;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.damagesources.ElectricShockDamageSource;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
 import com.infamous.dungeons_libraries.utils.ArrowHelper;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -27,7 +27,7 @@ import java.util.List;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.getCanApplyToEnemyPredicate;
 
-@Mod.EventBusSubscriber(modid= MODID)
+@Mod.EventBusSubscriber(modid = MODID)
 public class ShockWebEnchantment extends DungeonsEnchantment {
     // I can't get the clipping logic to work, so I am disabling the functionality of the enchantment for now
     private static final boolean ENABLED = false;
@@ -80,7 +80,7 @@ public class ShockWebEnchantment extends DungeonsEnchantment {
                 double searchRadius = 16.0D;
                 AABB boundingBox = arrow.getBoundingBox().inflate(searchRadius, searchRadius, searchRadius);
                 List<AbstractArrow> nearbyArrows = world.getEntitiesOfClass(AbstractArrow.class, boundingBox,
-                    nearbyArrow -> nearbyArrow != arrow);
+                        nearbyArrow -> nearbyArrow != arrow);
                 if (nearbyArrows.isEmpty()) return;
                 DungeonsGear.LOGGER.info("Found {} arrows!", nearbyArrows.size());
 
@@ -101,7 +101,7 @@ public class ShockWebEnchantment extends DungeonsEnchantment {
                 }
                  */
                     List<LivingEntity> entitiesToShock = ProjectileEffectHelper.rayTraceEntities(world, from, to, boundingBox,
-                        getCanApplyToEnemyPredicate((LivingEntity) shooter));
+                            getCanApplyToEnemyPredicate((LivingEntity) shooter));
                     if (entitiesToShock.isEmpty()) continue;
                     DungeonsGear.LOGGER.info("Found {} targets!", entitiesToShock.size());
 

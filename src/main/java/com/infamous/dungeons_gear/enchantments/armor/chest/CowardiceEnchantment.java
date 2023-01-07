@@ -1,8 +1,8 @@
 package com.infamous.dungeons_gear.enchantments.armor.chest;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.HealthAbilityEnchantment;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_libraries.attribute.AttributeRegistry;
 import net.minecraft.world.entity.LivingEntity;
@@ -38,8 +38,9 @@ public class CowardiceEnchantment extends HealthAbilityEnchantment {
         if (event.phase == TickEvent.Phase.START) return;
         triggerEffect(player);
     }
+
     @SubscribeEvent
-    public static void onLivingUpdate(LivingEvent.LivingTickEvent event){
+    public static void onLivingUpdate(LivingEvent.LivingTickEvent event) {
         triggerEffect(event.getEntity());
     }
 
@@ -49,19 +50,19 @@ public class CowardiceEnchantment extends HealthAbilityEnchantment {
             float currentHealth = livingEntity.getHealth();
             AttributeInstance attackDamage = livingEntity.getAttribute(Attributes.ATTACK_DAMAGE);
             AttributeInstance rangedDamage = livingEntity.getAttribute(AttributeRegistry.RANGED_DAMAGE_MULTIPLIER.get());
-            if(attackDamage != null){
+            if (attackDamage != null) {
                 attackDamage.removeModifier(COWARD);
             }
-            if(rangedDamage != null) {
+            if (rangedDamage != null) {
                 rangedDamage.removeModifier(COWARD);
             }
             if (currentHealth >= maxHealth) {
                 if (ModEnchantmentHelper.hasEnchantment(livingEntity, EnchantmentInit.COWARDICE.get())) {
                     int cowardiceLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.COWARDICE.get(), livingEntity);
-                    if(attackDamage != null){
+                    if (attackDamage != null) {
                         livingEntity.getAttribute(Attributes.ATTACK_DAMAGE).addTransientModifier(new AttributeModifier(COWARD, "cowardice multiplier", DungeonsGearConfig.COWARDICE_BASE_MULTIPLIER.get() + DungeonsGearConfig.COWARDICE_MULTIPLIER_PER_LEVEL.get() * cowardiceLevel, AttributeModifier.Operation.MULTIPLY_TOTAL));
                     }
-                    if(rangedDamage != null) {
+                    if (rangedDamage != null) {
                         livingEntity.getAttribute(AttributeRegistry.RANGED_DAMAGE_MULTIPLIER.get()).addTransientModifier(new AttributeModifier(COWARD, "cowardice multiplier", DungeonsGearConfig.COWARDICE_BASE_MULTIPLIER.get() + DungeonsGearConfig.COWARDICE_MULTIPLIER_PER_LEVEL.get() * cowardiceLevel, AttributeModifier.Operation.MULTIPLY_TOTAL));
                     }
                 }

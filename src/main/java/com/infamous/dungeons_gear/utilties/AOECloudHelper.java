@@ -9,7 +9,7 @@ import net.minecraft.world.entity.AreaEffectCloud;
 import net.minecraft.world.entity.LivingEntity;
 
 public class AOECloudHelper {
-    public static void spawnExplosionCloud(LivingEntity attacker, LivingEntity victim, float radius){
+    public static void spawnExplosionCloud(LivingEntity attacker, LivingEntity victim, float radius) {
         AreaEffectCloud areaeffectcloudentity = new AreaEffectCloud(victim.level, victim.getX(), victim.getY(), victim.getZ());
         areaeffectcloudentity.setOwner(attacker);
         areaeffectcloudentity.setParticle(ParticleTypes.EXPLOSION);
@@ -18,7 +18,7 @@ public class AOECloudHelper {
         attacker.level.addFreshEntity(areaeffectcloudentity);
     }
 
-    public static void spawnExplosionCloudAtPos(LivingEntity attacker, boolean arrow, BlockPos blockPos, float radius){
+    public static void spawnExplosionCloudAtPos(LivingEntity attacker, boolean arrow, BlockPos blockPos, float radius) {
         int inGroundMitigator = arrow ? 1 : 0;
         AreaEffectCloud areaeffectcloudentity = new AreaEffectCloud(attacker.level, blockPos.getX(), blockPos.getY() + inGroundMitigator, blockPos.getZ());
         areaeffectcloudentity.setOwner(attacker);
@@ -28,7 +28,7 @@ public class AOECloudHelper {
         attacker.level.addFreshEntity(areaeffectcloudentity);
     }
 
-    public static void spawnCritCloud(LivingEntity attacker, LivingEntity victim, float radius){
+    public static void spawnCritCloud(LivingEntity attacker, LivingEntity victim, float radius) {
         AreaEffectCloud areaeffectcloudentity = new AreaEffectCloud(victim.level, victim.getX(), victim.getY(), victim.getZ());
         areaeffectcloudentity.setOwner(attacker);
         areaeffectcloudentity.setParticle(ParticleTypes.CRIT);
@@ -37,7 +37,7 @@ public class AOECloudHelper {
         attacker.level.addFreshEntity(areaeffectcloudentity);
     }
 
-    public static void spawnRegenCloud(LivingEntity attacker, int amplifier){
+    public static void spawnRegenCloud(LivingEntity attacker, int amplifier) {
         AreaEffectCloud areaeffectcloudentity = new AreaEffectCloud(attacker.level, attacker.getX(), attacker.getY(), attacker.getZ());
         areaeffectcloudentity.setOwner(attacker);
         areaeffectcloudentity.setRadius(5.0F);
@@ -49,7 +49,7 @@ public class AOECloudHelper {
         attacker.level.addFreshEntity(areaeffectcloudentity);
     }
 
-    public static void spawnRegenCloudAtPos(LivingEntity attacker, boolean arrow, BlockPos blockPos, int amplifier){
+    public static void spawnRegenCloudAtPos(LivingEntity attacker, boolean arrow, BlockPos blockPos, int amplifier) {
         int inGroundMitigator = arrow ? 1 : 0;
         AreaEffectCloud areaeffectcloudentity = new AreaEffectCloud(attacker.level, blockPos.getX(), blockPos.getY() + inGroundMitigator, blockPos.getZ());
         areaeffectcloudentity.setOwner(attacker);
@@ -62,7 +62,7 @@ public class AOECloudHelper {
         attacker.level.addFreshEntity(areaeffectcloudentity);
     }
 
-    public static void spawnSoulProtectionCloudAtPos(LivingEntity attacker, BlockPos blockPos, int duration){
+    public static void spawnSoulProtectionCloudAtPos(LivingEntity attacker, BlockPos blockPos, int duration) {
         AreaEffectCloud areaeffectcloudentity = new AreaEffectCloud(attacker.level, blockPos.getX(), blockPos.getY(), blockPos.getZ());
         areaeffectcloudentity.setOwner(attacker);
         areaeffectcloudentity.setRadius(5.0F);
@@ -74,7 +74,7 @@ public class AOECloudHelper {
         attacker.level.addFreshEntity(areaeffectcloudentity);
     }
 
-    public static void spawnPoisonCloud(LivingEntity attacker, LivingEntity victim, int amplifier){
+    public static void spawnPoisonCloud(LivingEntity attacker, LivingEntity victim, int amplifier) {
         AreaEffectCloud areaeffectcloudentity = new AreaEffectCloud(victim.level, victim.getX(), victim.getY(), victim.getZ());
         areaeffectcloudentity.setOwner(attacker);
         areaeffectcloudentity.setRadius(5.0F);
@@ -86,7 +86,7 @@ public class AOECloudHelper {
         victim.level.addFreshEntity(areaeffectcloudentity);
     }
 
-    public static void spawnPoisonCloudAtPos(LivingEntity attacker, boolean arrow, BlockPos blockPos, int amplifier){
+    public static void spawnPoisonCloudAtPos(LivingEntity attacker, boolean arrow, BlockPos blockPos, int amplifier) {
         int inGroundMitigator = arrow ? 1 : 0;
         AreaEffectCloud areaeffectcloudentity = new AreaEffectCloud(attacker.level, blockPos.getX(), blockPos.getY() + inGroundMitigator, blockPos.getZ());
         areaeffectcloudentity.setOwner(attacker);

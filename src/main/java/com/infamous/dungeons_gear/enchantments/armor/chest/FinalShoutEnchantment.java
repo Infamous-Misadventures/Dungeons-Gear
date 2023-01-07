@@ -44,19 +44,20 @@ public class FinalShoutEnchantment extends HealthAbilityEnchantment {
             float damageDealt = event.getAmount();
             Timers timers = TimersHelper.getTimersCapability(player);
             if (currentHealth - damageDealt <= (0.25F * maxHealth)) {
-                if(!ModEnchantmentHelper.hasEnchantment(player, FINAL_SHOUT.get())) return;
+                if (!ModEnchantmentHelper.hasEnchantment(player, FINAL_SHOUT.get())) return;
                 if (timers != null && timers.getEnchantmentTimer(FINAL_SHOUT.get()) == 0) {
                     int proc = 0;
-                    for(ItemStack is : CuriosIntegration.getArtifacts(player))
+                    for (ItemStack is : CuriosIntegration.getArtifacts(player))
                         if (is.getItem() instanceof ArtifactItem && !(is.getItem() instanceof AbstractBeaconItem)) {
                             InteractionResultHolder<ItemStack> procResult = ((ArtifactItem) is.getItem()).procArtifact(new ArtifactUseContext(player, InteractionHand.MAIN_HAND, new BlockHitResult(player.position(), Direction.UP, player.blockPosition(), false)));
-                            if(procResult.getResult().consumesAction() && !player.level.isClientSide) ArtifactItem.triggerSynergy(player, is);
+                            if (procResult.getResult().consumesAction() && !player.level.isClientSide)
+                                ArtifactItem.triggerSynergy(player, is);
                             proc++;
                         }
                     if (proc > 0) {
                         timers.setEnchantmentTimer(FINAL_SHOUT.get(), 240 - 40 * Math.min(EnchantmentHelper.getEnchantmentLevel(FINAL_SHOUT.get(), player), 6));
                     }
-                }else if(timers != null && timers.getEnchantmentTimer(FINAL_SHOUT.get()) < 0){
+                } else if (timers != null && timers.getEnchantmentTimer(FINAL_SHOUT.get()) < 0) {
                     timers.setEnchantmentTimer(FINAL_SHOUT.get(), 0);
                 }
             }

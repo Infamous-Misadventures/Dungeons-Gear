@@ -2,9 +2,9 @@ package com.infamous.dungeons_gear.enchantments.melee_ranged;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.DamageBoostEnchantment;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.registry.MobEffectInit;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.util.Mth;
@@ -23,7 +23,7 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.config.DungeonsGearConfig.DYNAMO_DAMAGE_MULTIPLIER_PER_STACK;
 import static com.infamous.dungeons_gear.config.DungeonsGearConfig.DYNAMO_MAX_STACKS;
 
-@Mod.EventBusSubscriber(modid= MODID)
+@Mod.EventBusSubscriber(modid = MODID)
 public class DynamoEnchantment extends DamageBoostEnchantment {
 
     public DynamoEnchantment() {

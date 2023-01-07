@@ -1,19 +1,17 @@
 package com.infamous.dungeons_gear.mixin;
 
 import com.infamous.dungeons_libraries.utils.AbilityHelper;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.AreaEffectCloud;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import javax.annotation.Nullable;
-
-import static com.infamous.dungeons_libraries.utils.AbilityHelper.canApplyToEnemy;
 
 @Mixin(AreaEffectCloud.class)
 public abstract class AreaEffectCloudEntityMixin {

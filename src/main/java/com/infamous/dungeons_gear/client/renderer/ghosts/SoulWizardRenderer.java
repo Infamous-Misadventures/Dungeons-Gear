@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 public class SoulWizardRenderer extends GeoEntityRenderer<SoulWizardEntity> {
-	
+
     public SoulWizardRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new SoulWizardModel());
         this.addLayer(new PulsatingGlowLayer<>(this, new ResourceLocation(DungeonsGear.MODID, "textures/entity/ghosts/soul_wizard_glow.png"), 0.2F, 1.0F, 0.25F));
@@ -22,14 +22,14 @@ public class SoulWizardRenderer extends GeoEntityRenderer<SoulWizardEntity> {
     @Override
     protected void applyRotations(SoulWizardEntity entityLiving, PoseStack matrixStackIn, float ageInTicks,
                                   float rotationYaw, float partialTicks) {
-    	float scaleFactor = 0.0F;
-    	if (entityLiving.appearAnimationTick < entityLiving.appearAnimationLength - 2) {
-	        scaleFactor = 1.0F;
-    	} else {
-    		scaleFactor = 0.0F;
-    	}
-	        matrixStackIn.scale(scaleFactor, scaleFactor, scaleFactor);
-	        super.applyRotations(entityLiving, matrixStackIn, ageInTicks, rotationYaw, partialTicks);
+        float scaleFactor = 0.0F;
+        if (entityLiving.appearAnimationTick < entityLiving.appearAnimationLength - 2) {
+            scaleFactor = 1.0F;
+        } else {
+            scaleFactor = 0.0F;
+        }
+        matrixStackIn.scale(scaleFactor, scaleFactor, scaleFactor);
+        super.applyRotations(entityLiving, matrixStackIn, ageInTicks, rotationYaw, partialTicks);
 
     }
 

@@ -1,22 +1,22 @@
 package com.infamous.dungeons_gear.enchantments.melee;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.AOEDamageEnchantment;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.utilties.PlayerAttackHelper;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
-@Mod.EventBusSubscriber(modid= MODID)
+@Mod.EventBusSubscriber(modid = MODID)
 public class GuardingStrikeEnchantment extends AOEDamageEnchantment {
 
     public GuardingStrikeEnchantment() {
@@ -29,13 +29,13 @@ public class GuardingStrikeEnchantment extends AOEDamageEnchantment {
     }
 
     @SubscribeEvent
-    public static void onGuardingStrikeKill(LivingDeathEvent event){
-        if(PlayerAttackHelper.isProbablyNotMeleeDamage(event.getSource())) return;
-        if(event.getSource().getEntity() instanceof LivingEntity){
+    public static void onGuardingStrikeKill(LivingDeathEvent event) {
+        if (PlayerAttackHelper.isProbablyNotMeleeDamage(event.getSource())) return;
+        if (event.getSource().getEntity() instanceof LivingEntity) {
             LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
             ItemStack mainhand = attacker.getMainHandItem();
             int guardingStrikeLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.GUARDING_STRIKE.get(), mainhand);
-            if(guardingStrikeLevel > 0){
+            if (guardingStrikeLevel > 0) {
                 int duration = 20 + 20 * guardingStrikeLevel;
                 MobEffectInstance shield = new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, duration, 2);
                 attacker.addEffect(shield);

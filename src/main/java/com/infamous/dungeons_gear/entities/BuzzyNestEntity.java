@@ -1,6 +1,5 @@
 package com.infamous.dungeons_gear.entities;
 
-import com.infamous.dungeons_libraries.capabilities.minionmaster.Master;
 import com.infamous.dungeons_libraries.entities.TotemBaseEntity;
 import com.infamous.dungeons_libraries.summon.SummonHelper;
 import net.minecraft.network.protocol.Packet;
@@ -17,8 +16,6 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMasterCapability;
-
 public class BuzzyNestEntity extends TotemBaseEntity implements IAnimatable {
 
     AnimationFactory factory = new AnimationFactory(this);
@@ -29,7 +26,7 @@ public class BuzzyNestEntity extends TotemBaseEntity implements IAnimatable {
 
     @Override
     protected void applyTotemEffect() {
-        if(!this.level.isClientSide() && this.lifeTicks % 20 == 0 && this.getOwner() != null) {
+        if (!this.level.isClientSide() && this.lifeTicks % 20 == 0 && this.getOwner() != null) {
             SummonHelper.summonEntity(this.getOwner(), this.blockPosition(), EntityType.BEE);
             this.level.playSound(null, this.blockPosition(), SoundEvents.BEEHIVE_EXIT, SoundSource.BLOCKS, 1.0F, 1.0F);
         }

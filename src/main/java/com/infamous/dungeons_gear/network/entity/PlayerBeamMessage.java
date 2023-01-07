@@ -73,9 +73,9 @@ public class PlayerBeamMessage {
                     ServerPlayer player = ctx.get().getSender();
                     if (player != null) {
                         Entity entity = player.level.getEntity(packet.beamEntityID);
-                        if(entity instanceof ArtifactBeamEntity) {
+                        if (entity instanceof ArtifactBeamEntity) {
                             ArtifactBeamEntity artifactBeamEntity = (ArtifactBeamEntity) entity;
-                            if(artifactBeamEntity.getOwner() != player) return;
+                            if (artifactBeamEntity.getOwner() != player) return;
                             artifactBeamEntity.setPos(packet.positionX, packet.positionY, packet.positionZ);
                             artifactBeamEntity.setXRot(packet.xRot);
                             artifactBeamEntity.setYRot(packet.yRot);

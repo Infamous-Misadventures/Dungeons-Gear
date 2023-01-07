@@ -20,8 +20,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes.ARMOR_SLOT;
-import static com.infamous.dungeons_gear.registry.EnchantmentInit.MULTI_ROLL;
 import static com.infamous.dungeons_gear.registry.AttributeInit.ROLL_LIMIT;
+import static com.infamous.dungeons_gear.registry.EnchantmentInit.MULTI_ROLL;
 
 public class MultiRollEnchantment extends JumpingEnchantment {
     private final static Map<EquipmentSlot, UUID> EQUIPMENT_ATTRIBUTE_UUID_MAP = Stream.of(
@@ -65,7 +65,7 @@ public class MultiRollEnchantment extends JumpingEnchantment {
         if (itemEnchantmentLevel > 0) {
             AttributeInstance attributeInstance = livingEntity.getAttribute(ROLL_LIMIT.get());
             if (attributeInstance != null && attributeInstance.getModifier(attributeModifierUUID) == null) {
-                attributeInstance.addTransientModifier(new AttributeModifier(attributeModifierUUID, "Enchantment MultiRoll", 1*itemEnchantmentLevel, AttributeModifier.Operation.ADDITION));
+                attributeInstance.addTransientModifier(new AttributeModifier(attributeModifierUUID, "Enchantment MultiRoll", 1 * itemEnchantmentLevel, AttributeModifier.Operation.ADDITION));
             }
         }
     }

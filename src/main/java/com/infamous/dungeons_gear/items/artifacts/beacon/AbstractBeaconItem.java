@@ -45,7 +45,7 @@ public abstract class AbstractBeaconItem extends ArtifactItem {
         Level worldIn = iuc.getLevel();
 
         ArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(playerIn);
-        if(!canFire(playerIn, itemstack) || (!worldIn.isClientSide && cap.isUsingArtifact() && cap.getUsingArtifact().getItem().equals(itemstack.getItem()))){
+        if (!canFire(playerIn, itemstack) || (!worldIn.isClientSide && cap.isUsingArtifact() && cap.getUsingArtifact().getItem().equals(itemstack.getItem()))) {
             stopUsingArtifact(playerIn);
             return new InteractionResultHolder<>(InteractionResult.PASS, itemstack);
         }
@@ -72,20 +72,20 @@ public abstract class AbstractBeaconItem extends ArtifactItem {
     @Override
     public void onUseTick(Level world, LivingEntity livingEntity, ItemStack stack, int count) {
         if (!world.isClientSide() && livingEntity instanceof Player player) {
-            if(player.isCreative()) return;
+            if (player.isCreative()) return;
 
             if (this.consumeTick(player, stack)) {
                 MobEffectInstance slowdown = new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 20);
                 player.addEffect(slowdown);
-                if(count % 20 == 0){ // damage the stack every second used, not every tick used
+                if (count % 20 == 0) { // damage the stack every second used, not every tick used
                     stack.hurtAndBreak(1, player, entity -> entity.broadcastBreakEvent(player.getUsedItemHand()));
                 }
-                if(stack.getDamageValue() >= stack.getMaxDamage()){
+                if (stack.getDamageValue() >= stack.getMaxDamage()) {
                     stopUsingArtifact(player);
                 }
-            }else{
+            } else {
                 ArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(livingEntity);
-                if(cap.isUsingArtifact()){
+                if (cap.isUsingArtifact()) {
                     this.stopUsingArtifact(livingEntity);
                     cap.stopUsingArtifact();
                 }
@@ -96,7 +96,7 @@ public abstract class AbstractBeaconItem extends ArtifactItem {
     @Override
     public void stopUsingArtifact(LivingEntity livingEntity) {
         super.stopUsingArtifact(livingEntity);
-        if(!livingEntity.level.isClientSide()) {
+        if (!livingEntity.level.isClientSide()) {
             ArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(livingEntity);
             cap.stopUsingArtifact();
             List<ArtifactBeamEntity> beams = livingEntity.level.getEntitiesOfClass(ArtifactBeamEntity.class, livingEntity.getBoundingBox().inflate(1), artifactBeamEntity -> artifactBeamEntity.getOwner() == livingEntity);
@@ -105,7 +105,7 @@ public abstract class AbstractBeaconItem extends ArtifactItem {
             if (livingEntity.hasEffect(MobEffects.MOVEMENT_SLOWDOWN)) {
                 livingEntity.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
             }
-            if (livingEntity instanceof ServerPlayer serverPlayer){
+            if (livingEntity instanceof ServerPlayer serverPlayer) {
                 NetworkHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new CuriosArtifactStopMessage());
             }
         }

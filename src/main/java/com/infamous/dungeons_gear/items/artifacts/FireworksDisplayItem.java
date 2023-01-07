@@ -4,18 +4,18 @@ import com.infamous.dungeons_gear.entities.FireworksDisplayEntity;
 import com.infamous.dungeons_gear.registry.EntityTypeInit;
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class FireworksDisplayItem extends ArtifactItem {
     public FireworksDisplayItem(Properties properties) {
         super(properties);
-        procOnItemUse=true;
+        procOnItemUse = true;
     }
 
 
@@ -36,9 +36,9 @@ public class FireworksDisplayItem extends ArtifactItem {
             } else {
                 blockPos = itemUseContextPos.relative(itemUseContextFace);
             }
-            if(itemUseContextPlayer != null) {
+            if (itemUseContextPlayer != null) {
                 FireworksDisplayEntity totemEntity = EntityTypeInit.FIREWORKS_DISPLAY.get().create(itemUseContextPlayer.level);
-                if(totemEntity != null) {
+                if (totemEntity != null) {
                     totemEntity.moveTo(blockPos, 0, 0);
                     totemEntity.setOwner(itemUseContextPlayer);
                     itemUseContextPlayer.level.addFreshEntity(totemEntity);

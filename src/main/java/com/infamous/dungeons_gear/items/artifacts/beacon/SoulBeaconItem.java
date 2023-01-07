@@ -13,8 +13,6 @@ import java.util.UUID;
 
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_GATHERING;
 
-import net.minecraft.world.item.Item.Properties;
-
 public abstract class SoulBeaconItem extends AbstractBeaconItem implements ISoulConsumer {
 
     public SoulBeaconItem(Properties properties) {

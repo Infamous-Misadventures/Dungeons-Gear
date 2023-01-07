@@ -11,10 +11,9 @@ import com.infamous.dungeons_gear.groups.MeleeWeaponGroup;
 import com.infamous.dungeons_gear.groups.RangedWeaponGroup;
 import com.infamous.dungeons_gear.items.DualWieldItemProperties;
 import com.infamous.dungeons_gear.items.GearRangedItemModelProperties;
-import com.infamous.dungeons_gear.registry.*;
-import com.infamous.dungeons_gear.registry.GlobalLootModifierInit;
 import com.infamous.dungeons_gear.loot.ModLootFunctionTypes;
 import com.infamous.dungeons_gear.network.NetworkHandler;
+import com.infamous.dungeons_gear.registry.*;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -27,12 +26,10 @@ import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import software.bernie.example.registry.SoundRegistry;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(DungeonsGear.MODID)
-public class DungeonsGear
-{
+public class DungeonsGear {
     // Directly reference a log4j logger.
     public static final String MODID = "dungeons_gear";
     public static final Logger LOGGER = LogManager.getLogger();
@@ -79,8 +76,7 @@ public class DungeonsGear
         DungeonsGearCompatibility.checkCompatStatus();
     }
 
-    private void setup(final FMLCommonSetupEvent event)
-    {
+    private void setup(final FMLCommonSetupEvent event) {
         NetworkHandler.init();
         event.enqueueWork(ModLootFunctionTypes::register);
     }

@@ -1,8 +1,8 @@
 package com.infamous.dungeons_gear.enchantments.armor.chest;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.Mod;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes.ARMOR_SLOT;
 
-@Mod.EventBusSubscriber(modid= MODID)
+@Mod.EventBusSubscriber(modid = MODID)
 public class DeflectEnchantment extends DungeonsEnchantment {
 
     public DeflectEnchantment() {
@@ -37,11 +37,11 @@ public class DeflectEnchantment extends DungeonsEnchantment {
     }
 
     @SubscribeEvent
-    public static void onDeflectImpact(ProjectileImpactEvent event){
+    public static void onDeflectImpact(ProjectileImpactEvent event) {
         HitResult rayTraceResult = event.getRayTraceResult();
-        if(!ModEnchantmentHelper.arrowHitLivingEntity(rayTraceResult)) return;
+        if (!ModEnchantmentHelper.arrowHitLivingEntity(rayTraceResult)) return;
         Projectile projectile = event.getProjectile();
-        if(projectile instanceof AbstractArrow arrow) {
+        if (projectile instanceof AbstractArrow arrow) {
             if (!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
             if (arrow.getPierceLevel() > 0) return;
             LivingEntity victim = (LivingEntity) ((EntityHitResult) rayTraceResult).getEntity();

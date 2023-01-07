@@ -1,9 +1,9 @@
 package com.infamous.dungeons_gear.utilties;
 
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -16,7 +16,7 @@ public class SoundHelper {
 
     public static final Random RNG = new Random();
 
-    public static void playLightningStrikeSounds(Entity soundEmissionTarget){
+    public static void playLightningStrikeSounds(Entity soundEmissionTarget) {
         Player player = getPlayerFrom(soundEmissionTarget);
         soundEmissionTarget.level.playSound(player,
                 soundEmissionTarget.getX(), soundEmissionTarget.getY(), soundEmissionTarget.getZ(),
@@ -26,25 +26,25 @@ public class SoundHelper {
                 SoundEvents.LIGHTNING_BOLT_IMPACT, soundEmissionTarget.getSoundSource(), volumeLimit, 0.5F + RNG.nextFloat() * 0.2F);
     }
 
-    public static void playGenericExplodeSound(Entity soundEmissionTarget){
+    public static void playGenericExplodeSound(Entity soundEmissionTarget) {
         soundEmissionTarget.level.playLocalSound(
                 soundEmissionTarget.getX(), soundEmissionTarget.getY(), soundEmissionTarget.getZ(),
                 SoundEvents.GENERIC_EXPLODE, soundEmissionTarget.getSoundSource(), volumeLimit, (1.0F + (RNG.nextFloat() - RNG.nextFloat()) * 0.2F) * 0.7F, false);
     }
 
-    public static void playBoltImpactSound(Entity soundEmissionTarget){
+    public static void playBoltImpactSound(Entity soundEmissionTarget) {
         soundEmissionTarget.level.playSound(getPlayerFrom(soundEmissionTarget),
                 soundEmissionTarget.blockPosition(),
                 SoundEvents.LIGHTNING_BOLT_IMPACT, soundEmissionTarget.getSoundSource(), volumeLimit, 0.5F + RNG.nextFloat() * 0.2F);
     }
 
-    public static void playAttackSweepSound(Entity soundEmissionTarget){
+    public static void playAttackSweepSound(Entity soundEmissionTarget) {
         soundEmissionTarget.level.playSound(getPlayerFrom(soundEmissionTarget),
                 soundEmissionTarget.blockPosition(),
                 SoundEvents.PLAYER_ATTACK_SWEEP, soundEmissionTarget.getSoundSource(), volumeLimit, standardPitch);
     }
 
-    public static void playBellSound(Entity soundEmissionTarget){
+    public static void playBellSound(Entity soundEmissionTarget) {
         Player player = getPlayerFrom(soundEmissionTarget);
         soundEmissionTarget.level.playSound(player,
                 soundEmissionTarget.blockPosition(),
@@ -54,17 +54,16 @@ public class SoundHelper {
                 SoundEvents.BELL_RESONATE, soundEmissionTarget.getSoundSource(), volumeLimit, standardPitch);
     }
 
-    public static void playCreatureSound(Entity soundEmissionTarget, SoundEvent soundEvent){
+    public static void playCreatureSound(Entity soundEmissionTarget, SoundEvent soundEvent) {
         soundEmissionTarget.level.playSound(getPlayerFrom(soundEmissionTarget), soundEmissionTarget.blockPosition(), soundEvent, soundEmissionTarget.getSoundSource(), volumeLimit, standardPitch);
 
     }
 
-    public static void playBeaconSound(Entity soundEmissionTarget, boolean activate){
-        if(activate){
+    public static void playBeaconSound(Entity soundEmissionTarget, boolean activate) {
+        if (activate) {
             soundEmissionTarget.level.playSound(getPlayerFrom(soundEmissionTarget), soundEmissionTarget.blockPosition(), SoundEvents.BEACON_ACTIVATE, soundEmissionTarget.getSoundSource(), volumeLimit, standardPitch);
 
-        }
-        else{
+        } else {
             soundEmissionTarget.level.playSound(getPlayerFrom(soundEmissionTarget), soundEmissionTarget.blockPosition(), SoundEvents.BEACON_DEACTIVATE, soundEmissionTarget.getSoundSource(), volumeLimit, standardPitch);
 
         }

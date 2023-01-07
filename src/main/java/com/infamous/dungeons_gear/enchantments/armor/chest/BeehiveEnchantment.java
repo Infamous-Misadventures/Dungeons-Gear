@@ -31,7 +31,7 @@ import static com.infamous.dungeons_gear.registry.EnchantmentInit.BEEHIVE;
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SUMMON_CAP;
 import static net.minecraft.world.entity.EntityType.BEE;
 
-@Mod.EventBusSubscriber(modid= MODID)
+@Mod.EventBusSubscriber(modid = MODID)
 public class BeehiveEnchantment extends DungeonsEnchantment {
     private final static Map<EquipmentSlot, UUID> EQUIPMENT_ATTRIBUTE_UUID_MAP = Stream.of(
                     new AbstractMap.SimpleImmutableEntry<>(EquipmentSlot.HEAD, UUID.fromString("58598d49-1149-4ce7-aef6-6e7969e44235")),
@@ -66,7 +66,7 @@ public class BeehiveEnchantment extends DungeonsEnchantment {
 
         float beehiveHitRand = victim.getRandom().nextFloat();
         if (beehiveHitRand <= beehiveChance) {
-            if(SummonHelper.summonEntity(victim, victim.blockPosition(), BEE) != null) {
+            if (SummonHelper.summonEntity(victim, victim.blockPosition(), BEE) != null) {
                 SoundHelper.playCreatureSound(victim, SoundEvents.BEE_LOOP);
             }
         }
@@ -80,7 +80,7 @@ public class BeehiveEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onCurioChange(CurioChangeEvent event) {
-        if(!event.getIdentifier().equals(CuriosIntegration.ARTIFACT_IDENTIFIER)) return;
+        if (!event.getIdentifier().equals(CuriosIntegration.ARTIFACT_IDENTIFIER)) return;
         removeAttribute(event.getFrom(), event.getEntity(), CURIO_ATTRIBUTE_UUID_MAP.get(event.getSlotIndex()));
         addAttribute(event.getTo(), event.getEntity(), CURIO_ATTRIBUTE_UUID_MAP.get(event.getSlotIndex()));
     }

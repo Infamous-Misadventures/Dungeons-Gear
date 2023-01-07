@@ -6,11 +6,11 @@ import net.minecraftforge.common.util.INBTSerializable;
 
 public class DualWield implements INBTSerializable<CompoundTag> {
 
-    private ItemStack linked=ItemStack.EMPTY, wrapping=ItemStack.EMPTY;
+    private ItemStack linked = ItemStack.EMPTY, wrapping = ItemStack.EMPTY;
     private boolean fake;
 
     public void setLinkedItemStack(ItemStack stack) {
-        linked =stack;
+        linked = stack;
     }
 
     public ItemStack getLinkedItemStack() {
@@ -18,7 +18,7 @@ public class DualWield implements INBTSerializable<CompoundTag> {
     }
 
     public void setWrappedItemStack(ItemStack stack) {
-        wrapping=stack;
+        wrapping = stack;
     }
 
     public ItemStack getWrappedItemStack() {
@@ -26,7 +26,7 @@ public class DualWield implements INBTSerializable<CompoundTag> {
     }
 
     public void setFake(boolean isFake) {
-        fake=isFake;
+        fake = isFake;
     }
 
     public boolean isFake() {
@@ -35,7 +35,7 @@ public class DualWield implements INBTSerializable<CompoundTag> {
 
     @Override
     public CompoundTag serializeNBT() {
-        CompoundTag save=new CompoundTag();
+        CompoundTag save = new CompoundTag();
         save.put("wrapped", this.getWrappedItemStack().save(new CompoundTag()));
         save.putBoolean("fake", this.isFake());
         return save;

@@ -1,19 +1,17 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_libraries.network.BreakItemMessage;
+import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
-import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
+import com.infamous.dungeons_libraries.network.BreakItemMessage;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.InteractionResult;
 import net.minecraftforge.network.PacketDistributor;
 
-import net.minecraft.world.item.Item.Properties;
-
-public class SatchelOfElementsItem extends ArtifactItem{
+public class SatchelOfElementsItem extends ArtifactItem {
 
     public SatchelOfElementsItem(Properties properties) {
         super(properties);
@@ -24,11 +22,11 @@ public class SatchelOfElementsItem extends ArtifactItem{
         Player playerIn = c.getPlayer();
         ItemStack itemstack = c.getItemStack();
 
-        if(playerIn == null) return new InteractionResultHolder<>(InteractionResult.FAIL, itemstack);
+        if (playerIn == null) return new InteractionResultHolder<>(InteractionResult.FAIL, itemstack);
 
-        if(!c.getLevel().isClientSide){
+        if (!c.getLevel().isClientSide) {
             int limit = 7;
-            if(!AreaOfEffectHelper.applyElementalEffectsToNearbyEnemies(playerIn, limit, 8)){
+            if (!AreaOfEffectHelper.applyElementalEffectsToNearbyEnemies(playerIn, limit, 8)) {
                 new InteractionResultHolder<>(InteractionResult.FAIL, itemstack);
             }
         }

@@ -35,9 +35,9 @@ public class FireworksDisplayEntity extends TotemBaseEntity implements IAnimatab
     @Override
     protected void applyTotemEffect() {
         LivingEntity owner = getOwner();
-        if(owner == null) return;
-        if(this.lifeTicks % 20 == 0) {
-            for(int i = 0; i < 3; i++) {
+        if (owner == null) return;
+        if (this.lifeTicks % 20 == 0) {
+            for (int i = 0; i < 3; i++) {
                 double x = this.getX() + (random.nextFloat() - 0.5) * 8;
                 double z = this.getZ() + (random.nextFloat() - 0.5) * 8;
                 FireworkRocketEntity firework = new FireworkRocketEntity(level, x, this.getY(), z, generateRandomFireworksRocket());
@@ -46,19 +46,19 @@ public class FireworksDisplayEntity extends TotemBaseEntity implements IAnimatab
         }
     }
 
-    private ItemStack generateRandomFireworksRocket(){
+    private ItemStack generateRandomFireworksRocket() {
         ItemStack fireworksRocket = new ItemStack(Items.FIREWORK_ROCKET);
         CompoundTag fireworkNbt = fireworksRocket.getOrCreateTagElement("Fireworks");
 
         ListTag listnbt = new ListTag();
-        for(int i = 0; i < random.nextInt(3); i++) {
+        for (int i = 0; i < random.nextInt(3); i++) {
             CompoundTag starNbt = generateRandomStarNbt();
             listnbt.add(starNbt);
             if (!listnbt.isEmpty()) {
                 fireworkNbt.put("Explosions", listnbt);
             }
         }
-        fireworkNbt.putByte("Flight", (byte) (random.nextInt(3)+1));
+        fireworkNbt.putByte("Flight", (byte) (random.nextInt(3) + 1));
         return fireworksRocket;
     }
 
@@ -69,14 +69,14 @@ public class FireworksDisplayEntity extends TotemBaseEntity implements IAnimatab
         starNbt.putBoolean("Flicker", random.nextBoolean());
         starNbt.putBoolean("Trail", random.nextBoolean());
         List<Integer> list = Lists.newArrayList();
-    DyeColor[] values = Arrays.stream(DyeColor.values()).filter(color -> color != DyeColor.BLACK && color != DyeColor.GRAY).toArray(DyeColor[]::new);
-        for(int i = 0; i < random.nextInt(4); i++) {
+        DyeColor[] values = Arrays.stream(DyeColor.values()).filter(color -> color != DyeColor.BLACK && color != DyeColor.GRAY).toArray(DyeColor[]::new);
+        for (int i = 0; i < random.nextInt(4); i++) {
             DyeColor dyeColor = values[random.nextInt(values.length)];
             list.add(dyeColor.getFireworkColor());
         }
         starNbt.putIntArray("Colors", list);
         list = Lists.newArrayList();
-        for(int i = 0; i < random.nextInt(3); i++) {
+        for (int i = 0; i < random.nextInt(3); i++) {
             DyeColor dyeColor = values[random.nextInt(values.length)];
             list.add(dyeColor.getFireworkColor());
         }

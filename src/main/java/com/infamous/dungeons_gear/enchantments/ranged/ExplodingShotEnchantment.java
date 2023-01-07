@@ -1,8 +1,8 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.utilties.AOECloudHelper;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
@@ -28,7 +28,7 @@ public class ExplodingShotEnchantment extends DungeonsEnchantment {
 
     public ExplodingShotEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.RANGED, new EquipmentSlot[]{
-            EquipmentSlot.MAINHAND});
+                EquipmentSlot.MAINHAND});
     }
 
     @Override
@@ -52,7 +52,7 @@ public class ExplodingShotEnchantment extends DungeonsEnchantment {
                     float f = (float) arrow.getDeltaMovement().length();
                     int damage = Mth.ceil(Mth.clamp((double) f * arrow.getBaseDamage(), 0.0D, 2.147483647E9D));
                     if (arrow.isCritArrow()) {
-                        long criticalDamageBonus = (long) shooter.getRandom().nextInt(damage / 2 + 2);
+                        long criticalDamageBonus = shooter.getRandom().nextInt(damage / 2 + 2);
                         damage = (int) Math.min(criticalDamageBonus + (long) damage, 2147483647L);
                     }
 
@@ -72,7 +72,7 @@ public class ExplodingShotEnchantment extends DungeonsEnchantment {
                 if (arrowEntity.getOwner() instanceof LivingEntity) {
                     LivingEntity shooter = (LivingEntity) arrowEntity.getOwner();
                     int gravityLevel = ArrowHelper.enchantmentTagToLevel(arrowEntity, EnchantmentInit.EXPLODING_SHOT.get());
-                    if(gravityLevel > 0){
+                    if (gravityLevel > 0) {
                         LivingEntity victim = event.getEntity();
                         SoundHelper.playGenericExplodeSound(victim);
                         AOECloudHelper.spawnExplosionCloud(shooter, victim, 3.0F);

@@ -88,7 +88,7 @@ public final class EntityTypeInit {
     );
 
     public static final RegistryObject<EntityType<SoulWizardEntity>> SOUL_WIZARD = ENTITY_TYPES.register("soul_wizard", () ->
-            EntityType.Builder.<SoulWizardEntity>of(SoulWizardEntity::new, MobCategory.MONSTER)
+            EntityType.Builder.of(SoulWizardEntity::new, MobCategory.MONSTER)
                     .sized(0.25F, 1.0F)
                     .clientTrackingRange(8)
                     .build(new ResourceLocation(MODID, "soul_wizard").toString())

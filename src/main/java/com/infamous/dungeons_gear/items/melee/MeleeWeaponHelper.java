@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class MeleeWeaponHelper {
-    public static List<Item> getMeleeWeaponList(boolean unique){
+    public static List<Item> getMeleeWeaponList(boolean unique) {
         return ItemInit.MELEE_WEAPONS.values().stream().map(RegistryObject::get).filter(entry -> entry instanceof IUniqueGear && ((IUniqueGear) entry).isUnique() == unique).collect(Collectors.toList());
     }
 }

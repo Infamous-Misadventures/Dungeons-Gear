@@ -1,9 +1,9 @@
 package com.infamous.dungeons_gear.items;
 
 import com.infamous.dungeons_gear.registry.ItemInit;
-import net.minecraft.world.item.Item;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 
 public class DualWieldItemProperties {
     public DualWieldItemProperties() {

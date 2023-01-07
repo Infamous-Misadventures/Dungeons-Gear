@@ -39,7 +39,7 @@ public interface IDualWieldWeapon<T extends Item> {
 
     default ItemStack createDummy(ItemStack of) {
         ItemStack ret = of.copy();
-        ret.getCapability(ModCapabilities.DUAL_WIELD_CAPABILITY).ifPresent((a) ->{
+        ret.getCapability(ModCapabilities.DUAL_WIELD_CAPABILITY).ifPresent((a) -> {
             a.setLinkedItemStack(of);
             a.setFake(true);
         });
@@ -47,20 +47,20 @@ public interface IDualWieldWeapon<T extends Item> {
     }
 
     default void update(LivingEntity wielder, ItemStack is, int slot) {
-        if(wielder.isEffectiveAi())
-        if (wielder.getOffhandItem() == is)
-            updateOff(wielder, is);
-        else if (wielder.getMainHandItem() == is)
-            updateMain(wielder, is);
-        else if (wielder instanceof Player)
-            updateInventory((Player) wielder, is, slot);
+        if (wielder.isEffectiveAi())
+            if (wielder.getOffhandItem() == is)
+                updateOff(wielder, is);
+            else if (wielder.getMainHandItem() == is)
+                updateMain(wielder, is);
+            else if (wielder instanceof Player)
+                updateInventory((Player) wielder, is, slot);
     }
 
     default void updateMain(LivingEntity wielder, ItemStack is) {
         //wraps the offhand into a dummy
         if (wielder.getOffhandItem().getItem() != is.getItem()) {
             wielder.setItemInHand(InteractionHand.OFF_HAND, wrapStack(createDummy(is), wielder.getOffhandItem()));
-            if(wielder instanceof Player){
+            if (wielder instanceof Player) {
                 ((Player) wielder).inventoryMenu.broadcastChanges();
             }
         }
@@ -69,7 +69,7 @@ public interface IDualWieldWeapon<T extends Item> {
     default void updateOff(LivingEntity wielder, ItemStack is) {
         //unwraps the dummy if the main hand doesn't match
         is.getCapability(ModCapabilities.DUAL_WIELD_CAPABILITY).ifPresent((a) -> {
-            if(!a.isFake())return;
+            if (!a.isFake()) return;
             if (a.getLinkedItemStack().isEmpty() || wielder.getMainHandItem() != a.getLinkedItemStack())
                 wielder.setItemInHand(InteractionHand.OFF_HAND, unwrapStack(is));
             else copyTag(a.getLinkedItemStack(), is);

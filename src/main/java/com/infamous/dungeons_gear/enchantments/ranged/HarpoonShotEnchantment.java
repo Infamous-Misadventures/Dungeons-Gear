@@ -1,9 +1,9 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
-import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.items.artifacts.HarpoonQuiverItem;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -19,7 +19,7 @@ public class HarpoonShotEnchantment extends DungeonsEnchantment {
 
     public HarpoonShotEnchantment() {
         super(Rarity.RARE, ModEnchantmentTypes.RANGED, new EquipmentSlot[]{
-            EquipmentSlot.MAINHAND});
+                EquipmentSlot.MAINHAND});
     }
 
     @Override
@@ -28,13 +28,13 @@ public class HarpoonShotEnchantment extends DungeonsEnchantment {
     }
 
     @SubscribeEvent
-    public static void onArrowJoinWorld(EntityJoinLevelEvent event){
-        if(event.getEntity() instanceof AbstractArrow && !event.getLevel().isClientSide()){
+    public static void onArrowJoinWorld(EntityJoinLevelEvent event) {
+        if (event.getEntity() instanceof AbstractArrow && !event.getLevel().isClientSide()) {
             AbstractArrow arrowEntity = (AbstractArrow) event.getEntity();
-            if(arrowEntity.getOwner() instanceof LivingEntity){
+            if (arrowEntity.getOwner() instanceof LivingEntity) {
                 LivingEntity livingEntity = (LivingEntity) arrowEntity.getOwner();
                 int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.HARPOON_SHOT.get(), livingEntity);
-                if(enchantmentLevel > 0) {
+                if (enchantmentLevel > 0) {
                     arrowEntity.addTag(HarpoonQuiverItem.HARPOON_QUIVER);
                     arrowEntity.setDeltaMovement(arrowEntity.getDeltaMovement().scale(1.5D));
                     arrowEntity.setPierceLevel((byte) (arrowEntity.getPierceLevel() + enchantmentLevel));

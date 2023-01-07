@@ -22,9 +22,12 @@ import static com.infamous.dungeons_libraries.DungeonsLibraries.MODID;
 @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModCapabilities {
 
-    public static final Capability<RangedAbilities> RANGED_ABILITIES_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
-    public static final Capability<Combo> COMBO_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
-    public static final Capability<DualWield> DUAL_WIELD_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
+    public static final Capability<RangedAbilities> RANGED_ABILITIES_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
+    });
+    public static final Capability<Combo> COMBO_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
+    });
+    public static final Capability<DualWield> DUAL_WIELD_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
+    });
 
 
     public static void setupCapabilities() {

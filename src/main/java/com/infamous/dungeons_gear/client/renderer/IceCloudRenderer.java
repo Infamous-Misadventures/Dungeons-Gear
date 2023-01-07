@@ -14,14 +14,14 @@ import software.bernie.geckolib3.renderers.geo.GeoProjectilesRenderer;
 
 @OnlyIn(Dist.CLIENT)
 public class IceCloudRenderer extends GeoProjectilesRenderer<IceCloudEntity> {
-   public IceCloudRenderer(EntityRendererProvider.Context renderManager) {
-      super(renderManager, new IceCloudModel());
-   }
+    public IceCloudRenderer(EntityRendererProvider.Context renderManager) {
+        super(renderManager, new IceCloudModel());
+    }
 
-   @Override
-   public RenderType getRenderType(IceCloudEntity animatable, float partialTicks, PoseStack stack,
-                                   MultiBufferSource renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn,
-                                   ResourceLocation textureLocation) {
-      return RenderType.entityTranslucent(getTextureLocation(animatable));
-   }
+    @Override
+    public RenderType getRenderType(IceCloudEntity animatable, float partialTicks, PoseStack stack,
+                                    MultiBufferSource renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn,
+                                    ResourceLocation textureLocation) {
+        return RenderType.entityTranslucent(getTextureLocation(animatable));
+    }
 }

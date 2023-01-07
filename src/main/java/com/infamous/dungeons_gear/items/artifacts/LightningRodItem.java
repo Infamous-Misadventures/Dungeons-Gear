@@ -3,26 +3,24 @@ package com.infamous.dungeons_gear.items.artifacts;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.network.NetworkHandler;
-import com.infamous.dungeons_libraries.network.BreakItemMessage;
-import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
-import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
 import com.infamous.dungeons_gear.utilties.AreaOfEffectHelper;
 import com.infamous.dungeons_gear.utilties.SoundHelper;
 import com.infamous.dungeons_libraries.capabilities.soulcaster.SoulCasterHelper;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
+import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
 import com.infamous.dungeons_libraries.items.interfaces.ISoulConsumer;
+import com.infamous.dungeons_libraries.network.BreakItemMessage;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.InteractionResult;
 import net.minecraftforge.network.PacketDistributor;
 
 import java.util.UUID;
 
 import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SOUL_GATHERING;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class LightningRodItem extends ArtifactItem implements ISoulConsumer {
     public LightningRodItem(Properties properties) {
@@ -33,7 +31,7 @@ public class LightningRodItem extends ArtifactItem implements ISoulConsumer {
         Player playerIn = c.getPlayer();
         ItemStack itemStack = c.getItemStack();
 
-        if(SoulCasterHelper.consumeSouls(playerIn, this.getActivationCost(itemStack))){
+        if (SoulCasterHelper.consumeSouls(playerIn, this.getActivationCost(itemStack))) {
             AreaOfEffectHelper.electrifyNearbyEnemies(playerIn, 5, 5, Integer.MAX_VALUE); //ToDo Rewrite to be only 1 bolt?
             SoundHelper.playLightningStrikeSounds(playerIn);
             itemStack.hurtAndBreak(1, playerIn, (entity) -> NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new BreakItemMessage(entity.getId(), itemStack)));

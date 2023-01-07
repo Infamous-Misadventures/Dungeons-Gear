@@ -33,15 +33,13 @@ import java.util.UUID;
 
 import static com.infamous.dungeons_libraries.utils.AreaOfEffectHelper.getCanApplyToEnemyPredicate;
 
-import net.minecraft.world.entity.Entity.RemovalReason;
-
 public class ArtifactBeamEntity extends Entity implements IEntityAdditionalSpawnData {
     public static final double MAX_RAYTRACE_DISTANCE = 256;
     public static final float BEAM_DAMAGE_PER_TICK = 0.5F; // 10.0F damage per second
     private LivingEntity owner;
     private UUID ownerUUID;
     private BeamColor beamColor;
-    private float beamWidth = 0.2f;
+    private final float beamWidth = 0.2f;
 
 
     public ArtifactBeamEntity(EntityType<?> p_i48580_1_, Level p_i48580_2_) {
@@ -56,13 +54,14 @@ public class ArtifactBeamEntity extends Entity implements IEntityAdditionalSpawn
     }
 
     public BeamColor getBeamColor() {
-        if(beamColor == null) return new BeamColor((short) 90, (short) 0, (short) 90, (short) 255, (short) 255, (short) 255);
+        if (beamColor == null)
+            return new BeamColor((short) 90, (short) 0, (short) 90, (short) 255, (short) 255, (short) 255);
         return beamColor;
     }
 
     public void setOwner(LivingEntity owner) {
         this.owner = owner;
-        if(owner != null){
+        if (owner != null) {
             this.ownerUUID = owner.getUUID();
             updatePositionAndRotation();
         }
@@ -71,25 +70,25 @@ public class ArtifactBeamEntity extends Entity implements IEntityAdditionalSpawn
     @Override
     public void tick() {
         LivingEntity owner = getOwner();
-        if(!this.level.isClientSide) {
+        if (!this.level.isClientSide) {
             if (owner == null || !owner.isAlive()) {
                 this.remove(RemovalReason.DISCARDED);
                 return;
             }
             ArtifactUsage artifactUsage = ArtifactUsageHelper.getArtifactUsageCapability(owner);
-            if(!artifactUsage.isUsingArtifact() || !(artifactUsage.getUsingArtifact().getItem() instanceof AbstractBeaconItem)){
+            if (!artifactUsage.isUsingArtifact() || !(artifactUsage.getUsingArtifact().getItem() instanceof AbstractBeaconItem)) {
                 this.remove(RemovalReason.DISCARDED);
                 return;
             }
         }
-        if (this.owner instanceof Player && this.level.isClientSide()){
+        if (this.owner instanceof Player && this.level.isClientSide()) {
             updatePositionAndRotation();
             NetworkHandler.INSTANCE.sendToServer(new PlayerBeamMessage(this));
-        }else if (!(this.owner instanceof Player) && !this.level.isClientSide()) {
+        } else if (!(this.owner instanceof Player) && !this.level.isClientSide()) {
             updatePositionAndRotation();
         }
 
-        if(!this.level.isClientSide()){
+        if (!this.level.isClientSide()) {
             Set<LivingEntity> entities = new HashSet<>();
             AABB aabb = new AABB(this.position(), this.position()).inflate(beamWidth);
             double distanceToDestination = beamTraceDistance(MAX_RAYTRACE_DISTANCE, 1.0f, false);
@@ -123,13 +122,13 @@ public class ArtifactBeamEntity extends Entity implements IEntityAdditionalSpawn
         this.xRotO = boundDegrees(this.owner.xRotO);
     }
 
-    private float boundDegrees(float v){
+    private float boundDegrees(float v) {
         return (v % 360 + 360) % 360;
     }
 
     private Vec3 getOffsetVector() {
         Vec3 viewVector = this.getViewVector(1.0F);
-        return new Vec3(viewVector.x, getOwner().getEyeHeight()*0.8D, viewVector.z);
+        return new Vec3(viewVector.x, getOwner().getEyeHeight() * 0.8D, viewVector.z);
     }
 
     public float getBeamWidth() {
@@ -137,9 +136,9 @@ public class ArtifactBeamEntity extends Entity implements IEntityAdditionalSpawn
     }
 
     public final Vec3 getWorldPosition(float p_242282_1_) {
-        double d0 = Mth.lerp((double)p_242282_1_, this.xo, this.getX());
-        double d1 = Mth.lerp((double)p_242282_1_, this.yo, this.getY());
-        double d2 = Mth.lerp((double)p_242282_1_, this.zo, this.getZ());
+        double d0 = Mth.lerp(p_242282_1_, this.xo, this.getX());
+        double d1 = Mth.lerp(p_242282_1_, this.yo, this.getY());
+        double d2 = Mth.lerp(p_242282_1_, this.zo, this.getZ());
         return new Vec3(d0, d1, d2);
     }
 
@@ -153,7 +152,7 @@ public class ArtifactBeamEntity extends Entity implements IEntityAdditionalSpawn
     public double beamTraceDistance(double distance, float ticks, boolean passesWater) {
         HitResult rayTraceResult = beamTraceResult(distance, ticks, passesWater);
         double distanceToDestination = MAX_RAYTRACE_DISTANCE;
-        if(rayTraceResult instanceof BlockHitResult) {
+        if (rayTraceResult instanceof BlockHitResult) {
             BlockPos collision = ((BlockHitResult) rayTraceResult).getBlockPos();
             Vec3 destination = new Vec3(collision.getX(), collision.getY(), collision.getZ());
             distanceToDestination = this.position().distanceTo(destination);
@@ -163,13 +162,13 @@ public class ArtifactBeamEntity extends Entity implements IEntityAdditionalSpawn
 
     @Nullable
     public LivingEntity getOwner() {
-        if(this.owner == null && this.ownerUUID != null){
-            if(this.level instanceof ServerLevel) {
+        if (this.owner == null && this.ownerUUID != null) {
+            if (this.level instanceof ServerLevel) {
                 Entity entity = ((ServerLevel) this.level).getEntity(this.ownerUUID);
                 if (entity instanceof LivingEntity) {
                     this.owner = (LivingEntity) entity;
                 }
-            } else if(this.level.isClientSide) {
+            } else if (this.level.isClientSide) {
                 this.owner = this.level.getPlayerByUUID(this.ownerUUID);
             }
         }

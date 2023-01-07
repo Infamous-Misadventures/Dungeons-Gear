@@ -1,8 +1,8 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_gear.utilties.ProjectileEffectHelper;
 import com.infamous.dungeons_libraries.utils.ArrowHelper;
@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 
-@Mod.EventBusSubscriber(modid= MODID)
+@Mod.EventBusSubscriber(modid = MODID)
 public class RicochetEnchantment extends DungeonsEnchantment {
 
     public static final String INTRINSIC_RICOCHET_TAG = "IntrinsicRicochet";
@@ -45,7 +45,6 @@ public class RicochetEnchantment extends DungeonsEnchantment {
         HitResult rayTraceResult = event.getRayTraceResult();
         if (event.getProjectile() instanceof AbstractArrow arrow) {
             if (!ModEnchantmentHelper.shooterIsLiving(arrow)) return;
-            ;
             LivingEntity shooter = (LivingEntity) arrow.getOwner();
             if (!(ModEnchantmentHelper.arrowHitLivingEntity(rayTraceResult))) return;
             EntityHitResult entityRayTraceResult = (EntityHitResult) rayTraceResult;

@@ -17,38 +17,38 @@ public class SoulWizardOrbRenderer extends GeoProjectilesRenderer<SoulWizardOrbE
         super(renderManager, new SoulWizardOrbModel());
     }
 
-	@Override
-	public void renderEarly(SoulWizardOrbEntity animatable, PoseStack stackIn, float partialTicks,
-							MultiBufferSource renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn, int packedOverlayIn,
-			float red, float green, float blue, float alpha) {
-		
-		float scaleFactor = 1.0F;
-		if (animatable.lifeTime <= 3) {
-			scaleFactor = 0.0F;
-		} else {
-			scaleFactor = 1.0F;
-		}
-		stackIn.scale(scaleFactor, scaleFactor, scaleFactor);
-	}
-	
-	@Override
-	protected int getBlockLightLevel(SoulWizardOrbEntity p_225624_1_, BlockPos p_225624_2_) {
-		return 15;
-	}
+    @Override
+    public void renderEarly(SoulWizardOrbEntity animatable, PoseStack stackIn, float partialTicks,
+                            MultiBufferSource renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn, int packedOverlayIn,
+                            float red, float green, float blue, float alpha) {
 
-	
+        float scaleFactor = 1.0F;
+        if (animatable.lifeTime <= 3) {
+            scaleFactor = 0.0F;
+        } else {
+            scaleFactor = 1.0F;
+        }
+        stackIn.scale(scaleFactor, scaleFactor, scaleFactor);
+    }
+
+    @Override
+    protected int getBlockLightLevel(SoulWizardOrbEntity p_225624_1_, BlockPos p_225624_2_) {
+        return 15;
+    }
+
+
     @Override
     public void render(SoulWizardOrbEntity entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
         float scaleFactor = 1.0F;
         matrixStackIn.scale(scaleFactor, scaleFactor, scaleFactor);
-        
+
         super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
     }
 
     @Override
     public RenderType getRenderType(SoulWizardOrbEntity animatable, float partialTicks, PoseStack stack,
-									MultiBufferSource renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn,
-									ResourceLocation textureLocation) {
+                                    MultiBufferSource renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn,
+                                    ResourceLocation textureLocation) {
         return RenderType.entityTranslucent(getTextureLocation(animatable));
     }
 }

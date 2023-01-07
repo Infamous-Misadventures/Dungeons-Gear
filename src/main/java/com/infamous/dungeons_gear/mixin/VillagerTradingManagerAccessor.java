@@ -8,12 +8,12 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface VillagerTradingManagerAccessor {
 
     @Invoker(value = "postWandererEvent", remap = false)
-    static void invokePostWandererEvent(){
+    static void invokePostWandererEvent() {
         throw new AssertionError();
     }
 
     @Invoker(value = "postVillagerEvents", remap = false)
-    static void invokePostVillagerEvents(){
+    static void invokePostVillagerEvents() {
         throw new AssertionError();
     }
 }

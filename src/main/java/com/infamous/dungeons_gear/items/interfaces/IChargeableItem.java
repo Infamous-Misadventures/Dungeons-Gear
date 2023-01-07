@@ -1,7 +1,7 @@
 package com.infamous.dungeons_gear.items.interfaces;
 
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
 
 public interface IChargeableItem {
 
@@ -15,7 +15,7 @@ public interface IChargeableItem {
         compoundnbt.putBoolean("Charged", chargedIn);
     }
 
-    default int getChargeTime(){
+    default int getChargeTime() {
         return this.getChargeTimeInSeconds() * 20;
     }
 

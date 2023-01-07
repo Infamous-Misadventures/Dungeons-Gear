@@ -13,7 +13,7 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes.ARMOR_SLOT;
 import static com.infamous.dungeons_gear.registry.EnchantmentInit.DODGE;
 
-@Mod.EventBusSubscriber(modid= MODID)
+@Mod.EventBusSubscriber(modid = MODID)
 public class DodgeEnchantment extends JumpingEnchantment {
 
     public DodgeEnchantment() {

@@ -1,11 +1,9 @@
 package com.infamous.dungeons_gear.items;
 
-import com.infamous.dungeons_gear.DungeonsGear;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.Tags;
 
 import static net.minecraftforge.versions.forge.ForgeVersion.MOD_ID;
 

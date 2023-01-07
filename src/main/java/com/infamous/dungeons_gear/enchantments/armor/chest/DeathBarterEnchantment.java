@@ -1,9 +1,9 @@
 package com.infamous.dungeons_gear.enchantments.armor.chest;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
-import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.IEmeraldsEnchantment;
+import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,7 +24,7 @@ import java.util.List;
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 import static com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes.ARMOR_SLOT;
 
-@Mod.EventBusSubscriber(modid= MODID)
+@Mod.EventBusSubscriber(modid = MODID)
 public class DeathBarterEnchantment extends DungeonsEnchantment implements IEmeraldsEnchantment {
 
     public DeathBarterEnchantment() {
@@ -36,21 +36,21 @@ public class DeathBarterEnchantment extends DungeonsEnchantment implements IEmer
     }
 
     @SubscribeEvent
-    public static void onDeathBarter(LivingDeathEvent event){
+    public static void onDeathBarter(LivingDeathEvent event) {
         LivingEntity living = event.getEntity();
         Player player = null;
-        if(living instanceof Player){
+        if (living instanceof Player) {
             player = (Player) event.getEntity();
-        } else{
+        } else {
             return;
         }
 
         Inventory playerInventory = player.getInventory();
         int totalEmeraldCount = 0;
         List<Integer> emeraldSlotIndices = new ArrayList<>();
-        for(int slotIndex = 0; slotIndex < playerInventory.getContainerSize(); slotIndex++){
+        for (int slotIndex = 0; slotIndex < playerInventory.getContainerSize(); slotIndex++) {
             ItemStack currentStack = playerInventory.getItem(slotIndex);
-            if(currentStack.getItem() == Items.EMERALD){
+            if (currentStack.getItem() == Items.EMERALD) {
                 totalEmeraldCount += currentStack.getCount();
                 emeraldSlotIndices.add(slotIndex);
             }
@@ -58,20 +58,20 @@ public class DeathBarterEnchantment extends DungeonsEnchantment implements IEmer
 
         int deathBarterLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.DEATH_BARTER.get(), player);
         int emeraldRequirement = 150 - Math.min(100, 50 * (deathBarterLevel - 1)); // will always need at least 50 emeralds even if the level exceeds 3
-        if(deathBarterLevel > 0 && totalEmeraldCount >= emeraldRequirement){
+        if (deathBarterLevel > 0 && totalEmeraldCount >= emeraldRequirement) {
 
-            for(Integer slotIndex : emeraldSlotIndices){
-                if(emeraldRequirement > 0){
+            for (Integer slotIndex : emeraldSlotIndices) {
+                if (emeraldRequirement > 0) {
                     ItemStack currentEmeraldStack = playerInventory.getItem(slotIndex);
                     int currentEmeraldCount = currentEmeraldStack.getCount();
-                    if(currentEmeraldCount >= emeraldRequirement){
+                    if (currentEmeraldCount >= emeraldRequirement) {
                         currentEmeraldStack.setCount(currentEmeraldCount - emeraldRequirement);
                         emeraldRequirement = 0;
-                    } else{
+                    } else {
                         currentEmeraldStack.setCount(0);
                         emeraldRequirement -= currentEmeraldCount;
                     }
-                } else{
+                } else {
                     break;
                 }
             }

@@ -31,7 +31,7 @@ public class TotemOfSoulProtectionEntity extends TotemBaseEntity implements IAni
     @Override
     protected void applyTotemEffect() {
         LivingEntity owner = getOwner();
-        if(owner == null) return;
+        if (owner == null) return;
         applyToNearbyEntities(getOwner(), 8,
                 getCanHealPredicate(getOwner()), (LivingEntity nearbyEntity) -> {
                     MobEffectInstance MobEffectInstance = new MobEffectInstance(MobEffectInit.SOUL_PROTECTION.get(), 21);

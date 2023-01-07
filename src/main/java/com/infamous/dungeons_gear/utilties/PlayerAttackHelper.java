@@ -29,7 +29,7 @@ public class PlayerAttackHelper {
                 playerEntity.swingingArm = hand;
                 if (playerEntity.level instanceof ServerLevel) {
                     ClientboundAnimatePacket sanimatehandpacket = new ClientboundAnimatePacket(playerEntity, hand == InteractionHand.MAIN_HAND ? 0 : 3);
-                    ServerChunkCache serverchunkprovider = ((ServerLevel)playerEntity.level).getChunkSource();
+                    ServerChunkCache serverchunkprovider = ((ServerLevel) playerEntity.level).getChunkSource();
 
                     serverchunkprovider.broadcast(playerEntity, sanimatehandpacket);
                 }
@@ -72,16 +72,24 @@ public class PlayerAttackHelper {
 //        attributes.addAll(off.getAttributeModifiers(EquipmentSlotType.OFFHAND).keys());
 //        attributes.forEach((att)->{Optional.ofNullable(e.getAttribute(att)).ifPresent(ModifiableAttributeInstance::compute);});
         main.getAttributeModifiers(EquipmentSlot.MAINHAND).forEach((att, mod) -> {
-            Optional.ofNullable(e.getAttribute(att)).ifPresent((mai) -> {mai.removeModifier(mod);});
+            Optional.ofNullable(e.getAttribute(att)).ifPresent((mai) -> {
+                mai.removeModifier(mod);
+            });
         });
         off.getAttributeModifiers(EquipmentSlot.OFFHAND).forEach((att, mod) -> {
-            Optional.ofNullable(e.getAttribute(att)).ifPresent((mai) -> {mai.removeModifier(mod);});
+            Optional.ofNullable(e.getAttribute(att)).ifPresent((mai) -> {
+                mai.removeModifier(mod);
+            });
         });
         main.getAttributeModifiers(EquipmentSlot.OFFHAND).forEach((att, mod) -> {
-            Optional.ofNullable(e.getAttribute(att)).ifPresent((mai) -> {mai.addTransientModifier(mod);});
+            Optional.ofNullable(e.getAttribute(att)).ifPresent((mai) -> {
+                mai.addTransientModifier(mod);
+            });
         });
         off.getAttributeModifiers(EquipmentSlot.MAINHAND).forEach((att, mod) -> {
-            Optional.ofNullable(e.getAttribute(att)).ifPresent((mai) -> {mai.addTransientModifier(mod);});
+            Optional.ofNullable(e.getAttribute(att)).ifPresent((mai) -> {
+                mai.addTransientModifier(mod);
+            });
         });
         e.attackStrengthTicker = cap.getOffhandCooldown();
         cap.setOffhandCooldown(tssl);

@@ -1,4 +1,3 @@
-
 package com.infamous.dungeons_gear.client;
 
 import com.infamous.dungeons_gear.client.particles.ElectricShockParticle;
@@ -19,7 +18,7 @@ import static com.infamous.dungeons_gear.DungeonsGear.MODID;
 public class ParticleEventHandler {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public static void onParticleFactory(RegisterParticleProvidersEvent event){
+    public static void onParticleFactory(RegisterParticleProvidersEvent event) {
         Minecraft.getInstance().particleEngine.register(ParticleInit.ELECTRIC_SHOCK.get(), ElectricShockParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(ParticleInit.SNOWFLAKE.get(), SnowflakeParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(ParticleInit.SOUL_DUST.get(), SoulDustParticle.Factory::new);

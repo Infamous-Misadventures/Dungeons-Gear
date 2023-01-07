@@ -51,7 +51,7 @@ public class ProjectileEffectHelper {
         // borrowed from AbstractSkeletonEntity
         double towardsX = target.getX() - victim.getX();
         double towardsZ = target.getZ() - victim.getZ();
-        double euclideanDist = (double) Mth.sqrt((float) (towardsX * towardsX + towardsZ * towardsZ));
+        double euclideanDist = Mth.sqrt((float) (towardsX * towardsX + towardsZ * towardsZ));
         double towardsY = target.getY(0.3333333333333333D) - arrowEntity.getY() + euclideanDist * (double) 0.2F;
         setProjectileTowards(arrowEntity, towardsX, towardsY, towardsZ, 0);
         //
@@ -66,13 +66,13 @@ public class ProjectileEffectHelper {
         nearbyEntities.sort(Comparator.comparingDouble(livingEntity -> livingEntity.distanceToSqr(attacker)));
         LivingEntity target = nearbyEntities.get(0);
         if (target != null) {
-            ArrowItem arrowItem = (ArrowItem) ((ArrowItem) (Items.ARROW));
+            ArrowItem arrowItem = (ArrowItem) Items.ARROW;
             AbstractArrow arrowEntity = arrowItem.createArrow(world, new ItemStack(Items.ARROW), attacker);
             arrowEntity.setBaseDamage(arrowEntity.getBaseDamage() * bonusShotDamageMultiplier);
             // borrowed from AbstractSkeletonEntity
             double towardsX = target.getX() - attacker.getX();
             double towardsZ = target.getZ() - attacker.getZ();
-            double euclideanDist = (double) Mth.sqrt((float) (towardsX * towardsX + towardsZ * towardsZ));
+            double euclideanDist = Mth.sqrt((float) (towardsX * towardsX + towardsZ * towardsZ));
             double towardsY = target.getY(0.3333333333333333D) - arrowEntity.getY() + euclideanDist * (double) 0.2F;
             arrowEntity.shootFromRotation(attacker, attacker.getXRot(), attacker.getYRot(), 0.0F, arrowVelocity * 3.0F, 1.0F);
             setProjectileTowards(arrowEntity, towardsX, towardsY, towardsZ, 0);
@@ -91,15 +91,15 @@ public class ProjectileEffectHelper {
 
         nearbyEntities.sort(Comparator.comparingDouble(livingEntity -> livingEntity.distanceToSqr(attacker)));
         int amount = Math.min(arrowsToFire, nearbyEntities.size());
-        for(int i = 0; i < amount; i++){
+        for (int i = 0; i < amount; i++) {
             LivingEntity target = nearbyEntities.get(i);
-            ArrowItem arrowItem = (ArrowItem) ((ArrowItem) (Items.ARROW));
+            ArrowItem arrowItem = (ArrowItem) Items.ARROW;
             AbstractArrow arrowEntity = arrowItem.createArrow(world, new ItemStack(Items.ARROW), attacker);
             arrowEntity.setBaseDamage(arrowEntity.getBaseDamage() * damageMultiplier);
             // borrowed from AbstractSkeletonEntity
             double towardsX = target.getX() - attacker.getX();
             double towardsZ = target.getZ() - attacker.getZ();
-            double euclideanDist = (double) Mth.sqrt((float) (towardsX * towardsX + towardsZ * towardsZ));
+            double euclideanDist = Mth.sqrt((float) (towardsX * towardsX + towardsZ * towardsZ));
             double towardsY = target.getY(0.3333333333333333D) - arrowEntity.getY() + euclideanDist * (double) 0.2F;
             arrowEntity.shootFromRotation(attacker, attacker.getXRot(), attacker.getYRot(), 0.0F, arrowVelocity * 3.0F, 1.0F);
             setProjectileTowards(arrowEntity, towardsX, towardsY, towardsZ, 0);
@@ -122,7 +122,7 @@ public class ProjectileEffectHelper {
             // borrowed from AbstractSkeletonEntity
             double towardsX = target.getX() - attacker.getX();
             double towardsZ = target.getZ() - attacker.getZ();
-            double euclideanDist = (double) Mth.sqrt((float) (towardsX * towardsX + towardsZ * towardsZ));
+            double euclideanDist = Mth.sqrt((float) (towardsX * towardsX + towardsZ * towardsZ));
             double towardsY = target.getY(0.3333333333333333D) - snowballEntity.getY() + euclideanDist * (double) 0.2F;
             snowballEntity.shootFromRotation(attacker, attacker.getXRot(), attacker.getYRot(), 0.0F, 1.5F, 1.0F);
             setProjectileTowards(snowballEntity, towardsX, towardsY, towardsZ, 0);
@@ -149,7 +149,7 @@ public class ProjectileEffectHelper {
     }
 
     private static AbstractArrow createChainReactionProjectile(Level world, LivingEntity attacker, ItemStack ammoStack, AbstractArrow originalArrow) {
-        ArrowItem arrowItem = (ArrowItem) ((ArrowItem) (ammoStack.getItem() instanceof ArrowItem ? ammoStack.getItem() : Items.ARROW));
+        ArrowItem arrowItem = (ArrowItem) (ammoStack.getItem() instanceof ArrowItem ? ammoStack.getItem() : Items.ARROW);
         AbstractArrow abstractArrowEntity = arrowItem.createArrow(world, ammoStack, attacker);
         if (attacker instanceof Player) {
             abstractArrowEntity.setCritArrow(true);
@@ -193,9 +193,9 @@ public class ProjectileEffectHelper {
             Vec3 lookVector = victim.getViewVector(1.0F);
             Vector3f vector3f = new Vector3f(lookVector);
             vector3f.transform(quaternion);
-            projectile.shoot((double) vector3f.x(), (double) vector3f.y(), (double) vector3f.z(), v1, v2);
+            projectile.shoot(vector3f.x(), vector3f.y(), vector3f.z(), v1, v2);
             world.addFreshEntity(projectile);
-            world.playSound((Player) null, victim.getX(), victim.getY(), victim.getZ(), SoundEvents.CROSSBOW_SHOOT, attacker.getSoundSource(), 1.0F, soundPitch);
+            world.playSound(null, victim.getX(), victim.getY(), victim.getZ(), SoundEvents.CROSSBOW_SHOOT, attacker.getSoundSource(), 1.0F, soundPitch);
         }
     }
 
@@ -209,9 +209,7 @@ public class ProjectileEffectHelper {
             float soulsCriticalBoostChanceCap;
             soulsCriticalBoostChanceCap = 0.1F + 0.05F * enigmaResonatorLevel;
             float soulsCriticalBoostRand = attacker.getRandom().nextFloat();
-            if (soulsCriticalBoostRand <= Math.min(numSouls / soulsLimit, soulsCriticalBoostChanceCap)) {
-                return true;
-            }
+            return soulsCriticalBoostRand <= Math.min(numSouls / soulsLimit, soulsCriticalBoostChanceCap);
         }
         return false;
     }
@@ -228,7 +226,7 @@ public class ProjectileEffectHelper {
         projectileEntity.setDeltaMovement(vector3d);
         float f = Mth.sqrt((float) vector3d.horizontalDistanceSqr());
         projectileEntity.setYRot((float) (Mth.atan2(vector3d.x, vector3d.z) * (double) (180F / (float) Math.PI)));
-        projectileEntity.setXRot((float) (Mth.atan2(vector3d.y, (double) f) * (double) (180F / (float) Math.PI)));
+        projectileEntity.setXRot((float) (Mth.atan2(vector3d.y, f) * (double) (180F / (float) Math.PI)));
         projectileEntity.yRotO = projectileEntity.getYRot();
         projectileEntity.xRotO = projectileEntity.getXRot();
     }
@@ -236,8 +234,8 @@ public class ProjectileEffectHelper {
     public static List<LivingEntity> rayTraceEntities(Level worldIn, Vec3 startVec, Vec3 endVec, AABB boundingBox, Predicate<LivingEntity> filter) {
         List<LivingEntity> rayTraceEntities = new ArrayList<>();
         List<LivingEntity> nearbyEntities = worldIn.getEntitiesOfClass(LivingEntity.class, boundingBox, filter);
-        for(LivingEntity nearbyEntity : nearbyEntities) {
-            AABB nearbyEntityBB = nearbyEntity.getBoundingBox().inflate((double)0.3F);
+        for (LivingEntity nearbyEntity : nearbyEntities) {
+            AABB nearbyEntityBB = nearbyEntity.getBoundingBox().inflate(0.3F);
             Optional<Vec3> entityClip = nearbyEntityBB.clip(startVec, endVec);
             if (entityClip.isPresent()) {
                 rayTraceEntities.add(nearbyEntity);

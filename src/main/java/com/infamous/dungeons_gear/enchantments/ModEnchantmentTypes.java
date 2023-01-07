@@ -13,21 +13,21 @@ import java.util.function.Predicate;
 
 public class ModEnchantmentTypes {
     public static final EnchantmentCategory MELEE = addEnchantment("dungeons_gear_melee", item ->
-                    DungeonsGearConfig.ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR.get() ?
-                            (item instanceof SwordItem || item instanceof TridentItem || item instanceof IMeleeWeapon) :
-                            (item instanceof IMeleeWeapon)
+            DungeonsGearConfig.ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR.get() ?
+                    (item instanceof SwordItem || item instanceof TridentItem || item instanceof IMeleeWeapon) :
+                    (item instanceof IMeleeWeapon)
     );
 
     public static final EnchantmentCategory MELEE_RANGED = addEnchantment("dungeons_gear_melee_ranged", item ->
-                    DungeonsGearConfig.ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR.get() ?
-                            (item instanceof SwordItem || item instanceof IMeleeWeapon || item instanceof TridentItem || item instanceof BowItem || item instanceof CrossbowItem) :
-                            (item instanceof IMeleeWeapon || item instanceof IRangedWeapon)
+            DungeonsGearConfig.ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR.get() ?
+                    (item instanceof SwordItem || item instanceof IMeleeWeapon || item instanceof TridentItem || item instanceof BowItem || item instanceof CrossbowItem) :
+                    (item instanceof IMeleeWeapon || item instanceof IRangedWeapon)
     );
 
     public static final EnchantmentCategory RANGED = addEnchantment("dungeons_gear_ranged", item ->
-                    DungeonsGearConfig.ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR.get() ?
-                            (item instanceof BowItem || item instanceof CrossbowItem) :
-                            (item instanceof IRangedWeapon)
+            DungeonsGearConfig.ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR.get() ?
+                    (item instanceof BowItem || item instanceof CrossbowItem) :
+                    (item instanceof IRangedWeapon)
     );
 
 
@@ -37,9 +37,9 @@ public class ModEnchantmentTypes {
 
 
     public static final EnchantmentCategory ARMOR_RANGED = addEnchantment("dungeons_gear_armor_ranged", item ->
-                    DungeonsGearConfig.ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR.get() ?
-                            (item instanceof BowItem || item instanceof CrossbowItem || item instanceof ArmorItem) :
-                            (item instanceof IRangedWeapon || item instanceof ArmorGear)
+            DungeonsGearConfig.ENABLE_ENCHANTS_ON_NON_DUNGEONS_GEAR.get() ?
+                    (item instanceof BowItem || item instanceof CrossbowItem || item instanceof ArmorItem) :
+                    (item instanceof IRangedWeapon || item instanceof ArmorGear)
     );
 
     public static final EquipmentSlot[] WEAPON_SLOT = new EquipmentSlot[]{

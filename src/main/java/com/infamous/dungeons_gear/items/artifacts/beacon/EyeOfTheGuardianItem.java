@@ -1,15 +1,13 @@
 package com.infamous.dungeons_gear.items.artifacts.beacon;
 
+import com.infamous.dungeons_gear.items.interfaces.IChargeableItem;
 import com.infamous.dungeons_libraries.capabilities.artifact.ArtifactUsage;
 import com.infamous.dungeons_libraries.capabilities.artifact.ArtifactUsageHelper;
 import com.infamous.dungeons_libraries.items.artifacts.ArtifactItem;
-import com.infamous.dungeons_gear.items.interfaces.IChargeableItem;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class EyeOfTheGuardianItem extends AbstractBeaconItem implements IChargeableItem {
 
@@ -22,11 +20,11 @@ public class EyeOfTheGuardianItem extends AbstractBeaconItem implements IChargea
 
     @Override
     public void onUseTick(Level world, LivingEntity livingEntity, ItemStack stack, int count) {
-        if(IChargeableItem.isCharged(stack)){
+        if (IChargeableItem.isCharged(stack)) {
             super.onUseTick(world, livingEntity, stack, count);
-        } else{
-            float charge = (float)(stack.getUseDuration() - count) / (float) this.getChargeTime();
-            if(charge >= 1.0F){
+        } else {
+            float charge = (float) (stack.getUseDuration() - count) / (float) this.getChargeTime();
+            if (charge >= 1.0F) {
                 IChargeableItem.setCharged(stack, true);
             }
         }
@@ -43,7 +41,7 @@ public class EyeOfTheGuardianItem extends AbstractBeaconItem implements IChargea
         super.releaseUsing(stack, worldIn, entityLiving, timeLeft);
         IChargeableItem.setCharged(stack, false);
         if (entityLiving instanceof Player) {
-            Player player = (Player)entityLiving;
+            Player player = (Player) entityLiving;
             ArtifactItem.putArtifactOnCooldown(player, stack.getItem());
         }
     }
@@ -71,11 +69,7 @@ public class EyeOfTheGuardianItem extends AbstractBeaconItem implements IChargea
     @Override
     protected boolean consumeTick(Player playerEntity, ItemStack stack) {
         ArtifactUsage cap = ArtifactUsageHelper.getArtifactUsageCapability(playerEntity);
-        if(cap.getUsingArtifactRemaining() <= 0){
-            return false;
-        }else{
-            return true;
-        }
+        return cap.getUsingArtifactRemaining() > 0;
     }
 
     @Override

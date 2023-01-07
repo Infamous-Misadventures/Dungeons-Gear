@@ -8,7 +8,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 
 public class SoulDustParticle extends TextureSheetParticle {
-	
+
     protected SoulDustParticle(ClientLevel level, double xCoord, double yCoord, double zCoord, double xd, double yd, double zd) {
         super(level, xCoord, yCoord, zCoord, xd, yd, zd);
 
@@ -32,11 +32,11 @@ public class SoulDustParticle extends TextureSheetParticle {
 
     @Override
     protected int getLightColor(float p_189214_1_) {
-    	return 240;
+        return 240;
     }
-    
+
     private void fadeOut() {
-        this.alpha = (-(1/(float)lifetime) * age + 1);
+        this.alpha = (-(1 / (float) lifetime) * age + 1);
     }
 
 
@@ -44,7 +44,7 @@ public class SoulDustParticle extends TextureSheetParticle {
     public static class Factory implements ParticleProvider<SimpleParticleType> {
         private final SpriteSet spriteSet;
 
-        public Factory(SpriteSet sprite){
+        public Factory(SpriteSet sprite) {
             this.spriteSet = sprite;
         }
 

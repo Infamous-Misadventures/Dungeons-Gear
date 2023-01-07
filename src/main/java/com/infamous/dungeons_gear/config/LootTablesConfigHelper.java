@@ -15,7 +15,7 @@ public class LootTablesConfigHelper {
     private final Map<LootTableType, List<String>> byType = new HashMap<>();
     private final Map<LootTableRarity, List<String>> byRarity = new HashMap<>();
 
-    public void init(){
+    public void init() {
         vanilla();
         repurposedStructures();
         betterStrongholds();
@@ -32,11 +32,11 @@ public class LootTablesConfigHelper {
         byRarity.computeIfAbsent(rarity, k -> new ArrayList<>()).add(s);
     }
 
-    public List<String> getLootTable(LootTableType type){
+    public List<String> getLootTable(LootTableType type) {
         return byType.get(type);
     }
 
-    public List<String> getLootTable(LootTableRarity rarity){
+    public List<String> getLootTable(LootTableRarity rarity) {
         return byRarity.get(rarity);
     }
 

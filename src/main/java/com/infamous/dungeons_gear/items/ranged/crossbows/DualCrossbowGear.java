@@ -13,8 +13,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-import net.minecraft.world.item.Item.Properties;
-
 public class DualCrossbowGear extends CrossbowGear implements IDualWieldWeapon {
 
     public DualCrossbowGear(Properties builder) {
@@ -45,13 +43,13 @@ public class DualCrossbowGear extends CrossbowGear implements IDualWieldWeapon {
                 setCharged(offhandHeldItem, true);
             }
             SoundSource lvt_7_1_ = livingEntity instanceof Player ? SoundSource.PLAYERS : SoundSource.HOSTILE;
-            world.playSound((Player) null, livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), SoundEvents.CROSSBOW_LOADING_END, lvt_7_1_, 1.0F, 1.0F / (livingEntity.getRandom().nextFloat() * 0.5F + 1.0F) + 0.2F);
+            world.playSound(null, livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), SoundEvents.CROSSBOW_LOADING_END, lvt_7_1_, 1.0F, 1.0F / (livingEntity.getRandom().nextFloat() * 0.5F + 1.0F) + 0.2F);
         }
 
     }
 
     @Override
-    protected void damageItem(int amount, ItemStack stack, LivingEntity shooter, InteractionHand handIn){
+    protected void damageItem(int amount, ItemStack stack, LivingEntity shooter, InteractionHand handIn) {
         if (stack.getCapability(ModCapabilities.DUAL_WIELD_CAPABILITY).isPresent()) {
             if (!stack.getCapability(ModCapabilities.DUAL_WIELD_CAPABILITY).resolve().get().getLinkedItemStack().isEmpty())
                 stack = stack.getCapability(ModCapabilities.DUAL_WIELD_CAPABILITY).resolve().get().getLinkedItemStack();

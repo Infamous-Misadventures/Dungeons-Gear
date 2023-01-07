@@ -10,7 +10,7 @@ public class RangedAbilities implements INBTSerializable<CompoundTag> {
     private int crossbowChargeTime;
     private long lastFiredTime;
 
-    public RangedAbilities(){
+    public RangedAbilities() {
         this.fuseShotCounter = 0;
         this.bowChargeTime = 0;
         this.crossbowChargeTime = 0;

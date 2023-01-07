@@ -43,14 +43,14 @@ public abstract class LockableLootTileEntityMixin extends BaseContainerBlockEnti
     }
 
     @Inject(at = @At("HEAD"), method = "unpackLootTable", cancellable = true)
-    private void fillWithLoot(@Nullable Player player, CallbackInfo callbackInfo){
+    private void fillWithLoot(@Nullable Player player, CallbackInfo callbackInfo) {
         if (this.lootTable != null && this.level.getServer() != null) {
             LootTable lootTable = this.level.getServer().getLootTables().get(this.lootTable);
             if (player instanceof ServerPlayer) {
-                CriteriaTriggers.GENERATE_LOOT.trigger((ServerPlayer)player, this.lootTable);
+                CriteriaTriggers.GENERATE_LOOT.trigger((ServerPlayer) player, this.lootTable);
             }
 
-            LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerLevel)this.level)).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(this.worldPosition)).withOptionalRandomSeed(this.lootTableSeed);
+            LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerLevel) this.level)).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(this.worldPosition)).withOptionalRandomSeed(this.lootTableSeed);
             if (player != null) {
                 lootcontext$builder.withLuck(player.getLuck()).withParameter(LootContextParams.THIS_ENTITY, player);
             }
@@ -69,24 +69,24 @@ public abstract class LockableLootTileEntityMixin extends BaseContainerBlockEnti
     protected abstract NonNullList<ItemStack> getItems();
 
     @Inject(at = @At("HEAD"), method = "isEmpty", cancellable = true)
-    private void isEmpty(CallbackInfoReturnable<Boolean> cir){
-        if(this.isApplyingModifier){
+    private void isEmpty(CallbackInfoReturnable<Boolean> cir) {
+        if (this.isApplyingModifier) {
             cir.setReturnValue(this.getItems().stream().allMatch(ItemStack::isEmpty));
             cir.cancel();
         }
     }
 
     @Inject(at = @At("HEAD"), method = "getItem", cancellable = true)
-    private void getStackInSlot(int index, CallbackInfoReturnable<ItemStack> cir){
-        if(this.isApplyingModifier){
+    private void getStackInSlot(int index, CallbackInfoReturnable<ItemStack> cir) {
+        if (this.isApplyingModifier) {
             cir.setReturnValue(this.getItems().get(index));
             cir.cancel();
         }
     }
 
     @Inject(at = @At("HEAD"), method = "setItem", cancellable = true)
-    private void setInventorySlotContents(int index, ItemStack stack, CallbackInfo callbackInfo){
-        if(this.isApplyingModifier){
+    private void setInventorySlotContents(int index, ItemStack stack, CallbackInfo callbackInfo) {
+        if (this.isApplyingModifier) {
             this.getItems().set(index, stack);
             if (stack.getCount() > this.getMaxStackSize()) {
                 stack.setCount(this.getMaxStackSize());

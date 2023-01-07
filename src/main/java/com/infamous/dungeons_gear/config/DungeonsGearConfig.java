@@ -501,7 +501,7 @@ public class DungeonsGearConfig {
                                 "minecraft:ender_dragon",
                                 "minecraft:elder_guardian",
                                 "minecraft:wither"
-                                ),
+                        ),
                         (itemRaw) -> itemRaw instanceof String);
         builder.pop();
     }
