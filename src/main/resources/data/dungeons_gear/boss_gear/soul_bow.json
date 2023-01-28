@@ -18,7 +18,17 @@
 			}
 		}
 	],
-	"offhands": [],
+	"offhands": [{
+		"weight": 3,
+		"stack": {
+			"item": "minecraft:air"
+		}
+	},{
+		"weight": 3,
+		"stack": {
+			"item": "minecraft:shield"
+		}
+	}],
 	"boots": [{
 		"weight": 3,
 		"stack": {

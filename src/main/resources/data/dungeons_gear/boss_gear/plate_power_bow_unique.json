@@ -48,7 +48,7 @@
 			"item": "dungeons_gear:full_metal_leggings"
 		}
 	}],
-	"chestfull_metals": [{
+	"chestplates": [{
 		"weight": 3,
 		"stack": {
 			"item": "dungeons_gear:full_metal_chestplate"

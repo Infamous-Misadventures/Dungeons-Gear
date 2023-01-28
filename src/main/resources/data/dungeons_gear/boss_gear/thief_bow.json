@@ -5,12 +5,12 @@
 			"stack": {
 				"item": "dungeons_gear:shortbow"
 			}
-		},{
+		}, {
 			"weight": 4,
 			"stack": {
 				"item": "dungeons_gear:trickbow"
 			}
-		},{
+		}, {
 			"weight": 1,
 			"stack": {
 				"item": "dungeons_gear:dagger"
@@ -24,11 +24,24 @@
 		}
 	],
 	"offhands": [{
-		"weight": 3,
-		"stack": {
-			"item": "minecraft:shield"
+			"weight": 3,
+			"stack": {
+				"item": "minecraft:shield"
+			}
+		},
+		{
+			"weight": 1,
+			"stack": {
+				"item": "dungeons_gear:dagger"
+			}
+		},
+		{
+			"weight": 1,
+			"stack": {
+				"item": "dungeons_gear:sickle"
+			}
 		}
-	}],
+	],
 	"boots": [{
 		"weight": 3,
 		"stack": {

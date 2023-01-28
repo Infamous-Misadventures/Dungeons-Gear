@@ -11,6 +11,7 @@ import com.infamous.dungeons_libraries.items.artifacts.ArtifactUseContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
 import net.minecraft.potion.EffectInstance;
@@ -106,7 +107,9 @@ public abstract class AbstractBeaconItem extends ArtifactItem{
             if(livingEntity.hasEffect(Effects.MOVEMENT_SLOWDOWN)){
                 livingEntity.removeEffect(Effects.MOVEMENT_SLOWDOWN);
             }
-            NetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> livingEntity), new CuriosArtifactStopMessage());
+            if(livingEntity instanceof ServerPlayerEntity){
+                NetworkHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) livingEntity), new CuriosArtifactStopMessage());
+            }
         }
     }
 

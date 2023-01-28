@@ -21,33 +21,40 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.infamous.dungeons_gear.registry.ItemRegistry.*;
 import static com.infamous.dungeons_libraries.capabilities.minionmaster.MinionMasterHelper.getMasterCapability;
 
 public class ArmorEffectHelper {
     public static void summonOrTeleportBat(PlayerEntity playerEntity, World world) {
-        IMaster summonerCap = getMasterCapability(playerEntity);
-        if(summonerCap == null) return;
-        Optional<Entity> batPet = summonerCap.getSummonedMobs().stream().filter(entity -> entity.getType() == EntityType.BAT).findFirst();
-        if(!batPet.isPresent()){
-            SummonHelper.summonEntity(playerEntity, playerEntity.blockPosition(), EntityType.BAT);
-            SoundHelper.playCreatureSound(playerEntity, SoundEvents.BAT_AMBIENT);
-        } else{
-            if(world instanceof ServerWorld){
-                batPet.get().teleportToWithTicket(playerEntity.getX() + playerEntity.getEyeHeight(), playerEntity.getY() + playerEntity.getEyeHeight(), playerEntity.getZ() + playerEntity.getEyeHeight());
+        if (world instanceof ServerWorld) {
+            IMaster masterCap = getMasterCapability(playerEntity);
+            if (masterCap == null) return;
+            List<Entity> batSummons = masterCap.getSummonedMobs().stream().filter(entity -> entity.getType() == EntityType.BAT).collect(Collectors.toList());
+            if (batSummons.isEmpty()) {
+                SummonHelper.summonEntity(playerEntity, playerEntity.blockPosition(), EntityType.BAT);
+            } else {
+                Entity batPet = batSummons.get(0);
+                batPet.teleportToWithTicket(playerEntity.getX() + playerEntity.getEyeHeight(), playerEntity.getY() + playerEntity.getEyeHeight(), playerEntity.getZ() + playerEntity.getEyeHeight());
+            }
+            if(batSummons.size() > 1){
+                for(int i = 1; i < batSummons.size(); i++){
+                    batSummons.get(i).remove();
+                }
             }
         }
     }
 
-    public static void teleportOnHit(LivingEntity livingEntity){
+    public static void teleportOnHit(LivingEntity livingEntity) {
         World world = livingEntity.getCommandSenderWorld();
         if (!world.isClientSide) {
 
-            for(int i = 0; i < 16; ++i) {
+            for (int i = 0; i < 16; ++i) {
                 double teleportX = livingEntity.getX() + (livingEntity.getRandom().nextDouble() - 0.5D) * 16.0D;
-                double teleportY = MathHelper.clamp(livingEntity.getY() + (double)(livingEntity.getRandom().nextInt(16) - 8), 0.0D, (double)(world.getHeight() - 1));
+                double teleportY = MathHelper.clamp(livingEntity.getY() + (double) (livingEntity.getRandom().nextInt(16) - 8), 0.0D, (double) (world.getHeight() - 1));
                 double teleportZ = livingEntity.getZ() + (livingEntity.getRandom().nextDouble() - 0.5D) * 16.0D;
                 if (livingEntity.isPassenger()) {
                     livingEntity.stopRiding();
@@ -55,7 +62,7 @@ public class ArmorEffectHelper {
 
                 if (livingEntity.randomTeleport(teleportX, teleportY, teleportZ, true)) {
                     SoundEvent soundEvent = livingEntity instanceof FoxEntity ? SoundEvents.FOX_TELEPORT : SoundEvents.CHORUS_FRUIT_TELEPORT;
-                    world.playSound((PlayerEntity)null, livingEntity.blockPosition(), soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                    world.playSound((PlayerEntity) null, livingEntity.blockPosition(), soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
                     livingEntity.playSound(soundEvent, 1.0F, 1.0F);
                     break;
                 }
@@ -101,7 +108,7 @@ public class ArmorEffectHelper {
 
             float tumblebeeRand = playerEntity.getRandom().nextFloat();
             if (tumblebeeRand <= DungeonsGearConfig.TUMBLE_BEE_CHANCE_PER_LEVEL.get() * tumblebeeLevel) {
-                if(SummonHelper.summonEntity(playerEntity, playerEntity.blockPosition(), EntityType.BEE) != null) {
+                if (SummonHelper.summonEntity(playerEntity, playerEntity.blockPosition(), EntityType.BEE) != null) {
                     SoundHelper.playCreatureSound(playerEntity, SoundEvents.BEE_LOOP);
                 }
             }
