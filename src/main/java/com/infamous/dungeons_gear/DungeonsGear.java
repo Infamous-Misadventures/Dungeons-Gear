@@ -86,8 +86,9 @@ public class DungeonsGear {
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
-
-        MinecraftForge.EVENT_BUS.register(new DualWieldItemProperties());
-        GearRangedItemModelProperties.init();
+        event.enqueueWork(() -> {
+            GearRangedItemModelProperties.init();
+            new DualWieldItemProperties();
+        });
     }
 }
