@@ -6,14 +6,12 @@ import net.minecraftforge.common.util.INBTSerializable;
 public class RangedAbilities implements INBTSerializable<CompoundTag> {
 
     private int fuseShotCounter;
-    private float bowChargeTime;
-    private int crossbowChargeTime;
+    private float dynamicChargeTime;
     private long lastFiredTime;
 
     public RangedAbilities() {
         this.fuseShotCounter = 0;
-        this.bowChargeTime = 0;
-        this.crossbowChargeTime = 0;
+        this.dynamicChargeTime = 0;
         this.lastFiredTime = 0;
     }
 
@@ -25,20 +23,12 @@ public class RangedAbilities implements INBTSerializable<CompoundTag> {
         this.fuseShotCounter = fuseShotCounter;
     }
 
-    public float getBowChargeTime() {
-        return bowChargeTime;
+    public float getDynamicChargeTime() {
+        return this.dynamicChargeTime;
     }
 
-    public void setBowChargeTime(float bowChargeTime) {
-        this.bowChargeTime = bowChargeTime;
-    }
-
-    public int getCrossbowChargeTime() {
-        return this.crossbowChargeTime;
-    }
-
-    public void setCrossbowChargeTime(int crossbowChargeTime) {
-        this.crossbowChargeTime = crossbowChargeTime;
+    public void setDynamicChargeTime(float dynamicChargeTime) {
+        this.dynamicChargeTime = dynamicChargeTime;
     }
 
     public long getLastFiredTime() {
@@ -53,7 +43,7 @@ public class RangedAbilities implements INBTSerializable<CompoundTag> {
     public CompoundTag serializeNBT() {
         CompoundTag tag = new CompoundTag();
         tag.putInt("fuseShotCounter", this.getFuseShotCounter());
-        tag.putInt("crossbowChargeTime", this.getCrossbowChargeTime());
+        tag.putFloat("dynamicChargeTime", this.getDynamicChargeTime());
         tag.putLong("lastFiredTime", this.getLastFiredTime());
         return tag;
     }
@@ -61,7 +51,7 @@ public class RangedAbilities implements INBTSerializable<CompoundTag> {
     @Override
     public void deserializeNBT(CompoundTag tag) {
         this.setFuseShotCounter(tag.getInt("fuseShotCounter"));
-        this.setCrossbowChargeTime(tag.getInt("crossbowChargeTime"));
+        this.setDynamicChargeTime(tag.getFloat("dynamicChargeTime"));
         this.setLastFiredTime(tag.getLong("lastFiredTime"));
     }
 }

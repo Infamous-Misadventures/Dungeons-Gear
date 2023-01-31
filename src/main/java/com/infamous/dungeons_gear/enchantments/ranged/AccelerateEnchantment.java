@@ -54,7 +54,7 @@ public class AccelerateEnchantment extends DungeonsEnchantment {
         if (stack.getItem() instanceof BowItem) {
             RangedAbilities weaponCapability = RangedAbilitiesHelper.getRangedAbilitiesCapability(stack);
             long lastFiredTime = weaponCapability.getLastFiredTime();
-            float bowChargeTime = weaponCapability.getBowChargeTime();
+            float dynamicChargeTime = weaponCapability.getDynamicChargeTime();
 
             int accelerateLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.ACCELERATE.get(), stack);
 
@@ -65,17 +65,17 @@ public class AccelerateEnchantment extends DungeonsEnchantment {
                     defaultChargeTime = ((BowGear) stack.getItem()).getDefaultChargeTime();
                 }
 
-                if ((lastFiredTime < worldTime - (Math.max(bowChargeTime, 0) + 20) && bowChargeTime < defaultChargeTime)
+                if ((lastFiredTime < worldTime - (Math.max(dynamicChargeTime, 0) + defaultChargeTime) && dynamicChargeTime < defaultChargeTime)
                         || arrowVelocity < 1.0F) {
-                    weaponCapability.setBowChargeTime(defaultChargeTime);
-                } else if (arrowVelocity == 1.0F) {
+                    weaponCapability.setDynamicChargeTime(defaultChargeTime);
+                } else if (arrowVelocity >= 1.0F) {
                     float fireRateReduction =
                             (int) (defaultChargeTime * (0.04 + 0.04 * accelerateLevel));
 
-                    weaponCapability.setBowChargeTime(bowChargeTime - fireRateReduction);
+                    weaponCapability.setDynamicChargeTime(dynamicChargeTime - fireRateReduction);
                 }
-                weaponCapability.setLastFiredTime(worldTime);
             }
+            weaponCapability.setLastFiredTime(worldTime);
         }
     }
 
@@ -88,7 +88,7 @@ public class AccelerateEnchantment extends DungeonsEnchantment {
         if (stack.getItem() instanceof CrossbowItem & CrossbowItem.isCharged(stack)) {
             RangedAbilities weaponCap = RangedAbilitiesHelper.getRangedAbilitiesCapability(stack);
             long lastFiredTime = weaponCap.getLastFiredTime();
-            int crossbowChargeTime = weaponCap.getCrossbowChargeTime();
+            int dynamicChargeTime = (int) weaponCap.getDynamicChargeTime();
 
             int accelerateLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.ACCELERATE.get(), stack);
 
@@ -98,17 +98,17 @@ public class AccelerateEnchantment extends DungeonsEnchantment {
             }
 
             if (accelerateLevel > 0) {
-                if (lastFiredTime < worldTime - (Math.max(crossbowChargeTime, 0) + 23)
-                        && crossbowChargeTime < defaultChargeTime) {
-                    weaponCap.setCrossbowChargeTime((int) defaultChargeTime);
+                if (lastFiredTime < worldTime - (Math.max(dynamicChargeTime, 0) + (defaultChargeTime + 3))
+                        && dynamicChargeTime < defaultChargeTime) {
+                    weaponCap.setDynamicChargeTime((int) defaultChargeTime);
                 } else {
                     int fireRateReduction =
                             (int) (defaultChargeTime * (0.04 + 0.04 * accelerateLevel));
 
-                    weaponCap.setCrossbowChargeTime(crossbowChargeTime - fireRateReduction);
+                    weaponCap.setDynamicChargeTime(dynamicChargeTime - fireRateReduction);
                 }
-                weaponCap.setLastFiredTime(worldTime);
             }
+            weaponCap.setLastFiredTime(worldTime);
         }
     }
 
@@ -117,10 +117,9 @@ public class AccelerateEnchantment extends DungeonsEnchantment {
         ItemStack itemStack = event.getItemStack();
         int accelerateLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.ACCELERATE.get(), itemStack);
         RangedAbilities weaponCapability = RangedAbilitiesHelper.getRangedAbilitiesCapability(itemStack);
-        float bowChargeTime = weaponCapability.getBowChargeTime();
-        long lastFiredTime = weaponCapability.getLastFiredTime();
-        if (accelerateLevel > 0 && lastFiredTime > 0) {
-            event.setChargeTime(bowChargeTime);
+        float dynamicChargeTime = weaponCapability.getDynamicChargeTime();
+        if (accelerateLevel > 0 && weaponCapability.getLastFiredTime() > 0) {
+            event.setChargeTime(dynamicChargeTime);
         }
     }
 
@@ -129,10 +128,9 @@ public class AccelerateEnchantment extends DungeonsEnchantment {
         ItemStack itemStack = event.getItemStack();
         int accelerateLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.ACCELERATE.get(), itemStack);
         RangedAbilities weaponCapability = RangedAbilitiesHelper.getRangedAbilitiesCapability(itemStack);
-        float bowChargeTime = weaponCapability.getBowChargeTime();
-        long lastFiredTime = weaponCapability.getLastFiredTime();
-        if (accelerateLevel > 0 && lastFiredTime > 0) {
-            event.setChargeTime(bowChargeTime);
+        float dynamicChargeTime = weaponCapability.getDynamicChargeTime();
+        if (accelerateLevel > 0 && weaponCapability.getLastFiredTime() > 0) {
+            event.setChargeTime(dynamicChargeTime);
         }
     }
 

@@ -1,8 +1,6 @@
 package com.infamous.dungeons_gear.enchantments.ranged;
 
 import com.infamous.dungeons_gear.DungeonsGear;
-import com.infamous.dungeons_gear.capabilities.bow.RangedAbilities;
-import com.infamous.dungeons_gear.capabilities.bow.RangedAbilitiesHelper;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
@@ -43,14 +41,11 @@ public class VelocityEnchantment extends DungeonsEnchantment {
     }
 
     @SubscribeEvent
-    public static void onCrossbowChargeTime(CrossbowEvent.ChargeTime event) {
+    public static void onCrossbowVelocity(CrossbowEvent.Velocity event) {
         ItemStack itemStack = event.getItemStack();
-        int accelerateLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.ACCELERATE.get(), itemStack);
-        RangedAbilities weaponCapability = RangedAbilitiesHelper.getRangedAbilitiesCapability(itemStack);
-        float bowChargeTime = weaponCapability.getBowChargeTime();
-        long lastFiredTime = weaponCapability.getLastFiredTime();
-        if (accelerateLevel > 0 && lastFiredTime > 0) {
-            event.setChargeTime(bowChargeTime);
+        int velocityLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.VELOCITY.get(), itemStack);
+        if (velocityLevel > 0) {
+            event.setVelocity(event.getVelocity() + 0.8F * velocityLevel);
         }
     }
 
