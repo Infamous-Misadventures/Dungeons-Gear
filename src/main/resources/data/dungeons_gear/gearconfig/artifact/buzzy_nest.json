@@ -1,0 +1,11 @@
+{
+  "attributes": [
+    {
+      "attribute": "dungeons_libraries:summon_cap",
+      "amount": 3,
+      "operation": 0
+    }
+  ],
+  "cooldown": 23,
+  "durability": 64
+}

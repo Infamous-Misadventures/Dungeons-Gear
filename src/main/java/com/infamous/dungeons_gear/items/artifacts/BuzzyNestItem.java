@@ -1,7 +1,5 @@
 package com.infamous.dungeons_gear.items.artifacts;
 
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
 import com.infamous.dungeons_gear.entities.BuzzyNestEntity;
 import com.infamous.dungeons_gear.network.NetworkHandler;
 import com.infamous.dungeons_gear.registry.EntityTypeInit;
@@ -11,17 +9,11 @@ import com.infamous.dungeons_libraries.network.BreakItemMessage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.network.PacketDistributor;
-
-import java.util.UUID;
-
-import static com.infamous.dungeons_libraries.attribute.AttributeRegistry.SUMMON_CAP;
 
 public class BuzzyNestItem extends ArtifactItem {
 
@@ -60,26 +52,5 @@ public class BuzzyNestItem extends ArtifactItem {
             }
             return InteractionResultHolder.consume(itemUseContext.getItemStack());
         }
-    }
-
-
-    @Override
-    public int getCooldownInSeconds() {
-        return 23;
-    }
-
-    @Override
-    public int getDurationInSeconds() {
-        return 0;
-    }
-
-    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(int slotIndex) {
-        return getAttributeModifiersForSlot(getUUIDForSlot(slotIndex));
-    }
-
-    private ImmutableMultimap<Attribute, AttributeModifier> getAttributeModifiersForSlot(UUID slot_uuid) {
-        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-        builder.put(SUMMON_CAP.get(), new AttributeModifier(slot_uuid, "Artifact modifier", 3, AttributeModifier.Operation.ADDITION));
-        return builder.build();
     }
 }

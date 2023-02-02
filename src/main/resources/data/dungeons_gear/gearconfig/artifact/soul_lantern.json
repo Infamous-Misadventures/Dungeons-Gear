@@ -1,0 +1,16 @@
+{
+  "attributes": [
+    {
+      "attribute": "dungeons_libraries:summon_cap",
+      "amount": 3,
+      "operation": 0
+    },
+    {
+      "attribute": "dungeons_libraries:soul_gathering",
+      "amount": 1,
+      "operation": 0
+    }
+  ],
+  "cooldown": 30,
+  "durability": 64
+}
