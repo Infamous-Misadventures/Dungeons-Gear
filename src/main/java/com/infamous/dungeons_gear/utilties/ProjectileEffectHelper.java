@@ -8,6 +8,7 @@ import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -166,7 +167,7 @@ public class ProjectileEffectHelper {
     }
 
     public static void fireChainReactionProjectiles(Level world, LivingEntity attacker, LivingEntity victim, float v, float v1, AbstractArrow originalArrow) {
-        float[] randomSoundPitches = CrossbowGear.getRandomSoundPitches(victim.getRandom());
+        float[] randomSoundPitches = getRandomSoundPitches(victim.getRandom());
         for (int i = 0; i < 4; ++i) {
             ItemStack currentProjectile = new ItemStack(Items.ARROW);
             if (!currentProjectile.isEmpty()) {
@@ -181,6 +182,16 @@ public class ProjectileEffectHelper {
                 }
             }
         }
+    }
+
+    public static float[] getRandomSoundPitches(RandomSource rand) {
+        boolean flag = rand.nextBoolean();
+        return new float[]{1.0F, getRandomSoundPitch(flag, rand), getRandomSoundPitch(!flag, rand)};
+    }
+
+    private static float getRandomSoundPitch(boolean flagIn, RandomSource random) {
+        float f = flagIn ? 0.63F : 0.43F;
+        return 1.0F / (random.nextFloat() * 0.5F + 1.8F) + f;
     }
 
     private static void fireChainReactionProjectileFromVictim(Level world, LivingEntity attacker, LivingEntity victim, ItemStack projectileStack, float soundPitch, float v1, float v2, float centerOffset, AbstractArrow originalArrow) {

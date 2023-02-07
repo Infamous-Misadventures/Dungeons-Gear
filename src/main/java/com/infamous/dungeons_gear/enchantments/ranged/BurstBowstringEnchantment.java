@@ -26,10 +26,10 @@ public class BurstBowstringEnchantment extends DungeonsEnchantment {
         float arrowVelocity = 0.0F;
         if (mainhandStack.getItem() instanceof BowItem || mainhandStack.getItem() instanceof CrossbowItem) {
             burstBowStringLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.BURST_BOWSTRING.get(), mainhandStack);
-            arrowVelocity = RangedAttackHelper.getVanillaOrModdedCrossbowArrowVelocity(jumper, mainhandStack);
+            arrowVelocity = RangedAttackHelper.getCrossbowArrowVelocity(jumper, mainhandStack);
         } else if (offhandStack.getItem() instanceof BowItem || offhandStack.getItem() instanceof CrossbowItem) {
             burstBowStringLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.BURST_BOWSTRING.get(), offhandStack);
-            arrowVelocity = RangedAttackHelper.getVanillaOrModdedCrossbowArrowVelocity(jumper, offhandStack);
+            arrowVelocity = RangedAttackHelper.getCrossbowArrowVelocity(jumper, offhandStack);
         }
 
         if (burstBowStringLevel > 0) {

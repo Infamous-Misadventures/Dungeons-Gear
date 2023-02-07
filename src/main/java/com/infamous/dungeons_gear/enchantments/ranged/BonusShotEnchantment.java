@@ -18,7 +18,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.infamous.dungeons_gear.DungeonsGear.MODID;
-import static com.infamous.dungeons_libraries.utils.RangedAttackHelper.getVanillaOrModdedCrossbowArrowVelocity;
+import static com.infamous.dungeons_libraries.utils.RangedAttackHelper.getCrossbowArrowVelocity;
 
 @Mod.EventBusSubscriber(modid = MODID)
 public class BonusShotEnchantment extends DungeonsEnchantment {
@@ -42,7 +42,7 @@ public class BonusShotEnchantment extends DungeonsEnchantment {
                     int bonusShotLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.BONUS_SHOT.get(), stack);
                     float damageMultiplier;
                     damageMultiplier = 0.1F + (bonusShotLevel - 1 * 0.07F);
-                    float arrowVelocity = getVanillaOrModdedCrossbowArrowVelocity(player, stack);
+                    float arrowVelocity = getCrossbowArrowVelocity(player, stack);
                     ProjectileEffectHelper.fireBonusShotTowardsOtherEntity(player, 10,
                             damageMultiplier, arrowVelocity);
                 }
@@ -59,7 +59,7 @@ public class BonusShotEnchantment extends DungeonsEnchantment {
             int bonusShotLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.BONUS_SHOT.get(), stack);
             float damageMultiplier;
             damageMultiplier = 0.1F + (bonusShotLevel - 1 * 0.07F);
-            float arrowVelocity = RangedAttackHelper.getArrowVelocity(livingEntity, stack, charge);
+            float arrowVelocity = RangedAttackHelper.getBowArrowVelocity(livingEntity, stack, charge);
             if (arrowVelocity >= 0.1F) {
                 ProjectileEffectHelper.fireBonusShotTowardsOtherEntity(livingEntity, 10, damageMultiplier, arrowVelocity);
             }

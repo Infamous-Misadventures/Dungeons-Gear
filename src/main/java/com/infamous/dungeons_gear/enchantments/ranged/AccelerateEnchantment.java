@@ -60,7 +60,7 @@ public class AccelerateEnchantment extends DungeonsEnchantment {
 
             if (accelerateLevel > 0) {
                 float defaultChargeTime = 20.0F;
-                float arrowVelocity = RangedAttackHelper.getArrowVelocity(livingEntity, stack, charge);
+                float arrowVelocity = RangedAttackHelper.getBowArrowVelocity(livingEntity, stack, charge);
                 if (stack.getItem() instanceof BowGear) {
                     defaultChargeTime = ((BowGear) stack.getItem()).getDefaultChargeTime();
                 }
