@@ -1,14 +1,17 @@
 package com.infamous.dungeons_gear.enchantments.armor.chest;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
+import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.registry.EnchantmentInit;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -25,24 +28,24 @@ public class RecklessEnchantment extends DungeonsEnchantment {
         super(Rarity.COMMON, EnchantmentCategory.ARMOR_CHEST, ARMOR_SLOT);
     }
 
+    @SubscribeEvent
+    public static void onLivingUpdate(LivingEquipmentChangeEvent event) {
+        LivingEntity livingEntity = event.getEntity();
+        int levelFrom = event.getFrom().getEnchantmentLevel(EnchantmentInit.RECKLESS.get());
+        int levelTo = event.getTo().getEnchantmentLevel(EnchantmentInit.RECKLESS.get());
+        if(levelFrom == levelTo) return;
+        if(levelFrom == 0) {
+            livingEntity.getAttribute(Attributes.MAX_HEALTH).removeModifier(RECKLESS);
+            livingEntity.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(RECKLESS);
+        }
+        if (levelTo > 0) {
+            livingEntity.getAttribute(Attributes.MAX_HEALTH).addTransientModifier(new AttributeModifier(RECKLESS, "reckless multiplier", DungeonsGearConfig.RECKLESS_MAX_HEALTH_MULTIPLIER.get(), AttributeModifier.Operation.MULTIPLY_TOTAL));
+            livingEntity.getAttribute(Attributes.ATTACK_DAMAGE).addTransientModifier(new AttributeModifier(RECKLESS, "reckless multiplier", DungeonsGearConfig.RECKLESS_ATTACK_DAMAGE_BASE_MULTIPLIER.get() + (DungeonsGearConfig.RECKLESS_ATTACK_DAMAGE_MULTIPLIER_PER_LEVEL.get() * levelTo), AttributeModifier.Operation.MULTIPLY_TOTAL));
+        }
+    }
+
     @Override
     public int getMaxLevel() {
         return 3;
-    }
-
-    @SubscribeEvent
-    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        Player player = event.player;
-        if (player == null) return;
-        if (event.phase == TickEvent.Phase.START) return;
-        if (player.isAlive()) {
-            player.getAttribute(Attributes.MAX_HEALTH).removeModifier(RECKLESS);
-            player.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(RECKLESS);
-            int recklessLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.RECKLESS.get(), player);
-            if (recklessLevel > 0) {
-                player.getAttribute(Attributes.MAX_HEALTH).addTransientModifier(new AttributeModifier(RECKLESS, "reckless multiplier", DungeonsGearConfig.RECKLESS_MAX_HEALTH_MULTIPLIER.get(), AttributeModifier.Operation.MULTIPLY_TOTAL));
-                player.getAttribute(Attributes.ATTACK_DAMAGE).addTransientModifier(new AttributeModifier(RECKLESS, "reckless multiplier", DungeonsGearConfig.RECKLESS_ATTACK_DAMAGE_BASE_MULTIPLIER.get() + (DungeonsGearConfig.RECKLESS_ATTACK_DAMAGE_MULTIPLIER_PER_LEVEL.get() * recklessLevel), AttributeModifier.Operation.MULTIPLY_TOTAL));
-            }
-        }
     }
 }
