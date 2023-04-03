@@ -38,18 +38,10 @@ public class GravityPulseEnchantment extends PulseEnchantment {
     }
 
     @SubscribeEvent
-    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        Player player = event.player;
-        if (player == null || player.isSpectator()) return;
-        if (event.phase == TickEvent.Phase.START) return;
-        if (player.isAlive() && player.isEffectiveAi()) {
-            triggerEffect(player);
-        }
-    }
-
-    @SubscribeEvent
     public static void onLivingUpdate(LivingEvent.LivingTickEvent event) {
-        triggerEffect(event.getEntity());
+        if (ModEnchantmentHelper.canEnchantmentTrigger(event.getEntity())) {
+            triggerEffect(event.getEntity());
+        }
     }
 
     public static void triggerEffect(LivingEntity livingEntity) {

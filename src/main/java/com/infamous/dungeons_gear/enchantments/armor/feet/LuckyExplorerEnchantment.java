@@ -7,6 +7,7 @@ import com.infamous.dungeons_gear.enchantments.types.DropsEnchantment;
 import com.infamous.dungeons_gear.enchantments.types.IEmeraldsEnchantment;
 import com.infamous.dungeons_gear.registry.EnchantmentInit;
 import com.infamous.dungeons_gear.utilties.LootTableHelper;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -43,9 +44,7 @@ public class LuckyExplorerEnchantment extends DropsEnchantment implements IEmera
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         Player player = event.player;
-        if (player == null || player.isSpectator()) return;
-        if (event.phase == TickEvent.Phase.START) return;
-        if (player.isAlive() && !player.level.isClientSide) {
+        if(ModEnchantmentHelper.canEnchantmentTrigger(player)){
             int luckyExplorerLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.LUCKY_EXPLORER.get(), player);
             if (luckyExplorerLevel > 0) {
                 Combo comboCap = ComboHelper.getComboCapability(player);

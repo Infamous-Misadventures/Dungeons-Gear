@@ -5,6 +5,7 @@ import com.infamous.dungeons_gear.capabilities.combo.ComboHelper;
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.types.HealthAbilityEnchantment;
 import com.infamous.dungeons_gear.registry.EnchantmentInit;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -37,9 +38,7 @@ public class ExplorerEnchantment extends HealthAbilityEnchantment {
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         Player player = event.player;
-        if (player == null) return;
-        if (event.phase == TickEvent.Phase.START) return;
-        if (player.isAlive() && !player.level.isClientSide) {
+        if(ModEnchantmentHelper.canEnchantmentTrigger(player)){
             Combo comboCap = ComboHelper.getComboCapability(player);
             BlockPos lastExplorerCheckpoint = comboCap.getLastExplorerCheckpoint();
             BlockPos currentPos = player.blockPosition();

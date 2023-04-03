@@ -2,6 +2,7 @@ package com.infamous.dungeons_gear.enchantments.armor.legs;
 
 import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.types.PulseEnchantment;
+import com.infamous.dungeons_gear.utilties.ModEnchantmentHelper;
 import com.infamous.dungeons_libraries.utils.AbilityHelper;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -37,25 +38,13 @@ public class MeleeAuraEnchantment extends PulseEnchantment {
     }
 
     @SubscribeEvent
-    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        Player player = event.player;
-        if (player == null || player.isSpectator()) return;
-        if (event.phase == TickEvent.Phase.START) return;
-        if (player.isAlive() && player.isEffectiveAi()) {
-            apply(player);
+    public static void onLivingUpdate(LivingEvent.LivingTickEvent event) {
+        if (ModEnchantmentHelper.canEnchantmentTrigger(event.getEntity())) {
+            triggerEffect(event.getEntity());
         }
     }
 
-    @SubscribeEvent
-    public static void onLivingEntityTick(LivingEvent.LivingTickEvent event) {
-        LivingEntity livingEntity = event.getEntity();
-        if (livingEntity == null || livingEntity instanceof Player) return;
-        if (livingEntity.isAlive() && livingEntity.isEffectiveAi()) {
-            apply(livingEntity);
-        }
-    }
-
-    private static void apply(LivingEntity entity) {
+    private static void triggerEffect(LivingEntity entity) {
 
         int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(MELEE_AURA.get(), entity);
         if (enchantmentLevel > 0) {
