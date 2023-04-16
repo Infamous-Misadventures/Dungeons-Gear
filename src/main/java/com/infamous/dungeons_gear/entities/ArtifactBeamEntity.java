@@ -204,7 +204,9 @@ public class ArtifactBeamEntity extends Entity implements IEntityAdditionalSpawn
 
     @Override
     public void writeSpawnData(FriendlyByteBuf buffer) {
-        buffer.writeUUID(this.ownerUUID);
+    	if (this.ownerUUID != null) {
+    		buffer.writeUUID(this.ownerUUID);
+    	}
         buffer.writeShort(this.getBeamColor().getRedValue());
         buffer.writeShort(this.getBeamColor().getGreenValue());
         buffer.writeShort(this.getBeamColor().getBlueValue());
