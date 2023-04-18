@@ -1,11 +1,5 @@
 {
-  "attributes": [
-    {
-      "attribute": "minecraft:generic.attack_damage",
-      "amount": 2,
-      "operation": 0
-    }
-  ],
+  "attributes": [],
   "built_in_enchantments": [{"enchantment": "dungeons_gear:ricochet", "level": 1},{"enchantment": "dungeons_gear:poison_cloud", "level": 1}],
   "unique": true,
   "durability": 384,

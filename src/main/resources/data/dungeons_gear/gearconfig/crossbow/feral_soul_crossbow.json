@@ -1,11 +1,6 @@
 {
   "attributes": [
     {
-      "attribute": "minecraft:generic.attack_damage",
-      "amount": 2,
-      "operation": 0
-    },
-    {
       "attribute": "dungeons_libraries:soul_gathering",
       "amount": 1,
       "operation": 0
