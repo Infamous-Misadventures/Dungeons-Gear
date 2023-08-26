@@ -236,8 +236,7 @@ public class DungeonsGearConfig {
         builder.comment("Compatibility Configuration").push("compatibility_configuration");
         ENABLE_WAR_DANCE_COMPAT = builder
                 .comment("Enable Project: War Dance compatibility. \n" +
-                        "Dual wield weapon offhand functions are suppressed in favor of using War Dance's offhand attacks. \n" +
-                        "Block reach attributes are added to spears so they benefit from skills. \n" +
+                        "This currently does nothing, but eventually dodging will trigger Dungeons Gear Roll enchantments. \n" +
                         "Does nothing if Project: War Dance is not installed. [true / false]")
                 .define("enableProjectWarDanceCompat", true);
         builder.pop();

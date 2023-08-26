@@ -36,16 +36,6 @@ public class RefreshmentEnchantment extends DropsEnchantment {
                 EquipmentSlot.MAINHAND});
     }
 
-    public int getMaxLevel() {
-        return 3;
-    }
-
-    @Override
-    public boolean checkCompatibility(Enchantment enchantment) {
-        return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() ||
-                !(enchantment instanceof DropsEnchantment);
-    }
-
     @SubscribeEvent
     public static void onRefreshmentKill(LivingDeathEvent event) {
         DamageSource damageSource = event.getSource();
@@ -81,12 +71,25 @@ public class RefreshmentEnchantment extends DropsEnchantment {
                 ItemStack currentStack = playerInventory.getItem(slotId);
                 if (currentStack.getItem() instanceof BottleItem) {
                     ItemStack healthPotion = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.HEALING);
-                    playerInventory.setItem(slotId, healthPotion);
+                    if (!player.getAbilities().instabuild)
+                        currentStack.shrink(1);
+                    if(!playerInventory.add(healthPotion))
+                        player.drop(healthPotion, false);
                     comboCap.setRefreshmentCounter(comboCap.getRefreshmentCounter() - REFRESHMENT_GOAL);
                     return;
                 }
             }
         }
+    }
+
+    public int getMaxLevel() {
+        return 3;
+    }
+
+    @Override
+    public boolean checkCompatibility(Enchantment enchantment) {
+        return DungeonsGearConfig.ENABLE_OVERPOWERED_ENCHANTMENT_COMBOS.get() ||
+                !(enchantment instanceof DropsEnchantment);
     }
 
 }
