@@ -4,6 +4,7 @@ import com.infamous.dungeons_gear.config.DungeonsGearConfig;
 import com.infamous.dungeons_gear.enchantments.ModEnchantmentTypes;
 import com.infamous.dungeons_gear.enchantments.types.DungeonsEnchantment;
 import com.infamous.dungeons_gear.registry.EnchantmentInit;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -30,11 +31,13 @@ public class RecklessEnchantment extends DungeonsEnchantment {
 
     @SubscribeEvent
     public static void onLivingUpdate(LivingEquipmentChangeEvent event) {
+        //no handsies!
+        if (event.getSlot().getType() == EquipmentSlot.Type.HAND) return;
         LivingEntity livingEntity = event.getEntity();
         int levelFrom = event.getFrom().getEnchantmentLevel(EnchantmentInit.RECKLESS.get());
         int levelTo = event.getTo().getEnchantmentLevel(EnchantmentInit.RECKLESS.get());
-        if(levelFrom == levelTo) return;
-        if(levelFrom == 0) {
+        if (levelFrom == levelTo) return;
+        if (levelFrom == 0) {
             livingEntity.getAttribute(Attributes.MAX_HEALTH).removeModifier(RECKLESS);
             livingEntity.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(RECKLESS);
         }

@@ -25,9 +25,9 @@ import static com.infamous.dungeons_gear.registry.ItemInit.*;
 import static net.minecraft.world.level.storage.loot.BuiltInLootTables.SPAWN_BONUS_CHEST;
 
 public class DungeonsLootAdditions extends LootModifier {
-
     public static final Supplier<Codec<DungeonsLootAdditions>> CODEC = Suppliers.memoize(()
             -> RecordCodecBuilder.create(instance -> codecStart(instance).apply(instance, DungeonsLootAdditions::new)));
+    private boolean noRecursion = false;
 
     public DungeonsLootAdditions(LootItemCondition[] conditionsIn) {
         super(conditionsIn);
@@ -36,17 +36,24 @@ public class DungeonsLootAdditions extends LootModifier {
     @Nonnull
     @Override
     public ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
+        if (noRecursion) return generatedLoot;
+        noRecursion = true;
         ObjectArrayList<ItemStack> modifiedLoot = generatedLoot;
         // return early if the user has disabled this feature
         if (!DungeonsGearConfig.ENABLE_DUNGEONS_GEAR_LOOT.get()) {
+            noRecursion = false;
             return generatedLoot;
         }
         if (!DungeonsGearConfig.ENABLE_DUNGEONS_GEAR_LOOT_ON_BONUS_CHEST.get() && context.getQueriedLootTableId().equals(SPAWN_BONUS_CHEST)) {
+            noRecursion = false;
             return generatedLoot;
         }
         modifiedLoot = modExceptions(modifiedLoot, context);
         ResourceLocation lootTable = determineTable(context.getQueriedLootTableId());
-        if (lootTable == null) return generatedLoot;
+        if (lootTable == null) {
+            noRecursion = false;
+            return generatedLoot;
+        }
         List<ItemStack> itemStacks = LootTableHelper.generateItemStacks(context.getLevel(), context, lootTable);
         if (!ConfigurableLootHelper.isArmorLootEnabled()) {
             itemStacks = itemStacks.stream().filter(itemStack -> !ARMORS.containsValue(itemStack.getItem())).collect(Collectors.toList());
@@ -61,6 +68,7 @@ public class DungeonsLootAdditions extends LootModifier {
             itemStacks = itemStacks.stream().filter(itemStack -> !ARTIFACTS.containsValue(itemStack.getItem())).collect(Collectors.toList());
         }
         modifiedLoot.addAll(itemStacks);
+        noRecursion = false;
         return modifiedLoot;
     }
 
