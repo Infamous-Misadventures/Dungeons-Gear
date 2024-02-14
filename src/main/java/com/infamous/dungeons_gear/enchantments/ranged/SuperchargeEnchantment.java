@@ -44,10 +44,7 @@ public class SuperchargeEnchantment extends DungeonsEnchantment {
             if (superchargeLevel > 0) {
                 double originalDamage = arrow.getBaseDamage();
                 int originalKnockback = arrow.knockback;
-                double damageModifier = 0;
-                if (superchargeLevel == 1) damageModifier = 1.2D;
-                if (superchargeLevel == 2) damageModifier = 1.4D;
-                if (superchargeLevel == 3) damageModifier = 1.6D;
+                double damageModifier = 1.0D + 0.2D * superchargeLevel;
                 arrow.setBaseDamage(originalDamage * damageModifier);
                 arrow.setKnockback(originalKnockback + 1);
             }
