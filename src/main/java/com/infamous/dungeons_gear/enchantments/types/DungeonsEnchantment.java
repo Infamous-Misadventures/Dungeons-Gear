@@ -50,6 +50,6 @@ public class DungeonsEnchantment extends Enchantment {
 
     @Override
     public boolean isTreasureOnly() {
-        return ModEnchantmentHelper.isTreasureEnchant(this);
+        return ModEnchantmentHelper.isNotBlacklistedEnchant(this) && ModEnchantmentHelper.isTreasureEnchant(this);
     }
 }
