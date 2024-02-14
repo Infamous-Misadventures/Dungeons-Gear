@@ -37,23 +37,32 @@ public class RecklessEnchantment extends DungeonsEnchantment {
         int levelFrom = event.getFrom().getEnchantmentLevel(EnchantmentInit.RECKLESS.get());
         int levelTo = event.getTo().getEnchantmentLevel(EnchantmentInit.RECKLESS.get());
         if (levelFrom == levelTo) return;
-        if (levelFrom == 0) {
-            AttributeModifier existingRecklessHealthMod = livingEntity.getAttribute(Attributes.MAX_HEALTH).getModifier(RECKLESS);
-            if(existingRecklessHealthMod != null){
-                livingEntity.getAttribute(Attributes.MAX_HEALTH).removeModifier(existingRecklessHealthMod);
-                if(livingEntity.getHealth() < livingEntity.getMaxHealth()){
-                    float regainedHealth = Math.abs(livingEntity.getMaxHealth() * DungeonsGearConfig.RECKLESS_MAX_HEALTH_MULTIPLIER.get().floatValue());
-                    livingEntity.setHealth(livingEntity.getHealth() + regainedHealth);
-                }
-            }
-            livingEntity.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(RECKLESS);
-        }
+        // equipping armor with reckless
         if (levelTo > 0) {
+            // remove any existing modifiers
+            livingEntity.getAttribute(Attributes.MAX_HEALTH).removeModifier(RECKLESS);
+            livingEntity.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(RECKLESS);
+
+            // add the modifiers and update health
             livingEntity.getAttribute(Attributes.MAX_HEALTH).addTransientModifier(new AttributeModifier(RECKLESS, "reckless multiplier", DungeonsGearConfig.RECKLESS_MAX_HEALTH_MULTIPLIER.get(), AttributeModifier.Operation.MULTIPLY_BASE));
             if(livingEntity.getHealth() > livingEntity.getMaxHealth()){
                 livingEntity.setHealth(livingEntity.getMaxHealth());
             }
             livingEntity.getAttribute(Attributes.ATTACK_DAMAGE).addTransientModifier(new AttributeModifier(RECKLESS, "reckless multiplier", DungeonsGearConfig.RECKLESS_ATTACK_DAMAGE_BASE_MULTIPLIER.get() + (DungeonsGearConfig.RECKLESS_ATTACK_DAMAGE_MULTIPLIER_PER_LEVEL.get() * levelTo), AttributeModifier.Operation.MULTIPLY_BASE));
+        }
+        // removing reckless armor
+        else{
+            // remove the modifiers and regain health lost from reckless
+            AttributeModifier existingRecklessHealthMod = livingEntity.getAttribute(Attributes.MAX_HEALTH).getModifier(RECKLESS);
+            if(existingRecklessHealthMod != null){
+                livingEntity.getAttribute(Attributes.MAX_HEALTH).removeModifier(existingRecklessHealthMod);
+                if(livingEntity.getHealth() < livingEntity.getMaxHealth()){
+                    float regainedHealth = Math.abs(livingEntity.getMaxHealth() * (float)existingRecklessHealthMod.getAmount());
+                    livingEntity.setHealth(livingEntity.getHealth() + regainedHealth);
+                }
+            }
+            livingEntity.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(RECKLESS);
+
         }
     }
 
