@@ -37,6 +37,7 @@ public class RecklessEnchantment extends DungeonsEnchantment {
         int levelFrom = event.getFrom().getEnchantmentLevel(EnchantmentInit.RECKLESS.get());
         int levelTo = event.getTo().getEnchantmentLevel(EnchantmentInit.RECKLESS.get());
         if (levelFrom == levelTo) return;
+        int highestEquippedLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentInit.RECKLESS.get(), livingEntity);
         // equipping armor with reckless
         if (levelTo > 0) {
             // remove any existing modifiers
@@ -48,7 +49,7 @@ public class RecklessEnchantment extends DungeonsEnchantment {
             if(livingEntity.getHealth() > livingEntity.getMaxHealth()){
                 livingEntity.setHealth(livingEntity.getMaxHealth());
             }
-            livingEntity.getAttribute(Attributes.ATTACK_DAMAGE).addTransientModifier(new AttributeModifier(RECKLESS, "reckless multiplier", DungeonsGearConfig.RECKLESS_ATTACK_DAMAGE_BASE_MULTIPLIER.get() + (DungeonsGearConfig.RECKLESS_ATTACK_DAMAGE_MULTIPLIER_PER_LEVEL.get() * levelTo), AttributeModifier.Operation.MULTIPLY_BASE));
+            livingEntity.getAttribute(Attributes.ATTACK_DAMAGE).addTransientModifier(new AttributeModifier(RECKLESS, "reckless multiplier", DungeonsGearConfig.RECKLESS_ATTACK_DAMAGE_BASE_MULTIPLIER.get() + (DungeonsGearConfig.RECKLESS_ATTACK_DAMAGE_MULTIPLIER_PER_LEVEL.get() * highestEquippedLevel), AttributeModifier.Operation.MULTIPLY_BASE));
         }
         // removing reckless armor
         else{
