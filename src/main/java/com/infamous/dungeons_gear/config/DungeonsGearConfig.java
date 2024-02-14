@@ -16,7 +16,6 @@ import java.util.List;
 public class DungeonsGearConfig {
     private final LootTablesConfigHelper lootTables = new LootTablesConfigHelper();
     private static final ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
-    public static ForgeConfigSpec.ConfigValue<Integer> METAL_MELEE_WEAPON_DURABILITY;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_DUNGEONS_GEAR_LOOT;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_DUNGEONS_GEAR_LOOT_ON_BONUS_CHEST;
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_EXPERIMENTAL;
@@ -239,13 +238,6 @@ public class DungeonsGearConfig {
                         "This currently does nothing, but eventually dodging will trigger Dungeons Gear Roll enchantments. \n" +
                         "Does nothing if Project: War Dance is not installed. [true / false]")
                 .define("enableProjectWarDanceCompat", true);
-        builder.pop();
-
-
-        builder.comment("Item Configuration").push("item_configuration");
-        METAL_MELEE_WEAPON_DURABILITY = builder
-                .comment("Set the durability for melee weapons. [0-1024, default: 250")
-                .defineInRange("meleeWeaponDurability", 250, 0, 1024);
         builder.pop();
 
         builder.comment("Rarity Loot Table Configuration").push("rarity_loot_table_configuration");
